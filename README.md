@@ -9,13 +9,16 @@ A suite of tools developed by Cortico Health Technologies to improve the Oscar e
   * Includes a subtle user interface theme (see picture below, which can be enabled optionally in the control panel).
 
 Drag and Drop:
+
 ![Oscar Schedule Drag and Drop](dnd.gif)
 
 Cortico Control Panel:
+
 ![Cortico Controls](cortico-control.png)
 
 Custom Oscar Theme
-![Oscar Schedule Drag and Drop](ortico-oscar-ui.png)
+
+![Cortico Oscar Theme](cortico-oscar-ui.png)
 
 
 # Cortico Specific Features (optional)
