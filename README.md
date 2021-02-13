@@ -4,11 +4,19 @@ A suite of tools developed by Cortico Health Technologies to improve the Oscar e
 
 # General Oscar Quality of Life Features:
   * Drag and drop functionality on the schedule (see screenshot below)
-  * A quick way to check public health insurance eligibility for your whole schedule.
+  * A quick way to check public health insurance eligibility for your whole schedule. Open the control panel for the plug-in (click "Cortico" menu item, in image below), and click "Check Eligibility".
   * Prevents Oscar refreshing while you are actively working (which interrupts your work). Oscar will wait until your mouse stops moving for a minute.
-  * Includes very subtle user interface improvements (see picture below).
+  * Includes a subtle user interface theme (see picture below, which can be enabled optionally in the control panel).
 
+Drag and Drop:
 ![Oscar Schedule Drag and Drop](dnd.gif)
+
+Cortico Control Panel:
+![Cortico Controls](cortico-control.png)
+
+Custom Oscar Theme
+![Oscar Schedule Drag and Drop](ortico-oscar-ui.png)
+
 
 # Cortico Specific Features (optional)
   * Allows joining a video call directly from the schedule page.
