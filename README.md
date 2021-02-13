@@ -31,9 +31,15 @@ We hope this repository can provide a helpful testing ground for some new Oscar 
 
 # Contributing
 
+Remember to test your changes on all version of Osccar (OpenOSP, WELL, community edition) before publishing.
+
 ## How to package and update the Firefox extension
 
-Sign in as clark@countable.ca into addons.mozilla.org, and submit an updated version.
+The official Mozilla account for this plug-in is clark@countable.ca . Please contact him to publish changes.
+
+Notes on publishing:
+
+Sign into addons.mozilla.org, and submit an updated version.
   * you must increment the version in manifest.json
 
 To package the add-on, do
@@ -50,7 +56,7 @@ Indicate the plug-in does not use remote code (which is the case).
 
 ## How to package and update the Chrome extension
 
-The Chrome developer account is shirley@countable.ca. In the Privacy tab:
+The Chrome developer account is shirley@countable.ca. Contact her to publish changes. In the Privacy tab:
 
 Description:
 
