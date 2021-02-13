@@ -1,6 +1,6 @@
 # Oscar Enhancement Suite
 
-A suite of tools developed by Cortico Health Technologies to improve the Oscar experience of Cortico users. It includes some oft-requested quality of life improvements for Oscar, unrelated to Cortico. Clinics who do not use Cortico may still use this plug-in, but support will be a best-effort basis since we only have a support contract with clinics who run [Cortico]().
+A suite of tools developed by Cortico Health Technologies to improve the Oscar experience of Cortico users. It includes some oft-requested quality of life improvements for Oscar, unrelated to Cortico. Clinics who do not use Cortico may still use this plug-in, but support will be a best-effort basis in that case. Please log any problems in the GitHub issues.
 
 # General Oscar Quality of Life Features:
   * Drag and drop functionality on the schedule (see screenshot below)
