@@ -1,3 +1,11 @@
+// ==UserScript==
+// @name     Cortico
+// @version  1
+// @grant    none
+// @require https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.9.7/dayjs.min.js
+// ==/UserScript==
+
+
 // PubSub
 var pubsub = {};
  
@@ -64,13 +72,6 @@ var pubsub = {};
         return this;
     };
 }( pubsub ));
-
-// ==UserScript==
-// @name     Cortico
-// @version  1
-// @grant    none
-// @require https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.9.7/dayjs.min.js
-// ==/UserScript==
 
 // manually update this variable with the version in manifest.json
 const version = 1.9
