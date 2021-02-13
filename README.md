@@ -8,6 +8,8 @@ A suite of tools developed by Cortico Health Technologies to improve the Oscar e
   * Prevents Oscar refreshing while you are actively working (which interrupts your work). Oscar will wait until your mouse stops moving for a minute.
   * Includes very subtle user interface improvements (see picture below).
 
+![Oscar Schedule Drag and Drop](dnd.gif)
+
 # Cortico Specific Features (optional)
   * Allows joining a video call directly from the schedule page.
   * Allows you to see diagnostic questions that patients answered in the online booking system.
