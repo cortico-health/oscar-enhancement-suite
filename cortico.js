@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name     Cortico
-// @version  1
+// @version  2.0
 // @grant    none
 // @require https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.9.7/dayjs.min.js
 // ==/UserScript==
@@ -74,7 +74,7 @@ var pubsub = {};
 }( pubsub ));
 
 // manually update this variable with the version in manifest.json
-const version = 1.9
+const version = 2.0
 const init_cortico = function() {
   // create an element to indicate the library is loaded in the dom, and to contain fixed menus/elements.
   const anchor = document.createElement("div");
