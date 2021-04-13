@@ -956,15 +956,19 @@ async function checkAllEligibility() {
         break;
       }
       
-      addToCache(demographic_no);
+      
+      let verified = false;
       
       if (lowerCaseText.includes("success")) {
       	plusSignAppointments(demographic_no);
+        verified = true;
       } else {
         appointmentInfo[i]['reason'] = text
         addToFailures(appointmentInfo[i])
         pubsub.publish('check-eligibility-failed', getFailureCache())
       }
+      
+      addToCache(demographic_no, verified);
       
       
       await new Promise((resolve, reject) => {
@@ -1197,12 +1201,22 @@ function plusSignAppointments(demographic_no) {
 }
 
 function plusSignFromCache() {
+
 	const _cache = localStorage.getItem("checkCache")
   if (!_cache) return
   const cache = JSON.parse(_cache)
+  console.log("Cacheeee", cache)
+  
+  const _today = dayjs().format("YYYY-MM-DD")
+  
   for (let key in cache) {
-    console.log("Cache", cache[key])
+
     if (cache[key].verified === true) {
+      const cachedDate = cache[key].date
+      // Check appointment if it exists in cache, but expired
+      if (isDateExpired(dayjs(cachedDate), _today, 5)) {
+        continue
+      }
       plusSignAppointments(key)
     }
   }
