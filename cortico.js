@@ -117,6 +117,11 @@ const init_cortico = function() {
       plusSignFromCache();
     }
 
+    const isMarkham = window.location.href.includes('mmfcc')
+    if (isMarkham) {
+      plusSignFromCache();
+    }
+
   }
   
   init_styles()
