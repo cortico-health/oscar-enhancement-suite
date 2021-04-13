@@ -45,7 +45,6 @@ Sign into addons.mozilla.org, and submit an updated version.
 To package the add-on, do
 
 ```
-cd browser-extension
 zip -r * cortico.zip
 ```
 
