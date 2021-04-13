@@ -959,7 +959,10 @@ async function checkAllEligibility() {
       
       let verified = false;
       
-      if (lowerCaseText.includes("success")) {
+      if (
+        lowerCaseText.includes("success") ||
+      	lowerCaseText.includes("health card passed validation")
+      ) {
       	plusSignAppointments(demographic_no);
         verified = true;
       } else {
