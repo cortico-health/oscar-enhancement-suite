@@ -2,10 +2,6 @@
 // @name     Cortico
 // @version  2.1
 // @grant    none
-// @description  try to take over the world!
-// @author       You
-// @match        https://demo3.junoemr.com/kensington/*
-// @icon         https://www.google.com/s2/favicons?domain=junoemr.com
 // ==/UserScript==
 
 // Dayjs
@@ -130,9 +126,9 @@ const init_cortico = function() {
     setupPreferredPharmacy();
   } else if (route.indexOf("/oscarRx/ViewScript2.jsp") > -1) {
       // We need to determine first if the prescription is "delivery"
-      const currentNotes = localStorage.getItem('currentNotes')
+      const currentReason = localStorage.getItem('currentReason')
 
-      if (currentNotes.toLowerCase().indexOf("delivery") > -1) {
+      if (currentReason.toLowerCase().indexOf("delivery") > -1) {
           const additionalNotes = document.getElementById('additionalNotes')
           additionalNotes.value = "FOR DELIVERY"
 
@@ -357,13 +353,13 @@ const init_styles = function () {
    color:#fff;
    text-decoration:none
   }
-	.infirmaryView:first-child {
-	 /*position:fixed;*/
+  .infirmaryView:first-child {
+   /*position:fixed;*/
    margin-left: 57px;
    padding: 1px 15px;
-	 top: 0;
-	}
-	`
+   top: 0;
+  }
+  `
   );
 };
 
@@ -524,13 +520,13 @@ function getEligStatus() {
 }
 
 function getEligFailed() {
-	var container = document.createElement("div");
+  var container = document.createElement("div");
   container.style.textAlign = 'center'
   pubsub.subscribe('check-eligibility-failed', (topic, data) => {
     container.innerHTML = '<p style="margin-top: 10px;">Failed to Verify:</p>';
 
     const list = getFailedList(data)
-  	container.appendChild(list)
+    container.appendChild(list)
   })
 
   return container;
@@ -540,11 +536,11 @@ function getFailedList(data) {
     const failed = JSON.parse(data)
     let listItems = '';
     failed.map(f => {
-    	listItems += `<li>Demographic No: ${f.demographic_no}</li>`
+      listItems += `<li>Demographic No: ${f.demographic_no}</li>`
     })
     const list = document.createElement("ul");
     list.innerHTML = listItems
-  	return list
+    return list
 }
 
 function getNewUIOption() {
@@ -643,7 +639,7 @@ function getCorticoUrlOption() {
 }
 
 function getEligButton() {
-	var button = document.createElement("button");
+  var button = document.createElement("button");
   button.textContent = "Check Eligiblity"
   button.addEventListener('click', checkAllEligibility)
   return button;
@@ -737,15 +733,15 @@ function dragAndDrop() {
       return;
     }
     if (!dragTarget) {
-    	return
+      return
     }
     //Comment because unstable, this will undo highlight multiple rows in the table
     //target.setAttribute('rowspan', 1)
     handleColors(dragTarget);
   }
 
- 	function handleColors(target) {
-		//Appropriately reset colors on hover and dragend, dragover
+  function handleColors(target) {
+    //Appropriately reset colors on hover and dragend, dragover
     var isAppt = target.classList.contains("appt")
     var isEmpty = target.classList.contains("noGrid")
     if (isAppt) {
@@ -860,7 +856,7 @@ function dragAndDrop() {
 function addVideoCall() {
   /* To be completed
 
-	var nodes = document.querySelectorAll('td.appt')
+  var nodes = document.querySelectorAll('td.appt')
   nodes.forEach(function(node) {
       var anchor = document.createElement('a')
       anchor.textContent = 'V'
@@ -884,18 +880,18 @@ function getProvider() {
 }
 
 function addToFailures(metadata) {
-	const _cache = getFailureCache()
+  const _cache = getFailureCache()
   const cache = JSON.parse(_cache) || []
   cache.push(metadata)
   localStorage.setItem("failureCache", JSON.stringify(cache))
 }
 
 function clearFailureCache() {
-	return localStorage.removeItem('failureCache')
+  return localStorage.removeItem('failureCache')
 }
 
 function getFailureCache() {
-	return localStorage.getItem('failureCache')
+  return localStorage.getItem('failureCache')
 }
 
 
@@ -917,23 +913,23 @@ function filterAppointments(appointments) {
   const _today = dayjs().format("YYYY-MM-DD")
 
   if (!_cache) {
-  	return appointments
+    return appointments
   }
 
   const cache = JSON.parse(_cache)
   return appointments.filter(appt => {
- 		const demographic_no = appt.demographic_no
+    const demographic_no = appt.demographic_no
 
     // Check appointment if it doesn't exist in cache
 
     if (!cache.hasOwnProperty(demographic_no)) {
-    	return true
+      return true
     }
 
     const cachedDate = cache[demographic_no].date
     // Check appointment if it exists in cache, but expired
     if (isDateExpired(dayjs(cachedDate), _today, 5)) {
-    	return true
+      return true
     }
 
     return false
@@ -950,7 +946,7 @@ async function checkAllEligibility() {
   //localStorage.removeItem("checkCache")
 
   if (window.checkAllEligibilityRunning === true) {
-  	return alert("Check Already Running")
+    return alert("Check Already Running")
   }
 
   clearFailureCache();
@@ -960,7 +956,7 @@ async function checkAllEligibility() {
 
   var length = appointmentInfo.length;
   if (appointmentInfo.length === 0) {
-  	alert("No Appointments to Check")
+    alert("No Appointments to Check")
   }
   var error = false;
 
@@ -990,9 +986,9 @@ async function checkAllEligibility() {
 
       if (
         lowerCaseText.includes("success") ||
-      	lowerCaseText.includes("health card passed validation")
+        lowerCaseText.includes("health card passed validation")
       ) {
-      	plusSignAppointments(demographic_no);
+        plusSignAppointments(demographic_no);
         verified = true;
       } else {
         appointmentInfo[i]['reason'] = text
@@ -1011,11 +1007,11 @@ async function checkAllEligibility() {
 
     }
   } catch(err) {
-  	alert(err)
+    alert(err)
   } finally {
     window.checkAllEligibilityRunning = false;
     pubsub.publish('check-eligibility', {
-    	complete: true,
+      complete: true,
       total: length,
       error
     })
@@ -1122,7 +1118,7 @@ function checkEligiblity(demographicNo, origin, provider) {
         Accept: "text/javascript, text/html, application/xml, text/xml, */*",
         "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
       },
-  	})
+    })
 }
 
 function getAppointmentLink(apptTdElement) {
@@ -1165,7 +1161,7 @@ function getAppointmentInfo(apptNodes) {
     var apptLink = getAppointmentLink(node);
     // Already verified
     if (apptLink.textContent.includes("+")) {
-    	return
+      return
     }
     var apptUrl = extractApptUrl(apptLink.attributes.onclick.textContent);
     var demographicNo = getDemographicNo(apptUrl);
@@ -1186,11 +1182,11 @@ function extractApptUrl(s) {
 }
 
 function appointmentEditRequest(origin, provider, apptUrl) {
-	return fetch(origin + "/" + provider + apptUrl);
+  return fetch(origin + "/" + provider + apptUrl);
 }
 
 function handleAddData(data) {
-	if (!isJuno()) {
+  if (!isJuno()) {
     return data
   }
 
@@ -1204,24 +1200,24 @@ function handleAddData(data) {
 }
 
 function addAppointment(origin, provider, data) {
-	data.set("displaymode", "Add Appointment");
+  data.set("displaymode", "Add Appointment");
   const _data = new URLSearchParams(data);
   return appointmentRequest(origin, provider, _data)
 }
 function cutAppointment(origin, provider, data) {
-	data.set("displaymode", "Cut");
+  data.set("displaymode", "Cut");
   const _data = new URLSearchParams(data);
   return appointmentRequest(origin, provider, _data)
 }
 
 function updateAppointment(origin, provider, data) {
-	data.set("displaymode", "Update Appt");
+  data.set("displaymode", "Update Appt");
   const _data = new URLSearchParams(data);
   return appointmentRequest(origin, provider, _data)
 }
 
 function appointmentRequest(origin, provider, data) {
-	return fetch(
+  return fetch(
     origin + "/" + provider + "/appointment/appointmentcontrol.jsp",
     {
       method: "POST",
@@ -1247,7 +1243,7 @@ function getProviderNoFromTd(tdElement) {
   //juno
   var dsInput = tdElement.closest("table").closest("tbody").querySelector('input[name="searchview"]')
   if (dsInput) {
-  	return dsInput.attributes.onclick.nodeValue.match(/'([^']+)'/)[1]
+    return dsInput.attributes.onclick.nodeValue.match(/'([^']+)'/)[1]
   }
 
   return null
@@ -1255,8 +1251,8 @@ function getProviderNoFromTd(tdElement) {
 }
 
 function updateAppointmentAnchorLinks(apptTdElement, oldOptions, newOptions) {
-	apptTdElement.querySelectorAll("a").forEach((node) => {
-  	var linkAttribute = node.attributes.onclick || node.attributes.href
+  apptTdElement.querySelectorAll("a").forEach((node) => {
+    var linkAttribute = node.attributes.onclick || node.attributes.href
     var linkValue = linkAttribute.nodeValue
 
 
@@ -1289,7 +1285,7 @@ function getAppointments(demographic_no) {
     var _demographic_no = getDemographicNo(apptUrl);
 
     if ( demographic_no === _demographic_no ) {
-    	appointments.push(node)
+      appointments.push(node)
     }
   })
   return appointments
@@ -1308,13 +1304,13 @@ function plusSignAppointments(demographic_no) {
   const appointments = getAppointments(demographic_no)
   appointments.map((appt) => {
     var apptLink = getAppointmentLink(appt);
-  	addVerifiedMark(" + &nbsp;", apptLink)
+    addVerifiedMark(" + &nbsp;", apptLink)
   })
 }
 
 function plusSignFromCache() {
 
-	const _cache = localStorage.getItem("checkCache")
+  const _cache = localStorage.getItem("checkCache")
   if (!_cache) return
   const cache = JSON.parse(_cache)
   console.log("Cacheeee", cache)
@@ -1350,24 +1346,22 @@ function setupPrescriptionButtons() {
       // assuming that reason field is always 2nd to the last
       var reason = titleContents[titleContents.length - 2]
       var reasonValue = reason.split(":")[1].trim()
+      console.log(reasonValue)
+      var reasonValuesList = reasonValue.match(/\[(.*?)\]/g)
+      console.log(reasonValuesList)
+
+      // we are assuming here that the pharmacy code is the 2nd
+      var pharmacyCode = reasonValuesList[1] || null;
+      pharmacyCode = pharmacyCode.replace(/[\[\]']+/g, '')
 
       localStorage.setItem('currentReason', reasonValue)
+      localStorage.setItem('currentPharmacyCode', pharmacyCode)
 
       // TODO get the pharmacy from reason field
     }
   }, false)
 }
 
-async function setupFaxButton() {
-  const prescriptionFrame = document.getElementById("AutoNumber1")
-  prescriptionFrame.addEventListener("click", function(e) {
-    if (e.target.matches("#faxBUtton, #faxAndPasteButton")) {
-      const result = await sendPatientPrescriptionNotification()
-      const text = await results.text()
-      const json = JSON.parse(text)
-    }
-  }, false)
-}
 
 function sendPatientPrescriptionNotification() {
   const clinicName = localStorage.getItem('clinicname')
@@ -1387,11 +1381,42 @@ function sendPatientPrescriptionNotification() {
         "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
         "Content-Type": "application/x-www-form-urlencoded",
     },
-})
+  })
 }
 
+
+function setupFaxButton() {
+  const prescriptionFrame = document.getElementById("AutoNumber1")
+  prescriptionFrame.addEventListener("click", async function(e) {
+    if (e.target.matches("#faxBUtton, #faxAndPasteButton")) {
+      const result = await sendPatientPrescriptionNotification()
+      const text = await result.text()
+      const json = JSON.parse(text)
+    }
+  }, false)
+}
+
+
+function getPharmacyDetails(pharmacyCode){
+  const clinicName = localStorage.getItem('clinicname')
+  const url = clinicName + `/api/pharmacies/?code=${pharmacyCode}`
+
+  return fetch(url, {
+    method: "GET",
+    headers: {
+        "Content-Type": "application/json",
+    },
+  })
+}
+
+
 async function setupPreferredPharmacy() {
-  const searchTerm = localStorage.getItem('currentReason')
+  const pharmacyCode = localStorage.getItem('currentPharmacyCode')
+
+  const corticoPharmacy = await getPharmacyDetails(pharmacyCode)
+  const corticoPharmacyText = JSON.parse(await corticoPharmacy.text());
+  const searchTerm = corticoPharmacyText[0]['name']
+
   const demographicNo = getDemographicFomLocation()
   const currPharmacyResults = await getCurrentPharmacy(demographicNo)
   const currPharmacyText = JSON.parse(await currPharmacyResults.text());
@@ -1404,18 +1429,20 @@ async function setupPreferredPharmacy() {
 
   const currentlyUsingPharmacy = (
     preferredPharmacy && preferredPharmacy.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1)
-  console.log("curr", currentlyUsingPharmacy)
+  console.log("currently using dlvr pharmacy", currentlyUsingPharmacy)
 
   if (searchTerm && !currentlyUsingPharmacy) {
     const results = await getPharmacyResults(searchTerm)
     const text = await results.text()
     const json = JSON.parse(text)
-    console.log("pharmacy", json.length)
+
     if (json.length > 0) {
       alert("Updating preferred pharmacy, press Ok to reload")
       const setPharmacyResults = await setPreferredPharmacy(json[0], demographicNo);
       const setPharmacyText = await setPharmacyResults.text()
       window.location.reload()
+    } else {
+      alert(`Customer pharmacy ${searchTerm} does not exist in your Oscar pharmacy database!`)
     }
   }
 }
