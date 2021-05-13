@@ -116,19 +116,25 @@ const init_cortico = function() {
     last_button.parentNode.innerHTML +=
       "<button class='cortico-btn' id='recall-btn' style='color:white; background-color:blue'>Recall email</button>";
 
-    const cortico_recall_button = document.getElementById("recall-btn")
+    const corticoRecallButton = document.getElementById("recall-btn")
 
     function update_recall_button_visibility() {
       statusValue = statusOption.options[statusOption.selectedIndex].text;
       console.log("statusValue", statusValue.toLowerCase())
 
-      cortico_recall_button.style.visibility =
+      corticoRecallButton.style.visibility =
       statusValue.toLowerCase() === "todo" ? "visible" : "hidden";
     }
 
     update_recall_button_visibility();
 
     statusOption.addEventListener("change", update_recall_button_visibility);
+
+    corticoRecallButton.addEventListener("click", () => {
+      const patientEmail = getPatientEmail()
+      
+      window.open("mailto:")
+    })
 
   } else if (route.indexOf("/provider/providercontrol.jsp") > -1) {
     init_schedule();
