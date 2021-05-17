@@ -122,13 +122,14 @@ const init_cortico = function() {
     }
 
     setupPrescriptionButtons();
+    setupPreferredPharmacies();
   } else if (route.indexOf("/oscarRx/choosePatient.do") > -1) {
     setupPreferredPharmacy();
   } else if (route.indexOf("/oscarRx/ViewScript2.jsp") > -1) {
       // We need to determine first if the prescription is "delivery"
-      const currentReason = localStorage.getItem('currentReason')
+      const currentPharmacyCode = localStorage.getItem('currentPharmacyCode')
 
-      if (currentReason.toLowerCase().indexOf("delivery") > -1) {
+      if (currentPharmacyCode.toLowerCase().indexOf("dlvr") > -1) {
           const additionalNotes = document.getElementById('additionalNotes')
           additionalNotes.value = "FOR DELIVERY"
 
@@ -1330,6 +1331,23 @@ function plusSignFromCache() {
   }
 }
 
+function getPharmacyCodeFromReason(textContent) {
+    var titleContents = textContent.split("\n")
+
+    var reason = titleContents[3]
+    var reasonValue = reason.split(":")[1].trim()
+    var reasonValuesList = reasonValue.match(/\[(.*?)\]/g)
+
+    // we are assuming here that the pharmacy code is the 2nd
+    var pharmacyCode = reasonValuesList ? reasonValuesList[1] : null;
+
+    if (pharmacyCode) {
+      pharmacyCode = pharmacyCode.replace(/[\[\]']+/g, '')
+    }
+
+    return pharmacyCode;
+}
+
 
 function setupPrescriptionButtons() {
   const providerSchedule = document.querySelector("#providerSchedule")
@@ -1341,23 +1359,9 @@ function setupPrescriptionButtons() {
       }
 
       var apptTitle = element.attributes.title.textContent
-      var titleContents = apptTitle.split("\n")
+      var pharmacyCode = getPharmacyCodeFromReason(apptTitle)
 
-      // assuming that reason field is always 2nd to the last
-      var reason = titleContents[titleContents.length - 2]
-      var reasonValue = reason.split(":")[1].trim()
-      console.log(reasonValue)
-      var reasonValuesList = reasonValue.match(/\[(.*?)\]/g)
-      console.log(reasonValuesList)
-
-      // we are assuming here that the pharmacy code is the 2nd
-      var pharmacyCode = reasonValuesList[1] || null;
-      pharmacyCode = pharmacyCode.replace(/[\[\]']+/g, '')
-
-      localStorage.setItem('currentReason', reasonValue)
       localStorage.setItem('currentPharmacyCode', pharmacyCode)
-
-      // TODO get the pharmacy from reason field
     }
   }, false)
 }
@@ -1399,7 +1403,7 @@ function setupFaxButton() {
 
 function getPharmacyDetails(pharmacyCode){
   const clinicName = localStorage.getItem('clinicname')
-  const url = clinicName + `/api/pharmacies/?code=${pharmacyCode}`
+  const url = `https://kmc.cortico.ca/api/pharmacies/?code=${pharmacyCode}`
 
   return fetch(url, {
     method: "GET",
@@ -1410,14 +1414,22 @@ function getPharmacyDetails(pharmacyCode){
 }
 
 
-async function setupPreferredPharmacy() {
-  const pharmacyCode = localStorage.getItem('currentPharmacyCode')
+async function setupPreferredPharmacy(code, demographic_no) {
+  var pharmacyCode = localStorage.getItem('currentPharmacyCode')
 
+  if (code) {
+    pharmacyCode = code
+  }
+  console.log(pharmacyCode)
   const corticoPharmacy = await getPharmacyDetails(pharmacyCode)
   const corticoPharmacyText = JSON.parse(await corticoPharmacy.text());
   const searchTerm = corticoPharmacyText[0]['name']
 
-  const demographicNo = getDemographicFomLocation()
+  var demographicNo = demographic_no
+  if (!demographic_no) {
+    demographicNo = getDemographicFomLocation()
+  }
+
   const currPharmacyResults = await getCurrentPharmacy(demographicNo)
   const currPharmacyText = JSON.parse(await currPharmacyResults.text());
   var preferredPharmacy;
@@ -1429,26 +1441,65 @@ async function setupPreferredPharmacy() {
 
   const currentlyUsingPharmacy = (
     preferredPharmacy && preferredPharmacy.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1)
-  console.log("currently using dlvr pharmacy", currentlyUsingPharmacy)
+  console.log(`currently using dlvr pharmacy ${currentlyUsingPharmacy} ${searchTerm.toLowerCase()}`)
 
   if (searchTerm && !currentlyUsingPharmacy) {
-    const results = await getPharmacyResults(searchTerm)
-    const text = await results.text()
-    const json = JSON.parse(text)
+      const results = await getPharmacyResults(searchTerm)
+      const text = await results.text()
+      const json = JSON.parse(text)
+      const pharmacyUpdated = json.length > 0
 
-    if (json.length > 0) {
-      alert("Updating preferred pharmacy, press Ok to reload")
-      const setPharmacyResults = await setPreferredPharmacy(json[0], demographicNo);
-      const setPharmacyText = await setPharmacyResults.text()
-      window.location.reload()
-    } else {
-      alert(`Customer pharmacy ${searchTerm} does not exist in your Oscar pharmacy database!`)
-    }
+      const isRxPage = window.location.href.indexOf("oscarRx/choosePatient.do") > -1
+
+      if (pharmacyUpdated) {
+          const setPharmacyResults = await setPreferredPharmacy(json[0], demographicNo);
+          const setPharmacyText = await setPharmacyResults.text()
+
+          if (isRxPage) alert("Updating preferred pharmacy, press Ok to reload")
+          else console.log("Updating preferred pharmacy")
+      } else {
+          if (isRxPage) alert(`Customer pharmacy ${searchTerm} does not exist in your Oscar pharmacy database!`)
+          else console.log(`Customer pharmacy ${searchTerm} does not exist in your Oscar pharmacy database`)
+      }
   }
+
+  await new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve();
+    }, 2000)
+  })
 }
+
 
 function getDemographicFomLocation() {
   const routeParams = new URLSearchParams(window.location.search)
 
   return routeParams.get('demographicNo')
 }
+
+
+function setupPreferredPharmacies() {
+  window.setupPreferredPharmaciesRunning = true;
+
+  const appointments = document.querySelectorAll(".apptLink");
+
+  appointments.forEach(async function(element) {
+    if (!element || !element.attributes) {
+      return;
+    }
+    const apptTitle = element.attributes.title.textContent
+    const pharmacyCode = getPharmacyCodeFromReason(apptTitle)
+
+    if (!pharmacyCode) {
+      return;
+    }
+
+    var apptUrl = extractApptUrl(element.attributes.onclick.textContent);
+    var demographicNo = getDemographicNo(apptUrl);
+
+    console.log("setting up preferred pharmacy")
+
+    await setupPreferredPharmacy(pharmacyCode, demographicNo)
+  })
+}
+
