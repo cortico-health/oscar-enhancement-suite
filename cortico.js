@@ -2,6 +2,9 @@
 // @name     Cortico
 // @version  2.1
 // @grant    none
+// @author       You
+// @match        https://demo3.junoemr.com/kensington/*
+// @icon         https://www.google.com/s2/favicons?domain=junoemr.com
 // ==/UserScript==
 
 // Dayjs
@@ -122,7 +125,6 @@ const init_cortico = function() {
     }
 
     setupPrescriptionButtons();
-    setupPreferredPharmacies();
   } else if (route.indexOf("/oscarRx/choosePatient.do") > -1) {
     setupPreferredPharmacy();
   } else if (route.indexOf("/oscarRx/ViewScript2.jsp") > -1) {
@@ -467,7 +469,8 @@ function createSideBar() {
   sidebar.appendChild(getEligButton());
   sidebar.appendChild(getEligFailed());
 
-
+  sidebar.appendChild(getBatchPharmaciesStatus());
+  sidebar.appendChild(getBatchPharmaciesButton());
 
   var styleSheet = styleSheetFactory("cortico_sidebar");
   var styles = "";
@@ -514,6 +517,24 @@ function getEligStatus() {
       const header = 'Currenty Processing' + progress + ':'
       const name = (data.info.split('\n'))[1]
       container.innerHTML = "<p>" + header + "<br/>" + name + "</p>"
+    }
+
+  })
+  return container;
+}
+
+function getBatchPharmaciesStatus() {
+  var container = document.createElement("div");
+  container.style.textAlign = 'center'
+  pubsub.subscribe('check-batch-pharmacies', (topic, data) => {
+    const progress = '(' + data.current + "/" + data.total + ')'
+
+    if (data.complete === true) {
+      container.innerHTML = 'Setup Complete!'
+
+    } else {
+      const header = 'Currenty Processing' + progress + ':'
+      container.innerHTML = "<p>" + header + "<br/>" + "</p>"
     }
 
   })
@@ -645,6 +666,14 @@ function getEligButton() {
   button.addEventListener('click', checkAllEligibility)
   return button;
 }
+
+function getBatchPharmaciesButton() {
+  var button = document.createElement("button");
+  button.textContent = "Set preferred pharmacies"
+  button.addEventListener('click', setupPreferredPharmacies)
+  return button;
+}
+
 
 function addNewUI() {
   var styleSheet = styleSheetFactory("newUIStyleSheet");
@@ -1462,12 +1491,6 @@ async function setupPreferredPharmacy(code, demographic_no) {
           else console.log(`Customer pharmacy ${searchTerm} does not exist in your Oscar pharmacy database`)
       }
   }
-
-  await new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve();
-    }, 2000)
-  })
 }
 
 
@@ -1478,28 +1501,54 @@ function getDemographicFomLocation() {
 }
 
 
-function setupPreferredPharmacies() {
+async function setupPreferredPharmacies() {
+  console.log("setting up batch pharmacies")
   window.setupPreferredPharmaciesRunning = true;
 
+  clearFailureCache();
   const appointments = document.querySelectorAll(".apptLink");
+  var error = false;
+  try {
+    for (let i = 0; i < appointments.length; i++) {
+      const element = appointments[i]
+      if (!element || !element.attributes) {
+        continue;
+      }
+      const apptTitle = element.attributes.title.textContent
+      const pharmacyCode = getPharmacyCodeFromReason(apptTitle)
+  
+      if (!pharmacyCode) {
+        continue;
+      }
+  
+      var temp = {}
+      temp.total = appointments.length
+      temp.current = i
+      console.log(temp.current)
+      pubsub.publish('check-batch-pharmacies', temp)
 
-  appointments.forEach(async function(element) {
-    if (!element || !element.attributes) {
-      return;
+      var apptUrl = extractApptUrl(element.attributes.onclick.textContent);
+      var demographicNo = getDemographicNo(apptUrl);
+  
+      console.log("setting up preferred pharmacy")
+
+      await setupPreferredPharmacy(pharmacyCode, demographicNo)
+
+      await new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve();
+        }, 2000)
+      })
     }
-    const apptTitle = element.attributes.title.textContent
-    const pharmacyCode = getPharmacyCodeFromReason(apptTitle)
-
-    if (!pharmacyCode) {
-      return;
-    }
-
-    var apptUrl = extractApptUrl(element.attributes.onclick.textContent);
-    var demographicNo = getDemographicNo(apptUrl);
-
-    console.log("setting up preferred pharmacy")
-
-    await setupPreferredPharmacy(pharmacyCode, demographicNo)
-  })
+  } catch(err) {
+    alert(err)
+  } finally {
+    window.setupPreferredPharmaciesRunning = false;
+    pubsub.publish('check-batch-pharmacies', {
+      complete: true,
+      total: length,
+      error
+    })
+  }
 }
 
