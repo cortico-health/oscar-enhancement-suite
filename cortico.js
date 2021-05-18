@@ -1394,7 +1394,7 @@ function setupPrescriptionButtons() {
 
 
 function sendPatientPrescriptionNotification() {
-  const clinicName = localStorage.getItem('clinicname')
+  const clinicName = localStorage['clinicname']
   const url = clinicName + "/notify-prescription"
 
   var formData = new FormData();
@@ -1428,8 +1428,8 @@ function setupFaxButton() {
 
 
 function getPharmacyDetails(pharmacyCode){
-  const clinicName = localStorage.getItem('clinicname')
-  const url = `https://kmc.cortico.ca/api/pharmacies/?code=${pharmacyCode}`
+  const clinicName = localStorage['clinicname']
+  const url = `${clinicName}/api/pharmacies/?code=${pharmacyCode}`
 
   return fetch(url, {
     method: "GET",
@@ -1467,7 +1467,8 @@ async function setupPreferredPharmacy(code, demographic_no) {
 
   const currentlyUsingPharmacy = (
     preferredPharmacy && preferredPharmacy.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1)
-  console.log(`currently using dlvr pharmacy ${currentlyUsingPharmacy} ${searchTerm.toLowerCase()}`)
+  console.log(`currently using dlvr pharmacy ${currentlyUsingPharmacy}`)
+  console.log(`search term ${searchTerm.toLowerCase()}`)
 
   if (searchTerm && !currentlyUsingPharmacy) {
       const results = await getPharmacyResults(searchTerm)
