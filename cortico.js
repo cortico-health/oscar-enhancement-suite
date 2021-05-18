@@ -2,9 +2,6 @@
 // @name     Cortico
 // @version  2.1
 // @grant    none
-// @author       You
-// @match        https://demo3.junoemr.com/kensington/*
-// @icon         https://www.google.com/s2/favicons?domain=junoemr.com
 // ==/UserScript==
 
 // Dayjs
