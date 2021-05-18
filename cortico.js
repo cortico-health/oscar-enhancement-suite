@@ -1251,17 +1251,34 @@ async function init_recall_button() {
     statusValue.toLowerCase() === "todo" ? "visible" : "hidden";
   }
 
-  update_recall_button_visibility();
-
-  statusOption.addEventListener("change", update_recall_button_visibility);
-
-  corticoRecallButton.addEventListener("click", async (e) => {
+  async function send_patient_recall_email(e) {
     e.preventDefault();
 
     var patientEmail = await getPatientEmail();
+    const formData = new FormData(document.querySelector("form[name=EDITAPPT]"));
+    const apptTime = formData.get("start_time");
+    const apptDate = formData.get("appointment_date");
 
-    window.open(`mailto:${patientEmail}`)
-  })
+    if (!patientEmail) {
+      alert('Patient has no email')
+      return
+    }
+    if (!apptTime || !apptDate) {
+      alert('Please provide date/time')
+      return
+    }
+
+    var apptSchedule =  apptDate + "T" + apptTime
+    var cleanedSchedule = dayjs(apptSchedule).format("h:mmA on MMMM D");
+
+    window.open(`mailto:${patientEmail}?subject=Your doctor has sent a recall email&body=Your doctor needs to follow up documents/results.%0d%0a` +
+                `We have tentatively booked you an appointment at ${cleanedSchedule}.%0d%0a%0d%0aPlease [confirm] or [reschedule].`)
+  }
+
+  update_recall_button_visibility();
+
+  statusOption.addEventListener("change", update_recall_button_visibility);
+  corticoRecallButton.addEventListener("click", send_patient_recall_email)
 
 }
 
@@ -1272,6 +1289,8 @@ async function getPatientEmail() {
   var re = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi
   var emails = text.match(re)
 
+  if (!emails)
+      return null
   // Should return 2 from view and edit, get atleast one
   return emails[0]
 }
@@ -1281,6 +1300,6 @@ function getDemographicPageResponse() {
   const provider = getProvider();
   const demographicNo = getDemographicNo(window.location.href)
   const url = `${origin}/${provider}/demographic/demographiccontrol.jsp?demographic_no=${demographicNo}&displaymode=edit&dboperation=search_detail`
-  console.log(url)
+
   return fetch(url)
 }
