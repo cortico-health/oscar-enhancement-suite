@@ -1495,8 +1495,10 @@ async function setupPreferredPharmacy(code, demographic_no) {
             else console.log("Updating preferred pharmacy")
           }
       } else {
-          if (isRxPage) alert(`Customer pharmacy ${searchTerm} does not exist in your Oscar pharmacy database!`)
-          else console.log(`Customer pharmacy ${searchTerm} does not exist in your Oscar pharmacy database`)
+          const msg = `Customer pharmacy ${searchTerm} does not exist in your Oscar pharmacy database!`
+          storePharmaciesFailureCache(demographicNo, msg)
+          if (isRxPage) alert(msg)
+          else console.log(msg)
       }
   }
 }
@@ -1508,21 +1510,49 @@ function storePharmaciesCache(demographicNo) {
   var date = dayjs().format("YYYY-MM-DD")
   var demographics = new Array()
 
-  if (cache && cache['date'] === date) {
+  if (cache && cache['date'] !== date) {
+    // erase the cache when new day
     localStorage['pharmaciesCache'] = null
+    cache = null
   }
   if (cache && cache['demographics']) {
     demographics = cache['demographics']
   }
-  console.log("de", demographics)
   demographics.push(demographicNo)
 
-  var cache = {
+  cache = {
     date: date,
     demographics: demographics
   }
-  console.log("data", cache)
   localStorage.setItem('pharmaciesCache', JSON.stringify(cache))
+}
+
+function storePharmaciesFailureCache(demographicNo, message) {
+  var _cache = localStorage.getItem('pharmaciesCacheFailure')
+  var cache = JSON.parse(_cache)
+
+  var date = dayjs().format("YYYY-MM-DD")
+  var failures = new Array()
+
+  if (cache && cache['date'] === date) {
+    localStorage['pharmaciesCacheFailure'] = null
+    cache = null
+  }
+  if (cache && cache['failures']) {
+    failures = cache['failures']
+  }
+
+  var data = {
+    demographicNo: demographicNo,
+    message: message
+  }
+  failures.push(data)
+
+  cache = {
+    date: date,
+    failures: failures
+  }
+  localStorage.setItem('pharmaciesCacheFailure', JSON.stringify(cache))
 }
 
 
@@ -1551,7 +1581,6 @@ async function setupPreferredPharmacies() {
       const apptUrl = extractApptUrl(element.attributes.onclick.textContent);
       const demographicNo = getDemographicNo(apptUrl);
       const _pharmaciesCache = localStorage.getItem('pharmaciesCache')
-      console.log('ph', _pharmaciesCache)
       const pharmaciesCache = JSON.parse(_pharmaciesCache)
       var demographics = new Array()
 
