@@ -1,7 +1,10 @@
 // ==UserScript==
-// @name     Cortico
+// @name     Cortico2
 // @version  2.1
 // @grant    none
+// @author       You
+// @match        https://demo3.junoemr.com/kensington/*
+// @icon         https://www.google.com/s2/favicons?domain=junoemr.com
 // ==/UserScript==
 
 // Dayjs
@@ -233,7 +236,7 @@ const init_schedule = function () {
     if (now.valueOf() - last_interaction.valueOf() > 60000) {
       console.log('before clearInterval')
       clearInterval(reloadHandler);
-      if (window.checkAllEligibilityRunning !== true) {
+      if (window.checkAllEligibilityRunning !== true || window.setupPreferredPharmaciesRunning !== true) {
         window.location.reload();
       }
     }
@@ -311,53 +314,53 @@ const init_appointment_page = function () {
 const init_styles = function () {
   addGlobalStyle(
     `.cortico-btn {
-   -webkit-appearance:none;
-   -moz-appearance:none;
-   appearance:none;
-   background:#4a527d;
-   border:.05rem solid #2e3769;
-   border-radius:.2rem;
-   color:#fff;
-   cursor:pointer;
-   display:inline-block;
-   font-family:Montserrat,sans-serif;
-   font-size:.8rem;
-   font-weight:600;
-   height:30px;
-   line-height:1.2rem;
-   outline:0;
-   padding:0 1rem;
-   text-align:center;
-   text-decoration:none;
-   transition:background .2s,border .2s,box-shadow .2s,color .2s;
-   -webkit-user-select:none;
-   -moz-user-select:none;
-   -ms-user-select:none;
-   user-select:none;
-   vertical-align:middle;
-   white-space:nowrap
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  appearance:none;
+  background:#4a527d;
+  border:.05rem solid #2e3769;
+  border-radius:.2rem;
+  color:#fff;
+  cursor:pointer;
+  display:inline-block;
+  font-family:Montserrat,sans-serif;
+  font-size:.8rem;
+  font-weight:600;
+  height:30px;
+  line-height:1.2rem;
+  outline:0;
+  padding:0 1rem;
+  text-align:center;
+  text-decoration:none;
+  transition:background .2s,border .2s,box-shadow .2s,color .2s;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+  vertical-align:middle;
+  white-space:nowrap
   }
   .cortico-btn:focus {
-   box-shadow:0 0 0 .1rem rgba(92,112,255,.2)
+  box-shadow:0 0 0 .1rem rgba(92,112,255,.2)
   }
   .cortico-btn:focus,
   .cortico-btn:hover {
-   background:#2e3769;
-   border-color:#2e3769;
-   text-decoration:none
+  background:#2e3769;
+  border-color:#2e3769;
+  text-decoration:none
   }
   .cortico-btn.active,
   .cortico-btn:active {
-   background:#4a527d;
-   border-color:#262e57;
-   color:#fff;
-   text-decoration:none
+  background:#4a527d;
+  border-color:#262e57;
+  color:#fff;
+  text-decoration:none
   }
   .infirmaryView:first-child {
-   /*position:fixed;*/
-   margin-left: 57px;
-   padding: 1px 15px;
-   top: 0;
+  /*position:fixed;*/
+  margin-left: 57px;
+  padding: 1px 15px;
+  top: 0;
   }
   `
   );
@@ -749,8 +752,8 @@ function dragAndDrop() {
     var isAppt = target.classList.contains("appt")
     var isEmpty = target.classList.contains("noGrid")
     if (isAppt || isEmpty) {
-       target.style.backgroundColor = "yellow";
-       window.dragTarget = target;
+      target.style.backgroundColor = "yellow";
+      window.dragTarget = target;
     }
 
   }
@@ -1029,7 +1032,7 @@ async function checkAllEligibility() {
       await new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve();
-        }, 5000)
+        }, 50)
       })
 
     }
@@ -1395,7 +1398,7 @@ function setupPrescriptionButtons() {
 
 function sendPatientPrescriptionNotification() {
   const clinicName = localStorage['clinicname']
-  const url = clinicName + "/notify-prescription"
+  const url = `https://${clinicName}.cortico.ca/notify-prescription`
 
   var formData = new FormData();
   formData.append("demographic_no", getDemographicFomLocation())
@@ -1428,8 +1431,8 @@ function setupFaxButton() {
 
 
 function getPharmacyDetails(pharmacyCode){
-  const clinicName = localStorage['clinicname']
-  const url = `${clinicName}/api/pharmacies/?code=${pharmacyCode}`
+  const clinicName = localStorage["clinicname"]
+  const url = `https://${clinicName}.cortico.ca/api/pharmacies/?code=${pharmacyCode}`
 
   return fetch(url, {
     method: "GET",
@@ -1473,22 +1476,53 @@ async function setupPreferredPharmacy(code, demographic_no) {
   if (searchTerm && !currentlyUsingPharmacy) {
       const results = await getPharmacyResults(searchTerm)
       const text = await results.text()
+      console.log("text", text)
       const json = JSON.parse(text)
       const pharmacyUpdated = json.length > 0
 
       const isRxPage = window.location.href.indexOf("oscarRx/choosePatient.do") > -1
 
-      if (pharmacyUpdated) {
-          const setPharmacyResults = await setPreferredPharmacy(json[0], demographicNo);
-          const setPharmacyText = await setPharmacyResults.text()
+      storePharmaciesCache(demographicNo)
 
-          if (isRxPage) alert("Updating preferred pharmacy, press Ok to reload")
-          else console.log("Updating preferred pharmacy")
+      if (pharmacyUpdated) 
+      {
+          const pharmacy =(json.find((item) => {return item.name === searchTerm}))
+          if (Pharmacy){
+            const setPharmacyResults = await setPreferredPharmacy(pharmacy, demographicNo);
+            const setPharmacyText = await setPharmacyResults.text()
+
+            if (isRxPage) alert("Updating preferred pharmacy, press Ok to reload")
+            else console.log("Updating preferred pharmacy")
+          }
       } else {
           if (isRxPage) alert(`Customer pharmacy ${searchTerm} does not exist in your Oscar pharmacy database!`)
           else console.log(`Customer pharmacy ${searchTerm} does not exist in your Oscar pharmacy database`)
       }
   }
+}
+
+function storePharmaciesCache(demographicNo) {
+  console.log("storing demographic in cache", demographicNo)
+  var _cache = localStorage.getItem('pharmaciesCache')
+  var cache = JSON.parse(_cache)
+  var date = dayjs().format("YYYY-MM-DD")
+  var demographics = new Array()
+
+  if (cache && cache['date'] === date) {
+    localStorage['pharmaciesCache'] = null
+  }
+  if (cache && cache['demographics']) {
+    demographics = cache['demographics']
+  }
+  console.log("de", demographics)
+  demographics.push(demographicNo)
+
+  var cache = {
+    date: date,
+    demographics: demographics
+  }
+  console.log("data", cache)
+  localStorage.setItem('pharmaciesCache', JSON.stringify(cache))
 }
 
 
@@ -1509,26 +1543,37 @@ async function setupPreferredPharmacies() {
   try {
     for (let i = 0; i < appointments.length; i++) {
       const element = appointments[i]
+
       if (!element || !element.attributes) {
         continue;
       }
+
+      const apptUrl = extractApptUrl(element.attributes.onclick.textContent);
+      const demographicNo = getDemographicNo(apptUrl);
+      const _pharmaciesCache = localStorage.getItem('pharmaciesCache')
+      console.log('ph', _pharmaciesCache)
+      const pharmaciesCache = JSON.parse(_pharmaciesCache)
+      var demographics = new Array()
+
+      if (pharmaciesCache && pharmaciesCache['demographics']) {
+        demographics = pharmaciesCache['demographics']
+      }
+      if (demographics && demographics.includes(demographicNo)) {
+        continue
+      }
+
       const apptTitle = element.attributes.title.textContent
       const pharmacyCode = getPharmacyCodeFromReason(apptTitle)
-  
+
       if (!pharmacyCode) {
         continue;
       }
-  
+
       var temp = {}
       temp.total = appointments.length
       temp.current = i
       console.log(temp.current)
       pubsub.publish('check-batch-pharmacies', temp)
-
-      var apptUrl = extractApptUrl(element.attributes.onclick.textContent);
-      var demographicNo = getDemographicNo(apptUrl);
-  
-      console.log("setting up preferred pharmacy")
 
       await setupPreferredPharmacy(pharmacyCode, demographicNo)
 
@@ -1549,4 +1594,3 @@ async function setupPreferredPharmacies() {
     })
   }
 }
-
