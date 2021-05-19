@@ -1484,10 +1484,10 @@ async function setupPreferredPharmacy(code, demographic_no) {
 
       storePharmaciesCache(demographicNo)
 
-      if (pharmacyUpdated) 
+      if (pharmacyUpdated)
       {
           const pharmacy =(json.find((item) => {return item.name === searchTerm}))
-          if (Pharmacy){
+          if (pharmacy){
             const setPharmacyResults = await setPreferredPharmacy(pharmacy, demographicNo);
             const setPharmacyText = await setPharmacyResults.text()
 
@@ -1516,8 +1516,9 @@ function storePharmaciesCache(demographicNo) {
     cache = null
   }
   if (cache && cache['demographics']) {
-    demographics = cache['demographics']
+    demographics = JSON.parse(cache['demographics'])
   }
+  console.log(demographics)
   demographics.push(demographicNo)
 
   cache = {
