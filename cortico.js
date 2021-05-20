@@ -1013,6 +1013,7 @@ async function checkAllEligibility() {
       let verified = false;
 
       if (
+        !lowerCaseText.includes("failure-phn") &&
         lowerCaseText.includes("success") ||
         lowerCaseText.includes("health card passed validation")
       ) {
