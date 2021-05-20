@@ -2,6 +2,9 @@
 // @name     Cortico
 // @version  2.1
 // @grant    none
+// @author       You
+// @match        https://demo3.junoemr.com/kensington/*
+// @icon         https://www.google.com/s2/favicons?domain=junoemr.com
 // ==/UserScript==
 
 
@@ -444,6 +447,7 @@ function createSideBar() {
   sidebar.appendChild(newUiOption);
 
   sidebar.appendChild(getCorticoUrlOption());
+  sidebar.appendChild(getRecallStatusOption());
   sidebar.appendChild(getEligStatus());
   sidebar.appendChild(getEligButton());
   sidebar.appendChild(getEligFailed());
@@ -480,6 +484,61 @@ function addMenu(container) {
 
   document.body.prepend(sidebar);
   navigation.appendChild(menu);
+}
+
+function getRecallStatusOption() {
+  var container = document.createElement("div");
+  container.style.width = '100%';
+  container.style.padding = "0px 10px";
+  container.style.boxSizing = 'border-box';
+
+  var inputContainer = document.createElement("div");
+  inputContainer.style.display = 'flex'
+  inputContainer.style.alignItems = 'center'
+  inputContainer.style.justifyContent = 'center';
+
+  var input = document.createElement("input");
+  input.setAttribute("id", "recall-status");
+  input.setAttribute("type", "text");
+  input.setAttribute("placeholder", "Recall Status");
+  input.style.fontSize = "16px";
+  input.style.padding = "5px 5px";
+  input.style.margin = "0px 10px";
+  input.style.width = "35%";
+  input.style.backgroundColor = "transparent";
+  input.style.border = "1px solid rgb(75, 84, 246)";
+
+  inputContainer.appendChild(input);
+
+  if (localStorage.getItem("recall-status")) {
+    input.value = localStorage.getItem("recall-status");
+  }
+
+  var label = document.createElement("label");
+  label.setAttribute("for", "recall-status");
+  label.textContent = "Status to check for recall button";
+  label.style.display = "block";
+  label.style.marginTop = "30px";
+  label.style.marginBottom = "10px";
+  label.style.textAlign = 'center';
+
+  var button = document.createElement("button");
+  button.textContent = "Save";
+  button.style.width = "100%";
+  button.style.display = "inline-block";
+  button.style.margin = "10px auto";
+
+  container.appendChild(label);
+  container.appendChild(inputContainer);
+  container.appendChild(button);
+
+  button.addEventListener("click", function () {
+    if (input.value) {
+      localStorage.setItem("recall-status", input.value);
+      alert("Your recall status has changed");
+    }
+  });
+  return container;
 }
 
 function getEligStatus() {
@@ -1247,8 +1306,9 @@ async function init_recall_button() {
     statusValue = statusOption.options[statusOption.selectedIndex].text;
     console.log("statusValue", statusValue.toLowerCase())
 
+    var recallStatus = localStorage["recall-status"] ? localStorage["recall-status"] : "todo"
     corticoRecallButton.style.visibility =
-    statusValue.toLowerCase() === "todo" ? "visible" : "hidden";
+    statusValue.toLowerCase() === recallStatus.toLowerCase() ? "visible" : "hidden";
   }
 
   async function send_patient_recall_email(e) {
