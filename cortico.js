@@ -1258,6 +1258,7 @@ async function init_recall_button() {
     const formData = new FormData(document.querySelector("form[name=EDITAPPT]"));
     const apptTime = formData.get("start_time");
     const apptDate = formData.get("appointment_date");
+    const apptPatient = formData.get("keyword")
 
     if (!patientEmail) {
       alert('Patient has no email')
@@ -1270,9 +1271,14 @@ async function init_recall_button() {
 
     var apptSchedule =  apptDate + "T" + apptTime
     var cleanedSchedule = dayjs(apptSchedule).format("h:mmA on MMMM D");
+    var cleanedPatient = apptPatient ? apptPatient : 'Patient'
+    var clinicName = localStorage["clinicname"]
 
-    window.open(`mailto:${patientEmail}?subject=Your doctor has sent a recall email&body=Your doctor needs to follow up documents/results.%0d%0a` +
-                `We have tentatively booked you an appointment at ${cleanedSchedule}.%0d%0a%0d%0aPlease [confirm] or [reschedule].`)
+    window.open(`mailto:${patientEmail}?subject=Your doctor wants to speak with you&` +
+    `body=Dear ${cleanedPatient},%0d%0aYour doctor needs to follow up with you regarding some documents or results.%0d%0a` +
+    `We have tentatively booked you an appointment at ${cleanedSchedule}.%0d%0a%0d%0aPlease confirm with the following link:` +
+    `https://${ clinicName }.cortico.ca/get-patient-appointment-lookup-url/%0d%0a%0d%0a` +
+    `Sincerely,%0d%0a${clinicName.toUpperCase()} STAFF`)
   }
 
   update_recall_button_visibility();
