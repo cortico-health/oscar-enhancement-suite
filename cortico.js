@@ -125,8 +125,6 @@ const init_cortico = function() {
     }
 
     setupPrescriptionButtons();
-  } else if (route.indexOf("/oscarRx/choosePatient.do") > -1) {
-    setupPreferredPharmacy();
   } else if (route.indexOf("/oscarRx/ViewScript2.jsp") > -1) {
       // We need to determine first if the prescription is "delivery"
       const currentPharmacyCode = localStorage.getItem('currentPharmacyCode')
@@ -1452,7 +1450,7 @@ async function setupPreferredPharmacy(code, demographic_no) {
   console.log(pharmacyCode)
   const corticoPharmacy = await getPharmacyDetails(pharmacyCode)
   const corticoPharmacyText = JSON.parse(await corticoPharmacy.text());
-  const searchTerm = corticoPharmacyText[0]['name']
+  const searchTerm = corticoPharmacyText[0]['name'] || null
 
   var demographicNo = demographic_no
   if (!demographic_no) {
@@ -1470,8 +1468,9 @@ async function setupPreferredPharmacy(code, demographic_no) {
 
   const currentlyUsingPharmacy = (
     preferredPharmacy && preferredPharmacy.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1)
-  console.log(`currently using dlvr pharmacy ${currentlyUsingPharmacy}`)
-  console.log(`search term ${searchTerm.toLowerCase()}`)
+  console.log(`currently using pharmacy ${searchTerm.toLowerCase()}, ${currentlyUsingPharmacy}`)
+
+  storePharmaciesCache(demographicNo)
 
   if (searchTerm && !currentlyUsingPharmacy) {
       const results = await getPharmacyResults(searchTerm)
@@ -1481,8 +1480,6 @@ async function setupPreferredPharmacy(code, demographic_no) {
       const pharmacyUpdated = json.length > 0
 
       const isRxPage = window.location.href.indexOf("oscarRx/choosePatient.do") > -1
-
-      storePharmaciesCache(demographicNo)
 
       if (pharmacyUpdated)
       {
@@ -1508,7 +1505,7 @@ function storePharmaciesCache(demographicNo) {
   var _cache = localStorage.getItem('pharmaciesCache')
   var cache = JSON.parse(_cache)
   var date = dayjs().format("YYYY-MM-DD")
-  var demographics = new Array()
+  var demographics;
 
   if (cache && cache['date'] !== date) {
     // erase the cache when new day
@@ -1517,9 +1514,14 @@ function storePharmaciesCache(demographicNo) {
   }
   if (cache && cache['demographics']) {
     demographics = JSON.parse(cache['demographics'])
+  } else {
+    demographics = new Array()
   }
-  console.log(demographics)
-  demographics.push(demographicNo)
+  console.log(Array.isArray(demographics))
+  // make sure demographics is array before pushing
+  if (Array.isArray(demographics)) {
+    demographics.push(demographicNo)
+  } 
 
   cache = {
     date: date,
@@ -1602,7 +1604,6 @@ async function setupPreferredPharmacies() {
       var temp = {}
       temp.total = appointments.length
       temp.current = i
-      console.log(temp.current)
       pubsub.publish('check-batch-pharmacies', temp)
 
       await setupPreferredPharmacy(pharmacyCode, demographicNo)
