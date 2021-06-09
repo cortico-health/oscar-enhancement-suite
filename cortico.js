@@ -1365,15 +1365,23 @@ function plusSignFromCache() {
 }
 
 
-function getPharmacyCodeFromReason(textContent) {
+function getPharmacyCodeFromReasonOrNotes(textContent) {
     var titleContents = textContent.split("\n")
 
-    var reason = titleContents[3]
-    var reasonValue = reason.split(":")[1].trim()
-    var reasonValuesList = reasonValue.match(/\[(.*?)\]/g)
+    var notes = titleContents[titleContents.length - 1]
+    var notesValue = notes.split(":")[1].trim()
+    var notesValuesList = notesValue.match(/\[(.*?)\]/g)
+    var pharmacyCode = notesValuesList.length > 0 ? notesValuesList[0] : null;
 
-    // we are assuming here that the pharmacy code is the 2nd
-    var pharmacyCode = reasonValuesList ? reasonValuesList[1] : null;
+    // Check RFV field if not existing in notes
+    if (!pharmacyCode) {
+      var reason = titleContents[3]
+      var reasonValue = reason.split(":")[1].trim()
+      var reasonValuesList = reasonValue.match(/\[(.*?)\]/g)
+  
+      // we are assuming here that the pharmacy code is the 2nd
+      pharmacyCode = reasonValuesList ? reasonValuesList[1] : null;
+    }
 
     if (pharmacyCode) {
       pharmacyCode = pharmacyCode.replace(/[\[\]']+/g, '')
@@ -1393,7 +1401,7 @@ function setupPrescriptionButtons() {
       }
 
       var apptTitle = element.attributes.title.textContent
-      var pharmacyCode = getPharmacyCodeFromReason(apptTitle)
+      var pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle)
 
       localStorage.setItem('currentPharmacyCode', pharmacyCode)
     }
@@ -1521,7 +1529,7 @@ async function setupPreferredPharmacies() {
         continue;
       }
       const apptTitle = element.attributes.title.textContent
-      const pharmacyCode = getPharmacyCodeFromReason(apptTitle)
+      const pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle)
   
       if (!pharmacyCode) {
         continue;
