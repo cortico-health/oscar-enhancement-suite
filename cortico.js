@@ -2,6 +2,7 @@
 // @name     Cortico
 // @version  2.1
 // @grant    none
+// @match    https://demo3.junoemr.com/kensington/*
 // ==/UserScript==
 
 
@@ -1369,7 +1370,8 @@ function getPharmacyCodeFromReasonOrNotes(textContent) {
     var titleContents = textContent.split("\n")
 
     var notes = titleContents[titleContents.length - 1]
-    var notesValue = notes.split(":")[1].trim()
+    var notesKeyValue = notes.split(":")
+    var notesValue = notesKeyValue.length > 0 ? notesKeyValue[1].trim() : ""
     var notesValuesList = notesValue.match(/\[(.*?)\]/g)
     var pharmacyCode = notesValuesList.length > 0 ? notesValuesList[0] : null;
 
