@@ -2,7 +2,6 @@
 // @name     Cortico
 // @version  2.1
 // @grant    none
-// @match    https://demo3.junoemr.com/kensington/*
 // ==/UserScript==
 
 
@@ -425,7 +424,7 @@ function addCorticoLogo() {
   var menu = document.querySelector("#firstMenu #navList");
   var listitem = document.createElement("li");
   listitem.innerHTML =
-    '<a href="http://cortico.ca"><img src="https://cortico.ca/images/favicon/32x32.png" height="15" style="vertical-align: middle;" /></a>';
+    '<a href="http://cortico.ca"><img src="https://bool.countable.ca/32x32.png" height="15" style="vertical-align: middle;" /></a>';
   menu.appendChild(listitem);
 }
 
@@ -1366,23 +1365,36 @@ function plusSignFromCache() {
 }
 
 
+function stringArrayToObj(stringArray) {
+    var obj = {};
+    for (var i = 0; i < stringArray.length; i++) {
+        var split = stringArray[i].split(':');
+
+        if (!split[0] || !split[1]) {
+            continue;
+        }
+        obj[split[0].trim()] = split[1].trim();
+    }
+
+    return obj
+}
+
+
 function getPharmacyCodeFromReasonOrNotes(textContent) {
     var titleContents = textContent.split("\n")
+    var apptFields = stringArrayToObj(titleContents)
 
-    var notes = titleContents[titleContents.length - 1]
-    var notesKeyValue = notes.split(":")
-    var notesValue = notesKeyValue.length > 0 ? notesKeyValue[1].trim() : ""
-    var notesValuesList = notesValue.match(/\[(.*?)\]/g)
-    var pharmacyCode = notesValuesList.length > 0 ? notesValuesList[0] : null;
+    var notes = apptFields["notes"]
+    var notesValuesList = notes.match(/\[(.*?)\]/g)
+    var pharmacyCode = notesValuesList && notesValuesList.length > 0 ? notesValuesList[0] : null;
 
     // Check RFV field if not existing in notes
     if (!pharmacyCode) {
-      var reason = titleContents[3]
-      var reasonValue = reason.split(":")[1].trim()
-      var reasonValuesList = reasonValue.match(/\[(.*?)\]/g)
-  
+      var reason = apptFields["reason"]
+      var reasonValuesList = reason.match(/\[(.*?)\]/g)
+
       // we are assuming here that the pharmacy code is the 2nd
-      pharmacyCode = reasonValuesList ? reasonValuesList[1] : null;
+      pharmacyCode = reasonValuesList && reasonValuesList.length > 0 ? reasonValuesList[1] : null;
     }
 
     if (pharmacyCode) {
@@ -1532,11 +1544,11 @@ async function setupPreferredPharmacies() {
       }
       const apptTitle = element.attributes.title.textContent
       const pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle)
-  
+
       if (!pharmacyCode) {
         continue;
       }
-  
+
       var temp = {}
       temp.total = appointments.length
       temp.current = i
@@ -1545,7 +1557,7 @@ async function setupPreferredPharmacies() {
 
       var apptUrl = extractApptUrl(element.attributes.onclick.textContent);
       var demographicNo = getDemographicNo(apptUrl);
-  
+
       console.log("setting up preferred pharmacy")
 
       await setupPreferredPharmacy(pharmacyCode, demographicNo)
