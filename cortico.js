@@ -424,7 +424,7 @@ function addCorticoLogo() {
   var menu = document.querySelector("#firstMenu #navList");
   var listitem = document.createElement("li");
   listitem.innerHTML =
-    '<a href="http://cortico.ca"><img src="https://bool.countable.ca/32x32.png" height="15" style="vertical-align: middle;" /></a>';
+    '<a href="http://cortico.ca"><img src="http://bool.countable.ca/32x32.png" height="15" style="vertical-align: middle;" /></a>';
   menu.appendChild(listitem);
 }
 
