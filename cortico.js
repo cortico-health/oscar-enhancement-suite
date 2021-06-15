@@ -1445,7 +1445,7 @@ function setupFaxButton() {
 
 function getPharmacyDetails(pharmacyCode){
   const clinicName = localStorage['clinicname']
-  const url = `${clinicName}/api/pharmacies/?code=${pharmacyCode}`
+  const url = `https://${clinicName}.cortico.ca/api/pharmacies/?code=${pharmacyCode}`
 
   return fetch(url, {
     method: "GET",
