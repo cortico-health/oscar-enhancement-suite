@@ -108,6 +108,7 @@ const init_cortico = function() {
   ) {
     init_appointment_page();
     init_recall_button();
+    init_diagnostic_viewer_button();
   } else if (route.indexOf("/provider/providercontrol.jsp") > -1) {
     init_schedule();
     dragAndDrop();
@@ -1500,6 +1501,26 @@ async function setupPreferredPharmacy(code, demographic_no) {
 }
 
 
+async function getDiagnosticFromCortico(notes) {
+  const clinicName = localStorage['clinicname']
+  const url = `https://${clinicName}.cortico.ca/api/encrypted/diagnostic-results`
+
+  const data = {
+    "notes": notes
+  }
+
+  return fetch(url, {
+    method: "POST",
+    body: data,
+    headers: {
+            Accept:
+            "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+            "Content-Type": "application/x-www-form-urlencoded",
+    },
+  })
+}
+
+
 function getDemographicFomLocation() {
   const routeParams = new URLSearchParams(window.location.search)
 
@@ -1522,11 +1543,11 @@ async function setupPreferredPharmacies() {
       }
       const apptTitle = element.attributes.title.textContent
       const pharmacyCode = getPharmacyCodeFromReason(apptTitle)
-  
+
       if (!pharmacyCode) {
         continue;
       }
-  
+
       var temp = {}
       temp.total = appointments.length
       temp.current = i
@@ -1535,7 +1556,7 @@ async function setupPreferredPharmacies() {
 
       var apptUrl = extractApptUrl(element.attributes.onclick.textContent);
       var demographicNo = getDemographicNo(apptUrl);
-  
+
       console.log("setting up preferred pharmacy")
 
       await setupPreferredPharmacy(pharmacyCode, demographicNo)
@@ -1557,6 +1578,39 @@ async function setupPreferredPharmacies() {
     })
   }
 }
+
+
+async function init_diagnostic_viewer_button() {
+  const notesField = document.querySelector("textarea[name='notes']");
+  var notesValue = notesField.textContent;
+  console.log("echo", notesValue)
+
+  var last_button = document.querySelector("#cortico").parentNode;
+  last_button.parentNode.innerHTML +=
+    "<button class='cortico-btn' id='diagnostic-viewer-btn' style='color:white; background-color:blue'>Diagnostic Viewer</button>";
+
+
+  const corticoDiagnosticViewBtn = document.getElementById("diagnostic-viewer-btn")
+  function update_diagnostic_button_visibility() {
+    notesValue = notesField.textContent;
+    console.log("notes value", notesValue.toLowerCase())
+
+    corticoDiagnosticViewBtn.style.visibility =
+    notesValue.includes("-- Cortico data below, do not change!") ? "visible" : "hidden";
+  }
+
+  async function open_diagnostic_viewer(e) {
+    e.preventDefault();
+
+    var diagnostic_response = await getDiagnosticFromCortico(notesValue)
+    var diagnostic_text = await JSON.parse(diagnostic_response.text())
+  }
+
+  update_diagnostic_button_visibility();
+
+  corticoDiagnosticViewBtn.addEventListener("click", open_diagnostic_viewer)
+}
+
 
 async function init_recall_button() {
   const statusOption = document.querySelector("select[name='status']");
