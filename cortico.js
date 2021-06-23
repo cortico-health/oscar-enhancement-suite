@@ -487,6 +487,40 @@ function createSideBar() {
   return sidebar;
 }
 
+function showDiagnosticResults(html_string) {
+  if (window.diagnosticResults) {
+    window.diagnosticResults.style.display = 'block';
+    return window.diagnosticResults
+  }
+
+  var container = document.createElement("div");
+  window.diagnosticResults = container
+  container.classList.add("cortico-diagnostic-viewer");
+  container.innerHTML = html_string
+
+  var containerClose = document.createElement("button")
+  containerClose.classList.add("cortico-diagnostic-close");
+  containerClose.textContent = "Close";
+  containerClose.style.cursor = "pointer";
+  containerClose.addEventListener("click", function () {
+    container.style.display = 'none';
+  });
+  container.appendChild(containerClose);
+
+  var styleSheet = styleSheetFactory("cortico_sidebar");
+  var styles = "";
+  styles +=
+    ".cortico-diagnostic-viewer { position: fixed; top: 20%; left: 50% ;width: 300px; background-color: white; transform: translate(-50%, 0) }";
+  styles +=
+    ".cortico-diagnostic-viewer { padding: 20px; padding-top: 30px; border: 1px solid }";
+  styles +=
+    ".cortico-diagnostic-close { position: absolute; top: 10px; right: 10px; z-index: 500; }";
+  styleSheet.innerText = styles;
+
+  console.log("prepending")
+  document.body.prepend(container);
+}
+
 function addMenu(container) {
   var navigation = document.querySelector("#firstMenu #navList");
   var menu = document.createElement("li");
@@ -1404,7 +1438,7 @@ function setupPrescriptionButtons() {
 
 function sendPatientPrescriptionNotification() {
   const clinicName = localStorage['clinicname']
-  const url = clinicName + "/notify-prescription"
+  const url = `http://${clinicName}.cortico.ca/notify-prescription/`
 
   var formData = new FormData();
   formData.append("demographic_no", getDemographicFomLocation())
@@ -1501,21 +1535,14 @@ async function setupPreferredPharmacy(code, demographic_no) {
 }
 
 
-async function getDiagnosticFromCortico(notes) {
+async function getDiagnosticFromCortico(appt_no, notes) {
   const clinicName = localStorage['clinicname']
-  const url = `https://${clinicName}.cortico.ca/api/encrypted/diagnostic-results`
-
-  const data = {
-    "notes": notes
-  }
+  const url = `https://${clinicName}.cortico.ca/api/encrypted/diagnostic-results/?appointment_id=${appt_no}&notes=${notes}`
 
   return fetch(url, {
-    method: "POST",
-    body: data,
+    method: "GET",
     headers: {
-            Accept:
-            "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-            "Content-Type": "application/x-www-form-urlencoded",
+      "Content-Type": "application/json",
     },
   })
 }
@@ -1602,8 +1629,10 @@ async function init_diagnostic_viewer_button() {
   async function open_diagnostic_viewer(e) {
     e.preventDefault();
 
-    var diagnostic_response = await getDiagnosticFromCortico(notesValue)
-    var diagnostic_text = await JSON.parse(diagnostic_response.text())
+    const appt_no = getQueryStringValue("appointment_no");
+    const diagnostic_response = await getDiagnosticFromCortico(appt_no, notesValue)
+    const diagnostic_text = await JSON.parse(diagnostic_response.text())
+    await showDiagnosticResults(diagnostic_text)
   }
 
   update_diagnostic_button_visibility();
