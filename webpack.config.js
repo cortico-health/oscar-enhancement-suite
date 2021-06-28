@@ -9,6 +9,28 @@ module.exports = {
     mode: 'production',
     module: {
         rules: [
+            {
+                test: /\.css$/i,
+                use: [
+                  "style-loader",
+                  "css-loader",
+                  {
+                    loader: "postcss-loader",
+                    options: {
+                      postcssOptions: {
+                        plugins: [
+                          [
+                            "postcss-preset-env",
+                            {
+                              browsers: "> 0.001%, not dead" 
+                            },
+                          ],
+                        ],
+                      },
+                    },
+                  },
+                ],
+              },
           {
             test: /\.m?js$/,
             exclude: /node_modules/,
