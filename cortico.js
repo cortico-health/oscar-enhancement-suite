@@ -274,7 +274,7 @@ const init_appointment_page = function () {
     window.open(
       "https://" +
         localStorage["clinicname"] +
-        ".cortico.ca/video-preview/" +
+        ".cortico.ca/appointment/" +
         appt_no
     );
     return false;
