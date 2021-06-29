@@ -7,6 +7,7 @@
 import { pubSubInit } from "./modules/PubSub/PubSub";
 import dayjs from "dayjs";
 import { getAppointments } from "./modules/Appointments/Appointments";
+import { addAppointmentMenu } from "./modules/Appointments/AppointmentMenu";
 import { Oscar } from "./modules/Oscar/Oscar";
 
 // manually update this variable with the version in manifest.json
@@ -49,7 +50,7 @@ const init_cortico = function () {
     dragAndDrop();
     addCorticoLogo();
     addMenu();
-    addVideoCall();
+    addAppointmentMenu();
     if (!oscar.isJuno()) {
       plusSignFromCache();
     }

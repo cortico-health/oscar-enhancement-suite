@@ -10,6 +10,5 @@ export const Ellipsis = () => {
     dot.classList.add("ellip-dot");
     container.appendChild(dot);
   }
-
   return container;
 };
