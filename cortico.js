@@ -1631,7 +1631,7 @@ async function init_diagnostic_viewer_button() {
 
     const appt_no = getQueryStringValue("appointment_no");
     const diagnostic_response = await getDiagnosticFromCortico(appt_no, notesValue)
-    const diagnostic_text = await JSON.parse(diagnostic_response.text())
+    const diagnostic_text = String(await diagnostic_response.text())
     await showDiagnosticResults(diagnostic_text)
   }
 
