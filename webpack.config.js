@@ -39,9 +39,10 @@ module.exports = {
               options: {
                 presets: [
                   ['@babel/preset-env', { 
-                      "targets": "> 0.001%, not dead" 
+                      "targets": "> 0.001%, not dead, IE >= 9",
+                      "modules": "amd"
                     }]
-                ]
+                ],
               }
             }
           }
