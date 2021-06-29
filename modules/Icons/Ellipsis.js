@@ -5,10 +5,15 @@ export const Ellipsis = () => {
   const container = document.createElement("div");
   container.classList.add("ellip-dot-container");
 
+  const wrapper = document.createElement("div");
+  wrapper.classList.add("ellip-dot-wrapper");
+
   for (let i = 0; i < numDots; i++) {
     const dot = document.createElement("div");
     dot.classList.add("ellip-dot");
     container.appendChild(dot);
   }
-  return container;
+
+  wrapper.appendChild(container);
+  return wrapper;
 };

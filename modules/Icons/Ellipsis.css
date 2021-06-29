@@ -1,3 +1,8 @@
+.ellip-dot-wrapper {
+  display: inline-block;
+  cursor: pointer;
+}
+
 .ellip-dot-container {
   display: flex;
 }
