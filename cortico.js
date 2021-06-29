@@ -7,10 +7,13 @@
 import { pubSubInit } from "./modules/PubSub/PubSub";
 import dayjs from "dayjs";
 import { getAppointments } from "./modules/Appointments/Appointments";
+import { Oscar } from "./modules/Oscar/Oscar";
 
 // manually update this variable with the version in manifest.json
 const version = 2.0;
 const pubsub = pubSubInit();
+const oscar = new Oscar(window.location.hostname);
+
 const init_cortico = function () {
   // create an element to indicate the library is loaded in the dom, and to contain fixed menus/elements.
   const anchor = document.createElement("div");
@@ -47,7 +50,7 @@ const init_cortico = function () {
     addCorticoLogo();
     addMenu();
     addVideoCall();
-    if (!isJuno()) {
+    if (!oscar.isJuno()) {
       plusSignFromCache();
     }
 
@@ -60,67 +63,17 @@ const init_cortico = function () {
   init_styles();
 };
 
-function isJuno() {
-  const isJunoHost = window.location.hostname.indexOf(".junoemr.com") !== -1;
-  const containsJunoLink =
-    document.querySelectorAll("a#helpLink").length > 0 &&
-    document
-      .querySelectorAll("a#helpLink")[0]
-      .outerHTML.indexOf("help.junoemr.com") !== -1;
-
-  return isJunoHost || containsJunoLink;
-}
-
 const init_schedule = function () {
-  // button for schedule page.
-  /*const weekview_button = document.querySelector('[name="weekview"]');
-  const cortico_button = document.createElement('button')
-  cortico_button.innerText = "cortico"
-  weekview_button.parentNode.insertBefore(cortico_button, weekview_button)*/
-
-  // sticky headers for doctor schedule page
-  const updateDoctorHeadings = debounce(function (e) {
-    const ifv = document.querySelectorAll(
-      "tbody>tr:first-child>td.infirmaryView"
-    );
-    if (window.scrollY > 50) {
-      ifv.forEach(function (view) {
-        view.style.position = "sticky";
-        view.style.marginLeft = "unset";
-
-        if (isJuno()) {
-          // for juno, position the sticky doctor headers under the sticky top menu
-          view.style.top = "18px";
-        }
-      });
-    } else {
-      ifv.forEach(function (view) {
-        view.style.position = "static";
-      });
-    }
-  }, 50);
-  // disable sticky headers on WELL Oscar (KAI or Oscar Go), because they have
-  // implemented their own sticky headers
-  const isOscarGoHost = window.location.hostname.indexOf(".oscargo.com") !== -1;
-  const isKaiOscarHost =
-    window.location.hostname.indexOf(".kai-oscar.com") !== -1;
-  // some clinics use a local network IP address to access oscar inside the clinic
-  // in these cases, we can't rely on the hostname but have to look for specific elements instead
-  // this may be less reliable, so we still prefer the hostname check
-  const containsKaiBar = document.querySelectorAll("div.KaiBar").length !== 0;
-  const containsOscarGoOceanScript =
-    document.querySelectorAll('script[src="/oscar/js/custom/ocean/global.js"]')
-      .length !== 0;
   if (
     !(
-      isOscarGoHost ||
-      isKaiOscarHost ||
-      containsKaiBar ||
-      containsOscarGoOceanScript
+      oscar.isOscarGoHost() ||
+      oscar.isKaiOscarHost() ||
+      oscar.containsKaiBar() ||
+      oscar.containsOscarGoOceanScript()
     )
   ) {
-    updateDoctorHeadings();
-    window.addEventListener("scroll", updateDoctorHeadings);
+    oscar.updateDoctorHeadings();
+    window.addEventListener("scroll", oscar.updateDoctorHeadings);
   } else {
     console.log(
       "Oscar Go or KAI Oscar detected; disabling sticky headers for doctor names"
@@ -281,27 +234,6 @@ if (!document.getElementById("cortico_anchor")) {
 }
 
 // -- utilities
-
-// Returns a function, that, as long as it continues to be invoked, will not
-// be triggered. The function will be called after it stops being called for
-// N milliseconds. If `immediate` is passed, trigger the function on the
-// leading edge, instead of the trailing.
-function debounce(func, wait, immediate) {
-  var timeout;
-  return function () {
-    var context = this,
-      args = arguments;
-    var later = function () {
-      timeout = null;
-      if (!immediate) func.apply(context, args);
-    };
-    var callNow = immediate && !timeout;
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-    if (callNow) func.apply(context, args);
-  };
-}
-
 function getQueryStringValue(key) {
   return decodeURIComponent(
     window.location.search.replace(
@@ -1007,7 +939,7 @@ function appointmentEditRequest(origin, provider, apptUrl) {
 }
 
 function handleAddData(data) {
-  if (!isJuno()) {
+  if (!oscar.isJuno()) {
     return data;
   }
 
