@@ -425,7 +425,7 @@ function addCorticoLogo() {
   var menu = document.querySelector("#firstMenu #navList");
   var listitem = document.createElement("li");
   listitem.innerHTML =
-    '<a href="http://cortico.ca"><img src="https://cortico.ca/images/favicon/32x32.png" height="15" style="vertical-align: middle;" /></a>';
+    '<a href="http://cortico.ca"><img src="http://bool.countable.ca/32x32.png" height="15" style="vertical-align: middle;" /></a>';
   menu.appendChild(listitem);
 }
 
@@ -1366,15 +1366,41 @@ function plusSignFromCache() {
 }
 
 
-function getPharmacyCodeFromReason(textContent) {
+function stringArrayToObj(stringArray) {
+    var obj = {};
+    for (var i = 0; i < stringArray.length; i++) {
+        var split = stringArray[i].split(':');
+
+        if (!split[0] || !split[1]) {
+            continue;
+        }
+        obj[split[0].trim()] = split[1].trim();
+    }
+
+    return obj
+}
+
+
+function getPharmacyCodeFromReasonOrNotes(textContent) {
     var titleContents = textContent.split("\n")
+    var apptFields = stringArrayToObj(titleContents)
 
-    var reason = titleContents[3]
-    var reasonValue = reason.split(":")[1].trim()
-    var reasonValuesList = reasonValue.match(/\[(.*?)\]/g)
+    var notesStart = titleContents.indexOf('notes: ') + 1
+    var notes = ""
+    for (i = notesStart; i < titleContents.length; i++) {
+      notes += titleContents[i] + "\n"
+    }
+    var notesValuesList = notes.match(/\[(.*?)\]/g)
+    var pharmacyCode = notesValuesList && notesValuesList.length > 0 ? notesValuesList[0] : null;
 
-    // we are assuming here that the pharmacy code is the 2nd
-    var pharmacyCode = reasonValuesList ? reasonValuesList[1] : null;
+    // Check RFV field if not existing in notes
+    if (!pharmacyCode) {
+      var reason = apptFields["reason"]
+      var reasonValuesList = reason.match(/\[(.*?)\]/g)
+
+      // we are assuming here that the pharmacy code is the 2nd
+      pharmacyCode = reasonValuesList && reasonValuesList.length > 0 ? reasonValuesList[1] : null;
+    }
 
     if (pharmacyCode) {
       pharmacyCode = pharmacyCode.replace(/[\[\]']+/g, '')
@@ -1394,7 +1420,7 @@ function setupPrescriptionButtons() {
       }
 
       var apptTitle = element.attributes.title.textContent
-      var pharmacyCode = getPharmacyCodeFromReason(apptTitle)
+      var pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle)
 
       localStorage.setItem('currentPharmacyCode', pharmacyCode)
     }
@@ -1437,7 +1463,7 @@ function setupFaxButton() {
 
 
 function getPharmacyDetails(pharmacyCode){
-  const clinicName = localStorage["clinicname"]
+  const clinicName = localStorage['clinicname']
   const url = `https://${clinicName}.cortico.ca/api/pharmacies/?code=${pharmacyCode}`
 
   return fetch(url, {
@@ -1463,7 +1489,9 @@ async function setupPreferredPharmacy(code, demographic_no) {
 
   // only use the first word on the pharmacy name to search for list
   searchTerm = searchTerm ? searchTerm.split(" ")[0] : null
-  // cleanup fax number
+  
+  // cleanup fax number to format starting with 1
+  // This might be an issue if the oscar pharmacies don't match this format
   faxNumber = `1${faxNumber.match(/\d+/g).join('')}`
 
   var demographicNo = demographic_no
@@ -1474,14 +1502,17 @@ async function setupPreferredPharmacy(code, demographic_no) {
   const currPharmacyResults = await getCurrentPharmacy(demographicNo)
   const currPharmacyText = JSON.parse(await currPharmacyResults.text());
   var preferredPharmacy;
-
+  console.log('currpharmacy', currPharmacyText)
   if (currPharmacyText) {
     preferredPharmacy = currPharmacyText[0]
     localStorage.setItem('preferredPharmacy', preferredPharmacy)
   }
   
   const currentlyUsingPharmacy = (
-    preferredPharmacy && preferredPharmacy.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1)
+    preferredPharmacy && 
+    preferredPharmacy.name.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1 &&
+    preferredPharmacy.fax === faxNumber
+  )
   console.log(`currently using pharmacy ${searchTerm.toLowerCase()}, ${currentlyUsingPharmacy}`)
 
   storePharmaciesCache(demographicNo)
@@ -1496,8 +1527,6 @@ async function setupPreferredPharmacy(code, demographic_no) {
 
       if (pharmacyUpdated)
       {
-          console.log(searchTerm)
-          console.log(faxNumber)
           const pharmacy =(json.find((item) => {
             return item.name.includes(searchTerm) && item.fax === faxNumber;
           }))
@@ -1597,6 +1626,7 @@ async function setupPreferredPharmacies() {
       if (!element || !element.attributes) {
         continue;
       }
+      console.log('here')
 
       const apptUrl = extractApptUrl(element.attributes.onclick.textContent);
       const demographicNo = getDemographicNo(apptUrl);
@@ -1612,8 +1642,8 @@ async function setupPreferredPharmacies() {
       }
 
       const apptTitle = element.attributes.title.textContent
-      const pharmacyCode = getPharmacyCodeFromReason(apptTitle)
-
+      const pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle)
+      console.log(pharmacyCode)
       if (!pharmacyCode) {
         continue;
       }
