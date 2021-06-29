@@ -604,7 +604,7 @@ function dragAndDrop() {
       return false;
     }
 
-    apptLinkText = apptLink.attributes.onclick.textContent;
+    const apptLinkText = apptLink.attributes.onclick.textContent;
 
     //Get the URL and Take out the "../" in front
     const apptUrl = extractApptUrl(apptLinkText);
@@ -691,24 +691,6 @@ function dragAndDrop() {
 }
 
 /* Drag and Drop Feature end */
-
-function addVideoCall() {
-  /* To be completed
-  
-	var nodes = document.querySelectorAll('td.appt')
-  nodes.forEach(function(node) {
-      var anchor = document.createElement('a')
-      anchor.textContent = 'V'
-      anchor.setAttribute('href', '#')
-   
-      var divider = document.createElement('span')
-      divider.textContent = ' | '
-       
-      node.appendChild(divider)
-      node.appendChild(anchor)
-  })
-  */
-}
 
 function getOrigin() {
   return window.location.origin;
@@ -1039,7 +1021,6 @@ function addVerifiedMark(mark, node) {
     node.innerHTML = mark + node.innerHTML;
     return node;
   }
-
   return null;
 }
 
