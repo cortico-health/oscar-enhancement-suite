@@ -1487,8 +1487,14 @@ async function setupPreferredPharmacy(code, demographic_no) {
       const isRxPage = window.location.href.indexOf("oscarRx/choosePatient.do") > -1
 
       if (pharmacyUpdated) {
-          const setPharmacyResults = await setPreferredPharmacy(json[0], demographicNo);
-          const setPharmacyText = await setPharmacyResults.text()
+          const pharmacy =(json.find((item) => {return item.name === searchTerm}))
+            if (pharmacy){
+              const setPharmacyResults = await setPreferredPharmacy(pharmacy, demographicNo);
+              const setPharmacyText = await setPharmacyResults.text()
+
+              if (isRxPage) alert("Updating preferred pharmacy, press Ok to reload")
+              else console.log("Updating preferred pharmacy")
+          }
 
           if (isRxPage) alert("Updating preferred pharmacy, press Ok to reload")
           else console.log("Updating preferred pharmacy")
