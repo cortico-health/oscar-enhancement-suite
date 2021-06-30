@@ -8,6 +8,8 @@ export function addAppointmentMenu() {
     appt.appendChild(appointmentMenu());
   });
   console.log("Appointments", appointments);
+
+  document.addEventListener("click", (e) => {});
 }
 
 export function appointmentMenu() {
