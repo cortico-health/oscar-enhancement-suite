@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 import { getAppointments } from "./modules/Appointments/Appointments";
 import { addAppointmentMenu } from "./modules/Appointments/AppointmentMenu";
 import { Oscar } from "./modules/Oscar/Oscar";
+import "element-closest-polyfill";
 
 // manually update this variable with the version in manifest.json
 const version = 2.0;

@@ -73,5 +73,5 @@ export function appointmentMenuItems() {
 }
 
 export function getPatientContactInfo(e) {
-  console.log("Hello World");
+  console.log("Hello World", e.target.closest("td.appt"));
 }
