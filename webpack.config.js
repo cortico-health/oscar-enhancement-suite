@@ -1,0 +1,54 @@
+const path = require("path");
+
+module.exports = {
+  entry: "./cortico.js",
+  output: {
+    filename: "cortico-min.js",
+    path: path.resolve(__dirname, "dist"),
+  },
+  mode: "production",
+  module: {
+    rules: [
+      {
+        test: /\.css$/i,
+        use: [
+          "style-loader",
+          "css-loader",
+          {
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                plugins: [
+                  [
+                    "postcss-preset-env",
+                    {
+                      browsers: "> 0.001%, not dead",
+                    },
+                  ],
+                ],
+              },
+            },
+          },
+        ],
+      },
+      {
+        test: /\.m?js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: [
+              [
+                "@babel/preset-env",
+                {
+                  targets: "> 0.001%, not dead, IE >= 9",
+                  modules: "amd",
+                },
+              ],
+            ],
+          },
+        },
+      },
+    ],
+  },
+};

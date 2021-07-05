@@ -28,6 +28,15 @@ Custom Oscar Theme
 
 We hope this repository can provide a helpful testing ground for some new Oscar UI feaures and we would love to contribute them to the Oscar source code for various OSPs who may be interested! Please contact me at clark@cortico.health if you want assistance merging anything here into Oscar itself.
 
+# Developing
+
+Make changes in the appropriate and generate a build.
+
+1. yarn
+2. yarn build
+
+The build output will be in `dist` directory
+
 
 # Contributing
 
