@@ -111,6 +111,7 @@ const init_cortico = function() {
   ) {
     init_appointment_page();
     init_recall_button();
+    init_diagnostic_viewer_button();
   } else if (route.indexOf("/provider/providercontrol.jsp") > -1) {
     init_schedule();
     dragAndDrop();
@@ -486,6 +487,40 @@ function createSideBar() {
   styleSheet.innerText = styles;
 
   return sidebar;
+}
+
+function showDiagnosticResults(html_string) {
+  if (window.diagnosticResults) {
+    window.diagnosticResults.style.display = 'block';
+    return window.diagnosticResults
+  }
+
+  var container = document.createElement("div");
+  window.diagnosticResults = container
+  container.classList.add("cortico-diagnostic-viewer");
+  container.innerHTML = html_string
+
+  var containerClose = document.createElement("button")
+  containerClose.classList.add("cortico-diagnostic-close");
+  containerClose.textContent = "Close";
+  containerClose.style.cursor = "pointer";
+  containerClose.addEventListener("click", function () {
+    container.style.display = 'none';
+  });
+  container.appendChild(containerClose);
+
+  var styleSheet = styleSheetFactory("cortico_sidebar");
+  var styles = "";
+  styles +=
+    ".cortico-diagnostic-viewer { position: fixed; top: 20%; left: 50% ;width: 300px; background-color: white; transform: translate(-50%, 0) }";
+  styles +=
+    ".cortico-diagnostic-viewer { padding: 20px; padding-top: 30px; border: 1px solid }";
+  styles +=
+    ".cortico-diagnostic-close { position: absolute; top: 10px; right: 10px; z-index: 500; }";
+  styleSheet.innerText = styles;
+
+  console.log("prepending")
+  document.body.prepend(container);
 }
 
 function addMenu(container) {
@@ -1486,7 +1521,7 @@ function setupPrescriptionButtons() {
 
 function sendPatientPrescriptionNotification() {
   const clinicName = localStorage['clinicname']
-  const url = `https://${clinicName}.cortico.ca/notify-prescription`
+  const url = `http://${clinicName}.cortico.ca/notify-prescription/`
 
   var formData = new FormData();
   formData.append("demographic_no", getDemographicFomLocation())
@@ -1661,6 +1696,19 @@ function storePharmaciesFailureCache(demographicNo, message) {
 }
 
 
+async function getDiagnosticFromCortico(appt_no, notes) {
+  const clinicName = localStorage['clinicname']
+  const url = `https://${clinicName}.cortico.ca/api/encrypted/diagnostic-results/?appointment_id=${appt_no}&notes=${notes}`
+
+  return fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+}
+
+
 function getDemographicFomLocation() {
   const routeParams = new URLSearchParams(window.location.search)
 
@@ -1699,7 +1747,6 @@ async function setupPreferredPharmacies() {
 
       const apptTitle = element.attributes.title.textContent
       const pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle)
-      console.log(pharmacyCode)
       if (!pharmacyCode) {
         continue;
       }
@@ -1708,7 +1755,7 @@ async function setupPreferredPharmacies() {
       temp.total = appointments.length
       temp.current = i
       pubsub.publish('check-batch-pharmacies', temp)
-
+      
       await setupPreferredPharmacy(pharmacyCode, demographicNo)
 
       await new Promise((resolve, reject) => {
@@ -1728,6 +1775,41 @@ async function setupPreferredPharmacies() {
     })
   }
 }
+
+
+async function init_diagnostic_viewer_button() {
+  const notesField = document.querySelector("textarea[name='notes']");
+  var notesValue = notesField.textContent;
+  console.log("echo", notesValue)
+
+  var last_button = document.querySelector("#cortico").parentNode;
+  last_button.parentNode.innerHTML +=
+    "<button class='cortico-btn' id='diagnostic-viewer-btn' style='color:white; background-color:blue'>Diagnostic Viewer</button>";
+
+
+  const corticoDiagnosticViewBtn = document.getElementById("diagnostic-viewer-btn")
+  function update_diagnostic_button_visibility() {
+    notesValue = notesField.textContent;
+    console.log("notes value", notesValue.toLowerCase())
+
+    corticoDiagnosticViewBtn.style.visibility =
+    notesValue.includes("-- Cortico data below, do not change!") ? "visible" : "hidden";
+  }
+
+  async function open_diagnostic_viewer(e) {
+    e.preventDefault();
+
+    const appt_no = getQueryStringValue("appointment_no");
+    const diagnostic_response = await getDiagnosticFromCortico(appt_no, notesValue)
+    const diagnostic_text = String(await diagnostic_response.text())
+    await showDiagnosticResults(diagnostic_text)
+  }
+
+  update_diagnostic_button_visibility();
+
+  corticoDiagnosticViewBtn.addEventListener("click", open_diagnostic_viewer)
+}
+
 
 async function init_recall_button() {
   const statusOption = document.querySelector("select[name='status']");
