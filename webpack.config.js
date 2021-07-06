@@ -41,11 +41,12 @@ module.exports = {
               [
                 "@babel/preset-env",
                 {
-                  targets: "> 0.001%, not dead, IE >= 9",
+                  targets: "> 0.25%, not dead, IE > 11",
                   modules: "amd",
                 },
               ],
             ],
+            plugins: ["@babel/plugin-transform-runtime"],
           },
         },
       },

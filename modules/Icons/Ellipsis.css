@@ -1,0 +1,17 @@
+.ellip-dot-wrapper {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.ellip-dot-container {
+  display: flex;
+}
+
+.ellip-dot {
+  display: flex;
+  width: 5px;
+  height: 5px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
+  margin: 0 1px;
+}
