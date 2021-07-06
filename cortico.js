@@ -1288,12 +1288,11 @@ function getPharmacyCodeFromReasonOrNotes(textContent) {
   var titleContents = textContent.split("\n");
   var apptFields = stringArrayToObj(titleContents);
 
-  var notesStart = titleContents.indexOf("notes: ") + 1;
-  var notes = "";
-  for (i = notesStart; i < titleContents.length; i++) {
-    notes += titleContents[i] + "\n";
-  }
-  var notesValuesList = notes.match(/\[(.*?)\]/g);
+  // assuming that the notes is always the last field in the textContent
+  var textContentList = textContent.split("notes: ");
+  var notesValue = textContentList[textContentList.length - 1];
+
+  var notesValuesList = notesValue.match(/\[(.*?)\]/g);
   var pharmacyCode =
     notesValuesList && notesValuesList.length > 0 ? notesValuesList[0] : null;
 
@@ -1342,7 +1341,7 @@ function sendPatientPrescriptionNotification() {
   const url = `http://${clinicName}.cortico.ca/notify-prescription/`;
 
   var formData = new FormData();
-  formData.append("demographic_no", getDemographicFomLocation());
+  formData.append("demographic_no", getDemographicFromLocation());
   formData.append("pharmacy", localStorage.getItem("preferredPharmacy"));
 
   const data = new URLSearchParams(formData);
@@ -1402,11 +1401,11 @@ async function setupPreferredPharmacy(code, demographic_no) {
 
   // cleanup fax number to format starting with 1
   // This might be an issue if the oscar pharmacies don't match this format
-  faxNumber = `1${faxNumber.match(/\d+/g).join("")}`;
+  if (faxNumber) faxNumber = `1${faxNumber.match(/\d+/g).join("")}`;
 
   var demographicNo = demographic_no;
   if (!demographic_no) {
-    demographicNo = getDemographicFomLocation();
+    demographicNo = getDemographicFromLocation();
   }
 
   const currPharmacyResults = await getCurrentPharmacy(demographicNo);
@@ -1531,7 +1530,7 @@ async function getDiagnosticFromCortico(appt_no, notes) {
   });
 }
 
-function getDemographicFomLocation() {
+function getDemographicFromLocation() {
   const routeParams = new URLSearchParams(window.location.search);
 
   return routeParams.get("demographicNo");
