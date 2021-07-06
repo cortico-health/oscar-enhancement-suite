@@ -2,7 +2,6 @@
 // @name     Cortico
 // @version  2.1
 // @grant    none
-// @author       You
 // ==/UserScript==
 
 import { pubSubInit } from "./modules/PubSub/PubSub";
@@ -48,7 +47,7 @@ const init_cortico = function () {
   ) {
     init_appointment_page();
     init_recall_button();
-    init_diagnostic_viewer_button();
+    // init_diagnostic_viewer_button();
   } else if (route.indexOf("/provider/providercontrol.jsp") > -1) {
     init_schedule();
     dragAndDrop();
