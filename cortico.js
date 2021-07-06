@@ -1,10 +1,8 @@
 // ==UserScript==
-// @name     Cortico2
+// @name     Cortico
 // @version  2.1
 // @grant    none
 // @author       You
-// @match        https://demo3.junoemr.com/kensington/*
-// @icon         https://www.google.com/s2/favicons?domain=junoemr.com
 // ==/UserScript==
 
 import { pubSubInit } from "./modules/PubSub/PubSub";
@@ -83,7 +81,7 @@ const init_cortico = function () {
         addNotes();
       });
 
-      setupFaxButton();
+      // setupFaxButton();
     }
   }
   init_styles();
