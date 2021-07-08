@@ -47,6 +47,14 @@ const init_cortico = function () {
   ) {
     init_appointment_page();
     init_recall_button();
+
+    // Temporary fix, adding event listener does not work inside init_appointment_page
+    // Note: event listeners inside init_recall_button seems to be working fine
+    var resources_field = document.querySelector('[name="resources"]');
+    var cortico_button = document.getElementById("cortico-video-appt-btn");
+    // open a windows to the cortico video page for this appointment.
+    cortico_button.addEventListener("click", open_video_appointment_page);
+    resources_field.addEventListener("change", update_video_button_visibility);
     // init_diagnostic_viewer_button();
   } else if (route.indexOf("/provider/providercontrol.jsp") > -1) {
     init_schedule();
@@ -129,7 +137,39 @@ const init_schedule = function () {
   }, 1000);
 };
 
-const init_appointment_page = function () {
+function update_video_button_visibility() {
+  var cortico_button = document.getElementById("cortico-video-appt-btn");
+  var resources_field = document.querySelector('[name="resources"]');
+  cortico_button.style.visibility =
+    resources_field.value === "virtual" ? "visible" : "hidden";
+}
+
+function open_video_appointment_page(e) {
+  e.preventDefault(); // don't submit the form.
+
+  if (!localStorage["clinicname"]) {
+    var clinicname = prompt("what is your Cortico website URL?");
+    if (clinicname.indexOf(".cortico.ca") > -1) {
+      clinicname = clinicname.substr(0, clinicname.indexOf(".cortico.ca"));
+      clinicname = clinicname.replace(/https?:\/\//, "");
+    }
+    localStorage["clinicname"] = clinicname;
+  }
+  var appt_no = getQueryStringValue("appointment_no");
+  if (!appt_no) {
+    return alert(
+      "Please save your appointment first, before starting a video call."
+    );
+  }
+  window.open(
+    "https://" +
+      localStorage["clinicname"] +
+      ".cortico.ca/appointment/" +
+      appt_no
+  );
+}
+
+function init_appointment_page() {
   // resources dropdown
   var resources_field = document.querySelector(
     'input[type="text"][name="resources"]'
@@ -159,43 +199,10 @@ const init_appointment_page = function () {
   // telehealth button
   var last_button = document.querySelector("#printReceiptButton").parentNode;
   last_button.parentNode.innerHTML +=
-    "<button class='cortico-btn' id='cortico' style='color:white; background-color:blue'>Cortico Video Call &phone;</button>";
+    "<button class='cortico-btn' type='button' id='cortico-video-appt-btn' style='color:white; background-color:blue'>Cortico Video Call &phone;</button>";
 
-  var cortico_button = document.getElementById("cortico");
-  // open a windows to the cortico video page for this appointment.
-  cortico_button.addEventListener("click", function (e) {
-    e.preventDefault(); // don't submit the form.
-
-    if (!localStorage["clinicname"]) {
-      var clinicname = prompt("what is your Cortico website URL?");
-      if (clinicname.indexOf(".cortico.ca") > -1) {
-        clinicname = clinicname.substr(0, clinicname.indexOf(".cortico.ca"));
-        clinicname = clinicname.replace(/https?:\/\//, "");
-      }
-      localStorage["clinicname"] = clinicname;
-    }
-    appt_no = getQueryStringValue("appointment_no");
-    if (!appt_no) {
-      return alert(
-        "Please save your appointment first, before starting a video call."
-      );
-    }
-    window.open(
-      "https://" +
-        localStorage["clinicname"] +
-        ".cortico.ca/appointment/" +
-        appt_no
-    );
-    return false;
-  });
-
-  function update_video_button_visibility() {
-    cortico_button.style.visibility =
-      resources_field.value === "virtual" ? "visible" : "hidden";
-  }
   update_video_button_visibility();
-  resources_field.addEventListener("change", update_video_button_visibility);
-};
+}
 
 const init_styles = function () {
   addGlobalStyle(
@@ -1598,7 +1605,9 @@ async function init_diagnostic_viewer_button() {
   var notesValue = notesField.textContent;
   console.log("echo", notesValue);
 
-  var last_button = document.querySelector("#cortico").parentNode;
+  var last_button = document.querySelector(
+    "#cortico-video-appt-btn"
+  ).parentNode;
   last_button.parentNode.innerHTML +=
     "<button class='cortico-btn' id='diagnostic-viewer-btn' style='color:white; background-color:blue'>Diagnostic Viewer</button>";
 
@@ -1638,9 +1647,11 @@ async function init_recall_button() {
   var statusValue = statusOption.options[statusOption.selectedIndex].text;
   console.log("echo", statusValue);
 
-  var last_button = document.querySelector("#cortico").parentNode;
+  var last_button = document.querySelector(
+    "#cortico-video-appt-btn"
+  ).parentNode;
   last_button.parentNode.innerHTML +=
-    "<button class='cortico-btn' id='recall-btn' style='color:white; background-color:blue'>Recall email</button>";
+    "<button class='cortico-btn' type='button' id='recall-btn' style='color:white; background-color:blue'>Recall email</button>";
 
   const corticoRecallButton = document.getElementById("recall-btn");
 
