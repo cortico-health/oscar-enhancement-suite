@@ -205,8 +205,7 @@ function init_appointment_page() {
 }
 
 const init_styles = function () {
-  addGlobalStyle(
-    `.cortico-btn {
+  var style = `.cortico-btn {
   -webkit-appearance:none;
   -moz-appearance:none;
   appearance:none;
@@ -249,14 +248,18 @@ const init_styles = function () {
   color:#fff;
   text-decoration:none
   }
+  `;
+
+  if (!oscar.isKaiOscarHost()) {
+    style += `
   .infirmaryView:first-child {
   /*position:fixed;*/
   margin-left: 57px;
   padding: 1px 15px;
   top: 0;
+  }`;
   }
-  `
-  );
+  addGlobalStyle(style);
 };
 
 if (!document.getElementById("cortico_anchor")) {
@@ -512,11 +515,19 @@ function getEligFailed() {
 }
 
 function getFailedList(data) {
-  const failed = JSON.parse(data);
+  let failed = JSON.parse(data);
   let listItems = "";
-  failed.map((f) => {
-    listItems += `<li>Demographic No: ${f.demographic_no}</li>`;
-  });
+
+  // make sure that failed is of type array so map function works
+  if (typeof failed === "string") {
+    failed = JSON.parse(failed);
+  }
+
+  if (failed) {
+    failed.map((f) => {
+      listItems += `<li>Demographic No: ${f.demographic_no}</li>`;
+    });
+  }
   const list = document.createElement("ul");
   list.innerHTML = listItems;
   return list;
@@ -1565,7 +1576,12 @@ async function setupPreferredPharmacies() {
       if (pharmaciesCache && pharmaciesCache["demographics"]) {
         demographics = pharmaciesCache["demographics"];
       }
-      if (demographics && demographics.includes(demographicNo)) {
+
+      if (
+        demographics &&
+        Array.isArray(demographics) &&
+        demographics.includes(demographicNo)
+      ) {
         continue;
       }
 
