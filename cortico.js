@@ -1576,7 +1576,12 @@ async function setupPreferredPharmacies() {
       if (pharmaciesCache && pharmaciesCache["demographics"]) {
         demographics = pharmaciesCache["demographics"];
       }
-      if (demographics && demographics.includes(demographicNo)) {
+
+      if (
+        demographics &&
+        Array.isArray(demographics) &&
+        demographics.includes(demographicNo)
+      ) {
         continue;
       }
 
