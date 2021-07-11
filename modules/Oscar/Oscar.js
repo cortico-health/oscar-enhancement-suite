@@ -44,6 +44,7 @@ export class Oscar {
 
   // sticky headers for doctor schedule page
   updateDoctorHeadings = debounce(function (e) {
+    const _this = this;
     const ifv = document.querySelectorAll(
       "tbody>tr:first-child>td.infirmaryView"
     );
@@ -52,7 +53,7 @@ export class Oscar {
         view.style.position = "sticky";
         view.style.marginLeft = "unset";
 
-        if (this.isJuno()) {
+        if (_this.isJuno()) {
           // for juno, position the sticky doctor headers under the sticky top menu
           view.style.top = "18px";
         }
