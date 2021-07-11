@@ -515,11 +515,19 @@ function getEligFailed() {
 }
 
 function getFailedList(data) {
-  const failed = JSON.parse(data);
+  let failed = JSON.parse(data);
   let listItems = "";
-  failed.map((f) => {
-    listItems += `<li>Demographic No: ${f.demographic_no}</li>`;
-  });
+
+  // make sure that failed is of type array so map function works
+  if (typeof failed === "string") {
+    failed = JSON.parse(failed);
+  }
+
+  if (failed) {
+    failed.map((f) => {
+      listItems += `<li>Demographic No: ${f.demographic_no}</li>`;
+    });
+  }
   const list = document.createElement("ul");
   list.innerHTML = listItems;
   return list;
