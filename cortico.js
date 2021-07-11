@@ -205,8 +205,7 @@ function init_appointment_page() {
 }
 
 const init_styles = function () {
-  addGlobalStyle(
-    `.cortico-btn {
+  var style = `.cortico-btn {
   -webkit-appearance:none;
   -moz-appearance:none;
   appearance:none;
@@ -249,14 +248,18 @@ const init_styles = function () {
   color:#fff;
   text-decoration:none
   }
+  `;
+
+  if (!oscar.isKaiOscarHost()) {
+    style += `
   .infirmaryView:first-child {
   /*position:fixed;*/
   margin-left: 57px;
   padding: 1px 15px;
   top: 0;
+  }`;
   }
-  `
-  );
+  addGlobalStyle(style);
 };
 
 if (!document.getElementById("cortico_anchor")) {
