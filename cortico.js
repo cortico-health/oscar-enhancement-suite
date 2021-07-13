@@ -10,6 +10,7 @@ import { getAppointments } from "./modules/Appointments/Appointments";
 import { addAppointmentMenu } from "./modules/Appointments/AppointmentMenu";
 import { Oscar } from "./modules/Oscar/Oscar";
 import "element-closest-polyfill";
+import { getOrigin, getProvider } from "./modules/Utils/Utils";
 
 // manually update this variable with the version in manifest.json
 const version = 2.0;
@@ -326,7 +327,9 @@ function addGlobalStyle(css) {
 }
 
 function addCorticoLogo() {
-  var menu = document.querySelector("#firstMenu #navList");
+  var menu =
+    document.querySelector("#firstMenu #navList") ||
+    document.querySelector("#firstMenu #navlist");
   var listitem = document.createElement("li");
   listitem.innerHTML =
     '<a href="http://cortico.ca"><img src="http://bool.countable.ca/32x32.png" height="15" style="vertical-align: middle;" /></a>';
@@ -427,7 +430,9 @@ function showDiagnosticResults(html_string) {
 }
 
 function addMenu(container) {
-  var navigation = document.querySelector("#firstMenu #navList");
+  var navigation =
+    document.querySelector("#firstMenu #navList") ||
+    document.querySelector("#firstMenu #navlist");
   var menu = document.createElement("li");
   menu.textContent = "Cortico";
   menu.style.color = "rgb(75, 84, 246)";
@@ -879,14 +884,6 @@ function dragAndDrop() {
 }
 
 /* Drag and Drop Feature end */
-
-function getOrigin() {
-  return window.location.origin;
-}
-
-function getProvider() {
-  return window.location.pathname.split("/")[1];
-}
 
 function addToFailures(metadata) {
   const _cache = getFailureCache();

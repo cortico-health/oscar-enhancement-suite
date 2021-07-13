@@ -2,14 +2,14 @@ import { Ellipsis } from "../Icons/Ellipsis";
 import { getAppointments } from "./Appointments";
 import "./AppointmentMenu.css";
 import { Modal } from "../Modal/Modal";
-import { getMasterFileUrl } from "../../modules/Utils/Utils";
+import { getOrigin, getProvider } from "../../modules/Utils/Utils";
+import { Masterfile } from "../Masterfile/Masterfile";
 const modal = new Modal();
 
 export function addAppointmentMenu() {
   const appointments = getAppointments();
   appointments.map((appt) => {
     appt.appendChild(appointmentMenu(appt));
-    getMasterFileUrl(appt);
   });
 }
 
@@ -29,6 +29,16 @@ export function appointmentMenu(apptTd) {
     menu.classList.toggle("show");
   });
 
+  menuIcon.addEventListener(
+    "click",
+    async (e) => {
+      await renderPatientInfo(apptTd);
+    },
+    {
+      once: true,
+    }
+  );
+
   const menuItems = appointmentMenuItems();
   menu.appendChild(menuItems);
 
@@ -44,10 +54,6 @@ export function appointmentMenuItems() {
     {
       title: "Go To Appointment (Cortico)",
       href: "#",
-    },
-    {
-      title: "Contact Patient",
-      onClick: getPatientContactInfo,
     },
   ];
 
@@ -70,9 +76,25 @@ export function appointmentMenuItems() {
 
     list.appendChild(listItem);
   });
+
+  const listItem = document.createElement("li");
+  listItem.classList.add("contactInfo");
+  list.appendChild(listItem);
+
   return list;
 }
 
 export function getPatientContactInfo(e) {
   console.log("Hello World", e.target.closest("td.appt"));
+}
+
+async function renderPatientInfo(apptTd) {
+  console.log("Appt TD", apptTd);
+  if (!apptTd) {
+    return;
+  }
+
+  const masterFile = new Masterfile(apptTd);
+  const page = await masterFile.fetchPage();
+  console.log("Page", page);
 }
