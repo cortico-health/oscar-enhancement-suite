@@ -2,17 +2,18 @@ import { Ellipsis } from "../Icons/Ellipsis";
 import { getAppointments } from "./Appointments";
 import "./AppointmentMenu.css";
 import { Modal } from "../Modal/Modal";
-
+import { getMasterFileUrl } from "../../modules/Utils/Utils";
 const modal = new Modal();
 
 export function addAppointmentMenu() {
   const appointments = getAppointments();
   appointments.map((appt) => {
-    appt.appendChild(appointmentMenu());
+    appt.appendChild(appointmentMenu(appt));
+    getMasterFileUrl(appt);
   });
 }
 
-export function appointmentMenu() {
+export function appointmentMenu(apptTd) {
   const container = document.createElement("div");
   container.classList.add("appointment-menu-container");
 

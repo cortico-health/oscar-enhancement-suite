@@ -33,3 +33,36 @@ export function waitForElm(selector) {
     });
   });
 }
+
+/**
+ * Returns master file URL for the given appointment
+ * @param {HTMLTableDataCellElement} the appointment TD element.
+ * @return {string || null} the url or null if the algorithm fails.
+ */
+
+export function getMasterFileUrl(apptTd) {
+  if (!apptTd) {
+    return null;
+  }
+
+  const masterAnchor = apptTd.querySelector(".masterBtn");
+
+  if (!masterAnchor) {
+    return null;
+  }
+
+  let clickContent = masterAnchor.attributes.onclick.textContent;
+  if (!clickContent) {
+    return null;
+  }
+
+  clickContent = clickContent.split(",");
+  let url = clickContent[2];
+
+  if (!url) {
+    return null;
+  }
+
+  url = url.substring(3).replace(/'/g, "");
+  console.log(url);
+}
