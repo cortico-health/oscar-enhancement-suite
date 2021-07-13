@@ -62,7 +62,7 @@ const init_cortico = function () {
     dragAndDrop();
     addCorticoLogo();
     addMenu();
-    addAppointmentMenu();
+    //addAppointmentMenu();
     if (!oscar.isJuno()) {
       plusSignFromCache();
     }
