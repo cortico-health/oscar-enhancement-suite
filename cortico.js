@@ -1583,7 +1583,11 @@ async function setupPreferredPharmacies() {
       var demographics = new Array();
 
       if (pharmaciesCache && pharmaciesCache["demographics"]) {
-        demographics = pharmaciesCache["demographics"];
+        let cachedDemographics = pharmaciesCache["demographics"];
+
+        demographics = Array.isArray(cachedDemographics)
+          ? cachedDemographics
+          : JSON.parse(cachedDemographics);
       }
 
       if (
