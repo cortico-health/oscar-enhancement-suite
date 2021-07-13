@@ -47,6 +47,18 @@ The developers would need to ensure what they want to test went through the buil
 1. yarn
 2. yarn build
 
+# Debugging
+
+There are times when you want to visit what's wrong in the minified bundle, or after it has built.
+To enable source maps, in `webpack.config.js`
+
+    "devtool": "source-map"
+    "mode": "development"
+
+1. yarn build
+
+Then load these in to tampermonkey/greasemonkey and inspect the error. You should have sourcemaps enabled so that you know where things went wrong.
+
 # Contributing
 
 Remember to test your changes on all version of Osccar (OpenOSP, WELL, community edition) before publishing.
