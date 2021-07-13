@@ -1416,7 +1416,8 @@ async function setupPreferredPharmacy(code, demographic_no) {
 
   // cleanup fax number to format starting with 1
   // This might be an issue if the oscar pharmacies don't match this format
-  if (faxNumber) faxNumber = `1${faxNumber.match(/\d+/g).join("")}`;
+  if (faxNumber && faxNumber.length < 11)
+    faxNumber = `1${faxNumber.match(/\d+/g).join("")}`;
 
   var demographicNo = demographic_no;
   if (!demographic_no) {
@@ -1453,9 +1454,14 @@ async function setupPreferredPharmacy(code, demographic_no) {
       window.location.href.indexOf("oscarRx/choosePatient.do") > -1;
 
     if (pharmacyUpdated) {
-      const pharmacy = json.find((item) => {
-        return item.name.includes(searchTerm) && item.fax === faxNumber;
-      });
+      const pharmacy = json.length === 1 ? json[0] : null;
+      if (json.length > 1) {
+        pharmacy = json.find((item) => {
+          return item.name.includes(searchTerm) && item.fax === faxNumber;
+        });
+      }
+
+      console.log("Pharmacy", pharmacy);
       if (pharmacy) {
         const setPharmacyResults = await setPreferredPharmacy(
           pharmacy,
