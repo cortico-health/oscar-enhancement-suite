@@ -1434,9 +1434,9 @@ async function setupPreferredPharmacy(code, demographic_no) {
 
   const currentlyUsingPharmacy =
     preferredPharmacy &&
-    preferredPharmacy.name.toLowerCase().indexOf(searchTerm.toLowerCase()) >
-      -1 &&
-    preferredPharmacy.fax === faxNumber;
+    preferredPharmacy.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+    (preferredPharmacy.fax === faxNumber ||
+      faxNumber.includes(preferredPharmacy.fax));
   console.log(
     `currently using pharmacy ${searchTerm.toLowerCase()}, ${currentlyUsingPharmacy}`
   );
