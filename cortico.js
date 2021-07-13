@@ -61,7 +61,7 @@ const init_cortico = function () {
     dragAndDrop();
     addCorticoLogo();
     addMenu();
-    addAppointmentMenu();
+    //addAppointmentMenu();
     if (!oscar.isJuno()) {
       plusSignFromCache();
     }
@@ -179,9 +179,9 @@ function init_appointment_page() {
   if (cortico_media.indexOf(resources_field.value) > -1) {
     const parent = resources_field.parentNode;
 
-    let html = '<select name="resources">';
+    let selectHtml = '<select name="resources">';
     cortico_media.forEach(function (value) {
-      html +=
+      selectHtml +=
         "<option " +
         (value == resources_field.value ? "selected " : "") +
         'value="' +
@@ -190,9 +190,38 @@ function init_appointment_page() {
         (value || "n/a") +
         "</option>";
     });
-    html += "</select>";
+    selectHtml += "</select>";
 
-    parent.innerHTML = html;
+    parent.innerHTML = selectHtml;
+
+    const resourceCheckbox = document.createElement("input");
+    resourceCheckbox.setAttribute("type", "checkbox");
+    resourceCheckbox.setAttribute("id", "resourceCheck");
+
+    const resourceLabel = document.createElement("label");
+    resourceLabel.setAttribute("for", "resourceCheck");
+    resourceLabel.textContent = "Text field";
+    parent.appendChild(resourceCheckbox);
+    parent.appendChild(resourceLabel);
+
+    const resourceTextInput = document.createElement("input");
+    resourceTextInput.setAttribute("type", "TEXT");
+    resourceTextInput.setAttribute("name", "resources");
+    resourceTextInput.setAttribute("tabindex", "5");
+    resourceTextInput.setAttribute("width", "25");
+
+    resourceCheckbox.addEventListener("input", (e) => {
+      parent.innerHTML = "";
+      if (e.target.checked === true) {
+        parent.appendChild(resourceTextInput);
+      } else {
+        parent.innerHTML = selectHtml;
+      }
+
+      parent.appendChild(resourceCheckbox);
+      parent.appendChild(resourceLabel);
+    });
+
     resources_field = document.querySelector('[name="resources"]');
   }
 
