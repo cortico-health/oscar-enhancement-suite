@@ -3,10 +3,11 @@
 A suite of tools developed by [Cortico Health Technologies](https://cortico.ca) to improve the Oscar experience of Cortico users. It includes some oft-requested quality of life improvements for Oscar, unrelated to Cortico. Clinics who do not use Cortico may still use this plug-in, but support will be a best-effort basis in that case. Please log any problems in the GitHub issues.
 
 # General Oscar Quality of Life Features:
-  * Drag and drop functionality on the schedule (see screenshot below)
-  * A quick way to check public health insurance eligibility for your whole schedule. Open the control panel for the plug-in (click "Cortico" menu item, in image below), and click "Check Eligibility".
-  * Prevents Oscar refreshing while you are actively working (which interrupts your work). Oscar will wait until your mouse stops moving for a minute.
-  * Includes a subtle user interface theme (see picture below, which can be enabled optionally in the control panel).
+
+- Drag and drop functionality on the schedule (see screenshot below)
+- A quick way to check public health insurance eligibility for your whole schedule. Open the control panel for the plug-in (click "Cortico" menu item, in image below), and click "Check Eligibility".
+- Prevents Oscar refreshing while you are actively working (which interrupts your work). Oscar will wait until your mouse stops moving for a minute.
+- Includes a subtle user interface theme (see picture below, which can be enabled optionally in the control panel).
 
 Drag and Drop:
 
@@ -20,11 +21,10 @@ Custom Oscar Theme
 
 ![Cortico Oscar Theme](cortico-oscar-ui.png)
 
-
 # Cortico Specific Features (optional)
-  * Allows joining a video call directly from the schedule page.
-  * Allows you to see diagnostic questions that patients answered in the online booking system.
 
+- Allows joining a video call directly from the schedule page.
+- Allows you to see diagnostic questions that patients answered in the online booking system.
 
 We hope this repository can provide a helpful testing ground for some new Oscar UI feaures and we would love to contribute them to the Oscar source code for various OSPs who may be interested! Please contact me at clark@cortico.health if you want assistance merging anything here into Oscar itself.
 
@@ -37,6 +37,15 @@ Make changes in the appropriate and generate a build.
 
 The build output will be in `dist` directory
 
+# Testing
+
+The minified file located in `dist` directory named `cortico-min.js` may be loaded
+into tampermonkey, or greasemonkey for direct testing before publishing.
+
+The developers would need to ensure what they want to test went through the build process via
+
+1. yarn
+2. yarn build
 
 # Contributing
 
@@ -49,7 +58,8 @@ The official Mozilla account for this plug-in is clark@countable.ca . Please con
 Notes on publishing:
 
 Sign into addons.mozilla.org, and submit an updated version.
-  * you must increment the version in manifest.json
+
+- you must increment the version in manifest.json
 
 To package the add-on, do
 
@@ -60,7 +70,6 @@ zip -r * cortico.zip
 Then, upload this on https://addons.mozilla.org/en-CA/developers/addon/
 
 Indicate the plug-in does not use remote code (which is the case).
-
 
 ## How to package and update the Chrome extension
 
