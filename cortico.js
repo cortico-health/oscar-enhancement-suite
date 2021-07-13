@@ -1454,7 +1454,7 @@ async function setupPreferredPharmacy(code, demographic_no) {
       window.location.href.indexOf("oscarRx/choosePatient.do") > -1;
 
     if (pharmacyUpdated) {
-      const pharmacy = json.length === 1 ? json[0] : null;
+      let pharmacy = json.length === 1 ? json[0] : null;
       if (json.length > 1) {
         pharmacy = json.find((item) => {
           return item.name.includes(searchTerm) && item.fax === faxNumber;
