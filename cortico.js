@@ -1463,9 +1463,9 @@ async function setupPreferredPharmacy(code, demographic_no) {
 
   const currentlyUsingPharmacy =
     preferredPharmacy &&
-    preferredPharmacy.name.toLowerCase().indexOf(searchTerm.toLowerCase()) >
-      -1 &&
-    preferredPharmacy.fax === faxNumber;
+    preferredPharmacy.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+    (preferredPharmacy.fax === faxNumber ||
+      faxNumber.includes(preferredPharmacy.fax));
   console.log(
     `currently using pharmacy ${searchTerm.toLowerCase()}, ${currentlyUsingPharmacy}`
   );
@@ -1482,9 +1482,18 @@ async function setupPreferredPharmacy(code, demographic_no) {
       window.location.href.indexOf("oscarRx/choosePatient.do") > -1;
 
     if (pharmacyUpdated) {
-      const pharmacy = json.find((item) => {
-        return item.name.includes(searchTerm) && item.fax === faxNumber;
-      });
+      let pharmacy = json.length === 1 ? json[0] : null;
+      if (json.length > 1) {
+        pharmacy = json.find((item) => {
+          return (
+            item.name.includes(searchTerm) &&
+            // either if the fax is the same or the formatted fax has the values
+            (item.fax === faxNumber || faxNumber.includes(item.fax))
+          );
+        });
+      }
+
+      console.log("Pharmacy", pharmacy);
       if (pharmacy) {
         const setPharmacyResults = await setPreferredPharmacy(
           pharmacy,
@@ -1603,7 +1612,11 @@ async function setupPreferredPharmacies() {
       var demographics = new Array();
 
       if (pharmaciesCache && pharmaciesCache["demographics"]) {
-        demographics = pharmaciesCache["demographics"];
+        let cachedDemographics = pharmaciesCache["demographics"];
+
+        demographics = Array.isArray(cachedDemographics)
+          ? cachedDemographics
+          : JSON.parse(cachedDemographics);
       }
 
       if (
