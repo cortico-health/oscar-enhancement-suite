@@ -177,9 +177,14 @@ function init_appointment_page() {
   );
   const cortico_media = ["phone", "clinic", "virtual", "", "quiet"];
 
-  if (cortico_media.indexOf(resources_field.value) > -1) {
-    const parent = resources_field.parentNode;
+  const parent = resources_field.parentNode;
 
+  console.log(
+    "If test",
+    cortico_media.indexOf(resources_field.value),
+    resources_field.value
+  );
+  if (cortico_media.indexOf(resources_field.value) > -1) {
     let selectHtml = '<select name="resources">';
     cortico_media.forEach(function (value) {
       selectHtml +=
@@ -280,7 +285,7 @@ const init_styles = function () {
   }
   `;
 
-  if (!oscar.isKaiOscarHost()) {
+  if (!(oscar.isKaiOscarHost() || oscar.containsKaiBar())) {
     style += `
   .infirmaryView:first-child {
   /*position:fixed;*/

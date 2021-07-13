@@ -2,7 +2,6 @@ import { Ellipsis } from "../Icons/Ellipsis";
 import { getAppointments } from "./Appointments";
 import "./AppointmentMenu.css";
 import { Modal } from "../Modal/Modal";
-import { getOrigin, getProvider } from "../../modules/Utils/Utils";
 import { Masterfile } from "../Masterfile/Masterfile";
 const modal = new Modal();
 
