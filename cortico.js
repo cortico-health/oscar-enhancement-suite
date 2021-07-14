@@ -63,7 +63,7 @@ const init_cortico = function () {
     addCorticoLogo();
     addMenu();
     //addAppointmentMenu();
-    if (!oscar.isJuno()) {
+    if (!oscar.isJuno() && !oscar.containsKaiBar()) {
       plusSignFromCache();
     }
 
@@ -841,7 +841,7 @@ function dragAndDrop() {
     }
 
     const apptDoctor = formData.get("provider_no");
-    const targetDoctor = getProviderNoFromTd(ev.target);
+    const targetDoctor = getCurrentProviderNoFromTd(ev.target);
     const isSameDoctor = apptDoctor === targetDoctor;
     const doctor = targetDoctor;
 
@@ -893,7 +893,9 @@ function dragAndDrop() {
 function addToFailures(metadata) {
   const _cache = getFailureCache();
   const cache = JSON.parse(_cache) || [];
-  cache.push(metadata);
+  if (cache && cache.push) {
+    cache.push(metadata);
+  }
   localStorage.setItem("failureCache", JSON.stringify(cache));
 }
 
@@ -962,12 +964,14 @@ async function checkAllEligibility() {
   clearFailureCache();
   var nodes = document.querySelectorAll("td.appt");
   var appointmentInfo = getAppointmentInfo(nodes);
+  console.log("Appointment Info", appointmentInfo);
   appointmentInfo = filterAppointments(appointmentInfo);
 
   var length = appointmentInfo.length;
   if (appointmentInfo.length === 0) {
     alert("No Appointments to Check");
   }
+  const providerNo = getProviderNoFromTd(nodes[0]);
   var error = false;
 
   window.checkAllEligibilityRunning = true;
@@ -979,13 +983,28 @@ async function checkAllEligibility() {
       pubsub.publish("check-eligibility", temp);
 
       const demographic_no = appointmentInfo[i].demographic_no;
-      const result = await checkEligiblity(
-        demographic_no,
-        getOrigin(),
-        getProvider()
-      );
-      const text = await result.text();
-      const lowerCaseText = text.toLowerCase();
+      let result = null;
+      try {
+        result = await checkEligiblity(
+          demographic_no,
+          getOrigin(),
+          getProvider(),
+          providerNo
+        );
+      } catch (e) {
+        console.error(e);
+      }
+
+      let text = null;
+      let lowerCaseText = null;
+
+      if (result && result.status === 200) {
+        let text = await result.text();
+        lowerCaseText = text.toLowerCase();
+      } else {
+        text = "Failed to fetch";
+        lowerCaseText = "Failed to fetch";
+      }
 
       if (lowerCaseText.includes("error in teleplan connection")) {
         alert("Automatic Eligiblity Check Aborted. \n" + text);
@@ -1017,6 +1036,7 @@ async function checkAllEligibility() {
       });
     }
   } catch (err) {
+    console.log(err);
     alert(err);
   } finally {
     window.checkAllEligibilityRunning = false;
@@ -1102,7 +1122,7 @@ function setPreferredPharmacy(pharmacyObj, demographicNo) {
   });
 }
 
-function checkEligiblity(demographicNo, origin, provider) {
+function checkEligiblity(demographicNo, origin, provider, providerNo) {
   var url =
     origin +
     "/" +
@@ -1111,6 +1131,13 @@ function checkEligiblity(demographicNo, origin, provider) {
     "billing/CA/BC/ManageTeleplan.do?demographic=" +
     demographicNo +
     "&method=checkElig";
+
+  if (providerNo || providerNo === 0) {
+    url += "&provider=" + providerNo;
+  }
+  // Taken from oscar, they bust cache with this
+  const ran_number = Math.round(Math.random() * 1000000);
+  url += "&rand=" + ran_number;
 
   return fetch(url, {
     method: "POST",
@@ -1232,6 +1259,33 @@ function appointmentRequest(origin, provider, data) {
 
 // This TD Element needs to be an appointment or empty slot.
 function getProviderNoFromTd(tdElement) {
+  if (!tdElement) {
+    return null;
+  }
+  const encounterButton = tdElement.querySelector(".encounterBtn");
+
+  if (!encounterButton) {
+    return null;
+  }
+
+  const value = encounterButton.attributes.onclick.textContent;
+  if (!value) {
+    return null;
+  }
+
+  const split = value.split(",");
+  const url = split[2];
+  if (!url) {
+    return null;
+  }
+  const queryString = url.split("?")[1];
+
+  const searchParams = new URLSearchParams(queryString);
+  const providerNo = searchParams.get("providerNo");
+
+  return providerNo;
+}
+function getCurrentProviderNoFromTd(tdElement) {
   //oscar osp
   var dsButton = tdElement
     .closest("table")

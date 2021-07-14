@@ -6,7 +6,8 @@ module.exports = {
     filename: "cortico-min.js",
     path: path.resolve(__dirname, "dist"),
   },
-  mode: "production",
+  devtool: "source-map",
+  mode: "development",
   module: {
     rules: [
       {
