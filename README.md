@@ -76,7 +76,7 @@ Sign into addons.mozilla.org, and submit an updated version.
 To package the add-on, do
 
 ```
-zip -r * cortico.zip
+zip -r cortico.zip *
 ```
 
 Then, upload this on https://addons.mozilla.org/en-CA/developers/addon/
