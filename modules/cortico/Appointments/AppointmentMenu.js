@@ -97,5 +97,24 @@ async function renderPatientInfo(apptTd) {
   await masterFile.fetchPage();
 
   const email = masterFile.getEmail();
-  console.log("Got Email!", email);
+  const phoneNumbers = masterFile.getPhoneNumbers();
+  console.log("Phone Numbers", phoneNumbers);
+  const homePhone = phoneNumbers.find((p) => p.type === "home");
+  const workPhone = phoneNumbers.find((p) => p.type === "work");
+
+  const contactInfoContainer = apptTd.querySelector(".contactInfo");
+
+  let html = "";
+  if (email) {
+    html += `<div>Email: ${email}</div>`;
+  }
+
+  if (homePhone && homePhone.phone) {
+    html += `<div>Phone(H): ${homePhone.phone}</div>`;
+  }
+
+  if (workPhone && workPhone.phone) {
+    html += `<div>Phone(W): ${workPhone.phone}</div>`;
+  }
+  contactInfoContainer.innerHTML = html;
 }

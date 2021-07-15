@@ -83,7 +83,7 @@ export class Masterfile {
 
   /**
    * Returns an array of phone numbers
-   * @return {[]<PhoneNumber>}
+   * @return []
    */
   getPhoneNumbers() {
     if (!this.page) {
@@ -96,11 +96,11 @@ export class Masterfile {
     return [
       {
         type: "home",
-        phone: homePhone,
+        phone: homePhone && homePhone.value,
       },
       {
         type: "work",
-        phone: workPhone,
+        phone: workPhone && workPhone.value,
       },
     ];
   }
