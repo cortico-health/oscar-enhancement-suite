@@ -6,8 +6,7 @@ module.exports = {
     filename: "cortico-min.js",
     path: path.resolve(__dirname, "dist"),
   },
-  devtool: "source-map",
-  mode: "development",
+  mode: "production",
   module: {
     rules: [
       {
@@ -43,7 +42,6 @@ module.exports = {
                 "@babel/preset-env",
                 {
                   targets: "> 0.25%, not dead, IE > 11",
-                  modules: "amd",
                 },
               ],
             ],

@@ -6,9 +6,9 @@
 
 import { pubSubInit } from "./modules/PubSub/PubSub";
 import dayjs from "dayjs";
-import { getAppointments } from "./modules/Appointments/Appointments";
-import { addAppointmentMenu } from "./modules/Appointments/AppointmentMenu";
-import { Oscar } from "./modules/Oscar/Oscar";
+import { getAppointments } from "./modules/cortico/Appointments/Appointments";
+import { addAppointmentMenu } from "./modules/cortico/Appointments/AppointmentMenu";
+import { Oscar } from "./modules/core/Oscar.js";
 import "element-closest-polyfill";
 import { getOrigin, getProvider } from "./modules/Utils/Utils";
 
@@ -62,7 +62,7 @@ const init_cortico = function () {
     dragAndDrop();
     addCorticoLogo();
     addMenu();
-    //addAppointmentMenu();
+    addAppointmentMenu();
     if (!oscar.isJuno() && !oscar.containsKaiBar()) {
       plusSignFromCache();
     }

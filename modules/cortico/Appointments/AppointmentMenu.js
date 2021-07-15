@@ -1,8 +1,8 @@
-import { Ellipsis } from "../Icons/Ellipsis";
+import { Ellipsis } from "../../Icons/Ellipsis";
 import { getAppointments } from "./Appointments";
 import "./AppointmentMenu.css";
-import { Modal } from "../Modal/Modal";
-import { Masterfile } from "../Masterfile/Masterfile";
+import { Modal } from "../../Modal/Modal";
+import { Masterfile } from "../../core/Masterfile";
 const modal = new Modal();
 
 export function addAppointmentMenu() {
@@ -94,6 +94,8 @@ async function renderPatientInfo(apptTd) {
   }
 
   const masterFile = new Masterfile(apptTd);
-  const page = await masterFile.fetchPage();
-  console.log("Page", page);
+  await masterFile.fetchPage();
+
+  const email = masterFile.getEmail();
+  console.log("Got Email!", email);
 }

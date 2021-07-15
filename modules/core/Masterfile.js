@@ -1,12 +1,14 @@
-import { getOrigin, getProvider } from "../../modules/Utils/Utils";
+import { getOrigin, getProvider } from "../Utils/Utils";
 
 /**
  * Tries to represent the masterfile in oscar.
  */
+
 export class Masterfile {
   apptTD = null;
   url = null;
   page = null;
+  container = null;
 
   constructor(apptTd) {
     this.apptTD = apptTd;
@@ -54,7 +56,11 @@ export class Masterfile {
       const url = getOrigin() + "/" + getProvider() + this.url;
       const result = await fetch(url);
       const page = await result.text();
-      this.page = page;
+
+      const container = document.createElement("div");
+      container.innerHTML = page;
+      this.page = container;
+
       return this.page;
     } catch (e) {
       console.error(e);
@@ -66,5 +72,36 @@ export class Masterfile {
     if (!this.page) {
       throw new Error("Masterfile Page does not exist");
     }
+
+    const emailInput = this.page.querySelector('input[name="email"]');
+    if (!emailInput) {
+      return null;
+    }
+
+    return emailInput.value;
+  }
+
+  /**
+   * Returns an array of phone numbers
+   * @return {[]<PhoneNumber>}
+   */
+  getPhoneNumbers() {
+    if (!this.page) {
+      throw new Error("Masterfile Page does not exist");
+    }
+
+    const homePhone = this.page.querySelector('input[name="phone"]');
+    const workPhone = this.page.querySelector('input[name="phone2"]');
+
+    return [
+      {
+        type: "home",
+        phone: homePhone,
+      },
+      {
+        type: "work",
+        phone: workPhone,
+      },
+    ];
   }
 }
