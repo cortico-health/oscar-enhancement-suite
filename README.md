@@ -47,6 +47,22 @@ The developers would need to ensure what they want to test went through the buil
 1. yarn
 2. yarn build
 
+**TamperMonkey**
+
+Here's the one time tampermonkey script that auto updates to latest distribution file
+
+    // ==UserScript==
+    // @name Cortico Require Main
+    // @namespace http://tampermonkey.net/
+    // @version 0.1
+    // @description try to take over the world!
+    // @author You
+    // @match https://_/_
+    // @icon data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+    // @require https://raw.githubusercontent.com/cortico-health/oscar-enhancement-suite/main/dist/cortico-min.js
+    // @grant none
+    // ==/UserScript==
+
 # Debugging
 
 There are times when you want to visit what's wrong in the minified bundle, or after it has built.
