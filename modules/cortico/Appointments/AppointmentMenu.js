@@ -10,6 +10,19 @@ export function addAppointmentMenu() {
   appointments.map((appt) => {
     appt.appendChild(appointmentMenu(appt));
   });
+
+  const html = document.documentElement;
+  html.addEventListener("click", (e) => {
+    const menu = e.target.closest(".appointment-menu");
+    const menuToggle = e.target.closest(".ellip-dot-wrapper");
+
+    if (!menu && !menuToggle) {
+      const openMenu = document.querySelector(".appointment-menu.show");
+      if (openMenu) {
+        openMenu.classList.remove("show");
+      }
+    }
+  });
 }
 
 export function appointmentMenu(apptTd) {
@@ -25,7 +38,17 @@ export function appointmentMenu(apptTd) {
 
   menuIcon.addEventListener("click", (e) => {
     e.preventDefault();
+
+    const openMenu = document.querySelector(".appointment-menu.show");
+    if (openMenu) {
+      openMenu.classList.remove("show");
+    }
+
     menu.classList.toggle("show");
+
+    if (menu.classList.contains("show")) {
+      openMenu = menu;
+    }
   });
 
   menuIcon.addEventListener(
