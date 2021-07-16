@@ -43,12 +43,7 @@ export function appointmentMenu(apptTd) {
     if (openMenu) {
       openMenu.classList.remove("show");
     }
-
     menu.classList.toggle("show");
-
-    if (menu.classList.contains("show")) {
-      openMenu = menu;
-    }
   });
 
   menuIcon.addEventListener(
@@ -118,6 +113,7 @@ async function renderPatientInfo(apptTd) {
 
   const masterFile = new Masterfile(apptTd);
   await masterFile.fetchPage();
+  console.log(masterFile);
 
   const email = masterFile.getEmail();
   const phoneNumbers = masterFile.getPhoneNumbers();

@@ -3,7 +3,6 @@ import { getOrigin, getProvider } from "../Utils/Utils";
 /**
  * Tries to represent the masterfile in oscar.
  */
-
 export class Masterfile {
   apptTD = null;
   url = null;

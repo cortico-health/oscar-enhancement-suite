@@ -6,7 +6,8 @@ module.exports = {
     filename: "cortico-min.js",
     path: path.resolve(__dirname, "dist"),
   },
-  mode: "production",
+  devtool: "source-map",
+  mode: "development",
   module: {
     rules: [
       {
@@ -45,7 +46,16 @@ module.exports = {
                 },
               ],
             ],
-            plugins: ["@babel/plugin-transform-runtime"],
+            assumptions: {
+              setPublicClassFields: true,
+            },
+            plugins: [
+              [
+                "@babel/plugin-proposal-decorators",
+                { decoratorsBeforeExport: true },
+              ],
+              "@babel/plugin-transform-runtime",
+            ],
           },
         },
       },
