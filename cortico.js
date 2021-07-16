@@ -129,7 +129,7 @@ const init_schedule = function () {
       console.log("before clearInterval");
       clearInterval(reloadHandler);
       if (
-        window.checkAllEligibilityRunning !== true ||
+        window.checkAllEligibilityRunning !== true &&
         window.setupPreferredPharmaciesRunning !== true
       ) {
         window.location.reload();
