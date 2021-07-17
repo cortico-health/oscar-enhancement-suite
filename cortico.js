@@ -3,7 +3,6 @@
 // @version  2.1
 // @grant    none
 // ==/UserScript==
-import "tailwindcss/tailwind.css";
 import { pubSubInit } from "./modules/PubSub/PubSub";
 import dayjs from "dayjs";
 import { getAppointments } from "./modules/cortico/Appointments/Appointments";
