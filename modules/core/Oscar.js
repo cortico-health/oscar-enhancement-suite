@@ -53,7 +53,7 @@ export class Oscar {
         view.style.position = "sticky";
         view.style.marginLeft = "unset";
 
-        if (_this.isJuno()) {
+        if (this.isJuno()) {
           // for juno, position the sticky doctor headers under the sticky top menu
           view.style.top = "18px";
         }

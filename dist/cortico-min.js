@@ -581,7 +581,7 @@ var Oscar = /*#__PURE__*/function () {
           view.style.position = "sticky";
           view.style.marginLeft = "unset";
 
-          if (_this.isJuno()) {
+          if (this.isJuno()) {
             // for juno, position the sticky doctor headers under the sticky top menu
             view.style.top = "18px";
           }
@@ -672,7 +672,7 @@ function addAppointmentMenu() {
   });
   var html = document.documentElement;
   html.addEventListener("click", function (e) {
-    var menu = e.target.closest(".appointment-menu");
+    var menu = e.target.closest(".appointment-menu-container");
     var menuToggle = e.target.closest(".ellip-dot-wrapper");
 
     if (!menu && !menuToggle) {
@@ -692,7 +692,7 @@ function appointmentMenu(apptTd) {
   var menu = document.createElement("div");
   container.appendChild(menu);
   menu.classList.add("appointment-menu");
-  menuIcon.addEventListener("click", function (e) {
+  container.addEventListener("click", function (e) {
     e.preventDefault();
     var openMenu = document.querySelector(".appointment-menu.show");
 
@@ -702,7 +702,7 @@ function appointmentMenu(apptTd) {
 
     menu.classList.toggle("show");
   });
-  menuIcon.addEventListener("click", /*#__PURE__*/function () {
+  container.addEventListener("click", /*#__PURE__*/function () {
     var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee(e) {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
         while (1) {
@@ -917,7 +917,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".ellip-dot-wrapper {\n  display: inline-block;\n  cursor: pointer;\n}\n\n.ellip-dot-container {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -moz-box;\n  display: flex;\n}\n\n.ellip-dot {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -moz-box;\n  display: flex;\n  width: 5px;\n  height: 5px;\n  background-color: rgba(0, 0, 0, 0.7);\n  -webkit-border-radius: 50%;\n     -moz-border-radius: 50%;\n          border-radius: 50%;\n  margin: 0 1px;\n}\n", "",{"version":3,"sources":["webpack://./modules/Icons/Ellipsis.css"],"names":[],"mappings":"AAAA;EACE,qBAAqB;EACrB,eAAe;AACjB;;AAEA;EACE,oBAAa;EAAb,qBAAa;EAAb,iBAAa;EAAb,aAAa;AACf;;AAEA;EACE,oBAAa;EAAb,qBAAa;EAAb,iBAAa;EAAb,aAAa;EACb,UAAU;EACV,WAAW;EACX,oCAAoC;EACpC,0BAAkB;KAAlB,uBAAkB;UAAlB,kBAAkB;EAClB,aAAa;AACf","sourcesContent":[".ellip-dot-wrapper {\n  display: inline-block;\n  cursor: pointer;\n}\n\n.ellip-dot-container {\n  display: flex;\n}\n\n.ellip-dot {\n  display: flex;\n  width: 5px;\n  height: 5px;\n  background-color: rgba(0, 0, 0, 0.7);\n  border-radius: 50%;\n  margin: 0 1px;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".sh .ellip-dot-wrapper {\n  display: inline-block;\n  cursor: pointer;\n}\n\n.sh .ellip-dot-container {\n  display: flex;\n  flex-direction: column;\n}\n\n.sh .ellip-dot {\n  display: flex;\n  width: 5px;\n  height: 5px;\n  background-color: rgba(255, 255, 255, 1);\n  border-radius: 50%;\n  margin: 1px;\n  flex-direction: column;\n}\n", "",{"version":3,"sources":["webpack://./modules/Icons/Ellipsis.css"],"names":[],"mappings":"AAAA;EACE,qBAAqB;EACrB,eAAe;AACjB;;AAEA;EACE,aAAa;EACb,sBAAsB;AACxB;;AAEA;EACE,aAAa;EACb,UAAU;EACV,WAAW;EACX,wCAAwC;EACxC,kBAAkB;EAClB,WAAW;EACX,sBAAsB;AACxB","sourcesContent":[".ellip-dot-wrapper {\n  display: inline-block;\n  cursor: pointer;\n}\n\n.ellip-dot-container {\n  display: flex;\n  flex-direction: column;\n}\n\n.ellip-dot {\n  display: flex;\n  width: 5px;\n  height: 5px;\n  background-color: rgba(255, 255, 255, 1);\n  border-radius: 50%;\n  margin: 1px;\n  flex-direction: column;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -944,7 +944,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".cortico-modal-container {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  display: none;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n     -moz-box-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n     -moz-box-align: center;\n          align-items: center;\n  background-color: rgba(0, 0, 0, 0.8);\n  padding: 10px;\n  z-index: 100;\n  opacity: 0;\n  -webkit-transition: opacity 1s;\n  -o-transition: opacity 1s;\n  -moz-transition: opacity 1s;\n  transition: opacity 1s;\n}\n\n.cortico-modal-container.show {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -moz-box;\n  display: flex;\n  opacity: 1;\n}\n\n.cortico-modal {\n  background-color: white;\n  padding: 10px;\n  -webkit-border-radius: 0.5rem;\n     -moz-border-radius: 0.5rem;\n          border-radius: 0.5rem;\n}\n", "",{"version":3,"sources":["webpack://./modules/Modal/Modal.css"],"names":[],"mappings":"AAAA;EACE,eAAe;EACf,MAAM;EACN,OAAO;EACP,QAAQ;EACR,SAAS;EACT,aAAa;EACb,wBAAuB;EAAvB,+BAAuB;KAAvB,qBAAuB;UAAvB,uBAAuB;EACvB,yBAAmB;EAAnB,2BAAmB;KAAnB,sBAAmB;UAAnB,mBAAmB;EACnB,oCAAoC;EACpC,aAAa;EACb,YAAY;EACZ,UAAU;EACV,8BAAsB;EAAtB,yBAAsB;EAAtB,2BAAsB;EAAtB,sBAAsB;AACxB;;AAEA;EACE,oBAAa;EAAb,qBAAa;EAAb,iBAAa;EAAb,aAAa;EACb,UAAU;AACZ;;AAEA;EACE,uBAAuB;EACvB,aAAa;EACb,6BAAqB;KAArB,0BAAqB;UAArB,qBAAqB;AACvB","sourcesContent":[".cortico-modal-container {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  display: none;\n  justify-content: center;\n  align-items: center;\n  background-color: rgba(0, 0, 0, 0.8);\n  padding: 10px;\n  z-index: 100;\n  opacity: 0;\n  transition: opacity 1s;\n}\n\n.cortico-modal-container.show {\n  display: flex;\n  opacity: 1;\n}\n\n.cortico-modal {\n  background-color: white;\n  padding: 10px;\n  border-radius: 0.5rem;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".sh .cortico-modal-container {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  display: none;\n  justify-content: center;\n  align-items: center;\n  background-color: rgba(0, 0, 0, 0.8);\n  padding: 10px;\n  z-index: 100;\n  opacity: 0;\n  transition: opacity 1s;\n}\n\n.sh .cortico-modal-container.show {\n  display: flex;\n  opacity: 1;\n}\n\n.sh .cortico-modal {\n  background-color: white;\n  padding: 10px;\n  border-radius: 0.5rem;\n}\n", "",{"version":3,"sources":["webpack://./modules/Modal/Modal.css"],"names":[],"mappings":"AAAA;EACE,eAAe;EACf,MAAM;EACN,OAAO;EACP,QAAQ;EACR,SAAS;EACT,aAAa;EACb,uBAAuB;EACvB,mBAAmB;EACnB,oCAAoC;EACpC,aAAa;EACb,YAAY;EACZ,UAAU;EACV,sBAAsB;AACxB;;AAEA;EACE,aAAa;EACb,UAAU;AACZ;;AAEA;EACE,uBAAuB;EACvB,aAAa;EACb,qBAAqB;AACvB","sourcesContent":[".cortico-modal-container {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  display: none;\n  justify-content: center;\n  align-items: center;\n  background-color: rgba(0, 0, 0, 0.8);\n  padding: 10px;\n  z-index: 100;\n  opacity: 0;\n  transition: opacity 1s;\n}\n\n.cortico-modal-container.show {\n  display: flex;\n  opacity: 1;\n}\n\n.cortico-modal {\n  background-color: white;\n  padding: 10px;\n  border-radius: 0.5rem;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -971,7 +971,34 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "td.appt {\n  overflow: visible;\n}\n\n.appointment-menu {\n  background-color: white;\n  padding: 10px;\n  color: black;\n  position: absolute;\n  top: 10px;\n  padding: 1em;\n  -webkit-border-radius: 0.1rem;\n     -moz-border-radius: 0.1rem;\n          border-radius: 0.1rem;\n  display: none;\n}\n\n.appointment-menu.show {\n  display: block;\n}\n\n.appointment-menu-container {\n  position: relative;\n  display: inline-block;\n}\n", "",{"version":3,"sources":["webpack://./modules/cortico/Appointments/AppointmentMenu.css"],"names":[],"mappings":"AAAA;EACE,iBAAiB;AACnB;;AAEA;EACE,uBAAuB;EACvB,aAAa;EACb,YAAY;EACZ,kBAAkB;EAClB,SAAS;EACT,YAAY;EACZ,6BAAqB;KAArB,0BAAqB;UAArB,qBAAqB;EACrB,aAAa;AACf;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,kBAAkB;EAClB,qBAAqB;AACvB","sourcesContent":["td.appt {\n  overflow: visible;\n}\n\n.appointment-menu {\n  background-color: white;\n  padding: 10px;\n  color: black;\n  position: absolute;\n  top: 10px;\n  padding: 1em;\n  border-radius: 0.1rem;\n  display: none;\n}\n\n.appointment-menu.show {\n  display: block;\n}\n\n.appointment-menu-container {\n  position: relative;\n  display: inline-block;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".sh td.appt {\n  overflow: visible;\n}\n\n.sh .appointment-menu {\n  background-color: #5c70ff;\n  padding: 10px;\n  color: white;\n  position: absolute;\n  top: 10px;\n  padding: 1em;\n  border-radius: 0.5rem;\n  display: none;\n  z-index: 1500;\n  font-size: 12px;\n}\n\n.sh .appointment-menu a {\n  color: white;\n}\n\n.sh .appointment-menu ul {\n  padding: 0;\n  margin: 0;\n  list-style: none;\n}\n\n.sh .appointment-menu.show {\n  display: block;\n}\n\n.sh .appointment-menu-container {\n  position: relative;\n  float: right;\n  display: flex;\n  background-color: #5c70ff;\n  padding: 5px 10px;\n  margin-top: -3px;\n  margin-right: -3px;\n  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),\n    0 10px 10px -5px rgba(0, 0, 0, 0.04);\n  cursor: pointer;\n}\n", "",{"version":3,"sources":["webpack://./modules/cortico/Appointments/AppointmentMenu.css"],"names":[],"mappings":"AAAA;EACE,iBAAiB;AACnB;;AAEA;EACE,yBAAyB;EACzB,aAAa;EACb,YAAY;EACZ,kBAAkB;EAClB,SAAS;EACT,YAAY;EACZ,qBAAqB;EACrB,aAAa;EACb,aAAa;EACb,eAAe;AACjB;;AAEA;EACE,YAAY;AACd;;AAEA;EACE,UAAU;EACV,SAAS;EACT,gBAAgB;AAClB;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,kBAAkB;EAClB,YAAY;EACZ,aAAa;EACb,yBAAyB;EACzB,iBAAiB;EACjB,gBAAgB;EAChB,kBAAkB;EAClB;wCACsC;EACtC,eAAe;AACjB","sourcesContent":["td.appt {\n  overflow: visible;\n}\n\n.appointment-menu {\n  background-color: #5c70ff;\n  padding: 10px;\n  color: white;\n  position: absolute;\n  top: 10px;\n  padding: 1em;\n  border-radius: 0.5rem;\n  display: none;\n  z-index: 1500;\n  font-size: 12px;\n}\n\n.appointment-menu a {\n  color: white;\n}\n\n.appointment-menu ul {\n  padding: 0;\n  margin: 0;\n  list-style: none;\n}\n\n.appointment-menu.show {\n  display: block;\n}\n\n.appointment-menu-container {\n  position: relative;\n  float: right;\n  display: flex;\n  background-color: #5c70ff;\n  padding: 5px 10px;\n  margin-top: -3px;\n  margin-right: -3px;\n  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),\n    0 10px 10px -5px rgba(0, 0, 0, 0.04);\n  cursor: pointer;\n}\n"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].use[2]!./node_modules/tailwindcss/tailwind.css":
+/*!***********************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].use[2]!./node_modules/tailwindcss/tailwind.css ***!
+  \***********************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../css-loader/dist/runtime/cssWithMappingToString.js */ "./node_modules/css-loader/dist/runtime/cssWithMappingToString.js");
+/* harmony import */ var _css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "/*! tailwindcss v2.2.4 | MIT License | https://tailwindcss.com *//*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */\n\n/*\nDocument\n========\n*/\n\n/**\nUse a better box model (opinionated).\n*/\n\n.sh *,\n.sh ::before,\n.sh ::after {\n\tbox-sizing: border-box;\n}\n\n/**\nUse a more readable tab size (opinionated).\n*/\n\nhtml .sh {\n\t-moz-tab-size: 4;\n\ttab-size: 4;\n}\n\n/**\n1. Correct the line height in all browsers.\n2. Prevent adjustments of font size after orientation changes in iOS.\n*/\n\nhtml .sh {\n\tline-height: 1.15; /* 1 */\n\t-webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/*\nSections\n========\n*/\n\n/**\nRemove the margin in all browsers.\n*/\n\nbody .sh {\n\tmargin: 0;\n}\n\n/**\nImprove consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n*/\n\nbody .sh {\n\tfont-family:\n\t\tsystem-ui,\n\t\t-apple-system, /* Firefox supports this but not yet `system-ui` */\n\t\t'Segoe UI',\n\t\tRoboto,\n\t\tHelvetica,\n\t\tArial,\n\t\tsans-serif,\n\t\t'Apple Color Emoji',\n\t\t'Segoe UI Emoji';\n}\n\n/*\nGrouping content\n================\n*/\n\n/**\n1. Add the correct height in Firefox.\n2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)\n*/\n\n.sh hr {\n\theight: 0; /* 1 */\n\tcolor: inherit; /* 2 */\n}\n\n/*\nText-level semantics\n====================\n*/\n\n/**\nAdd the correct text decoration in Chrome, Edge, and Safari.\n*/\n\n.sh abbr[title] {\n\t-webkit-text-decoration: underline dotted;\n\t        text-decoration: underline dotted;\n}\n\n/**\nAdd the correct font weight in Edge and Safari.\n*/\n\n.sh b,\n.sh strong {\n\tfont-weight: bolder;\n}\n\n/**\n1. Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n2. Correct the odd 'em' font sizing in all browsers.\n*/\n\n.sh code,\n.sh kbd,\n.sh samp,\n.sh pre {\n\tfont-family:\n\t\tui-monospace,\n\t\tSFMono-Regular,\n\t\tConsolas,\n\t\t'Liberation Mono',\n\t\tMenlo,\n\t\tmonospace; /* 1 */\n\tfont-size: 1em; /* 2 */\n}\n\n/**\nAdd the correct font size in all browsers.\n*/\n\n.sh small {\n\tfont-size: 80%;\n}\n\n/**\nPrevent 'sub' and 'sup' elements from affecting the line height in all browsers.\n*/\n\n.sh sub,\n.sh sup {\n\tfont-size: 75%;\n\tline-height: 0;\n\tposition: relative;\n\tvertical-align: baseline;\n}\n\n.sh sub {\n\tbottom: -0.25em;\n}\n\n.sh sup {\n\ttop: -0.5em;\n}\n\n/*\nTabular data\n============\n*/\n\n/**\n1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)\n2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)\n*/\n\n.sh table {\n\ttext-indent: 0; /* 1 */\n\tborder-color: inherit; /* 2 */\n}\n\n/*\nForms\n=====\n*/\n\n/**\n1. Change the font styles in all browsers.\n2. Remove the margin in Firefox and Safari.\n*/\n\n.sh button,\n.sh input,\n.sh optgroup,\n.sh select,\n.sh textarea {\n\tfont-family: inherit; /* 1 */\n\tfont-size: 100%; /* 1 */\n\tline-height: 1.15; /* 1 */\n\tmargin: 0; /* 2 */\n}\n\n/**\nRemove the inheritance of text transform in Edge and Firefox.\n1. Remove the inheritance of text transform in Firefox.\n*/\n\n.sh button,\n.sh select { /* 1 */\n\ttext-transform: none;\n}\n\n/**\nCorrect the inability to style clickable types in iOS and Safari.\n*/\n\n.sh button,\n.sh [type='button'],\n.sh [type='reset'],\n.sh [type='submit'] {\n\t-webkit-appearance: button;\n}\n\n/**\nRemove the inner border and padding in Firefox.\n*/\n\n.sh ::-moz-focus-inner {\n\tborder-style: none;\n\tpadding: 0;\n}\n\n/**\nRestore the focus styles unset by the previous rule.\n*/\n\n.sh :-moz-focusring {\n\toutline: 1px dotted ButtonText;\n}\n\n/**\nRemove the additional ':invalid' styles in Firefox.\nSee: https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737\n*/\n\n.sh :-moz-ui-invalid {\n\tbox-shadow: none;\n}\n\n/**\nRemove the padding so developers are not caught out when they zero out 'fieldset' elements in all browsers.\n*/\n\n.sh legend {\n\tpadding: 0;\n}\n\n/**\nAdd the correct vertical alignment in Chrome and Firefox.\n*/\n\n.sh progress {\n\tvertical-align: baseline;\n}\n\n/**\nCorrect the cursor style of increment and decrement buttons in Safari.\n*/\n\n.sh ::-webkit-inner-spin-button,\n.sh ::-webkit-outer-spin-button {\n\theight: auto;\n}\n\n/**\n1. Correct the odd appearance in Chrome and Safari.\n2. Correct the outline style in Safari.\n*/\n\n.sh [type='search'] {\n\t-webkit-appearance: textfield; /* 1 */\n\toutline-offset: -2px; /* 2 */\n}\n\n/**\nRemove the inner padding in Chrome and Safari on macOS.\n*/\n\n.sh ::-webkit-search-decoration {\n\t-webkit-appearance: none;\n}\n\n/**\n1. Correct the inability to style clickable types in iOS and Safari.\n2. Change font properties to 'inherit' in Safari.\n*/\n\n.sh ::-webkit-file-upload-button {\n\t-webkit-appearance: button; /* 1 */\n\tfont: inherit; /* 2 */\n}\n\n/*\nInteractive\n===========\n*/\n\n/*\nAdd the correct display in Chrome and Safari.\n*/\n\n.sh summary {\n\tdisplay: list-item;\n}/**\n * Manually forked from SUIT CSS Base: https://github.com/suitcss/base\n * A thin layer on top of normalize.css that provides a starting point more\n * suitable for web applications.\n */\n\n/**\n * Removes the default spacing and border for appropriate elements.\n */\n\n.sh blockquote,\n.sh dl,\n.sh dd,\n.sh h1,\n.sh h2,\n.sh h3,\n.sh h4,\n.sh h5,\n.sh h6,\n.sh hr,\n.sh figure,\n.sh p,\n.sh pre {\n  margin: 0;\n}\n\n.sh button {\n  background-color: transparent;\n  background-image: none;\n}\n\n.sh fieldset {\n  margin: 0;\n  padding: 0;\n}\n\n.sh ol,\n.sh ul {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\n\n/**\n * Tailwind custom reset styles\n */\n\n/**\n * 1. Use the user's configured `sans` font-family (with Tailwind's default\n *    sans-serif font stack as a fallback) as a sane default.\n * 2. Use Tailwind's default \"normal\" line-height so the user isn't forced\n *    to override it to ensure consistency even when using the default theme.\n */\n\nhtml .sh {\n  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"; /* 1 */\n  line-height: 1.5; /* 2 */\n}\n\n\n/**\n * Inherit font-family and line-height from `html` so users can set them as\n * a class directly on the `html` element.\n */\n\nbody .sh {\n  font-family: inherit;\n  line-height: inherit;\n}\n\n/**\n * 1. Prevent padding and border from affecting element width.\n *\n *    We used to set this in the html element and inherit from\n *    the parent element for everything else. This caused issues\n *    in shadow-dom-enhanced elements like <details> where the content\n *    is wrapped by a div with box-sizing set to `content-box`.\n *\n *    https://github.com/mozdevs/cssremedy/issues/4\n *\n *\n * 2. Allow adding a border to an element by just adding a border-width.\n *\n *    By default, the way the browser specifies that an element should have no\n *    border is by setting it's border-style to `none` in the user-agent\n *    stylesheet.\n *\n *    In order to easily add borders to elements by just setting the `border-width`\n *    property, we change the default border-style for all elements to `solid`, and\n *    use border-width to hide them instead. This way our `border` utilities only\n *    need to set the `border-width` property instead of the entire `border`\n *    shorthand, making our border utilities much more straightforward to compose.\n *\n *    https://github.com/tailwindcss/tailwindcss/pull/116\n */\n\n.sh *,\n.sh ::before,\n.sh ::after {\n  box-sizing: border-box; /* 1 */\n  border-width: 0; /* 2 */\n  border-style: solid; /* 2 */\n  border-color: currentColor; /* 2 */\n}\n\n/*\n * Ensure horizontal rules are visible by default\n */\n\n.sh hr {\n  border-top-width: 1px;\n}\n\n/**\n * Undo the `border-style: none` reset that Normalize applies to images so that\n * our `border-{width}` utilities have the expected effect.\n *\n * The Normalize reset is unnecessary for us since we default the border-width\n * to 0 on all elements.\n *\n * https://github.com/tailwindcss/tailwindcss/issues/362\n */\n\n.sh img {\n  border-style: solid;\n}\n\n.sh textarea {\n  resize: vertical;\n}\n\n.sh input::placeholder,\n.sh textarea::placeholder {\n  opacity: 1;\n  color: #9ca3af;\n}\n\n.sh button,\n.sh [role=\"button\"] {\n  cursor: pointer;\n}\n\n.sh table {\n  border-collapse: collapse;\n}\n\n.sh h1,\n.sh h2,\n.sh h3,\n.sh h4,\n.sh h5,\n.sh h6 {\n  font-size: inherit;\n  font-weight: inherit;\n}\n\n/**\n * Reset links to optimize for opt-in styling instead of\n * opt-out.\n */\n\n.sh a {\n  color: inherit;\n  text-decoration: inherit;\n}\n\n/**\n * Reset form element properties that are easy to forget to\n * style explicitly so you don't inadvertently introduce\n * styles that deviate from your design system. These styles\n * supplement a partial reset that is already applied by\n * normalize.css.\n */\n\n.sh button,\n.sh input,\n.sh optgroup,\n.sh select,\n.sh textarea {\n  padding: 0;\n  line-height: inherit;\n  color: inherit;\n}\n\n/**\n * Use the configured 'mono' font family for elements that\n * are expected to be rendered with a monospace font, falling\n * back to the system monospace stack if there is no configured\n * 'mono' font family.\n */\n\n.sh pre,\n.sh code,\n.sh kbd,\n.sh samp {\n  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace;\n}\n\n/**\n * 1. Make replaced elements `display: block` by default as that's\n *    the behavior you want almost all of the time. Inspired by\n *    CSS Remedy, with `svg` added as well.\n *\n *    https://github.com/mozdevs/cssremedy/issues/14\n * \n * 2. Add `vertical-align: middle` to align replaced elements more\n *    sensibly by default when overriding `display` by adding a\n *    utility like `inline`.\n *\n *    This can trigger a poorly considered linting error in some\n *    tools but is included by design.\n * \n *    https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210\n */\n\n.sh img,\n.sh svg,\n.sh video,\n.sh canvas,\n.sh audio,\n.sh iframe,\n.sh embed,\n.sh object {\n  display: block; /* 1 */\n  vertical-align: middle; /* 2 */\n}\n\n/**\n * Constrain images and videos to the parent width and preserve\n * their intrinsic aspect ratio.\n *\n * https://github.com/mozdevs/cssremedy/issues/14\n */\n\n.sh img,\n.sh video {\n  max-width: 100%;\n  height: auto;\n}\n\n.sh *, .sh ::before, .sh ::after {\n\t--tw-translate-x: 0;\n\t--tw-translate-y: 0;\n\t--tw-rotate: 0;\n\t--tw-skew-x: 0;\n\t--tw-skew-y: 0;\n\t--tw-scale-x: 1;\n\t--tw-scale-y: 1;\n\t--tw-transform: translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n\t--tw-border-opacity: 1;\n\tborder-color: rgba(229, 231, 235, var(--tw-border-opacity));\n\t--tw-shadow: 0 0 #0000;\n\t--tw-ring-inset: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-ring-offset-width: 0px;\n\t--tw-ring-offset-color: #fff;\n\t--tw-ring-color: rgba(59, 130, 246, 0.5);\n\t--tw-ring-offset-shadow: 0 0 #0000;\n\t--tw-ring-shadow: 0 0 #0000;\n\t--tw-blur: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-brightness: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-contrast: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-grayscale: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-hue-rotate: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-invert: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-saturate: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-sepia: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-drop-shadow: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);\n\t--tw-backdrop-blur: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-backdrop-brightness: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-backdrop-contrast: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-backdrop-grayscale: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-backdrop-hue-rotate: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-backdrop-invert: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-backdrop-opacity: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-backdrop-saturate: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-backdrop-sepia: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);\n}\n", "",{"version":3,"sources":["webpack://./node_modules/tailwindcss/tailwind.css","webpack://./node_modules/tailwindcss/%3Cinput%20css%20DhURjM%3E","webpack://./node_modules/tailwindcss/%3Cinput%20css%208pUGQi%3E","<no source>"],"names":[],"mappings":"AAAA,gEAAc,CAAd,8FAAc;;AAAd;;;CAAc;;AAAd;;CAAc;;AAAd;;;CCcC,sBAAsB;ADdT;;AAAd;;CAAc;;AAAd;CCsBC,gBAAgB;CAChB,WAAW;ADvBE;;AAAd;;;CAAc;;AAAd;CCgCC,iBAAiB,EAAE,MAAM;CACzB,8BAA8B,EAAE,MAAM;ADjCzB;;AAAd;;;CAAc;;AAAd;;CAAc;;AAAd;CC8CC,SAAS;AD9CI;;AAAd;;CAAc;;AAAd;CCsDC;;;;;;;;;kBASiB;AD/DJ;;AAAd;;;CAAc;;AAAd;;;CAAc;;AAAd;CC6EC,SAAS,EAAE,MAAM;CACjB,cAAc,EAAE,MAAM;AD9ET;;AAAd;;;CAAc;;AAAd;;CAAc;;AAAd;CC2FC,yCAAiC;SAAjC,iCAAiC;AD3FpB;;AAAd;;CAAc;;AAAd;;CCoGC,mBAAmB;ADpGN;;AAAd;;;CAAc;;AAAd;;;;CCgHC;;;;;;WAMU,EAAE,MAAM;CAClB,cAAc,EAAE,MAAM;ADvHT;;AAAd;;CAAc;;AAAd;CC+HC,cAAc;AD/HD;;AAAd;;CAAc;;AAAd;;CCwIC,cAAc;CACd,cAAc;CACd,kBAAkB;CAClB,wBAAwB;AD3IX;;AAAd;CC+IC,eAAe;AD/IF;;AAAd;CCmJC,WAAW;ADnJE;;AAAd;;;CAAc;;AAAd;;;CAAc;;AAAd;CCiKC,cAAc,EAAE,MAAM;CACtB,qBAAqB,EAAE,MAAM;ADlKhB;;AAAd;;;CAAc;;AAAd;;;CAAc;;AAAd;;;;;CCoLC,oBAAoB,EAAE,MAAM;CAC5B,eAAe,EAAE,MAAM;CACvB,iBAAiB,EAAE,MAAM;CACzB,SAAS,EAAE,MAAM;ADvLJ;;AAAd;;;CAAc;;AAAd;aCgMS,MAAM;CACd,oBAAoB;ADjMP;;AAAd;;CAAc;;AAAd;;;;CC4MC,0BAA0B;AD5Mb;;AAAd;;CAAc;;AAAd;CCoNC,kBAAkB;CAClB,UAAU;ADrNG;;AAAd;;CAAc;;AAAd;CC6NC,8BAA8B;AD7NjB;;AAAd;;;CAAc;;AAAd;CCsOC,gBAAgB;ADtOH;;AAAd;;CAAc;;AAAd;CC8OC,UAAU;AD9OG;;AAAd;;CAAc;;AAAd;CCsPC,wBAAwB;ADtPX;;AAAd;;CAAc;;AAAd;;CC+PC,YAAY;AD/PC;;AAAd;;;CAAc;;AAAd;CCwQC,6BAA6B,EAAE,MAAM;CACrC,oBAAoB,EAAE,MAAM;ADzQf;;AAAd;;CAAc;;AAAd;CCiRC,wBAAwB;ADjRX;;AAAd;;;CAAc;;AAAd;CC0RC,0BAA0B,EAAE,MAAM;CAClC,aAAa,EAAE,MAAM;AD3RR;;AAAd;;;CAAc;;AAAd;;CAAc;;AAAd;CCwSC,kBAAkB;ADxSL,CAAd;;;;EAAc;;AAAd;;EAAc;;AAAd;;;;;;;;;;;;;EEuBE,SAAS;AFvBG;;AAAd;EE2BE,6BAA6B;EAC7B,sBAAsB;AF5BV;;AAAd;EEgCE,SAAS;EACT,UAAU;AFjCE;;AAAd;;EEsCE,gBAAgB;EAChB,SAAS;EACT,UAAU;AFxCE;;AAAd;;EAAc;;AAAd;;;;;EAAc;;AAAd;EEuDE,4NAAsP,EAAE,MAAM;EAC9P,gBAAgB,EAAE,MAAM;AFxDZ;;;AAAd;;;EAAc;;AAAd;EEkEE,oBAAoB;EACpB,oBAAoB;AFnER;;AAAd;;;;;;;;;;;;;;;;;;;;;;;;EAAc;;AAAd;;;EEmGE,sBAAsB,EAAE,MAAM;EAC9B,eAAe,EAAE,MAAM;EACvB,mBAAmB,EAAE,MAAM;EAC3B,0BAA0B,EAAE,MAAM;AFtGtB;;AAAd;;EAAc;;AAAd;EE8GE,qBAAqB;AF9GT;;AAAd;;;;;;;;EAAc;;AAAd;EE4HE,mBAAmB;AF5HP;;AAAd;EEgIE,gBAAgB;AFhIJ;;AAAd;;EEqIE,UAAU;EACV,cAAwC;AFtI5B;;AAAd;;EE2IE,eAAe;AF3IH;;AAAd;EE+IE,yBAAyB;AF/Ib;;AAAd;;;;;;EEwJE,kBAAkB;EAClB,oBAAoB;AFzJR;;AAAd;;;EAAc;;AAAd;EEkKE,cAAc;EACd,wBAAwB;AFnKZ;;AAAd;;;;;;EAAc;;AAAd;;;;;EEmLE,UAAU;EACV,oBAAoB;EACpB,cAAc;AFrLF;;AAAd;;;;;EAAc;;AAAd;;;;EEmME,+GAAyI;AFnM7H;;AAAd;;;;;;;;;;;;;;;EAAc;;AAAd;;;;;;;;EE+NE,cAAc,EAAE,MAAM;EACtB,sBAAsB,EAAE,MAAM;AFhOlB;;AAAd;;;;;EAAc;;AAAd;;EE4OE,eAAe;EACf,YAAY;AF7OA;;AAAd;CGAA,oBAAA;CAAA,oBAAA;CAAA,eAAA;CAAA,eAAA;CAAA,eAAA;CAAA,gBAAA;CAAA,gBAAA;CAAA,iNAAA;CAAA,uBAAA;CAAA,4DAAA;CAAA,uBAAA;CAAA,6CAAA;CAAA,4BAAA;CAAA,6BAAA;CAAA,yCAAA;CAAA,mCAAA;CAAA,4BAAA;CAAA,uCAAA;CAAA,6CAAA;CAAA,2CAAA;CAAA,4CAAA;CAAA,6CAAA;CAAA,yCAAA;CAAA,2CAAA;CAAA,wCAAA;CAAA,8CAAA;CAAA,uLAAA;CAAA,gDAAA;CAAA,sDAAA;CAAA,oDAAA;CAAA,qDAAA;CAAA,sDAAA;CAAA,kDAAA;CAAA,mDAAA;CAAA,oDAAA;CAAA,iDAAA;CAAA;AHAc","sourcesContent":["@tailwind base;\n\n@tailwind components;\n\n@tailwind utilities;\n","/*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */\n\n/*\nDocument\n========\n*/\n\n/**\nUse a better box model (opinionated).\n*/\n\n*,\n::before,\n::after {\n\tbox-sizing: border-box;\n}\n\n/**\nUse a more readable tab size (opinionated).\n*/\n\nhtml {\n\t-moz-tab-size: 4;\n\ttab-size: 4;\n}\n\n/**\n1. Correct the line height in all browsers.\n2. Prevent adjustments of font size after orientation changes in iOS.\n*/\n\nhtml {\n\tline-height: 1.15; /* 1 */\n\t-webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/*\nSections\n========\n*/\n\n/**\nRemove the margin in all browsers.\n*/\n\nbody {\n\tmargin: 0;\n}\n\n/**\nImprove consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n*/\n\nbody {\n\tfont-family:\n\t\tsystem-ui,\n\t\t-apple-system, /* Firefox supports this but not yet `system-ui` */\n\t\t'Segoe UI',\n\t\tRoboto,\n\t\tHelvetica,\n\t\tArial,\n\t\tsans-serif,\n\t\t'Apple Color Emoji',\n\t\t'Segoe UI Emoji';\n}\n\n/*\nGrouping content\n================\n*/\n\n/**\n1. Add the correct height in Firefox.\n2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)\n*/\n\nhr {\n\theight: 0; /* 1 */\n\tcolor: inherit; /* 2 */\n}\n\n/*\nText-level semantics\n====================\n*/\n\n/**\nAdd the correct text decoration in Chrome, Edge, and Safari.\n*/\n\nabbr[title] {\n\ttext-decoration: underline dotted;\n}\n\n/**\nAdd the correct font weight in Edge and Safari.\n*/\n\nb,\nstrong {\n\tfont-weight: bolder;\n}\n\n/**\n1. Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n2. Correct the odd 'em' font sizing in all browsers.\n*/\n\ncode,\nkbd,\nsamp,\npre {\n\tfont-family:\n\t\tui-monospace,\n\t\tSFMono-Regular,\n\t\tConsolas,\n\t\t'Liberation Mono',\n\t\tMenlo,\n\t\tmonospace; /* 1 */\n\tfont-size: 1em; /* 2 */\n}\n\n/**\nAdd the correct font size in all browsers.\n*/\n\nsmall {\n\tfont-size: 80%;\n}\n\n/**\nPrevent 'sub' and 'sup' elements from affecting the line height in all browsers.\n*/\n\nsub,\nsup {\n\tfont-size: 75%;\n\tline-height: 0;\n\tposition: relative;\n\tvertical-align: baseline;\n}\n\nsub {\n\tbottom: -0.25em;\n}\n\nsup {\n\ttop: -0.5em;\n}\n\n/*\nTabular data\n============\n*/\n\n/**\n1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)\n2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)\n*/\n\ntable {\n\ttext-indent: 0; /* 1 */\n\tborder-color: inherit; /* 2 */\n}\n\n/*\nForms\n=====\n*/\n\n/**\n1. Change the font styles in all browsers.\n2. Remove the margin in Firefox and Safari.\n*/\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n\tfont-family: inherit; /* 1 */\n\tfont-size: 100%; /* 1 */\n\tline-height: 1.15; /* 1 */\n\tmargin: 0; /* 2 */\n}\n\n/**\nRemove the inheritance of text transform in Edge and Firefox.\n1. Remove the inheritance of text transform in Firefox.\n*/\n\nbutton,\nselect { /* 1 */\n\ttext-transform: none;\n}\n\n/**\nCorrect the inability to style clickable types in iOS and Safari.\n*/\n\nbutton,\n[type='button'],\n[type='reset'],\n[type='submit'] {\n\t-webkit-appearance: button;\n}\n\n/**\nRemove the inner border and padding in Firefox.\n*/\n\n::-moz-focus-inner {\n\tborder-style: none;\n\tpadding: 0;\n}\n\n/**\nRestore the focus styles unset by the previous rule.\n*/\n\n:-moz-focusring {\n\toutline: 1px dotted ButtonText;\n}\n\n/**\nRemove the additional ':invalid' styles in Firefox.\nSee: https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737\n*/\n\n:-moz-ui-invalid {\n\tbox-shadow: none;\n}\n\n/**\nRemove the padding so developers are not caught out when they zero out 'fieldset' elements in all browsers.\n*/\n\nlegend {\n\tpadding: 0;\n}\n\n/**\nAdd the correct vertical alignment in Chrome and Firefox.\n*/\n\nprogress {\n\tvertical-align: baseline;\n}\n\n/**\nCorrect the cursor style of increment and decrement buttons in Safari.\n*/\n\n::-webkit-inner-spin-button,\n::-webkit-outer-spin-button {\n\theight: auto;\n}\n\n/**\n1. Correct the odd appearance in Chrome and Safari.\n2. Correct the outline style in Safari.\n*/\n\n[type='search'] {\n\t-webkit-appearance: textfield; /* 1 */\n\toutline-offset: -2px; /* 2 */\n}\n\n/**\nRemove the inner padding in Chrome and Safari on macOS.\n*/\n\n::-webkit-search-decoration {\n\t-webkit-appearance: none;\n}\n\n/**\n1. Correct the inability to style clickable types in iOS and Safari.\n2. Change font properties to 'inherit' in Safari.\n*/\n\n::-webkit-file-upload-button {\n\t-webkit-appearance: button; /* 1 */\n\tfont: inherit; /* 2 */\n}\n\n/*\nInteractive\n===========\n*/\n\n/*\nAdd the correct display in Chrome and Safari.\n*/\n\nsummary {\n\tdisplay: list-item;\n}\n","/**\n * Manually forked from SUIT CSS Base: https://github.com/suitcss/base\n * A thin layer on top of normalize.css that provides a starting point more\n * suitable for web applications.\n */\n\n/**\n * Removes the default spacing and border for appropriate elements.\n */\n\nblockquote,\ndl,\ndd,\nh1,\nh2,\nh3,\nh4,\nh5,\nh6,\nhr,\nfigure,\np,\npre {\n  margin: 0;\n}\n\nbutton {\n  background-color: transparent;\n  background-image: none;\n}\n\nfieldset {\n  margin: 0;\n  padding: 0;\n}\n\nol,\nul {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\n\n/**\n * Tailwind custom reset styles\n */\n\n/**\n * 1. Use the user's configured `sans` font-family (with Tailwind's default\n *    sans-serif font stack as a fallback) as a sane default.\n * 2. Use Tailwind's default \"normal\" line-height so the user isn't forced\n *    to override it to ensure consistency even when using the default theme.\n */\n\nhtml {\n  font-family: theme('fontFamily.sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"); /* 1 */\n  line-height: 1.5; /* 2 */\n}\n\n\n/**\n * Inherit font-family and line-height from `html` so users can set them as\n * a class directly on the `html` element.\n */\n\nbody {\n  font-family: inherit;\n  line-height: inherit;\n}\n\n/**\n * 1. Prevent padding and border from affecting element width.\n *\n *    We used to set this in the html element and inherit from\n *    the parent element for everything else. This caused issues\n *    in shadow-dom-enhanced elements like <details> where the content\n *    is wrapped by a div with box-sizing set to `content-box`.\n *\n *    https://github.com/mozdevs/cssremedy/issues/4\n *\n *\n * 2. Allow adding a border to an element by just adding a border-width.\n *\n *    By default, the way the browser specifies that an element should have no\n *    border is by setting it's border-style to `none` in the user-agent\n *    stylesheet.\n *\n *    In order to easily add borders to elements by just setting the `border-width`\n *    property, we change the default border-style for all elements to `solid`, and\n *    use border-width to hide them instead. This way our `border` utilities only\n *    need to set the `border-width` property instead of the entire `border`\n *    shorthand, making our border utilities much more straightforward to compose.\n *\n *    https://github.com/tailwindcss/tailwindcss/pull/116\n */\n\n*,\n::before,\n::after {\n  box-sizing: border-box; /* 1 */\n  border-width: 0; /* 2 */\n  border-style: solid; /* 2 */\n  border-color: currentColor; /* 2 */\n}\n\n/*\n * Ensure horizontal rules are visible by default\n */\n\nhr {\n  border-top-width: 1px;\n}\n\n/**\n * Undo the `border-style: none` reset that Normalize applies to images so that\n * our `border-{width}` utilities have the expected effect.\n *\n * The Normalize reset is unnecessary for us since we default the border-width\n * to 0 on all elements.\n *\n * https://github.com/tailwindcss/tailwindcss/issues/362\n */\n\nimg {\n  border-style: solid;\n}\n\ntextarea {\n  resize: vertical;\n}\n\ninput::placeholder,\ntextarea::placeholder {\n  opacity: 1;\n  color: theme('colors.gray.400', #a1a1aa);\n}\n\nbutton,\n[role=\"button\"] {\n  cursor: pointer;\n}\n\ntable {\n  border-collapse: collapse;\n}\n\nh1,\nh2,\nh3,\nh4,\nh5,\nh6 {\n  font-size: inherit;\n  font-weight: inherit;\n}\n\n/**\n * Reset links to optimize for opt-in styling instead of\n * opt-out.\n */\n\na {\n  color: inherit;\n  text-decoration: inherit;\n}\n\n/**\n * Reset form element properties that are easy to forget to\n * style explicitly so you don't inadvertently introduce\n * styles that deviate from your design system. These styles\n * supplement a partial reset that is already applied by\n * normalize.css.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  padding: 0;\n  line-height: inherit;\n  color: inherit;\n}\n\n/**\n * Use the configured 'mono' font family for elements that\n * are expected to be rendered with a monospace font, falling\n * back to the system monospace stack if there is no configured\n * 'mono' font family.\n */\n\npre,\ncode,\nkbd,\nsamp {\n  font-family: theme('fontFamily.mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace);\n}\n\n/**\n * 1. Make replaced elements `display: block` by default as that's\n *    the behavior you want almost all of the time. Inspired by\n *    CSS Remedy, with `svg` added as well.\n *\n *    https://github.com/mozdevs/cssremedy/issues/14\n * \n * 2. Add `vertical-align: middle` to align replaced elements more\n *    sensibly by default when overriding `display` by adding a\n *    utility like `inline`.\n *\n *    This can trigger a poorly considered linting error in some\n *    tools but is included by design.\n * \n *    https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210\n */\n\nimg,\nsvg,\nvideo,\ncanvas,\naudio,\niframe,\nembed,\nobject {\n  display: block; /* 1 */\n  vertical-align: middle; /* 2 */\n}\n\n/**\n * Constrain images and videos to the parent width and preserve\n * their intrinsic aspect ratio.\n *\n * https://github.com/mozdevs/cssremedy/issues/14\n */\n\nimg,\nvideo {\n  max-width: 100%;\n  height: auto;\n}\n",null],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2114,6 +2141,80 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/tailwindcss/tailwind.css":
+/*!***********************************************!*\
+  !*** ./node_modules/tailwindcss/tailwind.css ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _style_loader_dist_runtime_getTarget_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../style-loader/dist/runtime/getTarget.js */ "./node_modules/style-loader/dist/runtime/getTarget.js");
+/* harmony import */ var _style_loader_dist_runtime_getTarget_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_style_loader_dist_runtime_getTarget_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _css_loader_dist_cjs_js_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_tailwind_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !!../css-loader/dist/cjs.js!../postcss-loader/dist/cjs.js??ruleSet[1].rules[0].use[2]!./tailwind.css */ "./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].use[2]!./node_modules/tailwindcss/tailwind.css");
+
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = function(css, style){
+      if (style.styleSheet) {
+        style.styleSheet.cssText = css;
+      } else {
+      while (style.firstChild) {
+        style.removeChild(style.firstChild);
+      }
+
+      style.appendChild(document.createTextNode(css));
+    }
+  };
+options.setAttributes = function(style) {
+        var nonce =
+           true ? __webpack_require__.nc : 0;
+
+        if (nonce) {
+          style.setAttribute("nonce", nonce);
+        }
+      };
+options.insert = function(style){
+    var target = _style_loader_dist_runtime_getTarget_js__WEBPACK_IMPORTED_MODULE_2___default()("head");
+
+    if (!target) {
+      throw new Error(
+        "Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid."
+      );
+    }
+
+    target.appendChild(style);
+  };
+options.domAPI = (_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_3___default());
+
+var update = _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_css_loader_dist_cjs_js_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_tailwind_css__WEBPACK_IMPORTED_MODULE_4__.default, options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_css_loader_dist_cjs_js_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_tailwind_css__WEBPACK_IMPORTED_MODULE_4__.default && _css_loader_dist_cjs_js_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_tailwind_css__WEBPACK_IMPORTED_MODULE_4__.default.locals ? _css_loader_dist_cjs_js_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_tailwind_css__WEBPACK_IMPORTED_MODULE_4__.default.locals : undefined);
+
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/runtime/getTarget.js":
 /*!*************************************************************!*\
   !*** ./node_modules/style-loader/dist/runtime/getTarget.js ***!
@@ -2417,15 +2518,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _modules_PubSub_PubSub__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/PubSub/PubSub */ "./modules/PubSub/PubSub.js");
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js");
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _modules_cortico_Appointments_Appointments__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/cortico/Appointments/Appointments */ "./modules/cortico/Appointments/Appointments.js");
-/* harmony import */ var _modules_cortico_Appointments_AppointmentMenu__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/cortico/Appointments/AppointmentMenu */ "./modules/cortico/Appointments/AppointmentMenu.js");
-/* harmony import */ var _modules_core_Oscar_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/core/Oscar.js */ "./modules/core/Oscar.js");
-/* harmony import */ var element_closest_polyfill__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! element-closest-polyfill */ "./node_modules/element-closest-polyfill/index.js");
-/* harmony import */ var element_closest_polyfill__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(element_closest_polyfill__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/Utils/Utils */ "./modules/Utils/Utils.js");
+/* harmony import */ var tailwindcss_tailwind_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tailwindcss/tailwind.css */ "./node_modules/tailwindcss/tailwind.css");
+/* harmony import */ var _modules_PubSub_PubSub__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/PubSub/PubSub */ "./modules/PubSub/PubSub.js");
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js");
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _modules_cortico_Appointments_Appointments__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/cortico/Appointments/Appointments */ "./modules/cortico/Appointments/Appointments.js");
+/* harmony import */ var _modules_cortico_Appointments_AppointmentMenu__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/cortico/Appointments/AppointmentMenu */ "./modules/cortico/Appointments/AppointmentMenu.js");
+/* harmony import */ var _modules_core_Oscar_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/core/Oscar.js */ "./modules/core/Oscar.js");
+/* harmony import */ var element_closest_polyfill__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! element-closest-polyfill */ "./node_modules/element-closest-polyfill/index.js");
+/* harmony import */ var element_closest_polyfill__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(element_closest_polyfill__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/Utils/Utils */ "./modules/Utils/Utils.js");
 
 
 
@@ -2440,11 +2542,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
  // manually update this variable with the version in manifest.json
 
 var version = 2.0;
-var pubsub = (0,_modules_PubSub_PubSub__WEBPACK_IMPORTED_MODULE_3__.pubSubInit)();
-var oscar = new _modules_core_Oscar_js__WEBPACK_IMPORTED_MODULE_7__.Oscar(window.location.hostname);
+var pubsub = (0,_modules_PubSub_PubSub__WEBPACK_IMPORTED_MODULE_4__.pubSubInit)();
+var oscar = new _modules_core_Oscar_js__WEBPACK_IMPORTED_MODULE_8__.Oscar(window.location.hostname);
 
 var init_cortico = function init_cortico() {
   // create an element to indicate the library is loaded in the dom, and to contain fixed menus/elements.
@@ -2478,7 +2581,7 @@ var init_cortico = function init_cortico() {
     dragAndDrop();
     addCorticoLogo();
     addMenu();
-    (0,_modules_cortico_Appointments_AppointmentMenu__WEBPACK_IMPORTED_MODULE_6__.addAppointmentMenu)();
+    (0,_modules_cortico_Appointments_AppointmentMenu__WEBPACK_IMPORTED_MODULE_7__.addAppointmentMenu)();
 
     if (!oscar.isJuno() && !oscar.containsKaiBar()) {
       plusSignFromCache();
@@ -2535,7 +2638,7 @@ var init_schedule = function init_schedule() {
       console.log("before clearInterval");
       clearInterval(reloadHandler);
 
-      if (window.checkAllEligibilityRunning !== true || window.setupPreferredPharmaciesRunning !== true) {
+      if (window.checkAllEligibilityRunning !== true && window.setupPreferredPharmaciesRunning !== true) {
         window.location.reload();
       }
     }
@@ -3125,8 +3228,8 @@ function dragAndDrop() {
 
               apptUrl = extractApptUrl(apptLinkText); //Get our base url with the provider
 
-              origin = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_9__.getOrigin)();
-              provider = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_9__.getProvider)();
+              origin = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_10__.getOrigin)();
+              provider = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_10__.getProvider)();
               _context2.next = 14;
               return appointmentEditRequest(origin, provider, apptUrl);
 
@@ -3145,10 +3248,10 @@ function dragAndDrop() {
               originalStartTime = formData.get("start_time");
               apptDate = formData.get("appointment_date");
               duration = formData.get("duration") - 1;
-              newEndTime = dayjs__WEBPACK_IMPORTED_MODULE_4___default()(apptDate + "T" + newStartTime).add(duration, "minute").format("HH:mm"); // We check to see if the drag and drop overlaps to the next day, if it does we prevent.
+              newEndTime = dayjs__WEBPACK_IMPORTED_MODULE_5___default()(apptDate + "T" + newStartTime).add(duration, "minute").format("HH:mm"); // We check to see if the drag and drop overlaps to the next day, if it does we prevent.
 
-              _newStartTime = dayjs__WEBPACK_IMPORTED_MODULE_4___default()(apptDate + "T" + newStartTime);
-              _newEndTime = dayjs__WEBPACK_IMPORTED_MODULE_4___default()(apptDate + "T" + newStartTime).add(duration, "minute");
+              _newStartTime = dayjs__WEBPACK_IMPORTED_MODULE_5___default()(apptDate + "T" + newStartTime);
+              _newEndTime = dayjs__WEBPACK_IMPORTED_MODULE_5___default()(apptDate + "T" + newStartTime).add(duration, "minute");
 
               if (isSameDay(_newStartTime, _newEndTime)) {
                 _context2.next = 31;
@@ -3261,7 +3364,7 @@ function addToCache(demographic_no, _verified) {
 
   var _cache = localStorage.getItem("checkCache");
 
-  var _today = dayjs__WEBPACK_IMPORTED_MODULE_4___default()().format("YYYY-MM-DD");
+  var _today = dayjs__WEBPACK_IMPORTED_MODULE_5___default()().format("YYYY-MM-DD");
 
   var cache = JSON.parse(_cache) || {};
   cache[demographic_no] = {
@@ -3274,7 +3377,7 @@ function addToCache(demographic_no, _verified) {
 function filterAppointments(appointments) {
   var _cache = localStorage.getItem("checkCache");
 
-  var _today = dayjs__WEBPACK_IMPORTED_MODULE_4___default()().format("YYYY-MM-DD");
+  var _today = dayjs__WEBPACK_IMPORTED_MODULE_5___default()().format("YYYY-MM-DD");
 
   if (!_cache) {
     return appointments;
@@ -3290,7 +3393,7 @@ function filterAppointments(appointments) {
 
     var cachedDate = cache[demographic_no].date; // Check appointment if it exists in cache, but expired
 
-    if (isDateExpired(dayjs__WEBPACK_IMPORTED_MODULE_4___default()(cachedDate), _today, 5)) {
+    if (isDateExpired(dayjs__WEBPACK_IMPORTED_MODULE_5___default()(cachedDate), _today, 5)) {
       return true;
     }
 
@@ -3356,7 +3459,7 @@ function _checkAllEligibility() {
             result = null;
             _context4.prev = 22;
             _context4.next = 25;
-            return checkEligiblity(demographic_no, (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_9__.getOrigin)(), (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_9__.getProvider)(), providerNo);
+            return checkEligiblity(demographic_no, (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_10__.getOrigin)(), (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_10__.getProvider)(), providerNo);
 
           case 25:
             result = _context4.sent;
@@ -3458,7 +3561,7 @@ function _checkAllEligibility() {
 function getPharmacyResults(searchTerm) {
   var uriSafeSearch = searchTerm.toLowerCase().replace(" ", "+");
   var newLocal = "oscarRx/managePharmacy.do?method=search&search&term=" + uriSafeSearch;
-  var url = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_9__.getOrigin)() + "/" + (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_9__.getProvider)() + "/" + newLocal;
+  var url = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_10__.getOrigin)() + "/" + (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_10__.getProvider)() + "/" + newLocal;
   return fetch(url, {
     method: "GET",
     headers: (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__.default)({
@@ -3470,7 +3573,7 @@ function getPharmacyResults(searchTerm) {
 
 function getCurrentPharmacy(demographicNo) {
   var newLocal = "oscarRx/managePharmacy.do?method=getPharmacyFromDemographic&demographicNo=" + demographicNo;
-  var url = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_9__.getOrigin)() + "/" + (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_9__.getProvider)() + "/" + newLocal;
+  var url = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_10__.getOrigin)() + "/" + (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_10__.getProvider)() + "/" + newLocal;
   return fetch(url, {
     method: "GET",
     headers: (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__.default)({
@@ -3481,7 +3584,7 @@ function getCurrentPharmacy(demographicNo) {
 }
 
 function setPreferredPharmacy(pharmacyObj, demographicNo) {
-  var url = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_9__.getOrigin)() + "/" + (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_9__.getProvider)() + "/" + "oscarRx/managePharmacy.do?method=setPreferred";
+  var url = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_10__.getOrigin)() + "/" + (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_10__.getProvider)() + "/" + "oscarRx/managePharmacy.do?method=setPreferred";
   pharmacyObj.name = pharmacyObj.name.replace(" ", "+");
   var formData = new FormData();
   formData.append("pharmacyId", pharmacyObj.id);
@@ -3717,7 +3820,7 @@ function addVerifiedMark(mark, node) {
 }
 
 function plusSignAppointments(demographic_no) {
-  var appointments = (0,_modules_cortico_Appointments_Appointments__WEBPACK_IMPORTED_MODULE_5__.getAppointments)(demographic_no);
+  var appointments = (0,_modules_cortico_Appointments_Appointments__WEBPACK_IMPORTED_MODULE_6__.getAppointments)(demographic_no);
   appointments.map(function (appt) {
     var apptLink = getAppointmentLink(appt);
     addVerifiedMark(" + &nbsp;", apptLink);
@@ -3731,13 +3834,13 @@ function plusSignFromCache() {
   var cache = JSON.parse(_cache);
   console.log("Cacheeee", cache);
 
-  var _today = dayjs__WEBPACK_IMPORTED_MODULE_4___default()().format("YYYY-MM-DD");
+  var _today = dayjs__WEBPACK_IMPORTED_MODULE_5___default()().format("YYYY-MM-DD");
 
   for (var key in cache) {
     if (cache[key].verified === true) {
       var cachedDate = cache[key].date; // Check appointment if it exists in cache, but expired
 
-      if (isDateExpired(dayjs__WEBPACK_IMPORTED_MODULE_4___default()(cachedDate), _today, 5)) {
+      if (isDateExpired(dayjs__WEBPACK_IMPORTED_MODULE_5___default()(cachedDate), _today, 5)) {
         continue;
       }
 
@@ -4013,7 +4116,7 @@ function storePharmaciesCache(demographicNo) {
   var _cache = localStorage.getItem("pharmaciesCache");
 
   var cache = JSON.parse(_cache);
-  var date = dayjs__WEBPACK_IMPORTED_MODULE_4___default()().format("YYYY-MM-DD");
+  var date = dayjs__WEBPACK_IMPORTED_MODULE_5___default()().format("YYYY-MM-DD");
   var demographics;
 
   if (cache && cache["date"] !== date) {
@@ -4045,7 +4148,7 @@ function storePharmaciesFailureCache(demographicNo, message) {
   var _cache = localStorage.getItem("pharmaciesCacheFailure");
 
   var cache = JSON.parse(_cache);
-  var date = dayjs__WEBPACK_IMPORTED_MODULE_4___default()().format("YYYY-MM-DD");
+  var date = dayjs__WEBPACK_IMPORTED_MODULE_5___default()().format("YYYY-MM-DD");
   var failures = new Array();
 
   if (cache && cache["date"] === date) {
@@ -4344,7 +4447,7 @@ function _init_recall_button() {
 
                       case 14:
                         apptSchedule = apptDate + "T" + apptTime;
-                        cleanedSchedule = dayjs__WEBPACK_IMPORTED_MODULE_4___default()(apptSchedule).format("h:mmA on MMMM D");
+                        cleanedSchedule = dayjs__WEBPACK_IMPORTED_MODULE_5___default()(apptSchedule).format("h:mmA on MMMM D");
                         cleanedPatient = apptPatient ? apptPatient : "Patient";
                         clinicName = localStorage["clinicname"];
                         window.open("mailto:".concat(patientEmail, "?subject=Your doctor wants to speak with you&") + "body=Dear ".concat(cleanedPatient, ",%0d%0aYour doctor needs to follow up with you regarding some documents or results.%0d%0a") + "We have tentatively booked you an appointment at ".concat(cleanedSchedule, ".%0d%0a%0d%0aPlease confirm with the following link:") + "https://".concat(clinicName, ".cortico.ca/get-patient-appointment-lookup-url/%0d%0a%0d%0a") + "Sincerely,%0d%0a".concat(clinicName.toUpperCase(), " STAFF"));
@@ -4435,8 +4538,8 @@ function _getPatientEmail() {
 }
 
 function getDemographicPageResponse() {
-  var origin = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_9__.getOrigin)();
-  var provider = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_9__.getProvider)();
+  var origin = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_10__.getOrigin)();
+  var provider = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_10__.getProvider)();
   var demographicNo = getDemographicNo(window.location.href);
   var url = "".concat(origin, "/").concat(provider, "/demographic/demographiccontrol.jsp?demographic_no=").concat(demographicNo, "&displaymode=edit&dboperation=search_detail");
   return fetch(url);

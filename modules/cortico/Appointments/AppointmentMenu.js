@@ -13,7 +13,7 @@ export function addAppointmentMenu() {
 
   const html = document.documentElement;
   html.addEventListener("click", (e) => {
-    const menu = e.target.closest(".appointment-menu");
+    const menu = e.target.closest(".appointment-menu-container");
     const menuToggle = e.target.closest(".ellip-dot-wrapper");
 
     if (!menu && !menuToggle) {
@@ -36,7 +36,7 @@ export function appointmentMenu(apptTd) {
   container.appendChild(menu);
   menu.classList.add("appointment-menu");
 
-  menuIcon.addEventListener("click", (e) => {
+  container.addEventListener("click", (e) => {
     e.preventDefault();
 
     const openMenu = document.querySelector(".appointment-menu.show");
@@ -46,7 +46,7 @@ export function appointmentMenu(apptTd) {
     menu.classList.toggle("show");
   });
 
-  menuIcon.addEventListener(
+  container.addEventListener(
     "click",
     async (e) => {
       await renderPatientInfo(apptTd);
