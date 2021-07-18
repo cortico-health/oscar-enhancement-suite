@@ -2335,6 +2335,21 @@ function domAPI(options) {
 
 module.exports = domAPI;
 
+/***/ }),
+
+/***/ "./resources/icons/96x96.png":
+/*!***********************************!*\
+  !*** ./resources/icons/96x96.png ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGEAAABhCAYAAADGBs+jAAAACXBIWXMAAAsSAAALEgHS3X78AAAEqklEQVR4nO2dvXHbMBSAX3RpVNkb2BvYmcAaQIUa1nEmiDYIR1AmsFyrSe7Ux9lAniDWBlbF0jnIjzYlUyRAvAc8kO+707mxAAofQeLvAZ9eXl4gJaZZcQ4A1wAwObrsDQA8rFfj56R+EAAkI2GaFabg5wDwteVf7wFguV6NHwJdmjfiJeCdnwPAd8ev/jTfS6FmiJaAAswdfdUxiUcAuF2vxhviSyNFrAQCASVGxERyjRgJuIYPEAoATOMX8SWSIk4CsYCSm2lWzAjTI0WUBCYBJTlDmiSIkcAswHCFzVxxiJAQQEDJcQdPBNElBBQA2NMWR1QJgQUYLgPl40Q0CREEiCWKBBVwSHAJkQWIHNQLKkFADRA5hhRs7EiAgN16NT6PlHcjQWqCkHfAImLejbBLECJgO1gJglpBs0EOZQsS8E36pA6LBGEClpGvoRVyCSrAHVIJKqAbZBJUQHdIJKgAP7wlqAB/vCSoABo6S1ABdHSSoAJocZagAuhxkqACeLCWoAL4sJKgAnhplaAC+GmUoALC8PlULirAnUo83cZlEql2ol8F2DHNCrOib4afm5ov/cXYiGWTlA8SVEA7WEYmiPGH5Vd2Zo57vRrXLs8/kKAC2sHl9cuOZVQbuvUmQQW0gwJMGZ15JPNBRLV1pAIawJt06SkAsIwPlmPuJUyzYq4CWskJy8hEDb29H/aPo2lWPBMY9iGFVtA/4mTNy/rSPJZG06y4VQGtzBnSNGVuyn7/OIoZx5VKR4yrjKJLSGkogi2iFFDCBVMGTaQ0FMF6k5pmb4xwqV4PxnXgPLQEFVDDCNfuhyBJAdybV5n0R4HiuFKvAY+c6Y4CbEPTh0cQV23Yp1tK2DFl0pd3AFeo1T7dEY7mcWRiLcA007DnLpL1avyEe+pRco/pvg7g4WQD5XPPSQBWyzvJInAAj6oRs6sOhVSbqBMiEV0ElGNXYkXgE2NG8OjeHc8nUM6sbTFK0qq11TJB0teJnVLAQRmdmujPsbrYZvQbt760WmFg+UOkT/AsLDbKrWI2zZ3XldHJbRUwo1v81NWMLRbkwiVE1fFOSmGeIcdHed0YXFlGefkSrsN6bwvMsNy0yWldTSWNLlU5iWbuUfkYnpoKvkrIDUZ8nqW9HnMKtcHIxHOVgvTmqxchNhgxhfeHYAq1tyK4NxgxLYg7wiR7KYLlnYCPnwXjtGCv3hGkErDw8xOLY6npjQhvCVjwE+xPhJ6v7oWIzhKwXbyJvGYJBhvHDO/DuxPGuQhbkn9Ze7WOcLhCRXji3URVEf6Q9BNUhB9knTUV0R3SHrOK6Ab5sIWKcIdl7EhFuME6n0AUaEfBF8kb1LKOogqqEb9wulYk7PMJQkRcMIU8kZDK9CYFb4F6kfI/SbD4BAE14kzPWZMhQiVAfBF62F2JoFaTCKIddqci3ol67KOKeCX6AaiBRYjsNYs4CjigCJEnDgbrrNnA3KEb9mF3tjDXiOEeducKk4jhHnbXFWIRu8EedudLRYRPxGRtjJg0xEqAdxHXGBPnymMKAkBa66gJh8XGW4wRS2ZpZDISSnANrBFi/pYDcuZuN8syTSyd+Dv/AAD4D9nFlj4ll12bAAAAAElFTkSuQmCC");
+
 /***/ })
 
 /******/ 	});
@@ -2417,16 +2432,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__);
-Object(function webpackMissingModule() { var e = new Error("Cannot find module 'tailwindcss/tailwind.css'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
-/* harmony import */ var _modules_PubSub_PubSub__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/PubSub/PubSub */ "./modules/PubSub/PubSub.js");
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js");
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _modules_cortico_Appointments_Appointments__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/cortico/Appointments/Appointments */ "./modules/cortico/Appointments/Appointments.js");
-/* harmony import */ var _modules_cortico_Appointments_AppointmentMenu__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/cortico/Appointments/AppointmentMenu */ "./modules/cortico/Appointments/AppointmentMenu.js");
-/* harmony import */ var _modules_core_Oscar_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/core/Oscar.js */ "./modules/core/Oscar.js");
-/* harmony import */ var element_closest_polyfill__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! element-closest-polyfill */ "./node_modules/element-closest-polyfill/index.js");
-/* harmony import */ var element_closest_polyfill__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(element_closest_polyfill__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/Utils/Utils */ "./modules/Utils/Utils.js");
+/* harmony import */ var _modules_PubSub_PubSub__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/PubSub/PubSub */ "./modules/PubSub/PubSub.js");
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js");
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _modules_cortico_Appointments_Appointments__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/cortico/Appointments/Appointments */ "./modules/cortico/Appointments/Appointments.js");
+/* harmony import */ var _modules_cortico_Appointments_AppointmentMenu__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/cortico/Appointments/AppointmentMenu */ "./modules/cortico/Appointments/AppointmentMenu.js");
+/* harmony import */ var _modules_core_Oscar_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/core/Oscar.js */ "./modules/core/Oscar.js");
+/* harmony import */ var element_closest_polyfill__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! element-closest-polyfill */ "./node_modules/element-closest-polyfill/index.js");
+/* harmony import */ var element_closest_polyfill__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(element_closest_polyfill__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/Utils/Utils */ "./modules/Utils/Utils.js");
+/* harmony import */ var _resources_icons_96x96_png__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./resources/icons/96x96.png */ "./resources/icons/96x96.png");
 
 
 
@@ -2445,8 +2460,8 @@ Object(function webpackMissingModule() { var e = new Error("Cannot find module '
  // manually update this variable with the version in manifest.json
 
 var version = 2.0;
-var pubsub = (0,_modules_PubSub_PubSub__WEBPACK_IMPORTED_MODULE_4__.pubSubInit)();
-var oscar = new _modules_core_Oscar_js__WEBPACK_IMPORTED_MODULE_8__.Oscar(window.location.hostname);
+var pubsub = (0,_modules_PubSub_PubSub__WEBPACK_IMPORTED_MODULE_3__.pubSubInit)();
+var oscar = new _modules_core_Oscar_js__WEBPACK_IMPORTED_MODULE_7__.Oscar(window.location.hostname);
 
 var init_cortico = function init_cortico() {
   // create an element to indicate the library is loaded in the dom, and to contain fixed menus/elements.
@@ -2480,7 +2495,7 @@ var init_cortico = function init_cortico() {
     dragAndDrop();
     addCorticoLogo();
     addMenu();
-    (0,_modules_cortico_Appointments_AppointmentMenu__WEBPACK_IMPORTED_MODULE_7__.addAppointmentMenu)();
+    (0,_modules_cortico_Appointments_AppointmentMenu__WEBPACK_IMPORTED_MODULE_6__.addAppointmentMenu)();
 
     if (!oscar.isJuno() && !oscar.containsKaiBar()) {
       plusSignFromCache();
@@ -2660,7 +2675,13 @@ function addGlobalStyle(css) {
 function addCorticoLogo() {
   var menu = document.querySelector("#firstMenu #navList") || document.querySelector("#firstMenu #navlist");
   var listitem = document.createElement("li");
-  listitem.innerHTML = '<a href="http://cortico.ca"><img src="http://bool.countable.ca/32x32.png" height="15" style="vertical-align: middle;" /></a>';
+  var anchor = document.createElement("a");
+  anchor.setAttribute("href", "https://cortico.ca");
+  var corticoLogo = document.createElement("img");
+  corticoLogo.src = _resources_icons_96x96_png__WEBPACK_IMPORTED_MODULE_10__.default;
+  corticoLogo.height = "15";
+  anchor.appendChild(corticoLogo);
+  listitem.appendChild(anchor);
   menu.appendChild(listitem);
 }
 
@@ -3127,8 +3148,8 @@ function dragAndDrop() {
 
               apptUrl = extractApptUrl(apptLinkText); //Get our base url with the provider
 
-              origin = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_10__.getOrigin)();
-              provider = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_10__.getProvider)();
+              origin = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_9__.getOrigin)();
+              provider = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_9__.getProvider)();
               _context2.next = 14;
               return appointmentEditRequest(origin, provider, apptUrl);
 
@@ -3147,10 +3168,10 @@ function dragAndDrop() {
               originalStartTime = formData.get("start_time");
               apptDate = formData.get("appointment_date");
               duration = formData.get("duration") - 1;
-              newEndTime = dayjs__WEBPACK_IMPORTED_MODULE_5___default()(apptDate + "T" + newStartTime).add(duration, "minute").format("HH:mm"); // We check to see if the drag and drop overlaps to the next day, if it does we prevent.
+              newEndTime = dayjs__WEBPACK_IMPORTED_MODULE_4___default()(apptDate + "T" + newStartTime).add(duration, "minute").format("HH:mm"); // We check to see if the drag and drop overlaps to the next day, if it does we prevent.
 
-              _newStartTime = dayjs__WEBPACK_IMPORTED_MODULE_5___default()(apptDate + "T" + newStartTime);
-              _newEndTime = dayjs__WEBPACK_IMPORTED_MODULE_5___default()(apptDate + "T" + newStartTime).add(duration, "minute");
+              _newStartTime = dayjs__WEBPACK_IMPORTED_MODULE_4___default()(apptDate + "T" + newStartTime);
+              _newEndTime = dayjs__WEBPACK_IMPORTED_MODULE_4___default()(apptDate + "T" + newStartTime).add(duration, "minute");
 
               if (isSameDay(_newStartTime, _newEndTime)) {
                 _context2.next = 31;
@@ -3263,7 +3284,7 @@ function addToCache(demographic_no, _verified) {
 
   var _cache = localStorage.getItem("checkCache");
 
-  var _today = dayjs__WEBPACK_IMPORTED_MODULE_5___default()().format("YYYY-MM-DD");
+  var _today = dayjs__WEBPACK_IMPORTED_MODULE_4___default()().format("YYYY-MM-DD");
 
   var cache = JSON.parse(_cache) || {};
   cache[demographic_no] = {
@@ -3276,7 +3297,7 @@ function addToCache(demographic_no, _verified) {
 function filterAppointments(appointments) {
   var _cache = localStorage.getItem("checkCache");
 
-  var _today = dayjs__WEBPACK_IMPORTED_MODULE_5___default()().format("YYYY-MM-DD");
+  var _today = dayjs__WEBPACK_IMPORTED_MODULE_4___default()().format("YYYY-MM-DD");
 
   if (!_cache) {
     return appointments;
@@ -3292,7 +3313,7 @@ function filterAppointments(appointments) {
 
     var cachedDate = cache[demographic_no].date; // Check appointment if it exists in cache, but expired
 
-    if (isDateExpired(dayjs__WEBPACK_IMPORTED_MODULE_5___default()(cachedDate), _today, 5)) {
+    if (isDateExpired(dayjs__WEBPACK_IMPORTED_MODULE_4___default()(cachedDate), _today, 5)) {
       return true;
     }
 
@@ -3358,7 +3379,7 @@ function _checkAllEligibility() {
             result = null;
             _context4.prev = 22;
             _context4.next = 25;
-            return checkEligiblity(demographic_no, (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_10__.getOrigin)(), (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_10__.getProvider)(), providerNo);
+            return checkEligiblity(demographic_no, (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_9__.getOrigin)(), (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_9__.getProvider)(), providerNo);
 
           case 25:
             result = _context4.sent;
@@ -3460,7 +3481,7 @@ function _checkAllEligibility() {
 function getPharmacyResults(searchTerm) {
   var uriSafeSearch = searchTerm.toLowerCase().replace(" ", "+");
   var newLocal = "oscarRx/managePharmacy.do?method=search&search&term=" + uriSafeSearch;
-  var url = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_10__.getOrigin)() + "/" + (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_10__.getProvider)() + "/" + newLocal;
+  var url = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_9__.getOrigin)() + "/" + (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_9__.getProvider)() + "/" + newLocal;
   return fetch(url, {
     method: "GET",
     headers: (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__.default)({
@@ -3472,7 +3493,7 @@ function getPharmacyResults(searchTerm) {
 
 function getCurrentPharmacy(demographicNo) {
   var newLocal = "oscarRx/managePharmacy.do?method=getPharmacyFromDemographic&demographicNo=" + demographicNo;
-  var url = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_10__.getOrigin)() + "/" + (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_10__.getProvider)() + "/" + newLocal;
+  var url = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_9__.getOrigin)() + "/" + (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_9__.getProvider)() + "/" + newLocal;
   return fetch(url, {
     method: "GET",
     headers: (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__.default)({
@@ -3483,7 +3504,7 @@ function getCurrentPharmacy(demographicNo) {
 }
 
 function setPreferredPharmacy(pharmacyObj, demographicNo) {
-  var url = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_10__.getOrigin)() + "/" + (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_10__.getProvider)() + "/" + "oscarRx/managePharmacy.do?method=setPreferred";
+  var url = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_9__.getOrigin)() + "/" + (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_9__.getProvider)() + "/" + "oscarRx/managePharmacy.do?method=setPreferred";
   pharmacyObj.name = pharmacyObj.name.replace(" ", "+");
   var formData = new FormData();
   formData.append("pharmacyId", pharmacyObj.id);
@@ -3719,7 +3740,7 @@ function addVerifiedMark(mark, node) {
 }
 
 function plusSignAppointments(demographic_no) {
-  var appointments = (0,_modules_cortico_Appointments_Appointments__WEBPACK_IMPORTED_MODULE_6__.getAppointments)(demographic_no);
+  var appointments = (0,_modules_cortico_Appointments_Appointments__WEBPACK_IMPORTED_MODULE_5__.getAppointments)(demographic_no);
   appointments.map(function (appt) {
     var apptLink = getAppointmentLink(appt);
     addVerifiedMark(" + &nbsp;", apptLink);
@@ -3733,13 +3754,13 @@ function plusSignFromCache() {
   var cache = JSON.parse(_cache);
   console.log("Cacheeee", cache);
 
-  var _today = dayjs__WEBPACK_IMPORTED_MODULE_5___default()().format("YYYY-MM-DD");
+  var _today = dayjs__WEBPACK_IMPORTED_MODULE_4___default()().format("YYYY-MM-DD");
 
   for (var key in cache) {
     if (cache[key].verified === true) {
       var cachedDate = cache[key].date; // Check appointment if it exists in cache, but expired
 
-      if (isDateExpired(dayjs__WEBPACK_IMPORTED_MODULE_5___default()(cachedDate), _today, 5)) {
+      if (isDateExpired(dayjs__WEBPACK_IMPORTED_MODULE_4___default()(cachedDate), _today, 5)) {
         continue;
       }
 
@@ -4015,7 +4036,7 @@ function storePharmaciesCache(demographicNo) {
   var _cache = localStorage.getItem("pharmaciesCache");
 
   var cache = JSON.parse(_cache);
-  var date = dayjs__WEBPACK_IMPORTED_MODULE_5___default()().format("YYYY-MM-DD");
+  var date = dayjs__WEBPACK_IMPORTED_MODULE_4___default()().format("YYYY-MM-DD");
   var demographics;
 
   if (cache && cache["date"] !== date) {
@@ -4047,7 +4068,7 @@ function storePharmaciesFailureCache(demographicNo, message) {
   var _cache = localStorage.getItem("pharmaciesCacheFailure");
 
   var cache = JSON.parse(_cache);
-  var date = dayjs__WEBPACK_IMPORTED_MODULE_5___default()().format("YYYY-MM-DD");
+  var date = dayjs__WEBPACK_IMPORTED_MODULE_4___default()().format("YYYY-MM-DD");
   var failures = new Array();
 
   if (cache && cache["date"] === date) {
@@ -4346,7 +4367,7 @@ function _init_recall_button() {
 
                       case 14:
                         apptSchedule = apptDate + "T" + apptTime;
-                        cleanedSchedule = dayjs__WEBPACK_IMPORTED_MODULE_5___default()(apptSchedule).format("h:mmA on MMMM D");
+                        cleanedSchedule = dayjs__WEBPACK_IMPORTED_MODULE_4___default()(apptSchedule).format("h:mmA on MMMM D");
                         cleanedPatient = apptPatient ? apptPatient : "Patient";
                         clinicName = localStorage["clinicname"];
                         window.open("mailto:".concat(patientEmail, "?subject=Your doctor wants to speak with you&") + "body=Dear ".concat(cleanedPatient, ",%0d%0aYour doctor needs to follow up with you regarding some documents or results.%0d%0a") + "We have tentatively booked you an appointment at ".concat(cleanedSchedule, ".%0d%0a%0d%0aPlease confirm with the following link:") + "https://".concat(clinicName, ".cortico.ca/get-patient-appointment-lookup-url/%0d%0a%0d%0a") + "Sincerely,%0d%0a".concat(clinicName.toUpperCase(), " STAFF"));
@@ -4437,8 +4458,8 @@ function _getPatientEmail() {
 }
 
 function getDemographicPageResponse() {
-  var origin = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_10__.getOrigin)();
-  var provider = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_10__.getProvider)();
+  var origin = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_9__.getOrigin)();
+  var provider = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_9__.getProvider)();
   var demographicNo = getDemographicNo(window.location.href);
   var url = "".concat(origin, "/").concat(provider, "/demographic/demographiccontrol.jsp?demographic_no=").concat(demographicNo, "&displaymode=edit&dboperation=search_detail");
   return fetch(url);
