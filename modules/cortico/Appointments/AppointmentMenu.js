@@ -3,6 +3,7 @@ import { getAppointments } from "./Appointments";
 import "./AppointmentMenu.css";
 import { Modal } from "../../Modal/Modal";
 import { Masterfile } from "../../core/Masterfile";
+
 const modal = new Modal();
 
 export function addAppointmentMenu() {
@@ -37,8 +38,6 @@ export function appointmentMenu(apptTd) {
   menu.classList.add("appointment-menu");
 
   container.addEventListener("click", (e) => {
-    e.preventDefault();
-
     const openMenu = document.querySelector(".appointment-menu.show");
     if (openMenu) {
       openMenu.classList.remove("show");
@@ -66,7 +65,7 @@ export function appointmentMenuItems() {
   const items = [
     {
       title: "Portal Page",
-      href: "#",
+      href: "http://google.ca",
     },
     {
       title: "Go To Appointment (Cortico)",
