@@ -3,6 +3,7 @@ import { getAppointments } from "./Appointments";
 import "./AppointmentMenu.css";
 import { Modal } from "../../Modal/Modal";
 import { Masterfile } from "../../core/Masterfile";
+import corticoIcon from "../../../resources/icons/96x96.png";
 
 const modal = new Modal();
 
@@ -128,11 +129,11 @@ async function renderPatientInfo(apptTd) {
   }
 
   if (homePhone && homePhone.phone) {
-    html += `<div>Phone(H): ${homePhone.phone}</div>`;
+    html += `<div>Home: ${homePhone.phone}</div>`;
   }
 
   if (workPhone && workPhone.phone) {
-    html += `<div>Phone(W): ${workPhone.phone}</div>`;
+    html += `<div>Work: ${workPhone.phone}</div>`;
   }
   contactInfoContainer.innerHTML = html;
 }

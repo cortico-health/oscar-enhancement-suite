@@ -10,8 +10,7 @@ import { addAppointmentMenu } from "./modules/cortico/Appointments/AppointmentMe
 import { Oscar } from "./modules/core/Oscar.js";
 import "element-closest-polyfill";
 import { getOrigin, getProvider } from "./modules/Utils/Utils";
-import corticoIcon from "./resources/icons/96x96.png";
-
+import { CorticoIcon } from "./modules/Icons/CorticoIcon";
 // manually update this variable with the version in manifest.json
 const version = 2.0;
 const pubsub = pubSubInit();
@@ -340,9 +339,11 @@ function addCorticoLogo() {
   const anchor = document.createElement("a");
   anchor.setAttribute("href", "https://cortico.ca");
 
-  const corticoLogo = document.createElement("img");
-  corticoLogo.src = corticoIcon;
-  corticoLogo.height = "15";
+  const corticoLogo = CorticoIcon({
+    attrs: {
+      height: "15",
+    },
+  });
 
   anchor.appendChild(corticoLogo);
   listitem.appendChild(anchor);

@@ -41,3 +41,12 @@ export function getOrigin() {
 export function getProvider() {
   return window.location.pathname.split("/")[1];
 }
+
+export function getCorticoUrl() {
+  const clinicName = window.localStorage["clinicname"];
+  if (!clinicName) {
+    return null;
+  }
+
+  return `https://${clinicName}.cortico.ca`;
+}
