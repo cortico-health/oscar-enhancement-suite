@@ -1,0 +1,4 @@
+{
+    "baseUrl": "https://oscar-develop.cortico.ca/",
+    "integrationFolder": "cypress/e2e"
+}

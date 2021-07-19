@@ -47,6 +47,7 @@ The developers would need to ensure what they want to test went through the buil
 1. yarn
 2. yarn build
 
+<<<<<<< HEAD
 **TamperMonkey**
 
 Here's the one time tampermonkey script that auto updates to latest distribution file
@@ -62,6 +63,26 @@ Here's the one time tampermonkey script that auto updates to latest distribution
     // @require https://raw.githubusercontent.com/cortico-health/oscar-enhancement-suite/main/dist/cortico-min.js
     // @grant none
     // ==/UserScript==
+
+=======
+Cypress
+
+To test with cypress with an oscar instance, create a `cypress.env.json` file and fill in the following
+<<<<<<< HEAD
+
+```
+{
+    "OSCAR_LOGIN": "username",
+    "OSCAR_PASSWORD": "password",
+    "OSCAR_PIN": "pin"
+}
+```
+
+Then
+
+1. yarn
+2. yarn build
+3. yarn cypress:open
 
 # Debugging
 
