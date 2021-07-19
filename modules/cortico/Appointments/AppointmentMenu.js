@@ -28,6 +28,8 @@ export function addAppointmentMenu() {
 }
 
 export function appointmentMenu(apptTd) {
+  const wrapper = document.createElement("div");
+  wrapper.classList.add("appointment-menu-wrapper");
   const container = document.createElement("div");
   container.classList.add("appointment-menu-container");
 
@@ -59,7 +61,9 @@ export function appointmentMenu(apptTd) {
   const menuItems = appointmentMenuItems();
   menu.appendChild(menuItems);
 
-  return container;
+  wrapper.appendChild(container);
+
+  return wrapper;
 }
 
 export function appointmentMenuItems() {

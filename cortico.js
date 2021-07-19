@@ -133,7 +133,7 @@ const init_schedule = function () {
         window.checkAllEligibilityRunning !== true &&
         window.setupPreferredPharmaciesRunning !== true
       ) {
-        window.location.reload();
+        //window.location.reload();
       }
     }
   }, 1000);
