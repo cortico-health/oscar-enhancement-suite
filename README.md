@@ -50,11 +50,11 @@ The developers would need to ensure what they want to test went through the buil
 Cypress
 
 To test with cypress with an oscar instance, create a `cypress.env.json` file and fill in the following
-{
-"OSCAR_LOGIN": "username",
-"OSCAR_PASSWORD": "password",
-"OSCAR_PIN": "pin"
-}
+    {
+      "OSCAR_LOGIN": "username",
+      "OSCAR_PASSWORD": "password",
+      "OSCAR_PIN": "pin"
+    }
 
 Then
 
