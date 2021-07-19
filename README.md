@@ -47,7 +47,6 @@ The developers would need to ensure what they want to test went through the buil
 1. yarn
 2. yarn build
 
-<<<<<<< HEAD
 **TamperMonkey**
 
 Here's the one time tampermonkey script that auto updates to latest distribution file
