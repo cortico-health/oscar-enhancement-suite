@@ -724,9 +724,12 @@ function removeNewUI() {
 /* Drag and Drop Feature Begin */
 
 function appointmentRowDragStart(ev) {
+  console.log("Darg start", ev);
   if (ev.target.matches("td.appt")) {
     window.dragSelectedTarget = ev.target;
     ev.dataTransfer.setDragImage(ev.target, 0, 0);
+  } else {
+    ev.preventDefault();
   }
 }
 

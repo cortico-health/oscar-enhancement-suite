@@ -50,3 +50,21 @@ export function getCorticoUrl() {
 
   return `https://${clinicName}.cortico.ca`;
 }
+
+export function getPortalPage() {
+  const corticoUrl = getCorticoUrl();
+  if (!corticoUrl) {
+    return null;
+  }
+
+  return `${getCorticoUrl()}/virtual-portal`;
+}
+
+export function getCorticoAppointmentUrl(providerNo, appointmentNo) {
+  const corticoUrl = getCorticoUrl();
+  if (!corticoUrl) {
+    return null;
+  }
+
+  return `${getCorticoUrl()}/provider/schedule/${providerNo}/?appointment_id=${appointmentNo}`;
+}

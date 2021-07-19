@@ -3,7 +3,8 @@ import { getAppointments } from "./Appointments";
 import "./AppointmentMenu.css";
 import { Modal } from "../../Modal/Modal";
 import { Masterfile } from "../../core/Masterfile";
-import corticoIcon from "../../../resources/icons/96x96.png";
+import { Appointment } from "../../core/Appointment";
+import { getPortalPage, getCorticoAppointmentUrl } from "../../Utils/Utils";
 
 const modal = new Modal();
 
@@ -58,7 +59,7 @@ export function appointmentMenu(apptTd) {
     }
   );
 
-  const menuItems = appointmentMenuItems();
+  const menuItems = appointmentMenuItems(apptTd);
   menu.appendChild(menuItems);
 
   wrapper.appendChild(container);
@@ -66,15 +67,18 @@ export function appointmentMenu(apptTd) {
   return wrapper;
 }
 
-export function appointmentMenuItems() {
+export function appointmentMenuItems(apptTd) {
+  const appointment = new Appointment(apptTd);
+  const providerNo = appointment.getCurrentProvider();
+  const appointmentNo = appointment.getAppointmentNo();
   const items = [
     {
       title: "Portal Page",
-      href: "http://google.ca",
+      href: getPortalPage(),
     },
     {
       title: "Go To Appointment (Cortico)",
-      href: "#",
+      href: getCorticoAppointmentUrl(providerNo, appointmentNo),
     },
   ];
 
