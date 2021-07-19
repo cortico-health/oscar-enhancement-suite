@@ -63,7 +63,7 @@ Here's the one time tampermonkey script that auto updates to latest distribution
     // @grant none
     // ==/UserScript==
 
-Cypress
+**Cypress**
 
 To test with cypress with an oscar instance, create a `cypress.env.json` file and fill in the following
 
