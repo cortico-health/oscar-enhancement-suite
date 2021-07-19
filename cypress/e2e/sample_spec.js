@@ -1,14 +1,19 @@
 import plugin from "raw-loader!../../dist/cortico-min.js";
+
+const username = Cypress.env("OSCAR_LOGIN");
+const password = Cypress.env("OSCAR_PASSWORD");
+const pin = Cypress.env("OSCAR_PIN");
+
 describe("My First Test", () => {
   it("Does not do much!", () => {
     expect(true).to.equal(true);
     cy.visit("/")
       .get(":nth-child(1) > .form-control")
-      .type("oscardoc")
+      .type(username)
       .get(":nth-child(2) > .form-control")
-      .type("37uRc3mFK2mZt38e6Nn7FxWEJHzhfG81")
+      .type(password)
       .get(":nth-child(3) > .form-control")
-      .type("1117")
+      .type(pin)
       .get(".btn")
       .click();
 
