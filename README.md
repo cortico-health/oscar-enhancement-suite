@@ -47,6 +47,21 @@ The developers would need to ensure what they want to test went through the buil
 1. yarn
 2. yarn build
 
+Cypress
+
+To test with cypress with an oscar instance, create a `cypress.env.json` file and fill in the following
+{
+"OSCAR_LOGIN": "username",
+"OSCAR_PASSWORD": "password",
+"OSCAR_PIN": "pin"
+}
+
+Then
+
+1. yarn
+2. yarn build
+3. yarn cypress:open
+
 # Debugging
 
 There are times when you want to visit what's wrong in the minified bundle, or after it has built.
