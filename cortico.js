@@ -11,6 +11,8 @@ import { Oscar } from "./modules/core/Oscar.js";
 import "element-closest-polyfill";
 import { getOrigin, getProvider } from "./modules/Utils/Utils";
 import { CorticoIcon } from "./modules/Icons/CorticoIcon";
+import { debounce } from "./modules/Utils/Utils";
+
 // manually update this variable with the version in manifest.json
 const version = 2.0;
 const pubsub = pubSubInit();
@@ -103,8 +105,8 @@ const init_schedule = function () {
       oscar.containsOscarGoOceanScript()
     )
   ) {
-    oscar.updateDoctorHeadings();
-    window.addEventListener("scroll", oscar.updateDoctorHeadings);
+    const debounced = debounce(oscar.updateDoctorHeadings.bind(oscar), 50);
+    window.addEventListener("scroll", debounced);
   } else {
     console.log(
       "Oscar Go or KAI Oscar detected; disabling sticky headers for doctor names"
@@ -290,7 +292,7 @@ const init_styles = function () {
   /*position:fixed;*/
   margin-left: 57px;
   padding: 1px 15px;
-  top: 0;
+
   }`;
   }
   addGlobalStyle(style);
