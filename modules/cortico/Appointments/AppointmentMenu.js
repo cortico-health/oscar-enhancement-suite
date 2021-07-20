@@ -63,15 +63,6 @@ export function appointmentMenu(apptTd) {
       openMenu.classList.remove("show");
     }
     menu.classList.toggle("show");
-
-    console.log({ menu }, isOverflown(menu));
-
-    function isOverflown(element) {
-      return (
-        element.scrollHeight > element.clientHeight ||
-        element.scrollWidth > element.clientWidth
-      );
-    }
   });
 
   container.addEventListener(
@@ -119,7 +110,6 @@ export function appointmentMenu(apptTd) {
 
   menu.appendChild(linkHeading);
   menu.appendChild(corticoLinks);
-  console.log("Cortico Links", corticoLinks);
 
   const patientInfoHeading = create("h5", {
     attrs: {
@@ -195,7 +185,6 @@ export function getCorticoLinks(apptTd) {
 }
 
 async function renderPatientInfo(apptTd) {
-  console.log("Appt TD", apptTd);
   if (!apptTd) {
     return;
   }

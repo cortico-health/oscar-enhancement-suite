@@ -22,6 +22,10 @@ td.appt {
     0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
+.appointment-menu.show {
+  display: block;
+}
+
 .appointment-menu a {
   color: white;
 }
@@ -69,6 +73,7 @@ td.appt {
   margin: 0;
   padding: 0;
   margin-left: 5px;
+  font-size: 14px;
 }
 
 .appointment-menu-hr {

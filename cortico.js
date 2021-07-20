@@ -60,7 +60,11 @@ const init_cortico = function () {
     // init_diagnostic_viewer_button();
   } else if (route.indexOf("/provider/providercontrol.jsp") > -1) {
     init_schedule();
-    dragAndDrop();
+
+    if (!oscar.isJuno()) {
+      dragAndDrop();
+    }
+
     addCorticoLogo();
     addMenu();
     addAppointmentMenu();
