@@ -221,15 +221,15 @@ async function renderPatientInfo(apptTd) {
 
     let html = "";
     if (email) {
-      html += `<div>Email: ${email}</div>`;
+      html += `<div>Email: <a href="mailto:${email}">${email}</a></div>`;
     }
 
     if (homePhone && homePhone.phone) {
-      html += `<div>Home: ${homePhone.phone}</div>`;
+      html += `<div>Home: <a href="tel:${homePhone.phone}">${homePhone.phone}</a></div>`;
     }
 
     if (workPhone && workPhone.phone) {
-      html += `<div>Work: ${workPhone.phone}</div>`;
+      html += `<div>Work: <a href="tel:${workPhone.phone}">${workPhone.phone}</a></div>`;
     }
     contactInfoContainer.innerHTML = html;
   } catch (e) {

@@ -1025,15 +1025,15 @@ function _renderPatientInfo() {
             html = "";
 
             if (email) {
-              html += "<div>Email: ".concat(email, "</div>");
+              html += "<div>Email: <a href=\"mailto:".concat(email, "\">").concat(email, "</a></div>");
             }
 
             if (homePhone && homePhone.phone) {
-              html += "<div>Home: ".concat(homePhone.phone, "</div>");
+              html += "<div>Home: <a href=\"tel:".concat(homePhone.phone, "\">").concat(homePhone.phone, "</a></div>");
             }
 
             if (workPhone && workPhone.phone) {
-              html += "<div>Work: ".concat(workPhone.phone, "</div>");
+              html += "<div>Work: <a href=\"tel:".concat(workPhone.phone, "\">").concat(workPhone.phone, "</a></div>");
             }
 
             contactInfoContainer.innerHTML = html;
