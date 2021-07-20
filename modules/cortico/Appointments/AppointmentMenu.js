@@ -131,7 +131,7 @@ export function appointmentMenu(apptTd) {
 
   const hr = create("hr", {
     attrs: {
-      style: "margin: 10px 0;",
+      style: "margin: 10px 0; border-color: rgba(255,255,255,0.3)",
     },
   });
   menu.appendChild(hr);

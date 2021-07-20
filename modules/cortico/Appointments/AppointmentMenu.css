@@ -27,7 +27,11 @@ td.appt {
 }
 
 .appointment-menu a {
-  color: white;
+  color: white !important;
+}
+
+.appointment-menu a:hover {
+  color: gray !important;
 }
 
 .appointment-menu ul {
@@ -39,6 +43,7 @@ td.appt {
 .appointment-menu ul li,
 .contactInfo > div {
   margin: 1px 0;
+  color: white !important;
 }
 
 .appointment-menu-container {
@@ -90,5 +95,5 @@ td.appt {
 }
 
 .contactInfo a {
-  color: white;
+  color: white !important;
 }
