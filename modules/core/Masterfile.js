@@ -59,8 +59,6 @@ export class Masterfile {
         retryDelay: 3000,
         retryOn: function (attempt, error, response) {
           if (error !== null || response.status >= 400) {
-            console.log(`retrying, attempt number ${attempt + 1}`);
-
             if (attempt === 1) {
               return false;
             }
