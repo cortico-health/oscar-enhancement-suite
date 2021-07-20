@@ -364,7 +364,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "getProvider": () => (/* binding */ getProvider),
 /* harmony export */   "getCorticoUrl": () => (/* binding */ getCorticoUrl),
 /* harmony export */   "getPortalPage": () => (/* binding */ getPortalPage),
-/* harmony export */   "getCorticoAppointmentUrl": () => (/* binding */ getCorticoAppointmentUrl)
+/* harmony export */   "getCorticoAppointmentUrl": () => (/* binding */ getCorticoAppointmentUrl),
+/* harmony export */   "create": () => (/* binding */ create)
 /* harmony export */ });
 function debounce(func, wait, immediate) {
   var timeout;
@@ -433,6 +434,25 @@ function getCorticoAppointmentUrl(providerNo, appointmentNo) {
   }
 
   return "".concat(getCorticoUrl(), "/provider/schedule/").concat(providerNo, "/?appointment_id=").concat(appointmentNo);
+}
+function create(_element, options) {
+  if (!_element) {
+    return null;
+  }
+
+  var element = document.createElement(_element);
+
+  if (options.attrs) {
+    for (var prop in options.attrs) {
+      element.setAttribute(prop, options.attrs[prop]);
+    }
+  }
+
+  if (options.text) {
+    element.textContent = options.text;
+  }
+
+  return element;
 }
 
 /***/ }),
@@ -817,6 +837,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var modal = new _Modal_Modal__WEBPACK_IMPORTED_MODULE_5__.Modal();
 function addAppointmentMenu() {
   var appointments = (0,_Appointments__WEBPACK_IMPORTED_MODULE_3__.getAppointments)();
@@ -895,16 +916,22 @@ function appointmentMenu(apptTd) {
     }
   });
   title.appendChild(corticoIcon);
-  var h5 = document.createElement("h5");
-  h5.textContent = "Cortico";
-  h5.classList.add("color-primary");
-  h5.classList.add("appointment-menu-heading");
+  var h5 = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_8__.create)("h5", {
+    attrs: {
+      class: "color-primary appointment-menu-heading"
+    },
+    text: "Cortico"
+  });
   title.appendChild(h5);
   menu.appendChild(title);
-  var hr = document.createElement("hr");
-  hr.classList.add("appointment-menu-hr");
-  menu.appendChild(hr);
   menu.appendChild(menuItems);
+  var linkHeading = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_8__.create)("h5", {
+    attrs: {
+      class: "appointment-menu-subheading"
+    },
+    text: "Cortico Links"
+  });
+  menu.appendChild(linkHeading);
   wrapper.appendChild(container);
   return wrapper;
 }
@@ -1153,7 +1180,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "td.appt {\n  overflow: visible;\n}\n\n.color-primary {\n  color: #5c70ff;\n}\n\n.appointment-menu {\n  background-color: #5c70ff;\n  padding: 10px;\n  color: white;\n  position: absolute;\n  top: 0px;\n  padding: 1em;\n  -webkit-border-radius: 0.5rem;\n     -moz-border-radius: 0.5rem;\n          border-radius: 0.5rem;\n  display: none;\n  right: 0;\n  z-index: 1500;\n  font-size: 12px;\n  -webkit-box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),\n    0 10px 10px -5px rgba(0, 0, 0, 0.04);\n     -moz-box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),\n    0 10px 10px -5px rgba(0, 0, 0, 0.04);\n          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),\n    0 10px 10px -5px rgba(0, 0, 0, 0.04);\n}\n\n.appointment-menu a {\n  color: white;\n}\n\n.appointment-menu ul {\n  padding: 0;\n  margin: 0;\n  list-style: none;\n}\n\n.appointment-menu ul li,\n.contactInfo > div {\n  margin: 1px 0;\n}\n\n.appointment-menu-container {\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -moz-box;\n  display: flex;\n  background-color: #5c70ff;\n  padding: 5px 10px;\n  margin-top: -3px;\n  margin-right: -3px;\n  -webkit-border-radius: 2rem;\n     -moz-border-radius: 2rem;\n          border-radius: 2rem;\n  -webkit-box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),\n    0 10px 10px -5px rgba(0, 0, 0, 0.04);\n     -moz-box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),\n    0 10px 10px -5px rgba(0, 0, 0, 0.04);\n          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),\n    0 10px 10px -5px rgba(0, 0, 0, 0.04);\n}\n\n.appointment-menu-wrapper {\n  display: inline-block;\n  position: relative;\n  top: -5px;\n  cursor: pointer;\n}\n\n.appointment-menu-header {\n  background-color: white;\n  -webkit-border-radius: 0.5rem;\n     -moz-border-radius: 0.5rem;\n          border-radius: 0.5rem;\n  padding: 5px 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -moz-box;\n  display: flex;\n  -webkit-box-align: top;\n  -webkit-align-items: top;\n     -moz-box-align: top;\n          align-items: top;\n}\n\n.appointment-menu-heading {\n  margin: 0;\n  padding: 0;\n  margin-left: 5px;\n}\n\n.appointment-menu-hr {\n  margin: 0;\n  padding: 0;\n  margin: 5px 0;\n  border: 0;\n  border-top: 1px solid rgba(255, 255, 255, 0.3);\n}\n", "",{"version":3,"sources":["webpack://./modules/cortico/Appointments/AppointmentMenu.css"],"names":[],"mappings":"AAAA;EACE,iBAAiB;AACnB;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,yBAAyB;EACzB,aAAa;EACb,YAAY;EACZ,kBAAkB;EAClB,QAAQ;EACR,YAAY;EACZ,6BAAqB;KAArB,0BAAqB;UAArB,qBAAqB;EACrB,aAAa;EACb,QAAQ;EACR,aAAa;EACb,eAAe;EACf;wCACsC;KADtC;wCACsC;UADtC;wCACsC;AACxC;;AAEA;EACE,YAAY;AACd;;AAEA;EACE,UAAU;EACV,SAAS;EACT,gBAAgB;AAClB;;AAEA;;EAEE,aAAa;AACf;;AAEA;EACE,kBAAkB;EAClB,oBAAa;EAAb,qBAAa;EAAb,iBAAa;EAAb,aAAa;EACb,yBAAyB;EACzB,iBAAiB;EACjB,gBAAgB;EAChB,kBAAkB;EAClB,2BAAmB;KAAnB,wBAAmB;UAAnB,mBAAmB;EACnB;wCACsC;KADtC;wCACsC;UADtC;wCACsC;AACxC;;AAEA;EACE,qBAAqB;EACrB,kBAAkB;EAClB,SAAS;EACT,eAAe;AACjB;;AAEA;EACE,uBAAuB;EACvB,6BAAqB;KAArB,0BAAqB;UAArB,qBAAqB;EACrB,iBAAiB;EACjB,oBAAa;EAAb,qBAAa;EAAb,iBAAa;EAAb,aAAa;EACb,sBAAgB;EAAhB,wBAAgB;KAAhB,mBAAgB;UAAhB,gBAAgB;AAClB;;AAEA;EACE,SAAS;EACT,UAAU;EACV,gBAAgB;AAClB;;AAEA;EACE,SAAS;EACT,UAAU;EACV,aAAa;EACb,SAAS;EACT,8CAA8C;AAChD","sourcesContent":["td.appt {\n  overflow: visible;\n}\n\n.color-primary {\n  color: #5c70ff;\n}\n\n.appointment-menu {\n  background-color: #5c70ff;\n  padding: 10px;\n  color: white;\n  position: absolute;\n  top: 0px;\n  padding: 1em;\n  border-radius: 0.5rem;\n  display: none;\n  right: 0;\n  z-index: 1500;\n  font-size: 12px;\n  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),\n    0 10px 10px -5px rgba(0, 0, 0, 0.04);\n}\n\n.appointment-menu a {\n  color: white;\n}\n\n.appointment-menu ul {\n  padding: 0;\n  margin: 0;\n  list-style: none;\n}\n\n.appointment-menu ul li,\n.contactInfo > div {\n  margin: 1px 0;\n}\n\n.appointment-menu-container {\n  position: relative;\n  display: flex;\n  background-color: #5c70ff;\n  padding: 5px 10px;\n  margin-top: -3px;\n  margin-right: -3px;\n  border-radius: 2rem;\n  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),\n    0 10px 10px -5px rgba(0, 0, 0, 0.04);\n}\n\n.appointment-menu-wrapper {\n  display: inline-block;\n  position: relative;\n  top: -5px;\n  cursor: pointer;\n}\n\n.appointment-menu-header {\n  background-color: white;\n  border-radius: 0.5rem;\n  padding: 5px 10px;\n  display: flex;\n  align-items: top;\n}\n\n.appointment-menu-heading {\n  margin: 0;\n  padding: 0;\n  margin-left: 5px;\n}\n\n.appointment-menu-hr {\n  margin: 0;\n  padding: 0;\n  margin: 5px 0;\n  border: 0;\n  border-top: 1px solid rgba(255, 255, 255, 0.3);\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "td.appt {\n  overflow: visible;\n}\n\n.color-primary {\n  color: #5c70ff;\n}\n\n.appointment-menu {\n  background-color: #5c70ff;\n  padding: 10px;\n  color: white;\n  position: absolute;\n  top: 0px;\n  padding: 1em;\n  -webkit-border-radius: 0.5rem;\n     -moz-border-radius: 0.5rem;\n          border-radius: 0.5rem;\n  display: none;\n  right: 0;\n  z-index: 1500;\n  font-size: 12px;\n  -webkit-box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),\n    0 10px 10px -5px rgba(0, 0, 0, 0.04);\n     -moz-box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),\n    0 10px 10px -5px rgba(0, 0, 0, 0.04);\n          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),\n    0 10px 10px -5px rgba(0, 0, 0, 0.04);\n}\n\n.appointment-menu a {\n  color: white;\n}\n\n.appointment-menu ul {\n  padding: 0;\n  margin: 0;\n  list-style: none;\n}\n\n.appointment-menu ul li,\n.contactInfo > div {\n  margin: 1px 0;\n}\n\n.appointment-menu-container {\n  position: relative;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -moz-box;\n  display: flex;\n  background-color: #5c70ff;\n  padding: 5px 10px;\n  margin-top: -3px;\n  margin-right: -3px;\n  -webkit-border-radius: 2rem;\n     -moz-border-radius: 2rem;\n          border-radius: 2rem;\n  -webkit-box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),\n    0 10px 10px -5px rgba(0, 0, 0, 0.04);\n     -moz-box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),\n    0 10px 10px -5px rgba(0, 0, 0, 0.04);\n          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),\n    0 10px 10px -5px rgba(0, 0, 0, 0.04);\n}\n\n.appointment-menu-wrapper {\n  display: inline-block;\n  position: relative;\n  top: -5px;\n  cursor: pointer;\n}\n\n.appointment-menu-header {\n  background-color: white;\n  -webkit-border-radius: 0.5rem;\n     -moz-border-radius: 0.5rem;\n          border-radius: 0.5rem;\n  padding: 5px 10px;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -moz-box;\n  display: flex;\n  -webkit-box-align: top;\n  -webkit-align-items: top;\n     -moz-box-align: top;\n          align-items: top;\n  margin-bottom: 5px;\n}\n\n.appointment-menu-heading {\n  margin: 0;\n  padding: 0;\n  margin-left: 5px;\n}\n\n.appointment-menu-hr {\n  margin: 0;\n  padding: 0;\n  margin: 5px 0;\n  border: 0;\n  border-top: 1px solid rgba(255, 255, 255, 0.3);\n}\n\n.appointment-menu-subheading {\n  color: white;\n}\n", "",{"version":3,"sources":["webpack://./modules/cortico/Appointments/AppointmentMenu.css"],"names":[],"mappings":"AAAA;EACE,iBAAiB;AACnB;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,yBAAyB;EACzB,aAAa;EACb,YAAY;EACZ,kBAAkB;EAClB,QAAQ;EACR,YAAY;EACZ,6BAAqB;KAArB,0BAAqB;UAArB,qBAAqB;EACrB,aAAa;EACb,QAAQ;EACR,aAAa;EACb,eAAe;EACf;wCACsC;KADtC;wCACsC;UADtC;wCACsC;AACxC;;AAEA;EACE,YAAY;AACd;;AAEA;EACE,UAAU;EACV,SAAS;EACT,gBAAgB;AAClB;;AAEA;;EAEE,aAAa;AACf;;AAEA;EACE,kBAAkB;EAClB,oBAAa;EAAb,qBAAa;EAAb,iBAAa;EAAb,aAAa;EACb,yBAAyB;EACzB,iBAAiB;EACjB,gBAAgB;EAChB,kBAAkB;EAClB,2BAAmB;KAAnB,wBAAmB;UAAnB,mBAAmB;EACnB;wCACsC;KADtC;wCACsC;UADtC;wCACsC;AACxC;;AAEA;EACE,qBAAqB;EACrB,kBAAkB;EAClB,SAAS;EACT,eAAe;AACjB;;AAEA;EACE,uBAAuB;EACvB,6BAAqB;KAArB,0BAAqB;UAArB,qBAAqB;EACrB,iBAAiB;EACjB,oBAAa;EAAb,qBAAa;EAAb,iBAAa;EAAb,aAAa;EACb,sBAAgB;EAAhB,wBAAgB;KAAhB,mBAAgB;UAAhB,gBAAgB;EAChB,kBAAkB;AACpB;;AAEA;EACE,SAAS;EACT,UAAU;EACV,gBAAgB;AAClB;;AAEA;EACE,SAAS;EACT,UAAU;EACV,aAAa;EACb,SAAS;EACT,8CAA8C;AAChD;;AAEA;EACE,YAAY;AACd","sourcesContent":["td.appt {\n  overflow: visible;\n}\n\n.color-primary {\n  color: #5c70ff;\n}\n\n.appointment-menu {\n  background-color: #5c70ff;\n  padding: 10px;\n  color: white;\n  position: absolute;\n  top: 0px;\n  padding: 1em;\n  border-radius: 0.5rem;\n  display: none;\n  right: 0;\n  z-index: 1500;\n  font-size: 12px;\n  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),\n    0 10px 10px -5px rgba(0, 0, 0, 0.04);\n}\n\n.appointment-menu a {\n  color: white;\n}\n\n.appointment-menu ul {\n  padding: 0;\n  margin: 0;\n  list-style: none;\n}\n\n.appointment-menu ul li,\n.contactInfo > div {\n  margin: 1px 0;\n}\n\n.appointment-menu-container {\n  position: relative;\n  display: flex;\n  background-color: #5c70ff;\n  padding: 5px 10px;\n  margin-top: -3px;\n  margin-right: -3px;\n  border-radius: 2rem;\n  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),\n    0 10px 10px -5px rgba(0, 0, 0, 0.04);\n}\n\n.appointment-menu-wrapper {\n  display: inline-block;\n  position: relative;\n  top: -5px;\n  cursor: pointer;\n}\n\n.appointment-menu-header {\n  background-color: white;\n  border-radius: 0.5rem;\n  padding: 5px 10px;\n  display: flex;\n  align-items: top;\n  margin-bottom: 5px;\n}\n\n.appointment-menu-heading {\n  margin: 0;\n  padding: 0;\n  margin-left: 5px;\n}\n\n.appointment-menu-hr {\n  margin: 0;\n  padding: 0;\n  margin: 5px 0;\n  border: 0;\n  border-top: 1px solid rgba(255, 255, 255, 0.3);\n}\n\n.appointment-menu-subheading {\n  color: white;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

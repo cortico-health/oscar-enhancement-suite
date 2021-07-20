@@ -62,6 +62,7 @@ td.appt {
   padding: 5px 10px;
   display: flex;
   align-items: top;
+  margin-bottom: 5px;
 }
 
 .appointment-menu-heading {
@@ -76,4 +77,8 @@ td.appt {
   margin: 5px 0;
   border: 0;
   border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.appointment-menu-subheading {
+  color: white;
 }

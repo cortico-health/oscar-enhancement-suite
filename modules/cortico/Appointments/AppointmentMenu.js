@@ -6,6 +6,7 @@ import { Masterfile } from "../../core/Masterfile";
 import { Appointment } from "../../core/Appointment";
 import { getPortalPage, getCorticoAppointmentUrl } from "../../Utils/Utils";
 import { CorticoIcon } from "../../Icons/CorticoIcon";
+import { create } from "../../Utils/Utils";
 
 const modal = new Modal();
 
@@ -80,18 +81,26 @@ export function appointmentMenu(apptTd) {
   });
   title.appendChild(corticoIcon);
 
-  const h5 = document.createElement("h5");
-  h5.textContent = "Cortico";
-  h5.classList.add("color-primary");
-  h5.classList.add("appointment-menu-heading");
+  const h5 = create("h5", {
+    attrs: {
+      class: "color-primary appointment-menu-heading",
+    },
+    text: "Cortico",
+  });
+
   title.appendChild(h5);
+
   menu.appendChild(title);
-
-  const hr = document.createElement("hr");
-  hr.classList.add("appointment-menu-hr");
-  menu.appendChild(hr);
-
   menu.appendChild(menuItems);
+
+  const linkHeading = create("h5", {
+    attrs: {
+      class: "appointment-menu-subheading",
+    },
+    text: "Cortico Links",
+  });
+
+  menu.appendChild(linkHeading);
 
   wrapper.appendChild(container);
   return wrapper;

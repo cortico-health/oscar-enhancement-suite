@@ -68,3 +68,23 @@ export function getCorticoAppointmentUrl(providerNo, appointmentNo) {
 
   return `${getCorticoUrl()}/provider/schedule/${providerNo}/?appointment_id=${appointmentNo}`;
 }
+
+export function create(_element, options) {
+  if (!_element) {
+    return null;
+  }
+
+  const element = document.createElement(_element);
+
+  if (options.attrs) {
+    for (let prop in options.attrs) {
+      element.setAttribute(prop, options.attrs[prop]);
+    }
+  }
+
+  if (options.text) {
+    element.textContent = options.text;
+  }
+
+  return element;
+}
