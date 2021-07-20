@@ -41,6 +41,7 @@ export class Appointment {
     let providerNo = searchParams.get("curProviderNo");
 
     if (!providerNo || providerNo === "null") {
+      //Juno
       providerNo = searchParams.get("apptProvider_no");
     }
 

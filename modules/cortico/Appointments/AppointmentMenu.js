@@ -175,6 +175,7 @@ export function getCorticoLinks(apptTd) {
 
     if (item.href) {
       anchor.setAttribute("href", item.href);
+      anchor.setAttribute("target", "_blank");
     }
 
     if (item.onClick) {
@@ -219,15 +220,15 @@ async function renderPatientInfo(apptTd) {
 
     let html = "";
     if (email) {
-      html += `<div>☛ <a href="mailto:${email}">${email}</a></div>`;
+      html += `<div>☛ <a href="mailto:${email}" target="_blank">${email}</a></div>`;
     }
 
     if (homePhone && homePhone.phone) {
-      html += `<div>☛ (Home) <a href="tel:${homePhone.phone}">${homePhone.phone}</a></div>`;
+      html += `<div>☛ (Home) <a href="tel:${homePhone.phone}" target="_blank">${homePhone.phone}</a></div>`;
     }
 
     if (workPhone && workPhone.phone) {
-      html += `<div>☛ (Work) <a href="tel:${workPhone.phone}">${workPhone.phone}</a></div>`;
+      html += `<div>☛ (Work) <a href="tel:${workPhone.phone}" target="_blank">${workPhone.phone}</a></div>`;
     }
     contactInfoContainer.innerHTML = html;
   } catch (e) {
