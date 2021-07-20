@@ -233,7 +233,7 @@ async function renderPatientInfo(apptTd) {
     }
 
     if (cellphone && cellphone.phone) {
-      html += `<div>☛ (Work) <a href="tel:${cellphone.phone}">${cellphone.phone}</a></div>`;
+      html += `<div>☛ (Cell) <a href="tel:${cellphone.phone}">${cellphone.phone}</a></div>`;
     }
     contactInfoContainer.innerHTML = html;
   } catch (e) {

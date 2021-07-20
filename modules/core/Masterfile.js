@@ -84,7 +84,7 @@ export class Masterfile {
    * Returns an array of phone numbers
    * @return []
    */
-  Numbers() {
+  getPhoneNumbers() {
     if (!this.page) {
       throw new Error("Masterfile Page does not exist");
     }
