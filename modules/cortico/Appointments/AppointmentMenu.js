@@ -69,6 +69,11 @@ export function appointmentMenu(apptTd) {
     "click",
     async (e) => {
       await renderPatientInfo(apptTd);
+      console.log(menu.getBoundingClientRect());
+      const left = menu.getBoundingClientRect().left;
+      if (left < 0) {
+        menu.style = "left: 0; right: unset;";
+      }
     },
     {
       once: true,
