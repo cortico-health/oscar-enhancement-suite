@@ -217,18 +217,23 @@ async function renderPatientInfo(apptTd) {
     const phoneNumbers = masterFile.getPhoneNumbers();
     const homePhone = phoneNumbers.find((p) => p.type === "home");
     const workPhone = phoneNumbers.find((p) => p.type === "work");
+    const cellphone = phoneNumbers.find((p) => p.type === "cell");
 
     let html = "";
     if (email) {
-      html += `<div>☛ <a href="mailto:${email}" target="_blank">${email}</a></div>`;
+      html += `<div>☛ <a href="mailto:${email}">${email}</a></div>`;
     }
 
     if (homePhone && homePhone.phone) {
-      html += `<div>☛ (Home) <a href="tel:${homePhone.phone}" target="_blank">${homePhone.phone}</a></div>`;
+      html += `<div>☛ (Home) <a href="tel:${homePhone.phone}">${homePhone.phone}</a></div>`;
     }
 
     if (workPhone && workPhone.phone) {
-      html += `<div>☛ (Work) <a href="tel:${workPhone.phone}" target="_blank">${workPhone.phone}</a></div>`;
+      html += `<div>☛ (Work) <a href="tel:${workPhone.phone}">${workPhone.phone}</a></div>`;
+    }
+
+    if (cellphone && cellphone.phone) {
+      html += `<div>☛ (Work) <a href="tel:${cellphone.phone}">${cellphone.phone}</a></div>`;
     }
     contactInfoContainer.innerHTML = html;
   } catch (e) {

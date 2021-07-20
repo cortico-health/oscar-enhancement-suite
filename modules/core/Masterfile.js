@@ -84,13 +84,14 @@ export class Masterfile {
    * Returns an array of phone numbers
    * @return []
    */
-  getPhoneNumbers() {
+  Numbers() {
     if (!this.page) {
       throw new Error("Masterfile Page does not exist");
     }
 
     const homePhone = this.page.querySelector('input[name="phone"]');
     const workPhone = this.page.querySelector('input[name="phone2"]');
+    const cellPhone = this.page.querySelector('input[name="demo_cell"]');
 
     return [
       {
@@ -100,6 +101,10 @@ export class Masterfile {
       {
         type: "work",
         phone: workPhone && workPhone.value,
+      },
+      {
+        type: "cell",
+        phone: cellPhone && cellPhone.value,
       },
     ];
   }
