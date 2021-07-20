@@ -69,12 +69,16 @@ export function getCorticoAppointmentUrl(providerNo, appointmentNo) {
   return `${getCorticoUrl()}/provider/schedule/${providerNo}/?appointment_id=${appointmentNo}`;
 }
 
-export function create(_element, options) {
+export function create(_element, options, ...children) {
   if (!_element) {
     return null;
   }
 
   const element = document.createElement(_element);
+
+  if (!options) {
+    return element;
+  }
 
   if (options.attrs) {
     for (let prop in options.attrs) {
@@ -85,6 +89,10 @@ export function create(_element, options) {
   if (options.text) {
     element.textContent = options.text;
   }
+
+  children.map((child) => {
+    element.appendChild(child);
+  });
 
   return element;
 }

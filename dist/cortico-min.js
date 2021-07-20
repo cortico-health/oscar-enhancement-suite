@@ -442,6 +442,10 @@ function create(_element, options) {
 
   var element = document.createElement(_element);
 
+  if (!options) {
+    return element;
+  }
+
   if (options.attrs) {
     for (var prop in options.attrs) {
       element.setAttribute(prop, options.attrs[prop]);
@@ -452,6 +456,13 @@ function create(_element, options) {
     element.textContent = options.text;
   }
 
+  for (var _len = arguments.length, children = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+    children[_key - 2] = arguments[_key];
+  }
+
+  children.map(function (child) {
+    element.appendChild(child);
+  });
   return element;
 }
 
@@ -813,7 +824,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "addAppointmentMenu": () => (/* binding */ addAppointmentMenu),
 /* harmony export */   "appointmentMenu": () => (/* binding */ appointmentMenu),
-/* harmony export */   "appointmentMenuItems": () => (/* binding */ appointmentMenuItems),
+/* harmony export */   "getCorticoLinks": () => (/* binding */ getCorticoLinks),
 /* harmony export */   "getPatientContactInfo": () => (/* binding */ getPatientContactInfo)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
@@ -907,9 +918,12 @@ function appointmentMenu(apptTd) {
   }(), {
     once: true
   });
-  var menuItems = appointmentMenuItems(apptTd);
-  var title = document.createElement("div");
-  title.classList.add("appointment-menu-header");
+  var corticoLinks = getCorticoLinks(apptTd);
+  var title = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_8__.create)("div", {
+    attrs: {
+      class: "appointment-menu-header"
+    }
+  });
   var corticoIcon = (0,_Icons_CorticoIcon__WEBPACK_IMPORTED_MODULE_9__.CorticoIcon)({
     attrs: {
       height: "15"
@@ -924,7 +938,6 @@ function appointmentMenu(apptTd) {
   });
   title.appendChild(h5);
   menu.appendChild(title);
-  menu.appendChild(menuItems);
   var linkHeading = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_8__.create)("h5", {
     attrs: {
       class: "appointment-menu-subheading"
@@ -932,10 +945,26 @@ function appointmentMenu(apptTd) {
     text: "Cortico Links"
   });
   menu.appendChild(linkHeading);
+  menu.appendChild(corticoLinks);
+  var patientInfoHeading = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_8__.create)("h5", {
+    attrs: {
+      class: "appointment-menu-subheading"
+    },
+    text: "Contact Information"
+  });
+  var contactInfoContainer = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_8__.create)("div", {
+    attrs: {
+      class: "contactInfo"
+    }
+  });
+  var hr = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_8__.create)("hr");
+  menu.appendChild(hr);
+  menu.appendChild(patientInfoHeading);
+  menu.appendChild(contactInfoContainer);
   wrapper.appendChild(container);
   return wrapper;
 }
-function appointmentMenuItems(apptTd) {
+function getCorticoLinks(apptTd) {
   var appointment = new _core_Appointment__WEBPACK_IMPORTED_MODULE_7__.Appointment(apptTd);
   var providerNo = appointment.getCurrentProvider();
   var appointmentNo = appointment.getAppointmentNo();
@@ -965,14 +994,9 @@ function appointmentMenuItems(apptTd) {
 
     list.appendChild(listItem);
   });
-  var listItem = document.createElement("li");
-  listItem.classList.add("contactInfo");
-  list.appendChild(listItem);
   return list;
 }
-function getPatientContactInfo(e) {
-  console.log("Hello World", e.target.closest("td.appt"));
-}
+function getPatientContactInfo(e) {}
 
 function renderPatientInfo(_x2) {
   return _renderPatientInfo.apply(this, arguments);

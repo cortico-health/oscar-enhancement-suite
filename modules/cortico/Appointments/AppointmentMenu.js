@@ -70,10 +70,14 @@ export function appointmentMenu(apptTd) {
     }
   );
 
-  const menuItems = appointmentMenuItems(apptTd);
+  const corticoLinks = getCorticoLinks(apptTd);
 
-  const title = document.createElement("div");
-  title.classList.add("appointment-menu-header");
+  const title = create("div", {
+    attrs: {
+      class: "appointment-menu-header",
+    },
+  });
+
   const corticoIcon = CorticoIcon({
     attrs: {
       height: "15",
@@ -91,7 +95,6 @@ export function appointmentMenu(apptTd) {
   title.appendChild(h5);
 
   menu.appendChild(title);
-  menu.appendChild(menuItems);
 
   const linkHeading = create("h5", {
     attrs: {
@@ -101,12 +104,31 @@ export function appointmentMenu(apptTd) {
   });
 
   menu.appendChild(linkHeading);
+  menu.appendChild(corticoLinks);
 
+  const patientInfoHeading = create("h5", {
+    attrs: {
+      class: "appointment-menu-subheading",
+    },
+    text: "Contact Information",
+  });
+
+  const contactInfoContainer = create("div", {
+    attrs: {
+      class: "contactInfo",
+    },
+  });
+
+  const hr = create("hr");
+  menu.appendChild(hr);
+
+  menu.appendChild(patientInfoHeading);
+  menu.appendChild(contactInfoContainer);
   wrapper.appendChild(container);
   return wrapper;
 }
 
-export function appointmentMenuItems(apptTd) {
+export function getCorticoLinks(apptTd) {
   const appointment = new Appointment(apptTd);
   const providerNo = appointment.getCurrentProvider();
   const appointmentNo = appointment.getAppointmentNo();
@@ -141,16 +163,10 @@ export function appointmentMenuItems(apptTd) {
     list.appendChild(listItem);
   });
 
-  const listItem = document.createElement("li");
-  listItem.classList.add("contactInfo");
-  list.appendChild(listItem);
-
   return list;
 }
 
-export function getPatientContactInfo(e) {
-  console.log("Hello World", e.target.closest("td.appt"));
-}
+export function getPatientContactInfo(e) {}
 
 async function renderPatientInfo(apptTd) {
   console.log("Appt TD", apptTd);
