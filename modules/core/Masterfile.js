@@ -1,4 +1,6 @@
 import { getOrigin, getProvider } from "../Utils/Utils";
+var originalFetch = require("cross-fetch");
+const fetch = require("fetch-retry")(originalFetch);
 
 /**
  * Tries to represent the masterfile in oscar.
@@ -53,7 +55,23 @@ export class Masterfile {
 
     try {
       const url = getOrigin() + "/" + getProvider() + this.url;
-      const result = await fetch(url);
+      const result = await fetch(url, {
+        retryDelay: 2000,
+        retryOn: function (attempt, error, response) {
+          if (error !== null || response.status >= 400) {
+            console.log(`retrying, attempt number ${attempt + 1}`);
+
+            if (attempt === 1) {
+              return false;
+            }
+            return true;
+          }
+        },
+      });
+
+      if (result.status !== 200) {
+        throw result;
+      }
       const page = await result.text();
 
       const container = document.createElement("div");
@@ -62,7 +80,7 @@ export class Masterfile {
 
       return this.page;
     } catch (e) {
-      console.error(e);
+      console.error("Fetch error", e);
       return false;
     }
   }

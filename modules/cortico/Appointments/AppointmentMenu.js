@@ -212,7 +212,10 @@ async function renderPatientInfo(apptTd) {
   contactInfoContainer.appendChild(loaderContainer);
 
   try {
-    await masterFile.fetchPage();
+    const result = await masterFile.fetchPage();
+    if (result === false) {
+      throw "Could not fetch page";
+    }
     const email = masterFile.getEmail();
     const phoneNumbers = masterFile.getPhoneNumbers();
     const homePhone = phoneNumbers.find((p) => p.type === "home");
