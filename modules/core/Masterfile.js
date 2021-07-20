@@ -56,7 +56,7 @@ export class Masterfile {
     try {
       const url = getOrigin() + "/" + getProvider() + this.url;
       const result = await fetch(url, {
-        retryDelay: 2000,
+        retryDelay: 3000,
         retryOn: function (attempt, error, response) {
           if (error !== null || response.status >= 400) {
             console.log(`retrying, attempt number ${attempt + 1}`);
