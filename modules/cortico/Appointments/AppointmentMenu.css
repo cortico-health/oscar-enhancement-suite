@@ -88,3 +88,7 @@ td.appt {
   color: white;
   font-size: 12px;
 }
+
+.contactInfo a {
+  color: white;
+}
