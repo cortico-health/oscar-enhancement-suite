@@ -44,7 +44,6 @@ export class Oscar {
 
   // sticky headers for doctor schedule page
   updateDoctorHeadings() {
-    console.log("Ths ran", this);
     const ifv = document.querySelectorAll(
       "tbody>tr:first-child>td.infirmaryView"
     );

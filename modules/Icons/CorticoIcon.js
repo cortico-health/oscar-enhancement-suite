@@ -6,8 +6,12 @@ image.setAttribute("alt", "Cortico");
 
 export const CorticoIcon = ({ attrs }) => {
   const clone = image.cloneNode();
-  for (let prop in attrs) {
-    clone.setAttribute(prop, attrs[prop]);
+
+  if (attrs) {
+    for (let prop in attrs) {
+      clone.setAttribute(prop, attrs[prop]);
+    }
   }
+
   return clone;
 };
