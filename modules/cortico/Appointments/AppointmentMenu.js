@@ -1,14 +1,12 @@
 import { Ellipsis } from "../../Icons/Ellipsis";
 import { getAppointments } from "./Appointments";
 import "./AppointmentMenu.css";
-import { Modal } from "../../Modal/Modal";
 import { Masterfile } from "../../core/Masterfile";
 import { Appointment } from "../../core/Appointment";
 import { getPortalPage, getCorticoAppointmentUrl } from "../../Utils/Utils";
 import { CorticoIcon } from "../../Icons/CorticoIcon";
-import { create } from "../../Utils/Utils";
-
-const modal = new Modal();
+import { create, getCorticoUrl } from "../../Utils/Utils";
+import { Loader } from "../../Loader/Loader";
 
 export function addAppointmentMenu() {
   const appointments = getAppointments();
@@ -31,17 +29,33 @@ export function addAppointmentMenu() {
 }
 
 export function appointmentMenu(apptTd) {
-  const wrapper = document.createElement("div");
-  wrapper.classList.add("appointment-menu-wrapper");
-  const container = document.createElement("div");
-  container.classList.add("appointment-menu-container");
-
   const menuIcon = Ellipsis();
-  container.appendChild(menuIcon);
+  const menu = create("div", {
+    attrs: {
+      class: "appointment-menu",
+    },
+  });
 
-  const menu = document.createElement("div");
-  container.appendChild(menu);
-  menu.classList.add("appointment-menu");
+  const container = create(
+    "div",
+    {
+      attrs: {
+        class: "appointment-menu-container",
+      },
+    },
+    menuIcon,
+    menu
+  );
+
+  const wrapper = create(
+    "div",
+    {
+      attrs: {
+        class: "appointment-menu-wrapper",
+      },
+    },
+    container
+  );
 
   container.addEventListener("click", (e) => {
     const openMenu = document.querySelector(".appointment-menu.show");
@@ -105,6 +119,7 @@ export function appointmentMenu(apptTd) {
 
   menu.appendChild(linkHeading);
   menu.appendChild(corticoLinks);
+  console.log("Cortico Links", corticoLinks);
 
   const patientInfoHeading = create("h5", {
     attrs: {
@@ -129,6 +144,15 @@ export function appointmentMenu(apptTd) {
 }
 
 export function getCorticoLinks(apptTd) {
+  if (!getCorticoUrl()) {
+    const errorMessage = create("div", {
+      attrs: {
+        style: "white-space: initial;",
+      },
+      text: "Cortico clinic has not been set. Please set the Cortico Clinic URL from the sidebar.",
+    });
+    return errorMessage;
+  }
   const appointment = new Appointment(apptTd);
   const providerNo = appointment.getCurrentProvider();
   const appointmentNo = appointment.getAppointmentNo();
@@ -143,10 +167,10 @@ export function getCorticoLinks(apptTd) {
     },
   ];
 
-  const list = document.createElement("ul");
+  const list = create("ul");
   items.map((item) => {
-    const listItem = document.createElement("li");
-    const anchor = document.createElement("a");
+    const listItem = create("li");
+    const anchor = create("a");
     listItem.appendChild(anchor);
     anchor.textContent = item.title;
 
@@ -166,8 +190,6 @@ export function getCorticoLinks(apptTd) {
   return list;
 }
 
-export function getPatientContactInfo(e) {}
-
 async function renderPatientInfo(apptTd) {
   console.log("Appt TD", apptTd);
   if (!apptTd) {
@@ -175,28 +197,43 @@ async function renderPatientInfo(apptTd) {
   }
 
   const masterFile = new Masterfile(apptTd);
-  await masterFile.fetchPage();
-  console.log(masterFile);
-
-  const email = masterFile.getEmail();
-  const phoneNumbers = masterFile.getPhoneNumbers();
-  console.log("Phone Numbers", phoneNumbers);
-  const homePhone = phoneNumbers.find((p) => p.type === "home");
-  const workPhone = phoneNumbers.find((p) => p.type === "work");
 
   const contactInfoContainer = apptTd.querySelector(".contactInfo");
 
-  let html = "";
-  if (email) {
-    html += `<div>Email: ${email}</div>`;
-  }
+  const loaderContainer = create(
+    "div",
+    {
+      attrs: {
+        style:
+          "display: flex; width: 100%; justify-content: center; padding: 5px 0;",
+      },
+    },
+    Loader()
+  );
+  contactInfoContainer.appendChild(loaderContainer);
 
-  if (homePhone && homePhone.phone) {
-    html += `<div>Home: ${homePhone.phone}</div>`;
-  }
+  try {
+    await masterFile.fetchPage();
+    const email = masterFile.getEmail();
+    const phoneNumbers = masterFile.getPhoneNumbers();
+    const homePhone = phoneNumbers.find((p) => p.type === "home");
+    const workPhone = phoneNumbers.find((p) => p.type === "work");
 
-  if (workPhone && workPhone.phone) {
-    html += `<div>Work: ${workPhone.phone}</div>`;
+    let html = "";
+    if (email) {
+      html += `<div>Email: ${email}</div>`;
+    }
+
+    if (homePhone && homePhone.phone) {
+      html += `<div>Home: ${homePhone.phone}</div>`;
+    }
+
+    if (workPhone && workPhone.phone) {
+      html += `<div>Work: ${workPhone.phone}</div>`;
+    }
+    contactInfoContainer.innerHTML = html;
+  } catch (e) {
+    console.error(e);
+    contactInfoContainer.innerHTML = `<div style="white-space: initial;">Could not load contact information for this patient.</div>`;
   }
-  contactInfoContainer.innerHTML = html;
 }

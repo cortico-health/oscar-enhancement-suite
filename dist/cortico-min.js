@@ -200,72 +200,39 @@ var Ellipsis = function Ellipsis() {
 
 /***/ }),
 
-/***/ "./modules/Modal/Modal.js":
-/*!********************************!*\
-  !*** ./modules/Modal/Modal.js ***!
-  \********************************/
+/***/ "./modules/Loader/Loader.js":
+/*!**********************************!*\
+  !*** ./modules/Loader/Loader.js ***!
+  \**********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Modal": () => (/* binding */ Modal)
+/* harmony export */   "Loader": () => (/* binding */ Loader)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
-/* harmony import */ var _Modal_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Modal.css */ "./modules/Modal/Modal.css");
+/* harmony import */ var _Utils_Utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Utils/Utils */ "./modules/Utils/Utils.js");
+/* harmony import */ var _Loader_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Loader.css */ "./modules/Loader/Loader.css");
 
 
-
-var Modal = /*#__PURE__*/function () {
-  function Modal() {
-    var _this = this;
-
-    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__.default)(this, Modal);
-
-    this.modalContainer = null;
-    this.modal = null;
-    var modalContainer = document.querySelector(".cortico-modal-container");
-    var modal = document.querySelector(".cortico-modal");
-
-    if (modalContainer && modal) {
-      this.modalContainer = modalContainer;
-      this.modal = modal;
-      return;
+function Loader() {
+  var inner = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_0__.create)("div", {
+    attrs: {
+      class: "inner-loader"
     }
-
-    this.modalContainer = document.createElement("div");
-    this.modalContainer.classList.add("cortico-modal-container");
-    this.modal = document.createElement("div");
-    this.modal.classList.add("cortico-modal");
-    this.modalContainer.appendChild(this.modal);
-    document.body.prepend(this.modalContainer);
-    this.modalContainer.addEventListener("click", function (e) {
-      if (e.target.isEqualNode(_this.modalContainer)) {
-        _this.hide();
-      }
-    });
-  }
-
-  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__.default)(Modal, [{
-    key: "setContent",
-    value: function setContent(html) {
-      this.modal.innerHTML = html;
+  });
+  var loader = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_0__.create)("div", {
+    attrs: {
+      class: "loader"
     }
-  }, {
-    key: "hide",
-    value: function hide() {
-      this.modalContainer && this.modalContainer.classList.remove("show");
+  }, inner);
+  var loaderContainer = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_0__.create)("div", {
+    attrs: {
+      class: "loader-container"
     }
-  }, {
-    key: "show",
-    value: function show() {
-      this.modalContainer && this.modalContainer.classList.add("show");
-    }
-  }]);
-
-  return Modal;
-}();
+  }, loader);
+  return loaderContainer;
+}
 
 /***/ }),
 
@@ -824,8 +791,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "addAppointmentMenu": () => (/* binding */ addAppointmentMenu),
 /* harmony export */   "appointmentMenu": () => (/* binding */ appointmentMenu),
-/* harmony export */   "getCorticoLinks": () => (/* binding */ getCorticoLinks),
-/* harmony export */   "getPatientContactInfo": () => (/* binding */ getPatientContactInfo)
+/* harmony export */   "getCorticoLinks": () => (/* binding */ getCorticoLinks)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
@@ -833,11 +799,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Icons_Ellipsis__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Icons/Ellipsis */ "./modules/Icons/Ellipsis.js");
 /* harmony import */ var _Appointments__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Appointments */ "./modules/cortico/Appointments/Appointments.js");
 /* harmony import */ var _AppointmentMenu_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./AppointmentMenu.css */ "./modules/cortico/Appointments/AppointmentMenu.css");
-/* harmony import */ var _Modal_Modal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../Modal/Modal */ "./modules/Modal/Modal.js");
-/* harmony import */ var _core_Masterfile__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../core/Masterfile */ "./modules/core/Masterfile.js");
-/* harmony import */ var _core_Appointment__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../core/Appointment */ "./modules/core/Appointment.js");
-/* harmony import */ var _Utils_Utils__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../Utils/Utils */ "./modules/Utils/Utils.js");
-/* harmony import */ var _Icons_CorticoIcon__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../Icons/CorticoIcon */ "./modules/Icons/CorticoIcon.js");
+/* harmony import */ var _core_Masterfile__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../core/Masterfile */ "./modules/core/Masterfile.js");
+/* harmony import */ var _core_Appointment__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../core/Appointment */ "./modules/core/Appointment.js");
+/* harmony import */ var _Utils_Utils__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../Utils/Utils */ "./modules/Utils/Utils.js");
+/* harmony import */ var _Icons_CorticoIcon__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../Icons/CorticoIcon */ "./modules/Icons/CorticoIcon.js");
+/* harmony import */ var _Loader_Loader__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../Loader/Loader */ "./modules/Loader/Loader.js");
 
 
 
@@ -849,7 +815,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var modal = new _Modal_Modal__WEBPACK_IMPORTED_MODULE_5__.Modal();
 function addAppointmentMenu() {
   var appointments = (0,_Appointments__WEBPACK_IMPORTED_MODULE_3__.getAppointments)();
   appointments.map(function (appt) {
@@ -870,15 +835,22 @@ function addAppointmentMenu() {
   });
 }
 function appointmentMenu(apptTd) {
-  var wrapper = document.createElement("div");
-  wrapper.classList.add("appointment-menu-wrapper");
-  var container = document.createElement("div");
-  container.classList.add("appointment-menu-container");
   var menuIcon = (0,_Icons_Ellipsis__WEBPACK_IMPORTED_MODULE_2__.Ellipsis)();
-  container.appendChild(menuIcon);
-  var menu = document.createElement("div");
-  container.appendChild(menu);
-  menu.classList.add("appointment-menu");
+  var menu = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_7__.create)("div", {
+    attrs: {
+      class: "appointment-menu"
+    }
+  });
+  var container = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_7__.create)("div", {
+    attrs: {
+      class: "appointment-menu-container"
+    }
+  }, menuIcon, menu);
+  var wrapper = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_7__.create)("div", {
+    attrs: {
+      class: "appointment-menu-wrapper"
+    }
+  }, container);
   container.addEventListener("click", function (e) {
     var openMenu = document.querySelector(".appointment-menu.show");
 
@@ -919,18 +891,18 @@ function appointmentMenu(apptTd) {
     once: true
   });
   var corticoLinks = getCorticoLinks(apptTd);
-  var title = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_8__.create)("div", {
+  var title = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_7__.create)("div", {
     attrs: {
       class: "appointment-menu-header"
     }
   });
-  var corticoIcon = (0,_Icons_CorticoIcon__WEBPACK_IMPORTED_MODULE_9__.CorticoIcon)({
+  var corticoIcon = (0,_Icons_CorticoIcon__WEBPACK_IMPORTED_MODULE_8__.CorticoIcon)({
     attrs: {
       height: "15"
     }
   });
   title.appendChild(corticoIcon);
-  var h5 = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_8__.create)("h5", {
+  var h5 = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_7__.create)("h5", {
     attrs: {
       class: "color-primary appointment-menu-heading"
     },
@@ -938,7 +910,7 @@ function appointmentMenu(apptTd) {
   });
   title.appendChild(h5);
   menu.appendChild(title);
-  var linkHeading = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_8__.create)("h5", {
+  var linkHeading = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_7__.create)("h5", {
     attrs: {
       class: "appointment-menu-subheading"
     },
@@ -946,18 +918,19 @@ function appointmentMenu(apptTd) {
   });
   menu.appendChild(linkHeading);
   menu.appendChild(corticoLinks);
-  var patientInfoHeading = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_8__.create)("h5", {
+  console.log("Cortico Links", corticoLinks);
+  var patientInfoHeading = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_7__.create)("h5", {
     attrs: {
       class: "appointment-menu-subheading"
     },
     text: "Contact Information"
   });
-  var contactInfoContainer = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_8__.create)("div", {
+  var contactInfoContainer = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_7__.create)("div", {
     attrs: {
       class: "contactInfo"
     }
   });
-  var hr = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_8__.create)("hr");
+  var hr = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_7__.create)("hr");
   menu.appendChild(hr);
   menu.appendChild(patientInfoHeading);
   menu.appendChild(contactInfoContainer);
@@ -965,20 +938,30 @@ function appointmentMenu(apptTd) {
   return wrapper;
 }
 function getCorticoLinks(apptTd) {
-  var appointment = new _core_Appointment__WEBPACK_IMPORTED_MODULE_7__.Appointment(apptTd);
+  if (!(0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_7__.getCorticoUrl)()) {
+    var errorMessage = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_7__.create)("div", {
+      attrs: {
+        style: "white-space: initial;"
+      },
+      text: "Cortico clinic has not been set. Please set the Cortico Clinic URL from the sidebar."
+    });
+    return errorMessage;
+  }
+
+  var appointment = new _core_Appointment__WEBPACK_IMPORTED_MODULE_6__.Appointment(apptTd);
   var providerNo = appointment.getCurrentProvider();
   var appointmentNo = appointment.getAppointmentNo();
   var items = [{
     title: "Portal Page",
-    href: (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_8__.getPortalPage)()
+    href: (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_7__.getPortalPage)()
   }, {
     title: "Go To Appointment (Cortico)",
-    href: (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_8__.getCorticoAppointmentUrl)(providerNo, appointmentNo)
+    href: (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_7__.getCorticoAppointmentUrl)(providerNo, appointmentNo)
   }];
-  var list = document.createElement("ul");
+  var list = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_7__.create)("ul");
   items.map(function (item) {
-    var listItem = document.createElement("li");
-    var anchor = document.createElement("a");
+    var listItem = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_7__.create)("li");
+    var anchor = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_7__.create)("a");
     listItem.appendChild(anchor);
     anchor.textContent = item.title;
 
@@ -996,7 +979,6 @@ function getCorticoLinks(apptTd) {
   });
   return list;
 }
-function getPatientContactInfo(e) {}
 
 function renderPatientInfo(_x2) {
   return _renderPatientInfo.apply(this, arguments);
@@ -1004,7 +986,7 @@ function renderPatientInfo(_x2) {
 
 function _renderPatientInfo() {
   _renderPatientInfo = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2(apptTd) {
-    var masterFile, email, phoneNumbers, homePhone, workPhone, contactInfoContainer, html;
+    var masterFile, contactInfoContainer, loaderContainer, email, phoneNumbers, homePhone, workPhone, html;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
@@ -1019,22 +1001,27 @@ function _renderPatientInfo() {
             return _context2.abrupt("return");
 
           case 3:
-            masterFile = new _core_Masterfile__WEBPACK_IMPORTED_MODULE_6__.Masterfile(apptTd);
-            _context2.next = 6;
+            masterFile = new _core_Masterfile__WEBPACK_IMPORTED_MODULE_5__.Masterfile(apptTd);
+            contactInfoContainer = apptTd.querySelector(".contactInfo");
+            loaderContainer = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_7__.create)("div", {
+              attrs: {
+                style: "display: flex; width: 100%; justify-content: center; padding: 5px 0;"
+              }
+            }, (0,_Loader_Loader__WEBPACK_IMPORTED_MODULE_9__.Loader)());
+            contactInfoContainer.appendChild(loaderContainer);
+            _context2.prev = 7;
+            _context2.next = 10;
             return masterFile.fetchPage();
 
-          case 6:
-            console.log(masterFile);
+          case 10:
             email = masterFile.getEmail();
             phoneNumbers = masterFile.getPhoneNumbers();
-            console.log("Phone Numbers", phoneNumbers);
             homePhone = phoneNumbers.find(function (p) {
               return p.type === "home";
             });
             workPhone = phoneNumbers.find(function (p) {
               return p.type === "work";
             });
-            contactInfoContainer = apptTd.querySelector(".contactInfo");
             html = "";
 
             if (email) {
@@ -1050,13 +1037,21 @@ function _renderPatientInfo() {
             }
 
             contactInfoContainer.innerHTML = html;
+            _context2.next = 25;
+            break;
 
-          case 18:
+          case 21:
+            _context2.prev = 21;
+            _context2.t0 = _context2["catch"](7);
+            console.error(_context2.t0);
+            contactInfoContainer.innerHTML = "<div style=\"white-space: initial;\">Could not load contact information for this patient.</div>";
+
+          case 25:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2);
+    }, _callee2, null, [[7, 21]]);
   }));
   return _renderPatientInfo.apply(this, arguments);
 }
@@ -1157,10 +1152,10 @@ ___CSS_LOADER_EXPORT___.push([module.id, ".ellip-dot-wrapper {\n  display: inlin
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].use[2]!./modules/Modal/Modal.css":
-/*!*********************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].use[2]!./modules/Modal/Modal.css ***!
-  \*********************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].use[2]!./modules/Loader/Loader.css":
+/*!***********************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].use[2]!./modules/Loader/Loader.css ***!
+  \***********************************************************************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -1177,7 +1172,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".cortico-modal-container {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  display: none;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n     -moz-box-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n     -moz-box-align: center;\n          align-items: center;\n  background-color: rgba(0, 0, 0, 0.8);\n  padding: 10px;\n  z-index: 100;\n  opacity: 0;\n  -webkit-transition: opacity 1s;\n  -o-transition: opacity 1s;\n  -moz-transition: opacity 1s;\n  transition: opacity 1s;\n}\n\n.cortico-modal-container.show {\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -moz-box;\n  display: flex;\n  opacity: 1;\n}\n\n.cortico-modal {\n  background-color: white;\n  padding: 10px;\n  -webkit-border-radius: 0.5rem;\n     -moz-border-radius: 0.5rem;\n          border-radius: 0.5rem;\n}\n", "",{"version":3,"sources":["webpack://./modules/Modal/Modal.css"],"names":[],"mappings":"AAAA;EACE,eAAe;EACf,MAAM;EACN,OAAO;EACP,QAAQ;EACR,SAAS;EACT,aAAa;EACb,wBAAuB;EAAvB,+BAAuB;KAAvB,qBAAuB;UAAvB,uBAAuB;EACvB,yBAAmB;EAAnB,2BAAmB;KAAnB,sBAAmB;UAAnB,mBAAmB;EACnB,oCAAoC;EACpC,aAAa;EACb,YAAY;EACZ,UAAU;EACV,8BAAsB;EAAtB,yBAAsB;EAAtB,2BAAsB;EAAtB,sBAAsB;AACxB;;AAEA;EACE,oBAAa;EAAb,qBAAa;EAAb,iBAAa;EAAb,aAAa;EACb,UAAU;AACZ;;AAEA;EACE,uBAAuB;EACvB,aAAa;EACb,6BAAqB;KAArB,0BAAqB;UAArB,qBAAqB;AACvB","sourcesContent":[".cortico-modal-container {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  display: none;\n  justify-content: center;\n  align-items: center;\n  background-color: rgba(0, 0, 0, 0.8);\n  padding: 10px;\n  z-index: 100;\n  opacity: 0;\n  transition: opacity 1s;\n}\n\n.cortico-modal-container.show {\n  display: flex;\n  opacity: 1;\n}\n\n.cortico-modal {\n  background-color: white;\n  padding: 10px;\n  border-radius: 0.5rem;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".loader {\n  width: 30px;\n  height: 30px;\n  -webkit-border-radius: 50%;\n     -moz-border-radius: 50%;\n          border-radius: 50%;\n  background-color: rgba(0, 0, 0, 0.3);\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -moz-box;\n  display: flex;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n     -moz-box-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n     -moz-box-align: center;\n          align-items: center;\n}\n\n.inner-loader {\n  width: 10px;\n  height: 10px;\n  -webkit-border-radius: 50%;\n     -moz-border-radius: 50%;\n          border-radius: 50%;\n  background-color: rgba(255, 255, 255, 0.7);\n  -webkit-animation: scale 1s infinite;\n     -moz-animation: scale 1s infinite;\n       -o-animation: scale 1s infinite;\n          animation: scale 1s infinite;\n}\n\n@-webkit-keyframes scale {\n  0% {\n    -webkit-transform: scale(0);\n            transform: scale(0);\n  }\n\n  100% {\n    -webkit-transform: scale(2);\n            transform: scale(2);\n  }\n}\n\n@-moz-keyframes scale {\n  0% {\n    -moz-transform: scale(0);\n         transform: scale(0);\n  }\n\n  100% {\n    -moz-transform: scale(2);\n         transform: scale(2);\n  }\n}\n\n@-o-keyframes scale {\n  0% {\n    -o-transform: scale(0);\n       transform: scale(0);\n  }\n\n  100% {\n    -o-transform: scale(2);\n       transform: scale(2);\n  }\n}\n\n@keyframes scale {\n  0% {\n    -webkit-transform: scale(0);\n       -moz-transform: scale(0);\n         -o-transform: scale(0);\n            transform: scale(0);\n  }\n\n  100% {\n    -webkit-transform: scale(2);\n       -moz-transform: scale(2);\n         -o-transform: scale(2);\n            transform: scale(2);\n  }\n}\n", "",{"version":3,"sources":["webpack://./modules/Loader/Loader.css"],"names":[],"mappings":"AAAA;EACE,WAAW;EACX,YAAY;EACZ,0BAAkB;KAAlB,uBAAkB;UAAlB,kBAAkB;EAClB,oCAAoC;EACpC,oBAAa;EAAb,qBAAa;EAAb,iBAAa;EAAb,aAAa;EACb,wBAAuB;EAAvB,+BAAuB;KAAvB,qBAAuB;UAAvB,uBAAuB;EACvB,yBAAmB;EAAnB,2BAAmB;KAAnB,sBAAmB;UAAnB,mBAAmB;AACrB;;AAEA;EACE,WAAW;EACX,YAAY;EACZ,0BAAkB;KAAlB,uBAAkB;UAAlB,kBAAkB;EAClB,0CAA0C;EAC1C,oCAA4B;KAA5B,iCAA4B;OAA5B,+BAA4B;UAA5B,4BAA4B;AAC9B;;AAEA;EACE;IACE,2BAAmB;YAAnB,mBAAmB;EACrB;;EAEA;IACE,2BAAmB;YAAnB,mBAAmB;EACrB;AACF;;AARA;EACE;IACE,wBAAmB;SAAnB,mBAAmB;EACrB;;EAEA;IACE,wBAAmB;SAAnB,mBAAmB;EACrB;AACF;;AARA;EACE;IACE,sBAAmB;OAAnB,mBAAmB;EACrB;;EAEA;IACE,sBAAmB;OAAnB,mBAAmB;EACrB;AACF;;AARA;EACE;IACE,2BAAmB;OAAnB,wBAAmB;SAAnB,sBAAmB;YAAnB,mBAAmB;EACrB;;EAEA;IACE,2BAAmB;OAAnB,wBAAmB;SAAnB,sBAAmB;YAAnB,mBAAmB;EACrB;AACF","sourcesContent":[".loader {\n  width: 30px;\n  height: 30px;\n  border-radius: 50%;\n  background-color: rgba(0, 0, 0, 0.3);\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\n.inner-loader {\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n  background-color: rgba(255, 255, 255, 0.7);\n  animation: scale 1s infinite;\n}\n\n@keyframes scale {\n  0% {\n    transform: scale(0);\n  }\n\n  100% {\n    transform: scale(2);\n  }\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2199,10 +2194,10 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
-/***/ "./modules/Modal/Modal.css":
-/*!*********************************!*\
-  !*** ./modules/Modal/Modal.css ***!
-  \*********************************/
+/***/ "./modules/Loader/Loader.css":
+/*!***********************************!*\
+  !*** ./modules/Loader/Loader.css ***!
+  \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -2218,7 +2213,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_dist_runtime_getTarget_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_getTarget_js__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Modal_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !!../../node_modules/css-loader/dist/cjs.js!../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].use[2]!./Modal.css */ "./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].use[2]!./modules/Modal/Modal.css");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Loader_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !!../../node_modules/css-loader/dist/cjs.js!../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].use[2]!./Loader.css */ "./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].use[2]!./modules/Loader/Loader.css");
 
       
       
@@ -2263,12 +2258,12 @@ options.insert = function(style){
 options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
 options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_3___default());
 
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Modal_css__WEBPACK_IMPORTED_MODULE_4__.default, options);
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Loader_css__WEBPACK_IMPORTED_MODULE_4__.default, options);
 
 
 
 
-       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Modal_css__WEBPACK_IMPORTED_MODULE_4__.default && _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Modal_css__WEBPACK_IMPORTED_MODULE_4__.default.locals ? _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Modal_css__WEBPACK_IMPORTED_MODULE_4__.default.locals : undefined);
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Loader_css__WEBPACK_IMPORTED_MODULE_4__.default && _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Loader_css__WEBPACK_IMPORTED_MODULE_4__.default.locals ? _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Loader_css__WEBPACK_IMPORTED_MODULE_4__.default.locals : undefined);
 
 
 /***/ }),
