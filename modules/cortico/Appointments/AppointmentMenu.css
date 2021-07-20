@@ -11,6 +11,7 @@ td.appt {
   padding: 1em;
   border-radius: 0.5rem;
   display: none;
+  right: 0;
   z-index: 1500;
   font-size: 12px;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),

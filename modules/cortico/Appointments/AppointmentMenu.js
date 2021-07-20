@@ -47,6 +47,15 @@ export function appointmentMenu(apptTd) {
       openMenu.classList.remove("show");
     }
     menu.classList.toggle("show");
+
+    console.log({ menu }, isOverflown(menu));
+
+    function isOverflown(element) {
+      return (
+        element.scrollHeight > element.clientHeight ||
+        element.scrollWidth > element.clientWidth
+      );
+    }
   });
 
   container.addEventListener(
@@ -63,7 +72,6 @@ export function appointmentMenu(apptTd) {
   menu.appendChild(menuItems);
 
   wrapper.appendChild(container);
-
   return wrapper;
 }
 
