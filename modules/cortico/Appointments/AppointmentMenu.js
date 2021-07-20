@@ -134,7 +134,11 @@ export function appointmentMenu(apptTd) {
     },
   });
 
-  const hr = create("hr");
+  const hr = create("hr", {
+    attrs: {
+      style: "margin: 10px 0;",
+    },
+  });
   menu.appendChild(hr);
 
   menu.appendChild(patientInfoHeading);

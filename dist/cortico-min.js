@@ -930,7 +930,11 @@ function appointmentMenu(apptTd) {
       class: "contactInfo"
     }
   });
-  var hr = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_7__.create)("hr");
+  var hr = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_7__.create)("hr", {
+    attrs: {
+      style: "margin: 10px 0;"
+    }
+  });
   menu.appendChild(hr);
   menu.appendChild(patientInfoHeading);
   menu.appendChild(contactInfoContainer);
