@@ -6,6 +6,11 @@ services:
     volumes:
       - ./:/code
     working_dir: /code
+  oes-test:
+    image: cypress/included:8.0.0
+    volumes:
+      - ./:/code
+    working_dir: /code
 
 networks:
   back-tier:
