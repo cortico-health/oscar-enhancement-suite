@@ -12,6 +12,7 @@ import "element-closest-polyfill";
 import { getOrigin, getProvider } from "./modules/Utils/Utils";
 import { CorticoIcon } from "./modules/Icons/CorticoIcon";
 import { debounce } from "./modules/Utils/Utils";
+import "./index.css";
 
 // manually update this variable with the version in manifest.json
 const version = 2.0;
