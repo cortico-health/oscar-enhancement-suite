@@ -90,6 +90,11 @@ This will start webpack on watch mode and have source maps enabled by default.
 
 Then load these in to tampermonkey/greasemonkey and inspect the error. You should have sourcemaps enabled so that you know where things went wrong.
 
+# Building
+
+1. `cp dc.prod.yml docker-compose.override.yml`
+2. `docker-compose up`
+
 # Contributing
 
 Remember to test your changes on all version of Osccar (OpenOSP, WELL, community edition) before publishing.
