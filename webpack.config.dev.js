@@ -23,14 +23,7 @@ module.exports = {
             loader: "postcss-loader",
             options: {
               postcssOptions: {
-                plugins: [
-                  [
-                    "postcss-preset-env",
-                    {
-                      browsers: "> 0.001%, not dead",
-                    },
-                  ],
-                ],
+                config: true,
               },
             },
           },

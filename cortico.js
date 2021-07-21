@@ -12,6 +12,7 @@ import "element-closest-polyfill";
 import { getOrigin, getProvider } from "./modules/Utils/Utils";
 import { CorticoIcon } from "./modules/Icons/CorticoIcon";
 import { debounce } from "./modules/Utils/Utils";
+import "./index.css";
 
 // manually update this variable with the version in manifest.json
 const version = 2.0;
@@ -402,7 +403,7 @@ function createSideBar() {
   var styleSheet = styleSheetFactory("cortico_sidebar");
   var styles = "";
   styles +=
-    ".cortico-sidebar { position: fixed; top: 0; right: 0; bottom: 0; width: 300px; background-color: white; height: 100%; z-index: 50; }";
+    ".cortico-sidebar { position: fixed; top: 0; right: 0; bottom: 0; width: 300px; background-color: white; height: 100%; z-index: 1000; }";
   styles +=
     ".cortico-sidebar { transition: transform 0.25s ease-in; transform: translateX(300px); }";
   styles +=
