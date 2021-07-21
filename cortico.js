@@ -1500,6 +1500,10 @@ function getPharmacyDetails(pharmacyCode) {
     headers: {
       "Content-Type": "application/json",
     },
+  }).catch((error) => {
+    alert(
+      "There was an error fetching data, please try again. If the problem persists, please contact Cortico"
+    );
   });
 }
 
@@ -1655,6 +1659,10 @@ async function getDiagnosticFromCortico(appt_no, notes) {
     headers: {
       "Content-Type": "application/json",
     },
+  }).catch((error) => {
+    alert(
+      "There was an error fetching data, please try again. If the problem persists, please contact Cortico"
+    );
   });
 }
 
