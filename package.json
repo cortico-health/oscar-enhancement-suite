@@ -9,7 +9,8 @@
   "scripts": {
     "dev": "webpack --config webpack.config.dev.js",
     "build": "webpack --config webpack.config.js",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run --record --key c3beff34-2ba1-49df-8342-9552bed14542"
   },
   "dependencies": {
     "@babel/core": "^7.14.6",
