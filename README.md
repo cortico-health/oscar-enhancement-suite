@@ -81,15 +81,12 @@ Then
 2. yarn build
 3. yarn cypress:open
 
-# Debugging
+# Developing
 
-There are times when you want to visit what's wrong in the minified bundle, or after it has built.
-To enable source maps, in `webpack.config.js`
+1. `cp dc.dev.yml docker-compose.override.yml`
+2. `docker-compose up`
 
-    "devtool": "source-map"
-    "mode": "development"
-
-1. yarn build
+This will start webpack on watch mode and have source maps enabled by default.
 
 Then load these in to tampermonkey/greasemonkey and inspect the error. You should have sourcemaps enabled so that you know where things went wrong.
 
