@@ -63,7 +63,7 @@ const init_cortico = function () {
     init_schedule();
 
     if (!oscar.isJuno()) {
-      dragAndDrop();
+      //dragAndDrop();
     }
 
     addCorticoLogo();
