@@ -1043,6 +1043,8 @@ async function checkAllEligibility() {
         lowerCaseText = "Failed to fetch";
       }
 
+      console.log("Parsed result");
+
       if (lowerCaseText.includes("error in teleplan connection")) {
         alert("Automatic Eligiblity Check Aborted. \n" + text);
         error = true;
@@ -1058,13 +1060,15 @@ async function checkAllEligibility() {
       ) {
         plusSignAppointments(demographic_no);
         verified = true;
+        console.log("Success!");
       } else {
         appointmentInfo[i]["reason"] = text;
         addToFailures(appointmentInfo[i]);
         pubsub.publish("check-eligibility-failed", getFailureCache());
       }
-
+      console.log("Before add to cache");
       addToCache(demographic_no, verified);
+      console.log("Add to cache");
 
       await new Promise((resolve, reject) => {
         setTimeout(() => {
