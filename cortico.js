@@ -992,9 +992,10 @@ async function checkAllEligibility() {
     alert("No Appointments to Check");
   }
   console.log("before provider from td", providerNo);
+  console.log("I hcanged tu s");
 
   const providerNo = getProviderNoFromTd(nodes[0]);
-  console.log("provider from td", provierNo);
+  console.log("provider from td", providerNo);
   var error = false;
 
   window.checkAllEligibilityRunning = true;
