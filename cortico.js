@@ -1002,6 +1002,8 @@ async function checkAllEligibility() {
       pubsub.publish("check-eligibility", temp);
 
       const demographic_no = appointmentInfo[i].demographic_no;
+
+      console.log("Demographic no", demographic_no);
       let result = null;
       try {
         result = await checkEligiblity(
