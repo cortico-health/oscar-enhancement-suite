@@ -1178,7 +1178,8 @@ function getAppointmentLink(apptTdElement) {
   if (!apptLink) {
     var anchors = apptTdElement.querySelectorAll("a");
     anchors.forEach((anchor) => {
-      var temp = anchor.attributes.onclick.nodeValue;
+      var temp =
+        anchor.attributes.onclick && anchor.attributes.onclick.nodeValue;
       if (
         temp.includes("popupPage") &&
         temp.includes("appointmentcontrol.jsp")
@@ -1202,12 +1203,13 @@ function getAppointmentInfo(apptNodes) {
   var appointmentInfo = [];
   apptNodes.forEach(function (node) {
     var temp = {};
-    var apptLink = null;
-    try {
-      apptLink = getAppointmentLink(node);
-    } catch (e) {
-      return;
+    var apptLink = getAppointmentLink(node);
+
+    // No Appointment link
+    if (!apptLink) {
+      return null;
     }
+
     // Already verified
     if (apptLink.textContent.includes("+")) {
       return;
