@@ -63,6 +63,16 @@ Then load these in to tampermonkey/greasemonkey and inspect the error. You shoul
 
 Remember to test your changes on all version of Osccar (OpenOSP, WELL, community edition) before publishing.
 
+## Release Process
+
+Merge all your work into `develop`.
+
+To release the plug-in:
+1. merge your `develop` into `main`.
+2. announce your version release on slack.
+3. allow at least 24 hours (1 day) for the team to test. No changes to `main` during this time except bugfixes. (No new code, that goes on `develop` only)
+4. after 24 hours is elapsed, we can publish the `main` branch.
+
 ## How to package and update the Firefox extension
 
 The official Mozilla account for this plug-in is clark@countable.ca . Please contact him to publish changes.
