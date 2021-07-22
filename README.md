@@ -47,17 +47,53 @@ The developers would need to ensure what they want to test went through the buil
 1. yarn
 2. yarn build
 
-# Debugging
+**TamperMonkey**
 
-There are times when you want to visit what's wrong in the minified bundle, or after it has built.
-To enable source maps, in `webpack.config.js`
+Here's the one time tampermonkey script that auto updates to latest distribution file
 
-    "devtool": "source-map"
-    "mode": "development"
+    // ==UserScript==
+    // @name Cortico Require Main
+    // @namespace http://tampermonkey.net/
+    // @version 0.1
+    // @description try to take over the world!
+    // @author You
+    // @match https://_/_
+    // @icon data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+    // @require https://raw.githubusercontent.com/cortico-health/oscar-enhancement-suite/main/dist/cortico-min.js
+    // @grant none
+    // ==/UserScript==
 
-1. yarn build
+**Cypress**
+
+To test with cypress with an oscar instance, create a `cypress.env.json` file and fill in the following
+
+```
+{
+    "OSCAR_LOGIN": "username",
+    "OSCAR_PASSWORD": "password",
+    "OSCAR_PIN": "pin"
+}
+```
+
+Then
+
+1. yarn
+2. yarn build
+3. yarn cypress:open
+
+# Developing
+
+1. `cp dc.dev.yml docker-compose.override.yml`
+2. `docker-compose up`
+
+This will start webpack on watch mode and have source maps enabled by default.
 
 Then load these in to tampermonkey/greasemonkey and inspect the error. You should have sourcemaps enabled so that you know where things went wrong.
+
+# Building
+
+1. `cp dc.prod.yml docker-compose.override.yml`
+2. `docker-compose up`
 
 # Contributing
 

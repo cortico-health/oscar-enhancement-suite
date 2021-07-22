@@ -1,0 +1,18 @@
+version: "3.3"
+
+services:
+  oes-web:
+    image: node:16
+    volumes:
+      - ./:/code
+    working_dir: /code
+  oes-test:
+    image: cypress/included:8.0.0
+    volumes:
+      - ./:/code
+    working_dir: /code
+    command: "--key c3beff34-2ba1-49df-8342-9552bed14542 --record"
+
+networks:
+  back-tier:
+    driver: bridge

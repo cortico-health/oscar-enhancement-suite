@@ -41,3 +41,58 @@ export function getOrigin() {
 export function getProvider() {
   return window.location.pathname.split("/")[1];
 }
+
+export function getCorticoUrl() {
+  const clinicName = window.localStorage["clinicname"];
+  if (!clinicName) {
+    return null;
+  }
+
+  return `https://${clinicName}.cortico.ca`;
+}
+
+export function getPortalPage() {
+  const corticoUrl = getCorticoUrl();
+  if (!corticoUrl) {
+    return null;
+  }
+
+  return `${getCorticoUrl()}/virtual-portal`;
+}
+
+export function getCorticoAppointmentUrl(providerNo, appointmentNo) {
+  const corticoUrl = getCorticoUrl();
+  if (!corticoUrl) {
+    return null;
+  }
+
+  return `${getCorticoUrl()}/provider/schedule/${providerNo}/?appointment_id=${appointmentNo}`;
+}
+
+export function create(_element, options, ...children) {
+  if (!_element) {
+    return null;
+  }
+
+  const element = document.createElement(_element);
+
+  if (!options) {
+    return element;
+  }
+
+  if (options.attrs) {
+    for (let prop in options.attrs) {
+      element.setAttribute(prop, options.attrs[prop]);
+    }
+  }
+
+  if (options.text) {
+    element.textContent = options.text;
+  }
+
+  children.map((child) => {
+    element.appendChild(child);
+  });
+
+  return element;
+}
