@@ -13,7 +13,7 @@ import { getOrigin, getProvider } from "./modules/Utils/Utils";
 import { CorticoIcon } from "./modules/Icons/CorticoIcon";
 import { debounce } from "./modules/Utils/Utils";
 import "./index.css";
-console.log("Testssss");
+console.log("Hello World");
 // manually update this variable with the version in manifest.json
 const version = 3.1;
 const pubsub = pubSubInit();
@@ -48,6 +48,7 @@ const init_cortico = function () {
     route.indexOf("/appointment/addappointment.jsp") > -1 ||
     route.indexOf("/appointment/appointmentcontrol.jsp") > -1
   ) {
+    console.log("Does it evne get here?");
     init_appointment_page();
     init_recall_button();
 
@@ -56,7 +57,13 @@ const init_cortico = function () {
     var resources_field = document.querySelector('[name="resources"]');
     var cortico_button = document.getElementById("cortico-video-appt-btn");
     // open a windows to the cortico video page for this appointment.
-    cortico_button.addEventListener("click", open_video_appointment_page);
+    window.addEventListener("click", (e) => {
+      if (e.target.id === "cortico-video-appt-btn") {
+        open_video_appointment_page(e);
+      }
+    });
+    //You need to delegate
+    //cortico_button.addEventListener("click", open_video_appointment_page);
     resources_field.addEventListener("change", update_video_button_visibility);
     init_diagnostic_viewer_button();
   } else if (route.indexOf("/provider/providercontrol.jsp") > -1) {
@@ -152,6 +159,7 @@ function update_video_button_visibility() {
 }
 
 function open_video_appointment_page(e) {
+  console.log("Click worked");
   e.preventDefault(); // don't submit the form.
 
   if (!localStorage["clinicname"]) {
