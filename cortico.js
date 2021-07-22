@@ -1511,6 +1511,11 @@ function getPharmacyDetails(pharmacyCode) {
   });
 }
 
+function formatNumber(number) {
+  if (!number) return "";
+  return `1${number.match(/\d+/g).join("")}`;
+}
+
 async function setupPreferredPharmacy(code, demographic_no) {
   var pharmacyCode = localStorage.getItem("currentPharmacyCode");
 
@@ -1528,8 +1533,7 @@ async function setupPreferredPharmacy(code, demographic_no) {
 
   // cleanup fax number to format starting with 1
   // This might be an issue if the oscar pharmacies don't match this format
-  if (faxNumber) faxNumber = `1${faxNumber.match(/\d+/g).join("")}`;
-
+  if (faxNumber) faxNumber = formatNumber(faxNumber);
   var demographicNo = demographic_no;
   if (!demographic_no) {
     demographicNo = getDemographicFromLocation();
@@ -1566,12 +1570,15 @@ async function setupPreferredPharmacy(code, demographic_no) {
 
     if (pharmacyUpdated) {
       let pharmacy = json.length === 1 ? json[0] : null;
+
       if (json.length > 1) {
         pharmacy = json.find((item) => {
           return (
-            item.name.includes(searchTerm) &&
+            item.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+            item.fax.length > 8 &&
             // either if the fax is the same or the formatted fax has the values
-            (item.fax === faxNumber || faxNumber.includes(item.fax))
+            (formatNumber(item.fax) === faxNumber ||
+              faxNumber.includes(item.fax))
           );
         });
       }
