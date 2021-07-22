@@ -1179,7 +1179,10 @@ function getAppointmentLink(apptTdElement) {
     var anchors = apptTdElement.querySelectorAll("a");
     anchors.forEach((anchor) => {
       var temp =
-        anchor.attributes.onclick && anchor.attributes.onclick.nodeValue;
+        anchor &&
+        annchor.attributes &&
+        anchor.attributes.onclick &&
+        anchor.attributes.onclick.nodeValue;
       if (
         temp &&
         temp.includes("popupPage") &&
