@@ -108,3 +108,4 @@ dist/cortico-min.js.map
 cypress.env.json
 docker-compose.override.yml
 cypress/videos
+cypress/screenshots
