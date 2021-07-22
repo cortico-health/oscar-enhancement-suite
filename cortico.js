@@ -1181,6 +1181,7 @@ function getAppointmentLink(apptTdElement) {
       var temp =
         anchor.attributes.onclick && anchor.attributes.onclick.nodeValue;
       if (
+        temp &&
         temp.includes("popupPage") &&
         temp.includes("appointmentcontrol.jsp")
       ) {
