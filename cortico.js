@@ -15,7 +15,7 @@ import { debounce } from "./modules/Utils/Utils";
 import "./index.css";
 
 // manually update this variable with the version in manifest.json
-const version = 2.0;
+const version = 3.1;
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
 
