@@ -58,7 +58,7 @@ const init_cortico = function () {
     // open a windows to the cortico video page for this appointment.
     cortico_button.addEventListener("click", open_video_appointment_page);
     resources_field.addEventListener("change", update_video_button_visibility);
-    // init_diagnostic_viewer_button();
+    init_diagnostic_viewer_button();
   } else if (route.indexOf("/provider/providercontrol.jsp") > -1) {
     init_schedule();
 
