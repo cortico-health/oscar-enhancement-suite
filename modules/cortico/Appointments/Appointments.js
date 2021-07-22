@@ -30,8 +30,13 @@ export function getAppointmentLink(apptTdElement) {
   if (!apptLink) {
     var anchors = apptTdElement.querySelectorAll("a");
     anchors.forEach((anchor) => {
-      var temp = anchor.attributes.onclick.nodeValue;
+      var temp =
+        anchor &&
+        anchor.attributes &&
+        anchor.attributes.onclick &&
+        anchor.attributes.onclick.nodeValue;
       if (
+        temp &&
         temp.includes("popupPage") &&
         temp.includes("appointmentcontrol.jsp")
       ) {

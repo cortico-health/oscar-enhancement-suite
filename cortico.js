@@ -5,7 +5,10 @@
 // ==/UserScript==
 import { pubSubInit } from "./modules/PubSub/PubSub";
 import dayjs from "dayjs";
-import { getAppointments } from "./modules/cortico/Appointments/Appointments";
+import {
+  getAppointments,
+  getAppointmentLink,
+} from "./modules/cortico/Appointments/Appointments";
 import { addAppointmentMenu } from "./modules/cortico/Appointments/AppointmentMenu";
 import { Oscar } from "./modules/core/Oscar.js";
 import "element-closest-polyfill";
@@ -1188,37 +1191,6 @@ function checkEligiblity(demographicNo, origin, provider, providerNo) {
       "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
     },
   });
-}
-
-function getAppointmentLink(apptTdElement) {
-  var apptLink = apptTdElement.querySelector("a.apptLink");
-
-  if (apptLink) {
-    return apptLink;
-  }
-
-  // If doctor isn't set, the anchor element has no class called apptLink, so we traverse through all anchor elements
-  if (!apptLink) {
-    var anchors = apptTdElement.querySelectorAll("a");
-    anchors.forEach((anchor) => {
-      var temp =
-        anchor &&
-        anchor.attributes &&
-        anchor.attributes.onclick &&
-        anchor.attributes.onclick.nodeValue;
-      if (
-        temp &&
-        temp.includes("popupPage") &&
-        temp.includes("appointmentcontrol.jsp")
-      ) {
-        if (!apptLink) {
-          apptLink = anchor;
-        }
-      }
-    });
-  }
-
-  return apptLink;
 }
 
 function getDemographicNo(apptUrl) {
