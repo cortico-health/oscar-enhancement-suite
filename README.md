@@ -63,17 +63,37 @@ Here's the one time tampermonkey script that auto updates to latest distribution
     // @grant none
     // ==/UserScript==
 
-# Debugging
+**Cypress**
 
-There are times when you want to visit what's wrong in the minified bundle, or after it has built.
-To enable source maps, in `webpack.config.js`
+To test with cypress with an oscar instance, create a `cypress.env.json` file and fill in the following
 
-    "devtool": "source-map"
-    "mode": "development"
+```
+{
+    "OSCAR_LOGIN": "username",
+    "OSCAR_PASSWORD": "password",
+    "OSCAR_PIN": "pin"
+}
+```
 
-1. yarn build
+Then
+
+1. yarn
+2. yarn build
+3. yarn cypress:open
+
+# Developing
+
+1. `cp dc.dev.yml docker-compose.override.yml`
+2. `docker-compose up`
+
+This will start webpack on watch mode and have source maps enabled by default.
 
 Then load these in to tampermonkey/greasemonkey and inspect the error. You should have sourcemaps enabled so that you know where things went wrong.
+
+# Building
+
+1. `cp dc.prod.yml docker-compose.override.yml`
+2. `docker-compose up`
 
 # Contributing
 

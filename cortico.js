@@ -3,14 +3,16 @@
 // @version  2.1
 // @grant    none
 // ==/UserScript==
-
 import { pubSubInit } from "./modules/PubSub/PubSub";
 import dayjs from "dayjs";
-import { getAppointments } from "./modules/Appointments/Appointments";
-import { addAppointmentMenu } from "./modules/Appointments/AppointmentMenu";
-import { Oscar } from "./modules/Oscar/Oscar";
+import { getAppointments } from "./modules/cortico/Appointments/Appointments";
+import { addAppointmentMenu } from "./modules/cortico/Appointments/AppointmentMenu";
+import { Oscar } from "./modules/core/Oscar.js";
 import "element-closest-polyfill";
 import { getOrigin, getProvider } from "./modules/Utils/Utils";
+import { CorticoIcon } from "./modules/Icons/CorticoIcon";
+import { debounce } from "./modules/Utils/Utils";
+import "./index.css";
 
 // manually update this variable with the version in manifest.json
 const version = 2.0;
@@ -59,10 +61,14 @@ const init_cortico = function () {
     init_diagnostic_viewer_button();
   } else if (route.indexOf("/provider/providercontrol.jsp") > -1) {
     init_schedule();
-    dragAndDrop();
+
+    if (!oscar.isJuno()) {
+      //dragAndDrop();
+    }
+
     addCorticoLogo();
     addMenu();
-    //addAppointmentMenu();
+    addAppointmentMenu();
     if (!oscar.isJuno() && !oscar.containsKaiBar()) {
       plusSignFromCache();
     }
@@ -104,8 +110,8 @@ const init_schedule = function () {
       oscar.containsOscarGoOceanScript()
     )
   ) {
-    oscar.updateDoctorHeadings();
-    window.addEventListener("scroll", oscar.updateDoctorHeadings);
+    const debounced = debounce(oscar.updateDoctorHeadings.bind(oscar), 50);
+    window.addEventListener("scroll", debounced);
   } else {
     console.log(
       "Oscar Go or KAI Oscar detected; disabling sticky headers for doctor names"
@@ -132,7 +138,7 @@ const init_schedule = function () {
         window.checkAllEligibilityRunning !== true &&
         window.setupPreferredPharmaciesRunning !== true
       ) {
-        window.location.reload();
+        //window.location.reload();
       }
     }
   }, 1000);
@@ -291,7 +297,7 @@ const init_styles = function () {
   /*position:fixed;*/
   margin-left: 57px;
   padding: 1px 15px;
-  top: 0;
+
   }`;
   }
   addGlobalStyle(style);
@@ -336,8 +342,18 @@ function addCorticoLogo() {
     document.querySelector("#firstMenu #navList") ||
     document.querySelector("#firstMenu #navlist");
   var listitem = document.createElement("li");
-  listitem.innerHTML =
-    '<a href="http://cortico.ca"><img src="http://bool.countable.ca/32x32.png" height="15" style="vertical-align: middle;" /></a>';
+
+  const anchor = document.createElement("a");
+  anchor.setAttribute("href", "https://cortico.ca");
+
+  const corticoLogo = CorticoIcon({
+    attrs: {
+      height: "15",
+    },
+  });
+
+  anchor.appendChild(corticoLogo);
+  listitem.appendChild(anchor);
   menu.appendChild(listitem);
 }
 
@@ -387,7 +403,7 @@ function createSideBar() {
   var styleSheet = styleSheetFactory("cortico_sidebar");
   var styles = "";
   styles +=
-    ".cortico-sidebar { position: fixed; top: 0; right: 0; bottom: 0; width: 300px; background-color: white; height: 100%; z-index: 50; }";
+    ".cortico-sidebar { position: fixed; top: 0; right: 0; bottom: 0; width: 300px; background-color: white; height: 100%; z-index: 10000; }";
   styles +=
     ".cortico-sidebar { transition: transform 0.25s ease-in; transform: translateX(300px); }";
   styles +=
@@ -713,9 +729,12 @@ function removeNewUI() {
 /* Drag and Drop Feature Begin */
 
 function appointmentRowDragStart(ev) {
+  console.log("Darg start", ev);
   if (ev.target.matches("td.appt")) {
     window.dragSelectedTarget = ev.target;
     ev.dataTransfer.setDragImage(ev.target, 0, 0);
+  } else {
+    ev.preventDefault();
   }
 }
 
@@ -1481,6 +1500,10 @@ function getPharmacyDetails(pharmacyCode) {
     headers: {
       "Content-Type": "application/json",
     },
+  }).catch((error) => {
+    alert(
+      "There was an error fetching data, please try again. If the problem persists, please contact Cortico"
+    );
   });
 }
 
@@ -1636,6 +1659,10 @@ async function getDiagnosticFromCortico(appt_no, notes) {
     headers: {
       "Content-Type": "application/json",
     },
+  }).catch((error) => {
+    alert(
+      "There was an error fetching data, please try again. If the problem persists, please contact Cortico"
+    );
   });
 }
 
