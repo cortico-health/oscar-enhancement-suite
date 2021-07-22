@@ -1202,8 +1202,12 @@ function getAppointmentInfo(apptNodes) {
   var appointmentInfo = [];
   apptNodes.forEach(function (node) {
     var temp = {};
-
-    var apptLink = getAppointmentLink(node);
+    var apptLink = null;
+    try {
+      apptLink = getAppointmentLink(node);
+    } catch (e) {
+      return;
+    }
     // Already verified
     if (apptLink.textContent.includes("+")) {
       return;
