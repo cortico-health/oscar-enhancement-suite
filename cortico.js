@@ -13,7 +13,7 @@ import { getOrigin, getProvider } from "./modules/Utils/Utils";
 import { CorticoIcon } from "./modules/Icons/CorticoIcon";
 import { debounce } from "./modules/Utils/Utils";
 import "./index.css";
-console.log("Testss");
+console.log("Testssss");
 // manually update this variable with the version in manifest.json
 const version = 3.1;
 const pubsub = pubSubInit();
