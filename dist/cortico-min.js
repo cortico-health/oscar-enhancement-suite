@@ -3558,7 +3558,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-console.log("Test"); // manually update this variable with the version in manifest.json
+console.log("Testss"); // manually update this variable with the version in manifest.json
 
 var version = 3.1;
 var pubsub = (0,_modules_PubSub_PubSub__WEBPACK_IMPORTED_MODULE_3__.pubSubInit)();
