@@ -1180,7 +1180,7 @@ function getAppointmentLink(apptTdElement) {
     anchors.forEach((anchor) => {
       var temp =
         anchor &&
-        annchor.attributes &&
+        anchor.attributes &&
         anchor.attributes.onclick &&
         anchor.attributes.onclick.nodeValue;
       if (
