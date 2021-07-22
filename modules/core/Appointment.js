@@ -36,10 +36,16 @@ export class Appointment {
     if (!url) {
       return null;
     }
-    const searchParams = new URLSearchParams(url);
-    const curProviderNo = searchParams.get("curProviderNo");
 
-    return curProviderNo;
+    const searchParams = new URLSearchParams(url);
+    let providerNo = searchParams.get("curProviderNo");
+
+    if (!providerNo || providerNo === "null") {
+      //Juno
+      providerNo = searchParams.get("apptProvider_no");
+    }
+
+    return providerNo;
   }
 
   getAppointmentNo() {

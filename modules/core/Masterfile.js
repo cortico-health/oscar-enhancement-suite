@@ -1,4 +1,6 @@
 import { getOrigin, getProvider } from "../Utils/Utils";
+var originalFetch = require("cross-fetch");
+const fetch = require("fetch-retry")(originalFetch);
 
 /**
  * Tries to represent the masterfile in oscar.
@@ -53,7 +55,21 @@ export class Masterfile {
 
     try {
       const url = getOrigin() + "/" + getProvider() + this.url;
-      const result = await fetch(url);
+      const result = await fetch(url, {
+        retryDelay: 3000,
+        retryOn: function (attempt, error, response) {
+          if (error !== null || response.status >= 400) {
+            if (attempt === 1) {
+              return false;
+            }
+            return true;
+          }
+        },
+      });
+
+      if (result.status !== 200) {
+        throw result;
+      }
       const page = await result.text();
 
       const container = document.createElement("div");
@@ -62,7 +78,7 @@ export class Masterfile {
 
       return this.page;
     } catch (e) {
-      console.error(e);
+      console.error("Fetch error", e);
       return false;
     }
   }
@@ -91,6 +107,7 @@ export class Masterfile {
 
     const homePhone = this.page.querySelector('input[name="phone"]');
     const workPhone = this.page.querySelector('input[name="phone2"]');
+    const cellPhone = this.page.querySelector('input[name="demo_cell"]');
 
     return [
       {
@@ -100,6 +117,10 @@ export class Masterfile {
       {
         type: "work",
         phone: workPhone && workPhone.value,
+      },
+      {
+        type: "cell",
+        phone: cellPhone && cellPhone.value,
       },
     ];
   }

@@ -12,7 +12,7 @@ td.appt {
   color: white;
   position: absolute;
   top: 0px;
-  padding: 1em;
+  padding: 1.5rem;
   border-radius: 0.5rem;
   display: none;
   right: 0;
@@ -22,8 +22,16 @@ td.appt {
     0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
+.appointment-menu.show {
+  display: block;
+}
+
 .appointment-menu a {
-  color: white;
+  color: white !important;
+}
+
+.appointment-menu a:hover {
+  color: gray !important;
 }
 
 .appointment-menu ul {
@@ -35,6 +43,7 @@ td.appt {
 .appointment-menu ul li,
 .contactInfo > div {
   margin: 1px 0;
+  color: white !important;
 }
 
 .appointment-menu-container {
@@ -43,7 +52,6 @@ td.appt {
   background-color: #5c70ff;
   padding: 5px 10px;
   margin-top: -3px;
-  margin-right: -3px;
   border-radius: 2rem;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
     0 10px 10px -5px rgba(0, 0, 0, 0.04);
@@ -69,6 +77,7 @@ td.appt {
   margin: 0;
   padding: 0;
   margin-left: 5px;
+  font-size: 14px;
 }
 
 .appointment-menu-hr {
@@ -81,4 +90,9 @@ td.appt {
 
 .appointment-menu-subheading {
   color: white;
+  font-size: 12px;
+}
+
+.contactInfo a {
+  color: white !important;
 }

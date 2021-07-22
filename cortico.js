@@ -12,6 +12,7 @@ import "element-closest-polyfill";
 import { getOrigin, getProvider } from "./modules/Utils/Utils";
 import { CorticoIcon } from "./modules/Icons/CorticoIcon";
 import { debounce } from "./modules/Utils/Utils";
+import "./index.css";
 
 // manually update this variable with the version in manifest.json
 const version = 2.0;
@@ -57,10 +58,14 @@ const init_cortico = function () {
     // open a windows to the cortico video page for this appointment.
     cortico_button.addEventListener("click", open_video_appointment_page);
     resources_field.addEventListener("change", update_video_button_visibility);
-    // init_diagnostic_viewer_button();
+    init_diagnostic_viewer_button();
   } else if (route.indexOf("/provider/providercontrol.jsp") > -1) {
     init_schedule();
-    dragAndDrop();
+
+    if (!oscar.isJuno()) {
+      //dragAndDrop();
+    }
+
     addCorticoLogo();
     addMenu();
     addAppointmentMenu();
@@ -398,7 +403,7 @@ function createSideBar() {
   var styleSheet = styleSheetFactory("cortico_sidebar");
   var styles = "";
   styles +=
-    ".cortico-sidebar { position: fixed; top: 0; right: 0; bottom: 0; width: 300px; background-color: white; height: 100%; z-index: 50; }";
+    ".cortico-sidebar { position: fixed; top: 0; right: 0; bottom: 0; width: 300px; background-color: white; height: 100%; z-index: 10000; }";
   styles +=
     ".cortico-sidebar { transition: transform 0.25s ease-in; transform: translateX(300px); }";
   styles +=
@@ -1495,6 +1500,10 @@ function getPharmacyDetails(pharmacyCode) {
     headers: {
       "Content-Type": "application/json",
     },
+  }).catch((error) => {
+    alert(
+      "There was an error fetching data, please try again. If the problem persists, please contact Cortico"
+    );
   });
 }
 
@@ -1650,6 +1659,10 @@ async function getDiagnosticFromCortico(appt_no, notes) {
     headers: {
       "Content-Type": "application/json",
     },
+  }).catch((error) => {
+    alert(
+      "There was an error fetching data, please try again. If the problem persists, please contact Cortico"
+    );
   });
 }
 

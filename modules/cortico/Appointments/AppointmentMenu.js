@@ -63,21 +63,17 @@ export function appointmentMenu(apptTd) {
       openMenu.classList.remove("show");
     }
     menu.classList.toggle("show");
-
-    console.log({ menu }, isOverflown(menu));
-
-    function isOverflown(element) {
-      return (
-        element.scrollHeight > element.clientHeight ||
-        element.scrollWidth > element.clientWidth
-      );
-    }
   });
 
   container.addEventListener(
     "click",
     async (e) => {
       await renderPatientInfo(apptTd);
+      console.log(menu.getBoundingClientRect());
+      const left = menu.getBoundingClientRect().left;
+      if (left < 0) {
+        menu.style = "left: 0; right: unset;";
+      }
     },
     {
       once: true,
@@ -119,7 +115,6 @@ export function appointmentMenu(apptTd) {
 
   menu.appendChild(linkHeading);
   menu.appendChild(corticoLinks);
-  console.log("Cortico Links", corticoLinks);
 
   const patientInfoHeading = create("h5", {
     attrs: {
@@ -136,7 +131,7 @@ export function appointmentMenu(apptTd) {
 
   const hr = create("hr", {
     attrs: {
-      style: "margin: 10px 0;",
+      style: "margin: 10px 0; border-color: rgba(255,255,255,0.3)",
     },
   });
   menu.appendChild(hr);
@@ -162,11 +157,11 @@ export function getCorticoLinks(apptTd) {
   const appointmentNo = appointment.getAppointmentNo();
   const items = [
     {
-      title: "Portal Page",
+      title: "☛ Portal Page",
       href: getPortalPage(),
     },
     {
-      title: "Go To Appointment (Cortico)",
+      title: "☛ Go To Appointment (Cortico)",
       href: getCorticoAppointmentUrl(providerNo, appointmentNo),
     },
   ];
@@ -180,6 +175,7 @@ export function getCorticoLinks(apptTd) {
 
     if (item.href) {
       anchor.setAttribute("href", item.href);
+      anchor.setAttribute("target", "_blank");
     }
 
     if (item.onClick) {
@@ -195,7 +191,6 @@ export function getCorticoLinks(apptTd) {
 }
 
 async function renderPatientInfo(apptTd) {
-  console.log("Appt TD", apptTd);
   if (!apptTd) {
     return;
   }
@@ -217,23 +212,31 @@ async function renderPatientInfo(apptTd) {
   contactInfoContainer.appendChild(loaderContainer);
 
   try {
-    await masterFile.fetchPage();
+    const result = await masterFile.fetchPage();
+    if (result === false) {
+      throw "Could not fetch page";
+    }
     const email = masterFile.getEmail();
     const phoneNumbers = masterFile.getPhoneNumbers();
     const homePhone = phoneNumbers.find((p) => p.type === "home");
     const workPhone = phoneNumbers.find((p) => p.type === "work");
+    const cellphone = phoneNumbers.find((p) => p.type === "cell");
 
     let html = "";
     if (email) {
-      html += `<div>Email: <a href="mailto:${email}">${email}</a></div>`;
+      html += `<div>☛ <a href="mailto:${email}">${email}</a></div>`;
     }
 
     if (homePhone && homePhone.phone) {
-      html += `<div>Home: <a href="tel:${homePhone.phone}">${homePhone.phone}</a></div>`;
+      html += `<div>☛ (Home) <a href="tel:${homePhone.phone}">${homePhone.phone}</a></div>`;
     }
 
     if (workPhone && workPhone.phone) {
-      html += `<div>Work: <a href="tel:${workPhone.phone}">${workPhone.phone}</a></div>`;
+      html += `<div>☛ (Work) <a href="tel:${workPhone.phone}">${workPhone.phone}</a></div>`;
+    }
+
+    if (cellphone && cellphone.phone) {
+      html += `<div>☛ (Cell) <a href="tel:${cellphone.phone}">${cellphone.phone}</a></div>`;
     }
     contactInfoContainer.innerHTML = html;
   } catch (e) {
