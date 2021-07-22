@@ -991,7 +991,7 @@ async function checkAllEligibility() {
   if (appointmentInfo.length === 0) {
     alert("No Appointments to Check");
   }
-  console.log("before provider from td", provierNo);
+  console.log("before provider from td", providerNo);
 
   const providerNo = getProviderNoFromTd(nodes[0]);
   console.log("provider from td", provierNo);
