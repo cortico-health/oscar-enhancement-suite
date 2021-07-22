@@ -993,6 +993,7 @@ async function checkAllEligibility() {
   }
   console.log("before provider from td", providerNo);
   console.log("I hcanged tu s");
+  console.log("Test tmpaer");
 
   const providerNo = getProviderNoFromTd(nodes[0]);
   console.log("provider from td", providerNo);
@@ -1020,6 +1021,8 @@ async function checkAllEligibility() {
       } catch (e) {
         console.error(e);
       }
+
+      console.log("Test tmpaer");
 
       let text = null;
       let lowerCaseText = null;
@@ -1060,6 +1063,7 @@ async function checkAllEligibility() {
           resolve();
         }, 5000);
       });
+      console.log("Test tmpaer");
     }
   } catch (err) {
     console.log(err);
