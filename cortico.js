@@ -982,6 +982,7 @@ async function checkAllEligibility() {
 
   clearFailureCache();
   var nodes = document.querySelectorAll("td.appt");
+  console.log("Before appointment info");
   var appointmentInfo = getAppointmentInfo(nodes);
   console.log("Appointment Info", appointmentInfo);
   appointmentInfo = filterAppointments(appointmentInfo);
@@ -990,7 +991,10 @@ async function checkAllEligibility() {
   if (appointmentInfo.length === 0) {
     alert("No Appointments to Check");
   }
+  console.log("before provider from td", provierNo);
+
   const providerNo = getProviderNoFromTd(nodes[0]);
+  console.log("provider from td", provierNo);
   var error = false;
 
   window.checkAllEligibilityRunning = true;
