@@ -9,9 +9,9 @@
   align-items: center;
   background-color: rgba(0, 0, 0, 0.8);
   padding: 10px;
-  z-index: 100;
   opacity: 0;
   transition: opacity 1s;
+  @apply tw-z-10000;
 }
 
 .cortico-modal-container.show {

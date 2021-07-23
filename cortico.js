@@ -16,7 +16,7 @@ import { getOrigin, getProvider } from "./modules/Utils/Utils";
 import { CorticoIcon } from "./modules/Icons/CorticoIcon";
 import { debounce } from "./modules/Utils/Utils";
 import "./index.css";
-console.log("Hello World");
+import { Modal } from "./modules/Modal/Modal";
 // manually update this variable with the version in manifest.json
 const version = 3.1;
 const pubsub = pubSubInit();
@@ -47,6 +47,7 @@ const init_cortico = function () {
   }
 
   console.log("cortico plug-in initializing, version:", version);
+
   if (
     route.indexOf("/appointment/addappointment.jsp") > -1 ||
     route.indexOf("/appointment/appointmentcontrol.jsp") > -1

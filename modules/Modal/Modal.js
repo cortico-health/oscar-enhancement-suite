@@ -1,4 +1,5 @@
 import "./Modal.css";
+import { create } from "../Utils/Utils";
 
 export class Modal {
   modalContainer = null;
@@ -14,12 +15,22 @@ export class Modal {
       return;
     }
 
-    this.modalContainer = document.createElement("div");
-    this.modalContainer.classList.add("cortico-modal-container");
-    this.modal = document.createElement("div");
-    this.modal.classList.add("cortico-modal");
+    this.modal = create("div", {
+      attrs: {
+        class: "cortico-modal",
+      },
+    });
 
-    this.modalContainer.appendChild(this.modal);
+    this.modalContainer = create(
+      "div",
+      {
+        attrs: {
+          class: "cortico-modal-container tailwind",
+        },
+      },
+      this.modal
+    );
+
     document.body.prepend(this.modalContainer);
 
     this.modalContainer.addEventListener("click", (e) => {
