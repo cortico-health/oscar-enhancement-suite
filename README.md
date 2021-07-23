@@ -122,14 +122,16 @@ Sign into addons.mozilla.org, and submit an updated version.
 To package the add-on, do
 
 ```
-zip -r cortico.zip dist icons manifest.json
+docker-compose run pkg
 ```
 
-Then, upload this on https://addons.mozilla.org/en-CA/developers/addon/
+Then, upload cortico-firefox.zip on https://addons.mozilla.org/en-CA/developers/addon/
 
 Indicate the plug-in does not use remote code (which is the case).
 
 ## How to package and update the Chrome extension
+
+Upload cortico-chrome.zip
 
 The Chrome developer account is shirley@countable.ca. Contact her to publish changes. In the Privacy tab:
 

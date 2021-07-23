@@ -1,9 +1,5 @@
-<<<<<<< Updated upstream
-cortico.zip
-=======
 manifest.json
 *.zip
->>>>>>> Stashed changes
 # Logs
 logs
 *.log

@@ -12,6 +12,11 @@ services:
       - ./:/code
     working_dir: /code
     command: "--key c3beff34-2ba1-49df-8342-9552bed14542 --record"
+  pkg:
+    volumes:
+      - .:/code
+    working_dir: /code
+    build: .
 
 networks:
   back-tier:
