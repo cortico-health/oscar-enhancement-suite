@@ -40,8 +40,18 @@ export class Modal {
     });
   }
 
-  setContent(html) {
-    this.modal.innerHTML = html;
+  setContent(content) {
+    if (!content) {
+      return;
+    }
+
+    if (typeof content === "string") {
+      this.modal.innerHTML = html;
+    }
+
+    if (content instanceof Element) {
+      this.modal.appendChild(content);
+    }
   }
 
   hide() {

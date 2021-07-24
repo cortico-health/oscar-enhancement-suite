@@ -1,0 +1,3 @@
+.dashboard-container {
+  @apply tw-min-h-[800px] tw-overflow-auto;
+}

@@ -10,6 +10,7 @@ module.exports = {
   watchOptions: {
     aggregateTimeout: 600,
   },
+  cache: false,
   devtool: "source-map",
   mode: "development",
   module: {
