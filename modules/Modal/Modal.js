@@ -41,6 +41,7 @@ export class Modal {
   }
 
   setContent(content) {
+    console.log("Content", content);
     if (!content) {
       return;
     }

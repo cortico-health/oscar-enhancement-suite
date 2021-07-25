@@ -1,4 +1,5 @@
 const path = require("path");
+const webpack = require("webpack");
 
 module.exports = {
   entry: "./cortico.js",
@@ -13,6 +14,12 @@ module.exports = {
   cache: false,
   devtool: "source-map",
   mode: "development",
+  plugins: [
+    new webpack.ProvidePlugin({
+      h: ["preact", "h"],
+    }),
+  ],
+
   module: {
     rules: [
       {
@@ -53,6 +60,13 @@ module.exports = {
                 { decoratorsBeforeExport: true },
               ],
               "@babel/plugin-transform-runtime",
+              [
+                "@babel/plugin-transform-react-jsx",
+                {
+                  pragma: "h",
+                  pragmaFrag: "Fragment",
+                },
+              ],
             ],
           },
         },

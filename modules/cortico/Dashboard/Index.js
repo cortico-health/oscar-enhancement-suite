@@ -1,24 +1,17 @@
-import { create } from "../../Utils/Utils";
 import "./Dashboard.css";
+import { render } from "preact";
+import Sidebar from "./Sidebar";
 
 export default function () {
-  const sidebar = create("div", {
-    attrs: {
-      class: "dashboard-sidebar",
-    },
-    text: "Sidebar",
-  });
+  const container = document.querySelector(".cortico-modal");
 
-  const container = create(
-    "div",
-    {
-      attrs: {
-        class: "dashboard-container dashboard-2",
-      },
-      text: "Hello Worldsssssss stop caching man",
-    },
-    sidebar
-  );
-
-  return container;
+  const Dashboard = () => {
+    return (
+      <div className="tw-text-xl tw-text-blue-800">
+        <Sidebar />
+      </div>
+    );
+  };
+  console.log("its failing here");
+  return render(<Dashboard />, container);
 }

@@ -3,6 +3,7 @@
 // @version  2.1
 // @grant    none
 // ==/UserScript==
+
 import { pubSubInit } from "./modules/PubSub/PubSub";
 import dayjs from "dayjs";
 import {
@@ -50,12 +51,10 @@ const init_cortico = function () {
 
   console.log("cortico plug-in initializing, version:", version);
   /*
-
   const modal = new Modal();
   modal.setContent(Dashboard());
   modal.show();
   */
-
   if (
     route.indexOf("/appointment/addappointment.jsp") > -1 ||
     route.indexOf("/appointment/appointmentcontrol.jsp") > -1
