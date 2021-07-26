@@ -28,6 +28,7 @@ module.exports = {
       indigo: colors.indigo,
       purple: colors.violet,
       pink: colors.pink,
+      "cortico-blue": "rgba(75, 84, 246, 1)",
     },
     spacing: {
       px: "1px",
