@@ -1,6 +1,6 @@
-FROM alpine
+FROM node:16
 
-RUN apk update && apk add zip
+RUN apt-get update && apt-get install -y zip
 
 CMD ./pkg.sh
 

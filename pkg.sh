@@ -1,4 +1,7 @@
-#!/bin/ash
+#!/bin/bash
+
+yarn
+yarn build
 
 rm -f cortico-*.zip
 
