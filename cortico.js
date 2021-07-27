@@ -1144,6 +1144,8 @@ function setPreferredPharmacy(pharmacyObj, demographicNo) {
   pharmacyObj.name = pharmacyObj.name.replace(" ", "+");
 
   var formData = new FormData();
+  // Used by LDRS, and possibly other WELL oscars
+  formData.append("pharmId", pharmacyObj.id);
   formData.append("pharmacyId", pharmacyObj.id);
   formData.append("demographicNo", demographicNo);
   formData.append("pharmacyName", pharmacyObj.name);
