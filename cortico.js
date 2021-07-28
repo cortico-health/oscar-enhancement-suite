@@ -59,7 +59,6 @@ const init_cortico = function () {
     route.indexOf("/appointment/addappointment.jsp") > -1 ||
     route.indexOf("/appointment/appointmentcontrol.jsp") > -1
   ) {
-    console.log("Does it evne get here?");
     init_appointment_page();
     init_recall_button();
 
@@ -140,7 +139,7 @@ const init_schedule = function () {
   // note: this is currently set to 30 seconds, which is enough time (the refresh occurs
   // at 60s). Calling window.stop() too early breaks the Oscar menus ("Inbox" "Msg" "Consultations"
   // "Tickler") that are loaded by ajax
-  window.setTimeout(window.stop, 5000);
+  window.setTimeout(window.stop, 10000);
 
   // refresh when idle for 1 minute.
   let last_interaction = new Date();
@@ -149,14 +148,13 @@ const init_schedule = function () {
   });
   const reloadHandler = setInterval(function () {
     const now = new Date();
-    if (now.valueOf() - last_interaction.valueOf() > 60000) {
-      console.log("before clearInterval");
+    if (now.valueOf() - last_interaction.valueOf() > 180000) {
       clearInterval(reloadHandler);
       if (
         window.checkAllEligibilityRunning !== true &&
         window.setupPreferredPharmaciesRunning !== true
       ) {
-        //window.location.reload();
+        window.location.reload();
       }
     }
   }, 1000);
@@ -189,9 +187,9 @@ function open_video_appointment_page(e) {
   }
   window.open(
     "https://" +
-      localStorage["clinicname"] +
-      ".cortico.ca/appointment/" +
-      appt_no
+    localStorage["clinicname"] +
+    ".cortico.ca/appointment/" +
+    appt_no
   );
 }
 
@@ -258,8 +256,9 @@ function init_appointment_page() {
 
   // telehealth button
   var last_button = document.querySelector("#printReceiptButton").parentNode;
-  last_button.parentNode.innerHTML +=
-    "<button class='cortico-btn' type='button' id='cortico-video-appt-btn' style='color:white; background-color:blue'>Cortico Video Call &phone;</button>";
+  last_button.parentNode.appendChild(htmlToElement(
+    "<button class='cortico-btn' type='button' id='cortico-video-appt-btn' style='color:white; background-color:blue'>Cortico Video Call &phone;</button>"
+  ))
 
   update_video_button_visibility();
 }
@@ -335,8 +334,8 @@ function getQueryStringValue(key) {
     window.location.search.replace(
       new RegExp(
         "^(?:.*[&\\?]" +
-          encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") +
-          "(?:\\=([^&]*))?)?.*$",
+        encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") +
+        "(?:\\=([^&]*))?)?.*$",
         "i"
       ),
       "$1"
@@ -551,7 +550,7 @@ function getEligStatus() {
     if (data.complete === true) {
       container.innerHTML = "Check Complete!";
     } else {
-      const header = "Currenty Processing" + progress + ":";
+      const header = "Currently Processing" + progress + ":";
       const name = data.info.split("\n")[1];
       container.innerHTML = "<p>" + header + "<br/>" + name + "</p>";
     }
@@ -568,7 +567,7 @@ function getBatchPharmaciesStatus() {
     if (data.complete === true) {
       container.innerHTML = "Setup Complete!";
     } else {
-      const header = "Currenty Processing" + progress + ":";
+      const header = "Currently Processing" + progress + ":";
       container.innerHTML = "<p>" + header + "<br/>" + "</p>";
     }
   });
@@ -1041,8 +1040,6 @@ async function checkAllEligibility() {
         console.error(e);
       }
 
-      console.log("Test tmpaer");
-
       let text = null;
       let lowerCaseText = null;
 
@@ -1053,8 +1050,6 @@ async function checkAllEligibility() {
         text = "Failed to fetch";
         lowerCaseText = "Failed to fetch";
       }
-
-      console.log("Parsed result");
 
       if (lowerCaseText.includes("error in teleplan connection")) {
         alert("Automatic Eligiblity Check Aborted. \n" + text);
@@ -1084,7 +1079,7 @@ async function checkAllEligibility() {
       await new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve();
-        }, 5000);
+        }, 2000);
       });
       console.log("Test tmpaer");
     }
@@ -1388,7 +1383,6 @@ function plusSignFromCache() {
   const _cache = localStorage.getItem("checkCache");
   if (!_cache) return;
   const cache = JSON.parse(_cache);
-  console.log("Cacheeee", cache);
 
   const _today = dayjs().format("YYYY-MM-DD");
 
@@ -1533,7 +1527,6 @@ async function setupPreferredPharmacy(code, demographic_no) {
   if (code) {
     pharmacyCode = code;
   }
-  console.log(pharmacyCode);
   const corticoPharmacy = await getPharmacyDetails(pharmacyCode);
   const corticoPharmacyText = JSON.parse(await corticoPharmacy.text());
   var faxNumber = corticoPharmacyText[0]["fax_number"] || null;
@@ -1594,7 +1587,6 @@ async function setupPreferredPharmacy(code, demographic_no) {
         });
       }
 
-      console.log("Pharmacy", pharmacy);
       if (pharmacy) {
         const setPharmacyResults = await setPreferredPharmacy(
           pharmacy,
@@ -1608,10 +1600,16 @@ async function setupPreferredPharmacy(code, demographic_no) {
     } else {
       const msg = `Customer pharmacy ${searchTerm} does not exist in your Oscar pharmacy database!`;
       storePharmaciesFailureCache(demographicNo, msg);
+      displayPharmaciesFailure(demographicNo, msg);
       if (isRxPage) alert(msg);
-      else console.log(msg);
+      else console.warn(msg);
     }
   }
+}
+
+function displayPharmaciesFailure(demograhicNo, msg) {
+  const sidebar_panel = document.querySelector('.cortico-sidebar');
+  sidebar_panel.appendChild(htmlToElement("<div>demo#" + demograhicNo + " : " + msg));
 }
 
 function storePharmaciesCache(demographicNo) {
@@ -1701,17 +1699,22 @@ async function setupPreferredPharmacies() {
   clearFailureCache();
   const appointments = document.querySelectorAll(".apptLink");
   var error = false;
-  try {
-    for (let i = 0; i < appointments.length; i++) {
-      const element = appointments[i];
+  for (let i = 0; i < appointments.length; i++) {
 
-      if (!element || !element.attributes) {
-        continue;
-      }
-      console.log("here");
+    var temp = {};
+    temp.total = appointments.length;
+    temp.current = i;
+    pubsub.publish("check-batch-pharmacies", temp);
 
+    const element = appointments[i];
+
+    if (!element || !element.attributes) {
+      continue;
+    }
+    let demographicNo = null;
+    try {
       const apptUrl = extractApptUrl(element.attributes.onclick.textContent);
-      const demographicNo = getDemographicNo(apptUrl);
+      demographicNo = getDemographicNo(apptUrl);
       const _pharmaciesCache = localStorage.getItem("pharmaciesCache");
       const pharmaciesCache = JSON.parse(_pharmaciesCache);
       var demographics = new Array();
@@ -1738,48 +1741,44 @@ async function setupPreferredPharmacies() {
         continue;
       }
 
-      var temp = {};
-      temp.total = appointments.length;
-      temp.current = i;
-      pubsub.publish("check-batch-pharmacies", temp);
-
       await setupPreferredPharmacy(pharmacyCode, demographicNo);
 
+    } catch (err) {
+      storePharmaciesFailureCache(demographicNo, err.message);
+      displayPharmaciesFailure(demographicNo, err.message);
+    } finally {
       await new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve();
         }, 2000);
       });
     }
-  } catch (err) {
-    alert(err);
-  } finally {
-    window.setupPreferredPharmaciesRunning = false;
-    pubsub.publish("check-batch-pharmacies", {
-      complete: true,
-      total: length,
-      error,
-    });
   }
+  window.setupPreferredPharmaciesRunning = false;
+  pubsub.publish("check-batch-pharmacies", {
+    complete: true,
+    total: length,
+    error,
+  });
+
 }
 
 async function init_diagnostic_viewer_button() {
   const notesField = document.querySelector("textarea[name='notes']");
   var notesValue = notesField.textContent;
-  console.log("echo", notesValue);
 
   var last_button = document.querySelector(
     "#cortico-video-appt-btn"
   ).parentNode;
-  last_button.parentNode.innerHTML +=
-    "<button class='cortico-btn' id='diagnostic-viewer-btn' style='color:white; background-color:blue'>Diagnostic Viewer</button>";
+  last_button.parentNode.appendChild(htmlToElement(
+    "<button class='cortico-btn' id='diagnostic-viewer-btn' style='color:white; background-color:blue'>Diagnostic Viewer</button>"
+  ))
 
   const corticoDiagnosticViewBtn = document.getElementById(
     "diagnostic-viewer-btn"
   );
   function update_diagnostic_button_visibility() {
     notesValue = notesField.textContent;
-    console.log("notes value", notesValue.toLowerCase());
 
     corticoDiagnosticViewBtn.style.visibility = notesValue.includes(
       "-- Cortico data below, do not change!"
@@ -1805,22 +1804,26 @@ async function init_diagnostic_viewer_button() {
   corticoDiagnosticViewBtn.addEventListener("click", open_diagnostic_viewer);
 }
 
+function htmlToElement(html) {
+  const placeholder = document.createElement('div');
+  placeholder.innerHTML = html;
+  return placeholder.children.length ? placeholder.firstElementChild : undefined;
+};
+
 async function init_recall_button() {
+
   const statusOption = document.querySelector("select[name='status']");
   var statusValue = statusOption.options[statusOption.selectedIndex].text;
-  console.log("echo", statusValue);
 
   var last_button = document.querySelector(
     "#cortico-video-appt-btn"
   ).parentNode;
-  last_button.parentNode.innerHTML +=
-    "<button class='cortico-btn' type='button' id='recall-btn' style='color:white; background-color:blue'>Recall email</button>";
 
+  last_button.parentNode.appendChild(htmlToElement("<button class='cortico-btn' type='button' id='recall-btn' style='color:white; background-color:blue'>Recall email</button>"))
   const corticoRecallButton = document.getElementById("recall-btn");
 
   function update_recall_button_visibility() {
     statusValue = statusOption.options[statusOption.selectedIndex].text;
-    console.log("statusValue", statusValue.toLowerCase());
 
     var recallStatus = localStorage["recall-status"]
       ? localStorage["recall-status"]
@@ -1832,6 +1835,7 @@ async function init_recall_button() {
   }
 
   async function send_patient_recall_email(e) {
+    alert()
     e.preventDefault();
 
     var patientEmail = await getPatientEmail();
@@ -1858,17 +1862,18 @@ async function init_recall_button() {
 
     window.open(
       `mailto:${patientEmail}?subject=Your doctor wants to speak with you&` +
-        `body=Dear ${cleanedPatient},%0d%0aYour doctor needs to follow up with you regarding some documents or results.%0d%0a` +
-        `We have tentatively booked you an appointment at ${cleanedSchedule}.%0d%0a%0d%0aPlease confirm with the following link:` +
-        `https://${clinicName}.cortico.ca/get-patient-appointment-lookup-url/%0d%0a%0d%0a` +
-        `Sincerely,%0d%0a${clinicName.toUpperCase()} STAFF`
+      `body=Dear ${cleanedPatient},%0d%0aYour doctor needs to follow up with you regarding some documents or results.%0d%0a` +
+      `We have tentatively booked you an appointment at ${cleanedSchedule}.%0d%0a%0d%0aPlease confirm with the following link:` +
+      `https://${clinicName}.cortico.ca/get-patient-appointment-lookup-url/%0d%0a%0d%0a` +
+      `Sincerely,%0d%0a${clinicName.toUpperCase()} STAFF`
     );
   }
 
   update_recall_button_visibility();
 
   statusOption.addEventListener("change", update_recall_button_visibility);
-  corticoRecallButton.addEventListener("click", send_patient_recall_email);
+  recall.addEventListener("click", send_patient_recall_email);
+
 }
 
 async function getPatientEmail() {
