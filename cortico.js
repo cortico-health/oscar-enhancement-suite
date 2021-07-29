@@ -1081,7 +1081,6 @@ async function checkAllEligibility() {
           resolve();
         }, 2000);
       });
-      console.log("Test tmpaer");
     }
   } catch (err) {
     console.log(err);
@@ -1735,6 +1734,12 @@ async function setupPreferredPharmacies() {
         continue;
       }
 
+      await new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve();
+        }, 2000);
+      });
+
       const apptTitle = element.attributes.title.textContent;
       const pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle);
       if (!pharmacyCode) {
@@ -1747,11 +1752,6 @@ async function setupPreferredPharmacies() {
       storePharmaciesFailureCache(demographicNo, err.message);
       displayPharmaciesFailure(demographicNo, err.message);
     } finally {
-      await new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve();
-        }, 2000);
-      });
     }
   }
   window.setupPreferredPharmaciesRunning = false;
@@ -1835,7 +1835,6 @@ async function init_recall_button() {
   }
 
   async function send_patient_recall_email(e) {
-    alert()
     e.preventDefault();
 
     var patientEmail = await getPatientEmail();
