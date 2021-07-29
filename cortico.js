@@ -1872,7 +1872,7 @@ async function init_recall_button() {
   update_recall_button_visibility();
 
   statusOption.addEventListener("change", update_recall_button_visibility);
-  recall.addEventListener("click", send_patient_recall_email);
+  corticoRecallButton.addEventListener("click", send_patient_recall_email);
 
 }
 
