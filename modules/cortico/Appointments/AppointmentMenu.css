@@ -28,10 +28,11 @@ td.appt {
 
 .appointment-menu a {
   color: white !important;
+  text-decoration: underline;
 }
 
 .appointment-menu a:hover {
-  color: gray !important;
+  color: #d8ddff !important;
 }
 
 .appointment-menu ul {
@@ -89,7 +90,7 @@ td.appt {
 }
 
 .appointment-menu-subheading {
-  color: white;
+  color: #d8ddff;
   font-size: 12px;
 }
 
@@ -100,8 +101,4 @@ td.appt {
   font-size: 1.2rem;
   padding: 0 5px;
   color: white;
-}
-
-.contactInfo a {
-  color: white !important;
 }

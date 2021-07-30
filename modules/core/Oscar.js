@@ -4,6 +4,11 @@ export class Oscar {
   hostname = null;
   constructor(hostname = window.location.hostname) {
     this.hostname = hostname;
+
+    if (this.isJuno()) {
+      // Juno already has a sticky primary navbar. Lift it to preven collisions with Cortico UI.
+      document.getElementById('firstMenu').parentNode.parentNode.parentNode.zIndex = 1
+    }
   }
 
   isJuno() {
@@ -50,6 +55,7 @@ export class Oscar {
     if (window.scrollY > 50) {
       ifv.forEach((view) => {
         view.style.position = "sticky";
+        view.style.zIndex = 1;
         view.style.marginLeft = "unset";
 
         if (this.isJuno()) {

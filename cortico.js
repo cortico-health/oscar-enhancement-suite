@@ -412,6 +412,7 @@ function createSideBar() {
 
   sidebar.appendChild(getCorticoUrlOption());
   sidebar.appendChild(getRecallStatusOption());
+
   sidebar.appendChild(getEligButton());
   sidebar.appendChild(getEligStatus());
   sidebar.appendChild(getEligFailed());
