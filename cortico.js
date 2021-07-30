@@ -1514,11 +1514,7 @@ function getPharmacyDetails(pharmacyCode) {
     headers: {
       "Content-Type": "application/json",
     },
-  }).catch((error) => {
-    alert(
-      "There was an error fetching data, please try again. If the problem persists, please contact Cortico"
-    );
-  });
+  })
 }
 
 function formatNumber(number) {
@@ -1755,6 +1751,7 @@ async function setupPreferredPharmacies() {
       await setupPreferredPharmacy(pharmacyCode, demographicNo);
 
     } catch (err) {
+      console.error(err)
       storePharmaciesFailureCache(demographicNo, err.message);
       displayPharmaciesFailure(demographicNo, err.message);
     } finally {

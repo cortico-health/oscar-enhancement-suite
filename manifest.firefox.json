@@ -19,5 +19,9 @@
         "dist/cortico-min.js"
       ]
     }
+  ],
+  "permissions": [
+    "*://*.cortico.ca/*",
+    "webRequest"
   ]
 }
