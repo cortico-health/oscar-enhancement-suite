@@ -7,7 +7,8 @@ export class Oscar {
 
     if (this.isJuno()) {
       // Juno already has a sticky primary navbar. Lift it to preven collisions with Cortico UI.
-      document.getElementById('firstMenu').parentNode.parentNode.parentNode.zIndex = 1
+      const top_menu = document.getElementById('firstMenu');
+      if (top_menu) top_menu.parentNode.parentNode.parentNode.zIndex = 1
     }
   }
 
