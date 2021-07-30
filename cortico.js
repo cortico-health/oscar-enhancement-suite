@@ -407,16 +407,17 @@ function createSideBar() {
   });
   sidebar.appendChild(sidebarClose);
 
-  var newUiOption = getNewUIOption();
-  sidebar.appendChild(newUiOption);
+  //var newUiOption = getNewUIOption();
+  //sidebar.appendChild(newUiOption);
 
   sidebar.appendChild(getCorticoUrlOption());
   sidebar.appendChild(getRecallStatusOption());
-  sidebar.appendChild(getEligStatus());
   sidebar.appendChild(getEligButton());
+  sidebar.appendChild(getEligStatus());
   sidebar.appendChild(getEligFailed());
-  sidebar.appendChild(getBatchPharmaciesStatus());
+
   sidebar.appendChild(getBatchPharmaciesButton());
+  sidebar.appendChild(getBatchPharmaciesStatus());
 
   var styleSheet = styleSheetFactory("cortico_sidebar");
   var styles = "";
@@ -527,6 +528,7 @@ function getRecallStatusOption() {
   button.style.width = "100%";
   button.style.display = "inline-block";
   button.style.margin = "10px auto";
+  button.className = "cortico-btn";
 
   container.appendChild(label);
   container.appendChild(inputContainer);
@@ -685,6 +687,7 @@ function getCorticoUrlOption() {
   button.style.width = "100%";
   button.style.display = "inline-block";
   button.style.margin = "10px auto";
+  button.className = "cortico-btn";
 
   container.appendChild(label);
   container.appendChild(inputContainer);
@@ -703,6 +706,7 @@ function getCorticoUrlOption() {
 function getEligButton() {
   var button = document.createElement("button");
   button.textContent = "Check Eligiblity";
+  button.className = "cortico-btn";
   button.addEventListener("click", async (e) => {
     await checkAllEligibility();
   });
@@ -713,6 +717,7 @@ function getEligButton() {
 function getBatchPharmaciesButton() {
   var button = document.createElement("button");
   button.textContent = "Set preferred pharmacies";
+  button.className = "cortico-btn";
   button.addEventListener("click", setupPreferredPharmacies);
   return button;
 }

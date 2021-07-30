@@ -8,18 +8,18 @@ td.appt {
 
 .appointment-menu {
   background-color: #5c70ff;
-  padding: 10px;
   color: white;
   position: absolute;
   top: 0px;
+  right: 0;
   padding: 1.5rem;
   border-radius: 0.5rem;
+  border: 1px solid #d8ddff;
   display: none;
-  right: 0;
   z-index: 1500;
   font-size: 12px;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3),
+    0 10px 10px -5px rgba(0, 0, 0, 0.15);
 }
 
 .appointment-menu.show {
@@ -47,14 +47,14 @@ td.appt {
 }
 
 .appointment-menu-container {
-  position: relative;
+  position: absolute;
   display: flex;
   background-color: #5c70ff;
-  padding: 5px 10px;
-  margin-top: -3px;
-  border-radius: 2rem;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  padding: 1px 5px;
+  border: 1px solid #d8ddff;
+  top: -8px;
+  border-radius: 50%;
+  box-shadow: 0 3px 3px 2px rgba(0, 0, 0, 0.3);
 }
 
 .appointment-menu-wrapper {
@@ -91,6 +91,15 @@ td.appt {
 .appointment-menu-subheading {
   color: white;
   font-size: 12px;
+}
+
+.appointment-menu-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 1.2rem;
+  padding: 0 5px;
+  color: white;
 }
 
 .contactInfo a {

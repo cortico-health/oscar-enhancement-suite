@@ -58,6 +58,10 @@ export function appointmentMenu(apptTd) {
   );
 
   container.addEventListener("click", (e) => {
+
+    // close button doesn't re-open
+    if (e.target.className == 'appointment-menu-close') { return }
+
     const openMenu = document.querySelector(".appointment-menu.show");
     if (openMenu) {
       openMenu.classList.remove("show");
@@ -105,6 +109,18 @@ export function appointmentMenu(apptTd) {
   title.appendChild(h5);
 
   menu.appendChild(title);
+
+  const close = create("div", {
+    attrs: {
+      class: "appointment-menu-close"
+    },
+    text: "x"
+  })
+  menu.appendChild(close);
+  close.addEventListener("click", (e) => {
+    const openMenu = document.querySelector(".appointment-menu.show");
+    openMenu.classList.remove("show");
+  });
 
   const linkHeading = create("h5", {
     attrs: {
