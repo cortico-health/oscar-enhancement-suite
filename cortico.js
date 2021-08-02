@@ -488,8 +488,6 @@ function addMenu(container) {
   });
 
   menu.addEventListener("click", () => {
-    console.log("This should run once");
-
     const opened = window.localStorage["disclaimer"];
     if (!opened) {
       const modal = new Modal();
