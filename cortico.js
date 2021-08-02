@@ -19,7 +19,7 @@ import { debounce } from "./modules/Utils/Utils";
 import "./index.css";
 import { Modal } from "./modules/Modal/Modal";
 import Dashboard from "./modules/cortico/Dashboard";
-
+import Disclaimer from "./modules/cortico/Disclaimer";
 // manually update this variable with the version in manifest.json
 const version = 3.1;
 const pubsub = pubSubInit();
@@ -50,11 +50,12 @@ const init_cortico = function () {
   }
 
   console.log("cortico plug-in initializing, version:", version);
-
+  window.pubsub = pubsub;
+  /*
   const modal = new Modal();
   modal.setContent(Dashboard());
   modal.show();
-
+*/
   if (
     route.indexOf("/appointment/addappointment.jsp") > -1 ||
     route.indexOf("/appointment/appointmentcontrol.jsp") > -1
@@ -486,19 +487,17 @@ function addMenu(container) {
     sidebar.classList.toggle("cortico-sidebar-show");
   });
 
-  menu.addEventListener(
-    "click",
-    () => {
-      console.log("This should run once");
+  menu.addEventListener("click", () => {
+    console.log("This should run once");
+
+    const opened = window.localStorage["disclaimer"];
+    if (!opened) {
       const modal = new Modal();
-      modal.setContent("Hello World");
+      modal.setContent(Disclaimer());
       modal.show();
-      console.log("Got here");
-    },
-    {
-      once: true,
+      window.localStorage["disclaimer"] = true;
     }
-  );
+  });
 
   document.body.prepend(sidebar);
   navigation.appendChild(menu);

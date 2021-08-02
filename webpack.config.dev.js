@@ -10,7 +10,7 @@ module.exports = {
   watch: true,
   watchOptions: {
     aggregateTimeout: 600,
-    poll: 10000,
+    poll: 1000,
   },
   cache: false,
   devtool: "source-map",
