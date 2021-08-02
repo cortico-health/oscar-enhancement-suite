@@ -15,7 +15,7 @@ import { Oscar } from "./modules/core/Oscar.js";
 import "element-closest-polyfill";
 import { getOrigin, getProvider } from "./modules/Utils/Utils";
 import { CorticoIcon } from "./modules/Icons/CorticoIcon";
-import { debounce } from "./modules/Utils/Utils";
+import { debounce, create } from "./modules/Utils/Utils";
 import "./index.css";
 import { Modal } from "./modules/Modal/Modal";
 import Dashboard from "./modules/cortico/Dashboard";
@@ -407,6 +407,10 @@ function createSideBar() {
   sidebarClose.style.cursor = "pointer";
   sidebarClose.addEventListener("click", function () {
     sidebar.classList.remove("cortico-sidebar-show");
+    if (window.localStorage["firstRun"] === "true") {
+      closeSidebarInstructions();
+      window.localStorage["firstRun"] = false;
+    }
   });
   sidebar.appendChild(sidebarClose);
 
@@ -437,6 +441,13 @@ function createSideBar() {
   styleSheet.innerText = styles;
 
   return sidebar;
+}
+
+function closeSidebarInstructions() {
+  const sidebarInstructions = document.querySelector(".sidebar-instructions");
+  if (sidebarInstructions) {
+    sidebarInstructions.classList.add("sidebar-instructions-hidden");
+  }
 }
 
 function showDiagnosticResults(html_string) {
@@ -485,6 +496,10 @@ function addMenu(container) {
   var sidebar = createSideBar();
   menu.addEventListener("click", function () {
     sidebar.classList.toggle("cortico-sidebar-show");
+    if (window.localStorage["firstRun"] === "true") {
+      closeSidebarInstructions();
+      window.localStorage["firstRun"] = false;
+    }
   });
 
   menu.addEventListener("click", () => {
@@ -496,6 +511,18 @@ function addMenu(container) {
       window.localStorage["disclaimer"] = true;
     }
   });
+
+  menu.addEventListener(
+    "click",
+    () => {
+      if (window.localStorage["firstRun"] === undefined) {
+        window.localStorage["firstRun"] = true;
+      }
+    },
+    {
+      once: true,
+    }
+  );
 
   document.body.prepend(sidebar);
   navigation.appendChild(menu);
@@ -703,6 +730,16 @@ function getCorticoUrlOption() {
   button.style.margin = "10px auto";
   button.className = "cortico-btn";
 
+  if (window.localStorage["firstRun"] !== "false") {
+    const instructions = create("div", {
+      attrs: {
+        class: "sidebar-instructions",
+      },
+      text: "Welcome to the plugin!, please set your cortico clinic name",
+    });
+    container.appendChild(instructions);
+  }
+
   container.appendChild(label);
   container.appendChild(inputContainer);
   container.appendChild(button);
@@ -711,7 +748,8 @@ function getCorticoUrlOption() {
     if (input.value) {
       const corticoUrl = input.value + ".cortico.ca";
       localStorage.setItem("clinicname", input.value);
-      alert("Your clinic name has changed");
+      alert("Your clinic name has changed, the page will now reload");
+      window.location.reload();
     }
   });
   return container;

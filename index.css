@@ -4,3 +4,11 @@
 
 @tailwind components;
 @tailwind utilities;
+
+.sidebar-instructions {
+  @apply tw-text-3xl tw-text-center tw-font-bold;
+}
+
+.sidebar-instructions-hidden {
+  @apply tw-hidden;
+}
