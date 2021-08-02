@@ -50,11 +50,11 @@ const init_cortico = function () {
   }
 
   console.log("cortico plug-in initializing, version:", version);
-  /*
+
   const modal = new Modal();
   modal.setContent(Dashboard());
   modal.show();
-  */
+
   if (
     route.indexOf("/appointment/addappointment.jsp") > -1 ||
     route.indexOf("/appointment/appointmentcontrol.jsp") > -1
