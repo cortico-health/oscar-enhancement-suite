@@ -711,7 +711,8 @@ function getCorticoUrlOption() {
     if (input.value) {
       const corticoUrl = input.value + ".cortico.ca";
       localStorage.setItem("clinicname", input.value);
-      alert("Your clinic name has changed");
+      alert("Your clinic name has changed, the page will now reload");
+      window.location.reload();
     }
   });
   return container;
