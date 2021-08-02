@@ -7,9 +7,10 @@ module.exports = {
     filename: "cortico-min.js",
     path: path.resolve(__dirname, "dist"),
   },
-  watch: true,
+  watch: false,
   watchOptions: {
     aggregateTimeout: 600,
+    poll: false,
   },
   cache: false,
   devtool: "source-map",
