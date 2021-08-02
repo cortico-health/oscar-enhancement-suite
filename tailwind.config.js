@@ -5,6 +5,7 @@ module.exports = {
   presets: [],
   prefix: "tw-",
   mode: "jit",
+  important: true,
   darkMode: false, // or 'media' or 'class'
   theme: {
     screens: {
@@ -28,6 +29,7 @@ module.exports = {
       indigo: colors.indigo,
       purple: colors.violet,
       pink: colors.pink,
+      "cortico-blue": "rgba(75, 84, 246, 1)",
     },
     spacing: {
       px: "1px",
@@ -821,6 +823,11 @@ module.exports = {
       50: "50",
       5000: "5000",
       10000: "10000",
+      10001: "10001",
+      10002: "10002",
+      10003: "10003",
+      10004: "10004",
+      10005: "10005",
     },
   },
   variantOrder: [
