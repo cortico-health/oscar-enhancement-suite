@@ -38,7 +38,7 @@ export function getOrigin() {
   return window.location.origin;
 }
 
-export function getProvider() {
+export function getNamespace() {
   return window.location.pathname.split("/")[1];
 }
 

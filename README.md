@@ -32,8 +32,9 @@ We hope this repository can provide a helpful testing ground for some new Oscar 
 
 Make changes in the appropriate and generate a build.
 
-1. yarn
-2. yarn build
+1. `docker-compose run oes-web`
+
+In Google Chrome, go to chrome://extensions, and "Load unpacked" in this root directory. Click the refresh button after any change.
 
 The build output will be in `dist` directory
 
@@ -92,8 +93,9 @@ Then load these in to tampermonkey/greasemonkey and inspect the error. You shoul
 
 # Building
 
-1. `cp dc.prod.yml docker-compose.override.yml`
-2. `docker-compose up`
+1. `docker-compose run oes-pkg`
+
+Upload cortico-firefox.zip and cortico-chrome.zip to respective stores.
 
 # Contributing
 
