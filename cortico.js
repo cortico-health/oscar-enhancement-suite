@@ -19,13 +19,8 @@ import { debounce, create } from "./modules/Utils/Utils";
 import "./index.css";
 import { Modal } from "./modules/Modal/Modal";
 import Dashboard from "./modules/cortico/Dashboard";
-<<<<<<< HEAD
-
 const CORTICO = {}; // container for global state. Use this rather than `window`
-
-=======
 import Disclaimer from "./modules/cortico/Disclaimer";
->>>>>>> origin
 // manually update this variable with the version in manifest.json
 const version = 3.1;
 const pubsub = pubSubInit();
@@ -51,7 +46,7 @@ const init_cortico = function () {
 
   // some pages have no scripts, but they have other elements.
   if (!oscar_elements) {
-    oscar_elements = document.querySelectorAll('div.DoNotPrint>table')
+    oscar_elements = document.querySelectorAll("div.DoNotPrint>table");
   }
 
   // do not run unless we're on an Oscar page.
@@ -111,16 +106,13 @@ const init_cortico = function () {
     }
 
     setupPrescriptionButtons();
-  } else if (route.indexOf("/eform/efmformadd_data.jsp") > -1 ||
+  } else if (
+    route.indexOf("/eform/efmformadd_data.jsp") > -1 ||
     route.indexOf("/eform/efmshowform_data.jsp") > -1 ||
     route.indexOf("/casemgmt/forward.jsp") > -1
   ) {
-
     setupPatientEmailButton();
-
   } else if (route.indexOf("/oscarRx/ViewScript2.jsp") > -1) {
-
-
     // We need to determine first if the prescription is "delivery"
     const currentPharmacyCode = localStorage.getItem("currentPharmacyCode");
 
@@ -196,7 +188,6 @@ function update_video_button() {
 }
 
 function open_video_appointment_page(e) {
-
   e.preventDefault(); // don't submit the form.
 
   if (!localStorage["clinicname"]) {
@@ -284,38 +275,32 @@ function init_appointment_page() {
 
   // telehealth button
   var last_button = document.querySelector("#printReceiptButton").parentNode;
-<<<<<<< HEAD
-  last_button.parentNode.appendChild(htmlToElement(
-    "<button class='cortico-btn' type='button' id='cortico-video-appt-btn'>Video Call &phone;</button>"
-  ))
-=======
   last_button.parentNode.appendChild(
     htmlToElement(
-      "<button class='cortico-btn' type='button' id='cortico-video-appt-btn' style='color:white; background-color:blue'>Cortico Video Call &phone;</button>"
+      "<button class='cortico-btn' type='button' id='cortico-video-appt-btn'>Video Call &phone;</button>"
     )
   );
->>>>>>> origin
 
   update_video_button();
 }
 
 async function setupPatientEmailButton() {
-
   const patient_info = await getPatientInfo();
 
   const email_btn = htmlToElement(`
     <button id='cortico-email-patient' class='cortico-btn'>Email Patient</button>
-  `)
+  `);
 
-  const email_parent = document.querySelector('.DoNotPrint td') ||
-    document.querySelector('#save div:last-child');
+  const email_parent =
+    document.querySelector(".DoNotPrint td") ||
+    document.querySelector("#save div:last-child");
 
-  email_parent.appendChild(email_btn)
-  email_btn.addEventListener('click', function () {
+  email_parent.appendChild(email_btn);
+  email_btn.addEventListener("click", function () {
     window.open(
       `mailto:${patient_info.email}?subject=Your+Document&body=Hi+${patient_info["First Name"]}%0A%0A`
-    )
-  })
+    );
+  });
 }
 
 const init_styles = function () {
@@ -425,7 +410,7 @@ function addCorticoLogo() {
   const corticoLogo = CorticoIcon({
     attrs: {
       height: "15",
-      style: "position:relative; top: 2px;"
+      style: "position:relative; top: 2px;",
     },
   });
 
@@ -446,7 +431,8 @@ function styleSheetFactory(namespace) {
 }
 
 function createSideBar() {
-  if (window.corticoSidebar) { // TODO: is idempotency really needed here? it's a global init.
+  if (window.corticoSidebar) {
+    // TODO: is idempotency really needed here? it's a global init.
     return;
   }
 
@@ -515,7 +501,6 @@ function showDiagnosticResults(html_string) {
     container.classList.add("cortico-diagnostic-viewer");
     container.innerHTML = html_string;
   }
-
 
   var containerClose = document.createElement("button");
   containerClose.classList.add("cortico-diagnostic-close");
@@ -859,7 +844,6 @@ function removeNewUI() {
 /* Drag and Drop Feature Begin */
 
 function appointmentRowDragStart(ev) {
-
   if (ev.target.matches("td.appt")) {
     window.dragSelectedTarget = ev.target;
     ev.dataTransfer.setDragImage(ev.target, 0, 0);
@@ -1103,7 +1087,6 @@ function isDateExpired(past, now, days) {
 }
 
 async function checkAllEligibility() {
-
   //localStorage.removeItem("checkCache")
 
   if (window.checkAllEligibilityRunning === true) {
@@ -1177,7 +1160,7 @@ async function checkAllEligibility() {
         pubsub.publish("check-eligibility-failed", getFailureCache());
       }
       addToCache(demographic_no, verified);
-      console.log("Cached.")
+      console.log("Cached.");
 
       await new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -1302,7 +1285,9 @@ function checkEligiblity(demographicNo, origin, namespace, providerNo) {
 
 function getDemographicNo(apptUrl) {
   var searchParams = new URLSearchParams(apptUrl);
-  return searchParams.get("demographic_no") || searchParams.get("demographicNo");
+  return (
+    searchParams.get("demographic_no") || searchParams.get("demographicNo")
+  );
 }
 
 function getAppointmentInfo(apptNodes) {
@@ -1728,7 +1713,7 @@ function storePharmaciesCache(demographicNo) {
 
   // make sure demographics is array before pushing
   if (!Array.isArray(demographics)) {
-    demographics = []
+    demographics = [];
   }
 
   demographics.push(demographicNo);
@@ -1777,7 +1762,7 @@ async function getDiagnosticFromCortico(appt_no, notes) {
     headers: {
       "Content-Type": "application/json",
     },
-  })
+  });
 }
 
 function getDemographicFromLocation() {
@@ -1864,17 +1849,11 @@ async function init_diagnostic_viewer_button() {
   var last_button = document.querySelector(
     "#cortico-video-appt-btn"
   ).parentNode;
-<<<<<<< HEAD
-  last_button.parentNode.appendChild(htmlToElement(
-    "<button class='cortico-btn' id='diagnostic-viewer-btn'>Patient Responses</button>"
-  ))
-=======
   last_button.parentNode.appendChild(
     htmlToElement(
-      "<button class='cortico-btn' id='diagnostic-viewer-btn' style='color:white; background-color:blue'>Diagnostic Viewer</button>"
+      "<button class='cortico-btn' id='diagnostic-viewer-btn'>Patient Responses</button>"
     )
   );
->>>>>>> origin
 
   const corticoDiagnosticViewBtn = document.getElementById(
     "diagnostic-viewer-btn"
@@ -1922,15 +1901,11 @@ async function init_recall_button() {
     "#cortico-video-appt-btn"
   ).parentNode;
 
-<<<<<<< HEAD
-  last_button.parentNode.appendChild(htmlToElement("<button class='cortico-btn' type='button' id='recall-btn'>Recall email</button>"))
-=======
   last_button.parentNode.appendChild(
     htmlToElement(
-      "<button class='cortico-btn' type='button' id='recall-btn' style='color:white; background-color:blue'>Recall email</button>"
+      "<button class='cortico-btn' type='button' id='recall-btn'>Recall email</button>"
     )
   );
->>>>>>> origin
   const corticoRecallButton = document.getElementById("recall-btn");
 
   function update_recall_button_visibility() {
@@ -1950,7 +1925,7 @@ async function init_recall_button() {
 
     const patientInfo = await getPatientInfo();
     const patientEmail = patientInfo.email;
-    console.log(patientInfo)
+    console.log(patientInfo);
     const formData = new FormData(
       document.querySelector("form[name=EDITAPPT]")
     );
@@ -1991,12 +1966,14 @@ async function getPatientInfo() {
   const result = await getDemographicPageResponse();
   const text = await result.text();
 
-  var el = document.createElement('html');
-  el.innerHTML = text
+  var el = document.createElement("html");
+  el.innerHTML = text;
 
-  const info = {}
-  el.querySelectorAll('span.label').forEach(function (label) {
-    info[label.innerText.trim().replace(":", "")] = label.nextElementSibling ? label.nextElementSibling.innerText.trim() : null
+  const info = {};
+  el.querySelectorAll("span.label").forEach(function (label) {
+    info[label.innerText.trim().replace(":", "")] = label.nextElementSibling
+      ? label.nextElementSibling.innerText.trim()
+      : null;
   });
 
   var re = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi;
@@ -2005,21 +1982,23 @@ async function getPatientInfo() {
   if (emails.length) info.email = emails[0];
 
   // Should return 2 from view and edit, get atleast one
-  return info
+  return info;
 }
 
 function getDemographicPageResponse() {
   const origin = getOrigin();
   const namespace = getNamespace();
 
-  const demographicNo = getDemographicNo(window.location.search) || getDemographicNo(window.opener.location.search);
+  const demographicNo =
+    getDemographicNo(window.location.search) ||
+    getDemographicNo(window.opener.location.search);
 
   if (!demographicNo) {
-    console.trace()
-    console.error('Failed to load demographics.')
-    return ''
+    console.trace();
+    console.error("Failed to load demographics.");
+    return "";
   }
-  console.log(window.opener.location.search, demographicNo)
+  console.log(window.opener.location.search, demographicNo);
   const url = `${origin}/${namespace}/demographic/demographiccontrol.jsp?demographic_no=${demographicNo}&displaymode=edit&dboperation=search_detail`;
 
   return fetch(url);
