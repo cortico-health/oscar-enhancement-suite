@@ -37,7 +37,7 @@
     "prettier": "^2.3.2",
     "raw-loader": "^4.0.2",
     "regenerator-runtime": "^0.13.7",
-    "style-loader": "^3.0.0",
+    "style-loader": "^3.2.1",
     "tailwindcss": "^2.2.6",
     "url-loader": "^4.1.1",
     "velocity-animate": "^1.5.2",

@@ -15,13 +15,17 @@ import { Oscar } from "./modules/core/Oscar.js";
 import "element-closest-polyfill";
 import { getOrigin, getNamespace } from "./modules/Utils/Utils";
 import { CorticoIcon } from "./modules/Icons/CorticoIcon";
-import { debounce } from "./modules/Utils/Utils";
+import { debounce, create } from "./modules/Utils/Utils";
 import "./index.css";
 import { Modal } from "./modules/Modal/Modal";
 import Dashboard from "./modules/cortico/Dashboard";
+<<<<<<< HEAD
 
 const CORTICO = {}; // container for global state. Use this rather than `window`
 
+=======
+import Disclaimer from "./modules/cortico/Disclaimer";
+>>>>>>> origin
 // manually update this variable with the version in manifest.json
 const version = 3.1;
 const pubsub = pubSubInit();
@@ -58,11 +62,12 @@ const init_cortico = function () {
   }
 
   console.log("cortico plug-in initializing, version:", version);
+  window.pubsub = pubsub;
   /*
   const modal = new Modal();
   modal.setContent(Dashboard());
   modal.show();
-  */
+*/
   if (
     route.indexOf("/appointment/addappointment.jsp") > -1 ||
     route.indexOf("/appointment/appointmentcontrol.jsp") > -1
@@ -210,9 +215,9 @@ function open_video_appointment_page(e) {
   }
   window.open(
     "https://" +
-    localStorage["clinicname"] +
-    ".cortico.ca/appointment/" +
-    appt_no
+      localStorage["clinicname"] +
+      ".cortico.ca/appointment/" +
+      appt_no
   );
 }
 
@@ -279,9 +284,17 @@ function init_appointment_page() {
 
   // telehealth button
   var last_button = document.querySelector("#printReceiptButton").parentNode;
+<<<<<<< HEAD
   last_button.parentNode.appendChild(htmlToElement(
     "<button class='cortico-btn' type='button' id='cortico-video-appt-btn'>Video Call &phone;</button>"
   ))
+=======
+  last_button.parentNode.appendChild(
+    htmlToElement(
+      "<button class='cortico-btn' type='button' id='cortico-video-appt-btn' style='color:white; background-color:blue'>Cortico Video Call &phone;</button>"
+    )
+  );
+>>>>>>> origin
 
   update_video_button();
 }
@@ -379,8 +392,8 @@ function getQueryStringValue(key) {
     window.location.search.replace(
       new RegExp(
         "^(?:.*[&\\?]" +
-        encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") +
-        "(?:\\=([^&]*))?)?.*$",
+          encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") +
+          "(?:\\=([^&]*))?)?.*$",
         "i"
       ),
       "$1"
@@ -450,6 +463,10 @@ function createSideBar() {
   sidebarClose.style.cursor = "pointer";
   sidebarClose.addEventListener("click", function () {
     sidebar.classList.remove("cortico-sidebar-show");
+    if (window.localStorage["firstRun"] === "true") {
+      closeSidebarInstructions();
+      window.localStorage["firstRun"] = false;
+    }
   });
   sidebar.appendChild(sidebarClose);
 
@@ -480,6 +497,13 @@ function createSideBar() {
   styleSheet.innerText = styles;
 
   return sidebar;
+}
+
+function closeSidebarInstructions() {
+  const sidebarInstructions = document.querySelector(".sidebar-instructions");
+  if (sidebarInstructions) {
+    sidebarInstructions.classList.add("sidebar-instructions-hidden");
+  }
 }
 
 function showDiagnosticResults(html_string) {
@@ -527,7 +551,33 @@ function addMenu(container) {
   var sidebar = createSideBar();
   menu.addEventListener("click", function () {
     sidebar.classList.toggle("cortico-sidebar-show");
+    if (window.localStorage["firstRun"] === "true") {
+      closeSidebarInstructions();
+      window.localStorage["firstRun"] = false;
+    }
   });
+
+  menu.addEventListener("click", () => {
+    const opened = window.localStorage["disclaimer"];
+    if (!opened) {
+      const modal = new Modal();
+      modal.setContent(Disclaimer());
+      modal.show();
+      window.localStorage["disclaimer"] = true;
+    }
+  });
+
+  menu.addEventListener(
+    "click",
+    () => {
+      if (window.localStorage["firstRun"] === undefined) {
+        window.localStorage["firstRun"] = true;
+      }
+    },
+    {
+      once: true,
+    }
+  );
 
   document.body.prepend(sidebar);
   navigation.appendChild(menu);
@@ -735,6 +785,16 @@ function getCorticoUrlOption() {
   button.style.margin = "10px auto";
   button.className = "cortico-btn";
 
+  if (window.localStorage["firstRun"] !== "false") {
+    const instructions = create("div", {
+      attrs: {
+        class: "sidebar-instructions",
+      },
+      text: "Welcome to the plugin!, please set your cortico clinic name",
+    });
+    container.appendChild(instructions);
+  }
+
   container.appendChild(label);
   container.appendChild(inputContainer);
   container.appendChild(button);
@@ -743,7 +803,8 @@ function getCorticoUrlOption() {
     if (input.value) {
       const corticoUrl = input.value + ".cortico.ca";
       localStorage.setItem("clinicname", input.value);
-      alert("Your clinic name has changed");
+      alert("Your clinic name has changed, the page will now reload");
+      window.location.reload();
     }
   });
   return container;
@@ -1550,7 +1611,7 @@ function getPharmacyDetails(pharmacyCode) {
     headers: {
       "Content-Type": "application/json",
     },
-  })
+  });
 }
 
 function formatNumber(number) {
@@ -1645,8 +1706,10 @@ async function setupPreferredPharmacy(code, demographic_no) {
 }
 
 function displayPharmaciesFailure(demograhicNo, msg) {
-  const sidebar_panel = document.querySelector('.cortico-sidebar');
-  sidebar_panel.appendChild(htmlToElement("<div>demo#" + demograhicNo + " : " + msg));
+  const sidebar_panel = document.querySelector(".cortico-sidebar");
+  sidebar_panel.appendChild(
+    htmlToElement("<div>demo#" + demograhicNo + " : " + msg)
+  );
 }
 
 function storePharmaciesCache(demographicNo) {
@@ -1731,7 +1794,6 @@ async function setupPreferredPharmacies() {
   const appointments = document.querySelectorAll(".apptLink");
   var error = false;
   for (let i = 0; i < appointments.length; i++) {
-
     var temp = {};
     temp.total = appointments.length;
     temp.current = i;
@@ -1780,9 +1842,8 @@ async function setupPreferredPharmacies() {
       }
 
       await setupPreferredPharmacy(pharmacyCode, demographicNo);
-
     } catch (err) {
-      console.error(err)
+      console.error(err);
       storePharmaciesFailureCache(demographicNo, err.message);
       displayPharmaciesFailure(demographicNo, err.message);
     } finally {
@@ -1794,7 +1855,6 @@ async function setupPreferredPharmacies() {
     total: length,
     error,
   });
-
 }
 
 async function init_diagnostic_viewer_button() {
@@ -1804,9 +1864,17 @@ async function init_diagnostic_viewer_button() {
   var last_button = document.querySelector(
     "#cortico-video-appt-btn"
   ).parentNode;
+<<<<<<< HEAD
   last_button.parentNode.appendChild(htmlToElement(
     "<button class='cortico-btn' id='diagnostic-viewer-btn'>Patient Responses</button>"
   ))
+=======
+  last_button.parentNode.appendChild(
+    htmlToElement(
+      "<button class='cortico-btn' id='diagnostic-viewer-btn' style='color:white; background-color:blue'>Diagnostic Viewer</button>"
+    )
+  );
+>>>>>>> origin
 
   const corticoDiagnosticViewBtn = document.getElementById(
     "diagnostic-viewer-btn"
@@ -1839,13 +1907,14 @@ async function init_diagnostic_viewer_button() {
 }
 
 function htmlToElement(html) {
-  const placeholder = document.createElement('div');
+  const placeholder = document.createElement("div");
   placeholder.innerHTML = html;
-  return placeholder.children.length ? placeholder.firstElementChild : undefined;
-};
+  return placeholder.children.length
+    ? placeholder.firstElementChild
+    : undefined;
+}
 
 async function init_recall_button() {
-
   const statusOption = document.querySelector("select[name='status']");
   var statusValue = statusOption.options[statusOption.selectedIndex].text;
 
@@ -1853,7 +1922,15 @@ async function init_recall_button() {
     "#cortico-video-appt-btn"
   ).parentNode;
 
+<<<<<<< HEAD
   last_button.parentNode.appendChild(htmlToElement("<button class='cortico-btn' type='button' id='recall-btn'>Recall email</button>"))
+=======
+  last_button.parentNode.appendChild(
+    htmlToElement(
+      "<button class='cortico-btn' type='button' id='recall-btn' style='color:white; background-color:blue'>Recall email</button>"
+    )
+  );
+>>>>>>> origin
   const corticoRecallButton = document.getElementById("recall-btn");
 
   function update_recall_button_visibility() {
@@ -1897,10 +1974,10 @@ async function init_recall_button() {
 
     window.open(
       `mailto:${patientEmail}?subject=Your doctor wants to speak with you&` +
-      `body=Dear ${cleanedPatient},%0d%0aYour doctor needs to follow up with you regarding some documents or results.%0d%0a` +
-      `We have tentatively booked you an appointment at ${cleanedSchedule}.%0d%0a%0d%0aPlease confirm with the following link:` +
-      `https://${clinicName}.cortico.ca/get-patient-appointment-lookup-url/%0d%0a%0d%0a` +
-      `Sincerely,%0d%0a${clinicName.toUpperCase()} STAFF`
+        `body=Dear ${cleanedPatient},%0d%0aYour doctor needs to follow up with you regarding some documents or results.%0d%0a` +
+        `We have tentatively booked you an appointment at ${cleanedSchedule}.%0d%0a%0d%0aPlease confirm with the following link:` +
+        `https://${clinicName}.cortico.ca/get-patient-appointment-lookup-url/%0d%0a%0d%0a` +
+        `Sincerely,%0d%0a${clinicName.toUpperCase()} STAFF`
     );
   }
 
@@ -1908,7 +1985,6 @@ async function init_recall_button() {
 
   statusOption.addEventListener("change", update_recall_button_visibility);
   corticoRecallButton.addEventListener("click", send_patient_recall_email);
-
 }
 
 async function getPatientInfo() {

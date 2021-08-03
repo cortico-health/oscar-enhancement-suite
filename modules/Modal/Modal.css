@@ -11,7 +11,7 @@
   padding: 10px;
   opacity: 0;
   transition: opacity 1s;
-  @apply tw-z-10000;
+  @apply tw-z-10002;
 }
 
 .cortico-modal-container.show {
@@ -20,7 +20,5 @@
 }
 
 .cortico-modal {
-  background-color: white;
-  padding: 10px;
-  border-radius: 0.5rem;
+  background-color: transparent;
 }

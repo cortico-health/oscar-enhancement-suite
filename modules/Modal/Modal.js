@@ -38,16 +38,21 @@ export class Modal {
         this.hide();
       }
     });
+
+    if (window.pubsub) {
+      window.pubsub.subscribe("modal.close", () => {
+        this.hide();
+      });
+    }
   }
 
   setContent(content) {
-    console.log("Content", content);
     if (!content) {
       return;
     }
 
     if (typeof content === "string") {
-      this.modal.innerHTML = html;
+      this.modal.innerHTML = content;
     }
 
     if (content instanceof Element) {

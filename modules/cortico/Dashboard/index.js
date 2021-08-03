@@ -7,8 +7,9 @@ export default function () {
 
   const Dashboard = () => {
     return (
-      <div className="tw-text-xl tw-text-blue-800">
+      <div className="tw-flex tw-text-xl tw-h-[800px]">
         <Sidebar />
+        <div className="tw-w-full tw-p-4">Content goes here</div>
       </div>
     );
   };
