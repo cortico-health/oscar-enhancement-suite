@@ -6,19 +6,14 @@ services:
     volumes:
       - ./:/code
     working_dir: /code
+    command: bash -c "yarn && yarn dev"
   oes-test:
     image: cypress/included:8.0.0
     volumes:
       - ./:/code
     working_dir: /code
     command: "--key c3beff34-2ba1-49df-8342-9552bed14542 --record"
-  build:
-    image: node:16
-    volumes:
-      - ./:/code
-    working_dir: /code
-    command: "bash -c 'yarn && yarn build'"
-  pkg:
+  oes-pkg:
     volumes:
       - .:/code
     working_dir: /code

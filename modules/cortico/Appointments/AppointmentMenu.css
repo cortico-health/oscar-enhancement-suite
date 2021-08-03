@@ -3,11 +3,11 @@ td.appt {
 }
 
 .color-primary {
-  color: #5c70ff;
+  color: #5b6ce2;
 }
 
 .appointment-menu {
-  background-color: #5c70ff;
+  background-color: #5b6ce2;
   color: white;
   position: absolute;
   top: 0px;
@@ -50,7 +50,7 @@ td.appt {
 .appointment-menu-container {
   position: absolute;
   display: flex;
-  background-color: #5c70ff;
+  background-color: #5b6ce2;
   padding: 1px 5px;
   border: 1px solid #d8ddff;
   top: -8px;

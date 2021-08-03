@@ -1,4 +1,4 @@
-import { getOrigin, getProvider } from "../Utils/Utils";
+import { getOrigin, getNamespace } from "../Utils/Utils";
 var originalFetch = require("cross-fetch");
 const fetch = require("fetch-retry")(originalFetch);
 
@@ -54,7 +54,7 @@ export class Masterfile {
     }
 
     try {
-      const url = getOrigin() + "/" + getProvider() + this.url;
+      const url = getOrigin() + "/" + getNamespace() + this.url;
       const result = await fetch(url, {
         retryDelay: 3000,
         retryOn: function (attempt, error, response) {
