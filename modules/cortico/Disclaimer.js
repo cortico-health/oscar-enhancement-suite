@@ -13,10 +13,10 @@ function Disclaimer() {
     return (
       <div className="tw-bg-cortico-blue tw-p-10 tw-mx-auto tw-rounded-xl tw-max-w-3xl tw-text-white">
         <p className="tw-text-2xl">
-          By popular demand, Cortico has developed this this free and Open
-          Source plug-in for Oscar. Due to the nature of a browser plug-in,
-          we're unable to guarantee it will work with every EMR update, and you
-          use it at your own risk
+          By popular demand, Cortico has developed this free and Open Source
+          plug-in for Oscar. Due to the nature of a browser plug-in, we're
+          unable to guarantee it will work with every EMR update, and you use it
+          at your own risk
           <div className="tw-my-2">
             (See Licence at{" "}
             <a href="https://github.com/cortico-health/oscar-enhancement-suite/blob/main/LICENSE">
