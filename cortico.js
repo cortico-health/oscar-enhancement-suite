@@ -27,6 +27,8 @@ const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
 
 const init_cortico = function () {
+
+
   // create an element to indicate the library is loaded in the dom, and to contain fixed menus/elements.
   const anchor = document.createElement("div");
   anchor.id = "cortico_anchor";
@@ -90,7 +92,7 @@ const init_cortico = function () {
     init_schedule();
 
     if (!oscar.isJuno()) {
-      //dragAndDrop();
+      dragAndDrop();
     }
 
     addCorticoLogo();
@@ -159,7 +161,10 @@ const init_schedule = function () {
 
   // refresh when idle for 1 minute.
   let last_interaction = new Date();
-  window.addEventListener("mousemove", (e) => {
+  window.addEventListener("click", (e) => {
+    last_interaction = new Date();
+  });
+  window.addEventListener("keydown", (e) => {
     last_interaction = new Date();
   });
   const reloadHandler = setInterval(function () {
@@ -206,9 +211,9 @@ function open_video_appointment_page(e) {
   }
   window.open(
     "https://" +
-      localStorage["clinicname"] +
-      ".cortico.ca/appointment/" +
-      appt_no
+    localStorage["clinicname"] +
+    ".cortico.ca/appointment/" +
+    appt_no
   );
 }
 
@@ -285,22 +290,32 @@ function init_appointment_page() {
 }
 
 async function setupPatientEmailButton() {
+
+  let is_eform_page = true;
+  const clinicName = localStorage["clinicname"];
+
+  const email_parent = document.querySelector(".DoNotPrint td")
+  if (!email_parent) {
+    is_eform_page = false;
+    const email_parent = document.querySelector("#save div:last-child");
+  }
+
   const patient_info = await getPatientInfo();
+  let mailto_str
+  if (is_eform_page) {
+    mailto_str = `mailto:${patient_info.email}?subject=Your+Document&body=Hi+${patient_info["First Name"]}%0A%0APlease find the attached document from your doctor at ${clinicName}.`
+  } else {
+    mailto_str = `mailto:${patient_info.email}`
+  }
 
   const email_btn = htmlToElement(`
-    <button id='cortico-email-patient' class='cortico-btn'>Email Patient</button>
+  <p style='margin-bottom:2em'>
+    <a href='${mailto_str}' id='cortico-email-patient' class='cortico-btn'>Email Patient</a>
+  </p>
   `);
 
-  const email_parent =
-    document.querySelector(".DoNotPrint td") ||
-    document.querySelector("#save div:last-child");
-
   email_parent.appendChild(email_btn);
-  email_btn.addEventListener("click", function () {
-    window.open(
-      `mailto:${patient_info.email}?subject=Your+Document&body=Hi+${patient_info["First Name"]}%0A%0A`
-    );
-  });
+
 }
 
 const init_styles = function () {
@@ -377,8 +392,8 @@ function getQueryStringValue(key) {
     window.location.search.replace(
       new RegExp(
         "^(?:.*[&\\?]" +
-          encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") +
-          "(?:\\=([^&]*))?)?.*$",
+        encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") +
+        "(?:\\=([^&]*))?)?.*$",
         "i"
       ),
       "$1"
@@ -441,7 +456,7 @@ function createSideBar() {
   sidebar.classList.add("cortico-sidebar");
 
   sidebar.innerHTML =
-    '<a href="https://cortico.ca"><img src="https://cortico.ca/_nuxt/img/footer-logo.5fde08e.svg"  alt="Cortico" style="margin-bottom: 25px;" /></a>';
+    '<a href="https://cortico.ca"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGEAAABhCAYAAADGBs+jAAAACXBIWXMAAAsSAAALEgHS3X78AAAEqklEQVR4nO2dvXHbMBSAX3RpVNkb2BvYmcAaQIUa1nEmiDYIR1AmsFyrSe7Ux9lAniDWBlbF0jnIjzYlUyRAvAc8kO+707mxAAofQeLvAZ9eXl4gJaZZcQ4A1wAwObrsDQA8rFfj56R+EAAkI2GaFabg5wDwteVf7wFguV6NHwJdmjfiJeCdnwPAd8ev/jTfS6FmiJaAAswdfdUxiUcAuF2vxhviSyNFrAQCASVGxERyjRgJuIYPEAoATOMX8SWSIk4CsYCSm2lWzAjTI0WUBCYBJTlDmiSIkcAswHCFzVxxiJAQQEDJcQdPBNElBBQA2NMWR1QJgQUYLgPl40Q0CREEiCWKBBVwSHAJkQWIHNQLKkFADRA5hhRs7EiAgN16NT6PlHcjQWqCkHfAImLejbBLECJgO1gJglpBs0EOZQsS8E36pA6LBGEClpGvoRVyCSrAHVIJKqAbZBJUQHdIJKgAP7wlqAB/vCSoABo6S1ABdHSSoAJocZagAuhxkqACeLCWoAL4sJKgAnhplaAC+GmUoALC8PlULirAnUo83cZlEql2ol8F2DHNCrOib4afm5ov/cXYiGWTlA8SVEA7WEYmiPGH5Vd2Zo57vRrXLs8/kKAC2sHl9cuOZVQbuvUmQQW0gwJMGZ15JPNBRLV1pAIawJt06SkAsIwPlmPuJUyzYq4CWskJy8hEDb29H/aPo2lWPBMY9iGFVtA/4mTNy/rSPJZG06y4VQGtzBnSNGVuyn7/OIoZx5VKR4yrjKJLSGkogi2iFFDCBVMGTaQ0FMF6k5pmb4xwqV4PxnXgPLQEFVDDCNfuhyBJAdybV5n0R4HiuFKvAY+c6Y4CbEPTh0cQV23Yp1tK2DFl0pd3AFeo1T7dEY7mcWRiLcA007DnLpL1avyEe+pRco/pvg7g4WQD5XPPSQBWyzvJInAAj6oRs6sOhVSbqBMiEV0ElGNXYkXgE2NG8OjeHc8nUM6sbTFK0qq11TJB0teJnVLAQRmdmujPsbrYZvQbt760WmFg+UOkT/AsLDbKrWI2zZ3XldHJbRUwo1v81NWMLRbkwiVE1fFOSmGeIcdHed0YXFlGefkSrsN6bwvMsNy0yWldTSWNLlU5iWbuUfkYnpoKvkrIDUZ8nqW9HnMKtcHIxHOVgvTmqxchNhgxhfeHYAq1tyK4NxgxLYg7wiR7KYLlnYCPnwXjtGCv3hGkErDw8xOLY6npjQhvCVjwE+xPhJ6v7oWIzhKwXbyJvGYJBhvHDO/DuxPGuQhbkn9Ze7WOcLhCRXji3URVEf6Q9BNUhB9knTUV0R3SHrOK6Ab5sIWKcIdl7EhFuME6n0AUaEfBF8kb1LKOogqqEb9wulYk7PMJQkRcMIU8kZDK9CYFb4F6kfI/SbD4BAE14kzPWZMhQiVAfBF62F2JoFaTCKIddqci3ol67KOKeCX6AaiBRYjsNYs4CjigCJEnDgbrrNnA3KEb9mF3tjDXiOEeducKk4jhHnbXFWIRu8EedudLRYRPxGRtjJg0xEqAdxHXGBPnymMKAkBa66gJh8XGW4wRS2ZpZDISSnANrBFi/pYDcuZuN8syTSyd+Dv/AAD4D9nFlj4ll12bAAAAAElFTkSuQmCC"  alt="Cortico" style="margin-bottom: 25px;" /></a>';
 
   var sidebarClose = document.createElement("div");
   sidebarClose.classList.add("cortico-sidebar-close");
@@ -604,12 +619,13 @@ function getRecallStatusOption() {
   label.style.marginBottom = "10px";
   label.style.textAlign = "center";
 
-  var button = document.createElement("button");
-  button.textContent = "Save";
-  button.style.width = "100%";
-  button.style.display = "inline-block";
-  button.style.margin = "10px auto";
-  button.className = "cortico-btn";
+  var button = htmlToElement(`<button class='cortico-btn'>Save</button>`)
+  // document.createElement("button");
+  // button.textContent = "Save";
+  // button.style.width = "100%";
+  // button.style.display = "inline-block";
+  // button.style.margin = "10px auto";
+  // button.className = "cortico-btn";
 
   container.appendChild(label);
   container.appendChild(inputContainer);
@@ -775,7 +791,7 @@ function getCorticoUrlOption() {
       attrs: {
         class: "sidebar-instructions",
       },
-      text: "Welcome to the plugin!, please set your cortico clinic name",
+      text: "Welcome to the Cortico Oscar plugin! Please set your cortico clinic name",
     });
     container.appendChild(instructions);
   }
@@ -1165,7 +1181,7 @@ async function checkAllEligibility() {
       await new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve();
-        }, 2000);
+        }, 1500);
       });
     }
   } catch (err) {
@@ -1485,6 +1501,11 @@ function plusSignFromCache() {
   }
 }
 
+/**
+ * Parse strings of the form ['key1:value1', 'key2:value2'] -> {key1: value1, key2: value2}
+ * @param {} stringArray 
+ * @returns 
+ */
 function stringArrayToObj(stringArray) {
   var obj = {};
   for (var i = 0; i < stringArray.length; i++) {
@@ -1947,13 +1968,13 @@ async function init_recall_button() {
     var cleanedPatient = apptPatient ? apptPatient : "Patient";
     var clinicName = localStorage["clinicname"];
 
-    window.open(
+    window.location.href =
       `mailto:${patientEmail}?subject=Your doctor wants to speak with you&` +
-        `body=Dear ${cleanedPatient},%0d%0aYour doctor needs to follow up with you regarding some documents or results.%0d%0a` +
-        `We have tentatively booked you an appointment at ${cleanedSchedule}.%0d%0a%0d%0aPlease confirm with the following link:` +
-        `https://${clinicName}.cortico.ca/get-patient-appointment-lookup-url/%0d%0a%0d%0a` +
-        `Sincerely,%0d%0a${clinicName.toUpperCase()} STAFF`
-    );
+      `body=Dear ${cleanedPatient},%0d%0aYour doctor needs to follow up with you regarding some documents or results.%0d%0a` +
+      `We have tentatively booked you an appointment at ${cleanedSchedule}.%0d%0a%0d%0aPlease confirm with the following link:` +
+      `https://${clinicName}.cortico.ca/get-patient-appointment-lookup-url/%0d%0a%0d%0a` +
+      `Sincerely,%0d%0a${clinicName.toUpperCase()} STAFF`
+
   }
 
   update_recall_button_visibility();
@@ -1998,7 +2019,6 @@ function getDemographicPageResponse() {
     console.error("Failed to load demographics.");
     return "";
   }
-  console.log(window.opener.location.search, demographicNo);
   const url = `${origin}/${namespace}/demographic/demographiccontrol.jsp?demographic_no=${demographicNo}&displaymode=edit&dboperation=search_detail`;
 
   return fetch(url);

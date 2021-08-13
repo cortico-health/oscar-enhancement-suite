@@ -11,6 +11,7 @@ module.exports = {
   watchOptions: {
     aggregateTimeout: 600,
     poll: 1000,
+    ignored: /dist/
   },
   cache: false,
   devtool: "source-map",
