@@ -20,14 +20,13 @@
         "https://*/*/eform/efmshowform_data.jsp*"
       ],
       "js": [
-        "dist/cortico-min.js"
+        "dist/cortico-min.js",
+        "vendor/jspdf.umd.min.js"
       ]
     }
   ],
   "permissions": [
     "activeTab",
-    "scripting",
-    "http://*/",
-    "https://*/"
+    "scripting"
   ]
 }

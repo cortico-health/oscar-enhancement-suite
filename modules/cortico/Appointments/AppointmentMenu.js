@@ -1,5 +1,5 @@
 import { Ellipsis } from "../../Icons/Ellipsis";
-import { getAppointments } from "./Appointments";
+import { getAppointments, getAppointmentInfo } from "./Appointments";
 import "./AppointmentMenu.css";
 import { Masterfile } from "../../core/Masterfile";
 import { Appointment } from "../../core/Appointment";
@@ -10,10 +10,17 @@ import { Loader } from "../../Loader/Loader";
 
 export function addAppointmentMenu() {
   const appointments = getAppointments();
+  const checkCache = JSON.parse(localStorage.checkCache || '{}')
+  const pharmaciesCache = JSON.parse(localStorage.pharmaciesCache || '{"demographics":[]}')
+
+  const apptInfo = getAppointmentInfo(appointments);
+  console.log(apptInfo)
+
   appointments.map((appt) => {
-    appt.appendChild(appointmentMenu(appt));
+    appt.appendChild(appointmentMenu(appt, apptInfo, checkCache, pharmaciesCache));
   });
 
+  // clicks outside the menu, close it.
   const html = document.documentElement;
   html.addEventListener("click", (e) => {
     const menu = e.target.closest(".appointment-menu-container");
@@ -28,52 +35,80 @@ export function addAppointmentMenu() {
   });
 }
 
-export function appointmentMenu(apptTd) {
-  const menuIcon = Ellipsis();
-  const menu = create("div", {
+export function appointmentMenu(apptTd, apptInfo, checkCache, pharmaciesCache) {
+
+  const appointment = new Appointment(apptTd);
+  const appointmentNo = appointment.getAppointmentNo();
+  const apptInfoItem = apptInfo.find((item) => {
+    return item.appointment_no === appointmentNo
+  }) || {}
+
+  const cacheValue = checkCache[apptInfoItem.demographic_no]
+  const isPharmacyCached = pharmaciesCache.demographics.includes(apptInfoItem.demographic_no)
+
+  if (isPharmacyCached) {
+    apptTd.querySelector('[title="Prescriptions"]').appendChild(create(`<small>&#10004;</small>`))
+  }
+  let cacheColor = '#555555';
+  if (cacheValue) {
+    cacheColor = cacheValue.verified ? '#00cc51' : '#cc0063';
+  }
+
+  const corticoIcon = CorticoIcon({
     attrs: {
-      class: "appointment-menu",
+      height: "15",
     },
   });
+  const corticoLinks = getCorticoLinks(apptTd);
+  const menuIcon = Ellipsis();
 
-  const container = create(
-    "div",
-    {
-      attrs: {
-        class: "appointment-menu-container",
+  const wrapper = create(`
+  <div class='appointment-menu-wrapper'>
+    <div class='appointment-menu-container' style='background-color:${cacheColor}'>
+      <div class='appointment-menu'>
+        <div class='appointment-menu-close'>x</div>
+        <div class='appointment-menu-header'>
+          ${corticoIcon.outerHTML}
+          <h5 class='color-primary appointment-menu-heading'>Cortico</h5>
+        </div>
+        <h5 class='color-primary appointment-menu-subheading'>Cortico Links</h5>
+        ${corticoLinks}
+        <hr style='margin: 10px 0; border-color: rgba(255,255,255,0.3)'></hr>
+        <h5 class='appointment-menu-subheading'>Contact Information</h5>
+        <div class='contactInfo'></div>
+      </div>
+      ${menuIcon.outerHTML}
+    </div>
+  </div>
+  `, {
+
+    events: {
+
+      "click .appointment-menu-container": (e) => {
+        // close button doesn't re-open
+        if (e.target.className == 'appointment-menu-close') { return }
+        const openMenu = document.querySelector(".appointment-menu.show");
+        if (openMenu) {
+          openMenu.classList.remove("show");
+        }
+        const menu = wrapper.querySelector('.appointment-menu')
+        menu.classList.toggle("show");
       },
-    },
-    menuIcon,
-    menu
-  );
 
-  const wrapper = create(
-    "div",
-    {
-      attrs: {
-        class: "appointment-menu-wrapper",
-      },
-    },
-    container
-  );
+      "click .appointment-menu-close": (e) => {
+        const openMenu = document.querySelector(".appointment-menu.show");
+        openMenu.classList.remove("show");
+      }
 
-  container.addEventListener("click", (e) => {
-
-    // close button doesn't re-open
-    if (e.target.className == 'appointment-menu-close') { return }
-
-    const openMenu = document.querySelector(".appointment-menu.show");
-    if (openMenu) {
-      openMenu.classList.remove("show");
     }
-    menu.classList.toggle("show");
-  });
+  })
 
-  container.addEventListener(
+  // additional one-off event listener for initial render.
+  wrapper.addEventListener(
     "click",
     async (e) => {
       await renderPatientInfo(apptTd);
-      console.log(menu.getBoundingClientRect());
+      const menu = wrapper.querySelector('.appointment-menu')
       const left = menu.getBoundingClientRect().left;
       if (left < 0) {
         menu.style = "left: 0; right: unset;";
@@ -84,126 +119,33 @@ export function appointmentMenu(apptTd) {
     }
   );
 
-  const corticoLinks = getCorticoLinks(apptTd);
-
-  const title = create("div", {
-    attrs: {
-      class: "appointment-menu-header",
-    },
-  });
-
-  const corticoIcon = CorticoIcon({
-    attrs: {
-      height: "15",
-    },
-  });
-  title.appendChild(corticoIcon);
-
-  const h5 = create("h5", {
-    attrs: {
-      class: "color-primary appointment-menu-heading",
-    },
-    text: "Cortico",
-  });
-
-  title.appendChild(h5);
-
-  menu.appendChild(title);
-
-  const close = create("div", {
-    attrs: {
-      class: "appointment-menu-close"
-    },
-    text: "x"
-  })
-  menu.appendChild(close);
-  close.addEventListener("click", (e) => {
-    const openMenu = document.querySelector(".appointment-menu.show");
-    openMenu.classList.remove("show");
-  });
-
-  const linkHeading = create("h5", {
-    attrs: {
-      class: "appointment-menu-subheading",
-    },
-    text: "Cortico Links",
-  });
-
-  menu.appendChild(linkHeading);
-  menu.appendChild(corticoLinks);
-
-  const patientInfoHeading = create("h5", {
-    attrs: {
-      class: "appointment-menu-subheading",
-    },
-    text: "Contact Information",
-  });
-
-  const contactInfoContainer = create("div", {
-    attrs: {
-      class: "contactInfo",
-    },
-  });
-
-  const hr = create("hr", {
-    attrs: {
-      style: "margin: 10px 0; border-color: rgba(255,255,255,0.3)",
-    },
-  });
-  menu.appendChild(hr);
-
-  menu.appendChild(patientInfoHeading);
-  menu.appendChild(contactInfoContainer);
-  wrapper.appendChild(container);
   return wrapper;
 }
 
 export function getCorticoLinks(apptTd) {
   if (!getCorticoUrl()) {
-    const errorMessage = create("div", {
-      attrs: {
-        style: "white-space: initial;",
-      },
-      text: "Cortico clinic has not been set. Please set the Cortico Clinic URL from the sidebar.",
-    });
-    return errorMessage;
+    return `
+      <div style="white-space: initial;">
+        Cortico clinic has not been set. Please set the Cortico Clinic URL from the sidebar.
+      </div>
+    `
   }
   const appointment = new Appointment(apptTd);
   const providerNo = appointment.getCurrentProvider();
   const appointmentNo = appointment.getAppointmentNo();
-  const items = [
-    {
-      title: "☛ Portal Page",
-      href: getPortalPage(),
-    },
-    {
-      title: "☛ Go To Appointment (Cortico)",
-      href: getCorticoAppointmentUrl(providerNo, appointmentNo),
-    },
-  ];
 
-  const list = create("ul");
-  items.map((item) => {
-    const listItem = create("li");
-    const anchor = create("a");
-    listItem.appendChild(anchor);
-    anchor.textContent = item.title;
-
-    if (item.href) {
-      anchor.setAttribute("href", item.href);
-      anchor.setAttribute("target", "_blank");
-    }
-
-    if (item.onClick) {
-      anchor.addEventListener("click", (e) => {
-        item.onClick(e);
-      });
-    }
-
-    list.appendChild(listItem);
-  });
-
-  return list;
+  return `
+  <ul>
+    <li>
+      <a href="${getPortalPage()}" target="_blank">
+        ☛ Portal Page
+      </a>
+    </li><li>
+      <a href="${getCorticoAppointmentUrl(providerNo, appointmentNo)}" target="_blank">☛ Go To Appointment (Cortico)
+      </a>
+      </li>
+  </ul>
+  `
 }
 
 async function renderPatientInfo(apptTd) {
