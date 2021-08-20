@@ -23,9 +23,5 @@
         "dist/cortico-min.js"
       ]
     }
-  ],
-  "permissions": [
-    "activeTab",
-    "scripting"
   ]
 }
