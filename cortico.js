@@ -87,7 +87,7 @@ const init_cortico = function () {
     resources_field.addEventListener("change", update_video_button);
 
     // TODO: diagnostic results API needs authenticated first.
-    // init_diagnostic_viewer_button();
+    init_diagnostic_viewer_button();
   } else if (route.indexOf("/provider/providercontrol.jsp") > -1) {
     init_schedule();
 
