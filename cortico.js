@@ -533,6 +533,8 @@ function showDiagnosticResults(html_string) {
   styles +=
     ".cortico-diagnostic-viewer { padding: 20px; padding-top: 30px; border: 1px solid }";
   styles +=
+    ".cortico-diagnostic-viewer { overflow-y: scroll }";
+  styles +=
     ".cortico-diagnostic-close { position: absolute; top: 10px; right: 10px; z-index: 500; }";
   styleSheet.innerText = styles;
 
