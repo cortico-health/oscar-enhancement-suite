@@ -533,6 +533,8 @@ function showDiagnosticResults(html_string) {
   styles +=
     ".cortico-diagnostic-viewer { padding: 20px; padding-top: 30px; border: 1px solid }";
   styles +=
+    ".cortico-diagnostic-viewer { overflow-y: scroll }";
+  styles +=
     ".cortico-diagnostic-close { position: absolute; top: 10px; right: 10px; z-index: 500; }";
   styleSheet.innerText = styles;
 
@@ -1681,8 +1683,11 @@ async function setupPreferredPharmacy(code, demographic_no) {
 
       if (json.length > 1) {
         pharmacy = json.find((item) => {
+          let item_name = item.name.toLowerCase()
+          let cleaned_item_name = item_name.replace(/[^\w\s]/gi, '')
           return (
-            item.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+            (item_name.includes(searchTerm.toLowerCase()) ||
+              cleaned_item_name.includes(searchTerm.toLowerCase())) &&
             item.fax.length > 8 &&
             // either if the fax is the same or the formatted fax has the values
             (formatNumber(item.fax) === faxNumber ||
