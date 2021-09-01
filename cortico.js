@@ -1683,8 +1683,11 @@ async function setupPreferredPharmacy(code, demographic_no) {
 
       if (json.length > 1) {
         pharmacy = json.find((item) => {
+          let item_name = item.name.toLowerCase()
+          let cleaned_item_name = item_name.replace(/[^\w\s]/gi, '')
           return (
-            item.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+            (item_name.includes(searchTerm.toLowerCase()) ||
+              cleaned_item_name.includes(searchTerm.toLowerCase())) &&
             item.fax.length > 8 &&
             // either if the fax is the same or the formatted fax has the values
             (formatNumber(item.fax) === faxNumber ||
