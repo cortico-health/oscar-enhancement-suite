@@ -1,0 +1,110 @@
+td.appt {
+    overflow: visible;
+  }
+  
+  .color-primary {
+    color: #5b6ce2;
+  }
+  
+  .login-form {
+    background-color: #5b6ce2;
+    color: white;
+    position: fixed;
+    top: 0px;
+    right: 0;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid #d8ddff;
+    display: none;
+    z-index: 1500;
+    font-size: 12px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3),
+      0 10px 10px -5px rgba(0, 0, 0, 0.15);
+  }
+
+  .login-form input {
+      display: block;
+      border-radius: 5px;
+  }
+  
+  .login-form.show {
+    display: block;
+  }
+  
+  .login-form a {
+    color: white !important;
+    text-decoration: underline;
+  }
+  
+  .login-form a:hover {
+    color: #d8ddff !important;
+  }
+  
+  .login-form ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  
+  .login-form ul li,
+  .contactInfo > div {
+    margin: 1px 0;
+    color: white !important;
+  }
+  
+  .login-form-container {
+    position: absolute;
+    display: flex;
+    background-color: #5b6ce2;
+    padding: 1px 5px;
+    border: 1px solid #d8ddff;
+    top: -8px;
+    border-radius: 50%;
+    box-shadow: 0 3px 3px 2px rgba(0, 0, 0, 0.3);
+  }
+  
+  .login-form-wrapper {
+    display: inline-block;
+    position: relative;
+    top: -5px;
+    cursor: pointer;
+  }
+  
+  .login-form-header {
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 5px 10px;
+    display: flex;
+    align-items: top;
+    margin-bottom: 5px;
+  }
+  
+  .login-form-heading {
+    margin: 0;
+    padding: 0;
+    margin-left: 5px;
+    font-size: 14px;
+  }
+  
+  .login-form-hr {
+    margin: 0;
+    padding: 0;
+    margin: 5px 0;
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  .login-form-subheading {
+    color: #d8ddff;
+    font-size: 12px;
+  }
+  
+  .login-form-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 1.2rem;
+    padding: 0 5px;
+    color: white;
+  }
+  

@@ -11,6 +11,7 @@ import {
   getAppointmentLink,
 } from "./modules/cortico/Appointments/Appointments";
 import { addAppointmentMenu } from "./modules/cortico/Appointments/AppointmentMenu";
+import { addLoginForm } from "./modules/cortico/Login/Login";
 import { Oscar } from "./modules/core/Oscar.js";
 import "element-closest-polyfill";
 import { getOrigin, getNamespace } from "./modules/Utils/Utils";
@@ -98,6 +99,7 @@ const init_cortico = function () {
     addCorticoLogo();
     addMenu();
     addAppointmentMenu();
+    addLoginForm()
     if (!oscar.isJuno() && !oscar.containsKaiBar()) {
       plusSignFromCache();
     }
@@ -1782,11 +1784,12 @@ function storePharmaciesFailureCache(demographicNo, message) {
 async function getDiagnosticFromCortico(appt_no, notes) {
   const clinicName = localStorage["clinicname"];
   const url = `https://${clinicName}.cortico.ca/api/encrypted/diagnostic-results/?appointment_id=${appt_no}&notes=${notes}`;
+  // const url = `http://localhost/api/encrypted/diagnostic-results/?appointment_id=${appt_no}&notes=${notes}`;
 
   return fetch(url, {
     method: "GET",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/json"
     },
   });
 }
