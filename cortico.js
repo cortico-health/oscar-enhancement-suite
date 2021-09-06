@@ -17,6 +17,7 @@ import "element-closest-polyfill";
 import { getOrigin, getNamespace } from "./modules/Utils/Utils";
 import { CorticoIcon } from "./modules/Icons/CorticoIcon";
 import { debounce, create } from "./modules/Utils/Utils";
+import { loadExtensionStorageValue } from "./modules/Utils/Utils";
 import "./index.css";
 import { Modal } from "./modules/Modal/Modal";
 import Dashboard from "./modules/cortico/Dashboard";
@@ -750,15 +751,14 @@ async function getCorticoLogin() {
   var loginButton = document.createElement("button");
   loginButton.textContent = "Sign In at Cortico";
 
-  await chrome.storage.local.get("jwt_expired", function (result) {
-    console.log("jwt", result.jwt_expired)
+  loadExtensionStorageValue("jwt_expired").then(function (expired) {
     jwt_expired = result.jwt_expired
 
     if (jwt_expired === false) {
       loginButton.textContent = "Already signed in";
       loginButton.disabled = true
     }
-  });
+  })
 
   var container = document.createElement("div");
   container.style.width = "100%";
@@ -1817,15 +1817,6 @@ function storePharmaciesFailureCache(demographicNo, message) {
     failures: failures,
   };
   localStorage.setItem("pharmaciesCacheFailure", JSON.stringify(cache));
-}
-
-// tmp, move to Utils
-function loadExtensionStorageValue(key) {
-  return new Promise(function (resolve, reject) {
-    chrome.storage.local.get(key, function (result) {
-      resolve(result[key])
-    })
-  })
 }
 
 async function getDiagnosticFromCortico(appt_no, notes, token) {
