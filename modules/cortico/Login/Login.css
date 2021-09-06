@@ -10,8 +10,6 @@ td.appt {
     background-color: #5b6ce2;
     color: white;
     position: fixed;
-    top: 0px;
-    right: 0;
     padding: 1.5rem;
     border-radius: 0.5rem;
     border: 1px solid #d8ddff;
@@ -20,11 +18,15 @@ td.appt {
     font-size: 12px;
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3),
       0 10px 10px -5px rgba(0, 0, 0, 0.15);
+    top: 20%; 
+    left: 50%;
+    transform: translate(-50%, 0);
   }
 
   .login-form input {
       display: block;
       border-radius: 5px;
+      font-size: 14px
   }
   
   .login-form.show {
@@ -83,7 +85,7 @@ td.appt {
     margin: 0;
     padding: 0;
     margin-left: 5px;
-    font-size: 14px;
+    font-size: 16px;
   }
   
   .login-form-hr {
@@ -96,7 +98,7 @@ td.appt {
   
   .login-form-subheading {
     color: #d8ddff;
-    font-size: 12px;
+    font-size: 14px;
   }
   
   .login-form-close {

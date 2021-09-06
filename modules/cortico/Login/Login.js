@@ -3,7 +3,7 @@ import "./Login.css";
 import { CorticoIcon } from "../../Icons/CorticoIcon";
 import { create, getCorticoUrl } from "../../Utils/Utils";
 
-export function addLoginForm() {
+export function addLoginForm(browser) {
   const currentUser = localStorage.getItem("currentUser");
 
   if (!getCorticoUrl()) {
@@ -12,15 +12,15 @@ export function addLoginForm() {
     return
   }
 
-  if (getCorticoUrl() && currentUser != null)
-    document.body.appendChild(loginForm());
+  // if (getCorticoUrl() && currentUser == null)
+  document.body.appendChild(loginForm(browser));
 }
 
-export function loginForm() {
+export function loginForm(browser) {
   const menuIcon = Ellipsis();
   const menu = create("div", {
     attrs: {
-      class: "login-form show",
+      class: "login-form",
     },
   });
 
@@ -120,7 +120,7 @@ export function loginForm() {
     const loginUserName = username.value;
     const loginPassword = password.value;
 
-    corticoSignIn(loginUserName, loginPassword)
+    corticoSignIn(loginUserName, loginPassword, browser)
   })
 
   menu.appendChild(linkHeading);
@@ -132,15 +132,18 @@ export function loginForm() {
   return wrapper;
 }
 
-export async function corticoSignIn(username, password) {
+export async function corticoSignIn(username, password, browser) {
   const response = await signInRequest(username, password)
 
   if (response) {
     const json = JSON.parse(await response.text())
 
-    const user = json.user
+    browser = browser ? browser : chrome;
 
-    localStorage.setItem("currentUser", user.username)
+    if (browser) {
+      browser.storage.local.set({ "jwt_access_token": json.access })
+      browser.storage.local.set({ "jwt_expired": false })
+    }
 
     const openMenu = document.querySelector(".login-form.show");
     openMenu.classList.remove("show");
@@ -152,17 +155,15 @@ export async function signInRequest(username, password) {
     "username": username,
     "password": password
   }
-  // const url = 'http://localhost/dj-rest-auth/login/';
-  const url = getCorticoUrl() + '/dj-rest-auth/login/';
+  const url = getCorticoUrl() + '/api/token/';
 
   return fetch(url, {
     "method": 'POST',
     "headers": {
       "Content-Type": "application/json"
     },
-    "body": JSON.stringify(data),
-    "credentials": "omit"
+    "body": JSON.stringify(data)
   }).catch((err) => {
-    alert("ERROR: ", err)
+    alert("Please make sure your credentials are correct and Cortico is online")
   })
 }
