@@ -816,13 +816,6 @@ async function getCorticoLogin() {
   })
 
   var container = document.createElement("div");
-  container.style.width = "100%";
-  container.style.padding = "0px 10px";
-  container.style.boxSizing = "border-box";
-
-  loginButton.style.width = "100%";
-  loginButton.style.display = "inline-block";
-  loginButton.style.margin = "10px auto";
   loginButton.className = "cortico-btn";
 
   loginButton.addEventListener("click", (e) => {
