@@ -807,7 +807,7 @@ async function getCorticoLogin() {
   loginButton.textContent = "Sign In at Cortico";
 
   loadExtensionStorageValue("jwt_expired").then(function (expired) {
-    jwt_expired = result.jwt_expired
+    jwt_expired = expired
 
     if (jwt_expired === false) {
       loginButton.textContent = "Already signed in";

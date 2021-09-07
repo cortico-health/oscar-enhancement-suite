@@ -1466,96 +1466,24 @@ function addLoginForm(browser) {
 }
 function loginForm(browser) {
   var menuIcon = (0,_Icons_Ellipsis__WEBPACK_IMPORTED_MODULE_2__.Ellipsis)();
-  var menu = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_5__.create)("div", {
-    attrs: {
-      class: "login-form"
-    }
-  });
-  var container = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_5__.create)("div", {
-    attrs: {
-      class: "login-form-container"
-    }
-  }, menuIcon, menu);
-  var wrapper = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_5__.create)("div", {
-    attrs: {
-      class: "login-form-wrapper"
-    }
-  }, container);
-  container.addEventListener("click", function (e) {
-    // close button doesn't re-open
-    if (e.target.className == 'login-form-close') {
-      return;
-    }
-
-    var openMenu = document.querySelector(".login-form.show");
-
-    if (openMenu) {
-      openMenu.classList.remove("show");
-    }
-
-    menu.classList.toggle("show");
-  });
-  var title = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_5__.create)("div", {
-    attrs: {
-      class: "login-form-header"
-    }
-  });
   var corticoIcon = (0,_Icons_CorticoIcon__WEBPACK_IMPORTED_MODULE_4__.CorticoIcon)({
     attrs: {
       height: "15"
     }
   });
-  title.appendChild(corticoIcon);
-  var h5 = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_5__.create)("h5", {
-    attrs: {
-      class: "color-primary login-form-heading"
-    },
-    text: "Cortico"
+  var wrapper = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_5__.create)("<div class='login-form-wrapper'>\n      <div class='login-form-container'>\n        <div class='login-form'>\n          <div class='login-form-close'>x</div>\n          <div class='login-form-header'>\n            ".concat(corticoIcon.outerHTML, "\n            <h5 class='color-primary login-form-heading'>Cortico</h5>\n          </div>\n          <h5 class='color-primary login-form-subheading'>Cortico Login Form</h5>\n          <input type='text' placeholder='Username' id='loginUsername' />\n          <input type='password' placeholder='Password' id='loginPassword' />\n          <button type='button' id='loginButton'>Sign in</button>\n        </div>\n        ").concat(menuIcon.outerHTML, "\n      </div>\n    </div>"), {
+    events: {
+      "click .login-form-close": function clickLoginFormClose(e) {
+        var openMenu = document.querySelector(".login-form.show");
+        openMenu.classList.remove("show");
+      },
+      "click #loginButton": function clickLoginButton(e) {
+        var loginUserName = document.getElementById("loginUsername").value;
+        var loginPassword = document.getElementById("loginPassword").value;
+        corticoSignIn(loginUserName, loginPassword, browser);
+      }
+    }
   });
-  title.appendChild(h5);
-  menu.appendChild(title);
-  var close = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_5__.create)("div", {
-    attrs: {
-      class: "login-form-close"
-    },
-    text: "x"
-  });
-  menu.appendChild(close);
-  close.addEventListener("click", function (e) {
-    var openMenu = document.querySelector(".login-form.show");
-    openMenu.classList.remove("show");
-  });
-  var linkHeading = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_5__.create)("h5", {
-    attrs: {
-      class: "login-form-subheading"
-    },
-    text: "Cortico Login Form"
-  });
-  var username = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_5__.create)("input", {
-    attrs: {
-      type: "text"
-    },
-    placeholder: "Username"
-  });
-  var password = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_5__.create)("input", {
-    attrs: {
-      type: "password"
-    },
-    placeholder: "Password"
-  });
-  var signInButton = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_5__.create)("button", {
-    text: "Sign in"
-  });
-  signInButton.addEventListener("click", function (e) {
-    var loginUserName = username.value;
-    var loginPassword = password.value;
-    corticoSignIn(loginUserName, loginPassword, browser);
-  });
-  menu.appendChild(linkHeading);
-  menu.appendChild(username);
-  menu.appendChild(password);
-  menu.appendChild(signInButton);
-  wrapper.appendChild(container);
   return wrapper;
 }
 function corticoSignIn(_x, _x2, _x3) {
@@ -5020,7 +4948,7 @@ function _getCorticoLogin() {
             loginButton = document.createElement("button");
             loginButton.textContent = "Sign In at Cortico";
             (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_11__.loadExtensionStorageValue)("jwt_expired").then(function (expired) {
-              jwt_expired = result.jwt_expired;
+              jwt_expired = expired;
 
               if (jwt_expired === false) {
                 loginButton.textContent = "Already signed in";
@@ -5482,7 +5410,7 @@ function checkAllEligibility() {
 
 function _checkAllEligibility() {
   _checkAllEligibility = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee10() {
-    var nodes, appointmentInfo, length, providerNo, error, i, temp, demographic_no, _result2, text, lowerCaseText, _text, verified;
+    var nodes, appointmentInfo, length, providerNo, error, i, temp, demographic_no, result, text, lowerCaseText, _text, verified;
 
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee10$(_context10) {
       while (1) {
@@ -5524,13 +5452,13 @@ function _checkAllEligibility() {
             temp.current = i + 1;
             pubsub.publish("check-eligibility", temp);
             demographic_no = appointmentInfo[i].demographic_no;
-            _result2 = null;
+            result = null;
             _context10.prev = 21;
             _context10.next = 24;
             return checkEligiblity(demographic_no, (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_11__.getOrigin)(), (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_11__.getNamespace)(), providerNo);
 
           case 24:
-            _result2 = _context10.sent;
+            result = _context10.sent;
             _context10.next = 30;
             break;
 
@@ -5543,13 +5471,13 @@ function _checkAllEligibility() {
             text = null;
             lowerCaseText = null;
 
-            if (!(_result2 && _result2.status === 200)) {
+            if (!(result && result.status === 200)) {
               _context10.next = 39;
               break;
             }
 
             _context10.next = 35;
-            return _result2.text();
+            return result.text();
 
           case 35:
             _text = _context10.sent;
@@ -5946,8 +5874,7 @@ function setupFaxButton() {
   var prescriptionFrame = document.getElementById("AutoNumber1");
   prescriptionFrame.addEventListener("click", /*#__PURE__*/function () {
     var _ref2 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee3(e) {
-      var _result, text, json;
-
+      var result, text, json;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
@@ -5961,9 +5888,9 @@ function setupFaxButton() {
               return sendPatientPrescriptionNotification();
 
             case 3:
-              _result = _context3.sent;
+              result = _context3.sent;
               _context3.next = 6;
-              return _result.text();
+              return result.text();
 
             case 6:
               text = _context3.sent;

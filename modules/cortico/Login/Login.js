@@ -18,117 +18,46 @@ export function addLoginForm(browser) {
 
 export function loginForm(browser) {
   const menuIcon = Ellipsis();
-  const menu = create("div", {
-    attrs: {
-      class: "login-form",
-    },
-  });
-
-  const container = create(
-    "div",
-    {
-      attrs: {
-        class: "login-form-container",
-      },
-    },
-    menuIcon,
-    menu
-  );
-
-  const wrapper = create(
-    "div",
-    {
-      attrs: {
-        class: "login-form-wrapper",
-      },
-    },
-    container
-  );
-
-  container.addEventListener("click", (e) => {
-
-    // close button doesn't re-open
-    if (e.target.className == 'login-form-close') { return }
-
-    const openMenu = document.querySelector(".login-form.show");
-    if (openMenu) {
-      openMenu.classList.remove("show");
-    }
-    menu.classList.toggle("show");
-  });
-
-  const title = create("div", {
-    attrs: {
-      class: "login-form-header",
-    },
-  });
 
   const corticoIcon = CorticoIcon({
     attrs: {
       height: "15",
     },
   });
-  title.appendChild(corticoIcon);
 
-  const h5 = create("h5", {
-    attrs: {
-      class: "color-primary login-form-heading",
-    },
-    text: "Cortico",
-  });
+  const wrapper = create(
+    `<div class='login-form-wrapper'>
+      <div class='login-form-container'>
+        <div class='login-form'>
+          <div class='login-form-close'>x</div>
+          <div class='login-form-header'>
+            ${corticoIcon.outerHTML}
+            <h5 class='color-primary login-form-heading'>Cortico</h5>
+          </div>
+          <h5 class='color-primary login-form-subheading'>Cortico Login Form</h5>
+          <input type='text' placeholder='Username' id='loginUsername' />
+          <input type='password' placeholder='Password' id='loginPassword' />
+          <button type='button' id='loginButton'>Sign in</button>
+        </div>
+        ${menuIcon.outerHTML}
+      </div>
+    </div>`,
+    {
+      events: {
+        "click .login-form-close": (e) => {
+          const openMenu = document.querySelector(".login-form.show");
+          openMenu.classList.remove("show");
+        },
+        "click #loginButton": (e) => {
+          const loginUserName = document.getElementById("loginUsername").value;
+          const loginPassword = document.getElementById("loginPassword").value;
 
-  title.appendChild(h5);
+          corticoSignIn(loginUserName, loginPassword, browser)
+        }
+      },
+    }
+  );
 
-  menu.appendChild(title);
-
-  const close = create("div", {
-    attrs: {
-      class: "login-form-close"
-    },
-    text: "x"
-  })
-  menu.appendChild(close);
-  close.addEventListener("click", (e) => {
-    const openMenu = document.querySelector(".login-form.show");
-    openMenu.classList.remove("show");
-  });
-
-  const linkHeading = create("h5", {
-    attrs: {
-      class: "login-form-subheading",
-    },
-    text: "Cortico Login Form",
-  });
-
-  const username = create("input", {
-    attrs: {
-      type: "text"
-    },
-    placeholder: "Username"
-  })
-  const password = create("input", {
-    attrs: {
-      type: "password"
-    },
-    placeholder: "Password"
-  })
-  const signInButton = create("button", {
-    text: "Sign in"
-  })
-
-  signInButton.addEventListener("click", (e) => {
-    const loginUserName = username.value;
-    const loginPassword = password.value;
-
-    corticoSignIn(loginUserName, loginPassword, browser)
-  })
-
-  menu.appendChild(linkHeading);
-  menu.appendChild(username);
-  menu.appendChild(password);
-  menu.appendChild(signInButton);
-
-  wrapper.appendChild(container);
   return wrapper;
 }
 
