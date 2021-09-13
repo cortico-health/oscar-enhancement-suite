@@ -493,6 +493,7 @@ function createSideBar() {
   sidebar.appendChild(getEligFailed());
 
   sidebar.appendChild(getBatchPharmaciesButton());
+  sidebar.appendChild(getResetCacheButton());
   sidebar.appendChild(getBatchPharmaciesStatus());
 
   var styleSheet = styleSheetFactory("cortico_sidebar");
@@ -855,6 +856,28 @@ function getBatchPharmaciesButton() {
   button.className = "cortico-btn";
   button.addEventListener("click", setupPreferredPharmacies);
   return button;
+}
+
+function getResetCacheButton() {
+  var button = create("button", {
+    attrs: {
+      class: "cortico-btn",
+    },
+    text: "Reset Cache",
+  });
+
+  button.addEventListener("click", (e) => {
+    if (confirm("Are you sure you want to clear your cache?")) {
+      localStorage.clear()
+
+      alert("Successfully reset cache, the page will now reload.")
+      window.location.reload()
+    } else {
+      console.log("Clear cache cancelled")
+    }
+  })
+
+  return button
 }
 
 function addNewUI() {

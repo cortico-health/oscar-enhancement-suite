@@ -4345,6 +4345,7 @@ function createSideBar() {
   sidebar.appendChild(getEligStatus());
   sidebar.appendChild(getEligFailed());
   sidebar.appendChild(getBatchPharmaciesButton());
+  sidebar.appendChild(getResetCacheButton());
   sidebar.appendChild(getBatchPharmaciesStatus());
   var styleSheet = styleSheetFactory("cortico_sidebar");
   var styles = "";
@@ -4689,6 +4690,25 @@ function getBatchPharmaciesButton() {
   button.textContent = "Set preferred pharmacies";
   button.className = "cortico-btn";
   button.addEventListener("click", setupPreferredPharmacies);
+  return button;
+}
+
+function getResetCacheButton() {
+  var button = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_10__.create)("button", {
+    attrs: {
+      class: "cortico-btn"
+    },
+    text: "Reset Cache"
+  });
+  button.addEventListener("click", function (e) {
+    if (confirm("Are you sure you want to clear your cache?")) {
+      localStorage.clear();
+      alert("Successfully reset cache, the page will now reload.");
+      window.location.reload();
+    } else {
+      console.log("Clear cache cancelled");
+    }
+  });
   return button;
 }
 
