@@ -27,6 +27,7 @@
   "permissions": [
     "*://*.cortico.ca/*",
     "webRequest",
-    "activeTab"
+    "activeTab",
+    "storage"
   ]
 }

@@ -120,6 +120,13 @@ export function create(_element, options, ...children) {
   return element;
 }
 
+export function loadExtensionStorageValue(key) {
+  return new Promise(function (resolve, reject) {
+    chrome.storage.local.get(key, function (result) {
+      resolve(result[key])
+    })
+  })
+}
 
 export function htmlToElement(html) {
   const placeholder = document.createElement("div");

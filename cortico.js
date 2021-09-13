@@ -13,11 +13,13 @@ import {
   getAppointmentInfo
 } from "./modules/cortico/Appointments/Appointments";
 import { addAppointmentMenu } from "./modules/cortico/Appointments/AppointmentMenu";
+import { addLoginForm } from "./modules/cortico/Login/Login";
 import { Oscar } from "./modules/core/Oscar.js";
 import "element-closest-polyfill";
 import { getOrigin, getNamespace, htmlToElement } from "./modules/Utils/Utils";
 import { CorticoIcon } from "./modules/Icons/CorticoIcon";
 import { debounce, create, getDemographicNo } from "./modules/Utils/Utils";
+import { loadExtensionStorageValue } from "./modules/Utils/Utils";
 import "./index.css";
 import { Modal } from "./modules/Modal/Modal";
 import Dashboard from "./modules/cortico/Dashboard";
@@ -89,7 +91,7 @@ const init_cortico = function () {
     resources_field.addEventListener("change", update_video_button);
 
     // TODO: diagnostic results API needs authenticated first.
-    // init_diagnostic_viewer_button();
+    init_diagnostic_viewer_button();
   } else if (route.indexOf("/provider/providercontrol.jsp") > -1) {
     init_schedule();
 
@@ -104,6 +106,7 @@ const init_cortico = function () {
     addCorticoLogo();
     addMenu();
     addAppointmentMenu();
+    addLoginForm(chrome)
     if (!oscar.isJuno() && !oscar.containsKaiBar()) {
       plusSignFromCache();
     }
@@ -509,7 +512,7 @@ function styleSheetFactory(namespace) {
   return window[namespace];
 }
 
-function createSideBar() {
+async function createSideBar() {
   if (window.corticoSidebar) {
     // TODO: is idempotency really needed here? it's a global init.
     return;
@@ -538,6 +541,8 @@ function createSideBar() {
   //sidebar.appendChild(newUiOption);
 
   sidebar.appendChild(getCorticoUrlOption());
+  sidebar.appendChild(await getCorticoLogin());
+
   sidebar.appendChild(getRecallStatusOption());
 
   sidebar.appendChild(getEligButton());
@@ -590,6 +595,7 @@ function showDiagnosticResults(html_string) {
   var styles = `
     .cortico-diagnostic-viewer { position: fixed; top: 20%; left: 50% ;width: 300px; background-color: white; transform: translate(-50%, 0) }
     .cortico-diagnostic-viewer { padding: 20px; padding-top: 30px; border: 1px solid }
+    .cortico-diagnostic-viewer { overflow-y: scroll; max-height: 500px }
     .cortico-diagnostic-close { position: absolute; top: 10px; right: 10px; z-index: 500; }
   `
   styleSheet.innerText = styles;
@@ -597,7 +603,7 @@ function showDiagnosticResults(html_string) {
   document.body.prepend(container);
 }
 
-function addMenu(container) {
+async function addMenu(container) {
   var navigation =
     document.querySelector("#firstMenu #navList") ||
     document.querySelector("#firstMenu #navlist");
@@ -606,7 +612,7 @@ function addMenu(container) {
   menu.style.color = "rgb(75, 84, 246)";
   menu.style.cursor = "pointer";
 
-  var sidebar = createSideBar();
+  var sidebar = await createSideBar();
   menu.addEventListener("click", function () {
     sidebar.classList.toggle("cortico-sidebar-show");
     if (window.localStorage["firstRun"] === "true") {
@@ -792,6 +798,34 @@ function getNewUIOption() {
   container.appendChild(label);
 
   return container;
+}
+
+
+async function getCorticoLogin() {
+  var jwt_expired = null;
+  var loginButton = document.createElement("button");
+  loginButton.textContent = "Sign In at Cortico";
+
+  loadExtensionStorageValue("jwt_expired").then(function (expired) {
+    jwt_expired = expired
+
+    if (jwt_expired === false) {
+      loginButton.textContent = "Already signed in";
+      loginButton.disabled = true
+    }
+  })
+
+  var container = document.createElement("div");
+  loginButton.className = "cortico-btn";
+
+  loginButton.addEventListener("click", (e) => {
+    const loginForm = document.querySelector(".login-form")
+    loginForm.classList.add("show")
+  })
+
+  container.appendChild(loginButton);
+
+  return container
 }
 
 function getCorticoUrlOption() {
@@ -1700,8 +1734,11 @@ async function setupPreferredPharmacy(code, demographic_no) {
 
       if (json.length > 1) {
         pharmacy = json.find((item) => {
+          let item_name = item.name.toLowerCase()
+          let cleaned_item_name = item_name.replace(/[^\w\s]/gi, '')
           return (
-            item.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+            (item_name.includes(searchTerm.toLowerCase()) ||
+              cleaned_item_name.includes(searchTerm.toLowerCase())) &&
             item.fax.length > 8 &&
             // either if the fax is the same or the formatted fax has the values
             (formatNumber(item.fax) === faxNumber ||
@@ -1793,7 +1830,7 @@ function storePharmaciesFailureCache(demographicNo, message) {
   localStorage.setItem("pharmaciesCacheFailure", JSON.stringify(cache));
 }
 
-async function getDiagnosticFromCortico(appt_no, notes) {
+async function getDiagnosticFromCortico(appt_no, notes, token) {
   const clinicName = localStorage["clinicname"];
   const url = `https://${clinicName}.cortico.ca/api/encrypted/diagnostic-results/?appointment_id=${appt_no}&notes=${notes}`;
 
@@ -1801,7 +1838,14 @@ async function getDiagnosticFromCortico(appt_no, notes) {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
+      "Authorization": "Bearer " + token
     },
+  }).catch((err) => {
+    chrome.storage.local.set({ "jwt_expired": true })
+    alert("Your credentials have expired. Please login again")
+    addLoginForm(chrome)
+    const loginForm = document.querySelector(".login-form")
+    loginForm.classList.add("show")
   });
 }
 
@@ -1912,12 +1956,18 @@ async function init_diagnostic_viewer_button() {
     e.preventDefault();
 
     const appt_no = getQueryStringValue("appointment_no");
-    const diagnostic_response = await getDiagnosticFromCortico(
-      appt_no,
-      notesValue
-    );
-    const diagnostic_text = String(await diagnostic_response.text());
-    await showDiagnosticResults(diagnostic_text);
+
+    loadExtensionStorageValue("jwt_access_token").then(async function (access_token) {
+      const diagnostic_response = await getDiagnosticFromCortico(
+        appt_no,
+        notesValue,
+        access_token
+      );
+      if (diagnostic_response) {
+        const diagnostic_text = String(await diagnostic_response.text());
+        await showDiagnosticResults(diagnostic_text);
+      }
+    })
   }
 
   update_diagnostic_button_visibility();
