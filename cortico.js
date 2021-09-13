@@ -1121,7 +1121,7 @@ async function checkAllEligibility() {
     alert("No Appointments to Check");
   }
 
-  const providerNo = getProviderNoFromTd(nodes[0]);
+  var providerNo = getProviderNoFromTd(nodes[0]);
   var error = false;
 
   window.checkAllEligibilityRunning = true;
@@ -1134,6 +1134,12 @@ async function checkAllEligibility() {
 
       const demographic_no = appointmentInfo[i].demographic_no;
       let result = null;
+
+      // In cases where the first appointment in the schedule is an empty
+      // appointment, get the providerNo from the node itself
+      if (!providerNo)
+        providerNo = getProviderNoFromTd(nodes[i])
+
       try {
         result = await checkEligiblity(
           demographic_no,
@@ -1416,9 +1422,9 @@ function getProviderNoFromTd(tdElement) {
 
   const searchParams = new URLSearchParams(queryString);
   const providerNo = searchParams.get("providerNo");
-
   return providerNo;
 }
+
 function getCurrentProviderNoFromTd(tdElement) {
   //oscar osp
   var dsButton = tdElement
