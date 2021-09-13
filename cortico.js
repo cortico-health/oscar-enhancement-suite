@@ -1183,17 +1183,25 @@ async function checkAllEligibility() {
       const demographic_no = appointmentInfo[i].demographic_no;
       let result = null;
 
+      // empty appointment node, do not check
+      if (!demographic_no || demographic_no == 0)
+        continue;
+
       // In cases where the first appointment in the schedule is an empty
       // appointment, get the providerNo from the node itself
       if (!providerNo)
         providerNo = getProviderNoFromTd(nodes[i])
+
+      const patientInfo = await getPatientInfo(demographic_no)
+      const healthNumber = patientInfo["Health Ins. #"].replace(/\s+/g, ' ').trim();
 
       try {
         result = await checkEligiblity(
           demographic_no,
           getOrigin(),
           getNamespace(),
-          providerNo
+          providerNo,
+          healthNumber
         );
       } catch (e) {
         console.error(e);
@@ -1201,10 +1209,19 @@ async function checkAllEligibility() {
 
       let text = null;
       let lowerCaseText = null;
+      let requestSuccess = false;
 
       if (result && result.status === 200) {
         let text = await result.text();
         lowerCaseText = text.toLowerCase();
+
+        if (oscar.isOscarGoHost()) {
+          const jsonRes = JSON.parse(lowerCaseText)
+
+          if (jsonRes && jsonRes.ret) {
+            requestSuccess = true;
+          }
+        }
       } else {
         text = "Failed to fetch";
         lowerCaseText = "Failed to fetch";
@@ -1221,7 +1238,8 @@ async function checkAllEligibility() {
       if (
         (!lowerCaseText.includes("failure-phn") &&
           lowerCaseText.includes("success")) ||
-        lowerCaseText.includes("health card passed validation")
+        lowerCaseText.includes("health card passed validation") ||
+        requestSuccess
       ) {
         plusSignAppointments(demographic_no);
         verified = true;
@@ -1329,22 +1347,28 @@ function setPreferredPharmacy(pharmacyObj, demographicNo) {
   });
 }
 
-function checkEligiblity(demographicNo, origin, namespace, providerNo) {
-  var url =
-    origin +
-    "/" +
-    namespace +
-    "/" +
-    "billing/CA/BC/ManageTeleplan.do?demographic=" +
-    demographicNo +
-    "&method=checkElig";
+function checkEligiblity(demographicNo, origin, namespace, providerNo, healthNumber) {
+  var url = `${origin}/${namespace}/billing/CA/BC/ManageTeleplan.do?` +
+    `demographic=${demographicNo}&method=checkElig`;
+
+  // Taken from oscar, they bust cache with this
+  const ran_number = Math.round(Math.random() * 1000000);
+  url += "&rand=" + ran_number;
+
+
+  if (oscar.isOscarGoHost()) {
+    const [hin, ver] = healthNumber.split(" ")
+    url = `${origin}/${namespace}/hcv/validate.do?` +
+      `method=validateHin&hin=${hin}&ver=${ver}&sc=`;
+  }
+  if (oscar.isKaiOscarHost()) {
+    url = `${origin}/CardSwipe/?hc=${healthNumber}`;
+  }
 
   if (providerNo || providerNo === 0) {
     url += "&provider=" + providerNo;
   }
-  // Taken from oscar, they bust cache with this
-  const ran_number = Math.round(Math.random() * 1000000);
-  url += "&rand=" + ran_number;
+
 
   return fetch(url, {
     method: "POST",
@@ -2005,7 +2029,6 @@ async function init_recall_button() {
 
     const patientInfo = await getPatientInfo();
     const patientEmail = patientInfo.email;
-    console.log(patientInfo);
     const formData = new FormData(
       document.querySelector("form[name=EDITAPPT]")
     );
@@ -2042,8 +2065,8 @@ async function init_recall_button() {
   corticoRecallButton.addEventListener("click", send_patient_recall_email);
 }
 
-async function getPatientInfo() {
-  const result = await getDemographicPageResponse();
+async function getPatientInfo(demographicNo) {
+  const result = await getDemographicPageResponse(demographicNo);
   const text = await result.text();
 
   var el = document.createElement("html");
@@ -2059,17 +2082,17 @@ async function getPatientInfo() {
   var re = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi;
   var emails = text.match(re);
 
-  if (emails.length) info.email = emails[0];
+  if (emails && emails.length) info.email = emails[0];
 
-  // Should return 2 from view and edit, get atleast one
   return info;
 }
 
-function getDemographicPageResponse() {
+function getDemographicPageResponse(demographic) {
   const origin = getOrigin();
   const namespace = getNamespace();
 
   const demographicNo =
+    demographic ||
     getDemographicNo(window.location.search) ||
     getDemographicNo(window.opener.location.search);
 
