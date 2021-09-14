@@ -44,11 +44,16 @@ export function getNamespace() {
 
 export function getCorticoUrl() {
   const clinicName = window.localStorage["clinicname"];
+  let suffix = window.localStorage["customUrlSuffix"] || 'cortico.ca';
+
+  if (suffix.charAt(0) === ".") {
+    suffix = suffix.substring(1)
+  }
   if (!clinicName) {
     return null;
   }
 
-  return `https://${clinicName}.cortico.ca`;
+  return `https://${clinicName}.${suffix}`;
 }
 
 export function getPortalPage() {
@@ -73,8 +78,13 @@ export function create(_element, options, ...children) {
   if (!_element) {
     return null;
   }
+  let element;
+  if (_element.trim().startsWith("<")) {
+    element = htmlToElement(_element)
+  } else {
+    element = document.createElement(_element);
+  }
 
-  const element = document.createElement(_element);
 
   if (!options) {
     return element;
@@ -90,9 +100,58 @@ export function create(_element, options, ...children) {
     element.textContent = options.text;
   }
 
+  if (options.events) {
+    for (let event in options.events) {
+      console.log('*', event)
+      const chunks = event.split(' ')
+      const trigger = chunks.shift()
+      const selector = chunks.join(' ')
+      // closure
+      const tmp = function (trigger, selector, handler) {
+        element.addEventListener(trigger, function (e) {
+          let target = selector ? e.target.closest(selector) : e.target;
+
+          if (target) handler({ target: target, originalEvent: e })
+        })
+      }
+      tmp(trigger, selector, options.events[event])
+    }
+  }
+
   children.map((child) => {
     element.appendChild(child);
   });
 
   return element;
+}
+
+export function loadExtensionStorageValue(key) {
+  return new Promise(function (resolve, reject) {
+    chrome.storage.local.get(key, function (result) {
+      resolve(result[key])
+    })
+  })
+}
+
+export function htmlToElement(html) {
+  const placeholder = document.createElement("div");
+  placeholder.innerHTML = html;
+  return placeholder.children.length
+    ? placeholder.firstElementChild
+    : undefined;
+}
+
+export function getDemographicNo(apptUrl) {
+  var searchParams = new URLSearchParams(apptUrl);
+  return (
+    searchParams.get("demographic_no") || searchParams.get("demographicNo")
+  );
+}
+
+export function getAppointmentNo(apptUrl) {
+  console.log(apptUrl)
+  var searchParams = new URLSearchParams(apptUrl.split('?')[1]);
+  return (
+    searchParams.get("appointment_no")
+  );
 }
