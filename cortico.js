@@ -18,7 +18,7 @@ import { Oscar } from "./modules/core/Oscar.js";
 import "element-closest-polyfill";
 import { getOrigin, getNamespace, htmlToElement } from "./modules/Utils/Utils";
 import { CorticoIcon } from "./modules/Icons/CorticoIcon";
-import { debounce, create, getDemographicNo } from "./modules/Utils/Utils";
+import { debounce, create, getDemographicNo, getCorticoUrl } from "./modules/Utils/Utils";
 import { loadExtensionStorageValue } from "./modules/Utils/Utils";
 import "./index.css";
 import { Modal } from "./modules/Modal/Modal";
@@ -219,9 +219,8 @@ function open_video_appointment_page(e) {
     );
   }
   window.open(
-    "https://" +
-    localStorage["clinicname"] +
-    ".cortico.ca/appointment/" +
+    getCorticoUrl() +
+    "/appointment/" +
     appt_no
   );
 }
@@ -431,6 +430,18 @@ const init_styles = function () {
   color: #5b6ce2;
   text-decoration:none
   }
+  .cortico-input {
+  font-size: 16px;
+  padding: 5px 5px;
+  margin: 0px 10px;
+  width: 35%;
+  background-color: transparent;
+  border: 1px solid rgb(75, 84, 246);
+  }
+  .cortico-input.disabled {
+  background-color: #DDD;
+  color: #999;
+  }
   `;
 
   if (!(oscar.isKaiOscarHost() || oscar.containsKaiBar())) {
@@ -550,6 +561,7 @@ async function createSideBar() {
   sidebar.appendChild(getEligFailed());
 
   sidebar.appendChild(getBatchPharmaciesButton());
+  sidebar.appendChild(getResetCacheButton());
   sidebar.appendChild(getBatchPharmaciesStatus());
 
   var styleSheet = styleSheetFactory("cortico_sidebar");
@@ -840,18 +852,29 @@ function getCorticoUrlOption() {
 
   var prefix = document.createElement("span");
   prefix.textContent = "https://";
-  var suffix = document.createElement("span");
+  var suffix = document.createElement("input");
+  suffix.classList.add("cortico-input")
+  suffix.classList.add("disabled")
   suffix.textContent = ".cortico.ca";
+  suffix.setAttribute("type", "text");
+  suffix.setAttribute("value", ".cortico.ca");
+  suffix.setAttribute("placeholder", ".cortico.ca");
+  suffix.setAttribute("readonly", "true");
+
+  suffix.addEventListener("click", (e) => {
+    suffix.classList.remove("disabled")
+    suffix.removeAttribute("readonly");
+  })
+
+  if (localStorage.getItem("customUrlSuffix")) {
+    suffix.value = localStorage.getItem("customUrlSuffix");
+  }
+
   var input = document.createElement("input");
   input.setAttribute("id", "cortico-url");
   input.setAttribute("type", "text");
   input.setAttribute("placeholder", "Clinic Name");
-  input.style.fontSize = "16px";
-  input.style.padding = "5px 5px";
-  input.style.margin = "0px 10px";
-  input.style.width = "35%";
-  input.style.backgroundColor = "transparent";
-  input.style.border = "1px solid rgb(75, 84, 246)";
+  input.classList.add("cortico-input")
 
   inputContainer.appendChild(prefix);
   inputContainer.appendChild(input);
@@ -891,12 +914,15 @@ function getCorticoUrlOption() {
   container.appendChild(button);
 
   button.addEventListener("click", function () {
+    if (suffix.value) {
+      localStorage.setItem("customUrlSuffix", suffix.value)
+    }
     if (input.value) {
-      const corticoUrl = input.value + ".cortico.ca";
       localStorage.setItem("clinicname", input.value);
       alert("Your clinic name has changed, the page will now reload");
       window.location.reload();
     }
+
   });
   return container;
 }
@@ -918,6 +944,28 @@ function getBatchPharmaciesButton() {
   button.className = "cortico-btn";
   button.addEventListener("click", setupPreferredPharmacies);
   return button;
+}
+
+function getResetCacheButton() {
+  var button = create("button", {
+    attrs: {
+      class: "cortico-btn",
+    },
+    text: "Reset Cache",
+  });
+
+  button.addEventListener("click", (e) => {
+    if (confirm("Are you sure you want to clear your cache?")) {
+      localStorage.clear()
+
+      alert("Successfully reset cache, the page will now reload.")
+      window.location.reload()
+    } else {
+      console.log("Clear cache cancelled")
+    }
+  })
+
+  return button
 }
 
 function addNewUI() {
@@ -1210,7 +1258,7 @@ async function checkAllEligibility() {
     alert("No Appointments to Check");
   }
 
-  const providerNo = getProviderNoFromTd(nodes[0]);
+  var providerNo = getProviderNoFromTd(nodes[0]);
   var error = false;
 
   window.checkAllEligibilityRunning = true;
@@ -1223,6 +1271,12 @@ async function checkAllEligibility() {
 
       const demographic_no = appointmentInfo[i].demographic_no;
       let result = null;
+
+      // In cases where the first appointment in the schedule is an empty
+      // appointment, get the providerNo from the node itself
+      if (!providerNo)
+        providerNo = getProviderNoFromTd(nodes[i])
+
       try {
         result = await checkEligiblity(
           demographic_no,
@@ -1467,9 +1521,9 @@ function getProviderNoFromTd(tdElement) {
 
   const searchParams = new URLSearchParams(queryString);
   const providerNo = searchParams.get("providerNo");
-
   return providerNo;
 }
+
 function getCurrentProviderNoFromTd(tdElement) {
   //oscar osp
   var dsButton = tdElement
@@ -1627,7 +1681,7 @@ function setupPrescriptionButtons() {
 
 function sendPatientPrescriptionNotification() {
   const clinicName = localStorage["clinicname"];
-  const url = `http://${clinicName}.cortico.ca/notify-prescription/`;
+  const url = `${getCorticoUrl()}/notify-prescription/`;
 
   var formData = new FormData();
   formData.append("demographic_no", getDemographicFromLocation());
@@ -1663,7 +1717,7 @@ function setupFaxButton() {
 
 function getPharmacyDetails(pharmacyCode) {
   const clinicName = localStorage["clinicname"];
-  const url = `https://${clinicName}.cortico.ca/api/pharmacies/?code=${pharmacyCode}`;
+  const url = `${getCorticoUrl()}/api/pharmacies/?code=${pharmacyCode}`;
 
   return fetch(url, {
     method: "GET",
@@ -1832,7 +1886,7 @@ function storePharmaciesFailureCache(demographicNo, message) {
 
 async function getDiagnosticFromCortico(appt_no, notes, token) {
   const clinicName = localStorage["clinicname"];
-  const url = `https://${clinicName}.cortico.ca/api/encrypted/diagnostic-results/?appointment_id=${appt_no}&notes=${notes}`;
+  const url = `${getCorticoUrl()}/api/encrypted/diagnostic-results/?appointment_id=${appt_no}&notes=${notes}`;
 
   return fetch(url, {
     method: "GET",
@@ -2033,7 +2087,7 @@ async function init_recall_button() {
       `mailto:${patientEmail}?subject=Your doctor wants to speak with you&` +
       `body=Dear ${cleanedPatient},%0d%0aYour doctor needs to follow up with you regarding some documents or results.%0d%0a` +
       `We have tentatively booked you an appointment at ${cleanedSchedule}.%0d%0a%0d%0aPlease confirm with the following link:` +
-      `https://${clinicName}.cortico.ca/get-patient-appointment-lookup-url/%0d%0a%0d%0a` +
+      `${getCorticoUrl()}/get-patient-appointment-lookup-url/%0d%0a%0d%0a` +
       `Sincerely,%0d%0a${clinicName.toUpperCase()} STAFF`
 
   }
