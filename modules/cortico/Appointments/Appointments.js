@@ -1,3 +1,5 @@
+import { getDemographicNo, getAppointmentNo } from "../../Utils/Utils";
+
 export function getAppointments(demographic_no = null) {
   var appointments = [];
 
@@ -54,7 +56,34 @@ export function extractApptUrl(s) {
   return s.match(/'([^']+)'/)[1].substring(2);
 }
 
-export function getDemographicNo(apptUrl) {
-  var searchParams = new URLSearchParams(apptUrl);
-  return searchParams.get("demographic_no");
+export function getAppointmentInfo(apptNodes) {
+  var appointmentInfo = [];
+  apptNodes.forEach(function (node) {
+    var temp = {};
+    var apptLink = getAppointmentLink(node);
+
+    // No Appointment link
+    if (!apptLink) {
+      return null;
+    }
+
+    // Already verified
+    if (apptLink.textContent.includes("+")) {
+      return;
+    }
+    var apptUrl = extractApptUrl(apptLink.attributes.onclick.textContent);
+    var demographicNo = getDemographicNo(apptUrl);
+    var apptNo = getAppointmentNo(apptUrl);
+
+    temp.demographic_no = demographicNo;
+    temp.appointment_no = apptNo;
+    temp.info = apptLink.attributes.title.nodeValue;
+    appointmentInfo.push(temp);
+  });
+
+  //Remove duplicates and return
+  return appointmentInfo.filter(
+    (v, i, a) => a.findIndex((t) => t.demographic_no === v.demographic_no) === i
+  );
 }
+
