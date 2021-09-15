@@ -9,13 +9,17 @@ import dayjs from "dayjs";
 import {
   getAppointments,
   getAppointmentLink,
+  extractApptUrl,
+  getAppointmentInfo
 } from "./modules/cortico/Appointments/Appointments";
 import { addAppointmentMenu } from "./modules/cortico/Appointments/AppointmentMenu";
+import { addLoginForm } from "./modules/cortico/Login/Login";
 import { Oscar } from "./modules/core/Oscar.js";
 import "element-closest-polyfill";
-import { getOrigin, getNamespace } from "./modules/Utils/Utils";
+import { getOrigin, getNamespace, htmlToElement } from "./modules/Utils/Utils";
 import { CorticoIcon } from "./modules/Icons/CorticoIcon";
-import { debounce, create, getCorticoUrl } from "./modules/Utils/Utils";
+import { debounce, create, getDemographicNo, getCorticoUrl } from "./modules/Utils/Utils";
+import { loadExtensionStorageValue } from "./modules/Utils/Utils";
 import "./index.css";
 import { Modal } from "./modules/Modal/Modal";
 import Dashboard from "./modules/cortico/Dashboard";
@@ -27,7 +31,6 @@ const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
 
 const init_cortico = function () {
-
 
   // create an element to indicate the library is loaded in the dom, and to contain fixed menus/elements.
   const anchor = document.createElement("div");
@@ -60,6 +63,7 @@ const init_cortico = function () {
 
   console.log("cortico plug-in initializing, version:", version);
   window.pubsub = pubsub;
+
   /*
   const modal = new Modal();
   modal.setContent(Dashboard());
@@ -91,13 +95,18 @@ const init_cortico = function () {
   } else if (route.indexOf("/provider/providercontrol.jsp") > -1) {
     init_schedule();
 
-    if (!oscar.isJuno()) {
-      dragAndDrop();
-    }
+    /**
+     * Drag and drop - disabled for stability reasons.
+     * TODO: fixme?
+     */
+    // if (!oscar.isJuno()) {
+    //   dragAndDrop();
+    // }
 
     addCorticoLogo();
     addMenu();
     addAppointmentMenu();
+    addLoginForm(chrome)
     if (!oscar.isJuno() && !oscar.containsKaiBar()) {
       plusSignFromCache();
     }
@@ -288,6 +297,49 @@ function init_appointment_page() {
   update_video_button();
 }
 
+async function demoFromHTML() {
+
+  var pdf = new jsPDF('p', 'pt', 'letter');
+  // source can be HTML-formatted string, or a reference
+  // to an actual DOM element from which the text will be scraped.
+  source = $('#page1')[0];
+
+
+  // we support special element handlers. Register them with jQuery-style 
+  // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
+  // There is no support for any other type of selectors 
+  // (class, of compound) at this time.
+  specialElementHandlers = {
+    // element with id of "bypass" - jQuery style selector
+    '#bypassme': function (element, renderer) {
+      // true = "handled elsewhere, bypass text extraction"
+      return true
+    }
+  };
+  margins = {
+    top: 80,
+    bottom: 60,
+    left: 40,
+    width: 522
+  };
+  // all coords and widths are in jsPDF instance's declared units
+  // 'inches' in this case
+  pdf.fromHTML(
+    source, // HTML string or DOM elem ref.
+    margins.left, // x coord
+    margins.top, { // y coord
+    'width': margins.width, // max width of content on PDF
+    'elementHandlers': specialElementHandlers
+  },
+
+    function (dispose) {
+      // dispose: object with X, Y of the last line add to the PDF 
+      //          this allow the insertion of new lines after html
+      pdf.save('Test.pdf');
+    }, margins
+  );
+}
+
 async function setupPatientEmailButton() {
 
   let is_eform_page = true;
@@ -309,12 +361,26 @@ async function setupPatientEmailButton() {
 
   const email_btn = htmlToElement(`
   <p style='margin-bottom:2em'>
-    <a href='${mailto_str}' id='cortico-email-patient' class='cortico-btn'>Email Patient</a>
+    <a id='cortico-email-patient' class='cortico-btn'>Email Patient</a>
   </p>
   `);
 
+  delegate(email_btn, 'click', 'a', async function (e) {
+    await demoFromHTML()
+  })
+
   email_parent.appendChild(email_btn);
 
+}
+
+function delegate(element, event, descendentSelector, callback) {
+  element.addEventListener(event, function (e) {
+    var elem = e.target.closest(descendentSelector);
+    // returns null if no matching parentNode is found
+    if (elem) {
+      callback(elem, e);
+    }
+  }, false);
 }
 
 const init_styles = function () {
@@ -428,10 +494,11 @@ function addCorticoLogo() {
   var menu =
     document.querySelector("#firstMenu #navList") ||
     document.querySelector("#firstMenu #navlist");
-  var listitem = document.createElement("li");
-
-  const anchor = document.createElement("a");
-  anchor.setAttribute("href", "https://cortico.ca");
+  var listitem = create(`
+    <li>
+      <a href="https://cortico.health"></a>
+    </li>
+  `);
 
   const corticoLogo = CorticoIcon({
     attrs: {
@@ -440,8 +507,8 @@ function addCorticoLogo() {
     },
   });
 
-  anchor.appendChild(corticoLogo);
-  listitem.appendChild(anchor);
+  listitem.firstElementChild.appendChild(corticoLogo);
+
   menu.appendChild(listitem);
 }
 
@@ -456,36 +523,37 @@ function styleSheetFactory(namespace) {
   return window[namespace];
 }
 
-function createSideBar() {
+async function createSideBar() {
   if (window.corticoSidebar) {
     // TODO: is idempotency really needed here? it's a global init.
     return;
   }
 
-  var sidebar = document.createElement("div");
-  window.corticoSidebar = sidebar;
-  sidebar.classList.add("cortico-sidebar");
-
-  sidebar.innerHTML =
-    '<a href="https://cortico.ca"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGEAAABhCAYAAADGBs+jAAAACXBIWXMAAAsSAAALEgHS3X78AAAEqklEQVR4nO2dvXHbMBSAX3RpVNkb2BvYmcAaQIUa1nEmiDYIR1AmsFyrSe7Ux9lAniDWBlbF0jnIjzYlUyRAvAc8kO+707mxAAofQeLvAZ9eXl4gJaZZcQ4A1wAwObrsDQA8rFfj56R+EAAkI2GaFabg5wDwteVf7wFguV6NHwJdmjfiJeCdnwPAd8ev/jTfS6FmiJaAAswdfdUxiUcAuF2vxhviSyNFrAQCASVGxERyjRgJuIYPEAoATOMX8SWSIk4CsYCSm2lWzAjTI0WUBCYBJTlDmiSIkcAswHCFzVxxiJAQQEDJcQdPBNElBBQA2NMWR1QJgQUYLgPl40Q0CREEiCWKBBVwSHAJkQWIHNQLKkFADRA5hhRs7EiAgN16NT6PlHcjQWqCkHfAImLejbBLECJgO1gJglpBs0EOZQsS8E36pA6LBGEClpGvoRVyCSrAHVIJKqAbZBJUQHdIJKgAP7wlqAB/vCSoABo6S1ABdHSSoAJocZagAuhxkqACeLCWoAL4sJKgAnhplaAC+GmUoALC8PlULirAnUo83cZlEql2ol8F2DHNCrOib4afm5ov/cXYiGWTlA8SVEA7WEYmiPGH5Vd2Zo57vRrXLs8/kKAC2sHl9cuOZVQbuvUmQQW0gwJMGZ15JPNBRLV1pAIawJt06SkAsIwPlmPuJUyzYq4CWskJy8hEDb29H/aPo2lWPBMY9iGFVtA/4mTNy/rSPJZG06y4VQGtzBnSNGVuyn7/OIoZx5VKR4yrjKJLSGkogi2iFFDCBVMGTaQ0FMF6k5pmb4xwqV4PxnXgPLQEFVDDCNfuhyBJAdybV5n0R4HiuFKvAY+c6Y4CbEPTh0cQV23Yp1tK2DFl0pd3AFeo1T7dEY7mcWRiLcA007DnLpL1avyEe+pRco/pvg7g4WQD5XPPSQBWyzvJInAAj6oRs6sOhVSbqBMiEV0ElGNXYkXgE2NG8OjeHc8nUM6sbTFK0qq11TJB0teJnVLAQRmdmujPsbrYZvQbt760WmFg+UOkT/AsLDbKrWI2zZ3XldHJbRUwo1v81NWMLRbkwiVE1fFOSmGeIcdHed0YXFlGefkSrsN6bwvMsNy0yWldTSWNLlU5iWbuUfkYnpoKvkrIDUZ8nqW9HnMKtcHIxHOVgvTmqxchNhgxhfeHYAq1tyK4NxgxLYg7wiR7KYLlnYCPnwXjtGCv3hGkErDw8xOLY6npjQhvCVjwE+xPhJ6v7oWIzhKwXbyJvGYJBhvHDO/DuxPGuQhbkn9Ze7WOcLhCRXji3URVEf6Q9BNUhB9knTUV0R3SHrOK6Ab5sIWKcIdl7EhFuME6n0AUaEfBF8kb1LKOogqqEb9wulYk7PMJQkRcMIU8kZDK9CYFb4F6kfI/SbD4BAE14kzPWZMhQiVAfBF62F2JoFaTCKIddqci3ol67KOKeCX6AaiBRYjsNYs4CjigCJEnDgbrrNnA3KEb9mF3tjDXiOEeducKk4jhHnbXFWIRu8EedudLRYRPxGRtjJg0xEqAdxHXGBPnymMKAkBa66gJh8XGW4wRS2ZpZDISSnANrBFi/pYDcuZuN8syTSyd+Dv/AAD4D9nFlj4ll12bAAAAAElFTkSuQmCC"  alt="Cortico" style="margin-bottom: 25px;" /></a>';
-
-  var sidebarClose = document.createElement("div");
-  sidebarClose.classList.add("cortico-sidebar-close");
-  sidebarClose.textContent = "Close";
-  sidebarClose.style.cursor = "pointer";
-  sidebarClose.addEventListener("click", function () {
-    sidebar.classList.remove("cortico-sidebar-show");
-    if (window.localStorage["firstRun"] === "true") {
-      closeSidebarInstructions();
-      window.localStorage["firstRun"] = false;
+  const sidebar = create(`
+  <div class='cortico-sidebar'>
+    <a href="https://cortico.ca"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGEAAABhCAYAAADGBs+jAAAACXBIWXMAAAsSAAALEgHS3X78AAAEqklEQVR4nO2dvXHbMBSAX3RpVNkb2BvYmcAaQIUa1nEmiDYIR1AmsFyrSe7Ux9lAniDWBlbF0jnIjzYlUyRAvAc8kO+707mxAAofQeLvAZ9eXl4gJaZZcQ4A1wAwObrsDQA8rFfj56R+EAAkI2GaFabg5wDwteVf7wFguV6NHwJdmjfiJeCdnwPAd8ev/jTfS6FmiJaAAswdfdUxiUcAuF2vxhviSyNFrAQCASVGxERyjRgJuIYPEAoATOMX8SWSIk4CsYCSm2lWzAjTI0WUBCYBJTlDmiSIkcAswHCFzVxxiJAQQEDJcQdPBNElBBQA2NMWR1QJgQUYLgPl40Q0CREEiCWKBBVwSHAJkQWIHNQLKkFADRA5hhRs7EiAgN16NT6PlHcjQWqCkHfAImLejbBLECJgO1gJglpBs0EOZQsS8E36pA6LBGEClpGvoRVyCSrAHVIJKqAbZBJUQHdIJKgAP7wlqAB/vCSoABo6S1ABdHSSoAJocZagAuhxkqACeLCWoAL4sJKgAnhplaAC+GmUoALC8PlULirAnUo83cZlEql2ol8F2DHNCrOib4afm5ov/cXYiGWTlA8SVEA7WEYmiPGH5Vd2Zo57vRrXLs8/kKAC2sHl9cuOZVQbuvUmQQW0gwJMGZ15JPNBRLV1pAIawJt06SkAsIwPlmPuJUyzYq4CWskJy8hEDb29H/aPo2lWPBMY9iGFVtA/4mTNy/rSPJZG06y4VQGtzBnSNGVuyn7/OIoZx5VKR4yrjKJLSGkogi2iFFDCBVMGTaQ0FMF6k5pmb4xwqV4PxnXgPLQEFVDDCNfuhyBJAdybV5n0R4HiuFKvAY+c6Y4CbEPTh0cQV23Yp1tK2DFl0pd3AFeo1T7dEY7mcWRiLcA007DnLpL1avyEe+pRco/pvg7g4WQD5XPPSQBWyzvJInAAj6oRs6sOhVSbqBMiEV0ElGNXYkXgE2NG8OjeHc8nUM6sbTFK0qq11TJB0teJnVLAQRmdmujPsbrYZvQbt760WmFg+UOkT/AsLDbKrWI2zZ3XldHJbRUwo1v81NWMLRbkwiVE1fFOSmGeIcdHed0YXFlGefkSrsN6bwvMsNy0yWldTSWNLlU5iWbuUfkYnpoKvkrIDUZ8nqW9HnMKtcHIxHOVgvTmqxchNhgxhfeHYAq1tyK4NxgxLYg7wiR7KYLlnYCPnwXjtGCv3hGkErDw8xOLY6npjQhvCVjwE+xPhJ6v7oWIzhKwXbyJvGYJBhvHDO/DuxPGuQhbkn9Ze7WOcLhCRXji3URVEf6Q9BNUhB9knTUV0R3SHrOK6Ab5sIWKcIdl7EhFuME6n0AUaEfBF8kb1LKOogqqEb9wulYk7PMJQkRcMIU8kZDK9CYFb4F6kfI/SbD4BAE14kzPWZMhQiVAfBF62F2JoFaTCKIddqci3ol67KOKeCX6AaiBRYjsNYs4CjigCJEnDgbrrNnA3KEb9mF3tjDXiOEeducKk4jhHnbXFWIRu8EedudLRYRPxGRtjJg0xEqAdxHXGBPnymMKAkBa66gJh8XGW4wRS2ZpZDISSnANrBFi/pYDcuZuN8syTSyd+Dv/AAD4D9nFlj4ll12bAAAAAElFTkSuQmCC"  alt="Cortico" style="margin-bottom: 25px;" /></a>
+    <div class='cortico-sidebar-close'>Close</div>
+  </div>
+  `, {
+    events: {
+      'click .cortico-sidebar-close': function () {
+        sidebar.classList.remove("cortico-sidebar-show");
+        if (window.localStorage["firstRun"] === "true") {
+          closeSidebarInstructions();
+          window.localStorage["firstRun"] = false;
+        }
+      }
     }
-  });
-  sidebar.appendChild(sidebarClose);
+  })
+
+  window.corticoSidebar = sidebar;
 
   //var newUiOption = getNewUIOption();
   //sidebar.appendChild(newUiOption);
 
   sidebar.appendChild(getCorticoUrlOption());
+  sidebar.appendChild(await getCorticoLogin());
+
   sidebar.appendChild(getRecallStatusOption());
 
   sidebar.appendChild(getEligButton());
@@ -497,16 +565,13 @@ function createSideBar() {
   sidebar.appendChild(getBatchPharmaciesStatus());
 
   var styleSheet = styleSheetFactory("cortico_sidebar");
-  var styles = "";
-  styles +=
-    ".cortico-sidebar { position: fixed; top: 0; right: 0; bottom: 0; width: 300px; background-color: white; height: 100%; z-index: 10000; }";
-  styles +=
-    ".cortico-sidebar { transition: transform 0.25s ease-in; transform: translateX(300px); }";
-  styles +=
-    ".cortico-sidebar { display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 1px 5px 5px rgb(0, 0, 0); }";
-  styles += ".cortico-sidebar-show { transform: translateX(0); }";
-  styles +=
-    ".cortico-sidebar-close { position: absolute; top: 10px; right: 10px; z-index: 500; }";
+  var styles = `
+    .cortico-sidebar { position: fixed; top: 0; right: 0; bottom: 0; width: 300px; background-color: white; height: 100%; z-index: 10000; }
+    .cortico-sidebar { transition: transform 0.25s ease-in; transform: translateX(300px); }
+    .cortico-sidebar { display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 1px 5px 5px rgb(0, 0, 0); }
+    .cortico-sidebar-show { transform: translateX(0); }
+    .cortico-sidebar-close { cursor:pointer; position: absolute; top: 10px; right: 10px; z-index: 500; }
+  `
   styleSheet.innerText = styles;
 
   return sidebar;
@@ -539,21 +604,18 @@ function showDiagnosticResults(html_string) {
   container.appendChild(containerClose);
 
   var styleSheet = styleSheetFactory("cortico_sidebar");
-  var styles = "";
-  styles +=
-    ".cortico-diagnostic-viewer { position: fixed; top: 20%; left: 50% ;width: 300px; background-color: white; transform: translate(-50%, 0) }";
-  styles +=
-    ".cortico-diagnostic-viewer { padding: 20px; padding-top: 30px; border: 1px solid }";
-  styles +=
-    ".cortico-diagnostic-viewer { overflow-y: scroll }";
-  styles +=
-    ".cortico-diagnostic-close { position: absolute; top: 10px; right: 10px; z-index: 500; }";
+  var styles = `
+    .cortico-diagnostic-viewer { position: fixed; top: 20%; left: 50% ;width: 300px; background-color: white; transform: translate(-50%, 0) }
+    .cortico-diagnostic-viewer { padding: 20px; padding-top: 30px; border: 1px solid }
+    .cortico-diagnostic-viewer { overflow-y: scroll; max-height: 500px }
+    .cortico-diagnostic-close { position: absolute; top: 10px; right: 10px; z-index: 500; }
+  `
   styleSheet.innerText = styles;
 
   document.body.prepend(container);
 }
 
-function addMenu(container) {
+async function addMenu(container) {
   var navigation =
     document.querySelector("#firstMenu #navList") ||
     document.querySelector("#firstMenu #navlist");
@@ -562,7 +624,7 @@ function addMenu(container) {
   menu.style.color = "rgb(75, 84, 246)";
   menu.style.cursor = "pointer";
 
-  var sidebar = createSideBar();
+  var sidebar = await createSideBar();
   menu.addEventListener("click", function () {
     sidebar.classList.toggle("cortico-sidebar-show");
     if (window.localStorage["firstRun"] === "true") {
@@ -616,8 +678,6 @@ function getRecallStatusOption() {
   input.style.padding = "5px 5px";
   input.style.margin = "0px 10px";
   input.style.width = "35%";
-  input.style.backgroundColor = "transparent";
-  input.style.border = "1px solid rgb(75, 84, 246)";
 
   inputContainer.appendChild(input);
 
@@ -750,6 +810,34 @@ function getNewUIOption() {
   container.appendChild(label);
 
   return container;
+}
+
+
+async function getCorticoLogin() {
+  var jwt_expired = null;
+  var loginButton = document.createElement("button");
+  loginButton.textContent = "Sign In at Cortico";
+
+  loadExtensionStorageValue("jwt_expired").then(function (expired) {
+    jwt_expired = expired
+
+    if (jwt_expired === false) {
+      loginButton.textContent = "Already signed in";
+      loginButton.disabled = true
+    }
+  })
+
+  var container = document.createElement("div");
+  loginButton.className = "cortico-btn";
+
+  loginButton.addEventListener("click", (e) => {
+    const loginForm = document.querySelector(".login-form")
+    loginForm.classList.add("show")
+  })
+
+  container.appendChild(loginButton);
+
+  return container
 }
 
 function getCorticoUrlOption() {
@@ -1162,6 +1250,7 @@ async function checkAllEligibility() {
   clearFailureCache();
   var nodes = document.querySelectorAll("td.appt");
   var appointmentInfo = getAppointmentInfo(nodes);
+  console.log(appointmentInfo)
   appointmentInfo = filterAppointments(appointmentInfo);
 
   var length = appointmentInfo.length;
@@ -1379,45 +1468,7 @@ function checkEligiblity(demographicNo, origin, namespace, providerNo, healthNum
   });
 }
 
-function getDemographicNo(apptUrl) {
-  var searchParams = new URLSearchParams(apptUrl);
-  return (
-    searchParams.get("demographic_no") || searchParams.get("demographicNo")
-  );
-}
 
-function getAppointmentInfo(apptNodes) {
-  var appointmentInfo = [];
-  apptNodes.forEach(function (node) {
-    var temp = {};
-    var apptLink = getAppointmentLink(node);
-
-    // No Appointment link
-    if (!apptLink) {
-      return null;
-    }
-
-    // Already verified
-    if (apptLink.textContent.includes("+")) {
-      return;
-    }
-    var apptUrl = extractApptUrl(apptLink.attributes.onclick.textContent);
-    var demographicNo = getDemographicNo(apptUrl);
-
-    temp.demographic_no = demographicNo;
-    temp.info = apptLink.attributes.title.nodeValue;
-    appointmentInfo.push(temp);
-  });
-
-  //Remove duplicates and return
-  return appointmentInfo.filter(
-    (v, i, a) => a.findIndex((t) => t.demographic_no === v.demographic_no) === i
-  );
-}
-
-function extractApptUrl(s) {
-  return s.match(/'([^']+)'/)[1].substring(2);
-}
 
 function appointmentEditRequest(origin, namespace, apptUrl) {
   return fetch(origin + "/" + namespace + apptUrl);
@@ -1857,7 +1908,7 @@ function storePharmaciesFailureCache(demographicNo, message) {
   localStorage.setItem("pharmaciesCacheFailure", JSON.stringify(cache));
 }
 
-async function getDiagnosticFromCortico(appt_no, notes) {
+async function getDiagnosticFromCortico(appt_no, notes, token) {
   const clinicName = localStorage["clinicname"];
   const url = `${getCorticoUrl()}/api/encrypted/diagnostic-results/?appointment_id=${appt_no}&notes=${notes}`;
 
@@ -1865,7 +1916,14 @@ async function getDiagnosticFromCortico(appt_no, notes) {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
+      "Authorization": "Bearer " + token
     },
+  }).catch((err) => {
+    chrome.storage.local.set({ "jwt_expired": true })
+    alert("Your credentials have expired. Please login again")
+    addLoginForm(chrome)
+    const loginForm = document.querySelector(".login-form")
+    loginForm.classList.add("show")
   });
 }
 
@@ -1976,25 +2034,23 @@ async function init_diagnostic_viewer_button() {
     e.preventDefault();
 
     const appt_no = getQueryStringValue("appointment_no");
-    const diagnostic_response = await getDiagnosticFromCortico(
-      appt_no,
-      notesValue
-    );
-    const diagnostic_text = String(await diagnostic_response.text());
-    await showDiagnosticResults(diagnostic_text);
+
+    loadExtensionStorageValue("jwt_access_token").then(async function (access_token) {
+      const diagnostic_response = await getDiagnosticFromCortico(
+        appt_no,
+        notesValue,
+        access_token
+      );
+      if (diagnostic_response) {
+        const diagnostic_text = String(await diagnostic_response.text());
+        await showDiagnosticResults(diagnostic_text);
+      }
+    })
   }
 
   update_diagnostic_button_visibility();
 
   corticoDiagnosticViewBtn.addEventListener("click", open_diagnostic_viewer);
-}
-
-function htmlToElement(html) {
-  const placeholder = document.createElement("div");
-  placeholder.innerHTML = html;
-  return placeholder.children.length
-    ? placeholder.firstElementChild
-    : undefined;
 }
 
 async function init_recall_button() {
@@ -2048,7 +2104,7 @@ async function init_recall_button() {
     var apptSchedule = apptDate + "T" + apptTime;
     var cleanedSchedule = dayjs(apptSchedule).format("h:mmA on MMMM D");
     var cleanedPatient = apptPatient ? apptPatient : "Patient";
-    var clinicName = localStorage["clinicname"];
+    var clinicName = localStorage["clinicname"] || 'Your Medical Clinic';
 
     window.location.href =
       `mailto:${patientEmail}?subject=Your doctor wants to speak with you&` +
