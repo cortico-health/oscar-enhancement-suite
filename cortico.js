@@ -1282,15 +1282,16 @@ async function checkAllEligibility() {
         providerNo = getProviderNoFromTd(nodes[i])
 
       const patientInfo = await getPatientInfo(demographic_no)
-      const healthNumber = patientInfo["Health Ins. #"].replace(/\s+/g, ' ').trim();
-
+      const healthNumber = patientInfo["Health Ins"].replace(/\s+/g, ' ').trim();
+      const province = patientInfo["Province"].replace(/\s+/g, ' ').trim();
       try {
         result = await checkEligiblity(
           demographic_no,
           getOrigin(),
           getNamespace(),
           providerNo,
-          healthNumber
+          healthNumber,
+          province
         );
       } catch (e) {
         console.error(e);
@@ -1436,7 +1437,7 @@ function setPreferredPharmacy(pharmacyObj, demographicNo) {
   });
 }
 
-function checkEligiblity(demographicNo, origin, namespace, providerNo, healthNumber) {
+function checkEligiblity(demographicNo, origin, namespace, providerNo, healthNumber, province) {
   var url = `${origin}/${namespace}/billing/CA/BC/ManageTeleplan.do?` +
     `demographic=${demographicNo}&method=checkElig`;
 
@@ -1444,13 +1445,12 @@ function checkEligiblity(demographicNo, origin, namespace, providerNo, healthNum
   const ran_number = Math.round(Math.random() * 1000000);
   url += "&rand=" + ran_number;
 
-
-  if (oscar.isOscarGoHost()) {
+  if (oscar.isOscarGoHost() && province === "ON") {
     const [hin, ver] = healthNumber.split(" ")
     url = `${origin}/${namespace}/hcv/validate.do?` +
       `method=validateHin&hin=${hin}&ver=${ver}&sc=`;
   }
-  if (oscar.isKaiOscarHost()) {
+  if (oscar.isKaiOscarHost() && province === "ON") {
     url = `${origin}/CardSwipe/?hc=${healthNumber}`;
   }
 
@@ -2130,7 +2130,7 @@ async function getPatientInfo(demographicNo) {
 
   const info = {};
   el.querySelectorAll("span.label").forEach(function (label) {
-    info[label.innerText.trim().replace(":", "")] = label.nextElementSibling
+    info[label.innerText.replace(/[^\w\s]+/g, '').trim()] = label.nextElementSibling
       ? label.nextElementSibling.innerText.trim()
       : null;
   });
