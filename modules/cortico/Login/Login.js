@@ -1,16 +1,10 @@
 import { Ellipsis } from "../../Icons/Ellipsis";
 import "./Login.css";
 import { CorticoIcon } from "../../Icons/CorticoIcon";
-import { create, getCorticoUrl } from "../../Utils/Utils";
+import { create, getCorticoUrl, checkCorticoUrl } from "../../Utils/Utils";
 
 export function addLoginForm(browser) {
   const currentUser = localStorage.getItem("currentUser");
-
-  if (!getCorticoUrl()) {
-    alert("Please set the cortico url")
-
-    return
-  }
 
   // if (getCorticoUrl() && currentUser == null)
   document.body.appendChild(loginForm(browser));

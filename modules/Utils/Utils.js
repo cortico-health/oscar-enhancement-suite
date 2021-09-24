@@ -155,3 +155,15 @@ export function getAppointmentNo(apptUrl) {
     searchParams.get("appointment_no")
   );
 }
+
+
+export function checkCorticoUrl(event) {
+  if (!getCorticoUrl()) {
+    event.preventDefault();
+    alert("Please set the cortico URL to use this feature.")
+
+    return false
+  }
+
+  return
+}
