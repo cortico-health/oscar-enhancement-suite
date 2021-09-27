@@ -1,4 +1,4 @@
-import { getDemographicNo, getAppointmentNo } from "../../Utils/Utils";
+import { getDemographicNo, getAppointmentNo, addToCache } from "../../Utils/Utils";
 
 export function getAppointments(demographic_no = null) {
   var appointments = [];
@@ -61,6 +61,8 @@ export function getAppointmentInfo(apptNodes) {
   apptNodes.forEach(function (node) {
     var temp = {};
     var apptLink = getAppointmentLink(node);
+    var apptUrl = extractApptUrl(apptLink.attributes.onclick.textContent);
+    var demographicNo = getDemographicNo(apptUrl);
 
     // No Appointment link
     if (!apptLink) {
@@ -69,10 +71,9 @@ export function getAppointmentInfo(apptNodes) {
 
     // Already verified
     if (apptLink.textContent.includes("+")) {
-      return;
+      addToCache(demographicNo, true)
     }
-    var apptUrl = extractApptUrl(apptLink.attributes.onclick.textContent);
-    var demographicNo = getDemographicNo(apptUrl);
+
     var apptNo = getAppointmentNo(apptUrl);
 
     temp.demographic_no = demographicNo;

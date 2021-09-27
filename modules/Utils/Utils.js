@@ -1,3 +1,6 @@
+
+import dayjs from "dayjs";
+
 export function debounce(func, wait, immediate) {
   var timeout;
   return function () {
@@ -154,4 +157,17 @@ export function getAppointmentNo(apptUrl) {
   return (
     searchParams.get("appointment_no")
   );
+}
+
+export function addToCache(demographic_no, _verified) {
+  const verified = _verified || false;
+  const _cache = window.localStorage.getItem("checkCache");
+  const _today = dayjs().format("YYYY-MM-DD");
+  const cache = JSON.parse(_cache) || {};
+  cache[demographic_no] = {
+    date: _today,
+    verified: verified,
+  };
+
+  window.localStorage.setItem("checkCache", JSON.stringify(cache));
 }
