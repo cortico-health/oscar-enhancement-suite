@@ -17,9 +17,9 @@ export function addAppointmentMenu() {
   console.log(apptInfo)
 
   appointments.map((appt) => {
-    appt.appendChild(appointmentMenu(appt, apptInfo, checkCache, pharmaciesCache));
+    appt.appendChild(appointmentMenu(appt));
 
-    appointmentCheckbox(appt, apptInfo, checkCache, pharmaciesCache);
+    setAppointmentCheckbox(appt, apptInfo, checkCache, pharmaciesCache);
   });
 
   // clicks outside the menu, close it.
@@ -37,21 +37,7 @@ export function addAppointmentMenu() {
   });
 }
 
-export function appointmentMenu(apptTd, apptInfo, checkCache, pharmaciesCache) {
-
-  const appointment = new Appointment(apptTd);
-  const appointmentNo = appointment.getAppointmentNo();
-  const apptInfoItem = apptInfo.find((item) => {
-    return item.appointment_no === appointmentNo
-  }) || {}
-
-  const cacheValue = checkCache[apptInfoItem.demographic_no]
-  const isPharmacyCached = pharmaciesCache.demographics.includes(apptInfoItem.demographic_no)
-
-  if (isPharmacyCached) {
-    apptTd.querySelector('[title="Prescriptions"]').appendChild(create(`<small>&#10004;</small>`))
-  }
-
+export function appointmentMenu(apptTd) {
   const corticoIcon = CorticoIcon({
     attrs: {
       height: "15",
@@ -201,7 +187,7 @@ async function renderPatientInfo(apptTd) {
   }
 }
 
-export function appointmentCheckbox(apptTd, apptInfo, checkCache, pharmaciesCache) {
+export function setAppointmentCheckbox(apptTd, apptInfo, checkCache, pharmaciesCache) {
   const appointment = new Appointment(apptTd);
   const appointmentNo = appointment.getAppointmentNo();
   const apptInfoItem = apptInfo.find((item) => {

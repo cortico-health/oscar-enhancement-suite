@@ -124,7 +124,6 @@ td.appt {
   background-color: #5b6ce2;
   border: 1px solid #d8ddff;
   border-radius: 50%;
-  box-shadow: 0 3px 3px 2px rgba(0, 0, 0, 0.3);
   cursor: pointer;
-  font-size: 8px;
+  font-size: 9px;
 }
