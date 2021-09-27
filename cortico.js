@@ -946,7 +946,11 @@ function getBatchPharmaciesButton() {
   var button = document.createElement("button");
   button.textContent = "Set preferred pharmacies";
   button.className = "cortico-btn";
-  button.addEventListener("click", setupPreferredPharmacies);
+  button.addEventListener("click", (e) => {
+    if (!checkCorticoUrl(e)) return;
+
+    setupPreferredPharmacies()
+  });
   return button;
 }
 
