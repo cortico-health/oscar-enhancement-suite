@@ -101,9 +101,9 @@ const init_cortico = function () {
      * Drag and drop - disabled for stability reasons.
      * TODO: fixme?
      */
-    // if (!oscar.isJuno()) {
-    //   dragAndDrop();
-    // }
+    if (!oscar.isJuno() && !oscar.isKaiOscarHost()) {
+      dragAndDrop();
+    }
 
     addCorticoLogo();
     addMenu();
