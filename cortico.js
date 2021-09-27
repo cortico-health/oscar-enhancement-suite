@@ -19,7 +19,7 @@ import "element-closest-polyfill";
 import { getOrigin, getNamespace, htmlToElement } from "./modules/Utils/Utils";
 import { CorticoIcon } from "./modules/Icons/CorticoIcon";
 import { debounce, create, getDemographicNo, getCorticoUrl } from "./modules/Utils/Utils";
-import { loadExtensionStorageValue } from "./modules/Utils/Utils";
+import { loadExtensionStorageValue, checkCorticoUrl } from "./modules/Utils/Utils";
 import "./index.css";
 import { Modal } from "./modules/Modal/Modal";
 import Dashboard from "./modules/cortico/Dashboard";
@@ -83,6 +83,8 @@ const init_cortico = function () {
     // open a windows to the cortico video page for this appointment.
     window.addEventListener("click", (e) => {
       if (e.target.id === "cortico-video-appt-btn") {
+        if (!checkCorticoUrl(e)) return;
+
         open_video_appointment_page(e);
       }
     });
@@ -831,6 +833,8 @@ async function getCorticoLogin() {
   loginButton.className = "cortico-btn";
 
   loginButton.addEventListener("click", (e) => {
+    if (!checkCorticoUrl(e)) return;
+
     const loginForm = document.querySelector(".login-form")
     loginForm.classList.add("show")
   })
@@ -942,7 +946,11 @@ function getBatchPharmaciesButton() {
   var button = document.createElement("button");
   button.textContent = "Set preferred pharmacies";
   button.className = "cortico-btn";
-  button.addEventListener("click", setupPreferredPharmacies);
+  button.addEventListener("click", (e) => {
+    if (!checkCorticoUrl(e)) return;
+
+    setupPreferredPharmacies()
+  });
   return button;
 }
 
@@ -2031,6 +2039,8 @@ async function init_diagnostic_viewer_button() {
   }
 
   async function open_diagnostic_viewer(e) {
+    if (!checkCorticoUrl(e)) return;
+
     e.preventDefault();
 
     const appt_no = getQueryStringValue("appointment_no");
