@@ -75,6 +75,7 @@ const init_cortico = function () {
   ) {
     init_appointment_page();
     init_recall_button();
+    init_medium_option();
 
     // Temporary fix, adding event listener does not work inside init_appointment_page
     // Note: event listeners inside init_recall_button seems to be working fine
@@ -557,6 +558,7 @@ async function createSideBar() {
   sidebar.appendChild(await getCorticoLogin());
 
   sidebar.appendChild(getRecallStatusOption());
+  sidebar.appendChild(getMediumOption());
 
   sidebar.appendChild(getEligButton());
   sidebar.appendChild(getEligStatus());
@@ -698,9 +700,9 @@ function getRecallStatusOption() {
   var button = htmlToElement(`<button class='cortico-btn'>Save</button>`)
   // document.createElement("button");
   // button.textContent = "Save";
-  // button.style.width = "100%";
-  // button.style.display = "inline-block";
-  // button.style.margin = "10px auto";
+  button.style.width = "100%";
+  button.style.display = "inline-block";
+  button.style.margin = "10px auto";
   // button.className = "cortico-btn";
 
   container.appendChild(label);
@@ -711,6 +713,58 @@ function getRecallStatusOption() {
     if (input.value) {
       localStorage.setItem("recall-status", input.value);
       alert("Your recall status has changed");
+    }
+  });
+  return container;
+}
+
+function getMediumOption() {
+  var container = document.createElement("div");
+  container.style.width = "100%";
+  container.style.padding = "0px 10px";
+  container.style.boxSizing = "border-box";
+
+  var inputContainer = document.createElement("div");
+  inputContainer.style.display = "flex";
+  inputContainer.style.alignItems = "center";
+  inputContainer.style.justifyContent = "center";
+
+  var input = document.createElement("input");
+  input.setAttribute("id", "medium-option");
+  input.setAttribute("type", "text");
+  input.setAttribute("placeholder", "Medium");
+  input.style.fontSize = "16px";
+  input.style.padding = "5px 5px";
+  input.style.margin = "0px 10px";
+  input.style.width = "35%";
+
+  inputContainer.appendChild(input);
+
+  if (localStorage.getItem("medium-option")) {
+    input.value = localStorage.getItem("medium-option");
+  }
+
+  var label = document.createElement("label");
+  label.setAttribute("for", "medium-option");
+  label.textContent = "Default appointment type for reminder";
+  label.style.display = "block";
+  label.style.marginTop = "30px";
+  label.style.marginBottom = "10px";
+  label.style.textAlign = "center";
+
+  var button = htmlToElement(`<button class='cortico-btn'>Save</button>`)
+  button.style.width = "100%";
+  button.style.display = "inline-block";
+  button.style.margin = "10px auto";
+
+  container.appendChild(label);
+  container.appendChild(inputContainer);
+  container.appendChild(button);
+
+  button.addEventListener("click", function () {
+    if (input.value) {
+      localStorage.setItem("medium-option", input.value);
+      alert("Your default medium has changed");
     }
   });
   return container;
@@ -2130,6 +2184,18 @@ async function init_recall_button() {
   statusOption.addEventListener("change", update_recall_button_visibility);
   corticoRecallButton.addEventListener("click", send_patient_recall_email);
 }
+
+
+async function init_medium_option() {
+  const statusOption = document.querySelector("select[name='resources']");
+
+  var mediumOption = localStorage["medium-option"]
+    ? localStorage["medium-option"]
+    : "n/a";
+
+  statusOption.value = mediumOption;
+}
+
 
 async function getPatientInfo(demographicNo) {
   const result = await getDemographicPageResponse(demographicNo);
