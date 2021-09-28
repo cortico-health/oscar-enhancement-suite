@@ -19,7 +19,7 @@ import "element-closest-polyfill";
 import { getOrigin, getNamespace, htmlToElement } from "./modules/Utils/Utils";
 import { CorticoIcon } from "./modules/Icons/CorticoIcon";
 import { debounce, create, getDemographicNo, getCorticoUrl } from "./modules/Utils/Utils";
-import { loadExtensionStorageValue, addToCache, createSidebarContainer } from "./modules/Utils/Utils";
+import { loadExtensionStorageValue, addToCache, createSidebarContainer, checkCorticoUrl } from "./modules/Utils/Utils";
 import "./index.css";
 import { Modal } from "./modules/Modal/Modal";
 import Dashboard from "./modules/cortico/Dashboard";
@@ -75,6 +75,7 @@ const init_cortico = function () {
   ) {
     init_appointment_page();
     init_recall_button();
+    init_medium_option();
 
     // Temporary fix, adding event listener does not work inside init_appointment_page
     // Note: event listeners inside init_recall_button seems to be working fine
@@ -83,6 +84,8 @@ const init_cortico = function () {
     // open a windows to the cortico video page for this appointment.
     window.addEventListener("click", (e) => {
       if (e.target.id === "cortico-video-appt-btn") {
+        if (!checkCorticoUrl(e)) return;
+
         open_video_appointment_page(e);
       }
     });
@@ -99,9 +102,9 @@ const init_cortico = function () {
      * Drag and drop - disabled for stability reasons.
      * TODO: fixme?
      */
-    // if (!oscar.isJuno()) {
-    //   dragAndDrop();
-    // }
+    if (!oscar.isJuno() && !oscar.isKaiOscarHost()) {
+      dragAndDrop();
+    }
 
     addCorticoLogo();
     addMenu();
@@ -566,6 +569,7 @@ async function createSideBar() {
   sidebar.appendChild(await getCorticoLogin());
   sidebar.appendChild(getCorticoUrlOption());
   sidebar.appendChild(getRecallStatusOption());
+  sidebar.appendChild(getMediumOption());
 
   sidebar.appendChild(getEligButton());
   sidebar.appendChild(getEligStatus());
@@ -719,6 +723,58 @@ function getRecallStatusOption() {
   return container;
 }
 
+function getMediumOption() {
+  var container = document.createElement("div");
+  container.style.width = "100%";
+  container.style.padding = "0px 10px";
+  container.style.boxSizing = "border-box";
+
+  var inputContainer = document.createElement("div");
+  inputContainer.style.display = "flex";
+  inputContainer.style.alignItems = "center";
+  inputContainer.style.justifyContent = "center";
+
+  var input = document.createElement("input");
+  input.setAttribute("id", "medium-option");
+  input.setAttribute("type", "text");
+  input.setAttribute("placeholder", "Medium");
+  input.style.fontSize = "16px";
+  input.style.padding = "5px 5px";
+  input.style.margin = "0px 10px";
+  input.style.width = "35%";
+
+  inputContainer.appendChild(input);
+
+  if (localStorage.getItem("medium-option")) {
+    input.value = localStorage.getItem("medium-option");
+  }
+
+  var label = document.createElement("label");
+  label.setAttribute("for", "medium-option");
+  label.textContent = "Default appointment type for reminder";
+  label.style.display = "block";
+  label.style.marginTop = "30px";
+  label.style.marginBottom = "10px";
+  label.style.textAlign = "center";
+
+  var button = htmlToElement(`<button class='cortico-btn'>Save</button>`)
+  button.style.width = "100%";
+  button.style.display = "inline-block";
+  button.style.margin = "10px auto";
+
+  container.appendChild(label);
+  container.appendChild(inputContainer);
+  container.appendChild(button);
+
+  button.addEventListener("click", function () {
+    if (input.value) {
+      localStorage.setItem("medium-option", input.value);
+      alert("Your default medium has changed");
+    }
+  });
+  return container;
+}
+
 function getEligStatus() {
   var container = document.createElement("div");
   container.style.textAlign = "center";
@@ -840,6 +896,7 @@ async function getCorticoLogin() {
     {
       events: {
         "click .cortico-btn": (e) => {
+          if (!checkCorticoUrl(e)) return;
           if (e.target.className == 'cortico-btn') {
             const loginForm = document.querySelector(".login-form")
             loginForm.classList.add("show")
@@ -959,6 +1016,7 @@ function getBatchPharmaciesButton() {
     events: {
       "click .cortico-btn.inline": (e) => {
         console.log("Batch Pharmacy Setup running...")
+        if (!checkCorticoUrl(e)) return;
         setupPreferredPharmacies()
       }
     }
@@ -1287,15 +1345,16 @@ async function checkAllEligibility() {
         providerNo = getProviderNoFromTd(nodes[i])
 
       const patientInfo = await getPatientInfo(demographic_no)
-      const healthNumber = patientInfo["Health Ins. #"].replace(/\s+/g, ' ').trim();
-
+      const healthNumber = patientInfo["Health Ins"].replace(/\s+/g, ' ').trim();
+      const province = patientInfo["Province"].replace(/\s+/g, ' ').trim();
       try {
         result = await checkEligiblity(
           demographic_no,
           getOrigin(),
           getNamespace(),
           providerNo,
-          healthNumber
+          healthNumber,
+          province
         );
       } catch (e) {
         console.error(e);
@@ -1441,7 +1500,7 @@ function setPreferredPharmacy(pharmacyObj, demographicNo) {
   });
 }
 
-function checkEligiblity(demographicNo, origin, namespace, providerNo, healthNumber) {
+function checkEligiblity(demographicNo, origin, namespace, providerNo, healthNumber, province) {
   var url = `${origin}/${namespace}/billing/CA/BC/ManageTeleplan.do?` +
     `demographic=${demographicNo}&method=checkElig`;
 
@@ -1449,13 +1508,12 @@ function checkEligiblity(demographicNo, origin, namespace, providerNo, healthNum
   const ran_number = Math.round(Math.random() * 1000000);
   url += "&rand=" + ran_number;
 
-
-  if (oscar.isOscarGoHost()) {
+  if (oscar.isOscarGoHost() && province === "ON") {
     const [hin, ver] = healthNumber.split(" ")
     url = `${origin}/${namespace}/hcv/validate.do?` +
       `method=validateHin&hin=${hin}&ver=${ver}&sc=`;
   }
-  if (oscar.isKaiOscarHost()) {
+  if (oscar.isKaiOscarHost() && province === "ON") {
     url = `${origin}/CardSwipe/?hc=${healthNumber}`;
   }
 
@@ -1811,7 +1869,7 @@ async function setupPreferredPharmacy(code, demographic_no) {
       window.location.href.indexOf("oscarRx/choosePatient.do") > -1;
 
     if (pharmacyUpdated) {
-      let pharmacy = json.length === 1 ? json[0] : null;
+      let pharmacy = null;
 
       if (json.length > 1) {
         pharmacy = json.find((item) => {
@@ -2036,6 +2094,8 @@ async function init_diagnostic_viewer_button() {
   }
 
   async function open_diagnostic_viewer(e) {
+    if (!checkCorticoUrl(e)) return;
+
     e.preventDefault();
 
     const appt_no = getQueryStringValue("appointment_no");
@@ -2126,6 +2186,18 @@ async function init_recall_button() {
   corticoRecallButton.addEventListener("click", send_patient_recall_email);
 }
 
+
+async function init_medium_option() {
+  const statusOption = document.querySelector("select[name='resources']");
+
+  var mediumOption = localStorage["medium-option"]
+    ? localStorage["medium-option"]
+    : "n/a";
+
+  statusOption.value = mediumOption;
+}
+
+
 async function getPatientInfo(demographicNo) {
   const result = await getDemographicPageResponse(demographicNo);
   const text = await result.text();
@@ -2135,7 +2207,7 @@ async function getPatientInfo(demographicNo) {
 
   const info = {};
   el.querySelectorAll("span.label").forEach(function (label) {
-    info[label.innerText.trim().replace(":", "")] = label.nextElementSibling
+    info[label.innerText.replace(/[^\w\s]+/g, '').trim()] = label.nextElementSibling
       ? label.nextElementSibling.innerText.trim()
       : null;
   });

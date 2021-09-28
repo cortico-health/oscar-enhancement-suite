@@ -58,7 +58,7 @@ Here's the one time tampermonkey script that auto updates to latest distribution
     // @version 0.1
     // @description try to take over the world!
     // @author You
-    // @match https://_/_
+    // @match      *://*/*
     // @icon data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
     // @require https://raw.githubusercontent.com/cortico-health/oscar-enhancement-suite/main/dist/cortico-min.js
     // @grant none
