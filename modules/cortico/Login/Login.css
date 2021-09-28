@@ -5,7 +5,7 @@ td.appt {
   .color-primary {
     color: #5b6ce2;
   }
-  
+
   .login-form {
     background-color: #5b6ce2;
     color: white;
@@ -110,3 +110,8 @@ td.appt {
     color: white;
   }
   
+  .login-form-button {
+    position: absolute;
+    top: 1px;
+    left: 10px;
+  }

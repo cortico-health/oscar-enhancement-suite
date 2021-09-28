@@ -67,7 +67,6 @@ export function appointmentMenu(apptTd) {
   `, {
 
     events: {
-
       "click .appointment-menu-container": (e) => {
         // close button doesn't re-open
         if (e.target.className == 'appointment-menu-close') { return }

@@ -171,3 +171,17 @@ export function addToCache(demographic_no, _verified) {
 
   window.localStorage.setItem("checkCache", JSON.stringify(cache));
 }
+
+export function createSidebarContainer(child, events) {
+  var html = child ? (
+    typeof child === 'string' ? child : child.outerHTML
+  ) : ''
+  var events = events ? events : {}
+
+  var container = create(
+    `<div style='width: 100%; padding: 0px 10px; box-sizing: border-box'>
+    ${html}
+  </div>`, events)
+
+  return container
+}
