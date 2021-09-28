@@ -19,7 +19,7 @@ import "element-closest-polyfill";
 import { getOrigin, getNamespace, htmlToElement } from "./modules/Utils/Utils";
 import { CorticoIcon } from "./modules/Icons/CorticoIcon";
 import { debounce, create, getDemographicNo, getCorticoUrl } from "./modules/Utils/Utils";
-import { loadExtensionStorageValue } from "./modules/Utils/Utils";
+import { loadExtensionStorageValue, createSidebarContainer } from "./modules/Utils/Utils";
 import "./index.css";
 import { Modal } from "./modules/Modal/Modal";
 import Dashboard from "./modules/cortico/Dashboard";
@@ -442,6 +442,19 @@ const init_styles = function () {
   background-color: #DDD;
   color: #999;
   }
+  .cortico-btn.inline {
+  width: 100%;
+  display: inline-block;
+  margin: 10px auto;
+  }
+  .bottom {
+  position: absolute;
+  bottom: 1px;
+  left: 10px;
+  }
+  .warning {
+  background-color: #cc3300;
+  }
   `;
 
   if (!(oscar.isKaiOscarHost() || oscar.containsKaiBar())) {
@@ -547,13 +560,11 @@ async function createSideBar() {
   })
 
   window.corticoSidebar = sidebar;
-
   //var newUiOption = getNewUIOption();
   //sidebar.appendChild(newUiOption);
 
-  sidebar.appendChild(getCorticoUrlOption());
   sidebar.appendChild(await getCorticoLogin());
-
+  sidebar.appendChild(getCorticoUrlOption());
   sidebar.appendChild(getRecallStatusOption());
 
   sidebar.appendChild(getEligButton());
@@ -693,13 +704,7 @@ function getRecallStatusOption() {
   label.style.marginBottom = "10px";
   label.style.textAlign = "center";
 
-  var button = htmlToElement(`<button class='cortico-btn'>Save</button>`)
-  // document.createElement("button");
-  // button.textContent = "Save";
-  // button.style.width = "100%";
-  // button.style.display = "inline-block";
-  // button.style.margin = "10px auto";
-  // button.className = "cortico-btn";
+  var button = create(`<button class='cortico-btn inline'>Save</button>`)
 
   container.appendChild(label);
   container.appendChild(inputContainer);
@@ -814,9 +819,12 @@ function getNewUIOption() {
 
 
 async function getCorticoLogin() {
-  var jwt_expired = null;
-  var loginButton = document.createElement("button");
-  loginButton.textContent = "Sign In at Cortico";
+  if (!getCorticoUrl()) return create('<div></div>');
+
+  let jwt_expired = null;
+  let loginButton = create(
+    `<button class='cortico-btn'>Sign in at Cortico</button>`
+  )
 
   loadExtensionStorageValue("jwt_expired").then(function (expired) {
     jwt_expired = expired
@@ -827,24 +835,24 @@ async function getCorticoLogin() {
     }
   })
 
-  var container = document.createElement("div");
-  loginButton.className = "cortico-btn";
-
-  loginButton.addEventListener("click", (e) => {
-    const loginForm = document.querySelector(".login-form")
-    loginForm.classList.add("show")
-  })
-
-  container.appendChild(loginButton);
-
+  var container = create(
+    `<div class='login-form-button'>${loginButton.outerHTML}</div>`,
+    {
+      events: {
+        "click .cortico-btn": (e) => {
+          if (e.target.className == 'cortico-btn') {
+            const loginForm = document.querySelector(".login-form")
+            loginForm.classList.add("show")
+          }
+        }
+      }
+    }
+  )
   return container
 }
 
 function getCorticoUrlOption() {
-  var container = document.createElement("div");
-  container.style.width = "100%";
-  container.style.padding = "0px 10px";
-  container.style.boxSizing = "border-box";
+  var container = createSidebarContainer()
   var inputContainer = document.createElement("div");
   inputContainer.style.display = "flex";
   inputContainer.style.alignItems = "center";
@@ -892,12 +900,7 @@ function getCorticoUrlOption() {
   label.style.marginBottom = "10px";
   label.style.textAlign = "center";
 
-  var button = document.createElement("button");
-  button.textContent = "Save";
-  button.style.width = "100%";
-  button.style.display = "inline-block";
-  button.style.margin = "10px auto";
-  button.className = "cortico-btn";
+  var button = create(`<button class='cortico-btn inline'>Save</button>`)
 
   if (window.localStorage["firstRun"] !== "false") {
     const instructions = create("div", {
@@ -928,42 +931,57 @@ function getCorticoUrlOption() {
 }
 
 function getEligButton() {
-  var button = document.createElement("button");
-  button.textContent = "Check Eligiblity";
-  button.className = "cortico-btn";
-  button.addEventListener("click", async (e) => {
-    await checkAllEligibility();
-  });
+  var button = create(`
+    <button class='cortico-btn inline'>Check Eligibility</button>`
+  )
+  var container = createSidebarContainer(button,
+    {
+      events: {
+        "click .cortico-btn.inline": async (e) => {
+          console.log("Check Eligibility Start")
+          await checkAllEligibility();
+        }
+      }
+    }
+  )
+
   //button.addEventListener("click", window.checkAllEligibility);
-  return button;
+  return container;
 }
 
 function getBatchPharmaciesButton() {
-  var button = document.createElement("button");
-  button.textContent = "Set preferred pharmacies";
-  button.className = "cortico-btn";
-  button.addEventListener("click", setupPreferredPharmacies);
-  return button;
+  var button = create(`
+  <button class='cortico-btn inline'>
+    Set preferred pharmacies
+  </button>`
+  )
+  var container = createSidebarContainer(button, {
+    events: {
+      "click .cortico-btn.inline": (e) => {
+        console.log("Batch Pharmacy Setup running...")
+        setupPreferredPharmacies()
+      }
+    }
+  })
+  return container;
 }
 
 function getResetCacheButton() {
-  var button = create("button", {
-    attrs: {
-      class: "cortico-btn",
-    },
-    text: "Reset Cache",
-  });
+  var button = create(
+    `<button class='cortico-btn warning bottom'>Reset Cache</button>`, {
+    events: {
+      "click .cortico-btn.warning.bottom": (e) => {
+        if (confirm("Are you sure you want to clear your cache?")) {
+          localStorage.clear()
 
-  button.addEventListener("click", (e) => {
-    if (confirm("Are you sure you want to clear your cache?")) {
-      localStorage.clear()
-
-      alert("Successfully reset cache, the page will now reload.")
-      window.location.reload()
-    } else {
-      console.log("Clear cache cancelled")
+          alert("Successfully reset cache, the page will now reload.")
+          window.location.reload()
+        } else {
+          console.log("Clear cache cancelled")
+        }
+      }
     }
-  })
+  });
 
   return button
 }
