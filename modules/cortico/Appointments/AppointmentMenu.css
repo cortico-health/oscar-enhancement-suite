@@ -115,3 +115,15 @@ td.appt {
   padding: 0 5px;
   color: white;
 }
+
+.appointment-checkbox-wrapper {
+  display: inline-block;
+  position: relative;
+  top: 1px;
+  padding: 1px 3px;
+  background-color: #5b6ce2;
+  border: 1px solid #d8ddff;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 9px;
+}

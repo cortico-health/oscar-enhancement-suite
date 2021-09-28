@@ -19,7 +19,7 @@ import "element-closest-polyfill";
 import { getOrigin, getNamespace, htmlToElement } from "./modules/Utils/Utils";
 import { CorticoIcon } from "./modules/Icons/CorticoIcon";
 import { debounce, create, getDemographicNo, getCorticoUrl } from "./modules/Utils/Utils";
-import { loadExtensionStorageValue, createSidebarContainer } from "./modules/Utils/Utils";
+import { loadExtensionStorageValue, addToCache, createSidebarContainer } from "./modules/Utils/Utils";
 import "./index.css";
 import { Modal } from "./modules/Modal/Modal";
 import Dashboard from "./modules/cortico/Dashboard";
@@ -1212,19 +1212,6 @@ function getFailureCache() {
   return localStorage.getItem("failureCache");
 }
 
-function addToCache(demographic_no, _verified) {
-  const verified = _verified || false;
-  const _cache = localStorage.getItem("checkCache");
-  const _today = dayjs().format("YYYY-MM-DD");
-  const cache = JSON.parse(_cache) || {};
-  cache[demographic_no] = {
-    date: _today,
-    verified: verified,
-  };
-
-  localStorage.setItem("checkCache", JSON.stringify(cache));
-}
-
 function filterAppointments(appointments) {
   const _cache = localStorage.getItem("checkCache");
   const _today = dayjs().format("YYYY-MM-DD");
@@ -1814,8 +1801,6 @@ async function setupPreferredPharmacy(code, demographic_no) {
     `currently using pharmacy ${searchTerm.toLowerCase()}, ${currentlyUsingPharmacy}`
   );
 
-  storePharmaciesCache(demographicNo);
-
   if (searchTerm && !currentlyUsingPharmacy) {
     const results = await getPharmacyResults(searchTerm);
     const text = await results.text();
@@ -2000,6 +1985,8 @@ async function setupPreferredPharmacies() {
         }, 2000);
       });
 
+      storePharmaciesCache(demographicNo);
+
       const apptTitle = element.attributes.title.textContent;
       const pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle);
       if (!pharmacyCode) {
@@ -2008,7 +1995,7 @@ async function setupPreferredPharmacies() {
 
       await setupPreferredPharmacy(pharmacyCode, demographicNo);
     } catch (err) {
-      console.error(err);
+      console.error("err", err);
       storePharmaciesFailureCache(demographicNo, err.message);
       displayPharmaciesFailure(demographicNo, err.message);
     } finally {
