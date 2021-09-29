@@ -4465,9 +4465,13 @@ var init_cortico = function init_cortico() {
   */
 
   if (route.indexOf("/appointment/addappointment.jsp") > -1 || route.indexOf("/appointment/appointmentcontrol.jsp") > -1) {
+    // only show on add appointment
+    if (route.indexOf("/appointment/addappointment.jsp") > -1) {
+      init_medium_option();
+    }
+
     init_appointment_page();
-    init_recall_button();
-    init_medium_option(); // Temporary fix, adding event listener does not work inside init_appointment_page
+    init_recall_button(); // Temporary fix, adding event listener does not work inside init_appointment_page
     // Note: event listeners inside init_recall_button seems to be working fine
 
     var resources_field = document.querySelector('[name="resources"]');
@@ -4653,11 +4657,11 @@ function demoFromHTML() {
 }
 
 function _demoFromHTML() {
-  _demoFromHTML = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee4() {
+  _demoFromHTML = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee5() {
     var pdf;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee4$(_context4) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee5$(_context5) {
       while (1) {
-        switch (_context4.prev = _context4.next) {
+        switch (_context5.prev = _context5.next) {
           case 0:
             pdf = new jsPDF('p', 'pt', 'letter'); // source can be HTML-formatted string, or a reference
             // to an actual DOM element from which the text will be scraped.
@@ -4697,10 +4701,10 @@ function _demoFromHTML() {
 
           case 5:
           case "end":
-            return _context4.stop();
+            return _context5.stop();
         }
       }
-    }, _callee4);
+    }, _callee5);
   }));
   return _demoFromHTML.apply(this, arguments);
 }
@@ -4710,12 +4714,12 @@ function setupPatientEmailButton() {
 }
 
 function _setupPatientEmailButton() {
-  _setupPatientEmailButton = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee5() {
+  _setupPatientEmailButton = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee7() {
     var is_eform_page, clinicName, email_parent, _email_parent, patient_info, mailto_str, email_btn;
 
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee5$(_context5) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee7$(_context7) {
       while (1) {
-        switch (_context5.prev = _context5.next) {
+        switch (_context7.prev = _context7.next) {
           case 0:
             is_eform_page = true;
             clinicName = localStorage["clinicname"];
@@ -4726,29 +4730,48 @@ function _setupPatientEmailButton() {
               _email_parent = document.querySelector("#save div:last-child");
             }
 
-            _context5.next = 6;
+            _context7.next = 6;
             return getPatientInfo();
 
           case 6:
-            patient_info = _context5.sent;
-            // if (is_eform_page) {
-            //   mailto_str = `mailto:${patient_info.email}?subject=Your+Document&body=Hi+${patient_info["First Name"]}%0A%0APlease find the attached document from your doctor at ${clinicName}.`
-            // } else {
-            //   mailto_str = `mailto:${patient_info.email}`
-            // }
-            email_btn = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.htmlToElement)("\n  <p style='margin-bottom:2em'>\n    <a id='cortico-email-patient' class='cortico-btn'>Email Patient</a>\n  </p>\n  ");
-            email_btn.addEventListener(''); // delegate(email_btn, 'click', 'a', async function (e) {
-            //   await demoFromHTML()
-            // })
+            patient_info = _context7.sent;
 
+            if (is_eform_page) {
+              mailto_str = "mailto:".concat(patient_info.email, "?subject=Your+Document&body=Hi+").concat(patient_info["First Name"], "%0A%0APlease find the attached document from your doctor at ").concat(clinicName, ".");
+            } else {
+              mailto_str = "mailto:".concat(patient_info.email);
+            }
+
+            email_btn = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.htmlToElement)("\n  <p style='margin-bottom:2em'>\n    <a id='cortico-email-patient' class='cortico-btn'>Email Patient</a>\n  </p>\n  ");
+            delegate(email_btn, 'click', 'a', /*#__PURE__*/function () {
+              var _ref2 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee6(e) {
+                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee6$(_context6) {
+                  while (1) {
+                    switch (_context6.prev = _context6.next) {
+                      case 0:
+                        _context6.next = 2;
+                        return demoFromHTML();
+
+                      case 2:
+                      case "end":
+                        return _context6.stop();
+                    }
+                  }
+                }, _callee6);
+              }));
+
+              return function (_x12) {
+                return _ref2.apply(this, arguments);
+              };
+            }());
             email_parent.appendChild(email_btn);
 
-          case 10:
+          case 11:
           case "end":
-            return _context5.stop();
+            return _context7.stop();
         }
       }
-    }, _callee5);
+    }, _callee7);
   }));
   return _setupPatientEmailButton.apply(this, arguments);
 }
@@ -4829,18 +4852,18 @@ function createSideBar() {
 }
 
 function _createSideBar() {
-  _createSideBar = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee6() {
+  _createSideBar = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee8() {
     var sidebar, styleSheet, styles;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee6$(_context6) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee8$(_context8) {
       while (1) {
-        switch (_context6.prev = _context6.next) {
+        switch (_context8.prev = _context8.next) {
           case 0:
             if (!window.corticoSidebar) {
-              _context6.next = 2;
+              _context8.next = 2;
               break;
             }
 
-            return _context6.abrupt("return");
+            return _context8.abrupt("return");
 
           case 2:
             sidebar = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.create)("\n  <div class='cortico-sidebar'>\n    <a href=\"https://cortico.ca\"><img src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGEAAABhCAYAAADGBs+jAAAACXBIWXMAAAsSAAALEgHS3X78AAAEqklEQVR4nO2dvXHbMBSAX3RpVNkb2BvYmcAaQIUa1nEmiDYIR1AmsFyrSe7Ux9lAniDWBlbF0jnIjzYlUyRAvAc8kO+707mxAAofQeLvAZ9eXl4gJaZZcQ4A1wAwObrsDQA8rFfj56R+EAAkI2GaFabg5wDwteVf7wFguV6NHwJdmjfiJeCdnwPAd8ev/jTfS6FmiJaAAswdfdUxiUcAuF2vxhviSyNFrAQCASVGxERyjRgJuIYPEAoATOMX8SWSIk4CsYCSm2lWzAjTI0WUBCYBJTlDmiSIkcAswHCFzVxxiJAQQEDJcQdPBNElBBQA2NMWR1QJgQUYLgPl40Q0CREEiCWKBBVwSHAJkQWIHNQLKkFADRA5hhRs7EiAgN16NT6PlHcjQWqCkHfAImLejbBLECJgO1gJglpBs0EOZQsS8E36pA6LBGEClpGvoRVyCSrAHVIJKqAbZBJUQHdIJKgAP7wlqAB/vCSoABo6S1ABdHSSoAJocZagAuhxkqACeLCWoAL4sJKgAnhplaAC+GmUoALC8PlULirAnUo83cZlEql2ol8F2DHNCrOib4afm5ov/cXYiGWTlA8SVEA7WEYmiPGH5Vd2Zo57vRrXLs8/kKAC2sHl9cuOZVQbuvUmQQW0gwJMGZ15JPNBRLV1pAIawJt06SkAsIwPlmPuJUyzYq4CWskJy8hEDb29H/aPo2lWPBMY9iGFVtA/4mTNy/rSPJZG06y4VQGtzBnSNGVuyn7/OIoZx5VKR4yrjKJLSGkogi2iFFDCBVMGTaQ0FMF6k5pmb4xwqV4PxnXgPLQEFVDDCNfuhyBJAdybV5n0R4HiuFKvAY+c6Y4CbEPTh0cQV23Yp1tK2DFl0pd3AFeo1T7dEY7mcWRiLcA007DnLpL1avyEe+pRco/pvg7g4WQD5XPPSQBWyzvJInAAj6oRs6sOhVSbqBMiEV0ElGNXYkXgE2NG8OjeHc8nUM6sbTFK0qq11TJB0teJnVLAQRmdmujPsbrYZvQbt760WmFg+UOkT/AsLDbKrWI2zZ3XldHJbRUwo1v81NWMLRbkwiVE1fFOSmGeIcdHed0YXFlGefkSrsN6bwvMsNy0yWldTSWNLlU5iWbuUfkYnpoKvkrIDUZ8nqW9HnMKtcHIxHOVgvTmqxchNhgxhfeHYAq1tyK4NxgxLYg7wiR7KYLlnYCPnwXjtGCv3hGkErDw8xOLY6npjQhvCVjwE+xPhJ6v7oWIzhKwXbyJvGYJBhvHDO/DuxPGuQhbkn9Ze7WOcLhCRXji3URVEf6Q9BNUhB9knTUV0R3SHrOK6Ab5sIWKcIdl7EhFuME6n0AUaEfBF8kb1LKOogqqEb9wulYk7PMJQkRcMIU8kZDK9CYFb4F6kfI/SbD4BAE14kzPWZMhQiVAfBF62F2JoFaTCKIddqci3ol67KOKeCX6AaiBRYjsNYs4CjigCJEnDgbrrNnA3KEb9mF3tjDXiOEeducKk4jhHnbXFWIRu8EedudLRYRPxGRtjJg0xEqAdxHXGBPnymMKAkBa66gJh8XGW4wRS2ZpZDISSnANrBFi/pYDcuZuN8syTSyd+Dv/AAD4D9nFlj4ll12bAAAAAElFTkSuQmCC\"  alt=\"Cortico\" style=\"margin-bottom: 25px;\" /></a>\n    <div class='cortico-sidebar-close'>Close</div>\n  </div>\n  ", {
@@ -4858,14 +4881,14 @@ function _createSideBar() {
             window.corticoSidebar = sidebar; //var newUiOption = getNewUIOption();
             //sidebar.appendChild(newUiOption);
 
-            _context6.t0 = sidebar;
-            _context6.next = 7;
+            _context8.t0 = sidebar;
+            _context8.next = 7;
             return getCorticoLogin();
 
           case 7:
-            _context6.t1 = _context6.sent;
+            _context8.t1 = _context8.sent;
 
-            _context6.t0.appendChild.call(_context6.t0, _context6.t1);
+            _context8.t0.appendChild.call(_context8.t0, _context8.t1);
 
             sidebar.appendChild(getCorticoUrlOption());
             sidebar.appendChild(getRecallStatusOption());
@@ -4879,14 +4902,14 @@ function _createSideBar() {
             styleSheet = styleSheetFactory("cortico_sidebar");
             styles = "\n    .cortico-sidebar { position: fixed; top: 0; right: 0; bottom: 0; width: 300px; background-color: white; height: 100%; z-index: 10000; }\n    .cortico-sidebar { transition: transform 0.25s ease-in; transform: translateX(300px); }\n    .cortico-sidebar { display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 1px 5px 5px rgb(0, 0, 0); }\n    .cortico-sidebar-show { transform: translateX(0); }\n    .cortico-sidebar-close { cursor:pointer; position: absolute; top: 10px; right: 10px; z-index: 500; }\n  ";
             styleSheet.innerText = styles;
-            return _context6.abrupt("return", sidebar);
+            return _context8.abrupt("return", sidebar);
 
           case 22:
           case "end":
-            return _context6.stop();
+            return _context8.stop();
         }
       }
-    }, _callee6);
+    }, _callee8);
   }));
   return _createSideBar.apply(this, arguments);
 }
@@ -4928,22 +4951,22 @@ function addMenu(_x) {
 }
 
 function _addMenu() {
-  _addMenu = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee7(container) {
+  _addMenu = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee9(container) {
     var navigation, menu, sidebar;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee7$(_context7) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee9$(_context9) {
       while (1) {
-        switch (_context7.prev = _context7.next) {
+        switch (_context9.prev = _context9.next) {
           case 0:
             navigation = document.querySelector("#firstMenu #navList") || document.querySelector("#firstMenu #navlist");
             menu = document.createElement("li");
             menu.textContent = "Cortico";
             menu.style.color = "rgb(75, 84, 246)";
             menu.style.cursor = "pointer";
-            _context7.next = 7;
+            _context9.next = 7;
             return createSideBar();
 
           case 7:
-            sidebar = _context7.sent;
+            sidebar = _context9.sent;
             menu.addEventListener("click", function () {
               sidebar.classList.toggle("cortico-sidebar-show");
 
@@ -4974,10 +4997,10 @@ function _addMenu() {
 
           case 13:
           case "end":
-            return _context7.stop();
+            return _context9.stop();
         }
       }
-    }, _callee7);
+    }, _callee9);
   }));
   return _addMenu.apply(this, arguments);
 }
@@ -5063,10 +5086,8 @@ function getMediumOption() {
   container.appendChild(inputContainer);
   container.appendChild(button);
   button.addEventListener("click", function () {
-    if (input.value) {
-      localStorage.setItem("medium-option", input.value);
-      alert("Your default medium has changed");
-    }
+    localStorage.setItem("medium-option", input.value);
+    alert("Your default medium has changed");
   });
   return container;
 }
@@ -5169,20 +5190,20 @@ function getCorticoLogin() {
 }
 
 function _getCorticoLogin() {
-  _getCorticoLogin = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee9() {
+  _getCorticoLogin = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee11() {
     var container, jwt_expired, loginButton, loggedInAsText, loggedInAsHtml, btnEvent;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee9$(_context9) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee11$(_context11) {
       while (1) {
-        switch (_context9.prev = _context9.next) {
+        switch (_context11.prev = _context11.next) {
           case 0:
             container = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.create)('<div></div>');
 
             if ((0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getCorticoUrl)()) {
-              _context9.next = 3;
+              _context11.next = 3;
               break;
             }
 
-            return _context9.abrupt("return", container);
+            return _context11.abrupt("return", container);
 
           case 3:
             jwt_expired = null;
@@ -5199,13 +5220,13 @@ function _getCorticoLogin() {
                 }
               }
             };
-            _context9.next = 10;
+            _context11.next = 10;
             return (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.loadExtensionStorageValue)("jwt_username").then(function (username) {
               loggedInAsText = "Logged in as ".concat(username);
             });
 
           case 10:
-            _context9.next = 12;
+            _context11.next = 12;
             return (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.loadExtensionStorageValue)("jwt_expired").then(function (expired) {
               jwt_expired = expired;
               console.log("test", expired);
@@ -5215,10 +5236,10 @@ function _getCorticoLogin() {
                 loggedInAsHtml = "<p>".concat(loggedInAsText, "</p>");
                 btnEvent = {
                   "click .cortico-btn": function () {
-                    var _clickCorticoBtn = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee8(e) {
-                      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee8$(_context8) {
+                    var _clickCorticoBtn = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee10(e) {
+                      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee10$(_context10) {
                         while (1) {
-                          switch (_context8.prev = _context8.next) {
+                          switch (_context10.prev = _context10.next) {
                             case 0:
                               if (e.target.className == 'cortico-btn') {
                                 chrome.storage.local.remove(['jwt_access_token', 'jwt_expired']);
@@ -5228,13 +5249,13 @@ function _getCorticoLogin() {
 
                             case 1:
                             case "end":
-                              return _context8.stop();
+                              return _context10.stop();
                           }
                         }
-                      }, _callee8);
+                      }, _callee10);
                     }));
 
-                    function clickCorticoBtn(_x11) {
+                    function clickCorticoBtn(_x13) {
                       return _clickCorticoBtn.apply(this, arguments);
                     }
 
@@ -5248,14 +5269,14 @@ function _getCorticoLogin() {
             container = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.create)("<div class='login-form-button'>\n    ".concat(loginButton.outerHTML, "\n    ").concat(loggedInAsHtml, "\n    </div>"), {
               events: btnEvent
             });
-            return _context9.abrupt("return", container);
+            return _context11.abrupt("return", container);
 
           case 14:
           case "end":
-            return _context9.stop();
+            return _context11.stop();
         }
       }
-    }, _callee9);
+    }, _callee11);
   }));
   return _getCorticoLogin.apply(this, arguments);
 }
@@ -5385,15 +5406,44 @@ function getBatchPharmaciesButton() {
 function getResetCacheButton() {
   var button = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.create)("<button class='cortico-btn warning bottom'>Reset Cache</button>", {
     events: {
-      "click .cortico-btn.warning.bottom": function clickCorticoBtnWarningBottom(e) {
-        if (confirm("Are you sure you want to clear your cache?")) {
-          localStorage.clear();
-          alert("Successfully reset cache, the page will now reload.");
-          window.location.reload();
-        } else {
-          console.log("Clear cache cancelled");
+      "click .cortico-btn.warning.bottom": function () {
+        var _clickCorticoBtnWarningBottom = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee2(e) {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee2$(_context2) {
+            while (1) {
+              switch (_context2.prev = _context2.next) {
+                case 0:
+                  if (!confirm("Are you sure you want to clear your cache?")) {
+                    _context2.next = 8;
+                    break;
+                  }
+
+                  localStorage.clear();
+                  _context2.next = 4;
+                  return chrome.storage.local.clear();
+
+                case 4:
+                  alert("Successfully reset cache, the page will now reload.");
+                  window.location.reload();
+                  _context2.next = 9;
+                  break;
+
+                case 8:
+                  console.log("Clear cache cancelled");
+
+                case 9:
+                case "end":
+                  return _context2.stop();
+              }
+            }
+          }, _callee2);
+        }));
+
+        function clickCorticoBtnWarningBottom(_x3) {
+          return _clickCorticoBtnWarningBottom.apply(this, arguments);
         }
-      }
+
+        return clickCorticoBtnWarningBottom;
+      }()
     }
   });
   return button;
@@ -5500,25 +5550,25 @@ function dragAndDrop() {
     }
   }
 
-  function drop_handler(_x3) {
+  function drop_handler(_x4) {
     return _drop_handler.apply(this, arguments);
   } // Maybe better to use event delegation in the future
 
 
   function _drop_handler() {
-    _drop_handler = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee2(ev) {
+    _drop_handler = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee3(ev) {
       var newStartTime, apptLink, apptLinkText, apptUrl, origin, namespace, result, text, temp, formData, originalStartTime, apptDate, duration, newEndTime, _newStartTime, _newEndTime, apptDoctor, targetDoctor, isSameDoctor, doctor, parent;
 
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee2$(_context2) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee3$(_context3) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context3.prev = _context3.next) {
             case 0:
               if (isValidDragItem()) {
-                _context2.next = 2;
+                _context3.next = 2;
                 break;
               }
 
-              return _context2.abrupt("return");
+              return _context3.abrupt("return");
 
             case 2:
               handleColors(ev.target); // Sibling table cell has the start time
@@ -5528,12 +5578,12 @@ function dragAndDrop() {
               apptLink = (0,_modules_cortico_Appointments_Appointments__WEBPACK_IMPORTED_MODULE_7__.getAppointmentLink)(dragSelectedTarget);
 
               if (apptLink) {
-                _context2.next = 8;
+                _context3.next = 8;
                 break;
               }
 
               alert("No Valid Appointment Link Found");
-              return _context2.abrupt("return", false);
+              return _context3.abrupt("return", false);
 
             case 8:
               apptLinkText = apptLink.attributes.onclick.textContent; //Get the URL and Take out the "../" in front
@@ -5542,16 +5592,16 @@ function dragAndDrop() {
 
               origin = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getOrigin)();
               namespace = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getNamespace)();
-              _context2.next = 14;
+              _context3.next = 14;
               return appointmentEditRequest(origin, namespace, apptUrl);
 
             case 14:
-              result = _context2.sent;
-              _context2.next = 17;
+              result = _context3.sent;
+              _context3.next = 17;
               return result.text();
 
             case 17:
-              text = _context2.sent;
+              text = _context3.sent;
               //Make an element in memory, and we're gonna place the contents of the fetched page here, so we can grab the formdata
               temp = document.createElement("div");
               temp.style.display = "none";
@@ -5566,12 +5616,12 @@ function dragAndDrop() {
               _newEndTime = dayjs__WEBPACK_IMPORTED_MODULE_6___default()(apptDate + "T" + newStartTime).add(duration, "minute");
 
               if (isSameDay(_newStartTime, _newEndTime)) {
-                _context2.next = 31;
+                _context3.next = 31;
                 break;
               }
 
               alert("Cannot overlap to the next day");
-              return _context2.abrupt("return");
+              return _context3.abrupt("return");
 
             case 31:
               apptDoctor = formData.get("provider_no");
@@ -5582,20 +5632,20 @@ function dragAndDrop() {
               formData.set("end_time", newEndTime);
 
               if (!isSameDoctor) {
-                _context2.next = 49;
+                _context3.next = 49;
                 break;
               }
 
-              _context2.next = 40;
+              _context3.next = 40;
               return updateAppointment(origin, namespace, formData);
 
             case 40:
-              result = _context2.sent;
-              _context2.next = 43;
+              result = _context3.sent;
+              _context3.next = 43;
               return result.text();
 
             case 43:
-              text = _context2.sent;
+              text = _context3.sent;
               parent = ev.target.parentElement;
               parent.insertBefore(dragSelectedTarget, ev.target);
               updateAppointmentAnchorLinks(dragSelectedTarget, {
@@ -5605,7 +5655,7 @@ function dragAndDrop() {
                 start_time: newStartTime,
                 provider_no: targetDoctor
               });
-              _context2.next = 50;
+              _context3.next = 50;
               break;
 
             case 49:
@@ -5618,10 +5668,10 @@ function dragAndDrop() {
 
             case 50:
             case "end":
-              return _context2.stop();
+              return _context3.stop();
           }
         }
-      }, _callee2);
+      }, _callee3);
     }));
     return _drop_handler.apply(this, arguments);
   }
@@ -5699,19 +5749,19 @@ function checkAllEligibility() {
 }
 
 function _checkAllEligibility() {
-  _checkAllEligibility = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee10() {
+  _checkAllEligibility = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee12() {
     var nodes, appointmentInfo, length, providerNo, error, i, temp, demographic_no, result, patientInfo, healthNumber, province, text, lowerCaseText, requestSuccess, _text, jsonRes, verified;
 
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee10$(_context10) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee12$(_context12) {
       while (1) {
-        switch (_context10.prev = _context10.next) {
+        switch (_context12.prev = _context12.next) {
           case 0:
             if (!(window.checkAllEligibilityRunning === true)) {
-              _context10.next = 2;
+              _context12.next = 2;
               break;
             }
 
-            return _context10.abrupt("return", alert("Check Already Running"));
+            return _context12.abrupt("return", alert("Check Already Running"));
 
           case 2:
             clearFailureCache();
@@ -5728,12 +5778,12 @@ function _checkAllEligibility() {
             providerNo = getProviderNoFromTd(nodes[0]);
             error = false;
             window.checkAllEligibilityRunning = true;
-            _context10.prev = 12;
+            _context12.prev = 12;
             i = 0;
 
           case 14:
             if (!(i < length)) {
-              _context10.next = 64;
+              _context12.next = 64;
               break;
             }
 
@@ -5745,36 +5795,36 @@ function _checkAllEligibility() {
             result = null; // empty appointment node, do not check
 
             if (!(!demographic_no || demographic_no == 0)) {
-              _context10.next = 23;
+              _context12.next = 23;
               break;
             }
 
-            return _context10.abrupt("continue", 61);
+            return _context12.abrupt("continue", 61);
 
           case 23:
             // In cases where the first appointment in the schedule is an empty
             // appointment, get the providerNo from the node itself
             if (!providerNo) providerNo = getProviderNoFromTd(nodes[i]);
-            _context10.next = 26;
+            _context12.next = 26;
             return getPatientInfo(demographic_no);
 
           case 26:
-            patientInfo = _context10.sent;
+            patientInfo = _context12.sent;
             healthNumber = patientInfo["Health Ins"].replace(/\s+/g, ' ').trim();
             province = patientInfo["Province"].replace(/\s+/g, ' ').trim();
-            _context10.prev = 29;
-            _context10.next = 32;
+            _context12.prev = 29;
+            _context12.next = 32;
             return checkEligiblity(demographic_no, (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getOrigin)(), (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getNamespace)(), providerNo, healthNumber, province);
 
           case 32:
-            result = _context10.sent;
-            _context10.next = 38;
+            result = _context12.sent;
+            _context12.next = 38;
             break;
 
           case 35:
-            _context10.prev = 35;
-            _context10.t0 = _context10["catch"](29);
-            console.error(_context10.t0);
+            _context12.prev = 35;
+            _context12.t0 = _context12["catch"](29);
+            console.error(_context12.t0);
 
           case 38:
             text = null;
@@ -5782,15 +5832,15 @@ function _checkAllEligibility() {
             requestSuccess = false;
 
             if (!(result && result.status === 200)) {
-              _context10.next = 49;
+              _context12.next = 49;
               break;
             }
 
-            _context10.next = 44;
+            _context12.next = 44;
             return result.text();
 
           case 44:
-            _text = _context10.sent;
+            _text = _context12.sent;
             lowerCaseText = _text.toLowerCase();
 
             if (oscar.isOscarGoHost()) {
@@ -5801,7 +5851,7 @@ function _checkAllEligibility() {
               }
             }
 
-            _context10.next = 51;
+            _context12.next = 51;
             break;
 
           case 49:
@@ -5810,13 +5860,13 @@ function _checkAllEligibility() {
 
           case 51:
             if (!lowerCaseText.includes("error in teleplan connection")) {
-              _context10.next = 55;
+              _context12.next = 55;
               break;
             }
 
             alert("Automatic Eligiblity Check Aborted. \n" + text);
             error = true;
-            return _context10.abrupt("break", 64);
+            return _context12.abrupt("break", 64);
 
           case 55:
             verified = false;
@@ -5833,7 +5883,7 @@ function _checkAllEligibility() {
 
             (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.addToCache)(demographic_no, verified);
             console.log("Cached.");
-            _context10.next = 61;
+            _context12.next = 61;
             return new Promise(function (resolve, reject) {
               setTimeout(function () {
                 resolve();
@@ -5842,35 +5892,35 @@ function _checkAllEligibility() {
 
           case 61:
             i++;
-            _context10.next = 14;
+            _context12.next = 14;
             break;
 
           case 64:
-            _context10.next = 70;
+            _context12.next = 70;
             break;
 
           case 66:
-            _context10.prev = 66;
-            _context10.t1 = _context10["catch"](12);
-            console.log(_context10.t1);
-            alert(_context10.t1);
+            _context12.prev = 66;
+            _context12.t1 = _context12["catch"](12);
+            console.log(_context12.t1);
+            alert(_context12.t1);
 
           case 70:
-            _context10.prev = 70;
+            _context12.prev = 70;
             window.checkAllEligibilityRunning = false;
             pubsub.publish("check-eligibility", {
               complete: true,
               total: length,
               error: error
             });
-            return _context10.finish(70);
+            return _context12.finish(70);
 
           case 74:
           case "end":
-            return _context10.stop();
+            return _context12.stop();
         }
       }
-    }, _callee10, null, [[12, 66, 70, 74], [29, 35]]);
+    }, _callee12, null, [[12, 66, 70, 74], [29, 35]]);
   }));
   return _checkAllEligibility.apply(this, arguments);
 }
@@ -6205,38 +6255,38 @@ function sendPatientPrescriptionNotification() {
 function setupFaxButton() {
   var prescriptionFrame = document.getElementById("AutoNumber1");
   prescriptionFrame.addEventListener("click", /*#__PURE__*/function () {
-    var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee3(e) {
+    var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee4(e) {
       var result, text, json;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee3$(_context3) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee4$(_context4) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context4.prev = _context4.next) {
             case 0:
               if (!e.target.matches("#faxBUtton, #faxAndPasteButton")) {
-                _context3.next = 8;
+                _context4.next = 8;
                 break;
               }
 
-              _context3.next = 3;
+              _context4.next = 3;
               return sendPatientPrescriptionNotification();
 
             case 3:
-              result = _context3.sent;
-              _context3.next = 6;
+              result = _context4.sent;
+              _context4.next = 6;
               return result.text();
 
             case 6:
-              text = _context3.sent;
+              text = _context4.sent;
               json = JSON.parse(text);
 
             case 8:
             case "end":
-              return _context3.stop();
+              return _context4.stop();
           }
         }
-      }, _callee3);
+      }, _callee4);
     }));
 
-    return function (_x4) {
+    return function (_x5) {
       return _ref.apply(this, arguments);
     };
   }(), false);
@@ -6258,16 +6308,16 @@ function formatNumber(number) {
   return "1".concat(number.match(/\d+/g).join(""));
 }
 
-function setupPreferredPharmacy(_x5, _x6) {
+function setupPreferredPharmacy(_x6, _x7) {
   return _setupPreferredPharmacy.apply(this, arguments);
 }
 
 function _setupPreferredPharmacy() {
-  _setupPreferredPharmacy = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee11(code, demographic_no) {
+  _setupPreferredPharmacy = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee13(code, demographic_no) {
     var pharmacyCode, corticoPharmacy, corticoPharmacyText, faxNumber, searchTerm, demographicNo, currPharmacyResults, currPharmacyText, preferredPharmacy, currentlyUsingPharmacy, results, text, json, pharmacyUpdated, isRxPage, pharmacy, setPharmacyResults, setPharmacyText, msg;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee11$(_context11) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee13$(_context13) {
       while (1) {
-        switch (_context11.prev = _context11.next) {
+        switch (_context13.prev = _context13.next) {
           case 0:
             pharmacyCode = localStorage.getItem("currentPharmacyCode");
 
@@ -6275,18 +6325,18 @@ function _setupPreferredPharmacy() {
               pharmacyCode = code;
             }
 
-            _context11.next = 4;
+            _context13.next = 4;
             return getPharmacyDetails(pharmacyCode);
 
           case 4:
-            corticoPharmacy = _context11.sent;
-            _context11.t0 = JSON;
-            _context11.next = 8;
+            corticoPharmacy = _context13.sent;
+            _context13.t0 = JSON;
+            _context13.next = 8;
             return corticoPharmacy.text();
 
           case 8:
-            _context11.t1 = _context11.sent;
-            corticoPharmacyText = _context11.t0.parse.call(_context11.t0, _context11.t1);
+            _context13.t1 = _context13.sent;
+            corticoPharmacyText = _context13.t0.parse.call(_context13.t0, _context13.t1);
             faxNumber = corticoPharmacyText[0]["fax_number"] || null;
             searchTerm = corticoPharmacyText[0]["name"] || null; // only use the first word on the pharmacy name to search for list
 
@@ -6300,18 +6350,18 @@ function _setupPreferredPharmacy() {
               demographicNo = getDemographicFromLocation();
             }
 
-            _context11.next = 18;
+            _context13.next = 18;
             return getCurrentPharmacy(demographicNo);
 
           case 18:
-            currPharmacyResults = _context11.sent;
-            _context11.t2 = JSON;
-            _context11.next = 22;
+            currPharmacyResults = _context13.sent;
+            _context13.t2 = JSON;
+            _context13.next = 22;
             return currPharmacyResults.text();
 
           case 22:
-            _context11.t3 = _context11.sent;
-            currPharmacyText = _context11.t2.parse.call(_context11.t2, _context11.t3);
+            _context13.t3 = _context13.sent;
+            currPharmacyText = _context13.t2.parse.call(_context13.t2, _context13.t3);
             console.log("Current Pharmacy:", currPharmacyText);
 
             if (currPharmacyText) {
@@ -6323,26 +6373,26 @@ function _setupPreferredPharmacy() {
             console.log("currently using pharmacy ".concat(searchTerm.toLowerCase(), ", ").concat(currentlyUsingPharmacy));
 
             if (!(searchTerm && !currentlyUsingPharmacy)) {
-              _context11.next = 55;
+              _context13.next = 55;
               break;
             }
 
-            _context11.next = 31;
+            _context13.next = 31;
             return getPharmacyResults(searchTerm);
 
           case 31:
-            results = _context11.sent;
-            _context11.next = 34;
+            results = _context13.sent;
+            _context13.next = 34;
             return results.text();
 
           case 34:
-            text = _context11.sent;
+            text = _context13.sent;
             json = JSON.parse(text);
             pharmacyUpdated = json.length > 0;
             isRxPage = window.location.href.indexOf("oscarRx/choosePatient.do") > -1;
 
             if (!pharmacyUpdated) {
-              _context11.next = 51;
+              _context13.next = 51;
               break;
             }
 
@@ -6358,24 +6408,24 @@ function _setupPreferredPharmacy() {
             }
 
             if (!pharmacy) {
-              _context11.next = 49;
+              _context13.next = 49;
               break;
             }
 
-            _context11.next = 44;
+            _context13.next = 44;
             return setPreferredPharmacy(pharmacy, demographicNo);
 
           case 44:
-            setPharmacyResults = _context11.sent;
-            _context11.next = 47;
+            setPharmacyResults = _context13.sent;
+            _context13.next = 47;
             return setPharmacyResults.text();
 
           case 47:
-            setPharmacyText = _context11.sent;
+            setPharmacyText = _context13.sent;
             if (isRxPage) alert("Updating preferred pharmacy, press Ok to reload");else console.log("Updating preferred pharmacy");
 
           case 49:
-            _context11.next = 55;
+            _context13.next = 55;
             break;
 
           case 51:
@@ -6386,10 +6436,10 @@ function _setupPreferredPharmacy() {
 
           case 55:
           case "end":
-            return _context11.stop();
+            return _context13.stop();
         }
       }
-    }, _callee11);
+    }, _callee13);
   }));
   return _setupPreferredPharmacy.apply(this, arguments);
 }
@@ -6456,20 +6506,20 @@ function storePharmaciesFailureCache(demographicNo, message) {
   localStorage.setItem("pharmaciesCacheFailure", JSON.stringify(cache));
 }
 
-function getDiagnosticFromCortico(_x7, _x8, _x9) {
+function getDiagnosticFromCortico(_x8, _x9, _x10) {
   return _getDiagnosticFromCortico.apply(this, arguments);
 }
 
 function _getDiagnosticFromCortico() {
-  _getDiagnosticFromCortico = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee12(appt_no, notes, token) {
+  _getDiagnosticFromCortico = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee14(appt_no, notes, token) {
     var clinicName, url;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee12$(_context12) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee14$(_context14) {
       while (1) {
-        switch (_context12.prev = _context12.next) {
+        switch (_context14.prev = _context14.next) {
           case 0:
             clinicName = localStorage["clinicname"];
             url = "".concat((0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getCorticoUrl)(), "/api/encrypted/diagnostic-results/?appointment_id=").concat(appt_no, "&notes=").concat(notes);
-            return _context12.abrupt("return", fetch(url, {
+            return _context14.abrupt("return", fetch(url, {
               method: "GET",
               headers: {
                 "Content-Type": "application/json",
@@ -6487,10 +6537,10 @@ function _getDiagnosticFromCortico() {
 
           case 3:
           case "end":
-            return _context12.stop();
+            return _context14.stop();
         }
       }
-    }, _callee12);
+    }, _callee14);
   }));
   return _getDiagnosticFromCortico.apply(this, arguments);
 }
@@ -6505,12 +6555,12 @@ function setupPreferredPharmacies() {
 }
 
 function _setupPreferredPharmacies() {
-  _setupPreferredPharmacies = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee13() {
+  _setupPreferredPharmacies = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee15() {
     var appointments, error, i, temp, element, demographicNo, apptUrl, _pharmaciesCache, pharmaciesCache, demographics, cachedDemographics, apptTitle, pharmacyCode;
 
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee13$(_context13) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee15$(_context15) {
       while (1) {
-        switch (_context13.prev = _context13.next) {
+        switch (_context15.prev = _context15.next) {
           case 0:
             console.log("setting up batch pharmacies");
             window.setupPreferredPharmaciesRunning = true;
@@ -6521,7 +6571,7 @@ function _setupPreferredPharmacies() {
 
           case 6:
             if (!(i < appointments.length)) {
-              _context13.next = 45;
+              _context15.next = 45;
               break;
             }
 
@@ -6532,15 +6582,15 @@ function _setupPreferredPharmacies() {
             element = appointments[i];
 
             if (!(!element || !element.attributes)) {
-              _context13.next = 14;
+              _context15.next = 14;
               break;
             }
 
-            return _context13.abrupt("continue", 42);
+            return _context15.abrupt("continue", 42);
 
           case 14:
             demographicNo = null;
-            _context13.prev = 15;
+            _context15.prev = 15;
             apptUrl = (0,_modules_cortico_Appointments_Appointments__WEBPACK_IMPORTED_MODULE_7__.extractApptUrl)(element.attributes.onclick.textContent);
             demographicNo = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getDemographicNo)(apptUrl);
             _pharmaciesCache = localStorage.getItem("pharmaciesCache");
@@ -6553,14 +6603,14 @@ function _setupPreferredPharmacies() {
             }
 
             if (!(demographics && Array.isArray(demographics) && demographics.includes(demographicNo) && pharmaciesCache.date == dayjs__WEBPACK_IMPORTED_MODULE_6___default()().format("YYYY-MM-DD"))) {
-              _context13.next = 24;
+              _context15.next = 24;
               break;
             }
 
-            return _context13.abrupt("continue", 42);
+            return _context15.abrupt("continue", 42);
 
           case 24:
-            _context13.next = 26;
+            _context15.next = 26;
             return new Promise(function (resolve, reject) {
               setTimeout(function () {
                 resolve();
@@ -6573,34 +6623,34 @@ function _setupPreferredPharmacies() {
             pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle);
 
             if (pharmacyCode) {
-              _context13.next = 31;
+              _context15.next = 31;
               break;
             }
 
-            return _context13.abrupt("continue", 42);
+            return _context15.abrupt("continue", 42);
 
           case 31:
-            _context13.next = 33;
+            _context15.next = 33;
             return setupPreferredPharmacy(pharmacyCode, demographicNo);
 
           case 33:
-            _context13.next = 40;
+            _context15.next = 40;
             break;
 
           case 35:
-            _context13.prev = 35;
-            _context13.t0 = _context13["catch"](15);
-            console.error("err", _context13.t0);
-            storePharmaciesFailureCache(demographicNo, _context13.t0.message);
-            displayPharmaciesFailure(demographicNo, _context13.t0.message);
+            _context15.prev = 35;
+            _context15.t0 = _context15["catch"](15);
+            console.error("err", _context15.t0);
+            storePharmaciesFailureCache(demographicNo, _context15.t0.message);
+            displayPharmaciesFailure(demographicNo, _context15.t0.message);
 
           case 40:
-            _context13.prev = 40;
-            return _context13.finish(40);
+            _context15.prev = 40;
+            return _context15.finish(40);
 
           case 42:
             i++;
-            _context13.next = 6;
+            _context15.next = 6;
             break;
 
           case 45:
@@ -6613,10 +6663,10 @@ function _setupPreferredPharmacies() {
 
           case 47:
           case "end":
-            return _context13.stop();
+            return _context15.stop();
         }
       }
-    }, _callee13, null, [[15, 35, 40, 42]]);
+    }, _callee15, null, [[15, 35, 40, 42]]);
   }));
   return _setupPreferredPharmacies.apply(this, arguments);
 }
@@ -6626,83 +6676,83 @@ function init_diagnostic_viewer_button() {
 }
 
 function _init_diagnostic_viewer_button() {
-  _init_diagnostic_viewer_button = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee16() {
+  _init_diagnostic_viewer_button = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee18() {
     var notesField, notesValue, last_button, corticoDiagnosticViewBtn, update_diagnostic_button_visibility, open_diagnostic_viewer, _open_diagnostic_viewer;
 
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee16$(_context16) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee18$(_context18) {
       while (1) {
-        switch (_context16.prev = _context16.next) {
+        switch (_context18.prev = _context18.next) {
           case 0:
             _open_diagnostic_viewer = function _open_diagnostic_view2() {
-              _open_diagnostic_viewer = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee15(e) {
+              _open_diagnostic_viewer = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee17(e) {
                 var appt_no;
-                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee15$(_context15) {
+                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee17$(_context17) {
                   while (1) {
-                    switch (_context15.prev = _context15.next) {
+                    switch (_context17.prev = _context17.next) {
                       case 0:
                         if ((0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.checkCorticoUrl)(e.originalEvent)) {
-                          _context15.next = 2;
+                          _context17.next = 2;
                           break;
                         }
 
-                        return _context15.abrupt("return");
+                        return _context17.abrupt("return");
 
                       case 2:
                         e.preventDefault();
                         appt_no = getQueryStringValue("appointment_no");
-                        _context15.next = 6;
+                        _context17.next = 6;
                         return (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.loadExtensionStorageValue)("jwt_access_token").then( /*#__PURE__*/function () {
-                          var _ref2 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee14(access_token) {
+                          var _ref3 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee16(access_token) {
                             var diagnostic_response, diagnostic_text;
-                            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee14$(_context14) {
+                            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee16$(_context16) {
                               while (1) {
-                                switch (_context14.prev = _context14.next) {
+                                switch (_context16.prev = _context16.next) {
                                   case 0:
-                                    _context14.next = 2;
+                                    _context16.next = 2;
                                     return getDiagnosticFromCortico(appt_no, notesValue, access_token);
 
                                   case 2:
-                                    diagnostic_response = _context14.sent;
+                                    diagnostic_response = _context16.sent;
 
                                     if (!diagnostic_response) {
-                                      _context14.next = 11;
+                                      _context16.next = 11;
                                       break;
                                     }
 
-                                    _context14.t0 = String;
-                                    _context14.next = 7;
+                                    _context16.t0 = String;
+                                    _context16.next = 7;
                                     return diagnostic_response.text();
 
                                   case 7:
-                                    _context14.t1 = _context14.sent;
-                                    diagnostic_text = (0, _context14.t0)(_context14.t1);
-                                    _context14.next = 11;
+                                    _context16.t1 = _context16.sent;
+                                    diagnostic_text = (0, _context16.t0)(_context16.t1);
+                                    _context16.next = 11;
                                     return showDiagnosticResults(diagnostic_text);
 
                                   case 11:
                                   case "end":
-                                    return _context14.stop();
+                                    return _context16.stop();
                                 }
                               }
-                            }, _callee14);
+                            }, _callee16);
                           }));
 
-                          return function (_x13) {
-                            return _ref2.apply(this, arguments);
+                          return function (_x15) {
+                            return _ref3.apply(this, arguments);
                           };
                         }());
 
                       case 6:
                       case "end":
-                        return _context15.stop();
+                        return _context17.stop();
                     }
                   }
-                }, _callee15);
+                }, _callee17);
               }));
               return _open_diagnostic_viewer.apply(this, arguments);
             };
 
-            open_diagnostic_viewer = function _open_diagnostic_view(_x12) {
+            open_diagnostic_viewer = function _open_diagnostic_view(_x14) {
               return _open_diagnostic_viewer.apply(this, arguments);
             };
 
@@ -6721,10 +6771,10 @@ function _init_diagnostic_viewer_button() {
 
           case 10:
           case "end":
-            return _context16.stop();
+            return _context18.stop();
         }
       }
-    }, _callee16);
+    }, _callee18);
   }));
   return _init_diagnostic_viewer_button.apply(this, arguments);
 }
@@ -6734,26 +6784,26 @@ function init_recall_button() {
 }
 
 function _init_recall_button() {
-  _init_recall_button = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee18() {
+  _init_recall_button = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee20() {
     var statusOption, statusValue, last_button, corticoRecallButton, update_recall_button_visibility, send_patient_recall_email, _send_patient_recall_email;
 
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee18$(_context18) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee20$(_context20) {
       while (1) {
-        switch (_context18.prev = _context18.next) {
+        switch (_context20.prev = _context20.next) {
           case 0:
             _send_patient_recall_email = function _send_patient_recall_2() {
-              _send_patient_recall_email = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee17(e) {
+              _send_patient_recall_email = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee19(e) {
                 var patientInfo, patientEmail, formData, apptTime, apptDate, apptPatient, apptSchedule, cleanedSchedule, cleanedPatient, clinicName;
-                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee17$(_context17) {
+                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee19$(_context19) {
                   while (1) {
-                    switch (_context17.prev = _context17.next) {
+                    switch (_context19.prev = _context19.next) {
                       case 0:
                         e.preventDefault();
-                        _context17.next = 3;
+                        _context19.next = 3;
                         return getPatientInfo();
 
                       case 3:
-                        patientInfo = _context17.sent;
+                        patientInfo = _context19.sent;
                         patientEmail = patientInfo.email;
                         formData = new FormData(document.querySelector("form[name=EDITAPPT]"));
                         apptTime = formData.get("start_time");
@@ -6761,21 +6811,21 @@ function _init_recall_button() {
                         apptPatient = formData.get("keyword");
 
                         if (patientEmail) {
-                          _context17.next = 12;
+                          _context19.next = 12;
                           break;
                         }
 
                         alert("Patient has no email");
-                        return _context17.abrupt("return");
+                        return _context19.abrupt("return");
 
                       case 12:
                         if (!(!apptTime || !apptDate)) {
-                          _context17.next = 15;
+                          _context19.next = 15;
                           break;
                         }
 
                         alert("Please provide date/time");
-                        return _context17.abrupt("return");
+                        return _context19.abrupt("return");
 
                       case 15:
                         apptSchedule = apptDate + "T" + apptTime;
@@ -6786,15 +6836,15 @@ function _init_recall_button() {
 
                       case 20:
                       case "end":
-                        return _context17.stop();
+                        return _context19.stop();
                     }
                   }
-                }, _callee17);
+                }, _callee19);
               }));
               return _send_patient_recall_email.apply(this, arguments);
             };
 
-            send_patient_recall_email = function _send_patient_recall_(_x14) {
+            send_patient_recall_email = function _send_patient_recall_(_x16) {
               return _send_patient_recall_email.apply(this, arguments);
             };
 
@@ -6815,10 +6865,10 @@ function _init_recall_button() {
 
           case 11:
           case "end":
-            return _context18.stop();
+            return _context20.stop();
         }
       }
-    }, _callee18);
+    }, _callee20);
   }));
   return _init_recall_button.apply(this, arguments);
 }
@@ -6828,47 +6878,47 @@ function init_medium_option() {
 }
 
 function _init_medium_option() {
-  _init_medium_option = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee19() {
-    var statusOption, mediumOption;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee19$(_context19) {
+  _init_medium_option = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee21() {
+    var statusOption, storedMedium;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee21$(_context21) {
       while (1) {
-        switch (_context19.prev = _context19.next) {
+        switch (_context21.prev = _context21.next) {
           case 0:
             statusOption = document.querySelector("select[name='resources']");
-            mediumOption = localStorage["medium-option"] ? localStorage["medium-option"] : "n/a";
-            statusOption.value = mediumOption;
+            storedMedium = localStorage.getItem("medium-option");
+            statusOption.value = storedMedium ? storedMedium : 'n/a';
 
           case 3:
           case "end":
-            return _context19.stop();
+            return _context21.stop();
         }
       }
-    }, _callee19);
+    }, _callee21);
   }));
   return _init_medium_option.apply(this, arguments);
 }
 
-function getPatientInfo(_x10) {
+function getPatientInfo(_x11) {
   return _getPatientInfo.apply(this, arguments);
 }
 
 function _getPatientInfo() {
-  _getPatientInfo = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee20(demographicNo) {
+  _getPatientInfo = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee22(demographicNo) {
     var result, text, el, info, re, emails;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee20$(_context20) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee22$(_context22) {
       while (1) {
-        switch (_context20.prev = _context20.next) {
+        switch (_context22.prev = _context22.next) {
           case 0:
-            _context20.next = 2;
+            _context22.next = 2;
             return getDemographicPageResponse(demographicNo);
 
           case 2:
-            result = _context20.sent;
-            _context20.next = 5;
+            result = _context22.sent;
+            _context22.next = 5;
             return result.text();
 
           case 5:
-            text = _context20.sent;
+            text = _context22.sent;
             el = document.createElement("html");
             el.innerHTML = text;
             info = {};
@@ -6878,14 +6928,14 @@ function _getPatientInfo() {
             re = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi;
             emails = text.match(re);
             if (emails && emails.length) info.email = emails[0];
-            return _context20.abrupt("return", info);
+            return _context22.abrupt("return", info);
 
           case 14:
           case "end":
-            return _context20.stop();
+            return _context22.stop();
         }
       }
-    }, _callee20);
+    }, _callee22);
   }));
   return _getPatientInfo.apply(this, arguments);
 }

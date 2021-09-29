@@ -73,9 +73,12 @@ const init_cortico = function () {
     route.indexOf("/appointment/addappointment.jsp") > -1 ||
     route.indexOf("/appointment/appointmentcontrol.jsp") > -1
   ) {
+    // only show on add appointment
+    if (route.indexOf("/appointment/addappointment.jsp") > -1) {
+      init_medium_option();
+    }
     init_appointment_page();
     init_recall_button();
-    init_medium_option();
 
     // Temporary fix, adding event listener does not work inside init_appointment_page
     // Note: event listeners inside init_recall_button seems to be working fine
@@ -356,22 +359,21 @@ async function setupPatientEmailButton() {
 
   const patient_info = await getPatientInfo();
   let mailto_str
-  // if (is_eform_page) {
-  //   mailto_str = `mailto:${patient_info.email}?subject=Your+Document&body=Hi+${patient_info["First Name"]}%0A%0APlease find the attached document from your doctor at ${clinicName}.`
-  // } else {
-  //   mailto_str = `mailto:${patient_info.email}`
-  // }
+  if (is_eform_page) {
+    mailto_str = `mailto:${patient_info.email}?subject=Your+Document&body=Hi+${patient_info["First Name"]}%0A%0APlease find the attached document from your doctor at ${clinicName}.`
+  } else {
+    mailto_str = `mailto:${patient_info.email}`
+  }
 
   const email_btn = htmlToElement(`
   <p style='margin-bottom:2em'>
     <a id='cortico-email-patient' class='cortico-btn'>Email Patient</a>
   </p>
   `);
-  email_btn.addEventListener('')
 
-  // delegate(email_btn, 'click', 'a', async function (e) {
-  //   await demoFromHTML()
-  // })
+  delegate(email_btn, 'click', 'a', async function (e) {
+    await demoFromHTML()
+  })
 
   email_parent.appendChild(email_btn);
 }
@@ -767,10 +769,8 @@ function getMediumOption() {
   container.appendChild(button);
 
   button.addEventListener("click", function () {
-    if (input.value) {
-      localStorage.setItem("medium-option", input.value);
-      alert("Your default medium has changed");
-    }
+    localStorage.setItem("medium-option", input.value);
+    alert("Your default medium has changed");
   });
   return container;
 }
@@ -1053,9 +1053,10 @@ function getResetCacheButton() {
   var button = create(
     `<button class='cortico-btn warning bottom'>Reset Cache</button>`, {
     events: {
-      "click .cortico-btn.warning.bottom": (e) => {
+      "click .cortico-btn.warning.bottom": async (e) => {
         if (confirm("Are you sure you want to clear your cache?")) {
           localStorage.clear()
+          await chrome.storage.local.clear()
 
           alert("Successfully reset cache, the page will now reload.")
           window.location.reload()
@@ -2216,11 +2217,9 @@ async function init_recall_button() {
 async function init_medium_option() {
   const statusOption = document.querySelector("select[name='resources']");
 
-  var mediumOption = localStorage["medium-option"]
-    ? localStorage["medium-option"]
-    : "n/a";
+  let storedMedium = localStorage.getItem("medium-option")
 
-  statusOption.value = mediumOption;
+  statusOption.value = storedMedium ? storedMedium : 'n/a';
 }
 
 
