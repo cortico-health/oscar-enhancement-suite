@@ -69,6 +69,7 @@ td.appt {
   top: -8px;
   border-radius: 50%;
   box-shadow: 0 3px 3px 2px rgba(0, 0, 0, 0.3);
+  left: 7.5px;
 }
 
 .appointment-menu-wrapper {
@@ -120,10 +121,16 @@ td.appt {
   display: inline-block;
   position: relative;
   top: 1px;
-  padding: 1px 3px;
+}
+
+.appointment-checkbox {
+  top: -8px;
+  left: -1px;
+  position: absolute;
+  padding: 1px 2.5px;
   background-color: #5b6ce2;
   border: 1px solid #d8ddff;
   border-radius: 50%;
   cursor: pointer;
-  font-size: 9px;
+  font-size: 6px;
 }

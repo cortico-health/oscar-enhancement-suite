@@ -73,9 +73,12 @@ const init_cortico = function () {
     route.indexOf("/appointment/addappointment.jsp") > -1 ||
     route.indexOf("/appointment/appointmentcontrol.jsp") > -1
   ) {
+    // only show on add appointment
+    if (route.indexOf("/appointment/addappointment.jsp") > -1) {
+      init_medium_option();
+    }
     init_appointment_page();
     init_recall_button();
-    init_medium_option();
 
     // Temporary fix, adding event listener does not work inside init_appointment_page
     // Note: event listeners inside init_recall_button seems to be working fine
@@ -84,7 +87,7 @@ const init_cortico = function () {
     // open a windows to the cortico video page for this appointment.
     window.addEventListener("click", (e) => {
       if (e.target.id === "cortico-video-appt-btn") {
-        if (!checkCorticoUrl(e)) return;
+        if (!checkCorticoUrl(e.originalEvent)) return;
 
         open_video_appointment_page(e);
       }
@@ -373,7 +376,6 @@ async function setupPatientEmailButton() {
   })
 
   email_parent.appendChild(email_btn);
-
 }
 
 function delegate(element, event, descendentSelector, callback) {
@@ -767,10 +769,8 @@ function getMediumOption() {
   container.appendChild(button);
 
   button.addEventListener("click", function () {
-    if (input.value) {
-      localStorage.setItem("medium-option", input.value);
-      alert("Your default medium has changed");
-    }
+    localStorage.setItem("medium-option", input.value);
+    alert("Your default medium has changed");
   });
   return container;
 }
@@ -875,35 +875,59 @@ function getNewUIOption() {
 
 
 async function getCorticoLogin() {
-  if (!getCorticoUrl()) return create('<div></div>');
+  var container = create('<div></div>')
+  if (!getCorticoUrl()) return container;
 
   let jwt_expired = null;
   let loginButton = create(
     `<button class='cortico-btn'>Sign in at Cortico</button>`
   )
+  let loggedInAsText = '';
+  let loggedInAsHtml = '';
 
-  loadExtensionStorageValue("jwt_expired").then(function (expired) {
-    jwt_expired = expired
+  let btnEvent = {
+    "click .cortico-btn": (e) => {
+      if (!checkCorticoUrl(e.originalEvent)) return;
 
-    if (jwt_expired === false) {
-      loginButton.textContent = "Already signed in";
-      loginButton.disabled = true
+      if (e.target.className == 'cortico-btn') {
+        const loginForm = document.querySelector(".login-form")
+        loginForm.classList.add("show")
+      }
     }
+  }
+  await loadExtensionStorageValue("jwt_username").then(function (username) {
+    loggedInAsText = `Logged in as ${username}`;
   })
 
-  var container = create(
-    `<div class='login-form-button'>${loginButton.outerHTML}</div>`,
-    {
-      events: {
-        "click .cortico-btn": (e) => {
-          if (!checkCorticoUrl(e)) return;
+  await loadExtensionStorageValue("jwt_expired").then(function (expired) {
+    jwt_expired = expired
+    console.log("test", expired)
+
+    if (jwt_expired === false) {
+      loginButton = create(
+        `<button class='cortico-btn'>Log out</button>`
+      )
+      loggedInAsHtml = `<p>${loggedInAsText}</p>`
+      btnEvent = {
+        "click .cortico-btn": async (e) => {
           if (e.target.className == 'cortico-btn') {
-            const loginForm = document.querySelector(".login-form")
-            loginForm.classList.add("show")
+            chrome.storage.local.remove(['jwt_access_token', 'jwt_expired']);
+
+            alert("Logged out from cortico, reloading...");
+            window.location.reload();
           }
         }
       }
     }
+  })
+
+  var container = create(
+    `<div class='login-form-button'>
+    ${loginButton.outerHTML}
+    ${loggedInAsHtml}
+    </div>`, {
+    events: btnEvent
+  }
   )
   return container
 }
@@ -1015,8 +1039,9 @@ function getBatchPharmaciesButton() {
   var container = createSidebarContainer(button, {
     events: {
       "click .cortico-btn.inline": (e) => {
-        console.log("Batch Pharmacy Setup running...")
-        if (!checkCorticoUrl(e)) return;
+        if (!checkCorticoUrl(e.originalEvent)) return;
+
+        console.log("Batch Pharmacy Setup running...", e)
         setupPreferredPharmacies()
       }
     }
@@ -1028,9 +1053,10 @@ function getResetCacheButton() {
   var button = create(
     `<button class='cortico-btn warning bottom'>Reset Cache</button>`, {
     events: {
-      "click .cortico-btn.warning.bottom": (e) => {
+      "click .cortico-btn.warning.bottom": async (e) => {
         if (confirm("Are you sure you want to clear your cache?")) {
           localStorage.clear()
+          await chrome.storage.local.clear()
 
           alert("Successfully reset cache, the page will now reload.")
           window.location.reload()
@@ -1224,14 +1250,15 @@ function dragAndDrop() {
         { start_time: newStartTime, provider_no: targetDoctor }
       );
     } else {
-      result = await cutAppointment(origin, namespace, formData);
-      formData.set("provider_no", targetDoctor);
+      alert("Moving appointments to other providers is currently disabled.")
+      // result = await cutAppointment(origin, namespace, formData);
+      // formData.set("provider_no", targetDoctor);
 
-      handleAddData(formData);
-      const data = new URLSearchParams(formData);
-      result = await addAppointment(origin, namespace, data);
+      // handleAddData(formData);
+      // const data = new URLSearchParams(formData);
+      // result = await addAppointment(origin, namespace, data);
 
-      window.location.reload();
+      // window.location.reload();
     }
   }
 
@@ -2094,13 +2121,13 @@ async function init_diagnostic_viewer_button() {
   }
 
   async function open_diagnostic_viewer(e) {
-    if (!checkCorticoUrl(e)) return;
+    if (!checkCorticoUrl(e.originalEvent)) return;
 
     e.preventDefault();
 
     const appt_no = getQueryStringValue("appointment_no");
 
-    loadExtensionStorageValue("jwt_access_token").then(async function (access_token) {
+    await loadExtensionStorageValue("jwt_access_token").then(async function (access_token) {
       const diagnostic_response = await getDiagnosticFromCortico(
         appt_no,
         notesValue,
@@ -2190,11 +2217,9 @@ async function init_recall_button() {
 async function init_medium_option() {
   const statusOption = document.querySelector("select[name='resources']");
 
-  var mediumOption = localStorage["medium-option"]
-    ? localStorage["medium-option"]
-    : "n/a";
+  let storedMedium = localStorage.getItem("medium-option")
 
-  statusOption.value = mediumOption;
+  statusOption.value = storedMedium ? storedMedium : 'n/a';
 }
 
 
