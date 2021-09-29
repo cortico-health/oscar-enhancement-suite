@@ -211,10 +211,12 @@ export function setAppointmentCheckbox(apptTd, apptInfo, checkCache, pharmaciesC
 
     let masterRecord = apptTd.querySelector("a.masterbtn");
     masterRecord.append(create(`
-      <div class='appointment-checkbox-wrapper' style='background-color:${cacheColor}'>
-          ${menuIcon}
+    <div class='appointment-checkbox-wrapper'>
+      <div class='appointment-checkbox' style='background-color:${cacheColor}'>
+        ${menuIcon}
       </div>
-      `));
+    </div>
+    `));
   }
 
   if (isPharmacyCached) {
@@ -222,9 +224,12 @@ export function setAppointmentCheckbox(apptTd, apptInfo, checkCache, pharmaciesC
     menuIcon = '<small>&#10004;</small>';
 
     let rx = apptTd.querySelector("a[title='Prescriptions']")
+    rx.innerHTML = ' Rx'
     rx.append(create(`
-      <div class='appointment-checkbox-wrapper' style='background-color:${cacheColor}'>
+      <div class='appointment-checkbox-wrapper'>
+        <div class='appointment-checkbox' style='background-color:${cacheColor}'>
           ${menuIcon}
+        </div>
       </div>
       `));
   }

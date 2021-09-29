@@ -875,35 +875,58 @@ function getNewUIOption() {
 
 
 async function getCorticoLogin() {
-  if (!getCorticoUrl()) return create('<div></div>');
+  var container = create('<div></div>')
+  if (!getCorticoUrl()) return;
 
   let jwt_expired = null;
   let loginButton = create(
     `<button class='cortico-btn'>Sign in at Cortico</button>`
   )
+  let loggedInAsText = '';
+  let loggedInAsHtml = '';
 
-  loadExtensionStorageValue("jwt_expired").then(function (expired) {
+  let btnEvent = {
+    "click .cortico-btn": (e) => {
+      if (!checkCorticoUrl(e.originalEvent)) return;
+
+      if (e.target.className == 'cortico-btn') {
+        const loginForm = document.querySelector(".login-form")
+        loginForm.classList.add("show")
+      }
+    }
+  }
+  await loadExtensionStorageValue("jwt_username").then(function (username) {
+    loggedInAsText = `Logged in as ${username}`;
+  })
+
+  await loadExtensionStorageValue("jwt_expired").then(function (expired) {
     jwt_expired = expired
+    console.log("test", expired)
 
     if (jwt_expired === false) {
-      loginButton.textContent = "Already signed in";
-      loginButton.disabled = true
+      loginButton = create(
+        `<button class='cortico-btn'>Log out</button>`
+      )
+      loggedInAsHtml = `<p>${loggedInAsText}</p>`
+      btnEvent = {
+        "click .cortico-btn": async (e) => {
+          if (e.target.className == 'cortico-btn') {
+            chrome.storage.local.remove(['jwt_access_token', 'jwt_expired']);
+
+            alert("Logged out from cortico, reloading...");
+            window.location.reload();
+          }
+        }
+      }
     }
   })
 
   var container = create(
-    `<div class='login-form-button'>${loginButton.outerHTML}</div>`, {
-    events: {
-      "click .cortico-btn": (e) => {
-        console.log("test", e)
-        if (!checkCorticoUrl(e.originalEvent)) return;
-
-        if (e.target.className == 'cortico-btn') {
-          const loginForm = document.querySelector(".login-form")
-          loginForm.classList.add("show")
-        }
-      }
-    }
+    `<div class='login-form-button'>
+    ${loginButton.outerHTML}
+    ${loggedInAsHtml}
+    </div>`, {
+    events: btnEvent
   }
   )
   return container
@@ -2103,7 +2126,7 @@ async function init_diagnostic_viewer_button() {
 
     const appt_no = getQueryStringValue("appointment_no");
 
-    loadExtensionStorageValue("jwt_access_token").then(async function (access_token) {
+    await loadExtensionStorageValue("jwt_access_token").then(async function (access_token) {
       const diagnostic_response = await getDiagnosticFromCortico(
         appt_no,
         notesValue,
