@@ -6904,25 +6904,6 @@ function getDemographicPageResponse(demographic) {
   var url = "".concat(origin, "/").concat(namespace, "/demographic/demographiccontrol.jsp?demographic_no=").concat(demographicNo, "&displaymode=edit&dboperation=search_detail");
   return fetch(url);
 }
-
-function emailEforms() {
-  var url = "http://localhost/api/plug-in/email-form/";
-  var data = {
-    "subject": "Test",
-    "body": "Test body",
-    "to": "ferdinand@countable.ca",
-    "clinic_host": "stage-juno.cortico.ca",
-    "pdf_html": "<b>test</b>"
-  };
-  return fetch(url, {
-    method: "POST",
-    body: data,
-    headers: {
-      Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-      "Content-Type": "application/x-www-form-urlencoded"
-    }
-  });
-}
 })();
 
 /******/ })()
