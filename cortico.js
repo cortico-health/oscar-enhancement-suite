@@ -84,7 +84,7 @@ const init_cortico = function () {
     // open a windows to the cortico video page for this appointment.
     window.addEventListener("click", (e) => {
       if (e.target.id === "cortico-video-appt-btn") {
-        if (!checkCorticoUrl(e)) return;
+        if (!checkCorticoUrl(e.originalEvent)) return;
 
         open_video_appointment_page(e);
       }
@@ -892,18 +892,19 @@ async function getCorticoLogin() {
   })
 
   var container = create(
-    `<div class='login-form-button'>${loginButton.outerHTML}</div>`,
-    {
-      events: {
-        "click .cortico-btn": (e) => {
-          if (!checkCorticoUrl(e)) return;
-          if (e.target.className == 'cortico-btn') {
-            const loginForm = document.querySelector(".login-form")
-            loginForm.classList.add("show")
-          }
+    `<div class='login-form-button'>${loginButton.outerHTML}</div>`, {
+    events: {
+      "click .cortico-btn": (e) => {
+        console.log("test", e)
+        if (!checkCorticoUrl(e.originalEvent)) return;
+
+        if (e.target.className == 'cortico-btn') {
+          const loginForm = document.querySelector(".login-form")
+          loginForm.classList.add("show")
         }
       }
     }
+  }
   )
   return container
 }
@@ -1015,8 +1016,9 @@ function getBatchPharmaciesButton() {
   var container = createSidebarContainer(button, {
     events: {
       "click .cortico-btn.inline": (e) => {
-        console.log("Batch Pharmacy Setup running...")
-        if (!checkCorticoUrl(e)) return;
+        if (!checkCorticoUrl(e.originalEvent)) return;
+
+        console.log("Batch Pharmacy Setup running...", e)
         setupPreferredPharmacies()
       }
     }
@@ -2095,7 +2097,7 @@ async function init_diagnostic_viewer_button() {
   }
 
   async function open_diagnostic_viewer(e) {
-    if (!checkCorticoUrl(e)) return;
+    if (!checkCorticoUrl(e.originalEvent)) return;
 
     e.preventDefault();
 

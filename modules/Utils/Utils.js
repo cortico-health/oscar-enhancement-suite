@@ -189,10 +189,10 @@ export function createSidebarContainer(child, events) {
 export function checkCorticoUrl(event) {
   if (!getCorticoUrl()) {
     event.preventDefault();
-    alert("Please set the cortico URL to use this feature.")
+    alert("Please set the cortico URL to use this feature.");
 
-    return false
+    return false;
   }
 
-  return
+  return true;
 }
