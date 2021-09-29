@@ -876,7 +876,7 @@ function getNewUIOption() {
 
 async function getCorticoLogin() {
   var container = create('<div></div>')
-  if (!getCorticoUrl()) return;
+  if (!getCorticoUrl()) return container;
 
   let jwt_expired = null;
   let loginButton = create(
