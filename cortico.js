@@ -356,24 +356,24 @@ async function setupPatientEmailButton() {
 
   const patient_info = await getPatientInfo();
   let mailto_str
-  if (is_eform_page) {
-    mailto_str = `mailto:${patient_info.email}?subject=Your+Document&body=Hi+${patient_info["First Name"]}%0A%0APlease find the attached document from your doctor at ${clinicName}.`
-  } else {
-    mailto_str = `mailto:${patient_info.email}`
-  }
+  // if (is_eform_page) {
+  //   mailto_str = `mailto:${patient_info.email}?subject=Your+Document&body=Hi+${patient_info["First Name"]}%0A%0APlease find the attached document from your doctor at ${clinicName}.`
+  // } else {
+  //   mailto_str = `mailto:${patient_info.email}`
+  // }
 
   const email_btn = htmlToElement(`
   <p style='margin-bottom:2em'>
     <a id='cortico-email-patient' class='cortico-btn'>Email Patient</a>
   </p>
   `);
+  email_btn.addEventListener('')
 
-  delegate(email_btn, 'click', 'a', async function (e) {
-    await demoFromHTML()
-  })
+  // delegate(email_btn, 'click', 'a', async function (e) {
+  //   await demoFromHTML()
+  // })
 
   email_parent.appendChild(email_btn);
-
 }
 
 function delegate(element, event, descendentSelector, callback) {
@@ -2240,4 +2240,26 @@ function getDemographicPageResponse(demographic) {
   const url = `${origin}/${namespace}/demographic/demographiccontrol.jsp?demographic_no=${demographicNo}&displaymode=edit&dboperation=search_detail`;
 
   return fetch(url);
+}
+
+
+function emailEforms() {
+  let url = "http://localhost/api/plug-in/email-form/";
+  let data = {
+    "subject": "Test",
+    "body": "Test body",
+    "to": "ferdinand@countable.ca",
+    "clinic_host": "stage-juno.cortico.ca",
+    "pdf_html": "<b>test</b>"
+  }
+
+  return fetch(url, {
+    method: "POST",
+    body: data,
+    headers: {
+      Accept:
+        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+  })
 }

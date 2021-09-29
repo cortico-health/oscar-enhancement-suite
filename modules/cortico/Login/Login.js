@@ -67,6 +67,9 @@ export async function corticoSignIn(username, password, browser) {
 
     const openMenu = document.querySelector(".login-form.show");
     openMenu.classList.remove("show");
+
+    alert("Successfully signed in, the page will now reload")
+    window.location.reload()
   }
 }
 
