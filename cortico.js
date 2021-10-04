@@ -19,7 +19,7 @@ import "element-closest-polyfill";
 import { getOrigin, getNamespace, htmlToElement } from "./modules/Utils/Utils";
 import { CorticoIcon } from "./modules/Icons/CorticoIcon";
 import { debounce, create, getDemographicNo, getCorticoUrl } from "./modules/Utils/Utils";
-import { loadExtensionStorageValue, checkCorticoUrl } from "./modules/Utils/Utils";
+import { loadExtensionStorageValue, addToCache, createSidebarContainer, checkCorticoUrl } from "./modules/Utils/Utils";
 import "./index.css";
 import { Modal } from "./modules/Modal/Modal";
 import Dashboard from "./modules/cortico/Dashboard";
@@ -73,9 +73,12 @@ const init_cortico = function () {
     route.indexOf("/appointment/addappointment.jsp") > -1 ||
     route.indexOf("/appointment/appointmentcontrol.jsp") > -1
   ) {
+    // only show on add appointment
+    if (route.indexOf("/appointment/addappointment.jsp") > -1) {
+      init_medium_option();
+    }
     init_appointment_page();
     init_recall_button();
-    init_medium_option();
 
     // Temporary fix, adding event listener does not work inside init_appointment_page
     // Note: event listeners inside init_recall_button seems to be working fine
@@ -84,7 +87,7 @@ const init_cortico = function () {
     // open a windows to the cortico video page for this appointment.
     window.addEventListener("click", (e) => {
       if (e.target.id === "cortico-video-appt-btn") {
-        if (!checkCorticoUrl(e)) return;
+        if (!checkCorticoUrl(e.originalEvent)) return;
 
         open_video_appointment_page(e);
       }
@@ -300,80 +303,43 @@ function init_appointment_page() {
   update_video_button();
 }
 
-async function demoFromHTML() {
-
-  var pdf = new jsPDF('p', 'pt', 'letter');
-  // source can be HTML-formatted string, or a reference
-  // to an actual DOM element from which the text will be scraped.
-  source = $('#page1')[0];
-
-
-  // we support special element handlers. Register them with jQuery-style 
-  // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
-  // There is no support for any other type of selectors 
-  // (class, of compound) at this time.
-  specialElementHandlers = {
-    // element with id of "bypass" - jQuery style selector
-    '#bypassme': function (element, renderer) {
-      // true = "handled elsewhere, bypass text extraction"
-      return true
-    }
-  };
-  margins = {
-    top: 80,
-    bottom: 60,
-    left: 40,
-    width: 522
-  };
-  // all coords and widths are in jsPDF instance's declared units
-  // 'inches' in this case
-  pdf.fromHTML(
-    source, // HTML string or DOM elem ref.
-    margins.left, // x coord
-    margins.top, { // y coord
-    'width': margins.width, // max width of content on PDF
-    'elementHandlers': specialElementHandlers
-  },
-
-    function (dispose) {
-      // dispose: object with X, Y of the last line add to the PDF 
-      //          this allow the insertion of new lines after html
-      pdf.save('Test.pdf');
-    }, margins
-  );
-}
-
 async function setupPatientEmailButton() {
 
   let is_eform_page = true;
   const clinicName = localStorage["clinicname"];
 
   const email_parent = document.querySelector(".DoNotPrint td")
+    || document.querySelector("#BottomButtons")
   if (!email_parent) {
     is_eform_page = false;
     const email_parent = document.querySelector("#save div:last-child");
   }
 
   const patient_info = await getPatientInfo();
-  let mailto_str
-  if (is_eform_page) {
-    mailto_str = `mailto:${patient_info.email}?subject=Your+Document&body=Hi+${patient_info["First Name"]}%0A%0APlease find the attached document from your doctor at ${clinicName}.`
-  } else {
-    mailto_str = `mailto:${patient_info.email}`
-  }
 
-  const email_btn = htmlToElement(`
+  const email_btn = create(`
   <p style='margin-bottom:2em'>
     <a id='cortico-email-patient' class='cortico-btn'>Email Patient</a>
   </p>
   `);
+  email_btn.addEventListener("click", async (e) => {
+    if (!checkCorticoUrl(e)) return;
 
-  delegate(email_btn, 'click', 'a', async function (e) {
-    await demoFromHTML()
+    await loadExtensionStorageValue("jwt_access_token").then(async function (access_token) {
+      // copy document and remove unnecessary stuff
+      let html = document.cloneNode(true);
+      let doNotPrintList = html.querySelectorAll(".DoNotPrint")
+
+      let patientFormResponse = await emailPatientEForm(
+        patient_info,
+        html.documentElement.outerHTML,
+        access_token
+      );
+      console.log('RSP: ', patientFormResponse)
+    })
   })
 
   email_parent.appendChild(email_btn);
-
 }
 
 function delegate(element, event, descendentSelector, callback) {
@@ -444,6 +410,19 @@ const init_styles = function () {
   .cortico-input.disabled {
   background-color: #DDD;
   color: #999;
+  }
+  .cortico-btn.inline {
+  width: 100%;
+  display: inline-block;
+  margin: 10px auto;
+  }
+  .bottom {
+  position: absolute;
+  bottom: 1px;
+  left: 10px;
+  }
+  .warning {
+  background-color: #cc3300;
   }
   `;
 
@@ -550,13 +529,11 @@ async function createSideBar() {
   })
 
   window.corticoSidebar = sidebar;
-
   //var newUiOption = getNewUIOption();
   //sidebar.appendChild(newUiOption);
 
-  sidebar.appendChild(getCorticoUrlOption());
   sidebar.appendChild(await getCorticoLogin());
-
+  sidebar.appendChild(getCorticoUrlOption());
   sidebar.appendChild(getRecallStatusOption());
   sidebar.appendChild(getMediumOption());
 
@@ -697,13 +674,7 @@ function getRecallStatusOption() {
   label.style.marginBottom = "10px";
   label.style.textAlign = "center";
 
-  var button = htmlToElement(`<button class='cortico-btn'>Save</button>`)
-  // document.createElement("button");
-  // button.textContent = "Save";
-  button.style.width = "100%";
-  button.style.display = "inline-block";
-  button.style.margin = "10px auto";
-  // button.className = "cortico-btn";
+  var button = create(`<button class='cortico-btn inline'>Save</button>`)
 
   container.appendChild(label);
   container.appendChild(inputContainer);
@@ -762,10 +733,8 @@ function getMediumOption() {
   container.appendChild(button);
 
   button.addEventListener("click", function () {
-    if (input.value) {
-      localStorage.setItem("medium-option", input.value);
-      alert("Your default medium has changed");
-    }
+    localStorage.setItem("medium-option", input.value);
+    alert("Your default medium has changed");
   });
   return container;
 }
@@ -870,39 +839,65 @@ function getNewUIOption() {
 
 
 async function getCorticoLogin() {
-  var jwt_expired = null;
-  var loginButton = document.createElement("button");
-  loginButton.textContent = "Sign In at Cortico";
+  var container = create('<div></div>')
+  if (!getCorticoUrl()) return container;
 
-  loadExtensionStorageValue("jwt_expired").then(function (expired) {
+  let jwt_expired = null;
+  let loginButton = create(
+    `<button class='cortico-btn'>Sign in at Cortico</button>`
+  )
+  let loggedInAsText = '';
+  let loggedInAsHtml = '';
+
+  let btnEvent = {
+    "click .cortico-btn": (e) => {
+      if (!checkCorticoUrl(e.originalEvent)) return;
+
+      if (e.target.className == 'cortico-btn') {
+        const loginForm = document.querySelector(".login-form")
+        loginForm.classList.add("show")
+      }
+    }
+  }
+  await loadExtensionStorageValue("jwt_username").then(function (username) {
+    loggedInAsText = `Logged in as ${username}`;
+  })
+
+  await loadExtensionStorageValue("jwt_expired").then(function (expired) {
     jwt_expired = expired
+    console.log("test", expired)
 
     if (jwt_expired === false) {
-      loginButton.textContent = "Already signed in";
-      loginButton.disabled = true
+      loginButton = create(
+        `<button class='cortico-btn'>Log out</button>`
+      )
+      loggedInAsHtml = `<p>${loggedInAsText}</p>`
+      btnEvent = {
+        "click .cortico-btn": async (e) => {
+          if (e.target.className == 'cortico-btn') {
+            chrome.storage.local.remove(['jwt_access_token', 'jwt_expired']);
+
+            alert("Logged out from cortico, reloading...");
+            window.location.reload();
+          }
+        }
+      }
     }
   })
 
-  var container = document.createElement("div");
-  loginButton.className = "cortico-btn";
-
-  loginButton.addEventListener("click", (e) => {
-    if (!checkCorticoUrl(e)) return;
-
-    const loginForm = document.querySelector(".login-form")
-    loginForm.classList.add("show")
-  })
-
-  container.appendChild(loginButton);
-
+  var container = create(
+    `<div class='login-form-button'>
+    ${loginButton.outerHTML}
+    ${loggedInAsHtml}
+    </div>`, {
+    events: btnEvent
+  }
+  )
   return container
 }
 
 function getCorticoUrlOption() {
-  var container = document.createElement("div");
-  container.style.width = "100%";
-  container.style.padding = "0px 10px";
-  container.style.boxSizing = "border-box";
+  var container = createSidebarContainer()
   var inputContainer = document.createElement("div");
   inputContainer.style.display = "flex";
   inputContainer.style.alignItems = "center";
@@ -950,12 +945,7 @@ function getCorticoUrlOption() {
   label.style.marginBottom = "10px";
   label.style.textAlign = "center";
 
-  var button = document.createElement("button");
-  button.textContent = "Save";
-  button.style.width = "100%";
-  button.style.display = "inline-block";
-  button.style.margin = "10px auto";
-  button.className = "cortico-btn";
+  var button = create(`<button class='cortico-btn inline'>Save</button>`)
 
   if (window.localStorage["firstRun"] !== "false") {
     const instructions = create("div", {
@@ -986,46 +976,60 @@ function getCorticoUrlOption() {
 }
 
 function getEligButton() {
-  var button = document.createElement("button");
-  button.textContent = "Check Eligiblity";
-  button.className = "cortico-btn";
-  button.addEventListener("click", async (e) => {
-    await checkAllEligibility();
-  });
+  var button = create(`
+    <button class='cortico-btn inline'>Check Eligibility</button>`
+  )
+  var container = createSidebarContainer(button,
+    {
+      events: {
+        "click .cortico-btn.inline": async (e) => {
+          console.log("Check Eligibility Start")
+          await checkAllEligibility();
+        }
+      }
+    }
+  )
+
   //button.addEventListener("click", window.checkAllEligibility);
-  return button;
+  return container;
 }
 
 function getBatchPharmaciesButton() {
-  var button = document.createElement("button");
-  button.textContent = "Set preferred pharmacies";
-  button.className = "cortico-btn";
-  button.addEventListener("click", (e) => {
-    if (!checkCorticoUrl(e)) return;
+  var button = create(`
+  <button class='cortico-btn inline'>
+    Set preferred pharmacies
+  </button>`
+  )
+  var container = createSidebarContainer(button, {
+    events: {
+      "click .cortico-btn.inline": (e) => {
+        if (!checkCorticoUrl(e.originalEvent)) return;
 
-    setupPreferredPharmacies()
-  });
-  return button;
+        console.log("Batch Pharmacy Setup running...", e)
+        setupPreferredPharmacies()
+      }
+    }
+  })
+  return container;
 }
 
 function getResetCacheButton() {
-  var button = create("button", {
-    attrs: {
-      class: "cortico-btn",
-    },
-    text: "Reset Cache",
-  });
+  var button = create(
+    `<button class='cortico-btn warning bottom'>Reset Cache</button>`, {
+    events: {
+      "click .cortico-btn.warning.bottom": async (e) => {
+        if (confirm("Are you sure you want to clear your cache?")) {
+          localStorage.clear()
+          await chrome.storage.local.clear()
 
-  button.addEventListener("click", (e) => {
-    if (confirm("Are you sure you want to clear your cache?")) {
-      localStorage.clear()
-
-      alert("Successfully reset cache, the page will now reload.")
-      window.location.reload()
-    } else {
-      console.log("Clear cache cancelled")
+          alert("Successfully reset cache, the page will now reload.")
+          window.location.reload()
+        } else {
+          console.log("Clear cache cancelled")
+        }
+      }
     }
-  })
+  });
 
   return button
 }
@@ -1210,14 +1214,15 @@ function dragAndDrop() {
         { start_time: newStartTime, provider_no: targetDoctor }
       );
     } else {
-      result = await cutAppointment(origin, namespace, formData);
-      formData.set("provider_no", targetDoctor);
+      alert("Moving appointments to other providers is currently disabled.")
+      // result = await cutAppointment(origin, namespace, formData);
+      // formData.set("provider_no", targetDoctor);
 
-      handleAddData(formData);
-      const data = new URLSearchParams(formData);
-      result = await addAppointment(origin, namespace, data);
+      // handleAddData(formData);
+      // const data = new URLSearchParams(formData);
+      // result = await addAppointment(origin, namespace, data);
 
-      window.location.reload();
+      // window.location.reload();
     }
   }
 
@@ -1254,19 +1259,6 @@ function clearFailureCache() {
 
 function getFailureCache() {
   return localStorage.getItem("failureCache");
-}
-
-function addToCache(demographic_no, _verified) {
-  const verified = _verified || false;
-  const _cache = localStorage.getItem("checkCache");
-  const _today = dayjs().format("YYYY-MM-DD");
-  const cache = JSON.parse(_cache) || {};
-  cache[demographic_no] = {
-    date: _today,
-    verified: verified,
-  };
-
-  localStorage.setItem("checkCache", JSON.stringify(cache));
 }
 
 function filterAppointments(appointments) {
@@ -1858,8 +1850,6 @@ async function setupPreferredPharmacy(code, demographic_no) {
     `currently using pharmacy ${searchTerm.toLowerCase()}, ${currentlyUsingPharmacy}`
   );
 
-  storePharmaciesCache(demographicNo);
-
   if (searchTerm && !currentlyUsingPharmacy) {
     const results = await getPharmacyResults(searchTerm);
     const text = await results.text();
@@ -2044,6 +2034,8 @@ async function setupPreferredPharmacies() {
         }, 2000);
       });
 
+      storePharmaciesCache(demographicNo);
+
       const apptTitle = element.attributes.title.textContent;
       const pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle);
       if (!pharmacyCode) {
@@ -2052,7 +2044,7 @@ async function setupPreferredPharmacies() {
 
       await setupPreferredPharmacy(pharmacyCode, demographicNo);
     } catch (err) {
-      console.error(err);
+      console.error("err", err);
       storePharmaciesFailureCache(demographicNo, err.message);
       displayPharmaciesFailure(demographicNo, err.message);
     } finally {
@@ -2093,13 +2085,11 @@ async function init_diagnostic_viewer_button() {
   }
 
   async function open_diagnostic_viewer(e) {
-    if (!checkCorticoUrl(e)) return;
-
-    e.preventDefault();
+    if (!checkCorticoUrl(e.originalEvent)) return;
 
     const appt_no = getQueryStringValue("appointment_no");
 
-    loadExtensionStorageValue("jwt_access_token").then(async function (access_token) {
+    await loadExtensionStorageValue("jwt_access_token").then(async function (access_token) {
       const diagnostic_response = await getDiagnosticFromCortico(
         appt_no,
         notesValue,
@@ -2189,11 +2179,9 @@ async function init_recall_button() {
 async function init_medium_option() {
   const statusOption = document.querySelector("select[name='resources']");
 
-  var mediumOption = localStorage["medium-option"]
-    ? localStorage["medium-option"]
-    : "n/a";
+  let storedMedium = localStorage.getItem("medium-option")
 
-  statusOption.value = mediumOption;
+  statusOption.value = storedMedium ? storedMedium : 'n/a';
 }
 
 
@@ -2236,4 +2224,62 @@ function getDemographicPageResponse(demographic) {
   const url = `${origin}/${namespace}/demographic/demographiccontrol.jsp?demographic_no=${demographicNo}&displaymode=edit&dboperation=search_detail`;
 
   return fetch(url);
+}
+
+
+async function emailPatientEForm(patientInfo, html, token) {
+  let url = getCorticoUrl() + "/api/plug-in/email-form/"
+  let patientEmail = patientInfo.email || null
+
+  if (!patientEmail) {
+    alert("The patient has no email");
+
+    return;
+  }
+
+  let data = {
+    "clinic_host": getCorticoUrl().replace(/http.?:\/\//, ''),
+    "to": patientEmail,
+    "pdf_html": html
+  }
+
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data),
+    mode: 'cors',
+    headers: {
+      "Content-type": "application/json",
+      "Authorization": `Bearer ${token}`
+    }
+    // TODO: handle other cortico api errors the same way
+  }).then(handleErrors)
+    .then(response => response.json())
+    .then((data) => {
+      if (data.success) {
+        alert(`Successfully emailed PDF to ${patientEmail}.`)
+      } else {
+        alert(`Sending email failed: ${data.message}`)
+      }
+    })
+    .catch((err) => {
+      console.error("Cortico: Error sending email: ", err)
+      if ((err + '').includes("Unauthorized")) {
+        alert("Your credentials have expired. Please login again")
+        chrome.storage.local.set({ "jwt_expired": true })
+
+        addLoginForm(chrome)
+        const loginForm = document.querySelector(".login-form")
+        loginForm.classList.add("show")
+      } else {
+        alert("Something went wrong with Cortico.")
+      }
+    });
+}
+
+function handleErrors(response) {
+  if (!response.ok) {
+    throw Error(response.statusText);
+  }
+
+  return response;
 }

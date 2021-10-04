@@ -17,7 +17,9 @@ export function addAppointmentMenu() {
   console.log(apptInfo)
 
   appointments.map((appt) => {
-    appt.appendChild(appointmentMenu(appt, apptInfo, checkCache, pharmaciesCache));
+    appt.appendChild(appointmentMenu(appt));
+
+    setAppointmentCheckbox(appt, apptInfo, checkCache, pharmaciesCache);
   });
 
   // clicks outside the menu, close it.
@@ -35,25 +37,7 @@ export function addAppointmentMenu() {
   });
 }
 
-export function appointmentMenu(apptTd, apptInfo, checkCache, pharmaciesCache) {
-
-  const appointment = new Appointment(apptTd);
-  const appointmentNo = appointment.getAppointmentNo();
-  const apptInfoItem = apptInfo.find((item) => {
-    return item.appointment_no === appointmentNo
-  }) || {}
-
-  const cacheValue = checkCache[apptInfoItem.demographic_no]
-  const isPharmacyCached = pharmaciesCache.demographics.includes(apptInfoItem.demographic_no)
-
-  if (isPharmacyCached) {
-    apptTd.querySelector('[title="Prescriptions"]').appendChild(create(`<small>&#10004;</small>`))
-  }
-  let cacheColor = '#555555';
-  if (cacheValue) {
-    cacheColor = cacheValue.verified ? '#00cc51' : '#cc0063';
-  }
-
+export function appointmentMenu(apptTd) {
   const corticoIcon = CorticoIcon({
     attrs: {
       height: "15",
@@ -64,7 +48,7 @@ export function appointmentMenu(apptTd, apptInfo, checkCache, pharmaciesCache) {
 
   const wrapper = create(`
   <div class='appointment-menu-wrapper'>
-    <div class='appointment-menu-container' style='background-color:${cacheColor}'>
+    <div class='appointment-menu-container' style='background-color:#5b6ce2'>
       <div class='appointment-menu'>
         <div class='appointment-menu-close'>x</div>
         <div class='appointment-menu-header'>
@@ -83,7 +67,6 @@ export function appointmentMenu(apptTd, apptInfo, checkCache, pharmaciesCache) {
   `, {
 
     events: {
-
       "click .appointment-menu-container": (e) => {
         // close button doesn't re-open
         if (e.target.className == 'appointment-menu-close') { return }
@@ -202,3 +185,53 @@ async function renderPatientInfo(apptTd) {
     contactInfoContainer.innerHTML = `<div style="white-space: initial;">Could not load contact information for this patient.</div>`;
   }
 }
+
+export function setAppointmentCheckbox(apptTd, apptInfo, checkCache, pharmaciesCache) {
+  const appointment = new Appointment(apptTd);
+  const appointmentNo = appointment.getAppointmentNo();
+  const apptInfoItem = apptInfo.find((item) => {
+    return item.appointment_no === appointmentNo
+  }) || {}
+
+  const cacheValue = checkCache[apptInfoItem.demographic_no]
+  const isPharmacyCached = pharmaciesCache.demographics.includes(apptInfoItem.demographic_no)
+
+  let menuIcon = '<small>&#10006;</small>';
+  let cacheColor = '#555555';
+  let apptStatus = apptTd.querySelector("a.apptStatus").querySelector("img").title
+
+  if (cacheValue != undefined) {
+    cacheColor = cacheValue.verified ? '#00cc51' : '#cc0063';
+    menuIcon = cacheValue.verified ? '<small>&#10004;</small>' : menuIcon;
+
+    if (apptStatus.toLowerCase() === 'private') {
+      menuIcon = '<small>$</small>';
+      cacheColor = '#555555';
+    }
+
+    let masterRecord = apptTd.querySelector("a.masterbtn");
+    masterRecord.append(create(`
+    <div class='appointment-checkbox-wrapper'>
+      <div class='appointment-checkbox' style='background-color:${cacheColor}'>
+        ${menuIcon}
+      </div>
+    </div>
+    `));
+  }
+
+  if (isPharmacyCached) {
+    cacheColor = '#00cc51';
+    menuIcon = '<small>&#10004;</small>';
+
+    let rx = apptTd.querySelector("a[title='Prescriptions']")
+    rx.innerHTML = ' Rx'
+    rx.append(create(`
+      <div class='appointment-checkbox-wrapper'>
+        <div class='appointment-checkbox' style='background-color:${cacheColor}'>
+          ${menuIcon}
+        </div>
+      </div>
+      `));
+  }
+}
+

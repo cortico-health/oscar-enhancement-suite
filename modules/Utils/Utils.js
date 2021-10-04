@@ -1,3 +1,6 @@
+
+import dayjs from "dayjs";
+
 export function debounce(func, wait, immediate) {
   var timeout;
   return function () {
@@ -43,6 +46,9 @@ export function getNamespace() {
 }
 
 export function getCorticoUrl() {
+  // FOR TESTING:
+  //return 'http://localhost';
+
   const clinicName = window.localStorage["clinicname"];
   let suffix = window.localStorage["customUrlSuffix"] || 'cortico.ca';
 
@@ -156,14 +162,40 @@ export function getAppointmentNo(apptUrl) {
   );
 }
 
+export function addToCache(demographic_no, _verified) {
+  const verified = _verified || false;
+  const _cache = window.localStorage.getItem("checkCache");
+  const _today = dayjs().format("YYYY-MM-DD");
+  const cache = JSON.parse(_cache) || {};
+  cache[demographic_no] = {
+    date: _today,
+    verified: verified,
+  };
+
+  window.localStorage.setItem("checkCache", JSON.stringify(cache));
+}
+
+export function createSidebarContainer(child, events) {
+  var html = child ? (
+    typeof child === 'string' ? child : child.outerHTML
+  ) : ''
+  var events = events ? events : {}
+
+  var container = create(
+    `<div style='width: 100%; padding: 0px 10px; box-sizing: border-box'>
+    ${html}
+  </div>`, events)
+
+  return container
+}
 
 export function checkCorticoUrl(event) {
   if (!getCorticoUrl()) {
     event.preventDefault();
-    alert("Please set the cortico URL to use this feature.")
+    alert("Please set the cortico URL to use this feature.");
 
-    return false
+    return false;
   }
 
-  return
+  return true;
 }

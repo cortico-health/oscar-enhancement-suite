@@ -55,6 +55,10 @@ export function loginForm(browser) {
 export async function corticoSignIn(username, password, browser) {
   const response = await signInRequest(username, password)
 
+  if (!response.ok) {
+    return alert('Login failed. Check username and password.')
+  }
+
   if (response) {
     const json = JSON.parse(await response.text())
 
@@ -63,10 +67,14 @@ export async function corticoSignIn(username, password, browser) {
     if (browser) {
       browser.storage.local.set({ "jwt_access_token": json.access })
       browser.storage.local.set({ "jwt_expired": false })
+      browser.storage.local.set({ "jwt_username": username })
     }
 
     const openMenu = document.querySelector(".login-form.show");
     openMenu.classList.remove("show");
+
+    alert("Successfully signed in, the page will now reload")
+    window.location.reload()
   }
 }
 
@@ -84,6 +92,11 @@ export async function signInRequest(username, password) {
     },
     "body": JSON.stringify(data)
   }).catch((err) => {
-    alert("Please make sure your credentials are correct and Cortico is online")
+    console.error(err)
+    if (('' + err).includes('Failed to fetch')) {
+      alert('Cortico instance cannot be reached. Check clinic name.')
+    } else {
+      alert('Cortico: Unknown Login Error: ' + err)
+    }
   })
 }
