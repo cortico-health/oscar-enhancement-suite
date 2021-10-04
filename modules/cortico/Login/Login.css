@@ -69,7 +69,6 @@ td.appt {
     display: inline-block;
     position: relative;
     top: -5px;
-    cursor: pointer;
   }
   
   .login-form-header {

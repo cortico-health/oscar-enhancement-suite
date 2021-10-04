@@ -46,6 +46,9 @@ export function getNamespace() {
 }
 
 export function getCorticoUrl() {
+  // FOR TESTING:
+  //return 'http://localhost';
+
   const clinicName = window.localStorage["clinicname"];
   let suffix = window.localStorage["customUrlSuffix"] || 'cortico.ca';
 
