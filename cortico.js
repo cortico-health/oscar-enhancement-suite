@@ -330,22 +330,6 @@ async function setupPatientEmailButton() {
       let html = document.cloneNode(true);
       let doNotPrintList = html.querySelectorAll(".DoNotPrint")
 
-      // html.head.remove();
-      // html.querySelector("[name='LabQuickSelect']").remove();
-
-      // html.querySelectorAll("input[type='text']").forEach((input) => {
-      //   let parent = input.parentNode;
-      //   let value = input.value;
-      //   let style = input.style
-      //   input.remove()
-
-      //   let node = create(`<p>${value}</p>`)
-      //   node.style = style
-      //   parent.appendChild(node)
-      // })
-
-      // doNotPrintList.forEach(e => e.remove());
-
       let patientFormResponse = await emailPatientEForm(
         patient_info,
         html.documentElement.outerHTML,
@@ -2245,16 +2229,19 @@ function getDemographicPageResponse(demographic) {
 
 async function emailPatientEForm(patientInfo, html, token) {
   let url = getCorticoUrl() + "/api/plug-in/email-form/"
-  let patientEmail = patientInfo["Email"]
-  console.log(patientEmail)
+  let patientEmail = patientInfo.email || null
+
+  if (!patientEmail) {
+    alert("The patient has no email");
+
+    return;
+  }
 
   let data = {
     "clinic_host": getCorticoUrl().replace(/http.?:\/\//, ''),
-    "to": patientEmail, // TODO: has [email protected currently on oscar-develop.cortico.ca]
+    "to": patientEmail,
     "pdf_html": html
   }
-
-  console.log(data)
 
   return fetch(url, {
     method: "POST",
