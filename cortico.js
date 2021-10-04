@@ -303,49 +303,6 @@ function init_appointment_page() {
   update_video_button();
 }
 
-async function demoFromHTML() {
-
-  var pdf = new jsPDF('p', 'pt', 'letter');
-  // source can be HTML-formatted string, or a reference
-  // to an actual DOM element from which the text will be scraped.
-  source = $('#page1')[0];
-
-
-  // we support special element handlers. Register them with jQuery-style 
-  // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
-  // There is no support for any other type of selectors 
-  // (class, of compound) at this time.
-  specialElementHandlers = {
-    // element with id of "bypass" - jQuery style selector
-    '#bypassme': function (element, renderer) {
-      // true = "handled elsewhere, bypass text extraction"
-      return true
-    }
-  };
-  margins = {
-    top: 80,
-    bottom: 60,
-    left: 40,
-    width: 522
-  };
-  // all coords and widths are in jsPDF instance's declared units
-  // 'inches' in this case
-  pdf.fromHTML(
-    source, // HTML string or DOM elem ref.
-    margins.left, // x coord
-    margins.top, { // y coord
-    'width': margins.width, // max width of content on PDF
-    'elementHandlers': specialElementHandlers
-  },
-
-    function (dispose) {
-      // dispose: object with X, Y of the last line add to the PDF 
-      //          this allow the insertion of new lines after html
-      pdf.save('Test.pdf');
-    }, margins
-  );
-}
-
 async function setupPatientEmailButton() {
 
   let is_eform_page = true;
@@ -359,21 +316,43 @@ async function setupPatientEmailButton() {
   }
 
   const patient_info = await getPatientInfo();
-  let mailto_str
-  if (is_eform_page) {
-    mailto_str = `mailto:${patient_info.email}?subject=Your+Document&body=Hi+${patient_info["First Name"]}%0A%0APlease find the attached document from your doctor at ${clinicName}.`
-  } else {
-    mailto_str = `mailto:${patient_info.email}`
-  }
 
-  const email_btn = htmlToElement(`
+  const email_btn = create(`
   <p style='margin-bottom:2em'>
     <a id='cortico-email-patient' class='cortico-btn'>Email Patient</a>
   </p>
   `);
+  email_btn.addEventListener("click", async (e) => {
+    if (!checkCorticoUrl(e)) return;
 
-  delegate(email_btn, 'click', 'a', async function (e) {
-    await demoFromHTML()
+    await loadExtensionStorageValue("jwt_access_token").then(async function (access_token) {
+      // copy document and remove unnecessary stuff
+      let html = document.cloneNode(true);
+      let doNotPrintList = html.querySelectorAll(".DoNotPrint")
+
+      // html.head.remove();
+      // html.querySelector("[name='LabQuickSelect']").remove();
+
+      // html.querySelectorAll("input[type='text']").forEach((input) => {
+      //   let parent = input.parentNode;
+      //   let value = input.value;
+      //   let style = input.style
+      //   input.remove()
+
+      //   let node = create(`<p>${value}</p>`)
+      //   node.style = style
+      //   parent.appendChild(node)
+      // })
+
+      // doNotPrintList.forEach(e => e.remove());
+
+      let patientFormResponse = await emailPatientEForm(
+        patient_info,
+        html.documentElement.outerHTML,
+        access_token
+      );
+      console.log('RSP: ', patientFormResponse)
+    })
   })
 
   email_parent.appendChild(email_btn);
@@ -2124,8 +2103,6 @@ async function init_diagnostic_viewer_button() {
   async function open_diagnostic_viewer(e) {
     if (!checkCorticoUrl(e.originalEvent)) return;
 
-    e.preventDefault();
-
     const appt_no = getQueryStringValue("appointment_no");
 
     await loadExtensionStorageValue("jwt_access_token").then(async function (access_token) {
@@ -2263,4 +2240,60 @@ function getDemographicPageResponse(demographic) {
   const url = `${origin}/${namespace}/demographic/demographiccontrol.jsp?demographic_no=${demographicNo}&displaymode=edit&dboperation=search_detail`;
 
   return fetch(url);
+}
+
+
+async function emailPatientEForm(patientInfo, html, token) {
+  let url = getCorticoUrl() + "/api/plug-in/email-form/"
+  let patientEmail = patientInfo["Email"]
+  console.log(patientEmail)
+
+  let data = {
+    "clinic_host": getCorticoUrl().replace(/http.?:\/\//, ''),
+    //"to": patientEmail,
+    to: 'clark@countable.ca',
+    "pdf_html": html
+  }
+
+  console.log(data)
+
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data),
+    mode: 'cors',
+    headers: {
+      "Content-type": "application/json",
+      "Authorization": `Bearer ${token}`
+    }
+    // TODO: handle other cortico api errors the same way
+  }).then(handleErrors)
+    .then(response => response.json())
+    .then((data) => {
+      if (data.success) {
+        alert(`Successfully emailed PDF to ${patientEmail}.`)
+      } else {
+        alert(`Sending email failed: ${data.message}`)
+      }
+    })
+    .catch((err) => {
+      console.error("Cortico: Error sending email: ", err)
+      if ((err + '').includes("Unauthorized")) {
+        alert("Your credentials have expired. Please login again")
+        chrome.storage.local.set({ "jwt_expired": true })
+
+        addLoginForm(chrome)
+        const loginForm = document.querySelector(".login-form")
+        loginForm.classList.add("show")
+      } else {
+        alert("Something went wrong with Cortico.")
+      }
+    });
+}
+
+function handleErrors(response) {
+  if (!response.ok) {
+    throw Error(response.statusText);
+  }
+
+  return response;
 }
