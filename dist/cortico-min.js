@@ -633,7 +633,8 @@ function getNamespace() {
   return window.location.pathname.split("/")[1];
 }
 function getCorticoUrl() {
-  return 'http://localhost';
+  // FOR TESTING:
+  //return 'http://localhost';
   var clinicName = window.localStorage["clinicname"];
   var suffix = window.localStorage["customUrlSuffix"] || 'cortico.ca';
 
@@ -6969,8 +6970,8 @@ function _emailPatientEForm() {
             console.log(patientEmail);
             data = {
               "clinic_host": (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getCorticoUrl)().replace(/http.?:\/\//, ''),
-              //"to": patientEmail,
-              to: 'clark@countable.ca',
+              "to": patientEmail,
+              // TODO: has [email protected currently on oscar-develop.cortico.ca]
               "pdf_html": html
             };
             console.log(data);

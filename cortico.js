@@ -2250,8 +2250,7 @@ async function emailPatientEForm(patientInfo, html, token) {
 
   let data = {
     "clinic_host": getCorticoUrl().replace(/http.?:\/\//, ''),
-    //"to": patientEmail,
-    to: 'clark@countable.ca',
+    "to": patientEmail, // TODO: has [email protected currently on oscar-develop.cortico.ca]
     "pdf_html": html
   }
 
