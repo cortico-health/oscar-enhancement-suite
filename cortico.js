@@ -566,23 +566,22 @@ function closeSidebarInstructions() {
 }
 
 function showDiagnosticResults(html_string) {
+  var container = document.createElement("div");
+
   if (CORTICO.diagnosticResults) {
     CORTICO.diagnosticResults.style.display = "block";
   } else {
-    var container = document.createElement("div");
     CORTICO.diagnosticResults = container;
     container.classList.add("cortico-diagnostic-viewer");
     container.innerHTML = html_string;
-  }
 
-  var containerClose = document.createElement("button");
-  containerClose.classList.add("cortico-diagnostic-close");
-  containerClose.textContent = "Close";
-  containerClose.style.cursor = "pointer";
-  containerClose.addEventListener("click", function () {
-    container.style.display = "none";
-  });
-  container.appendChild(containerClose);
+    var containerClose = create(`<button class='cortico-diagnostic-close' style='cursor: pointer;'>Close</button>`)
+
+    containerClose.addEventListener("click", function () {
+      container.style.display = "none";
+    });
+    container.appendChild(containerClose);
+  }
 
   var styleSheet = styleSheetFactory("cortico_sidebar");
   var styles = `
@@ -1971,11 +1970,15 @@ async function getDiagnosticFromCortico(appt_no, notes, token) {
       "Authorization": "Bearer " + token
     },
   }).catch((err) => {
-    chrome.storage.local.set({ "jwt_expired": true })
-    alert("Your credentials have expired. Please login again")
-    addLoginForm(chrome)
-    const loginForm = document.querySelector(".login-form")
-    loginForm.classList.add("show")
+    if ((err + '').includes('Unauthorized')) {
+      chrome.storage.local.set({ "jwt_expired": true })
+      alert("Your credentials have expired. Please login again")
+      addLoginForm(chrome)
+      const loginForm = document.querySelector(".login-form")
+      loginForm.classList.add("show")
+    } else {
+      alert("Failed to fetch data. There might be a problem with Cortico or the patient responses do not exist")
+    }
   });
 }
 
@@ -2067,7 +2070,7 @@ async function init_diagnostic_viewer_button() {
   ).parentNode;
   last_button.parentNode.appendChild(
     htmlToElement(
-      "<button class='cortico-btn' id='diagnostic-viewer-btn'>Patient Responses</button>"
+      "<button class='cortico-btn' type='button' id='diagnostic-viewer-btn'>Patient Responses</button>"
     )
   );
 
