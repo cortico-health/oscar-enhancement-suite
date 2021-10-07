@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name     Cortico
-// @version  2.1
+// @version  3.8
 // @grant    none
 // ==/UserScript==
 
@@ -26,7 +26,7 @@ import Dashboard from "./modules/cortico/Dashboard";
 const CORTICO = {}; // container for global state. Use this rather than `window`
 import Disclaimer from "./modules/cortico/Disclaimer";
 // manually update this variable with the version in manifest.json
-const version = 3.1;
+const version = 3.8;
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
 
