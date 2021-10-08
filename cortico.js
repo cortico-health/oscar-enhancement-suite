@@ -30,6 +30,8 @@ const version = 3.8;
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
 
+const cortico_media = ["phone", "clinic", "virtual", "", "quiet"];
+
 const init_cortico = function () {
 
   // create an element to indicate the library is loaded in the dom, and to contain fixed menus/elements.
@@ -73,12 +75,13 @@ const init_cortico = function () {
     route.indexOf("/appointment/addappointment.jsp") > -1 ||
     route.indexOf("/appointment/appointmentcontrol.jsp") > -1
   ) {
+    init_appointment_page();
+    init_recall_button();
+
     // only show on add appointment
     if (route.indexOf("/appointment/addappointment.jsp") > -1) {
       init_medium_option();
     }
-    init_appointment_page();
-    init_recall_button();
 
     // Temporary fix, adding event listener does not work inside init_appointment_page
     // Note: event listeners inside init_recall_button seems to be working fine
@@ -231,12 +234,29 @@ function open_video_appointment_page(e) {
   );
 }
 
+function getResourceSelect(resources_field) {
+  let selectHtml = '<select name="resources">';
+  let selected = resources_field ? resources_field.value : localStorage.getItem("medium-option")
+  cortico_media.forEach(function (value) {
+    selectHtml +=
+      "<option " +
+      (value == selected ? "selected " : "") +
+      'value="' +
+      value +
+      '">' +
+      (value || "n/a") +
+      "</option>";
+  });
+  selectHtml += "</select>";
+
+  return selectHtml
+}
+
 function init_appointment_page() {
   // resources dropdown
   var resources_field = document.querySelector(
     'input[type="text"][name="resources"]'
   );
-  const cortico_media = ["phone", "clinic", "virtual", "", "quiet"];
 
   const parent = resources_field.parentNode;
 
@@ -246,20 +266,7 @@ function init_appointment_page() {
     resources_field.value
   );
   if (cortico_media.indexOf(resources_field.value) > -1) {
-    let selectHtml = '<select name="resources">';
-    cortico_media.forEach(function (value) {
-      selectHtml +=
-        "<option " +
-        (value == resources_field.value ? "selected " : "") +
-        'value="' +
-        value +
-        '">' +
-        (value || "n/a") +
-        "</option>";
-    });
-    selectHtml += "</select>";
-
-    parent.innerHTML = selectHtml;
+    parent.innerHTML = getResourceSelect(resources_field);
 
     const resourceCheckbox = document.createElement("input");
     resourceCheckbox.setAttribute("type", "checkbox");
@@ -689,52 +696,30 @@ function getRecallStatusOption() {
 }
 
 function getMediumOption() {
-  var container = document.createElement("div");
-  container.style.width = "100%";
-  container.style.padding = "0px 10px";
-  container.style.boxSizing = "border-box";
 
-  var inputContainer = document.createElement("div");
-  inputContainer.style.display = "flex";
-  inputContainer.style.alignItems = "center";
-  inputContainer.style.justifyContent = "center";
+  var container = create(`<div style='100%; padding: 0px 10px; box-sizing: border-box'>
+    <label for='medium-option' 
+    style='display: block; margin-top: 30px; margin-bottom: 10px; text-align: center;'>
+      Default appointment type for reminder
+    </label>
 
-  var input = document.createElement("input");
-  input.setAttribute("id", "medium-option");
-  input.setAttribute("type", "text");
-  input.setAttribute("placeholder", "Medium");
-  input.style.fontSize = "16px";
-  input.style.padding = "5px 5px";
-  input.style.margin = "0px 10px";
-  input.style.width = "35%";
+    <div id='selectContainer' style='display: flex; align-items: center; justify-content: center'>
+      ${getResourceSelect()}
+    </div>
+    
+    <button style='width: 100%; display: inline-block; margin: 10px auto' class='cortico-btn'>Save</button>
+  </div>`, {
+    events: {
+      "click .cortico-btn": (e) => {
+        var resourceSelect = document.querySelector('select[name="resources"]')
+        var value = resourceSelect.options[resourceSelect.selectedIndex].value
 
-  inputContainer.appendChild(input);
+        localStorage.setItem("medium-option", value);
+        alert("Your default medium has changed");
+      }
+    }
+  })
 
-  if (localStorage.getItem("medium-option")) {
-    input.value = localStorage.getItem("medium-option");
-  }
-
-  var label = document.createElement("label");
-  label.setAttribute("for", "medium-option");
-  label.textContent = "Default appointment type for reminder";
-  label.style.display = "block";
-  label.style.marginTop = "30px";
-  label.style.marginBottom = "10px";
-  label.style.textAlign = "center";
-
-  var button = htmlToElement(`<button class='cortico-btn'>Save</button>`)
-  button.style.width = "100%";
-  button.style.display = "inline-block";
-  button.style.margin = "10px auto";
-
-  container.appendChild(label);
-  container.appendChild(inputContainer);
-  container.appendChild(button);
-
-  button.addEventListener("click", function () {
-    localStorage.setItem("medium-option", input.value);
-    alert("Your default medium has changed");
-  });
   return container;
 }
 
@@ -1993,7 +1978,9 @@ async function setupPreferredPharmacies() {
   window.setupPreferredPharmaciesRunning = true;
 
   clearFailureCache();
-  const appointments = document.querySelectorAll(".apptLink");
+  const appointments = getAppointments();
+
+  console.log(appointments)
   var error = false;
   for (let i = 0; i < appointments.length; i++) {
     var temp = {};
@@ -2001,7 +1988,13 @@ async function setupPreferredPharmacies() {
     temp.current = i;
     pubsub.publish("check-batch-pharmacies", temp);
 
-    const element = appointments[i];
+    const cancelled = appointments[i].querySelector("a.apptStatus[title='Cancelled ']")
+    console.log("cancelled", cancelled)
+    if (cancelled) {
+      continue;
+    }
+
+    const element = appointments[i].querySelector("a.apptLink")
 
     if (!element || !element.attributes) {
       continue;
@@ -2070,7 +2063,7 @@ async function init_diagnostic_viewer_button() {
   ).parentNode;
   last_button.parentNode.appendChild(
     htmlToElement(
-      "<button class='cortico-btn' type='button' id='diagnostic-viewer-btn'>Patient Responses</button>"
+      "<a class='cortico-btn' id='diagnostic-viewer-btn'>Patient Responses</a>"
     )
   );
 
@@ -2180,11 +2173,16 @@ async function init_recall_button() {
 
 
 async function init_medium_option() {
-  const statusOption = document.querySelector("select[name='resources']");
+  let statusOption = document.querySelector("select[name='resources']");
+  console.log(statusOption)
 
-  let storedMedium = localStorage.getItem("medium-option")
+  let storedMedium = localStorage.getItem("medium-option");
+  console.log(storedMedium)
 
-  statusOption.value = storedMedium ? storedMedium : 'n/a';
+  if (statusOption) {
+    console.log(statusOption)
+    statusOption.value = storedMedium ? storedMedium : 'n/a';
+  }
 }
 
 
