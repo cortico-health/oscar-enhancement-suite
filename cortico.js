@@ -30,6 +30,8 @@ const version = 3.8;
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
 
+const cortico_media = ["phone", "clinic", "virtual", "", "quiet"];
+
 const init_cortico = function () {
 
   // create an element to indicate the library is loaded in the dom, and to contain fixed menus/elements.
@@ -73,12 +75,13 @@ const init_cortico = function () {
     route.indexOf("/appointment/addappointment.jsp") > -1 ||
     route.indexOf("/appointment/appointmentcontrol.jsp") > -1
   ) {
+    init_appointment_page();
+    init_recall_button();
+
     // only show on add appointment
     if (route.indexOf("/appointment/addappointment.jsp") > -1) {
       init_medium_option();
     }
-    init_appointment_page();
-    init_recall_button();
 
     // Temporary fix, adding event listener does not work inside init_appointment_page
     // Note: event listeners inside init_recall_button seems to be working fine
@@ -231,12 +234,29 @@ function open_video_appointment_page(e) {
   );
 }
 
+function getResourceSelect(resources_field) {
+  let selectHtml = '<select name="resources">';
+  let selected = resources_field ? resources_field.value : localStorage.getItem("medium-option")
+  cortico_media.forEach(function (value) {
+    selectHtml +=
+      "<option " +
+      (value == selected ? "selected " : "") +
+      'value="' +
+      value +
+      '">' +
+      (value || "n/a") +
+      "</option>";
+  });
+  selectHtml += "</select>";
+
+  return selectHtml
+}
+
 function init_appointment_page() {
   // resources dropdown
   var resources_field = document.querySelector(
     'input[type="text"][name="resources"]'
   );
-  const cortico_media = ["phone", "clinic", "virtual", "", "quiet"];
 
   const parent = resources_field.parentNode;
 
@@ -246,20 +266,7 @@ function init_appointment_page() {
     resources_field.value
   );
   if (cortico_media.indexOf(resources_field.value) > -1) {
-    let selectHtml = '<select name="resources">';
-    cortico_media.forEach(function (value) {
-      selectHtml +=
-        "<option " +
-        (value == resources_field.value ? "selected " : "") +
-        'value="' +
-        value +
-        '">' +
-        (value || "n/a") +
-        "</option>";
-    });
-    selectHtml += "</select>";
-
-    parent.innerHTML = selectHtml;
+    parent.innerHTML = getResourceSelect(resources_field);
 
     const resourceCheckbox = document.createElement("input");
     resourceCheckbox.setAttribute("type", "checkbox");
@@ -698,21 +705,7 @@ function getMediumOption() {
   inputContainer.style.display = "flex";
   inputContainer.style.alignItems = "center";
   inputContainer.style.justifyContent = "center";
-
-  var input = document.createElement("input");
-  input.setAttribute("id", "medium-option");
-  input.setAttribute("type", "text");
-  input.setAttribute("placeholder", "Medium");
-  input.style.fontSize = "16px";
-  input.style.padding = "5px 5px";
-  input.style.margin = "0px 10px";
-  input.style.width = "35%";
-
-  inputContainer.appendChild(input);
-
-  if (localStorage.getItem("medium-option")) {
-    input.value = localStorage.getItem("medium-option");
-  }
+  inputContainer.appendChild(htmlToElement(getResourceSelect()));
 
   var label = document.createElement("label");
   label.setAttribute("for", "medium-option");
@@ -2180,11 +2173,16 @@ async function init_recall_button() {
 
 
 async function init_medium_option() {
-  const statusOption = document.querySelector("select[name='resources']");
+  let statusOption = document.querySelector("select[name='resources']");
+  console.log(statusOption)
 
-  let storedMedium = localStorage.getItem("medium-option")
+  let storedMedium = localStorage.getItem("medium-option");
+  console.log(storedMedium)
 
-  statusOption.value = storedMedium ? storedMedium : 'n/a';
+  if (statusOption) {
+    console.log(statusOption)
+    statusOption.value = storedMedium ? storedMedium : 'n/a';
+  }
 }
 
 
