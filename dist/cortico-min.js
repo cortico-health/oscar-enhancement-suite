@@ -6521,7 +6521,7 @@ function setupPreferredPharmacies() {
 
 function _setupPreferredPharmacies() {
   _setupPreferredPharmacies = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee15() {
-    var appointments, error, i, temp, element, demographicNo, apptUrl, _pharmaciesCache, pharmaciesCache, demographics, cachedDemographics, apptTitle, pharmacyCode;
+    var appointments, error, i, temp, cancelled, element, demographicNo, apptUrl, _pharmaciesCache, pharmaciesCache, demographics, cachedDemographics, apptTitle, pharmacyCode;
 
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee15$(_context15) {
       while (1) {
@@ -6530,13 +6530,14 @@ function _setupPreferredPharmacies() {
             console.log("setting up batch pharmacies");
             window.setupPreferredPharmaciesRunning = true;
             clearFailureCache();
-            appointments = document.querySelectorAll(".apptLink");
+            appointments = (0,_modules_cortico_Appointments_Appointments__WEBPACK_IMPORTED_MODULE_7__.getAppointments)();
+            console.log(appointments);
             error = false;
             i = 0;
 
-          case 6:
+          case 7:
             if (!(i < appointments.length)) {
-              _context15.next = 45;
+              _context15.next = 50;
               break;
             }
 
@@ -6544,18 +6545,29 @@ function _setupPreferredPharmacies() {
             temp.total = appointments.length;
             temp.current = i;
             pubsub.publish("check-batch-pharmacies", temp);
-            element = appointments[i];
+            cancelled = appointments[i].querySelector("a.apptStatus[title='Cancelled ']");
+            console.log("cancelled", cancelled);
 
-            if (!(!element || !element.attributes)) {
-              _context15.next = 14;
+            if (!cancelled) {
+              _context15.next = 16;
               break;
             }
 
-            return _context15.abrupt("continue", 42);
+            return _context15.abrupt("continue", 47);
 
-          case 14:
+          case 16:
+            element = appointments[i].querySelector("a.apptLink");
+
+            if (!(!element || !element.attributes)) {
+              _context15.next = 19;
+              break;
+            }
+
+            return _context15.abrupt("continue", 47);
+
+          case 19:
             demographicNo = null;
-            _context15.prev = 15;
+            _context15.prev = 20;
             apptUrl = (0,_modules_cortico_Appointments_Appointments__WEBPACK_IMPORTED_MODULE_7__.extractApptUrl)(element.attributes.onclick.textContent);
             demographicNo = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getDemographicNo)(apptUrl);
             _pharmaciesCache = localStorage.getItem("pharmaciesCache");
@@ -6568,57 +6580,57 @@ function _setupPreferredPharmacies() {
             }
 
             if (!(demographics && Array.isArray(demographics) && demographics.includes(demographicNo) && pharmaciesCache.date == dayjs__WEBPACK_IMPORTED_MODULE_6___default()().format("YYYY-MM-DD"))) {
-              _context15.next = 24;
+              _context15.next = 29;
               break;
             }
 
-            return _context15.abrupt("continue", 42);
+            return _context15.abrupt("continue", 47);
 
-          case 24:
-            _context15.next = 26;
+          case 29:
+            _context15.next = 31;
             return new Promise(function (resolve, reject) {
               setTimeout(function () {
                 resolve();
               }, 2000);
             });
 
-          case 26:
+          case 31:
             storePharmaciesCache(demographicNo);
             apptTitle = element.attributes.title.textContent;
             pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle);
 
             if (pharmacyCode) {
-              _context15.next = 31;
+              _context15.next = 36;
               break;
             }
 
-            return _context15.abrupt("continue", 42);
+            return _context15.abrupt("continue", 47);
 
-          case 31:
-            _context15.next = 33;
+          case 36:
+            _context15.next = 38;
             return setupPreferredPharmacy(pharmacyCode, demographicNo);
 
-          case 33:
-            _context15.next = 40;
+          case 38:
+            _context15.next = 45;
             break;
 
-          case 35:
-            _context15.prev = 35;
-            _context15.t0 = _context15["catch"](15);
+          case 40:
+            _context15.prev = 40;
+            _context15.t0 = _context15["catch"](20);
             console.error("err", _context15.t0);
             storePharmaciesFailureCache(demographicNo, _context15.t0.message);
             displayPharmaciesFailure(demographicNo, _context15.t0.message);
 
-          case 40:
-            _context15.prev = 40;
-            return _context15.finish(40);
+          case 45:
+            _context15.prev = 45;
+            return _context15.finish(45);
 
-          case 42:
+          case 47:
             i++;
-            _context15.next = 6;
+            _context15.next = 7;
             break;
 
-          case 45:
+          case 50:
             window.setupPreferredPharmaciesRunning = false;
             pubsub.publish("check-batch-pharmacies", {
               complete: true,
@@ -6626,12 +6638,12 @@ function _setupPreferredPharmacies() {
               error: error
             });
 
-          case 47:
+          case 52:
           case "end":
             return _context15.stop();
         }
       }
-    }, _callee15, null, [[15, 35, 40, 42]]);
+    }, _callee15, null, [[20, 40, 45, 47]]);
   }));
   return _setupPreferredPharmacies.apply(this, arguments);
 }

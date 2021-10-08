@@ -1978,7 +1978,9 @@ async function setupPreferredPharmacies() {
   window.setupPreferredPharmaciesRunning = true;
 
   clearFailureCache();
-  const appointments = document.querySelectorAll(".apptLink");
+  const appointments = getAppointments();
+
+  console.log(appointments)
   var error = false;
   for (let i = 0; i < appointments.length; i++) {
     var temp = {};
@@ -1986,7 +1988,13 @@ async function setupPreferredPharmacies() {
     temp.current = i;
     pubsub.publish("check-batch-pharmacies", temp);
 
-    const element = appointments[i];
+    const cancelled = appointments[i].querySelector("a.apptStatus[title='Cancelled ']")
+    console.log("cancelled", cancelled)
+    if (cancelled) {
+      continue;
+    }
+
+    const element = appointments[i].querySelector("a.apptLink")
 
     if (!element || !element.attributes) {
       continue;
