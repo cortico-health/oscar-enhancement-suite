@@ -2063,7 +2063,7 @@ async function init_diagnostic_viewer_button() {
   ).parentNode;
   last_button.parentNode.appendChild(
     htmlToElement(
-      "<button class='cortico-btn' type='button' id='diagnostic-viewer-btn'>Patient Responses</button>"
+      "<a class='cortico-btn' id='diagnostic-viewer-btn'>Patient Responses</a>"
     )
   );
 

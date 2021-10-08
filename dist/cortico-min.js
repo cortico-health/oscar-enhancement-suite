@@ -1712,7 +1712,7 @@ function _corticoSignIn() {
 
           case 5:
             if (!response) {
-              _context.next = 17;
+              _context.next = 22;
               break;
             }
 
@@ -1725,24 +1725,30 @@ function _corticoSignIn() {
             json = _context.t0.parse.call(_context.t0, _context.t1);
             browser = browser ? browser : chrome;
 
-            if (browser) {
-              browser.storage.local.set({
-                "jwt_access_token": json.access
-              });
-              browser.storage.local.set({
-                "jwt_expired": false
-              });
-              browser.storage.local.set({
-                "jwt_username": username
-              });
+            if (!browser) {
+              _context.next = 21;
+              break;
             }
 
+            browser.storage.local.set({
+              "jwt_access_token": json.access
+            });
+            browser.storage.local.set({
+              "jwt_expired": false
+            });
+            browser.storage.local.set({
+              "jwt_username": username
+            });
             openMenu = document.querySelector(".login-form.show");
             openMenu.classList.remove("show");
             alert("Successfully signed in, the page will now reload");
             window.location.reload();
+            return _context.abrupt("return");
 
-          case 17:
+          case 21:
+            return _context.abrupt("return");
+
+          case 22:
           case "end":
             return _context.stop();
         }
@@ -6740,7 +6746,7 @@ function _init_diagnostic_viewer_button() {
             notesField = document.querySelector("textarea[name='notes']");
             notesValue = notesField.textContent;
             last_button = document.querySelector("#cortico-video-appt-btn").parentNode;
-            last_button.parentNode.appendChild((0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.htmlToElement)("<button class='cortico-btn' type='button' id='diagnostic-viewer-btn'>Patient Responses</button>"));
+            last_button.parentNode.appendChild((0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.htmlToElement)("<a class='cortico-btn' id='diagnostic-viewer-btn'>Patient Responses</a>"));
             corticoDiagnosticViewBtn = document.getElementById("diagnostic-viewer-btn");
             update_diagnostic_button_visibility();
             corticoDiagnosticViewBtn.addEventListener("click", open_diagnostic_viewer);
