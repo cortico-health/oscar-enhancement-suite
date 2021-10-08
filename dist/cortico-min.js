@@ -5040,32 +5040,15 @@ function getRecallStatusOption() {
 }
 
 function getMediumOption() {
-  var container = document.createElement("div");
-  container.style.width = "100%";
-  container.style.padding = "0px 10px";
-  container.style.boxSizing = "border-box";
-  var inputContainer = document.createElement("div");
-  inputContainer.style.display = "flex";
-  inputContainer.style.alignItems = "center";
-  inputContainer.style.justifyContent = "center";
-  inputContainer.appendChild((0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.htmlToElement)(getResourceSelect()));
-  var label = document.createElement("label");
-  label.setAttribute("for", "medium-option");
-  label.textContent = "Default appointment type for reminder";
-  label.style.display = "block";
-  label.style.marginTop = "30px";
-  label.style.marginBottom = "10px";
-  label.style.textAlign = "center";
-  var button = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.htmlToElement)("<button class='cortico-btn'>Save</button>");
-  button.style.width = "100%";
-  button.style.display = "inline-block";
-  button.style.margin = "10px auto";
-  container.appendChild(label);
-  container.appendChild(inputContainer);
-  container.appendChild(button);
-  button.addEventListener("click", function () {
-    localStorage.setItem("medium-option", input.value);
-    alert("Your default medium has changed");
+  var container = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.create)("<div style='100%; padding: 0px 10px; box-sizing: border-box'>\n    <label for='medium-option' \n    style='display: block; margin-top: 30px; margin-bottom: 10px; text-align: center;'>\n      Default appointment type for reminder\n    </label>\n\n    <div id='selectContainer' style='display: flex; align-items: center; justify-content: center'>\n      ".concat(getResourceSelect(), "\n    </div>\n    \n    <button style='width: 100%; display: inline-block; margin: 10px auto' class='cortico-btn'>Save</button>\n  </div>"), {
+    events: {
+      "click .cortico-btn": function clickCorticoBtn(e) {
+        var resourceSelect = document.querySelector('select[name="resources"]');
+        var value = resourceSelect.options[resourceSelect.selectedIndex].value;
+        localStorage.setItem("medium-option", value);
+        alert("Your default medium has changed");
+      }
+    }
   });
   return container;
 }

@@ -696,38 +696,30 @@ function getRecallStatusOption() {
 }
 
 function getMediumOption() {
-  var container = document.createElement("div");
-  container.style.width = "100%";
-  container.style.padding = "0px 10px";
-  container.style.boxSizing = "border-box";
 
-  var inputContainer = document.createElement("div");
-  inputContainer.style.display = "flex";
-  inputContainer.style.alignItems = "center";
-  inputContainer.style.justifyContent = "center";
-  inputContainer.appendChild(htmlToElement(getResourceSelect()));
+  var container = create(`<div style='100%; padding: 0px 10px; box-sizing: border-box'>
+    <label for='medium-option' 
+    style='display: block; margin-top: 30px; margin-bottom: 10px; text-align: center;'>
+      Default appointment type for reminder
+    </label>
 
-  var label = document.createElement("label");
-  label.setAttribute("for", "medium-option");
-  label.textContent = "Default appointment type for reminder";
-  label.style.display = "block";
-  label.style.marginTop = "30px";
-  label.style.marginBottom = "10px";
-  label.style.textAlign = "center";
+    <div id='selectContainer' style='display: flex; align-items: center; justify-content: center'>
+      ${getResourceSelect()}
+    </div>
+    
+    <button style='width: 100%; display: inline-block; margin: 10px auto' class='cortico-btn'>Save</button>
+  </div>`, {
+    events: {
+      "click .cortico-btn": (e) => {
+        var resourceSelect = document.querySelector('select[name="resources"]')
+        var value = resourceSelect.options[resourceSelect.selectedIndex].value
 
-  var button = htmlToElement(`<button class='cortico-btn'>Save</button>`)
-  button.style.width = "100%";
-  button.style.display = "inline-block";
-  button.style.margin = "10px auto";
+        localStorage.setItem("medium-option", value);
+        alert("Your default medium has changed");
+      }
+    }
+  })
 
-  container.appendChild(label);
-  container.appendChild(inputContainer);
-  container.appendChild(button);
-
-  button.addEventListener("click", function () {
-    localStorage.setItem("medium-option", input.value);
-    alert("Your default medium has changed");
-  });
   return container;
 }
 
