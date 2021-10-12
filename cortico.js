@@ -20,6 +20,7 @@ import { getOrigin, getNamespace, htmlToElement } from "./modules/Utils/Utils";
 import { CorticoIcon } from "./modules/Icons/CorticoIcon";
 import { debounce, create, getDemographicNo, getCorticoUrl } from "./modules/Utils/Utils";
 import { loadExtensionStorageValue, addToCache, createSidebarContainer, checkCorticoUrl } from "./modules/Utils/Utils";
+import { showLoginForm } from "./modules/Utils/Utils";
 import "./index.css";
 import { Modal } from "./modules/Modal/Modal";
 import Dashboard from "./modules/cortico/Dashboard";
@@ -76,7 +77,12 @@ const init_cortico = function () {
     route.indexOf("/appointment/appointmentcontrol.jsp") > -1
   ) {
     init_appointment_page();
-    init_recall_button();
+
+    if ((window.location.href + '').includes("appointment_no")) {
+      init_recall_button();
+      init_diagnostic_viewer_button();
+    }
+
 
     // only show on add appointment
     if (route.indexOf("/appointment/addappointment.jsp") > -1) {
@@ -98,9 +104,6 @@ const init_cortico = function () {
     //You need to delegate
     //cortico_button.addEventListener("click", open_video_appointment_page);
     resources_field.addEventListener("change", update_video_button);
-
-    // TODO: diagnostic results API needs authenticated first.
-    init_diagnostic_viewer_button();
   } else if (route.indexOf("/provider/providercontrol.jsp") > -1) {
     init_schedule();
 
@@ -258,14 +261,16 @@ function init_appointment_page() {
     'input[type="text"][name="resources"]'
   );
 
-  const parent = resources_field.parentNode;
+
+  const parent = resources_field ? resources_field.parentNode : null;
+  const resourceValue = resources_field ? resources_field.value : null;
 
   console.log(
     "If test",
-    cortico_media.indexOf(resources_field.value),
-    resources_field.value
+    cortico_media.indexOf(),
+    resourceValue
   );
-  if (cortico_media.indexOf(resources_field.value) > -1) {
+  if (resources_field && cortico_media.indexOf(resourceValue) > -1) {
     parent.innerHTML = getResourceSelect(resources_field);
 
     const resourceCheckbox = document.createElement("input");
@@ -300,14 +305,20 @@ function init_appointment_page() {
   }
 
   // telehealth button
-  var last_button = document.querySelector("#printReceiptButton").parentNode;
-  last_button.parentNode.appendChild(
-    htmlToElement(
-      "<button class='cortico-btn' type='button' id='cortico-video-appt-btn'>Video Call &phone;</button>"
-    )
-  );
+  var last_button = document.querySelector("#printReceiptButton");
+  var last_button_parent = last_button ? last_button.parentNode : null;
 
-  update_video_button();
+  if (last_button_parent) {
+    last_button_parent.parentNode.appendChild(
+      create(
+        `<button class='cortico-btn' type='button' id='cortico-video-appt-btn'>
+          Video Call &phone;
+        </button>`
+      )
+    );
+
+    update_video_button();
+  }
 }
 
 async function setupPatientEmailButton() {
@@ -849,7 +860,6 @@ async function getCorticoLogin() {
 
   await loadExtensionStorageValue("jwt_expired").then(function (expired) {
     jwt_expired = expired
-    console.log("test", expired)
 
     if (jwt_expired === false) {
       loginButton = create(
@@ -1703,6 +1713,7 @@ function getPharmacyCodeFromReasonOrNotes(textContent) {
 
   // Check RFV field if not existing in notes
   if (!pharmacyCode) {
+    console.log("Checking RFV field")
     var reason = apptFields["reason"];
     var reasonValuesList = reason.match(/\[(.*?)\]/g);
 
@@ -1716,7 +1727,6 @@ function getPharmacyCodeFromReasonOrNotes(textContent) {
   if (pharmacyCode) {
     pharmacyCode = pharmacyCode.replace(/[\[\]']+/g, "");
   }
-
   return pharmacyCode;
 }
 
@@ -1801,7 +1811,9 @@ async function setupPreferredPharmacy(code, demographic_no) {
     pharmacyCode = code;
   }
   const corticoPharmacy = await getPharmacyDetails(pharmacyCode);
-  const corticoPharmacyText = JSON.parse(await corticoPharmacy.text());
+  const respText = await corticoPharmacy.text()
+  console.log("respText", respText)
+  const corticoPharmacyText = JSON.parse(respText);
   var faxNumber = corticoPharmacyText[0]["fax_number"] || null;
   var searchTerm = corticoPharmacyText[0]["name"] || null;
 
@@ -1947,20 +1959,19 @@ function storePharmaciesFailureCache(demographicNo, message) {
 async function getDiagnosticFromCortico(appt_no, notes, token) {
   const clinicName = localStorage["clinicname"];
   const url = `${getCorticoUrl()}/api/encrypted/diagnostic-results/?appointment_id=${appt_no}&notes=${notes}`;
-
   return fetch(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
       "Authorization": "Bearer " + token
     },
+  }).then((res) => {
+    if ((res + '').includes('Unauthorized') || res.status == 401) {
+      showLoginForm()
+    }
   }).catch((err) => {
     if ((err + '').includes('Unauthorized')) {
-      chrome.storage.local.set({ "jwt_expired": true })
-      alert("Your credentials have expired. Please login again")
-      addLoginForm(chrome)
-      const loginForm = document.querySelector(".login-form")
-      loginForm.classList.add("show")
+      showLoginForm()
     } else {
       alert("Failed to fetch data. There might be a problem with Cortico or the patient responses do not exist")
     }
@@ -1989,7 +2000,6 @@ async function setupPreferredPharmacies() {
     pubsub.publish("check-batch-pharmacies", temp);
 
     const cancelled = appointments[i].querySelector("a.apptStatus[title='Cancelled ']")
-    console.log("cancelled", cancelled)
     if (cancelled) {
       continue;
     }
@@ -2007,6 +2017,7 @@ async function setupPreferredPharmacies() {
       const pharmaciesCache = JSON.parse(_pharmaciesCache);
       var demographics = new Array();
 
+      console.log("Checking if demographic is cached...")
       if (pharmaciesCache && pharmaciesCache["demographics"]) {
         let cachedDemographics = pharmaciesCache["demographics"];
 
@@ -2021,6 +2032,7 @@ async function setupPreferredPharmacies() {
         demographics.includes(demographicNo) &&
         pharmaciesCache.date == dayjs().format("YYYY-MM-DD")
       ) {
+        console.log(`Demographic ${demographicNo} is cached, skipping`)
         continue;
       }
 
@@ -2032,15 +2044,15 @@ async function setupPreferredPharmacies() {
 
       storePharmaciesCache(demographicNo);
 
+      console.log("Checking if appt has pharmacy codes...")
       const apptTitle = element.attributes.title.textContent;
       const pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle);
       if (!pharmacyCode) {
+        console.log("Pharmacy code not found from appt")
         continue;
       }
-
       await setupPreferredPharmacy(pharmacyCode, demographicNo);
     } catch (err) {
-      console.error("err", err);
       storePharmaciesFailureCache(demographicNo, err.message);
       displayPharmaciesFailure(demographicNo, err.message);
     } finally {
@@ -2093,6 +2105,7 @@ async function init_diagnostic_viewer_button() {
       );
       if (diagnostic_response) {
         const diagnostic_text = String(await diagnostic_response.text());
+
         await showDiagnosticResults(diagnostic_text);
       }
     })
@@ -2174,14 +2187,11 @@ async function init_recall_button() {
 
 async function init_medium_option() {
   let statusOption = document.querySelector("select[name='resources']");
-  console.log(statusOption)
 
   let storedMedium = localStorage.getItem("medium-option");
-  console.log(storedMedium)
 
-  if (statusOption) {
-    console.log(statusOption)
-    statusOption.value = storedMedium ? storedMedium : 'n/a';
+  if (statusOption && storedMedium) {
+    statusOption.value = storedMedium;
   }
 }
 

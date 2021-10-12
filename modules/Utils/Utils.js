@@ -1,5 +1,6 @@
 
 import dayjs from "dayjs";
+import { addLoginForm } from "../cortico/Login/Login";
 
 export function debounce(func, wait, immediate) {
   var timeout;
@@ -198,4 +199,14 @@ export function checkCorticoUrl(event) {
   }
 
   return true;
+}
+
+export function showLoginForm() {
+  chrome.storage.local.set({ "jwt_expired": true })
+  alert("Your credentials have expired. Please login again")
+
+  addLoginForm(chrome)
+
+  const loginForm = document.querySelector(".login-form")
+  loginForm.classList.add("show")
 }
