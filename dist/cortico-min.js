@@ -6323,7 +6323,6 @@ function _setupPreferredPharmacy() {
 
           case 7:
             respText = _context13.sent;
-            console.log("respText", respText);
             corticoPharmacyText = JSON.parse(respText);
             faxNumber = corticoPharmacyText[0]["fax_number"] || null;
             searchTerm = corticoPharmacyText[0]["name"] || null; // only use the first word on the pharmacy name to search for list
@@ -6338,16 +6337,16 @@ function _setupPreferredPharmacy() {
               demographicNo = getDemographicFromLocation();
             }
 
-            _context13.next = 18;
+            _context13.next = 17;
             return getCurrentPharmacy(demographicNo);
 
-          case 18:
+          case 17:
             currPharmacyResults = _context13.sent;
             _context13.t0 = JSON;
-            _context13.next = 22;
+            _context13.next = 21;
             return currPharmacyResults.text();
 
-          case 22:
+          case 21:
             _context13.t1 = _context13.sent;
             currPharmacyText = _context13.t0.parse.call(_context13.t0, _context13.t1);
             console.log("Current Pharmacy:", currPharmacyText);
@@ -6361,26 +6360,26 @@ function _setupPreferredPharmacy() {
             console.log("currently using pharmacy ".concat(searchTerm.toLowerCase(), ", ").concat(currentlyUsingPharmacy));
 
             if (!(searchTerm && !currentlyUsingPharmacy)) {
-              _context13.next = 55;
+              _context13.next = 54;
               break;
             }
 
-            _context13.next = 31;
+            _context13.next = 30;
             return getPharmacyResults(searchTerm);
 
-          case 31:
+          case 30:
             results = _context13.sent;
-            _context13.next = 34;
+            _context13.next = 33;
             return results.text();
 
-          case 34:
+          case 33:
             text = _context13.sent;
             json = JSON.parse(text);
             pharmacyUpdated = json.length > 0;
             isRxPage = window.location.href.indexOf("oscarRx/choosePatient.do") > -1;
 
             if (!pharmacyUpdated) {
-              _context13.next = 51;
+              _context13.next = 50;
               break;
             }
 
@@ -6396,33 +6395,33 @@ function _setupPreferredPharmacy() {
             }
 
             if (!pharmacy) {
-              _context13.next = 49;
+              _context13.next = 48;
               break;
             }
 
-            _context13.next = 44;
+            _context13.next = 43;
             return setPreferredPharmacy(pharmacy, demographicNo);
 
-          case 44:
+          case 43:
             setPharmacyResults = _context13.sent;
-            _context13.next = 47;
+            _context13.next = 46;
             return setPharmacyResults.text();
 
-          case 47:
+          case 46:
             setPharmacyText = _context13.sent;
             if (isRxPage) alert("Updating preferred pharmacy, press Ok to reload");else console.log("Updating preferred pharmacy");
 
-          case 49:
-            _context13.next = 55;
+          case 48:
+            _context13.next = 54;
             break;
 
-          case 51:
+          case 50:
             msg = "Customer pharmacy ".concat(searchTerm, " does not exist in your Oscar pharmacy database!");
             storePharmaciesFailureCache(demographicNo, msg);
             displayPharmaciesFailure(demographicNo, msg);
             if (isRxPage) alert(msg);else console.warn(msg);
 
-          case 55:
+          case 54:
           case "end":
             return _context13.stop();
         }
@@ -6516,7 +6515,10 @@ function _getDiagnosticFromCortico() {
             }).then(function (res) {
               if ((res + '').includes('Unauthorized') || res.status == 401) {
                 (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.showLoginForm)();
+                return;
               }
+
+              return res;
             }).catch(function (err) {
               if ((err + '').includes('Unauthorized')) {
                 (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.showLoginForm)();
