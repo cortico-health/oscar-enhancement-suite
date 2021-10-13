@@ -1812,7 +1812,6 @@ async function setupPreferredPharmacy(code, demographic_no) {
   }
   const corticoPharmacy = await getPharmacyDetails(pharmacyCode);
   const respText = await corticoPharmacy.text()
-  console.log("respText", respText)
   const corticoPharmacyText = JSON.parse(respText);
   var faxNumber = corticoPharmacyText[0]["fax_number"] || null;
   var searchTerm = corticoPharmacyText[0]["name"] || null;
@@ -1968,7 +1967,11 @@ async function getDiagnosticFromCortico(appt_no, notes, token) {
   }).then((res) => {
     if ((res + '').includes('Unauthorized') || res.status == 401) {
       showLoginForm()
+
+      return
     }
+
+    return res
   }).catch((err) => {
     if ((err + '').includes('Unauthorized')) {
       showLoginForm()
