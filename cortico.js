@@ -1732,23 +1732,26 @@ function getPharmacyCodeFromReasonOrNotes(textContent) {
 
 function setupPrescriptionButtons() {
   const providerSchedule = document.querySelector("#providerSchedule");
-  providerSchedule.addEventListener(
-    "click",
-    function (e) {
-      if (e.target.matches('a[title="Prescriptions"]')) {
-        var element = e.target;
-        while (element.className != "apptLink") {
-          element = element.previousElementSibling;
+
+  if (providerSchedule) {
+    providerSchedule.addEventListener(
+      "click",
+      function (e) {
+        if (e.target.matches('a[title="Prescriptions"]')) {
+          var element = e.target;
+          while (element.className != "apptLink") {
+            element = element.previousElementSibling;
+          }
+  
+          var apptTitle = element.attributes.title.textContent;
+          var pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle);
+  
+          localStorage.setItem("currentPharmacyCode", pharmacyCode);
         }
-
-        var apptTitle = element.attributes.title.textContent;
-        var pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle);
-
-        localStorage.setItem("currentPharmacyCode", pharmacyCode);
-      }
-    },
-    false
-  );
+      },
+      false
+    );
+  }
 }
 
 function sendPatientPrescriptionNotification() {
