@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name     Cortico
-// @version  2.1
+// @version  3.8
 // @grant    none
 // ==/UserScript==
 
@@ -20,15 +20,18 @@ import { getOrigin, getNamespace, htmlToElement } from "./modules/Utils/Utils";
 import { CorticoIcon } from "./modules/Icons/CorticoIcon";
 import { debounce, create, getDemographicNo, getCorticoUrl } from "./modules/Utils/Utils";
 import { loadExtensionStorageValue, addToCache, createSidebarContainer, checkCorticoUrl } from "./modules/Utils/Utils";
+import { showLoginForm } from "./modules/Utils/Utils";
 import "./index.css";
 import { Modal } from "./modules/Modal/Modal";
 import Dashboard from "./modules/cortico/Dashboard";
 const CORTICO = {}; // container for global state. Use this rather than `window`
 import Disclaimer from "./modules/cortico/Disclaimer";
 // manually update this variable with the version in manifest.json
-const version = 3.1;
+const version = 3.8;
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
+
+const cortico_media = ["phone", "clinic", "virtual", "", "quiet"];
 
 const init_cortico = function () {
 
@@ -73,12 +76,18 @@ const init_cortico = function () {
     route.indexOf("/appointment/addappointment.jsp") > -1 ||
     route.indexOf("/appointment/appointmentcontrol.jsp") > -1
   ) {
+    init_appointment_page();
+
+    if ((window.location.href + '').includes("appointment_no")) {
+      init_recall_button();
+      init_diagnostic_viewer_button();
+    }
+
+
     // only show on add appointment
     if (route.indexOf("/appointment/addappointment.jsp") > -1) {
       init_medium_option();
     }
-    init_appointment_page();
-    init_recall_button();
 
     // Temporary fix, adding event listener does not work inside init_appointment_page
     // Note: event listeners inside init_recall_button seems to be working fine
@@ -95,9 +104,6 @@ const init_cortico = function () {
     //You need to delegate
     //cortico_button.addEventListener("click", open_video_appointment_page);
     resources_field.addEventListener("change", update_video_button);
-
-    // TODO: diagnostic results API needs authenticated first.
-    init_diagnostic_viewer_button();
   } else if (route.indexOf("/provider/providercontrol.jsp") > -1) {
     init_schedule();
 
@@ -231,35 +237,41 @@ function open_video_appointment_page(e) {
   );
 }
 
+function getResourceSelect(resources_field) {
+  let selectHtml = '<select name="resources">';
+  let selected = resources_field ? resources_field.value : localStorage.getItem("medium-option")
+  cortico_media.forEach(function (value) {
+    selectHtml +=
+      "<option " +
+      (value == selected ? "selected " : "") +
+      'value="' +
+      value +
+      '">' +
+      (value || "n/a") +
+      "</option>";
+  });
+  selectHtml += "</select>";
+
+  return selectHtml
+}
+
 function init_appointment_page() {
   // resources dropdown
   var resources_field = document.querySelector(
     'input[type="text"][name="resources"]'
   );
-  const cortico_media = ["phone", "clinic", "virtual", "", "quiet"];
 
-  const parent = resources_field.parentNode;
+
+  const parent = resources_field ? resources_field.parentNode : null;
+  const resourceValue = resources_field ? resources_field.value : null;
 
   console.log(
     "If test",
-    cortico_media.indexOf(resources_field.value),
-    resources_field.value
+    cortico_media.indexOf(),
+    resourceValue
   );
-  if (cortico_media.indexOf(resources_field.value) > -1) {
-    let selectHtml = '<select name="resources">';
-    cortico_media.forEach(function (value) {
-      selectHtml +=
-        "<option " +
-        (value == resources_field.value ? "selected " : "") +
-        'value="' +
-        value +
-        '">' +
-        (value || "n/a") +
-        "</option>";
-    });
-    selectHtml += "</select>";
-
-    parent.innerHTML = selectHtml;
+  if (resources_field && cortico_media.indexOf(resourceValue) > -1) {
+    parent.innerHTML = getResourceSelect(resources_field);
 
     const resourceCheckbox = document.createElement("input");
     resourceCheckbox.setAttribute("type", "checkbox");
@@ -293,14 +305,20 @@ function init_appointment_page() {
   }
 
   // telehealth button
-  var last_button = document.querySelector("#printReceiptButton").parentNode;
-  last_button.parentNode.appendChild(
-    htmlToElement(
-      "<button class='cortico-btn' type='button' id='cortico-video-appt-btn'>Video Call &phone;</button>"
-    )
-  );
+  var last_button = document.querySelector("#printReceiptButton");
+  var last_button_parent = last_button ? last_button.parentNode : null;
 
-  update_video_button();
+  if (last_button_parent) {
+    last_button_parent.parentNode.appendChild(
+      create(
+        `<button class='cortico-btn' type='button' id='cortico-video-appt-btn'>
+          Video Call &phone;
+        </button>`
+      )
+    );
+
+    update_video_button();
+  }
 }
 
 async function setupPatientEmailButton() {
@@ -689,52 +707,30 @@ function getRecallStatusOption() {
 }
 
 function getMediumOption() {
-  var container = document.createElement("div");
-  container.style.width = "100%";
-  container.style.padding = "0px 10px";
-  container.style.boxSizing = "border-box";
 
-  var inputContainer = document.createElement("div");
-  inputContainer.style.display = "flex";
-  inputContainer.style.alignItems = "center";
-  inputContainer.style.justifyContent = "center";
+  var container = create(`<div style='100%; padding: 0px 10px; box-sizing: border-box'>
+    <label for='medium-option' 
+    style='display: block; margin-top: 30px; margin-bottom: 10px; text-align: center;'>
+      Default appointment type for reminder
+    </label>
 
-  var input = document.createElement("input");
-  input.setAttribute("id", "medium-option");
-  input.setAttribute("type", "text");
-  input.setAttribute("placeholder", "Medium");
-  input.style.fontSize = "16px";
-  input.style.padding = "5px 5px";
-  input.style.margin = "0px 10px";
-  input.style.width = "35%";
+    <div id='selectContainer' style='display: flex; align-items: center; justify-content: center'>
+      ${getResourceSelect()}
+    </div>
+    
+    <button style='width: 100%; display: inline-block; margin: 10px auto' class='cortico-btn'>Save</button>
+  </div>`, {
+    events: {
+      "click .cortico-btn": (e) => {
+        var resourceSelect = document.querySelector('select[name="resources"]')
+        var value = resourceSelect.options[resourceSelect.selectedIndex].value
 
-  inputContainer.appendChild(input);
+        localStorage.setItem("medium-option", value);
+        alert("Your default medium has changed");
+      }
+    }
+  })
 
-  if (localStorage.getItem("medium-option")) {
-    input.value = localStorage.getItem("medium-option");
-  }
-
-  var label = document.createElement("label");
-  label.setAttribute("for", "medium-option");
-  label.textContent = "Default appointment type for reminder";
-  label.style.display = "block";
-  label.style.marginTop = "30px";
-  label.style.marginBottom = "10px";
-  label.style.textAlign = "center";
-
-  var button = htmlToElement(`<button class='cortico-btn'>Save</button>`)
-  button.style.width = "100%";
-  button.style.display = "inline-block";
-  button.style.margin = "10px auto";
-
-  container.appendChild(label);
-  container.appendChild(inputContainer);
-  container.appendChild(button);
-
-  button.addEventListener("click", function () {
-    localStorage.setItem("medium-option", input.value);
-    alert("Your default medium has changed");
-  });
   return container;
 }
 
@@ -864,7 +860,6 @@ async function getCorticoLogin() {
 
   await loadExtensionStorageValue("jwt_expired").then(function (expired) {
     jwt_expired = expired
-    console.log("test", expired)
 
     if (jwt_expired === false) {
       loginButton = create(
@@ -1718,6 +1713,7 @@ function getPharmacyCodeFromReasonOrNotes(textContent) {
 
   // Check RFV field if not existing in notes
   if (!pharmacyCode) {
+    console.log("Checking RFV field")
     var reason = apptFields["reason"];
     var reasonValuesList = reason.match(/\[(.*?)\]/g);
 
@@ -1731,7 +1727,6 @@ function getPharmacyCodeFromReasonOrNotes(textContent) {
   if (pharmacyCode) {
     pharmacyCode = pharmacyCode.replace(/[\[\]']+/g, "");
   }
-
   return pharmacyCode;
 }
 
@@ -1816,7 +1811,8 @@ async function setupPreferredPharmacy(code, demographic_no) {
     pharmacyCode = code;
   }
   const corticoPharmacy = await getPharmacyDetails(pharmacyCode);
-  const corticoPharmacyText = JSON.parse(await corticoPharmacy.text());
+  const respText = await corticoPharmacy.text()
+  const corticoPharmacyText = JSON.parse(respText);
   var faxNumber = corticoPharmacyText[0]["fax_number"] || null;
   var searchTerm = corticoPharmacyText[0]["name"] || null;
 
@@ -1962,20 +1958,23 @@ function storePharmaciesFailureCache(demographicNo, message) {
 async function getDiagnosticFromCortico(appt_no, notes, token) {
   const clinicName = localStorage["clinicname"];
   const url = `${getCorticoUrl()}/api/encrypted/diagnostic-results/?appointment_id=${appt_no}&notes=${notes}`;
-
   return fetch(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
       "Authorization": "Bearer " + token
     },
+  }).then((res) => {
+    if ((res + '').includes('Unauthorized') || res.status == 401) {
+      showLoginForm()
+
+      return
+    }
+
+    return res
   }).catch((err) => {
     if ((err + '').includes('Unauthorized')) {
-      chrome.storage.local.set({ "jwt_expired": true })
-      alert("Your credentials have expired. Please login again")
-      addLoginForm(chrome)
-      const loginForm = document.querySelector(".login-form")
-      loginForm.classList.add("show")
+      showLoginForm()
     } else {
       alert("Failed to fetch data. There might be a problem with Cortico or the patient responses do not exist")
     }
@@ -1993,7 +1992,9 @@ async function setupPreferredPharmacies() {
   window.setupPreferredPharmaciesRunning = true;
 
   clearFailureCache();
-  const appointments = document.querySelectorAll(".apptLink");
+  const appointments = getAppointments();
+
+  console.log(appointments)
   var error = false;
   for (let i = 0; i < appointments.length; i++) {
     var temp = {};
@@ -2001,7 +2002,12 @@ async function setupPreferredPharmacies() {
     temp.current = i;
     pubsub.publish("check-batch-pharmacies", temp);
 
-    const element = appointments[i];
+    const cancelled = appointments[i].querySelector("a.apptStatus[title='Cancelled ']")
+    if (cancelled) {
+      continue;
+    }
+
+    const element = appointments[i].querySelector("a.apptLink")
 
     if (!element || !element.attributes) {
       continue;
@@ -2014,6 +2020,7 @@ async function setupPreferredPharmacies() {
       const pharmaciesCache = JSON.parse(_pharmaciesCache);
       var demographics = new Array();
 
+      console.log("Checking if demographic is cached...")
       if (pharmaciesCache && pharmaciesCache["demographics"]) {
         let cachedDemographics = pharmaciesCache["demographics"];
 
@@ -2028,6 +2035,7 @@ async function setupPreferredPharmacies() {
         demographics.includes(demographicNo) &&
         pharmaciesCache.date == dayjs().format("YYYY-MM-DD")
       ) {
+        console.log(`Demographic ${demographicNo} is cached, skipping`)
         continue;
       }
 
@@ -2039,15 +2047,15 @@ async function setupPreferredPharmacies() {
 
       storePharmaciesCache(demographicNo);
 
+      console.log("Checking if appt has pharmacy codes...")
       const apptTitle = element.attributes.title.textContent;
       const pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle);
       if (!pharmacyCode) {
+        console.log("Pharmacy code not found from appt")
         continue;
       }
-
       await setupPreferredPharmacy(pharmacyCode, demographicNo);
     } catch (err) {
-      console.error("err", err);
       storePharmaciesFailureCache(demographicNo, err.message);
       displayPharmaciesFailure(demographicNo, err.message);
     } finally {
@@ -2070,7 +2078,7 @@ async function init_diagnostic_viewer_button() {
   ).parentNode;
   last_button.parentNode.appendChild(
     htmlToElement(
-      "<button class='cortico-btn' type='button' id='diagnostic-viewer-btn'>Patient Responses</button>"
+      "<a class='cortico-btn' id='diagnostic-viewer-btn'>Patient Responses</a>"
     )
   );
 
@@ -2100,6 +2108,7 @@ async function init_diagnostic_viewer_button() {
       );
       if (diagnostic_response) {
         const diagnostic_text = String(await diagnostic_response.text());
+
         await showDiagnosticResults(diagnostic_text);
       }
     })
@@ -2180,11 +2189,13 @@ async function init_recall_button() {
 
 
 async function init_medium_option() {
-  const statusOption = document.querySelector("select[name='resources']");
+  let statusOption = document.querySelector("select[name='resources']");
 
-  let storedMedium = localStorage.getItem("medium-option")
+  let storedMedium = localStorage.getItem("medium-option");
 
-  statusOption.value = storedMedium ? storedMedium : 'n/a';
+  if (statusOption && storedMedium) {
+    statusOption.value = storedMedium;
+  }
 }
 
 
