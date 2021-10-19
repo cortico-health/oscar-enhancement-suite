@@ -8,6 +8,15 @@ module.exports = {
   important: true,
   darkMode: false, // or 'media' or 'class'
   theme: {
+    extend: {
+      screens: {
+        messenger: "600px",
+      },
+      flex: {
+        2: "2 1 0",
+        5: "5 1 0",
+      },
+    },
     screens: {
       sm: "640px",
       md: "768px",
@@ -1041,5 +1050,9 @@ module.exports = {
     wordBreak: ["responsive"],
     zIndex: ["responsive", "focus-within", "focus"],
   },
-  plugins: [],
+  plugins: [
+    require("@tailwindcss/forms")({
+      strategy: "class",
+    }),
+  ],
 };
