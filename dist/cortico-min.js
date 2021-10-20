@@ -4742,7 +4742,8 @@ function _setupPatientEmailButton() {
                         return _context6.abrupt("return");
 
                       case 2:
-                        _context6.next = 4;
+                        email_btn.disabled = true;
+                        _context6.next = 5;
                         return (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.loadExtensionStorageValue)("jwt_access_token").then( /*#__PURE__*/function () {
                           var _ref3 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee5(access_token) {
                             var html, doNotPrintList, patientFormResponse;
@@ -4758,9 +4759,10 @@ function _setupPatientEmailButton() {
 
                                   case 4:
                                     patientFormResponse = _context5.sent;
+                                    if (patientFormResponse) email_btn.disabled = false;
                                     console.log('RSP: ', patientFormResponse);
 
-                                  case 6:
+                                  case 7:
                                   case "end":
                                     return _context5.stop();
                                 }
@@ -4773,7 +4775,7 @@ function _setupPatientEmailButton() {
                           };
                         }());
 
-                      case 4:
+                      case 5:
                       case "end":
                         return _context6.stop();
                     }

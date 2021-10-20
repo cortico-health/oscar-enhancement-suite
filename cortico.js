@@ -347,6 +347,8 @@ async function setupPatientEmailButton() {
   email_btn.addEventListener("click", async (e) => {
     if (!checkCorticoUrl(e)) return;
 
+    email_btn.disabled = true
+
     await loadExtensionStorageValue("jwt_access_token").then(async function (access_token) {
       // copy document and remove unnecessary stuff
       let html = document.cloneNode(true);
@@ -357,6 +359,9 @@ async function setupPatientEmailButton() {
         html.documentElement.outerHTML,
         access_token
       );
+
+      if (patientFormResponse) email_btn.disabled = false
+  
       console.log('RSP: ', patientFormResponse)
     })
   })
