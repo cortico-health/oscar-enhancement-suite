@@ -4714,17 +4714,18 @@ function _setupPatientEmailButton() {
           case 0:
             is_eform_page = true;
             clinicName = localStorage["clinicname"];
-            email_parent = document.querySelector(".DoNotPrint td") || document.querySelector("#BottomButtons");
+            email_parent = document.querySelector(".DoNotPrint td") || document.querySelector("#BottomButtons") || document.querySelector("#topbar > form") || document.body;
+            console.log("email parent", email_parent);
 
             if (!email_parent) {
               is_eform_page = false;
               _email_parent = document.querySelector("#save div:last-child");
             }
 
-            _context7.next = 6;
+            _context7.next = 7;
             return getPatientInfo();
 
-          case 6:
+          case 7:
             patient_info = _context7.sent;
             email_btn = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.create)("\n  <p style='margin-bottom:2em'>\n    <a id='cortico-email-patient' class='cortico-btn'>Email Patient</a>\n  </p>\n  ");
             email_btn.addEventListener("click", /*#__PURE__*/function () {
@@ -4786,7 +4787,7 @@ function _setupPatientEmailButton() {
             }());
             email_parent.appendChild(email_btn);
 
-          case 10:
+          case 11:
           case "end":
             return _context7.stop();
         }

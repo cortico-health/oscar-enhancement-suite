@@ -326,8 +326,12 @@ async function setupPatientEmailButton() {
   let is_eform_page = true;
   const clinicName = localStorage["clinicname"];
 
-  const email_parent = document.querySelector(".DoNotPrint td")
-    || document.querySelector("#BottomButtons")
+  const email_parent = 
+    document.querySelector(".DoNotPrint td") || 
+    document.querySelector("#BottomButtons") || 
+    document.querySelector("#topbar > form") ||
+    document.body
+  console.log("email parent", email_parent)
   if (!email_parent) {
     is_eform_page = false;
     const email_parent = document.querySelector("#save div:last-child");
