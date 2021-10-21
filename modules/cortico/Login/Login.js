@@ -65,15 +65,21 @@ export async function corticoSignIn(username, password, browser) {
     browser = browser ? browser : chrome;
 
     if (browser) {
-      browser.storage.local.set({ "jwt_access_token": json.access })
-      browser.storage.local.set({ "jwt_expired": false })
-      browser.storage.local.set({ "jwt_username": username })
+      if (window.is_dev) {
+        window.localStorage.setItem("jwt_access_token", json.access)
+        window.localStorage.setItem("jwt_expired", false)
+        window.localStorage.setItem("jwt_username", username)
+      } else {
+        browser.storage.local.set({ "jwt_access_token": json.access })
+        browser.storage.local.set({ "jwt_expired": false })
+        browser.storage.local.set({ "jwt_username": username })
+      }
 
       const openMenu = document.querySelector(".login-form.show");
       openMenu.classList.remove("show");
 
-      alert("Successfully signed in, the page will now reload")
-      window.location.reload()
+      if(!alert("Successfully signed in, the page will now reload"))
+        window.location.reload()
 
       return
     }

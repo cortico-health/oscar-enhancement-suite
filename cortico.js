@@ -31,6 +31,7 @@ const version = 3.8;
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
 
+window.is_dev = process.env.NODE_ENV === "development" ? true : false
 const cortico_media = ["phone", "clinic", "virtual", "", "quiet"];
 
 const init_cortico = function () {
@@ -869,10 +870,15 @@ async function getCorticoLogin() {
       btnEvent = {
         "click .cortico-btn": async (e) => {
           if (e.target.className == 'cortico-btn') {
-            chrome.storage.local.remove(['jwt_access_token', 'jwt_expired']);
+            if (is_dev) {
+              localStorage.removeItem('jwt_access_token')
+              localStorage.removeItem('jwt_expired')
+            } else {
+              chrome.storage.local.remove(['jwt_access_token', 'jwt_expired']);
+            }
 
-            alert("Logged out from cortico, reloading...");
-            window.location.reload();
+            if (!alert("Logged out from cortico, reloading..."))
+              window.location.reload();
           }
         }
       }
@@ -961,8 +967,8 @@ function getCorticoUrlOption() {
     }
     if (input.value) {
       localStorage.setItem("clinicname", input.value);
-      alert("Your clinic name has changed, the page will now reload");
-      window.location.reload();
+      if (!alert("Your clinic name has changed, the page will now reload"))
+        window.location.reload();
     }
 
   });
@@ -1016,8 +1022,8 @@ function getResetCacheButton() {
           localStorage.clear()
           await chrome.storage.local.clear()
 
-          alert("Successfully reset cache, the page will now reload.")
-          window.location.reload()
+          if(!alert("Successfully reset cache, the page will now reload."))
+            window.location.reload()
         } else {
           console.log("Clear cache cancelled")
         }
@@ -2279,7 +2285,11 @@ async function emailPatientEForm(patientInfo, html, token) {
       console.error("Cortico: Error sending email: ", err)
       if ((err + '').includes("Unauthorized")) {
         alert("Your credentials have expired. Please login again")
-        chrome.storage.local.set({ "jwt_expired": true })
+        if (is_dev) {
+          localStorage.setItem("jwt_expired", true)
+        } else {
+          chrome.storage.local.set({ "jwt_expired": true })
+        }
 
         addLoginForm(chrome)
         const loginForm = document.querySelector(".login-form")
