@@ -327,8 +327,12 @@ async function setupPatientEmailButton() {
   let is_eform_page = true;
   const clinicName = localStorage["clinicname"];
 
-  const email_parent = document.querySelector(".DoNotPrint td")
-    || document.querySelector("#BottomButtons")
+  const email_parent = 
+    document.querySelector(".DoNotPrint td") || 
+    document.querySelector("#BottomButtons") || 
+    document.querySelector("#topbar > form") ||
+    document.body
+  console.log("email parent", email_parent)
   if (!email_parent) {
     is_eform_page = false;
     const email_parent = document.querySelector("#save div:last-child");
@@ -344,6 +348,8 @@ async function setupPatientEmailButton() {
   email_btn.addEventListener("click", async (e) => {
     if (!checkCorticoUrl(e)) return;
 
+    email_btn.disabled = true
+
     await loadExtensionStorageValue("jwt_access_token").then(async function (access_token) {
       // copy document and remove unnecessary stuff
       let html = document.cloneNode(true);
@@ -354,6 +360,9 @@ async function setupPatientEmailButton() {
         html.documentElement.outerHTML,
         access_token
       );
+
+      if (patientFormResponse) email_btn.disabled = false
+  
       console.log('RSP: ', patientFormResponse)
     })
   })
@@ -870,7 +879,7 @@ async function getCorticoLogin() {
       btnEvent = {
         "click .cortico-btn": async (e) => {
           if (e.target.className == 'cortico-btn') {
-            if (is_dev) {
+            if (window.is_dev) {
               localStorage.removeItem('jwt_access_token')
               localStorage.removeItem('jwt_expired')
             } else {
@@ -1379,10 +1388,14 @@ async function checkAllEligibility() {
 
       let verified = false;
 
-      if (
+      if (lowerCaseText.includes("this is not an insured benefit")) {
+        verified = "uninsured";
+        console.log("Patient not insured")
+      } else if (
         (!lowerCaseText.includes("failure-phn") &&
           lowerCaseText.includes("success")) ||
         lowerCaseText.includes("health card passed validation") ||
+        lowerCaseText.includes("patient eligible") ||
         requestSuccess
       ) {
         plusSignAppointments(demographic_no);
@@ -1738,23 +1751,26 @@ function getPharmacyCodeFromReasonOrNotes(textContent) {
 
 function setupPrescriptionButtons() {
   const providerSchedule = document.querySelector("#providerSchedule");
-  providerSchedule.addEventListener(
-    "click",
-    function (e) {
-      if (e.target.matches('a[title="Prescriptions"]')) {
-        var element = e.target;
-        while (element.className != "apptLink") {
-          element = element.previousElementSibling;
+
+  if (providerSchedule) {
+    providerSchedule.addEventListener(
+      "click",
+      function (e) {
+        if (e.target.matches('a[title="Prescriptions"]')) {
+          var element = e.target;
+          while (element.className != "apptLink") {
+            element = element.previousElementSibling;
+          }
+  
+          var apptTitle = element.attributes.title.textContent;
+          var pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle);
+  
+          localStorage.setItem("currentPharmacyCode", pharmacyCode);
         }
-
-        var apptTitle = element.attributes.title.textContent;
-        var pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle);
-
-        localStorage.setItem("currentPharmacyCode", pharmacyCode);
-      }
-    },
-    false
-  );
+      },
+      false
+    );
+  }
 }
 
 function sendPatientPrescriptionNotification() {
@@ -2285,7 +2301,7 @@ async function emailPatientEForm(patientInfo, html, token) {
       console.error("Cortico: Error sending email: ", err)
       if ((err + '').includes("Unauthorized")) {
         alert("Your credentials have expired. Please login again")
-        if (is_dev) {
+        if (window.is_dev) {
           localStorage.setItem("jwt_expired", true)
         } else {
           chrome.storage.local.set({ "jwt_expired": true })
@@ -2302,7 +2318,11 @@ async function emailPatientEForm(patientInfo, html, token) {
 
 function handleErrors(response) {
   if (!response.ok) {
-    throw Error(response.statusText);
+    if (response.status === 401) {
+      throw Error("Unauthorized")
+    } else {
+      throw Error(response.statusText);
+    }
   }
 
   return response;

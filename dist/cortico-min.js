@@ -1423,11 +1423,14 @@ function setAppointmentCheckbox(apptTd, apptInfo, checkCache, pharmaciesCache) {
   var isPharmacyCached = pharmaciesCache.demographics.includes(apptInfoItem.demographic_no);
   var menuIcon = '<small>&#10006;</small>';
   var cacheColor = '#555555';
-  var apptStatus = apptTd.querySelector("a.apptStatus").querySelector("img").title;
+  var anchor = apptTd.querySelector("a.apptStatus");
+  var apptStatus = anchor ? anchor.querySelector("img").title : "";
 
   if (cacheValue != undefined) {
-    cacheColor = cacheValue.verified ? '#00cc51' : '#cc0063';
-    menuIcon = cacheValue.verified ? '<small>&#10004;</small>' : menuIcon;
+    var verification = cacheValue.verified;
+    cacheColor = verification || verification === "uninsured" ? '#00cc51' : '#cc0063';
+    menuIcon = verification ? '<small>&#10004;</small>' : menuIcon;
+    menuIcon = verification === "uninsured" ? '<small>X</small>' : menuIcon;
 
     if (apptStatus.toLowerCase() === 'private') {
       menuIcon = '<small>$</small>';
@@ -4730,17 +4733,18 @@ function _setupPatientEmailButton() {
           case 0:
             is_eform_page = true;
             clinicName = localStorage["clinicname"];
-            email_parent = document.querySelector(".DoNotPrint td") || document.querySelector("#BottomButtons");
+            email_parent = document.querySelector(".DoNotPrint td") || document.querySelector("#BottomButtons") || document.querySelector("#topbar > form") || document.body;
+            console.log("email parent", email_parent);
 
             if (!email_parent) {
               is_eform_page = false;
               _email_parent = document.querySelector("#save div:last-child");
             }
 
-            _context7.next = 6;
+            _context7.next = 7;
             return getPatientInfo();
 
-          case 6:
+          case 7:
             patient_info = _context7.sent;
             email_btn = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.create)("\n  <p style='margin-bottom:2em'>\n    <a id='cortico-email-patient' class='cortico-btn'>Email Patient</a>\n  </p>\n  ");
             email_btn.addEventListener("click", /*#__PURE__*/function () {
@@ -4757,7 +4761,8 @@ function _setupPatientEmailButton() {
                         return _context6.abrupt("return");
 
                       case 2:
-                        _context6.next = 4;
+                        email_btn.disabled = true;
+                        _context6.next = 5;
                         return (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.loadExtensionStorageValue)("jwt_access_token").then( /*#__PURE__*/function () {
                           var _ref3 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee5(access_token) {
                             var html, doNotPrintList, patientFormResponse;
@@ -4773,9 +4778,10 @@ function _setupPatientEmailButton() {
 
                                   case 4:
                                     patientFormResponse = _context5.sent;
+                                    if (patientFormResponse) email_btn.disabled = false;
                                     console.log('RSP: ', patientFormResponse);
 
-                                  case 6:
+                                  case 7:
                                   case "end":
                                     return _context5.stop();
                                 }
@@ -4788,7 +4794,7 @@ function _setupPatientEmailButton() {
                           };
                         }());
 
-                      case 4:
+                      case 5:
                       case "end":
                         return _context6.stop();
                     }
@@ -4802,7 +4808,7 @@ function _setupPatientEmailButton() {
             }());
             email_parent.appendChild(email_btn);
 
-          case 10:
+          case 11:
           case "end":
             return _context7.stop();
         }
@@ -5245,7 +5251,7 @@ function _getCorticoLogin() {
                           switch (_context10.prev = _context10.next) {
                             case 0:
                               if (e.target.className == 'cortico-btn') {
-                                if (is_dev) {
+                                if (window.is_dev) {
                                   localStorage.removeItem('jwt_access_token');
                                   localStorage.removeItem('jwt_expired');
                                 } else {
@@ -5877,7 +5883,10 @@ function _checkAllEligibility() {
           case 55:
             verified = false;
 
-            if (!lowerCaseText.includes("failure-phn") && lowerCaseText.includes("success") || lowerCaseText.includes("health card passed validation") || requestSuccess) {
+            if (lowerCaseText.includes("this is not an insured benefit")) {
+              verified = "uninsured";
+              console.log("Patient not insured");
+            } else if (!lowerCaseText.includes("failure-phn") && lowerCaseText.includes("success") || lowerCaseText.includes("health card passed validation") || lowerCaseText.includes("patient eligible") || requestSuccess) {
               plusSignAppointments(demographic_no);
               verified = true;
               console.log("Success!");
@@ -6227,19 +6236,22 @@ function getPharmacyCodeFromReasonOrNotes(textContent) {
 
 function setupPrescriptionButtons() {
   var providerSchedule = document.querySelector("#providerSchedule");
-  providerSchedule.addEventListener("click", function (e) {
-    if (e.target.matches('a[title="Prescriptions"]')) {
-      var element = e.target;
 
-      while (element.className != "apptLink") {
-        element = element.previousElementSibling;
+  if (providerSchedule) {
+    providerSchedule.addEventListener("click", function (e) {
+      if (e.target.matches('a[title="Prescriptions"]')) {
+        var element = e.target;
+
+        while (element.className != "apptLink") {
+          element = element.previousElementSibling;
+        }
+
+        var apptTitle = element.attributes.title.textContent;
+        var pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle);
+        localStorage.setItem("currentPharmacyCode", pharmacyCode);
       }
-
-      var apptTitle = element.attributes.title.textContent;
-      var pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle);
-      localStorage.setItem("currentPharmacyCode", pharmacyCode);
-    }
-  }, false);
+    }, false);
+  }
 }
 
 function sendPatientPrescriptionNotification() {
@@ -7033,7 +7045,7 @@ function _emailPatientEForm() {
               if ((err + '').includes("Unauthorized")) {
                 alert("Your credentials have expired. Please login again");
 
-                if (is_dev) {
+                if (window.is_dev) {
                   localStorage.setItem("jwt_expired", true);
                 } else {
                   chrome.storage.local.set({
@@ -7061,7 +7073,11 @@ function _emailPatientEForm() {
 
 function handleErrors(response) {
   if (!response.ok) {
-    throw Error(response.statusText);
+    if (response.status === 401) {
+      throw Error("Unauthorized");
+    } else {
+      throw Error(response.statusText);
+    }
   }
 
   return response;
