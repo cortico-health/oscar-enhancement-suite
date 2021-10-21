@@ -226,6 +226,68 @@ function _nonIterableRest() {
 
 /***/ }),
 
+/***/ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _objectWithoutProperties)
+/* harmony export */ });
+/* harmony import */ var _objectWithoutPropertiesLoose_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./objectWithoutPropertiesLoose.js */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js");
+
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {};
+  var target = (0,_objectWithoutPropertiesLoose_js__WEBPACK_IMPORTED_MODULE_0__.default)(source, excluded);
+  var key, i;
+
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+      target[key] = source[key];
+    }
+  }
+
+  return target;
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _objectWithoutPropertiesLoose)
+/* harmony export */ });
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime/helpers/esm/readOnlyError.js":
 /*!******************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/esm/readOnlyError.js ***!
@@ -404,16 +466,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
 /* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
-/* harmony import */ var preact_compat__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! preact/compat */ "./node_modules/preact/compat/dist/compat.module.js");
-/* harmony import */ var _resources_icons_96x96_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../resources/icons/96x96.png */ "./resources/icons/96x96.png");
-/* harmony import */ var preact_hooks__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! preact/hooks */ "./node_modules/preact/hooks/dist/hooks.module.js");
-/* harmony import */ var _Utils_Utils__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Utils/Utils */ "./modules/Utils/Utils.js");
+/* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var preact_compat__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! preact/compat */ "./node_modules/preact/compat/dist/compat.module.js");
+/* harmony import */ var _resources_icons_96x96_png__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../resources/icons/96x96.png */ "./resources/icons/96x96.png");
+/* harmony import */ var preact_hooks__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! preact/hooks */ "./node_modules/preact/hooks/dist/hooks.module.js");
+/* harmony import */ var _Utils_Utils__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Utils/Utils */ "./modules/Utils/Utils.js");
 /* provided dependency */ var h = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js")["h"];
 
 
+
+var _excluded = ["close"];
 
 
 
@@ -424,14 +489,18 @@ __webpack_require__.r(__webpack_exports__);
 function Messenger() {
   var container = document.body;
 
-  function Header() {
+  function Header(_ref) {
+    var close = _ref.close,
+        props = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_2__.default)(_ref, _excluded);
+
     return h("div", {
       className: "tw-flex tw-rounded-t-md tw-items-top tw-border tw-bg-cortico-blue tw-p-12 tw-shadow-xl"
     }, h("div", {
-      className: "tw-flex-1"
+      className: "tw-flex-1",
+      onClick: close
     }, h("svg", {
       xmlns: "http://www.w3.org/2000/svg",
-      class: "tw-h-6 tw-w-6 tw-text-white tw-cursor-pointer tw-shadow-xl",
+      className: "tw-h-6 tw-w-6 tw-text-white tw-cursor-pointer tw-shadow-xl",
       fill: "none",
       viewBox: "0 0 24 24",
       stroke: "currentColor"
@@ -439,7 +508,7 @@ function Messenger() {
       "stroke-linecap": "round",
       "stroke-linejoin": "round",
       "stroke-width": "2",
-      d: "M10 19l-7-7m0 0l7-7m-7 7h18"
+      d: "M14 5l7 7m0 0l-7 7m7-7H3"
     }))), h("div", {
       className: "tw-flex-5"
     }, h("div", {
@@ -450,7 +519,7 @@ function Messenger() {
       className: "tw-mt-3 tw-bg-white tw-inline-block tw-py-1 tw-px-2 tw-rounded-md tw-shadow-2xl"
     }, h("img", {
       className: "tw-w-3 tw-h-3 tw-inline-block",
-      src: _resources_icons_96x96_png__WEBPACK_IMPORTED_MODULE_5__.default,
+      src: _resources_icons_96x96_png__WEBPACK_IMPORTED_MODULE_6__.default,
       alt: "Cortico"
     }), h("p", {
       className: "tw-ml-1 tw-inline-block tw-text-xs tw-text-cortico-blue tw-font-medium"
@@ -469,7 +538,7 @@ function Messenger() {
     }, "sample@email.com")));
   }
 
-  var Subject = (0,preact_compat__WEBPACK_IMPORTED_MODULE_4__.forwardRef)(function (props, ref) {
+  var Subject = (0,preact_compat__WEBPACK_IMPORTED_MODULE_5__.forwardRef)(function (props, ref) {
     return h("div", {
       className: ""
     }, h("div", null, h("input", {
@@ -479,7 +548,7 @@ function Messenger() {
       placeholder: "Subject"
     })));
   });
-  var Chat = (0,preact_compat__WEBPACK_IMPORTED_MODULE_4__.forwardRef)(function (props, ref) {
+  var Chat = (0,preact_compat__WEBPACK_IMPORTED_MODULE_5__.forwardRef)(function (props, ref) {
     return h("div", {
       className: ""
     }, h("textarea", {
@@ -492,7 +561,7 @@ function Messenger() {
 
   function Loader() {
     return h("svg", {
-      className: "tw-animate-spin tw--ml-1 tw-mr-3 tw-h-5 tw-w-5 tw-text-white",
+      className: "tw-animate-spin tw--ml-1 tw-mr-3 tw-h-5 tw-w-5 tw-text-white tw-inline-block",
       xmlns: "http://www.w3.org/2000/svg",
       fill: "none",
       viewBox: "0 0 24 24"
@@ -511,43 +580,65 @@ function Messenger() {
   }
 
   function Content() {
-    var _useState = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_6__.useState)(false),
+    var _useState = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_7__.useState)(false),
         _useState2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__.default)(_useState, 2),
         loading = _useState2[0],
         setLoading = _useState2[1];
 
+    var _useState3 = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_7__.useState)(false),
+        _useState4 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__.default)(_useState3, 2),
+        open = _useState4[0],
+        setOpen = _useState4[1];
+
     var email = "aaron@countable.ca";
-    var subject = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_6__.useRef)();
-    var message = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_6__.useRef)();
+    var subject = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_7__.useRef)();
+    var message = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_7__.useRef)();
+
+    var handleOpen = function handleOpen(e) {
+      e.preventDefault();
+      setOpen(true);
+    };
+
+    var handleClose = function handleClose(e) {
+      e.preventDefault();
+      setOpen(false);
+    };
 
     var handleSubmit = /*#__PURE__*/function () {
-      var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee(e) {
+      var _ref2 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee(e) {
         var data, token, url;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(function _callee$(_context) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 e.preventDefault();
+                setLoading(true);
+                _context.next = 4;
+                return new Promise(function (resolve) {
+                  return setTimeout(resolve, 1000);
+                });
+
+              case 4:
                 data = {
-                  clinic_host: (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_7__.getCorticoUrl)().replace(/http.?:\/\//, ""),
+                  clinic_host: (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_8__.getCorticoUrl)().replace(/http.?:\/\//, ""),
                   to: email,
                   subject: subject.current.value,
                   body: message.current.value,
                   pdf_html: "<div>Hello World/div>"
                 };
-                _context.prev = 2;
-                _context.next = 5;
-                return (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_7__.loadExtensionStorageValue)("jwt_access_token");
+                _context.prev = 5;
+                _context.next = 8;
+                return (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_8__.loadExtensionStorageValue)("jwt_access_token");
 
-              case 5:
+              case 8:
                 token = _context.sent;
 
                 if (!token) {
-                  _context.next = 11;
+                  _context.next = 14;
                   break;
                 }
 
-                url = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_7__.getCorticoUrl)() + "/api/plug-in/email-form/";
+                url = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_8__.getCorticoUrl)() + "/api/plug-in/email-form/";
                 fetch(url, {
                   method: "POST",
                   body: JSON.stringify(data),
@@ -557,46 +648,56 @@ function Messenger() {
                     Authorization: "Bearer ".concat(token)
                   }
                 }).then(function (response) {
+                  return response.json();
+                }).then(function (response) {
                   console.log("Response", response);
                 }).catch(function (error) {
                   console.error("Error", error);
-                  throw erorr;
+                  throw error;
                 });
-                _context.next = 12;
-                break;
-
-              case 11:
-                throw "Cannot find token";
-
-              case 12:
-                _context.next = 17;
+                _context.next = 15;
                 break;
 
               case 14:
-                _context.prev = 14;
-                _context.t0 = _context["catch"](2);
-                console.error(_context.t0);
+                throw "Cannot find token";
+
+              case 15:
+                _context.next = 20;
+                break;
 
               case 17:
+                _context.prev = 17;
+                _context.t0 = _context["catch"](5);
+                console.error(_context.t0);
+
+              case 20:
+                _context.prev = 20;
+                setLoading(false);
+                console.log("Loading Finally", loading);
+                return _context.finish(20);
+
+              case 24:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[2, 14]]);
+        }, _callee, null, [[5, 17, 20, 24]]);
       }));
 
       return function handleSubmit(_x) {
-        return _ref.apply(this, arguments);
+        return _ref2.apply(this, arguments);
       };
     }();
 
     return h("div", {
-      className: "tailwind"
+      className: "tailwind tw-font-sans"
     }, h("div", {
-      className: "tw-fixed tw-bottom-5 tw-left-5 tw-bg-white tw-z-50 tw-max-w-[400px] tw-shadow-xl tw-w-full tw-rounded-md "
+      className: "tw-fixed tw-bottom-5 tw-right-5 tw-bg-white tw-z-10000 tw-max-w-[400px] tw-shadow-xl tw-w-full tw-rounded-md tw-transform tw-transition-transform tw-duration-200 tw-ease-in-out ".concat(open ? "tw-translate-x-0" : "tw-translate-x-[430px]")
     }, h("form", {
       onSubmit: handleSubmit
-    }, h(Header, null), h("div", {
+    }, h(Header, {
+      close: handleClose
+    }), h("div", {
       className: "tw-px-4 tw-py-2"
     }, h(To, null)), h("hr", {
       className: "tw-opacity-10"
@@ -615,8 +716,13 @@ function Messenger() {
     }), h("div", {
       className: "tw-flex tw-justify-end tw-p-4"
     }, h("button", {
+      disabled: loading,
       className: "tw-bg-cortico-blue tw-px-3 tw-py-2 tw-rounded-md tw-text-white tw-text-sm tw-flex tw-items-center"
-    }, loading === true ? h(Loader, null) : h("span", {
+    }, loading === true ? h("span", {
+      class: "tw-flex"
+    }, h(Loader, null), h("span", {
+      class: "tw-ml-1"
+    }, "Sending...")) : h("span", {
       className: "tw-flex tw-items-center"
     }, h("span", null, "Send Message"), h("svg", {
       xmlns: "http://www.w3.org/2000/svg",
@@ -630,10 +736,11 @@ function Messenger() {
       "stroke-width": "2",
       d: "M13 5l7 7-7 7M5 5l7 7-7 7"
     }))))))), h("div", {
-      className: "tw-fixed tw-bottom-5 tw-right-5 tw-bg-cortico-blue tw-rounded-full tw-z-5000 tw-shadow-xl tw-p-3 tw-w-20 tw-h-20 tw-cursor-pointer"
+      className: "tw-fixed tw-bottom-5 tw-right-5 tw-bg-cortico-blue tw-rounded-lg tw-z-5000 tw-shadow-xl tw-p-3 tw-w-24 tw-cursor-pointer",
+      onClick: handleOpen
     }, h("svg", {
       xmlns: "http://www.w3.org/2000/svg",
-      class: "tw-h-full tw-w-full tw-text-white",
+      class: "tw-text-white tw-h-10 tw-w-10 tw-mx-auto",
       fill: "none",
       viewBox: "0 0 24 24",
       stroke: "currentColor"
@@ -642,13 +749,22 @@ function Messenger() {
       "stroke-linejoin": "round",
       "stroke-width": "2",
       d: "M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
-    })), h("div", null, h("img", {
-      src: _resources_icons_96x96_png__WEBPACK_IMPORTED_MODULE_5__.default,
+    })), h("p", {
+      className: "tw-text-white tw-text-opacity-80 tw-text-sm tw-text-center tw-mt-2"
+    }, "Message Patient"), h("hr", {
+      className: "tw-opacity-20 tw-my-2"
+    }), h("div", {
+      className: "tw-flex tw-bg-white tw-p-1 tw-rounded-md tw-mt-2"
+    }, h("img", {
+      className: "tw-w-4 tw-h-4",
+      src: _resources_icons_96x96_png__WEBPACK_IMPORTED_MODULE_6__.default,
       alt: "Cortico"
-    }))));
+    }), h("div", {
+      className: "tw-text-cortico-blue tw-text-xs tw-font-semibold tw-ml-1"
+    }, "Cortico"))));
   }
 
-  return (0,preact__WEBPACK_IMPORTED_MODULE_3__.render)(h(Content, null), container);
+  return (0,preact__WEBPACK_IMPORTED_MODULE_4__.render)(h(Content, null), container);
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Messenger);
@@ -2664,7 +2780,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "/**\nUse a better box model (opinionated).\n*/\n\n.tailwind *,\n.tailwind ::before,\n.tailwind ::after {\n\tbox-sizing: border-box;\n}\n\n/**\nUse a more readable tab size (opinionated).\n*/\n\n.tailwind html {\n\t-moz-tab-size: 4;\n\t-o-tab-size: 4;\n\t   tab-size: 4;\n}\n\n/**\n1. Correct the line height in all browsers.\n2. Prevent adjustments of font size after orientation changes in iOS.\n*/\n\n.tailwind html {\n\tline-height: 1.15; /* 1 */\n\t-webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/**\nRemove the margin in all browsers.\n*/\n\n.tailwind body {\n\tmargin: 0;\n}\n\n/**\nImprove consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n*/\n\n.tailwind body {\n\tfont-family:\n\t\tsystem-ui,\n\t\t-apple-system, /* Firefox supports this but not yet `system-ui` */\n\t\t'Segoe UI',\n\t\tRoboto,\n\t\tHelvetica,\n\t\tArial,\n\t\tsans-serif,\n\t\t'Apple Color Emoji',\n\t\t'Segoe UI Emoji';\n}\n\n/**\n1. Add the correct height in Firefox.\n2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)\n*/\n\n.tailwind hr {\n\theight: 0; /* 1 */\n\tcolor: inherit; /* 2 */\n}\n\n/**\nAdd the correct text decoration in Chrome, Edge, and Safari.\n*/\n\n.tailwind abbr[title] {\n\t-webkit-text-decoration: underline dotted;\n\t        text-decoration: underline dotted;\n}\n\n/**\nAdd the correct font weight in Edge and Safari.\n*/\n\n.tailwind b,\n.tailwind strong {\n\tfont-weight: bolder;\n}\n\n/**\n1. Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n2. Correct the odd 'em' font sizing in all browsers.\n*/\n\n.tailwind code,\n.tailwind kbd,\n.tailwind samp,\n.tailwind pre {\n\tfont-family:\n\t\tui-monospace,\n\t\tSFMono-Regular,\n\t\tConsolas,\n\t\t'Liberation Mono',\n\t\tMenlo,\n\t\tmonospace; /* 1 */\n\tfont-size: 1em; /* 2 */\n}\n\n/**\nAdd the correct font size in all browsers.\n*/\n\n.tailwind small {\n\tfont-size: 80%;\n}\n\n/**\nPrevent 'sub' and 'sup' elements from affecting the line height in all browsers.\n*/\n\n.tailwind sub,\n.tailwind sup {\n\tfont-size: 75%;\n\tline-height: 0;\n\tposition: relative;\n\tvertical-align: baseline;\n}\n\n/*\nText-level semantics\n====================\n*/\n\n.tailwind sub {\n\tbottom: -0.25em;\n}\n\n/*\nGrouping content\n================\n*/\n\n.tailwind sup {\n\ttop: -0.5em;\n}\n\n/**\n1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)\n2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)\n*/\n\n.tailwind table {\n\ttext-indent: 0; /* 1 */\n\tborder-color: inherit; /* 2 */\n}\n\n/**\n1. Change the font styles in all browsers.\n2. Remove the margin in Firefox and Safari.\n*/\n\n.tailwind button,\n.tailwind input,\n.tailwind optgroup,\n.tailwind select,\n.tailwind textarea {\n\tfont-family: inherit; /* 1 */\n\tfont-size: 100%; /* 1 */\n\tline-height: 1.15; /* 1 */\n\tmargin: 0; /* 2 */\n}\n\n/**\nRemove the inheritance of text transform in Edge and Firefox.\n1. Remove the inheritance of text transform in Firefox.\n*/\n\n.tailwind button,\n.tailwind select { /* 1 */\n\ttext-transform: none;\n}\n\n/**\nCorrect the inability to style clickable types in iOS and Safari.\n*/\n\n.tailwind button,\n.tailwind [type='button'],\n.tailwind [type='reset'],\n.tailwind [type='submit'] {\n\t-webkit-appearance: button;\n}\n\n/**\nRemove the inner border and padding in Firefox.\n*/\n\n.tailwind ::-moz-focus-inner {\n\tborder-style: none;\n\tpadding: 0;\n}\n\n/**\nRestore the focus styles unset by the previous rule.\n*/\n\n.tailwind :-moz-focusring {\n\toutline: 1px dotted ButtonText;\n}\n\n/**\nRemove the additional ':invalid' styles in Firefox.\nSee: https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737\n*/\n\n.tailwind :-moz-ui-invalid {\n\tbox-shadow: none;\n}\n\n/**\nRemove the padding so developers are not caught out when they zero out 'fieldset' elements in all browsers.\n*/\n\n.tailwind legend {\n\tpadding: 0;\n}\n\n/**\nAdd the correct vertical alignment in Chrome and Firefox.\n*/\n\n.tailwind progress {\n\tvertical-align: baseline;\n}\n\n/**\nCorrect the cursor style of increment and decrement buttons in Safari.\n*/\n\n.tailwind ::-webkit-inner-spin-button,\n.tailwind ::-webkit-outer-spin-button {\n\theight: auto;\n}\n\n/**\n1. Correct the odd appearance in Chrome and Safari.\n2. Correct the outline style in Safari.\n*/\n\n.tailwind [type='search'] {\n\t-webkit-appearance: textfield; /* 1 */\n\toutline-offset: -2px; /* 2 */\n}\n\n/**\nRemove the inner padding in Chrome and Safari on macOS.\n*/\n\n.tailwind ::-webkit-search-decoration {\n\t-webkit-appearance: none;\n}\n\n/**\n1. Correct the inability to style clickable types in iOS and Safari.\n2. Change font properties to 'inherit' in Safari.\n*/\n\n.tailwind ::-webkit-file-upload-button {\n\t-webkit-appearance: button; /* 1 */\n\tfont: inherit; /* 2 */\n}\n\n/*\nAdd the correct display in Chrome and Safari.\n*/\n\n.tailwind summary {\n\tdisplay: list-item;\n}\n\n/**\n * Removes the default spacing and border for appropriate elements.\n */\n\n.tailwind blockquote,\n.tailwind dl,\n.tailwind dd,\n.tailwind h1,\n.tailwind h2,\n.tailwind h3,\n.tailwind h4,\n.tailwind h5,\n.tailwind h6,\n.tailwind hr,\n.tailwind figure,\n.tailwind p,\n.tailwind pre {\n  margin: 0;\n}\n\n/**\n * Manually forked from SUIT CSS Base: https://github.com/suitcss/base\n * A thin layer on top of normalize.css that provides a starting point more\n * suitable for web applications.\n */\n\n.tailwind button {\n  background-color: transparent;\n  background-image: none;\n}\n\n/*\nInteractive\n===========\n*/\n\n.tailwind fieldset {\n  margin: 0;\n  padding: 0;\n}\n\n/*\nForms\n=====\n*/\n\n.tailwind ol,\n.tailwind ul {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\n\n/**\n * 1. Use the user's configured `sans` font-family (with Tailwind's default\n *    sans-serif font stack as a fallback) as a sane default.\n * 2. Use Tailwind's default \"normal\" line-height so the user isn't forced\n *    to override it to ensure consistency even when using the default theme.\n */\n\n.tailwind html {\n  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"; /* 1 */\n  line-height: 1.5; /* 2 */\n}\n\n/**\n * Inherit font-family and line-height from `html` so users can set them as\n * a class directly on the `html` element.\n */\n\n.tailwind body {\n  font-family: inherit;\n  line-height: inherit;\n}\n\n/**\n * 1. Prevent padding and border from affecting element width.\n *\n *    We used to set this in the html element and inherit from\n *    the parent element for everything else. This caused issues\n *    in shadow-dom-enhanced elements like <details> where the content\n *    is wrapped by a div with box-sizing set to `content-box`.\n *\n *    https://github.com/mozdevs/cssremedy/issues/4\n *\n *\n * 2. Allow adding a border to an element by just adding a border-width.\n *\n *    By default, the way the browser specifies that an element should have no\n *    border is by setting it's border-style to `none` in the user-agent\n *    stylesheet.\n *\n *    In order to easily add borders to elements by just setting the `border-width`\n *    property, we change the default border-style for all elements to `solid`, and\n *    use border-width to hide them instead. This way our `border` utilities only\n *    need to set the `border-width` property instead of the entire `border`\n *    shorthand, making our border utilities much more straightforward to compose.\n *\n *    https://github.com/tailwindcss/tailwindcss/pull/116\n */\n\n.tailwind *,\n.tailwind ::before,\n.tailwind ::after {\n  box-sizing: border-box; /* 1 */\n  border-width: 0; /* 2 */\n  border-style: solid; /* 2 */\n  border-color: currentColor; /* 2 */\n}\n\n/*\n * Ensure horizontal rules are visible by default\n */\n\n.tailwind hr {\n  border-top-width: 1px;\n}\n\n/**\n * Undo the `border-style: none` reset that Normalize applies to images so that\n * our `border-{width}` utilities have the expected effect.\n *\n * The Normalize reset is unnecessary for us since we default the border-width\n * to 0 on all elements.\n *\n * https://github.com/tailwindcss/tailwindcss/issues/362\n */\n\n.tailwind img {\n  border-style: solid;\n}\n\n/**\n * Tailwind custom reset styles\n */\n\n.tailwind textarea {\n  resize: vertical;\n}\n\n/*\nTabular data\n============\n*/\n\n.tailwind input::-moz-placeholder, .tailwind textarea::-moz-placeholder {\n  opacity: 1;\n  color: #9ca3af;\n}\n\n.tailwind input:-ms-input-placeholder, .tailwind textarea:-ms-input-placeholder {\n  opacity: 1;\n  color: #9ca3af;\n}\n\n.tailwind input::placeholder,\n.tailwind textarea::placeholder {\n  opacity: 1;\n  color: #9ca3af;\n}\n\n/*\nSections\n========\n*/\n\n.tailwind button,\n.tailwind [role=\"button\"] {\n  cursor: pointer;\n}\n\n/*\nDocument\n========\n*/\n\n.tailwind table {\n  border-collapse: collapse;\n}\n\n/*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */\n\n.tailwind h1,\n.tailwind h2,\n.tailwind h3,\n.tailwind h4,\n.tailwind h5,\n.tailwind h6 {\n  font-size: inherit;\n  font-weight: inherit;\n}\n\n/**\n * Reset links to optimize for opt-in styling instead of\n * opt-out.\n */\n\n.tailwind a {\n  color: inherit;\n  text-decoration: inherit;\n}\n\n/**\n * Reset form element properties that are easy to forget to\n * style explicitly so you don't inadvertently introduce\n * styles that deviate from your design system. These styles\n * supplement a partial reset that is already applied by\n * normalize.css.\n */\n\n.tailwind button,\n.tailwind input,\n.tailwind optgroup,\n.tailwind select,\n.tailwind textarea {\n  padding: 0;\n  line-height: inherit;\n  color: inherit;\n}\n\n/**\n * Use the configured 'mono' font family for elements that\n * are expected to be rendered with a monospace font, falling\n * back to the system monospace stack if there is no configured\n * 'mono' font family.\n */\n\n.tailwind pre,\n.tailwind code,\n.tailwind kbd,\n.tailwind samp {\n  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace;\n}\n\n/**\n * 1. Make replaced elements `display: block` by default as that's\n *    the behavior you want almost all of the time. Inspired by\n *    CSS Remedy, with `svg` added as well.\n *\n *    https://github.com/mozdevs/cssremedy/issues/14\n * \n * 2. Add `vertical-align: middle` to align replaced elements more\n *    sensibly by default when overriding `display` by adding a\n *    utility like `inline`.\n *\n *    This can trigger a poorly considered linting error in some\n *    tools but is included by design.\n * \n *    https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210\n */\n\n.tailwind img,\n.tailwind svg,\n.tailwind video,\n.tailwind canvas,\n.tailwind audio,\n.tailwind iframe,\n.tailwind embed,\n.tailwind object {\n  display: block; /* 1 */\n  vertical-align: middle; /* 2 */\n}\n\n/**\n * Constrain images and videos to the parent width and preserve\n * their intrinsic aspect ratio.\n *\n * https://github.com/mozdevs/cssremedy/issues/14\n */\n\n.tailwind img,\n.tailwind video {\n  max-width: 100%;\n  height: auto;\n}\n\n/**\n * Ensure the default browser behavior of the `hidden` attribute.\n */\n\n.tailwind [hidden] {\n  display: none;\n}\n\n/*! tailwindcss v2.2.6 | MIT License | https://tailwindcss.com\n*/\n\n.tailwind .tw-border, .tailwind .tw-border-0 {\n\t--tw-border-opacity: 1;\n\tborder-color: rgba(229, 231, 235, var(--tw-border-opacity));\n}\n\n.tailwind .tw-shadow-xl, .tailwind .tw-shadow-2xl {\n\t--tw-ring-offset-shadow: 0 0 #0000;\n\t--tw-ring-shadow: 0 0 #0000;\n\t--tw-shadow: 0 0 #0000;\n}\n\n.tailwind .form-input,.tailwind .form-textarea,.tailwind .form-select,.tailwind .form-multiselect {\n\t-webkit-appearance: none;\n\t   -moz-appearance: none;\n\t        appearance: none;\n\tbackground-color: #fff;\n\tborder-color: #6b7280;\n\tborder-width: 1px;\n\tborder-radius: 0px;\n\tpadding-top: 0.5rem;\n\tpadding-right: 0.75rem;\n\tpadding-bottom: 0.5rem;\n\tpadding-left: 0.75rem;\n\tfont-size: 1rem;\n\tline-height: 1.5rem;\n\t--tw-shadow: 0 0 #0000;\n}\n\n.tailwind .form-input:focus, .tailwind .form-textarea:focus, .tailwind .form-select:focus, .tailwind .form-multiselect:focus {\n\toutline: 2px solid transparent;\n\toutline-offset: 2px;\n\t--tw-ring-inset: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-ring-offset-width: 0px;\n\t--tw-ring-offset-color: #fff;\n\t--tw-ring-color: #2563eb;\n\t--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);\n\t--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);\n\tbox-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n\tborder-color: #2563eb;\n}\n\n.tailwind .form-input::-moz-placeholder, .tailwind .form-textarea::-moz-placeholder {\n\tcolor: #6b7280;\n\topacity: 1;\n}\n\n.tailwind .form-input:-ms-input-placeholder, .tailwind .form-textarea:-ms-input-placeholder {\n\tcolor: #6b7280;\n\topacity: 1;\n}\n\n.tailwind .form-input::placeholder,.tailwind .form-textarea::placeholder {\n\tcolor: #6b7280;\n\topacity: 1;\n}\n.tw-fixed {\n\tposition: fixed !important;\n}\n.tw-bottom-5 {\n\tbottom: 1.25rem !important;\n}\n.tw-left-5 {\n\tleft: 1.25rem !important;\n}\n.tw-right-5 {\n\tright: 1.25rem !important;\n}\n.tw-z-50 {\n\tz-index: 50 !important;\n}\n.tw-z-5000 {\n\tz-index: 5000 !important;\n}\n.tw-mx-auto {\n\tmargin-left: auto !important;\n\tmargin-right: auto !important;\n}\n.tw-my-2 {\n\tmargin-top: 0.5rem !important;\n\tmargin-bottom: 0.5rem !important;\n}\n.tw-mt-2 {\n\tmargin-top: 0.5rem !important;\n}\n.tw-mt-3 {\n\tmargin-top: 0.75rem !important;\n}\n.tw-ml-1 {\n\tmargin-left: 0.25rem !important;\n}\n.tw-mt-0 {\n\tmargin-top: 0px !important;\n}\n.tw--ml-1 {\n\tmargin-left: -0.25rem !important;\n}\n.tw-mr-3 {\n\tmargin-right: 0.75rem !important;\n}\n.tw-ml-2 {\n\tmargin-left: 0.5rem !important;\n}\n.tw-mt-10 {\n\tmargin-top: 2.5rem !important;\n}\n.tw-block {\n\tdisplay: block !important;\n}\n.tw-inline-block {\n\tdisplay: inline-block !important;\n}\n.tw-flex {\n\tdisplay: flex !important;\n}\n.tw-h-6 {\n\theight: 1.5rem !important;\n}\n.tw-h-3 {\n\theight: 0.75rem !important;\n}\n.tw-h-5 {\n\theight: 1.25rem !important;\n}\n.tw-h-4 {\n\theight: 1rem !important;\n}\n.tw-h-20 {\n\theight: 5rem !important;\n}\n.tw-h-full {\n\theight: 100% !important;\n}\n.tw-h-\\[800px\\] {\n\theight: 800px !important;\n}\n.tw-w-6 {\n\twidth: 1.5rem !important;\n}\n.tw-w-3 {\n\twidth: 0.75rem !important;\n}\n.tw-w-full {\n\twidth: 100% !important;\n}\n.tw-w-5 {\n\twidth: 1.25rem !important;\n}\n.tw-w-4 {\n\twidth: 1rem !important;\n}\n.tw-w-20 {\n\twidth: 5rem !important;\n}\n.tw-w-\\[400px\\] {\n\twidth: 400px !important;\n}\n.tw-w-\\[70px\\] {\n\twidth: 70px !important;\n}\n.tw-w-2\\/3 {\n\twidth: 66.666667% !important;\n}\n.tw-w-\\[300px\\] {\n\twidth: 300px !important;\n}\n.tw-max-w-\\[400px\\] {\n\tmax-width: 400px !important;\n}\n.tw-max-w-3xl {\n\tmax-width: 48rem !important;\n}\n.tw-flex-1 {\n\tflex: 1 1 0% !important;\n}\n.tw-flex-5 {\n\tflex: 5 1 0 !important;\n}\n@-webkit-keyframes tw-spin {\n\n\tto {\n\t\ttransform: rotate(360deg);\n\t}\n}\n@keyframes tw-spin {\n\n\tto {\n\t\ttransform: rotate(360deg);\n\t}\n}\n.tw-animate-spin {\n\t-webkit-animation: tw-spin 1s linear infinite !important;\n\t        animation: tw-spin 1s linear infinite !important;\n}\n.tw-cursor-pointer {\n\tcursor: pointer !important;\n}\n.tw-resize-none {\n\tresize: none !important;\n}\n.tw-items-center {\n\talign-items: center !important;\n}\n.tw-justify-end {\n\tjustify-content: flex-end !important;\n}\n.tw-rounded-md {\n\tborder-radius: 0.375rem !important;\n}\n.tw-rounded-xl {\n\tborder-radius: 0.75rem !important;\n}\n.tw-rounded-full {\n\tborder-radius: 9999px !important;\n}\n.tw-rounded-t-md {\n\tborder-top-left-radius: 0.375rem !important;\n\tborder-top-right-radius: 0.375rem !important;\n}\n.tw-rounded-l-md {\n\tborder-top-left-radius: 0.375rem !important;\n\tborder-bottom-left-radius: 0.375rem !important;\n}\n.tw-border {\n\tborder-width: 1px !important;\n}\n.tw-border-0 {\n\tborder-width: 0px !important;\n}\n.tw-bg-cortico-blue {\n\tbackground-color: rgba(75, 84, 246, 1) !important;\n}\n.tw-bg-white {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(255, 255, 255, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-blue-700 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(29, 78, 216, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-gray-100 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(243, 244, 246, var(--tw-bg-opacity)) !important;\n}\n.tw-p-12 {\n\tpadding: 3rem !important;\n}\n.tw-p-2 {\n\tpadding: 0.5rem !important;\n}\n.tw-p-4 {\n\tpadding: 1rem !important;\n}\n.tw-p-3 {\n\tpadding: 0.75rem !important;\n}\n.tw-p-10 {\n\tpadding: 2.5rem !important;\n}\n.tw-py-1 {\n\tpadding-top: 0.25rem !important;\n\tpadding-bottom: 0.25rem !important;\n}\n.tw-px-2 {\n\tpadding-left: 0.5rem !important;\n\tpadding-right: 0.5rem !important;\n}\n.tw-px-4 {\n\tpadding-left: 1rem !important;\n\tpadding-right: 1rem !important;\n}\n.tw-py-2 {\n\tpadding-top: 0.5rem !important;\n\tpadding-bottom: 0.5rem !important;\n}\n.tw-px-3 {\n\tpadding-left: 0.75rem !important;\n\tpadding-right: 0.75rem !important;\n}\n.tw-pl-2 {\n\tpadding-left: 0.5rem !important;\n}\n.tw-font-sans {\n\tfont-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\" !important;\n}\n.tw-text-sm {\n\tfont-size: 0.875rem !important;\n\tline-height: 1.25rem !important;\n}\n.tw-text-xs {\n\tfont-size: 0.75rem !important;\n\tline-height: 1rem !important;\n}\n.tw-text-2xl {\n\tfont-size: 1.5rem !important;\n\tline-height: 2rem !important;\n}\n.tw-text-xl {\n\tfont-size: 1.25rem !important;\n\tline-height: 1.75rem !important;\n}\n.tw-font-light {\n\tfont-weight: 300 !important;\n}\n.tw-font-medium {\n\tfont-weight: 500 !important;\n}\n.tw-font-bold {\n\tfont-weight: 700 !important;\n}\n.tw-leading-5 {\n\tline-height: 1.25rem !important;\n}\n.tw-tracking-wider {\n\tletter-spacing: 0.05em !important;\n}\n.tw-text-white {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(255, 255, 255, var(--tw-text-opacity)) !important;\n}\n.tw-text-cortico-blue {\n\tcolor: rgba(75, 84, 246, 1) !important;\n}\n.tw-text-gray-700 {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(55, 65, 81, var(--tw-text-opacity)) !important;\n}\n.tw-text-gray-600 {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(75, 85, 99, var(--tw-text-opacity)) !important;\n}\n.tw-text-opacity-80 {\n\t--tw-text-opacity: 0.8 !important;\n}\n.tw-opacity-25 {\n\topacity: 0.25 !important;\n}\n.tw-opacity-75 {\n\topacity: 0.75 !important;\n}\n.tw-opacity-10 {\n\topacity: 0.1 !important;\n}\n.tw-shadow-xl {\n\t--tw-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;\n\tbox-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;\n}\n.tw-shadow-2xl {\n\t--tw-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;\n\tbox-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;\n}\n\n.sidebar-instructions {\n\ttext-align: center;\n\tfont-size: 1.875rem;\n\tline-height: 2.25rem;\n\tfont-weight: 700;\n}\n\n.sidebar-instructions-hidden {\n\tdisplay: none;\n}\n", "",{"version":3,"sources":["webpack://./index.css","webpack://./%3Cinput%20css%20ExUWsj%3E","webpack://./%3Cinput%20css%20tMKwHV%3E","<no source>"],"names":[],"mappings":"AACE;;CAAc;;AAAd;;;CCaD,sBAAsB;ADbP;;AAAd;;CAAc;;AAAd;CCqBD,gBAAgB;CAChB,cAAW;IAAX,WAAW;ADtBI;;AAAd;;;CAAc;;AAAd;CC+BD,iBAAiB,EAAE,MAAM;CACzB,8BAA8B,EAAE,MAAM;ADhCvB;;AAAd;;CAAc;;AAAd;CC6CD,SAAS;AD7CM;;AAAd;;CAAc;;AAAd;CCqDD;;;;;;;;;kBASiB;AD9DF;;AAAd;;;CAAc;;AAAd;CC4ED,SAAS,EAAE,MAAM;CACjB,cAAc,EAAE,MAAM;AD7EP;;AAAd;;CAAc;;AAAd;CC0FD,yCAAiC;SAAjC,iCAAiC;AD1FlB;;AAAd;;CAAc;;AAAd;;CCmGD,mBAAmB;ADnGJ;;AAAd;;;CAAc;;AAAd;;;;CC+GD;;;;;;WAMU,EAAE,MAAM;CAClB,cAAc,EAAE,MAAM;ADtHP;;AAAd;;CAAc;;AAAd;CC8HD,cAAc;AD9HC;;AAAd;;CAAc;;AAAd;;CCuID,cAAc;CACd,cAAc;CACd,kBAAkB;CAClB,wBAAwB;AD1IT;;AAAd;;;CAAc;;AAAd;CC8ID,eAAe;AD9IA;;AAAd;;;CAAc;;AAAd;CCkJD,WAAW;ADlJI;;AAAd;;;CAAc;;AAAd;CCgKD,cAAc,EAAE,MAAM;CACtB,qBAAqB,EAAE,MAAM;ADjKd;;AAAd;;;CAAc;;AAAd;;;;;CCmLD,oBAAoB,EAAE,MAAM;CAC5B,eAAe,EAAE,MAAM;CACvB,iBAAiB,EAAE,MAAM;CACzB,SAAS,EAAE,MAAM;ADtLF;;AAAd;;;CAAc;;AAAd;mBC+LO,MAAM;CACd,oBAAoB;ADhML;;AAAd;;CAAc;;AAAd;;;;CC2MD,0BAA0B;AD3MX;;AAAd;;CAAc;;AAAd;CCmND,kBAAkB;CAClB,UAAU;ADpNK;;AAAd;;CAAc;;AAAd;CC4ND,8BAA8B;AD5Nf;;AAAd;;;CAAc;;AAAd;CCqOD,gBAAgB;ADrOD;;AAAd;;CAAc;;AAAd;CC6OD,UAAU;AD7OK;;AAAd;;CAAc;;AAAd;CCqPD,wBAAwB;ADrPT;;AAAd;;CAAc;;AAAd;;CC8PD,YAAY;AD9PG;;AAAd;;;CAAc;;AAAd;CCuQD,6BAA6B,EAAE,MAAM;CACrC,oBAAoB,EAAE,MAAM;ADxQb;;AAAd;;CAAc;;AAAd;CCgRD,wBAAwB;ADhRT;;AAAd;;;CAAc;;AAAd;CCyRD,0BAA0B,EAAE,MAAM;CAClC,aAAa,EAAE,MAAM;AD1RN;;AAAd;;CAAc;;AAAd;CCuSD,kBAAkB;ADvSH;;AAAd;;EAAc;;AAAd;;;;;;;;;;;;;EEsBA,SAAS;AFtBK;;AAAd;;;;EAAc;;AAAd;EE0BA,6BAA6B;EAC7B,sBAAsB;AF3BR;;AAAd;;;CAAc;;AAAd;EE+BA,SAAS;EACT,UAAU;AFhCI;;AAAd;;;CAAc;;AAAd;;EEqCA,gBAAgB;EAChB,SAAS;EACT,UAAU;AFvCI;;AAAd;;;;;EAAc;;AAAd;EEsDA,4NAAsP,EAAE,MAAM;EAC9P,gBAAgB,EAAE,MAAM;AFvDV;;AAAd;;;EAAc;;AAAd;EEiEA,oBAAoB;EACpB,oBAAoB;AFlEN;;AAAd;;;;;;;;;;;;;;;;;;;;;;;;EAAc;;AAAd;;;EEkGA,sBAAsB,EAAE,MAAM;EAC9B,eAAe,EAAE,MAAM;EACvB,mBAAmB,EAAE,MAAM;EAC3B,0BAA0B,EAAE,MAAM;AFrGpB;;AAAd;;EAAc;;AAAd;EE6GA,qBAAqB;AF7GP;;AAAd;;;;;;;;EAAc;;AAAd;EE2HA,mBAAmB;AF3HL;;AAAd;;EAAc;;AAAd;EE+HA,gBAAgB;AF/HF;;AAAd;;;CAAc;;AAAd;EEoIA,UAAU;EACV,cAAwC;AFrI1B;;AAAd;EEoIA,UAAU;EACV,cAAwC;AFrI1B;;AAAd;;EEoIA,UAAU;EACV,cAAwC;AFrI1B;;AAAd;;;CAAc;;AAAd;;EE0IA,eAAe;AF1ID;;AAAd;;;CAAc;;AAAd;EE8IA,yBAAyB;AF9IX;;AAAd,8FAAc;;AAAd;;;;;;EEuJA,kBAAkB;EAClB,oBAAoB;AFxJN;;AAAd;;;EAAc;;AAAd;EEiKA,cAAc;EACd,wBAAwB;AFlKV;;AAAd;;;;;;EAAc;;AAAd;;;;;EEkLA,UAAU;EACV,oBAAoB;EACpB,cAAc;AFpLA;;AAAd;;;;;EAAc;;AAAd;;;;EEkMA,+GAAyI;AFlM3H;;AAAd;;;;;;;;;;;;;;;EAAc;;AAAd;;;;;;;;EE8NA,cAAc,EAAE,MAAM;EACtB,sBAAsB,EAAE,MAAM;AF/NhB;;AAAd;;;;;EAAc;;AAAd;;EE2OA,eAAe;EACf,YAAY;AF5OE;;AAAd;;EAAc;;AAAd;EEoPA,aAAa;AFpPC;;AAAd;CAAc;;AGDhB;CAAA,uBAAA;CAAA;CAAA;;AAAA;CAAA,mCAAA;CAAA,4BAAA;CAAA;CAAA;;AHCE;CGDF,yBAAA;IAAA,sBAAA;SAAA,iBAAA;CAAA,uBAAA;CAAA,sBAAA;CAAA,kBAAA;CAAA,mBAAA;CAAA,oBAAA;CAAA,uBAAA;CAAA,uBAAA;CAAA,sBAAA;CAAA,gBAAA;CAAA,oBAAA;CAAA,uBAAA;AHCgB;;AAAd;CGDF,+BAAA;CAAA,oBAAA;CAAA,6CAAA;CAAA,4BAAA;CAAA,6BAAA;CAAA,yBAAA;CAAA,4GAAA;CAAA,0GAAA;CAAA,kFAAA;CAAA;AHCgB;;AAAd;CGDF,eAAA;CAAA;AHCgB;;AAAd;CGDF,eAAA;CAAA;AHCgB;;AAAd;CGDF,eAAA;CAAA;AHCgB;AAIhB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,6BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;;CGLA;EAAA;EAAA;AHKmB;AAAnB;;CGLA;EAAA;EAAA;AHKmB;AAAnB;CGLA,yDAAA;SAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,4CAAA;CAAA;AHKmB;AAAnB;CGLA,4CAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,gCAAA;CAAA;AHKmB;AAAnB;CGLA,gCAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,+BAAA;CAAA;AHKmB;AAAnB;CGLA,iCAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,+BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,6BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,gCAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,gCAAA;CAAA;AHKmB;AAAnB;CGLA,gCAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,kGAAA;CAAA;AHKmB;AAAnB;CGLA,8DAAA;CAAA;AHKmB;;AGLnB;CAAA,mBAAA;CAAA,oBAAA;CAAA,qBAAA;CAAA;CAAA;;AAAA;CAAA;CAAA","sourcesContent":[".tailwind {\n  @tailwind base;\n}\n\n@tailwind components;\n@tailwind utilities;\n\n.sidebar-instructions {\n  @apply tw-text-3xl tw-text-center tw-font-bold;\n}\n\n.sidebar-instructions-hidden {\n  @apply tw-hidden;\n}\n","/*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */\n\n/*\nDocument\n========\n*/\n\n/**\nUse a better box model (opinionated).\n*/\n\n*,\n::before,\n::after {\n\tbox-sizing: border-box;\n}\n\n/**\nUse a more readable tab size (opinionated).\n*/\n\nhtml {\n\t-moz-tab-size: 4;\n\ttab-size: 4;\n}\n\n/**\n1. Correct the line height in all browsers.\n2. Prevent adjustments of font size after orientation changes in iOS.\n*/\n\nhtml {\n\tline-height: 1.15; /* 1 */\n\t-webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/*\nSections\n========\n*/\n\n/**\nRemove the margin in all browsers.\n*/\n\nbody {\n\tmargin: 0;\n}\n\n/**\nImprove consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n*/\n\nbody {\n\tfont-family:\n\t\tsystem-ui,\n\t\t-apple-system, /* Firefox supports this but not yet `system-ui` */\n\t\t'Segoe UI',\n\t\tRoboto,\n\t\tHelvetica,\n\t\tArial,\n\t\tsans-serif,\n\t\t'Apple Color Emoji',\n\t\t'Segoe UI Emoji';\n}\n\n/*\nGrouping content\n================\n*/\n\n/**\n1. Add the correct height in Firefox.\n2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)\n*/\n\nhr {\n\theight: 0; /* 1 */\n\tcolor: inherit; /* 2 */\n}\n\n/*\nText-level semantics\n====================\n*/\n\n/**\nAdd the correct text decoration in Chrome, Edge, and Safari.\n*/\n\nabbr[title] {\n\ttext-decoration: underline dotted;\n}\n\n/**\nAdd the correct font weight in Edge and Safari.\n*/\n\nb,\nstrong {\n\tfont-weight: bolder;\n}\n\n/**\n1. Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n2. Correct the odd 'em' font sizing in all browsers.\n*/\n\ncode,\nkbd,\nsamp,\npre {\n\tfont-family:\n\t\tui-monospace,\n\t\tSFMono-Regular,\n\t\tConsolas,\n\t\t'Liberation Mono',\n\t\tMenlo,\n\t\tmonospace; /* 1 */\n\tfont-size: 1em; /* 2 */\n}\n\n/**\nAdd the correct font size in all browsers.\n*/\n\nsmall {\n\tfont-size: 80%;\n}\n\n/**\nPrevent 'sub' and 'sup' elements from affecting the line height in all browsers.\n*/\n\nsub,\nsup {\n\tfont-size: 75%;\n\tline-height: 0;\n\tposition: relative;\n\tvertical-align: baseline;\n}\n\nsub {\n\tbottom: -0.25em;\n}\n\nsup {\n\ttop: -0.5em;\n}\n\n/*\nTabular data\n============\n*/\n\n/**\n1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)\n2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)\n*/\n\ntable {\n\ttext-indent: 0; /* 1 */\n\tborder-color: inherit; /* 2 */\n}\n\n/*\nForms\n=====\n*/\n\n/**\n1. Change the font styles in all browsers.\n2. Remove the margin in Firefox and Safari.\n*/\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n\tfont-family: inherit; /* 1 */\n\tfont-size: 100%; /* 1 */\n\tline-height: 1.15; /* 1 */\n\tmargin: 0; /* 2 */\n}\n\n/**\nRemove the inheritance of text transform in Edge and Firefox.\n1. Remove the inheritance of text transform in Firefox.\n*/\n\nbutton,\nselect { /* 1 */\n\ttext-transform: none;\n}\n\n/**\nCorrect the inability to style clickable types in iOS and Safari.\n*/\n\nbutton,\n[type='button'],\n[type='reset'],\n[type='submit'] {\n\t-webkit-appearance: button;\n}\n\n/**\nRemove the inner border and padding in Firefox.\n*/\n\n::-moz-focus-inner {\n\tborder-style: none;\n\tpadding: 0;\n}\n\n/**\nRestore the focus styles unset by the previous rule.\n*/\n\n:-moz-focusring {\n\toutline: 1px dotted ButtonText;\n}\n\n/**\nRemove the additional ':invalid' styles in Firefox.\nSee: https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737\n*/\n\n:-moz-ui-invalid {\n\tbox-shadow: none;\n}\n\n/**\nRemove the padding so developers are not caught out when they zero out 'fieldset' elements in all browsers.\n*/\n\nlegend {\n\tpadding: 0;\n}\n\n/**\nAdd the correct vertical alignment in Chrome and Firefox.\n*/\n\nprogress {\n\tvertical-align: baseline;\n}\n\n/**\nCorrect the cursor style of increment and decrement buttons in Safari.\n*/\n\n::-webkit-inner-spin-button,\n::-webkit-outer-spin-button {\n\theight: auto;\n}\n\n/**\n1. Correct the odd appearance in Chrome and Safari.\n2. Correct the outline style in Safari.\n*/\n\n[type='search'] {\n\t-webkit-appearance: textfield; /* 1 */\n\toutline-offset: -2px; /* 2 */\n}\n\n/**\nRemove the inner padding in Chrome and Safari on macOS.\n*/\n\n::-webkit-search-decoration {\n\t-webkit-appearance: none;\n}\n\n/**\n1. Correct the inability to style clickable types in iOS and Safari.\n2. Change font properties to 'inherit' in Safari.\n*/\n\n::-webkit-file-upload-button {\n\t-webkit-appearance: button; /* 1 */\n\tfont: inherit; /* 2 */\n}\n\n/*\nInteractive\n===========\n*/\n\n/*\nAdd the correct display in Chrome and Safari.\n*/\n\nsummary {\n\tdisplay: list-item;\n}\n","/**\n * Manually forked from SUIT CSS Base: https://github.com/suitcss/base\n * A thin layer on top of normalize.css that provides a starting point more\n * suitable for web applications.\n */\n\n/**\n * Removes the default spacing and border for appropriate elements.\n */\n\nblockquote,\ndl,\ndd,\nh1,\nh2,\nh3,\nh4,\nh5,\nh6,\nhr,\nfigure,\np,\npre {\n  margin: 0;\n}\n\nbutton {\n  background-color: transparent;\n  background-image: none;\n}\n\nfieldset {\n  margin: 0;\n  padding: 0;\n}\n\nol,\nul {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\n\n/**\n * Tailwind custom reset styles\n */\n\n/**\n * 1. Use the user's configured `sans` font-family (with Tailwind's default\n *    sans-serif font stack as a fallback) as a sane default.\n * 2. Use Tailwind's default \"normal\" line-height so the user isn't forced\n *    to override it to ensure consistency even when using the default theme.\n */\n\nhtml {\n  font-family: theme('fontFamily.sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"); /* 1 */\n  line-height: 1.5; /* 2 */\n}\n\n\n/**\n * Inherit font-family and line-height from `html` so users can set them as\n * a class directly on the `html` element.\n */\n\nbody {\n  font-family: inherit;\n  line-height: inherit;\n}\n\n/**\n * 1. Prevent padding and border from affecting element width.\n *\n *    We used to set this in the html element and inherit from\n *    the parent element for everything else. This caused issues\n *    in shadow-dom-enhanced elements like <details> where the content\n *    is wrapped by a div with box-sizing set to `content-box`.\n *\n *    https://github.com/mozdevs/cssremedy/issues/4\n *\n *\n * 2. Allow adding a border to an element by just adding a border-width.\n *\n *    By default, the way the browser specifies that an element should have no\n *    border is by setting it's border-style to `none` in the user-agent\n *    stylesheet.\n *\n *    In order to easily add borders to elements by just setting the `border-width`\n *    property, we change the default border-style for all elements to `solid`, and\n *    use border-width to hide them instead. This way our `border` utilities only\n *    need to set the `border-width` property instead of the entire `border`\n *    shorthand, making our border utilities much more straightforward to compose.\n *\n *    https://github.com/tailwindcss/tailwindcss/pull/116\n */\n\n*,\n::before,\n::after {\n  box-sizing: border-box; /* 1 */\n  border-width: 0; /* 2 */\n  border-style: solid; /* 2 */\n  border-color: currentColor; /* 2 */\n}\n\n/*\n * Ensure horizontal rules are visible by default\n */\n\nhr {\n  border-top-width: 1px;\n}\n\n/**\n * Undo the `border-style: none` reset that Normalize applies to images so that\n * our `border-{width}` utilities have the expected effect.\n *\n * The Normalize reset is unnecessary for us since we default the border-width\n * to 0 on all elements.\n *\n * https://github.com/tailwindcss/tailwindcss/issues/362\n */\n\nimg {\n  border-style: solid;\n}\n\ntextarea {\n  resize: vertical;\n}\n\ninput::placeholder,\ntextarea::placeholder {\n  opacity: 1;\n  color: theme('colors.gray.400', #a1a1aa);\n}\n\nbutton,\n[role=\"button\"] {\n  cursor: pointer;\n}\n\ntable {\n  border-collapse: collapse;\n}\n\nh1,\nh2,\nh3,\nh4,\nh5,\nh6 {\n  font-size: inherit;\n  font-weight: inherit;\n}\n\n/**\n * Reset links to optimize for opt-in styling instead of\n * opt-out.\n */\n\na {\n  color: inherit;\n  text-decoration: inherit;\n}\n\n/**\n * Reset form element properties that are easy to forget to\n * style explicitly so you don't inadvertently introduce\n * styles that deviate from your design system. These styles\n * supplement a partial reset that is already applied by\n * normalize.css.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  padding: 0;\n  line-height: inherit;\n  color: inherit;\n}\n\n/**\n * Use the configured 'mono' font family for elements that\n * are expected to be rendered with a monospace font, falling\n * back to the system monospace stack if there is no configured\n * 'mono' font family.\n */\n\npre,\ncode,\nkbd,\nsamp {\n  font-family: theme('fontFamily.mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace);\n}\n\n/**\n * 1. Make replaced elements `display: block` by default as that's\n *    the behavior you want almost all of the time. Inspired by\n *    CSS Remedy, with `svg` added as well.\n *\n *    https://github.com/mozdevs/cssremedy/issues/14\n * \n * 2. Add `vertical-align: middle` to align replaced elements more\n *    sensibly by default when overriding `display` by adding a\n *    utility like `inline`.\n *\n *    This can trigger a poorly considered linting error in some\n *    tools but is included by design.\n * \n *    https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210\n */\n\nimg,\nsvg,\nvideo,\ncanvas,\naudio,\niframe,\nembed,\nobject {\n  display: block; /* 1 */\n  vertical-align: middle; /* 2 */\n}\n\n/**\n * Constrain images and videos to the parent width and preserve\n * their intrinsic aspect ratio.\n *\n * https://github.com/mozdevs/cssremedy/issues/14\n */\n\nimg,\nvideo {\n  max-width: 100%;\n  height: auto;\n}\n\n/**\n * Ensure the default browser behavior of the `hidden` attribute.\n */\n\n[hidden] {\n  display: none;\n}\n",null],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "/**\nUse a better box model (opinionated).\n*/\n\n.tailwind *,\n.tailwind ::before,\n.tailwind ::after {\n\tbox-sizing: border-box;\n}\n\n/**\nUse a more readable tab size (opinionated).\n*/\n\n.tailwind html {\n\t-moz-tab-size: 4;\n\t-o-tab-size: 4;\n\t   tab-size: 4;\n}\n\n/**\n1. Correct the line height in all browsers.\n2. Prevent adjustments of font size after orientation changes in iOS.\n*/\n\n.tailwind html {\n\tline-height: 1.15; /* 1 */\n\t-webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/**\nRemove the margin in all browsers.\n*/\n\n.tailwind body {\n\tmargin: 0;\n}\n\n/**\nImprove consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n*/\n\n.tailwind body {\n\tfont-family:\n\t\tsystem-ui,\n\t\t-apple-system, /* Firefox supports this but not yet `system-ui` */\n\t\t'Segoe UI',\n\t\tRoboto,\n\t\tHelvetica,\n\t\tArial,\n\t\tsans-serif,\n\t\t'Apple Color Emoji',\n\t\t'Segoe UI Emoji';\n}\n\n/**\n1. Add the correct height in Firefox.\n2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)\n*/\n\n.tailwind hr {\n\theight: 0; /* 1 */\n\tcolor: inherit; /* 2 */\n}\n\n/**\nAdd the correct text decoration in Chrome, Edge, and Safari.\n*/\n\n.tailwind abbr[title] {\n\t-webkit-text-decoration: underline dotted;\n\t        text-decoration: underline dotted;\n}\n\n/**\nAdd the correct font weight in Edge and Safari.\n*/\n\n.tailwind b,\n.tailwind strong {\n\tfont-weight: bolder;\n}\n\n/**\n1. Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n2. Correct the odd 'em' font sizing in all browsers.\n*/\n\n.tailwind code,\n.tailwind kbd,\n.tailwind samp,\n.tailwind pre {\n\tfont-family:\n\t\tui-monospace,\n\t\tSFMono-Regular,\n\t\tConsolas,\n\t\t'Liberation Mono',\n\t\tMenlo,\n\t\tmonospace; /* 1 */\n\tfont-size: 1em; /* 2 */\n}\n\n/**\nAdd the correct font size in all browsers.\n*/\n\n.tailwind small {\n\tfont-size: 80%;\n}\n\n/**\nPrevent 'sub' and 'sup' elements from affecting the line height in all browsers.\n*/\n\n.tailwind sub,\n.tailwind sup {\n\tfont-size: 75%;\n\tline-height: 0;\n\tposition: relative;\n\tvertical-align: baseline;\n}\n\n/*\nText-level semantics\n====================\n*/\n\n.tailwind sub {\n\tbottom: -0.25em;\n}\n\n/*\nGrouping content\n================\n*/\n\n.tailwind sup {\n\ttop: -0.5em;\n}\n\n/**\n1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)\n2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)\n*/\n\n.tailwind table {\n\ttext-indent: 0; /* 1 */\n\tborder-color: inherit; /* 2 */\n}\n\n/**\n1. Change the font styles in all browsers.\n2. Remove the margin in Firefox and Safari.\n*/\n\n.tailwind button,\n.tailwind input,\n.tailwind optgroup,\n.tailwind select,\n.tailwind textarea {\n\tfont-family: inherit; /* 1 */\n\tfont-size: 100%; /* 1 */\n\tline-height: 1.15; /* 1 */\n\tmargin: 0; /* 2 */\n}\n\n/**\nRemove the inheritance of text transform in Edge and Firefox.\n1. Remove the inheritance of text transform in Firefox.\n*/\n\n.tailwind button,\n.tailwind select { /* 1 */\n\ttext-transform: none;\n}\n\n/**\nCorrect the inability to style clickable types in iOS and Safari.\n*/\n\n.tailwind button,\n.tailwind [type='button'],\n.tailwind [type='reset'],\n.tailwind [type='submit'] {\n\t-webkit-appearance: button;\n}\n\n/**\nRemove the inner border and padding in Firefox.\n*/\n\n.tailwind ::-moz-focus-inner {\n\tborder-style: none;\n\tpadding: 0;\n}\n\n/**\nRestore the focus styles unset by the previous rule.\n*/\n\n.tailwind :-moz-focusring {\n\toutline: 1px dotted ButtonText;\n}\n\n/**\nRemove the additional ':invalid' styles in Firefox.\nSee: https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737\n*/\n\n.tailwind :-moz-ui-invalid {\n\tbox-shadow: none;\n}\n\n/**\nRemove the padding so developers are not caught out when they zero out 'fieldset' elements in all browsers.\n*/\n\n.tailwind legend {\n\tpadding: 0;\n}\n\n/**\nAdd the correct vertical alignment in Chrome and Firefox.\n*/\n\n.tailwind progress {\n\tvertical-align: baseline;\n}\n\n/**\nCorrect the cursor style of increment and decrement buttons in Safari.\n*/\n\n.tailwind ::-webkit-inner-spin-button,\n.tailwind ::-webkit-outer-spin-button {\n\theight: auto;\n}\n\n/**\n1. Correct the odd appearance in Chrome and Safari.\n2. Correct the outline style in Safari.\n*/\n\n.tailwind [type='search'] {\n\t-webkit-appearance: textfield; /* 1 */\n\toutline-offset: -2px; /* 2 */\n}\n\n/**\nRemove the inner padding in Chrome and Safari on macOS.\n*/\n\n.tailwind ::-webkit-search-decoration {\n\t-webkit-appearance: none;\n}\n\n/**\n1. Correct the inability to style clickable types in iOS and Safari.\n2. Change font properties to 'inherit' in Safari.\n*/\n\n.tailwind ::-webkit-file-upload-button {\n\t-webkit-appearance: button; /* 1 */\n\tfont: inherit; /* 2 */\n}\n\n/*\nAdd the correct display in Chrome and Safari.\n*/\n\n.tailwind summary {\n\tdisplay: list-item;\n}\n\n/**\n * Removes the default spacing and border for appropriate elements.\n */\n\n.tailwind blockquote,\n.tailwind dl,\n.tailwind dd,\n.tailwind h1,\n.tailwind h2,\n.tailwind h3,\n.tailwind h4,\n.tailwind h5,\n.tailwind h6,\n.tailwind hr,\n.tailwind figure,\n.tailwind p,\n.tailwind pre {\n  margin: 0;\n}\n\n/**\n * Manually forked from SUIT CSS Base: https://github.com/suitcss/base\n * A thin layer on top of normalize.css that provides a starting point more\n * suitable for web applications.\n */\n\n.tailwind button {\n  background-color: transparent;\n  background-image: none;\n}\n\n/*\nInteractive\n===========\n*/\n\n.tailwind fieldset {\n  margin: 0;\n  padding: 0;\n}\n\n/*\nForms\n=====\n*/\n\n.tailwind ol,\n.tailwind ul {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\n\n/**\n * 1. Use the user's configured `sans` font-family (with Tailwind's default\n *    sans-serif font stack as a fallback) as a sane default.\n * 2. Use Tailwind's default \"normal\" line-height so the user isn't forced\n *    to override it to ensure consistency even when using the default theme.\n */\n\n.tailwind html {\n  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"; /* 1 */\n  line-height: 1.5; /* 2 */\n}\n\n/**\n * Inherit font-family and line-height from `html` so users can set them as\n * a class directly on the `html` element.\n */\n\n.tailwind body {\n  font-family: inherit;\n  line-height: inherit;\n}\n\n/**\n * 1. Prevent padding and border from affecting element width.\n *\n *    We used to set this in the html element and inherit from\n *    the parent element for everything else. This caused issues\n *    in shadow-dom-enhanced elements like <details> where the content\n *    is wrapped by a div with box-sizing set to `content-box`.\n *\n *    https://github.com/mozdevs/cssremedy/issues/4\n *\n *\n * 2. Allow adding a border to an element by just adding a border-width.\n *\n *    By default, the way the browser specifies that an element should have no\n *    border is by setting it's border-style to `none` in the user-agent\n *    stylesheet.\n *\n *    In order to easily add borders to elements by just setting the `border-width`\n *    property, we change the default border-style for all elements to `solid`, and\n *    use border-width to hide them instead. This way our `border` utilities only\n *    need to set the `border-width` property instead of the entire `border`\n *    shorthand, making our border utilities much more straightforward to compose.\n *\n *    https://github.com/tailwindcss/tailwindcss/pull/116\n */\n\n.tailwind *,\n.tailwind ::before,\n.tailwind ::after {\n  box-sizing: border-box; /* 1 */\n  border-width: 0; /* 2 */\n  border-style: solid; /* 2 */\n  border-color: currentColor; /* 2 */\n}\n\n/*\n * Ensure horizontal rules are visible by default\n */\n\n.tailwind hr {\n  border-top-width: 1px;\n}\n\n/**\n * Undo the `border-style: none` reset that Normalize applies to images so that\n * our `border-{width}` utilities have the expected effect.\n *\n * The Normalize reset is unnecessary for us since we default the border-width\n * to 0 on all elements.\n *\n * https://github.com/tailwindcss/tailwindcss/issues/362\n */\n\n.tailwind img {\n  border-style: solid;\n}\n\n/**\n * Tailwind custom reset styles\n */\n\n.tailwind textarea {\n  resize: vertical;\n}\n\n/*\nTabular data\n============\n*/\n\n.tailwind input::-moz-placeholder, .tailwind textarea::-moz-placeholder {\n  opacity: 1;\n  color: #9ca3af;\n}\n\n.tailwind input:-ms-input-placeholder, .tailwind textarea:-ms-input-placeholder {\n  opacity: 1;\n  color: #9ca3af;\n}\n\n.tailwind input::placeholder,\n.tailwind textarea::placeholder {\n  opacity: 1;\n  color: #9ca3af;\n}\n\n/*\nSections\n========\n*/\n\n.tailwind button,\n.tailwind [role=\"button\"] {\n  cursor: pointer;\n}\n\n/*\nDocument\n========\n*/\n\n.tailwind table {\n  border-collapse: collapse;\n}\n\n/*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */\n\n.tailwind h1,\n.tailwind h2,\n.tailwind h3,\n.tailwind h4,\n.tailwind h5,\n.tailwind h6 {\n  font-size: inherit;\n  font-weight: inherit;\n}\n\n/**\n * Reset links to optimize for opt-in styling instead of\n * opt-out.\n */\n\n.tailwind a {\n  color: inherit;\n  text-decoration: inherit;\n}\n\n/**\n * Reset form element properties that are easy to forget to\n * style explicitly so you don't inadvertently introduce\n * styles that deviate from your design system. These styles\n * supplement a partial reset that is already applied by\n * normalize.css.\n */\n\n.tailwind button,\n.tailwind input,\n.tailwind optgroup,\n.tailwind select,\n.tailwind textarea {\n  padding: 0;\n  line-height: inherit;\n  color: inherit;\n}\n\n/**\n * Use the configured 'mono' font family for elements that\n * are expected to be rendered with a monospace font, falling\n * back to the system monospace stack if there is no configured\n * 'mono' font family.\n */\n\n.tailwind pre,\n.tailwind code,\n.tailwind kbd,\n.tailwind samp {\n  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace;\n}\n\n/**\n * 1. Make replaced elements `display: block` by default as that's\n *    the behavior you want almost all of the time. Inspired by\n *    CSS Remedy, with `svg` added as well.\n *\n *    https://github.com/mozdevs/cssremedy/issues/14\n * \n * 2. Add `vertical-align: middle` to align replaced elements more\n *    sensibly by default when overriding `display` by adding a\n *    utility like `inline`.\n *\n *    This can trigger a poorly considered linting error in some\n *    tools but is included by design.\n * \n *    https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210\n */\n\n.tailwind img,\n.tailwind svg,\n.tailwind video,\n.tailwind canvas,\n.tailwind audio,\n.tailwind iframe,\n.tailwind embed,\n.tailwind object {\n  display: block; /* 1 */\n  vertical-align: middle; /* 2 */\n}\n\n/**\n * Constrain images and videos to the parent width and preserve\n * their intrinsic aspect ratio.\n *\n * https://github.com/mozdevs/cssremedy/issues/14\n */\n\n.tailwind img,\n.tailwind video {\n  max-width: 100%;\n  height: auto;\n}\n\n/**\n * Ensure the default browser behavior of the `hidden` attribute.\n */\n\n.tailwind [hidden] {\n  display: none;\n}\n\n/*! tailwindcss v2.2.6 | MIT License | https://tailwindcss.com\n*/\n\n.tailwind .tw-translate-x-0, .tailwind .tw-translate-x-\\[410px\\], .tailwind .tw-translate-x-\\[430px\\], .tailwind .tw-transform {\n\t--tw-translate-x: 0;\n\t--tw-translate-y: 0;\n\t--tw-rotate: 0;\n\t--tw-skew-x: 0;\n\t--tw-skew-y: 0;\n\t--tw-scale-x: 1;\n\t--tw-scale-y: 1;\n\t--tw-transform: translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n}\n\n.tailwind .tw-border, .tailwind .tw-border-0 {\n\t--tw-border-opacity: 1;\n\tborder-color: rgba(229, 231, 235, var(--tw-border-opacity));\n}\n\n.tailwind .tw-shadow-xl, .tailwind .tw-shadow-2xl {\n\t--tw-ring-offset-shadow: 0 0 #0000;\n\t--tw-ring-shadow: 0 0 #0000;\n\t--tw-shadow: 0 0 #0000;\n}\n\n.tailwind .form-input,.tailwind .form-textarea,.tailwind .form-select,.tailwind .form-multiselect {\n\t-webkit-appearance: none;\n\t   -moz-appearance: none;\n\t        appearance: none;\n\tbackground-color: #fff;\n\tborder-color: #6b7280;\n\tborder-width: 1px;\n\tborder-radius: 0px;\n\tpadding-top: 0.5rem;\n\tpadding-right: 0.75rem;\n\tpadding-bottom: 0.5rem;\n\tpadding-left: 0.75rem;\n\tfont-size: 1rem;\n\tline-height: 1.5rem;\n\t--tw-shadow: 0 0 #0000;\n}\n\n.tailwind .form-input:focus, .tailwind .form-textarea:focus, .tailwind .form-select:focus, .tailwind .form-multiselect:focus {\n\toutline: 2px solid transparent;\n\toutline-offset: 2px;\n\t--tw-ring-inset: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-ring-offset-width: 0px;\n\t--tw-ring-offset-color: #fff;\n\t--tw-ring-color: #2563eb;\n\t--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);\n\t--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);\n\tbox-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n\tborder-color: #2563eb;\n}\n\n.tailwind .form-input::-moz-placeholder, .tailwind .form-textarea::-moz-placeholder {\n\tcolor: #6b7280;\n\topacity: 1;\n}\n\n.tailwind .form-input:-ms-input-placeholder, .tailwind .form-textarea:-ms-input-placeholder {\n\tcolor: #6b7280;\n\topacity: 1;\n}\n\n.tailwind .form-input::placeholder,.tailwind .form-textarea::placeholder {\n\tcolor: #6b7280;\n\topacity: 1;\n}\n.tw-fixed {\n\tposition: fixed !important;\n}\n.tw-bottom-5 {\n\tbottom: 1.25rem !important;\n}\n.tw-left-5 {\n\tleft: 1.25rem !important;\n}\n.tw-right-5 {\n\tright: 1.25rem !important;\n}\n.tw-z-50 {\n\tz-index: 50 !important;\n}\n.tw-z-5000 {\n\tz-index: 5000 !important;\n}\n.tw-z-10000 {\n\tz-index: 10000 !important;\n}\n.tw-mx-auto {\n\tmargin-left: auto !important;\n\tmargin-right: auto !important;\n}\n.tw-my-2 {\n\tmargin-top: 0.5rem !important;\n\tmargin-bottom: 0.5rem !important;\n}\n.tw-mt-2 {\n\tmargin-top: 0.5rem !important;\n}\n.tw-mt-3 {\n\tmargin-top: 0.75rem !important;\n}\n.tw-ml-1 {\n\tmargin-left: 0.25rem !important;\n}\n.tw-mt-0 {\n\tmargin-top: 0px !important;\n}\n.tw--ml-1 {\n\tmargin-left: -0.25rem !important;\n}\n.tw-mr-3 {\n\tmargin-right: 0.75rem !important;\n}\n.tw-ml-2 {\n\tmargin-left: 0.5rem !important;\n}\n.tw-mt-10 {\n\tmargin-top: 2.5rem !important;\n}\n.tw-block {\n\tdisplay: block !important;\n}\n.tw-inline-block {\n\tdisplay: inline-block !important;\n}\n.tw-flex {\n\tdisplay: flex !important;\n}\n.tw-h-6 {\n\theight: 1.5rem !important;\n}\n.tw-h-3 {\n\theight: 0.75rem !important;\n}\n.tw-h-5 {\n\theight: 1.25rem !important;\n}\n.tw-h-4 {\n\theight: 1rem !important;\n}\n.tw-h-20 {\n\theight: 5rem !important;\n}\n.tw-h-full {\n\theight: 100% !important;\n}\n.tw-h-\\[800px\\] {\n\theight: 800px !important;\n}\n.tw-h-10 {\n\theight: 2.5rem !important;\n}\n.tw-h-24 {\n\theight: 6rem !important;\n}\n.tw-w-6 {\n\twidth: 1.5rem !important;\n}\n.tw-w-3 {\n\twidth: 0.75rem !important;\n}\n.tw-w-full {\n\twidth: 100% !important;\n}\n.tw-w-5 {\n\twidth: 1.25rem !important;\n}\n.tw-w-4 {\n\twidth: 1rem !important;\n}\n.tw-w-20 {\n\twidth: 5rem !important;\n}\n.tw-w-\\[400px\\] {\n\twidth: 400px !important;\n}\n.tw-w-\\[70px\\] {\n\twidth: 70px !important;\n}\n.tw-w-2\\/3 {\n\twidth: 66.666667% !important;\n}\n.tw-w-\\[300px\\] {\n\twidth: 300px !important;\n}\n.tw-w-10 {\n\twidth: 2.5rem !important;\n}\n.tw-w-24 {\n\twidth: 6rem !important;\n}\n.tw-max-w-\\[400px\\] {\n\tmax-width: 400px !important;\n}\n.tw-max-w-3xl {\n\tmax-width: 48rem !important;\n}\n.tw-flex-1 {\n\tflex: 1 1 0% !important;\n}\n.tw-flex-5 {\n\tflex: 5 1 0 !important;\n}\n.tw-translate-x-0 {\n\t--tw-translate-x: 0px !important;\n\ttransform: var(--tw-transform) !important;\n}\n.tw-translate-x-\\[410px\\] {\n\t--tw-translate-x: 410px !important;\n\ttransform: var(--tw-transform) !important;\n}\n.tw-translate-x-\\[430px\\] {\n\t--tw-translate-x: 430px !important;\n\ttransform: var(--tw-transform) !important;\n}\n.tw-transform {\n\ttransform: var(--tw-transform) !important;\n}\n@-webkit-keyframes tw-spin {\n\n\tto {\n\t\ttransform: rotate(360deg);\n\t}\n}\n@keyframes tw-spin {\n\n\tto {\n\t\ttransform: rotate(360deg);\n\t}\n}\n.tw-animate-spin {\n\t-webkit-animation: tw-spin 1s linear infinite !important;\n\t        animation: tw-spin 1s linear infinite !important;\n}\n.tw-cursor-pointer {\n\tcursor: pointer !important;\n}\n.tw-resize-none {\n\tresize: none !important;\n}\n.tw-items-center {\n\talign-items: center !important;\n}\n.tw-justify-end {\n\tjustify-content: flex-end !important;\n}\n.tw-rounded-md {\n\tborder-radius: 0.375rem !important;\n}\n.tw-rounded-xl {\n\tborder-radius: 0.75rem !important;\n}\n.tw-rounded-full {\n\tborder-radius: 9999px !important;\n}\n.tw-rounded-lg {\n\tborder-radius: 0.5rem !important;\n}\n.tw-rounded-t-md {\n\tborder-top-left-radius: 0.375rem !important;\n\tborder-top-right-radius: 0.375rem !important;\n}\n.tw-rounded-l-md {\n\tborder-top-left-radius: 0.375rem !important;\n\tborder-bottom-left-radius: 0.375rem !important;\n}\n.tw-rounded-t-lg {\n\tborder-top-left-radius: 0.5rem !important;\n\tborder-top-right-radius: 0.5rem !important;\n}\n.tw-border {\n\tborder-width: 1px !important;\n}\n.tw-border-0 {\n\tborder-width: 0px !important;\n}\n.tw-bg-cortico-blue {\n\tbackground-color: rgba(75, 84, 246, 1) !important;\n}\n.tw-bg-white {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(255, 255, 255, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-blue-700 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(29, 78, 216, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-gray-100 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(243, 244, 246, var(--tw-bg-opacity)) !important;\n}\n.tw-p-12 {\n\tpadding: 3rem !important;\n}\n.tw-p-2 {\n\tpadding: 0.5rem !important;\n}\n.tw-p-4 {\n\tpadding: 1rem !important;\n}\n.tw-p-3 {\n\tpadding: 0.75rem !important;\n}\n.tw-p-10 {\n\tpadding: 2.5rem !important;\n}\n.tw-p-1 {\n\tpadding: 0.25rem !important;\n}\n.tw-py-1 {\n\tpadding-top: 0.25rem !important;\n\tpadding-bottom: 0.25rem !important;\n}\n.tw-px-2 {\n\tpadding-left: 0.5rem !important;\n\tpadding-right: 0.5rem !important;\n}\n.tw-px-4 {\n\tpadding-left: 1rem !important;\n\tpadding-right: 1rem !important;\n}\n.tw-py-2 {\n\tpadding-top: 0.5rem !important;\n\tpadding-bottom: 0.5rem !important;\n}\n.tw-px-3 {\n\tpadding-left: 0.75rem !important;\n\tpadding-right: 0.75rem !important;\n}\n.tw-pl-2 {\n\tpadding-left: 0.5rem !important;\n}\n.tw-text-center {\n\ttext-align: center !important;\n}\n.tw-font-sans {\n\tfont-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\" !important;\n}\n.tw-text-sm {\n\tfont-size: 0.875rem !important;\n\tline-height: 1.25rem !important;\n}\n.tw-text-xs {\n\tfont-size: 0.75rem !important;\n\tline-height: 1rem !important;\n}\n.tw-text-2xl {\n\tfont-size: 1.5rem !important;\n\tline-height: 2rem !important;\n}\n.tw-text-xl {\n\tfont-size: 1.25rem !important;\n\tline-height: 1.75rem !important;\n}\n.tw-font-light {\n\tfont-weight: 300 !important;\n}\n.tw-font-medium {\n\tfont-weight: 500 !important;\n}\n.tw-font-bold {\n\tfont-weight: 700 !important;\n}\n.tw-font-semibold {\n\tfont-weight: 600 !important;\n}\n.tw-leading-5 {\n\tline-height: 1.25rem !important;\n}\n.tw-tracking-wider {\n\tletter-spacing: 0.05em !important;\n}\n.tw-text-white {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(255, 255, 255, var(--tw-text-opacity)) !important;\n}\n.tw-text-cortico-blue {\n\tcolor: rgba(75, 84, 246, 1) !important;\n}\n.tw-text-gray-700 {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(55, 65, 81, var(--tw-text-opacity)) !important;\n}\n.tw-text-gray-600 {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(75, 85, 99, var(--tw-text-opacity)) !important;\n}\n.tw-text-opacity-80 {\n\t--tw-text-opacity: 0.8 !important;\n}\n.tw-opacity-25 {\n\topacity: 0.25 !important;\n}\n.tw-opacity-75 {\n\topacity: 0.75 !important;\n}\n.tw-opacity-10 {\n\topacity: 0.1 !important;\n}\n.tw-opacity-20 {\n\topacity: 0.2 !important;\n}\n.tw-shadow-xl {\n\t--tw-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;\n\tbox-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;\n}\n.tw-shadow-2xl {\n\t--tw-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;\n\tbox-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;\n}\n.tw-transition-transform {\n\ttransition-property: transform !important;\n\ttransition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;\n\ttransition-duration: 150ms !important;\n}\n.tw-duration-200 {\n\ttransition-duration: 200ms !important;\n}\n.tw-ease-in-out {\n\ttransition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;\n}\n\n.sidebar-instructions {\n\ttext-align: center;\n\tfont-size: 1.875rem;\n\tline-height: 2.25rem;\n\tfont-weight: 700;\n}\n\n.sidebar-instructions-hidden {\n\tdisplay: none;\n}\n", "",{"version":3,"sources":["webpack://./index.css","webpack://./%3Cinput%20css%20lDy-XB%3E","webpack://./%3Cinput%20css%20jZVE49%3E","<no source>"],"names":[],"mappings":"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B;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,iCAAA;CAAA;AHKmB;AAAnB;CGLA,mCAAA;CAAA;AHKmB;AAAnB;CGLA,mCAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;;CGLA;EAAA;EAAA;AHKmB;AAAnB;;CGLA;EAAA;EAAA;AHKmB;AAAnB;CGLA,yDAAA;SAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,4CAAA;CAAA;AHKmB;AAAnB;CGLA,4CAAA;CAAA;AHKmB;AAAnB;CGLA,0CAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,gCAAA;CAAA;AHKmB;AAAnB;CGLA,gCAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,+BAAA;CAAA;AHKmB;AAAnB;CGLA,iCAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,+BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,6BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,gCAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,gCAAA;CAAA;AHKmB;AAAnB;CGLA,gCAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,kGAAA;CAAA;AHKmB;AAAnB;CGLA,8DAAA;CAAA;AHKmB;AAAnB;CGLA,0CAAA;CAAA,oEAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;;AGLnB;CAAA,mBAAA;CAAA,oBAAA;CAAA,qBAAA;CAAA;CAAA;;AAAA;CAAA;CAAA","sourcesContent":[".tailwind {\n  @tailwind base;\n}\n\n@tailwind components;\n@tailwind utilities;\n\n.sidebar-instructions {\n  @apply tw-text-3xl tw-text-center tw-font-bold;\n}\n\n.sidebar-instructions-hidden {\n  @apply tw-hidden;\n}\n","/*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */\n\n/*\nDocument\n========\n*/\n\n/**\nUse a better box model (opinionated).\n*/\n\n*,\n::before,\n::after {\n\tbox-sizing: border-box;\n}\n\n/**\nUse a more readable tab size (opinionated).\n*/\n\nhtml {\n\t-moz-tab-size: 4;\n\ttab-size: 4;\n}\n\n/**\n1. Correct the line height in all browsers.\n2. Prevent adjustments of font size after orientation changes in iOS.\n*/\n\nhtml {\n\tline-height: 1.15; /* 1 */\n\t-webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/*\nSections\n========\n*/\n\n/**\nRemove the margin in all browsers.\n*/\n\nbody {\n\tmargin: 0;\n}\n\n/**\nImprove consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n*/\n\nbody {\n\tfont-family:\n\t\tsystem-ui,\n\t\t-apple-system, /* Firefox supports this but not yet `system-ui` */\n\t\t'Segoe UI',\n\t\tRoboto,\n\t\tHelvetica,\n\t\tArial,\n\t\tsans-serif,\n\t\t'Apple Color Emoji',\n\t\t'Segoe UI Emoji';\n}\n\n/*\nGrouping content\n================\n*/\n\n/**\n1. Add the correct height in Firefox.\n2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)\n*/\n\nhr {\n\theight: 0; /* 1 */\n\tcolor: inherit; /* 2 */\n}\n\n/*\nText-level semantics\n====================\n*/\n\n/**\nAdd the correct text decoration in Chrome, Edge, and Safari.\n*/\n\nabbr[title] {\n\ttext-decoration: underline dotted;\n}\n\n/**\nAdd the correct font weight in Edge and Safari.\n*/\n\nb,\nstrong {\n\tfont-weight: bolder;\n}\n\n/**\n1. Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n2. Correct the odd 'em' font sizing in all browsers.\n*/\n\ncode,\nkbd,\nsamp,\npre {\n\tfont-family:\n\t\tui-monospace,\n\t\tSFMono-Regular,\n\t\tConsolas,\n\t\t'Liberation Mono',\n\t\tMenlo,\n\t\tmonospace; /* 1 */\n\tfont-size: 1em; /* 2 */\n}\n\n/**\nAdd the correct font size in all browsers.\n*/\n\nsmall {\n\tfont-size: 80%;\n}\n\n/**\nPrevent 'sub' and 'sup' elements from affecting the line height in all browsers.\n*/\n\nsub,\nsup {\n\tfont-size: 75%;\n\tline-height: 0;\n\tposition: relative;\n\tvertical-align: baseline;\n}\n\nsub {\n\tbottom: -0.25em;\n}\n\nsup {\n\ttop: -0.5em;\n}\n\n/*\nTabular data\n============\n*/\n\n/**\n1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)\n2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)\n*/\n\ntable {\n\ttext-indent: 0; /* 1 */\n\tborder-color: inherit; /* 2 */\n}\n\n/*\nForms\n=====\n*/\n\n/**\n1. Change the font styles in all browsers.\n2. Remove the margin in Firefox and Safari.\n*/\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n\tfont-family: inherit; /* 1 */\n\tfont-size: 100%; /* 1 */\n\tline-height: 1.15; /* 1 */\n\tmargin: 0; /* 2 */\n}\n\n/**\nRemove the inheritance of text transform in Edge and Firefox.\n1. Remove the inheritance of text transform in Firefox.\n*/\n\nbutton,\nselect { /* 1 */\n\ttext-transform: none;\n}\n\n/**\nCorrect the inability to style clickable types in iOS and Safari.\n*/\n\nbutton,\n[type='button'],\n[type='reset'],\n[type='submit'] {\n\t-webkit-appearance: button;\n}\n\n/**\nRemove the inner border and padding in Firefox.\n*/\n\n::-moz-focus-inner {\n\tborder-style: none;\n\tpadding: 0;\n}\n\n/**\nRestore the focus styles unset by the previous rule.\n*/\n\n:-moz-focusring {\n\toutline: 1px dotted ButtonText;\n}\n\n/**\nRemove the additional ':invalid' styles in Firefox.\nSee: https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737\n*/\n\n:-moz-ui-invalid {\n\tbox-shadow: none;\n}\n\n/**\nRemove the padding so developers are not caught out when they zero out 'fieldset' elements in all browsers.\n*/\n\nlegend {\n\tpadding: 0;\n}\n\n/**\nAdd the correct vertical alignment in Chrome and Firefox.\n*/\n\nprogress {\n\tvertical-align: baseline;\n}\n\n/**\nCorrect the cursor style of increment and decrement buttons in Safari.\n*/\n\n::-webkit-inner-spin-button,\n::-webkit-outer-spin-button {\n\theight: auto;\n}\n\n/**\n1. Correct the odd appearance in Chrome and Safari.\n2. Correct the outline style in Safari.\n*/\n\n[type='search'] {\n\t-webkit-appearance: textfield; /* 1 */\n\toutline-offset: -2px; /* 2 */\n}\n\n/**\nRemove the inner padding in Chrome and Safari on macOS.\n*/\n\n::-webkit-search-decoration {\n\t-webkit-appearance: none;\n}\n\n/**\n1. Correct the inability to style clickable types in iOS and Safari.\n2. Change font properties to 'inherit' in Safari.\n*/\n\n::-webkit-file-upload-button {\n\t-webkit-appearance: button; /* 1 */\n\tfont: inherit; /* 2 */\n}\n\n/*\nInteractive\n===========\n*/\n\n/*\nAdd the correct display in Chrome and Safari.\n*/\n\nsummary {\n\tdisplay: list-item;\n}\n","/**\n * Manually forked from SUIT CSS Base: https://github.com/suitcss/base\n * A thin layer on top of normalize.css that provides a starting point more\n * suitable for web applications.\n */\n\n/**\n * Removes the default spacing and border for appropriate elements.\n */\n\nblockquote,\ndl,\ndd,\nh1,\nh2,\nh3,\nh4,\nh5,\nh6,\nhr,\nfigure,\np,\npre {\n  margin: 0;\n}\n\nbutton {\n  background-color: transparent;\n  background-image: none;\n}\n\nfieldset {\n  margin: 0;\n  padding: 0;\n}\n\nol,\nul {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\n\n/**\n * Tailwind custom reset styles\n */\n\n/**\n * 1. Use the user's configured `sans` font-family (with Tailwind's default\n *    sans-serif font stack as a fallback) as a sane default.\n * 2. Use Tailwind's default \"normal\" line-height so the user isn't forced\n *    to override it to ensure consistency even when using the default theme.\n */\n\nhtml {\n  font-family: theme('fontFamily.sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"); /* 1 */\n  line-height: 1.5; /* 2 */\n}\n\n\n/**\n * Inherit font-family and line-height from `html` so users can set them as\n * a class directly on the `html` element.\n */\n\nbody {\n  font-family: inherit;\n  line-height: inherit;\n}\n\n/**\n * 1. Prevent padding and border from affecting element width.\n *\n *    We used to set this in the html element and inherit from\n *    the parent element for everything else. This caused issues\n *    in shadow-dom-enhanced elements like <details> where the content\n *    is wrapped by a div with box-sizing set to `content-box`.\n *\n *    https://github.com/mozdevs/cssremedy/issues/4\n *\n *\n * 2. Allow adding a border to an element by just adding a border-width.\n *\n *    By default, the way the browser specifies that an element should have no\n *    border is by setting it's border-style to `none` in the user-agent\n *    stylesheet.\n *\n *    In order to easily add borders to elements by just setting the `border-width`\n *    property, we change the default border-style for all elements to `solid`, and\n *    use border-width to hide them instead. This way our `border` utilities only\n *    need to set the `border-width` property instead of the entire `border`\n *    shorthand, making our border utilities much more straightforward to compose.\n *\n *    https://github.com/tailwindcss/tailwindcss/pull/116\n */\n\n*,\n::before,\n::after {\n  box-sizing: border-box; /* 1 */\n  border-width: 0; /* 2 */\n  border-style: solid; /* 2 */\n  border-color: currentColor; /* 2 */\n}\n\n/*\n * Ensure horizontal rules are visible by default\n */\n\nhr {\n  border-top-width: 1px;\n}\n\n/**\n * Undo the `border-style: none` reset that Normalize applies to images so that\n * our `border-{width}` utilities have the expected effect.\n *\n * The Normalize reset is unnecessary for us since we default the border-width\n * to 0 on all elements.\n *\n * https://github.com/tailwindcss/tailwindcss/issues/362\n */\n\nimg {\n  border-style: solid;\n}\n\ntextarea {\n  resize: vertical;\n}\n\ninput::placeholder,\ntextarea::placeholder {\n  opacity: 1;\n  color: theme('colors.gray.400', #a1a1aa);\n}\n\nbutton,\n[role=\"button\"] {\n  cursor: pointer;\n}\n\ntable {\n  border-collapse: collapse;\n}\n\nh1,\nh2,\nh3,\nh4,\nh5,\nh6 {\n  font-size: inherit;\n  font-weight: inherit;\n}\n\n/**\n * Reset links to optimize for opt-in styling instead of\n * opt-out.\n */\n\na {\n  color: inherit;\n  text-decoration: inherit;\n}\n\n/**\n * Reset form element properties that are easy to forget to\n * style explicitly so you don't inadvertently introduce\n * styles that deviate from your design system. These styles\n * supplement a partial reset that is already applied by\n * normalize.css.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  padding: 0;\n  line-height: inherit;\n  color: inherit;\n}\n\n/**\n * Use the configured 'mono' font family for elements that\n * are expected to be rendered with a monospace font, falling\n * back to the system monospace stack if there is no configured\n * 'mono' font family.\n */\n\npre,\ncode,\nkbd,\nsamp {\n  font-family: theme('fontFamily.mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace);\n}\n\n/**\n * 1. Make replaced elements `display: block` by default as that's\n *    the behavior you want almost all of the time. Inspired by\n *    CSS Remedy, with `svg` added as well.\n *\n *    https://github.com/mozdevs/cssremedy/issues/14\n * \n * 2. Add `vertical-align: middle` to align replaced elements more\n *    sensibly by default when overriding `display` by adding a\n *    utility like `inline`.\n *\n *    This can trigger a poorly considered linting error in some\n *    tools but is included by design.\n * \n *    https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210\n */\n\nimg,\nsvg,\nvideo,\ncanvas,\naudio,\niframe,\nembed,\nobject {\n  display: block; /* 1 */\n  vertical-align: middle; /* 2 */\n}\n\n/**\n * Constrain images and videos to the parent width and preserve\n * their intrinsic aspect ratio.\n *\n * https://github.com/mozdevs/cssremedy/issues/14\n */\n\nimg,\nvideo {\n  max-width: 100%;\n  height: auto;\n}\n\n/**\n * Ensure the default browser behavior of the `hidden` attribute.\n */\n\n[hidden] {\n  display: none;\n}\n",null],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -4767,8 +4883,8 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
 /* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
-/* harmony import */ var _babel_runtime_helpers_readOnlyError__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/readOnlyError */ "./node_modules/@babel/runtime/helpers/esm/readOnlyError.js");
+/* harmony import */ var _babel_runtime_helpers_readOnlyError__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/readOnlyError */ "./node_modules/@babel/runtime/helpers/esm/readOnlyError.js");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _modules_PubSub_PubSub__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/PubSub/PubSub */ "./modules/PubSub/PubSub.js");
@@ -4822,110 +4938,171 @@ var pubsub = (0,_modules_PubSub_PubSub__WEBPACK_IMPORTED_MODULE_5__.pubSubInit)(
 var oscar = new _modules_core_Oscar_js__WEBPACK_IMPORTED_MODULE_10__.Oscar(window.location.hostname);
 var cortico_media = ["phone", "clinic", "virtual", "", "quiet"];
 
-var init_cortico = function init_cortico() {
-  // create an element to indicate the library is loaded in the dom, and to contain fixed menus/elements.
-  var anchor = document.createElement("div");
-  anchor.id = "cortico_anchor";
-  document.body.appendChild(anchor);
-  var route = "" + window.location;
-  var oscar_elements = Array.from(document.getElementsByTagName("script")).filter(function (s) {
-    return s.src.indexOf("/Oscar.js") > 0 || s.src.indexOf("/oscar/js/") > 0 || s.src.indexOf("/appointment.js") > 0 || s.src.indexOf("phr/phr.js" > -1) // Encounter page
-    ;
-  }); // some pages have no scripts, but they have other elements.
+var init_cortico = /*#__PURE__*/function () {
+  var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee() {
+    var anchor, route, oscar_elements, resources_field, cortico_button, isMarkham, patient_info, currentPharmacyCode, additionalNotes, previewFrame;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            // create an element to indicate the library is loaded in the dom, and to contain fixed menus/elements.
+            anchor = document.createElement("div");
+            anchor.id = "cortico_anchor";
+            document.body.appendChild(anchor);
+            route = "" + window.location;
+            oscar_elements = Array.from(document.getElementsByTagName("script")).filter(function (s) {
+              return s.src.indexOf("/Oscar.js") > 0 || s.src.indexOf("/oscar/js/") > 0 || s.src.indexOf("/appointment.js") > 0 || s.src.indexOf("phr/phr.js" > -1) // Encounter page
+              ;
+            }); // some pages have no scripts, but they have other elements.
 
-  if (!oscar_elements) {
-    document.querySelectorAll("div.DoNotPrint>table"), (0,_babel_runtime_helpers_readOnlyError__WEBPACK_IMPORTED_MODULE_3__.default)("oscar_elements");
-  } // do not run unless we're on an Oscar page.
-
-
-  if (oscar_elements.length === 0) {
-    console.log("Cortico could not find any oscar script");
-    return;
-  }
-
-  console.log("cortico plug-in initializing, version:", version);
-  window.pubsub = pubsub;
-  /*
-  const modal = new Modal();
-  modal.setContent(Dashboard());
-  modal.show();
-  */
-
-  if (route.indexOf("/appointment/addappointment.jsp") > -1 || route.indexOf("/appointment/appointmentcontrol.jsp") > -1) {
-    init_appointment_page();
-
-    if ((window.location.href + "").includes("appointment_no")) {
-      init_recall_button();
-      init_diagnostic_viewer_button();
-    } // only show on add appointment
+            if (!oscar_elements) {
+              document.querySelectorAll("div.DoNotPrint>table"), (0,_babel_runtime_helpers_readOnlyError__WEBPACK_IMPORTED_MODULE_2__.default)("oscar_elements");
+            } // do not run unless we're on an Oscar page.
 
 
-    if (route.indexOf("/appointment/addappointment.jsp") > -1) {
-      init_medium_option();
-    } // Temporary fix, adding event listener does not work inside init_appointment_page
-    // Note: event listeners inside init_recall_button seems to be working fine
+            if (!(oscar_elements.length === 0)) {
+              _context.next = 9;
+              break;
+            }
+
+            console.log("Cortico could not find any oscar script");
+            return _context.abrupt("return");
+
+          case 9:
+            console.log("cortico plug-in initializing, version:", version);
+            window.pubsub = pubsub;
+            /*
+            const modal = new Modal();
+            modal.setContent(Dashboard());
+            modal.show();
+            */
+
+            if (!(route.indexOf("/appointment/addappointment.jsp") > -1 || route.indexOf("/appointment/appointmentcontrol.jsp") > -1)) {
+              _context.next = 21;
+              break;
+            }
+
+            init_appointment_page();
+
+            if ((window.location.href + "").includes("appointment_no")) {
+              init_recall_button();
+              init_diagnostic_viewer_button();
+            } // only show on add appointment
 
 
-    var resources_field = document.querySelector('[name="resources"]');
-    var cortico_button = document.getElementById("cortico-video-appt-btn"); // open a windows to the cortico video page for this appointment.
+            if (route.indexOf("/appointment/addappointment.jsp") > -1) {
+              init_medium_option();
+            } // Temporary fix, adding event listener does not work inside init_appointment_page
+            // Note: event listeners inside init_recall_button seems to be working fine
 
-    window.addEventListener("click", function (e) {
-      if (e.target.id === "cortico-video-appt-btn") {
-        if (!(0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.checkCorticoUrl)(e.originalEvent)) return;
-        open_video_appointment_page(e);
+
+            resources_field = document.querySelector('[name="resources"]');
+            cortico_button = document.getElementById("cortico-video-appt-btn"); // open a windows to the cortico video page for this appointment.
+
+            window.addEventListener("click", function (e) {
+              if (e.target.id === "cortico-video-appt-btn") {
+                if (!(0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.checkCorticoUrl)(e.originalEvent)) return;
+                open_video_appointment_page(e);
+              }
+            }); //You need to delegate
+            //cortico_button.addEventListener("click", open_video_appointment_page);
+
+            resources_field.addEventListener("change", update_video_button);
+            _context.next = 45;
+            break;
+
+          case 21:
+            if (!(route.indexOf("/provider/providercontrol.jsp") > -1)) {
+              _context.next = 34;
+              break;
+            }
+
+            init_schedule();
+            /**
+             * Drag and drop - disabled for stability reasons.
+             * TODO: fixme?
+             */
+
+            if (!oscar.isJuno() && !oscar.isKaiOscarHost()) {
+              dragAndDrop();
+            }
+
+            addCorticoLogo();
+            addMenu();
+            (0,_modules_cortico_Appointments_AppointmentMenu__WEBPACK_IMPORTED_MODULE_8__.addAppointmentMenu)();
+            (0,_modules_cortico_Login_Login__WEBPACK_IMPORTED_MODULE_9__.addLoginForm)(chrome);
+
+            if (!oscar.isJuno() && !oscar.containsKaiBar()) {
+              plusSignFromCache();
+            }
+
+            isMarkham = window.location.href.includes("mmfcc");
+
+            if (isMarkham) {
+              plusSignFromCache();
+            }
+
+            setupPrescriptionButtons();
+            _context.next = 45;
+            break;
+
+          case 34:
+            if (!(route.indexOf("/eform/efmformadd_data.jsp") > -1 || route.indexOf("/eform/efmshowform_data.jsp") > -1 || route.indexOf("/casemgmt/forward.jsp") > -1)) {
+              _context.next = 44;
+              break;
+            }
+
+            setupPatientEmailButton();
+
+            if (!(route.indexOf("/casemgmt/forward.jsp") > -1)) {
+              _context.next = 42;
+              break;
+            }
+
+            _context.next = 39;
+            return getPatientInfo();
+
+          case 39:
+            patient_info = _context.sent;
+            console.log("Patient Info", patient_info);
+            (0,_modules_Messenger_Messenger__WEBPACK_IMPORTED_MODULE_16__.default)();
+
+          case 42:
+            _context.next = 45;
+            break;
+
+          case 44:
+            if (route.indexOf("/oscarRx/ViewScript2.jsp") > -1) {
+              // We need to determine first if the prescription is "delivery"
+              currentPharmacyCode = localStorage.getItem("currentPharmacyCode");
+
+              if (currentPharmacyCode.toLowerCase().indexOf("dlvr") > -1) {
+                additionalNotes = document.getElementById("additionalNotes");
+                additionalNotes.value = "FOR DELIVERY"; // make sure the preview frame is loaded before adding the notes
+
+                previewFrame = document.getElementById("preview");
+                previewFrame.addEventListener("load", function () {
+                  // addNotes is a function in oscar
+                  addNotes();
+                }); // setupFaxButton();
+              }
+            }
+
+          case 45:
+            init_styles();
+
+          case 46:
+          case "end":
+            return _context.stop();
+        }
       }
-    }); //You need to delegate
-    //cortico_button.addEventListener("click", open_video_appointment_page);
+    }, _callee);
+  }));
 
-    resources_field.addEventListener("change", update_video_button);
-  } else if (route.indexOf("/provider/providercontrol.jsp") > -1) {
-    init_schedule();
-    /**
-     * Drag and drop - disabled for stability reasons.
-     * TODO: fixme?
-     */
-
-    if (!oscar.isJuno() && !oscar.isKaiOscarHost()) {
-      dragAndDrop();
-    }
-
-    addCorticoLogo();
-    addMenu();
-    (0,_modules_cortico_Appointments_AppointmentMenu__WEBPACK_IMPORTED_MODULE_8__.addAppointmentMenu)();
-    (0,_modules_cortico_Login_Login__WEBPACK_IMPORTED_MODULE_9__.addLoginForm)(chrome);
-
-    if (!oscar.isJuno() && !oscar.containsKaiBar()) {
-      plusSignFromCache();
-    }
-
-    var isMarkham = window.location.href.includes("mmfcc");
-
-    if (isMarkham) {
-      plusSignFromCache();
-    }
-
-    setupPrescriptionButtons();
-  } else if (route.indexOf("/eform/efmformadd_data.jsp") > -1 || route.indexOf("/eform/efmshowform_data.jsp") > -1 || route.indexOf("/casemgmt/forward.jsp") > -1) {
-    setupPatientEmailButton();
-    (0,_modules_Messenger_Messenger__WEBPACK_IMPORTED_MODULE_16__.default)();
-  } else if (route.indexOf("/oscarRx/ViewScript2.jsp") > -1) {
-    // We need to determine first if the prescription is "delivery"
-    var currentPharmacyCode = localStorage.getItem("currentPharmacyCode");
-
-    if (currentPharmacyCode.toLowerCase().indexOf("dlvr") > -1) {
-      var additionalNotes = document.getElementById("additionalNotes");
-      additionalNotes.value = "FOR DELIVERY"; // make sure the preview frame is loaded before adding the notes
-
-      var previewFrame = document.getElementById("preview");
-      previewFrame.addEventListener("load", function () {
-        // addNotes is a function in oscar
-        addNotes();
-      }); // setupFaxButton();
-    }
-  }
-
-  init_styles();
-};
+  return function init_cortico() {
+    return _ref.apply(this, arguments);
+  };
+}();
 
 var init_schedule = function init_schedule() {
   if (!(oscar.isOscarGoHost() || oscar.isKaiOscarHost() || oscar.containsKaiBar() || oscar.containsOscarGoOceanScript())) {
@@ -5057,12 +5234,12 @@ function setupPatientEmailButton() {
 }
 
 function _setupPatientEmailButton() {
-  _setupPatientEmailButton = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee7() {
+  _setupPatientEmailButton = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee8() {
     var is_eform_page, clinicName, email_parent, _email_parent, patient_info, email_btn;
 
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee7$(_context7) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee8$(_context8) {
       while (1) {
-        switch (_context7.prev = _context7.next) {
+        switch (_context8.prev = _context8.next) {
           case 0:
             is_eform_page = true;
             clinicName = localStorage["clinicname"];
@@ -5074,79 +5251,79 @@ function _setupPatientEmailButton() {
               _email_parent = document.querySelector("#save div:last-child");
             }
 
-            _context7.next = 7;
+            _context8.next = 7;
             return getPatientInfo();
 
           case 7:
-            patient_info = _context7.sent;
+            patient_info = _context8.sent;
             email_btn = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.create)("\n  <p style='margin-bottom:2em'>\n    <a id='cortico-email-patient' class='cortico-btn'>Email Patient</a>\n  </p>\n  ");
             email_btn.addEventListener("click", /*#__PURE__*/function () {
-              var _ref2 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee6(e) {
-                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee6$(_context6) {
+              var _ref3 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee7(e) {
+                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee7$(_context7) {
                   while (1) {
-                    switch (_context6.prev = _context6.next) {
+                    switch (_context7.prev = _context7.next) {
                       case 0:
                         if ((0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.checkCorticoUrl)(e)) {
-                          _context6.next = 2;
+                          _context7.next = 2;
                           break;
                         }
 
-                        return _context6.abrupt("return");
+                        return _context7.abrupt("return");
 
                       case 2:
                         email_btn.disabled = true;
-                        _context6.next = 5;
+                        _context7.next = 5;
                         return (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.loadExtensionStorageValue)("jwt_access_token").then( /*#__PURE__*/function () {
-                          var _ref3 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee5(access_token) {
+                          var _ref4 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee6(access_token) {
                             var html, doNotPrintList, patientFormResponse;
-                            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee5$(_context5) {
+                            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee6$(_context6) {
                               while (1) {
-                                switch (_context5.prev = _context5.next) {
+                                switch (_context6.prev = _context6.next) {
                                   case 0:
                                     // copy document and remove unnecessary stuff
                                     html = document.cloneNode(true);
                                     doNotPrintList = html.querySelectorAll(".DoNotPrint");
-                                    _context5.next = 4;
+                                    _context6.next = 4;
                                     return emailPatientEForm(patient_info, html.documentElement.outerHTML, access_token);
 
                                   case 4:
-                                    patientFormResponse = _context5.sent;
+                                    patientFormResponse = _context6.sent;
                                     if (patientFormResponse) email_btn.disabled = false;
                                     console.log("RSP: ", patientFormResponse);
 
                                   case 7:
                                   case "end":
-                                    return _context5.stop();
+                                    return _context6.stop();
                                 }
                               }
-                            }, _callee5);
+                            }, _callee6);
                           }));
 
                           return function (_x16) {
-                            return _ref3.apply(this, arguments);
+                            return _ref4.apply(this, arguments);
                           };
                         }());
 
                       case 5:
                       case "end":
-                        return _context6.stop();
+                        return _context7.stop();
                     }
                   }
-                }, _callee6);
+                }, _callee7);
               }));
 
               return function (_x15) {
-                return _ref2.apply(this, arguments);
+                return _ref3.apply(this, arguments);
               };
             }());
             email_parent && email_parent.appendChild(email_btn);
 
           case 11:
           case "end":
-            return _context7.stop();
+            return _context8.stop();
         }
       }
-    }, _callee7);
+    }, _callee8);
   }));
   return _setupPatientEmailButton.apply(this, arguments);
 }
@@ -5227,18 +5404,18 @@ function createSideBar() {
 }
 
 function _createSideBar() {
-  _createSideBar = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee8() {
+  _createSideBar = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee9() {
     var sidebar, styleSheet, styles;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee8$(_context8) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee9$(_context9) {
       while (1) {
-        switch (_context8.prev = _context8.next) {
+        switch (_context9.prev = _context9.next) {
           case 0:
             if (!window.corticoSidebar) {
-              _context8.next = 2;
+              _context9.next = 2;
               break;
             }
 
-            return _context8.abrupt("return");
+            return _context9.abrupt("return");
 
           case 2:
             sidebar = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.create)("\n  <div class='cortico-sidebar'>\n    <a href=\"https://cortico.ca\"><img src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGEAAABhCAYAAADGBs+jAAAACXBIWXMAAAsSAAALEgHS3X78AAAEqklEQVR4nO2dvXHbMBSAX3RpVNkb2BvYmcAaQIUa1nEmiDYIR1AmsFyrSe7Ux9lAniDWBlbF0jnIjzYlUyRAvAc8kO+707mxAAofQeLvAZ9eXl4gJaZZcQ4A1wAwObrsDQA8rFfj56R+EAAkI2GaFabg5wDwteVf7wFguV6NHwJdmjfiJeCdnwPAd8ev/jTfS6FmiJaAAswdfdUxiUcAuF2vxhviSyNFrAQCASVGxERyjRgJuIYPEAoATOMX8SWSIk4CsYCSm2lWzAjTI0WUBCYBJTlDmiSIkcAswHCFzVxxiJAQQEDJcQdPBNElBBQA2NMWR1QJgQUYLgPl40Q0CREEiCWKBBVwSHAJkQWIHNQLKkFADRA5hhRs7EiAgN16NT6PlHcjQWqCkHfAImLejbBLECJgO1gJglpBs0EOZQsS8E36pA6LBGEClpGvoRVyCSrAHVIJKqAbZBJUQHdIJKgAP7wlqAB/vCSoABo6S1ABdHSSoAJocZagAuhxkqACeLCWoAL4sJKgAnhplaAC+GmUoALC8PlULirAnUo83cZlEql2ol8F2DHNCrOib4afm5ov/cXYiGWTlA8SVEA7WEYmiPGH5Vd2Zo57vRrXLs8/kKAC2sHl9cuOZVQbuvUmQQW0gwJMGZ15JPNBRLV1pAIawJt06SkAsIwPlmPuJUyzYq4CWskJy8hEDb29H/aPo2lWPBMY9iGFVtA/4mTNy/rSPJZG06y4VQGtzBnSNGVuyn7/OIoZx5VKR4yrjKJLSGkogi2iFFDCBVMGTaQ0FMF6k5pmb4xwqV4PxnXgPLQEFVDDCNfuhyBJAdybV5n0R4HiuFKvAY+c6Y4CbEPTh0cQV23Yp1tK2DFl0pd3AFeo1T7dEY7mcWRiLcA007DnLpL1avyEe+pRco/pvg7g4WQD5XPPSQBWyzvJInAAj6oRs6sOhVSbqBMiEV0ElGNXYkXgE2NG8OjeHc8nUM6sbTFK0qq11TJB0teJnVLAQRmdmujPsbrYZvQbt760WmFg+UOkT/AsLDbKrWI2zZ3XldHJbRUwo1v81NWMLRbkwiVE1fFOSmGeIcdHed0YXFlGefkSrsN6bwvMsNy0yWldTSWNLlU5iWbuUfkYnpoKvkrIDUZ8nqW9HnMKtcHIxHOVgvTmqxchNhgxhfeHYAq1tyK4NxgxLYg7wiR7KYLlnYCPnwXjtGCv3hGkErDw8xOLY6npjQhvCVjwE+xPhJ6v7oWIzhKwXbyJvGYJBhvHDO/DuxPGuQhbkn9Ze7WOcLhCRXji3URVEf6Q9BNUhB9knTUV0R3SHrOK6Ab5sIWKcIdl7EhFuME6n0AUaEfBF8kb1LKOogqqEb9wulYk7PMJQkRcMIU8kZDK9CYFb4F6kfI/SbD4BAE14kzPWZMhQiVAfBF62F2JoFaTCKIddqci3ol67KOKeCX6AaiBRYjsNYs4CjigCJEnDgbrrNnA3KEb9mF3tjDXiOEeducKk4jhHnbXFWIRu8EedudLRYRPxGRtjJg0xEqAdxHXGBPnymMKAkBa66gJh8XGW4wRS2ZpZDISSnANrBFi/pYDcuZuN8syTSyd+Dv/AAD4D9nFlj4ll12bAAAAAElFTkSuQmCC\"  alt=\"Cortico\" style=\"margin-bottom: 25px;\" /></a>\n    <div class='cortico-sidebar-close'>Close</div>\n  </div>\n  ", {
@@ -5256,14 +5433,14 @@ function _createSideBar() {
             window.corticoSidebar = sidebar; //var newUiOption = getNewUIOption();
             //sidebar.appendChild(newUiOption);
 
-            _context8.t0 = sidebar;
-            _context8.next = 7;
+            _context9.t0 = sidebar;
+            _context9.next = 7;
             return getCorticoLogin();
 
           case 7:
-            _context8.t1 = _context8.sent;
+            _context9.t1 = _context9.sent;
 
-            _context8.t0.appendChild.call(_context8.t0, _context8.t1);
+            _context9.t0.appendChild.call(_context9.t0, _context9.t1);
 
             sidebar.appendChild(getCorticoUrlOption());
             sidebar.appendChild(getRecallStatusOption());
@@ -5277,14 +5454,14 @@ function _createSideBar() {
             styleSheet = styleSheetFactory("cortico_sidebar");
             styles = "\n    .cortico-sidebar { position: fixed; top: 0; right: 0; bottom: 0; width: 300px; background-color: white; height: 100%; z-index: 10000; }\n    .cortico-sidebar { transition: transform 0.25s ease-in; transform: translateX(300px); }\n    .cortico-sidebar { display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 1px 5px 5px rgb(0, 0, 0); }\n    .cortico-sidebar-show { transform: translateX(0); }\n    .cortico-sidebar-close { cursor:pointer; position: absolute; top: 10px; right: 10px; z-index: 500; }\n  ";
             styleSheet.innerText = styles;
-            return _context8.abrupt("return", sidebar);
+            return _context9.abrupt("return", sidebar);
 
           case 22:
           case "end":
-            return _context8.stop();
+            return _context9.stop();
         }
       }
-    }, _callee8);
+    }, _callee9);
   }));
   return _createSideBar.apply(this, arguments);
 }
@@ -5324,22 +5501,22 @@ function addMenu(_x) {
 }
 
 function _addMenu() {
-  _addMenu = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee9(container) {
+  _addMenu = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee10(container) {
     var navigation, menu, sidebar;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee9$(_context9) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee10$(_context10) {
       while (1) {
-        switch (_context9.prev = _context9.next) {
+        switch (_context10.prev = _context10.next) {
           case 0:
             navigation = document.querySelector("#firstMenu #navList") || document.querySelector("#firstMenu #navlist");
             menu = document.createElement("li");
             menu.textContent = "Cortico";
             menu.style.color = "rgb(75, 84, 246)";
             menu.style.cursor = "pointer";
-            _context9.next = 7;
+            _context10.next = 7;
             return createSideBar();
 
           case 7:
-            sidebar = _context9.sent;
+            sidebar = _context10.sent;
             menu.addEventListener("click", function () {
               sidebar.classList.toggle("cortico-sidebar-show");
 
@@ -5370,10 +5547,10 @@ function _addMenu() {
 
           case 13:
           case "end":
-            return _context9.stop();
+            return _context10.stop();
         }
       }
-    }, _callee9);
+    }, _callee10);
   }));
   return _addMenu.apply(this, arguments);
 }
@@ -5533,20 +5710,20 @@ function getCorticoLogin() {
 }
 
 function _getCorticoLogin() {
-  _getCorticoLogin = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee11() {
+  _getCorticoLogin = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee12() {
     var container, jwt_expired, loginButton, loggedInAsText, loggedInAsHtml, btnEvent;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee11$(_context11) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee12$(_context12) {
       while (1) {
-        switch (_context11.prev = _context11.next) {
+        switch (_context12.prev = _context12.next) {
           case 0:
             container = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.create)("<div></div>");
 
             if ((0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getCorticoUrl)()) {
-              _context11.next = 3;
+              _context12.next = 3;
               break;
             }
 
-            return _context11.abrupt("return", container);
+            return _context12.abrupt("return", container);
 
           case 3:
             jwt_expired = null;
@@ -5563,13 +5740,13 @@ function _getCorticoLogin() {
                 }
               }
             };
-            _context11.next = 10;
+            _context12.next = 10;
             return (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.loadExtensionStorageValue)("jwt_username").then(function (username) {
               loggedInAsText = "Logged in as ".concat(username);
             });
 
           case 10:
-            _context11.next = 12;
+            _context12.next = 12;
             return (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.loadExtensionStorageValue)("jwt_expired").then(function (expired) {
               jwt_expired = expired;
 
@@ -5578,10 +5755,10 @@ function _getCorticoLogin() {
                 loggedInAsHtml = "<p>".concat(loggedInAsText, "</p>");
                 btnEvent = {
                   "click .cortico-btn": function () {
-                    var _clickCorticoBtn = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee10(e) {
-                      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee10$(_context10) {
+                    var _clickCorticoBtn = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee11(e) {
+                      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee11$(_context11) {
                         while (1) {
-                          switch (_context10.prev = _context10.next) {
+                          switch (_context11.prev = _context11.next) {
                             case 0:
                               if (e.target.className == "cortico-btn") {
                                 chrome.storage.local.remove(["jwt_access_token", "jwt_expired"]);
@@ -5591,10 +5768,10 @@ function _getCorticoLogin() {
 
                             case 1:
                             case "end":
-                              return _context10.stop();
+                              return _context11.stop();
                           }
                         }
-                      }, _callee10);
+                      }, _callee11);
                     }));
 
                     function clickCorticoBtn(_x17) {
@@ -5611,14 +5788,14 @@ function _getCorticoLogin() {
             container = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.create)("<div class='login-form-button'>\n    ".concat(loginButton.outerHTML, "\n    ").concat(loggedInAsHtml, "\n    </div>"), {
               events: btnEvent
             });
-            return _context11.abrupt("return", container);
+            return _context12.abrupt("return", container);
 
           case 14:
           case "end":
-            return _context11.stop();
+            return _context12.stop();
         }
       }
-    }, _callee11);
+    }, _callee12);
   }));
   return _getCorticoLogin.apply(this, arguments);
 }
@@ -5702,21 +5879,21 @@ function getEligButton() {
   var container = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.createSidebarContainer)(button, {
     events: {
       "click .cortico-btn.inline": function () {
-        var _clickCorticoBtnInline = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee(e) {
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee$(_context) {
+        var _clickCorticoBtnInline = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee2(e) {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee2$(_context2) {
             while (1) {
-              switch (_context.prev = _context.next) {
+              switch (_context2.prev = _context2.next) {
                 case 0:
                   console.log("Check Eligibility Start");
-                  _context.next = 3;
+                  _context2.next = 3;
                   return checkAllEligibility();
 
                 case 3:
                 case "end":
-                  return _context.stop();
+                  return _context2.stop();
               }
             }
-          }, _callee);
+          }, _callee2);
         }));
 
         function clickCorticoBtnInline(_x2) {
@@ -5749,24 +5926,24 @@ function getResetCacheButton() {
   var button = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.create)("<button class='cortico-btn warning bottom'>Reset Cache</button>", {
     events: {
       "click .cortico-btn.warning.bottom": function () {
-        var _clickCorticoBtnWarningBottom = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee2(e) {
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee2$(_context2) {
+        var _clickCorticoBtnWarningBottom = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee3(e) {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee3$(_context3) {
             while (1) {
-              switch (_context2.prev = _context2.next) {
+              switch (_context3.prev = _context3.next) {
                 case 0:
                   if (!confirm("Are you sure you want to clear your cache?")) {
-                    _context2.next = 8;
+                    _context3.next = 8;
                     break;
                   }
 
                   localStorage.clear();
-                  _context2.next = 4;
+                  _context3.next = 4;
                   return chrome.storage.local.clear();
 
                 case 4:
                   alert("Successfully reset cache, the page will now reload.");
                   window.location.reload();
-                  _context2.next = 9;
+                  _context3.next = 9;
                   break;
 
                 case 8:
@@ -5774,10 +5951,10 @@ function getResetCacheButton() {
 
                 case 9:
                 case "end":
-                  return _context2.stop();
+                  return _context3.stop();
               }
             }
-          }, _callee2);
+          }, _callee3);
         }));
 
         function clickCorticoBtnWarningBottom(_x3) {
@@ -5898,19 +6075,19 @@ function dragAndDrop() {
 
 
   function _drop_handler() {
-    _drop_handler = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee3(ev) {
+    _drop_handler = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee4(ev) {
       var newStartTime, apptLink, apptLinkText, apptUrl, origin, namespace, result, text, temp, formData, originalStartTime, apptDate, duration, newEndTime, _newStartTime, _newEndTime, apptDoctor, targetDoctor, isSameDoctor, doctor, parent;
 
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee3$(_context3) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee4$(_context4) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context4.prev = _context4.next) {
             case 0:
               if (isValidDragItem()) {
-                _context3.next = 2;
+                _context4.next = 2;
                 break;
               }
 
-              return _context3.abrupt("return");
+              return _context4.abrupt("return");
 
             case 2:
               handleColors(ev.target); // Sibling table cell has the start time
@@ -5920,12 +6097,12 @@ function dragAndDrop() {
               apptLink = (0,_modules_cortico_Appointments_Appointments__WEBPACK_IMPORTED_MODULE_7__.getAppointmentLink)(dragSelectedTarget);
 
               if (apptLink) {
-                _context3.next = 8;
+                _context4.next = 8;
                 break;
               }
 
               alert("No Valid Appointment Link Found");
-              return _context3.abrupt("return", false);
+              return _context4.abrupt("return", false);
 
             case 8:
               apptLinkText = apptLink.attributes.onclick.textContent; //Get the URL and Take out the "../" in front
@@ -5934,16 +6111,16 @@ function dragAndDrop() {
 
               origin = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getOrigin)();
               namespace = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getNamespace)();
-              _context3.next = 14;
+              _context4.next = 14;
               return appointmentEditRequest(origin, namespace, apptUrl);
 
             case 14:
-              result = _context3.sent;
-              _context3.next = 17;
+              result = _context4.sent;
+              _context4.next = 17;
               return result.text();
 
             case 17:
-              text = _context3.sent;
+              text = _context4.sent;
               //Make an element in memory, and we're gonna place the contents of the fetched page here, so we can grab the formdata
               temp = document.createElement("div");
               temp.style.display = "none";
@@ -5958,12 +6135,12 @@ function dragAndDrop() {
               _newEndTime = dayjs__WEBPACK_IMPORTED_MODULE_6___default()(apptDate + "T" + newStartTime).add(duration, "minute");
 
               if (isSameDay(_newStartTime, _newEndTime)) {
-                _context3.next = 31;
+                _context4.next = 31;
                 break;
               }
 
               alert("Cannot overlap to the next day");
-              return _context3.abrupt("return");
+              return _context4.abrupt("return");
 
             case 31:
               apptDoctor = formData.get("provider_no");
@@ -5974,20 +6151,20 @@ function dragAndDrop() {
               formData.set("end_time", newEndTime);
 
               if (!isSameDoctor) {
-                _context3.next = 49;
+                _context4.next = 49;
                 break;
               }
 
-              _context3.next = 40;
+              _context4.next = 40;
               return updateAppointment(origin, namespace, formData);
 
             case 40:
-              result = _context3.sent;
-              _context3.next = 43;
+              result = _context4.sent;
+              _context4.next = 43;
               return result.text();
 
             case 43:
-              text = _context3.sent;
+              text = _context4.sent;
               parent = ev.target.parentElement;
               parent.insertBefore(dragSelectedTarget, ev.target);
               updateAppointmentAnchorLinks(dragSelectedTarget, {
@@ -5997,7 +6174,7 @@ function dragAndDrop() {
                 start_time: newStartTime,
                 provider_no: targetDoctor
               });
-              _context3.next = 50;
+              _context4.next = 50;
               break;
 
             case 49:
@@ -6010,10 +6187,10 @@ function dragAndDrop() {
 
             case 50:
             case "end":
-              return _context3.stop();
+              return _context4.stop();
           }
         }
-      }, _callee3);
+      }, _callee4);
     }));
     return _drop_handler.apply(this, arguments);
   }
@@ -6091,19 +6268,19 @@ function checkAllEligibility() {
 }
 
 function _checkAllEligibility() {
-  _checkAllEligibility = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee12() {
+  _checkAllEligibility = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee13() {
     var nodes, appointmentInfo, length, providerNo, error, i, temp, demographic_no, result, patientInfo, healthNumber, province, text, lowerCaseText, requestSuccess, _text, jsonRes, verified;
 
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee12$(_context12) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee13$(_context13) {
       while (1) {
-        switch (_context12.prev = _context12.next) {
+        switch (_context13.prev = _context13.next) {
           case 0:
             if (!(window.checkAllEligibilityRunning === true)) {
-              _context12.next = 2;
+              _context13.next = 2;
               break;
             }
 
-            return _context12.abrupt("return", alert("Check Already Running"));
+            return _context13.abrupt("return", alert("Check Already Running"));
 
           case 2:
             clearFailureCache();
@@ -6120,12 +6297,12 @@ function _checkAllEligibility() {
             providerNo = getProviderNoFromTd(nodes[0]);
             error = false;
             window.checkAllEligibilityRunning = true;
-            _context12.prev = 12;
+            _context13.prev = 12;
             i = 0;
 
           case 14:
             if (!(i < length)) {
-              _context12.next = 64;
+              _context13.next = 64;
               break;
             }
 
@@ -6137,36 +6314,36 @@ function _checkAllEligibility() {
             result = null; // empty appointment node, do not check
 
             if (!(!demographic_no || demographic_no == 0)) {
-              _context12.next = 23;
+              _context13.next = 23;
               break;
             }
 
-            return _context12.abrupt("continue", 61);
+            return _context13.abrupt("continue", 61);
 
           case 23:
             // In cases where the first appointment in the schedule is an empty
             // appointment, get the providerNo from the node itself
             if (!providerNo) providerNo = getProviderNoFromTd(nodes[i]);
-            _context12.next = 26;
+            _context13.next = 26;
             return getPatientInfo(demographic_no);
 
           case 26:
-            patientInfo = _context12.sent;
+            patientInfo = _context13.sent;
             healthNumber = patientInfo["Health Ins"].replace(/\s+/g, " ").trim();
             province = patientInfo["Province"].replace(/\s+/g, " ").trim();
-            _context12.prev = 29;
-            _context12.next = 32;
+            _context13.prev = 29;
+            _context13.next = 32;
             return checkEligiblity(demographic_no, (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getOrigin)(), (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getNamespace)(), providerNo, healthNumber, province);
 
           case 32:
-            result = _context12.sent;
-            _context12.next = 38;
+            result = _context13.sent;
+            _context13.next = 38;
             break;
 
           case 35:
-            _context12.prev = 35;
-            _context12.t0 = _context12["catch"](29);
-            console.error(_context12.t0);
+            _context13.prev = 35;
+            _context13.t0 = _context13["catch"](29);
+            console.error(_context13.t0);
 
           case 38:
             text = null;
@@ -6174,15 +6351,15 @@ function _checkAllEligibility() {
             requestSuccess = false;
 
             if (!(result && result.status === 200)) {
-              _context12.next = 49;
+              _context13.next = 49;
               break;
             }
 
-            _context12.next = 44;
+            _context13.next = 44;
             return result.text();
 
           case 44:
-            _text = _context12.sent;
+            _text = _context13.sent;
             lowerCaseText = _text.toLowerCase();
 
             if (oscar.isOscarGoHost()) {
@@ -6193,7 +6370,7 @@ function _checkAllEligibility() {
               }
             }
 
-            _context12.next = 51;
+            _context13.next = 51;
             break;
 
           case 49:
@@ -6202,13 +6379,13 @@ function _checkAllEligibility() {
 
           case 51:
             if (!lowerCaseText.includes("error in teleplan connection")) {
-              _context12.next = 55;
+              _context13.next = 55;
               break;
             }
 
             alert("Automatic Eligiblity Check Aborted. \n" + text);
             error = true;
-            return _context12.abrupt("break", 64);
+            return _context13.abrupt("break", 64);
 
           case 55:
             verified = false;
@@ -6228,7 +6405,7 @@ function _checkAllEligibility() {
 
             (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.addToCache)(demographic_no, verified);
             console.log("Cached.");
-            _context12.next = 61;
+            _context13.next = 61;
             return new Promise(function (resolve, reject) {
               setTimeout(function () {
                 resolve();
@@ -6237,35 +6414,35 @@ function _checkAllEligibility() {
 
           case 61:
             i++;
-            _context12.next = 14;
+            _context13.next = 14;
             break;
 
           case 64:
-            _context12.next = 70;
+            _context13.next = 70;
             break;
 
           case 66:
-            _context12.prev = 66;
-            _context12.t1 = _context12["catch"](12);
-            console.log(_context12.t1);
-            alert(_context12.t1);
+            _context13.prev = 66;
+            _context13.t1 = _context13["catch"](12);
+            console.log(_context13.t1);
+            alert(_context13.t1);
 
           case 70:
-            _context12.prev = 70;
+            _context13.prev = 70;
             window.checkAllEligibilityRunning = false;
             pubsub.publish("check-eligibility", {
               complete: true,
               total: length,
               error: error
             });
-            return _context12.finish(70);
+            return _context13.finish(70);
 
           case 74:
           case "end":
-            return _context12.stop();
+            return _context13.stop();
         }
       }
-    }, _callee12, null, [[12, 66, 70, 74], [29, 35]]);
+    }, _callee13, null, [[12, 66, 70, 74], [29, 35]]);
   }));
   return _checkAllEligibility.apply(this, arguments);
 }
@@ -6604,39 +6781,39 @@ function sendPatientPrescriptionNotification() {
 function setupFaxButton() {
   var prescriptionFrame = document.getElementById("AutoNumber1");
   prescriptionFrame.addEventListener("click", /*#__PURE__*/function () {
-    var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee4(e) {
+    var _ref2 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee5(e) {
       var result, text, json;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee4$(_context4) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee5$(_context5) {
         while (1) {
-          switch (_context4.prev = _context4.next) {
+          switch (_context5.prev = _context5.next) {
             case 0:
               if (!e.target.matches("#faxBUtton, #faxAndPasteButton")) {
-                _context4.next = 8;
+                _context5.next = 8;
                 break;
               }
 
-              _context4.next = 3;
+              _context5.next = 3;
               return sendPatientPrescriptionNotification();
 
             case 3:
-              result = _context4.sent;
-              _context4.next = 6;
+              result = _context5.sent;
+              _context5.next = 6;
               return result.text();
 
             case 6:
-              text = _context4.sent;
+              text = _context5.sent;
               json = JSON.parse(text);
 
             case 8:
             case "end":
-              return _context4.stop();
+              return _context5.stop();
           }
         }
-      }, _callee4);
+      }, _callee5);
     }));
 
     return function (_x5) {
-      return _ref.apply(this, arguments);
+      return _ref2.apply(this, arguments);
     };
   }(), false);
 }
@@ -6662,11 +6839,11 @@ function setupPreferredPharmacy(_x6, _x7) {
 }
 
 function _setupPreferredPharmacy() {
-  _setupPreferredPharmacy = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee13(code, demographic_no) {
+  _setupPreferredPharmacy = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee14(code, demographic_no) {
     var pharmacyCode, corticoPharmacy, respText, corticoPharmacyText, faxNumber, searchTerm, demographicNo, currPharmacyResults, currPharmacyText, preferredPharmacy, currentlyUsingPharmacy, results, text, json, pharmacyUpdated, isRxPage, pharmacy, setPharmacyResults, setPharmacyText, msg;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee13$(_context13) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee14$(_context14) {
       while (1) {
-        switch (_context13.prev = _context13.next) {
+        switch (_context14.prev = _context14.next) {
           case 0:
             pharmacyCode = localStorage.getItem("currentPharmacyCode");
 
@@ -6674,16 +6851,16 @@ function _setupPreferredPharmacy() {
               pharmacyCode = code;
             }
 
-            _context13.next = 4;
+            _context14.next = 4;
             return getPharmacyDetails(pharmacyCode);
 
           case 4:
-            corticoPharmacy = _context13.sent;
-            _context13.next = 7;
+            corticoPharmacy = _context14.sent;
+            _context14.next = 7;
             return corticoPharmacy.text();
 
           case 7:
-            respText = _context13.sent;
+            respText = _context14.sent;
             corticoPharmacyText = JSON.parse(respText);
             faxNumber = corticoPharmacyText[0]["fax_number"] || null;
             searchTerm = corticoPharmacyText[0]["name"] || null; // only use the first word on the pharmacy name to search for list
@@ -6698,18 +6875,18 @@ function _setupPreferredPharmacy() {
               demographicNo = getDemographicFromLocation();
             }
 
-            _context13.next = 17;
+            _context14.next = 17;
             return getCurrentPharmacy(demographicNo);
 
           case 17:
-            currPharmacyResults = _context13.sent;
-            _context13.t0 = JSON;
-            _context13.next = 21;
+            currPharmacyResults = _context14.sent;
+            _context14.t0 = JSON;
+            _context14.next = 21;
             return currPharmacyResults.text();
 
           case 21:
-            _context13.t1 = _context13.sent;
-            currPharmacyText = _context13.t0.parse.call(_context13.t0, _context13.t1);
+            _context14.t1 = _context14.sent;
+            currPharmacyText = _context14.t0.parse.call(_context14.t0, _context14.t1);
             console.log("Current Pharmacy:", currPharmacyText);
 
             if (currPharmacyText) {
@@ -6721,26 +6898,26 @@ function _setupPreferredPharmacy() {
             console.log("currently using pharmacy ".concat(searchTerm.toLowerCase(), ", ").concat(currentlyUsingPharmacy));
 
             if (!(searchTerm && !currentlyUsingPharmacy)) {
-              _context13.next = 54;
+              _context14.next = 54;
               break;
             }
 
-            _context13.next = 30;
+            _context14.next = 30;
             return getPharmacyResults(searchTerm);
 
           case 30:
-            results = _context13.sent;
-            _context13.next = 33;
+            results = _context14.sent;
+            _context14.next = 33;
             return results.text();
 
           case 33:
-            text = _context13.sent;
+            text = _context14.sent;
             json = JSON.parse(text);
             pharmacyUpdated = json.length > 0;
             isRxPage = window.location.href.indexOf("oscarRx/choosePatient.do") > -1;
 
             if (!pharmacyUpdated) {
-              _context13.next = 50;
+              _context14.next = 50;
               break;
             }
 
@@ -6756,24 +6933,24 @@ function _setupPreferredPharmacy() {
             }
 
             if (!pharmacy) {
-              _context13.next = 48;
+              _context14.next = 48;
               break;
             }
 
-            _context13.next = 43;
+            _context14.next = 43;
             return setPreferredPharmacy(pharmacy, demographicNo);
 
           case 43:
-            setPharmacyResults = _context13.sent;
-            _context13.next = 46;
+            setPharmacyResults = _context14.sent;
+            _context14.next = 46;
             return setPharmacyResults.text();
 
           case 46:
-            setPharmacyText = _context13.sent;
+            setPharmacyText = _context14.sent;
             if (isRxPage) alert("Updating preferred pharmacy, press Ok to reload");else console.log("Updating preferred pharmacy");
 
           case 48:
-            _context13.next = 54;
+            _context14.next = 54;
             break;
 
           case 50:
@@ -6784,10 +6961,10 @@ function _setupPreferredPharmacy() {
 
           case 54:
           case "end":
-            return _context13.stop();
+            return _context14.stop();
         }
       }
-    }, _callee13);
+    }, _callee14);
   }));
   return _setupPreferredPharmacy.apply(this, arguments);
 }
@@ -6859,15 +7036,15 @@ function getDiagnosticFromCortico(_x8, _x9, _x10) {
 }
 
 function _getDiagnosticFromCortico() {
-  _getDiagnosticFromCortico = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee14(appt_no, notes, token) {
+  _getDiagnosticFromCortico = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee15(appt_no, notes, token) {
     var clinicName, url;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee14$(_context14) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee15$(_context15) {
       while (1) {
-        switch (_context14.prev = _context14.next) {
+        switch (_context15.prev = _context15.next) {
           case 0:
             clinicName = localStorage["clinicname"];
             url = "".concat((0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getCorticoUrl)(), "/api/encrypted/diagnostic-results/?appointment_id=").concat(appt_no, "&notes=").concat(notes);
-            return _context14.abrupt("return", fetch(url, {
+            return _context15.abrupt("return", fetch(url, {
               method: "GET",
               headers: {
                 "Content-Type": "application/json",
@@ -6890,10 +7067,10 @@ function _getDiagnosticFromCortico() {
 
           case 3:
           case "end":
-            return _context14.stop();
+            return _context15.stop();
         }
       }
-    }, _callee14);
+    }, _callee15);
   }));
   return _getDiagnosticFromCortico.apply(this, arguments);
 }
@@ -6908,12 +7085,12 @@ function setupPreferredPharmacies() {
 }
 
 function _setupPreferredPharmacies() {
-  _setupPreferredPharmacies = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee15() {
+  _setupPreferredPharmacies = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee16() {
     var appointments, error, i, temp, cancelled, element, demographicNo, apptUrl, _pharmaciesCache, pharmaciesCache, demographics, cachedDemographics, apptTitle, pharmacyCode;
 
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee15$(_context15) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee16$(_context16) {
       while (1) {
-        switch (_context15.prev = _context15.next) {
+        switch (_context16.prev = _context16.next) {
           case 0:
             console.log("setting up batch pharmacies");
             window.setupPreferredPharmaciesRunning = true;
@@ -6925,7 +7102,7 @@ function _setupPreferredPharmacies() {
 
           case 7:
             if (!(i < appointments.length)) {
-              _context15.next = 52;
+              _context16.next = 52;
               break;
             }
 
@@ -6936,25 +7113,25 @@ function _setupPreferredPharmacies() {
             cancelled = appointments[i].querySelector("a.apptStatus[title='Cancelled ']");
 
             if (!cancelled) {
-              _context15.next = 15;
+              _context16.next = 15;
               break;
             }
 
-            return _context15.abrupt("continue", 49);
+            return _context16.abrupt("continue", 49);
 
           case 15:
             element = appointments[i].querySelector("a.apptLink");
 
             if (!(!element || !element.attributes)) {
-              _context15.next = 18;
+              _context16.next = 18;
               break;
             }
 
-            return _context15.abrupt("continue", 49);
+            return _context16.abrupt("continue", 49);
 
           case 18:
             demographicNo = null;
-            _context15.prev = 19;
+            _context16.prev = 19;
             apptUrl = (0,_modules_cortico_Appointments_Appointments__WEBPACK_IMPORTED_MODULE_7__.extractApptUrl)(element.attributes.onclick.textContent);
             demographicNo = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getDemographicNo)(apptUrl);
             _pharmaciesCache = localStorage.getItem("pharmaciesCache");
@@ -6968,15 +7145,15 @@ function _setupPreferredPharmacies() {
             }
 
             if (!(demographics && Array.isArray(demographics) && demographics.includes(demographicNo) && pharmaciesCache.date == dayjs__WEBPACK_IMPORTED_MODULE_6___default()().format("YYYY-MM-DD"))) {
-              _context15.next = 30;
+              _context16.next = 30;
               break;
             }
 
             console.log("Demographic ".concat(demographicNo, " is cached, skipping"));
-            return _context15.abrupt("continue", 49);
+            return _context16.abrupt("continue", 49);
 
           case 30:
-            _context15.next = 32;
+            _context16.next = 32;
             return new Promise(function (resolve, reject) {
               setTimeout(function () {
                 resolve();
@@ -6990,34 +7167,34 @@ function _setupPreferredPharmacies() {
             pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle);
 
             if (pharmacyCode) {
-              _context15.next = 39;
+              _context16.next = 39;
               break;
             }
 
             console.log("Pharmacy code not found from appt");
-            return _context15.abrupt("continue", 49);
+            return _context16.abrupt("continue", 49);
 
           case 39:
-            _context15.next = 41;
+            _context16.next = 41;
             return setupPreferredPharmacy(pharmacyCode, demographicNo);
 
           case 41:
-            _context15.next = 47;
+            _context16.next = 47;
             break;
 
           case 43:
-            _context15.prev = 43;
-            _context15.t0 = _context15["catch"](19);
-            storePharmaciesFailureCache(demographicNo, _context15.t0.message);
-            displayPharmaciesFailure(demographicNo, _context15.t0.message);
+            _context16.prev = 43;
+            _context16.t0 = _context16["catch"](19);
+            storePharmaciesFailureCache(demographicNo, _context16.t0.message);
+            displayPharmaciesFailure(demographicNo, _context16.t0.message);
 
           case 47:
-            _context15.prev = 47;
-            return _context15.finish(47);
+            _context16.prev = 47;
+            return _context16.finish(47);
 
           case 49:
             i++;
-            _context15.next = 7;
+            _context16.next = 7;
             break;
 
           case 52:
@@ -7030,10 +7207,10 @@ function _setupPreferredPharmacies() {
 
           case 54:
           case "end":
-            return _context15.stop();
+            return _context16.stop();
         }
       }
-    }, _callee15, null, [[19, 43, 47, 49]]);
+    }, _callee16, null, [[19, 43, 47, 49]]);
   }));
   return _setupPreferredPharmacies.apply(this, arguments);
 }
@@ -7043,77 +7220,77 @@ function init_diagnostic_viewer_button() {
 }
 
 function _init_diagnostic_viewer_button() {
-  _init_diagnostic_viewer_button = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee18() {
+  _init_diagnostic_viewer_button = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee19() {
     var notesField, notesValue, last_button, corticoDiagnosticViewBtn, update_diagnostic_button_visibility, open_diagnostic_viewer, _open_diagnostic_viewer;
 
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee18$(_context18) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee19$(_context19) {
       while (1) {
-        switch (_context18.prev = _context18.next) {
+        switch (_context19.prev = _context19.next) {
           case 0:
             _open_diagnostic_viewer = function _open_diagnostic_view2() {
-              _open_diagnostic_viewer = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee17(e) {
+              _open_diagnostic_viewer = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee18(e) {
                 var appt_no;
-                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee17$(_context17) {
+                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee18$(_context18) {
                   while (1) {
-                    switch (_context17.prev = _context17.next) {
+                    switch (_context18.prev = _context18.next) {
                       case 0:
                         if ((0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.checkCorticoUrl)(e.originalEvent)) {
-                          _context17.next = 2;
+                          _context18.next = 2;
                           break;
                         }
 
-                        return _context17.abrupt("return");
+                        return _context18.abrupt("return");
 
                       case 2:
                         appt_no = getQueryStringValue("appointment_no");
-                        _context17.next = 5;
+                        _context18.next = 5;
                         return (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.loadExtensionStorageValue)("jwt_access_token").then( /*#__PURE__*/function () {
-                          var _ref4 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee16(access_token) {
+                          var _ref5 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee17(access_token) {
                             var diagnostic_response, diagnostic_text;
-                            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee16$(_context16) {
+                            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee17$(_context17) {
                               while (1) {
-                                switch (_context16.prev = _context16.next) {
+                                switch (_context17.prev = _context17.next) {
                                   case 0:
-                                    _context16.next = 2;
+                                    _context17.next = 2;
                                     return getDiagnosticFromCortico(appt_no, notesValue, access_token);
 
                                   case 2:
-                                    diagnostic_response = _context16.sent;
+                                    diagnostic_response = _context17.sent;
 
                                     if (!diagnostic_response) {
-                                      _context16.next = 11;
+                                      _context17.next = 11;
                                       break;
                                     }
 
-                                    _context16.t0 = String;
-                                    _context16.next = 7;
+                                    _context17.t0 = String;
+                                    _context17.next = 7;
                                     return diagnostic_response.text();
 
                                   case 7:
-                                    _context16.t1 = _context16.sent;
-                                    diagnostic_text = (0, _context16.t0)(_context16.t1);
-                                    _context16.next = 11;
+                                    _context17.t1 = _context17.sent;
+                                    diagnostic_text = (0, _context17.t0)(_context17.t1);
+                                    _context17.next = 11;
                                     return showDiagnosticResults(diagnostic_text);
 
                                   case 11:
                                   case "end":
-                                    return _context16.stop();
+                                    return _context17.stop();
                                 }
                               }
-                            }, _callee16);
+                            }, _callee17);
                           }));
 
                           return function (_x19) {
-                            return _ref4.apply(this, arguments);
+                            return _ref5.apply(this, arguments);
                           };
                         }());
 
                       case 5:
                       case "end":
-                        return _context17.stop();
+                        return _context18.stop();
                     }
                   }
-                }, _callee17);
+                }, _callee18);
               }));
               return _open_diagnostic_viewer.apply(this, arguments);
             };
@@ -7137,10 +7314,10 @@ function _init_diagnostic_viewer_button() {
 
           case 10:
           case "end":
-            return _context18.stop();
+            return _context19.stop();
         }
       }
-    }, _callee18);
+    }, _callee19);
   }));
   return _init_diagnostic_viewer_button.apply(this, arguments);
 }
@@ -7150,26 +7327,26 @@ function init_recall_button() {
 }
 
 function _init_recall_button() {
-  _init_recall_button = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee20() {
+  _init_recall_button = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee21() {
     var statusOption, statusValue, last_button, corticoRecallButton, update_recall_button_visibility, send_patient_recall_email, _send_patient_recall_email;
 
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee20$(_context20) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee21$(_context21) {
       while (1) {
-        switch (_context20.prev = _context20.next) {
+        switch (_context21.prev = _context21.next) {
           case 0:
             _send_patient_recall_email = function _send_patient_recall_2() {
-              _send_patient_recall_email = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee19(e) {
+              _send_patient_recall_email = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee20(e) {
                 var patientInfo, patientEmail, formData, apptTime, apptDate, apptPatient, apptSchedule, cleanedSchedule, cleanedPatient, clinicName;
-                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee19$(_context19) {
+                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee20$(_context20) {
                   while (1) {
-                    switch (_context19.prev = _context19.next) {
+                    switch (_context20.prev = _context20.next) {
                       case 0:
                         e.preventDefault();
-                        _context19.next = 3;
+                        _context20.next = 3;
                         return getPatientInfo();
 
                       case 3:
-                        patientInfo = _context19.sent;
+                        patientInfo = _context20.sent;
                         patientEmail = patientInfo.email;
                         formData = new FormData(document.querySelector("form[name=EDITAPPT]"));
                         apptTime = formData.get("start_time");
@@ -7177,21 +7354,21 @@ function _init_recall_button() {
                         apptPatient = formData.get("keyword");
 
                         if (patientEmail) {
-                          _context19.next = 12;
+                          _context20.next = 12;
                           break;
                         }
 
                         alert("Patient has no email");
-                        return _context19.abrupt("return");
+                        return _context20.abrupt("return");
 
                       case 12:
                         if (!(!apptTime || !apptDate)) {
-                          _context19.next = 15;
+                          _context20.next = 15;
                           break;
                         }
 
                         alert("Please provide date/time");
-                        return _context19.abrupt("return");
+                        return _context20.abrupt("return");
 
                       case 15:
                         apptSchedule = apptDate + "T" + apptTime;
@@ -7202,10 +7379,10 @@ function _init_recall_button() {
 
                       case 20:
                       case "end":
-                        return _context19.stop();
+                        return _context20.stop();
                     }
                   }
-                }, _callee19);
+                }, _callee20);
               }));
               return _send_patient_recall_email.apply(this, arguments);
             };
@@ -7231,10 +7408,10 @@ function _init_recall_button() {
 
           case 11:
           case "end":
-            return _context20.stop();
+            return _context21.stop();
         }
       }
-    }, _callee20);
+    }, _callee21);
   }));
   return _init_recall_button.apply(this, arguments);
 }
@@ -7244,11 +7421,11 @@ function init_medium_option() {
 }
 
 function _init_medium_option() {
-  _init_medium_option = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee21() {
+  _init_medium_option = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee22() {
     var statusOption, storedMedium;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee21$(_context21) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee22$(_context22) {
       while (1) {
-        switch (_context21.prev = _context21.next) {
+        switch (_context22.prev = _context22.next) {
           case 0:
             statusOption = document.querySelector("select[name='resources']");
             storedMedium = localStorage.getItem("medium-option");
@@ -7259,10 +7436,10 @@ function _init_medium_option() {
 
           case 3:
           case "end":
-            return _context21.stop();
+            return _context22.stop();
         }
       }
-    }, _callee21);
+    }, _callee22);
   }));
   return _init_medium_option.apply(this, arguments);
 }
@@ -7272,22 +7449,22 @@ function getPatientInfo(_x11) {
 }
 
 function _getPatientInfo() {
-  _getPatientInfo = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee22(demographicNo) {
+  _getPatientInfo = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee23(demographicNo) {
     var result, text, el, info, re, emails;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee22$(_context22) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee23$(_context23) {
       while (1) {
-        switch (_context22.prev = _context22.next) {
+        switch (_context23.prev = _context23.next) {
           case 0:
-            _context22.next = 2;
+            _context23.next = 2;
             return getDemographicPageResponse(demographicNo);
 
           case 2:
-            result = _context22.sent;
-            _context22.next = 5;
+            result = _context23.sent;
+            _context23.next = 5;
             return result.text();
 
           case 5:
-            text = _context22.sent;
+            text = _context23.sent;
             el = document.createElement("html");
             el.innerHTML = text;
             info = {};
@@ -7297,14 +7474,14 @@ function _getPatientInfo() {
             re = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi;
             emails = text.match(re);
             if (emails && emails.length) info.email = emails[0];
-            return _context22.abrupt("return", info);
+            return _context23.abrupt("return", info);
 
           case 14:
           case "end":
-            return _context22.stop();
+            return _context23.stop();
         }
       }
-    }, _callee22);
+    }, _callee23);
   }));
   return _getPatientInfo.apply(this, arguments);
 }
@@ -7329,22 +7506,22 @@ function emailPatientEForm(_x12, _x13, _x14) {
 }
 
 function _emailPatientEForm() {
-  _emailPatientEForm = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee23(patientInfo, html, token) {
+  _emailPatientEForm = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee24(patientInfo, html, token) {
     var url, patientEmail, data;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee23$(_context23) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee24$(_context24) {
       while (1) {
-        switch (_context23.prev = _context23.next) {
+        switch (_context24.prev = _context24.next) {
           case 0:
             url = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getCorticoUrl)() + "/api/plug-in/email-form/";
             patientEmail = patientInfo.email || null;
 
             if (patientEmail) {
-              _context23.next = 5;
+              _context24.next = 5;
               break;
             }
 
             alert("The patient has no email");
-            return _context23.abrupt("return");
+            return _context24.abrupt("return");
 
           case 5:
             data = {
@@ -7352,7 +7529,7 @@ function _emailPatientEForm() {
               to: patientEmail,
               pdf_html: html
             };
-            return _context23.abrupt("return", fetch(url, {
+            return _context24.abrupt("return", fetch(url, {
               method: "POST",
               body: JSON.stringify(data),
               mode: "cors",
@@ -7387,10 +7564,10 @@ function _emailPatientEForm() {
 
           case 7:
           case "end":
-            return _context23.stop();
+            return _context24.stop();
         }
       }
-    }, _callee23);
+    }, _callee24);
   }));
   return _emailPatientEForm.apply(this, arguments);
 }

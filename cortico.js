@@ -44,7 +44,7 @@ const oscar = new Oscar(window.location.hostname);
 
 const cortico_media = ["phone", "clinic", "virtual", "", "quiet"];
 
-const init_cortico = function () {
+const init_cortico = async function () {
   // create an element to indicate the library is loaded in the dom, and to contain fixed menus/elements.
   const anchor = document.createElement("div");
   anchor.id = "cortico_anchor";
@@ -144,7 +144,11 @@ const init_cortico = function () {
     route.indexOf("/casemgmt/forward.jsp") > -1
   ) {
     setupPatientEmailButton();
-    Messenger();
+    if (route.indexOf("/casemgmt/forward.jsp") > -1) {
+      const patient_info = await getPatientInfo();
+      console.log("Patient Info", patient_info);
+      Messenger();
+    }
   } else if (route.indexOf("/oscarRx/ViewScript2.jsp") > -1) {
     // We need to determine first if the prescription is "delivery"
     const currentPharmacyCode = localStorage.getItem("currentPharmacyCode");
