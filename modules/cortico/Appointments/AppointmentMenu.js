@@ -198,7 +198,8 @@ export function setAppointmentCheckbox(apptTd, apptInfo, checkCache, pharmaciesC
 
   let menuIcon = '<small>&#10006;</small>';
   let cacheColor = '#555555';
-  let apptStatus = apptTd.querySelector("a.apptStatus").querySelector("img").title
+  let anchor = apptTd.querySelector("a.apptStatus")
+  let apptStatus = anchor ? anchor.querySelector("img").title : ""
 
   if (cacheValue != undefined) {
     cacheColor = cacheValue.verified ? '#00cc51' : '#cc0063';
