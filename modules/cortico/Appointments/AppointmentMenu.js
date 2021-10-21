@@ -198,11 +198,14 @@ export function setAppointmentCheckbox(apptTd, apptInfo, checkCache, pharmaciesC
 
   let menuIcon = '<small>&#10006;</small>';
   let cacheColor = '#555555';
-  let apptStatus = apptTd.querySelector("a.apptStatus").querySelector("img").title
+  let anchor = apptTd.querySelector("a.apptStatus")
+  let apptStatus = anchor ? anchor.querySelector("img").title : ""
 
   if (cacheValue != undefined) {
-    cacheColor = cacheValue.verified ? '#00cc51' : '#cc0063';
-    menuIcon = cacheValue.verified ? '<small>&#10004;</small>' : menuIcon;
+    let verification = cacheValue.verified
+    cacheColor = verification || verification === "uninsured" ? '#00cc51' : '#cc0063';
+    menuIcon = verification ? '<small>&#10004;</small>' : menuIcon;
+    menuIcon = verification === "uninsured" ? '<small>X</small>' : menuIcon
 
     if (apptStatus.toLowerCase() === 'private') {
       menuIcon = '<small>$</small>';

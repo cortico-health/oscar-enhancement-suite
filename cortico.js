@@ -31,6 +31,7 @@ const version = 3.8;
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
 
+window.is_dev = process.env.NODE_ENV === "development" ? true : false
 const cortico_media = ["phone", "clinic", "virtual", "", "quiet"];
 
 const init_cortico = function () {
@@ -326,8 +327,12 @@ async function setupPatientEmailButton() {
   let is_eform_page = true;
   const clinicName = localStorage["clinicname"];
 
-  const email_parent = document.querySelector(".DoNotPrint td")
-    || document.querySelector("#BottomButtons")
+  const email_parent = 
+    document.querySelector(".DoNotPrint td") || 
+    document.querySelector("#BottomButtons") || 
+    document.querySelector("#topbar > form") ||
+    document.body
+  console.log("email parent", email_parent)
   if (!email_parent) {
     is_eform_page = false;
     const email_parent = document.querySelector("#save div:last-child");
@@ -343,6 +348,8 @@ async function setupPatientEmailButton() {
   email_btn.addEventListener("click", async (e) => {
     if (!checkCorticoUrl(e)) return;
 
+    email_btn.disabled = true
+
     await loadExtensionStorageValue("jwt_access_token").then(async function (access_token) {
       // copy document and remove unnecessary stuff
       let html = document.cloneNode(true);
@@ -353,6 +360,9 @@ async function setupPatientEmailButton() {
         html.documentElement.outerHTML,
         access_token
       );
+
+      if (patientFormResponse) email_btn.disabled = false
+  
       console.log('RSP: ', patientFormResponse)
     })
   })
@@ -869,10 +879,15 @@ async function getCorticoLogin() {
       btnEvent = {
         "click .cortico-btn": async (e) => {
           if (e.target.className == 'cortico-btn') {
-            chrome.storage.local.remove(['jwt_access_token', 'jwt_expired']);
+            if (window.is_dev) {
+              localStorage.removeItem('jwt_access_token')
+              localStorage.removeItem('jwt_expired')
+            } else {
+              chrome.storage.local.remove(['jwt_access_token', 'jwt_expired']);
+            }
 
-            alert("Logged out from cortico, reloading...");
-            window.location.reload();
+            if (!alert("Logged out from cortico, reloading..."))
+              window.location.reload();
           }
         }
       }
@@ -961,8 +976,8 @@ function getCorticoUrlOption() {
     }
     if (input.value) {
       localStorage.setItem("clinicname", input.value);
-      alert("Your clinic name has changed, the page will now reload");
-      window.location.reload();
+      if (!alert("Your clinic name has changed, the page will now reload"))
+        window.location.reload();
     }
 
   });
@@ -1016,8 +1031,8 @@ function getResetCacheButton() {
           localStorage.clear()
           await chrome.storage.local.clear()
 
-          alert("Successfully reset cache, the page will now reload.")
-          window.location.reload()
+          if(!alert("Successfully reset cache, the page will now reload."))
+            window.location.reload()
         } else {
           console.log("Clear cache cancelled")
         }
@@ -1373,10 +1388,14 @@ async function checkAllEligibility() {
 
       let verified = false;
 
-      if (
+      if (lowerCaseText.includes("this is not an insured benefit")) {
+        verified = "uninsured";
+        console.log("Patient not insured")
+      } else if (
         (!lowerCaseText.includes("failure-phn") &&
           lowerCaseText.includes("success")) ||
         lowerCaseText.includes("health card passed validation") ||
+        lowerCaseText.includes("patient eligible") ||
         requestSuccess
       ) {
         plusSignAppointments(demographic_no);
@@ -1732,23 +1751,26 @@ function getPharmacyCodeFromReasonOrNotes(textContent) {
 
 function setupPrescriptionButtons() {
   const providerSchedule = document.querySelector("#providerSchedule");
-  providerSchedule.addEventListener(
-    "click",
-    function (e) {
-      if (e.target.matches('a[title="Prescriptions"]')) {
-        var element = e.target;
-        while (element.className != "apptLink") {
-          element = element.previousElementSibling;
+
+  if (providerSchedule) {
+    providerSchedule.addEventListener(
+      "click",
+      function (e) {
+        if (e.target.matches('a[title="Prescriptions"]')) {
+          var element = e.target;
+          while (element.className != "apptLink") {
+            element = element.previousElementSibling;
+          }
+  
+          var apptTitle = element.attributes.title.textContent;
+          var pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle);
+  
+          localStorage.setItem("currentPharmacyCode", pharmacyCode);
         }
-
-        var apptTitle = element.attributes.title.textContent;
-        var pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle);
-
-        localStorage.setItem("currentPharmacyCode", pharmacyCode);
-      }
-    },
-    false
-  );
+      },
+      false
+    );
+  }
 }
 
 function sendPatientPrescriptionNotification() {
@@ -2279,7 +2301,11 @@ async function emailPatientEForm(patientInfo, html, token) {
       console.error("Cortico: Error sending email: ", err)
       if ((err + '').includes("Unauthorized")) {
         alert("Your credentials have expired. Please login again")
-        chrome.storage.local.set({ "jwt_expired": true })
+        if (window.is_dev) {
+          localStorage.setItem("jwt_expired", true)
+        } else {
+          chrome.storage.local.set({ "jwt_expired": true })
+        }
 
         addLoginForm(chrome)
         const loginForm = document.querySelector(".login-form")
@@ -2292,7 +2318,11 @@ async function emailPatientEForm(patientInfo, html, token) {
 
 function handleErrors(response) {
   if (!response.ok) {
-    throw Error(response.statusText);
+    if (response.status === 401) {
+      throw Error("Unauthorized")
+    } else {
+      throw Error(response.statusText);
+    }
   }
 
   return response;

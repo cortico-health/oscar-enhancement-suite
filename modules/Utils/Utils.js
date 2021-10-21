@@ -134,9 +134,13 @@ export function create(_element, options, ...children) {
 
 export function loadExtensionStorageValue(key) {
   return new Promise(function (resolve, reject) {
-    chrome.storage.local.get(key, function (result) {
-      resolve(result[key])
-    })
+    if (window.is_dev) {
+      resolve(window.localStorage.getItem(key))
+    } else {
+      chrome.storage.local.get(key, function (result) {
+        resolve(result[key])
+      })
+    }
   })
 }
 
@@ -202,7 +206,11 @@ export function checkCorticoUrl(event) {
 }
 
 export function showLoginForm() {
-  chrome.storage.local.set({ "jwt_expired": true })
+  if (window.is_dev) {
+     window.localStoraage.setItem("jwt_expired", true)
+  } else {
+    chrome.storage.local.set({ "jwt_expired": true })
+  }
   alert("Your credentials have expired. Please login again")
 
   addLoginForm(chrome)
