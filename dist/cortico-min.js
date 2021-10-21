@@ -1418,8 +1418,10 @@ function setAppointmentCheckbox(apptTd, apptInfo, checkCache, pharmaciesCache) {
   var apptStatus = anchor ? anchor.querySelector("img").title : "";
 
   if (cacheValue != undefined) {
-    cacheColor = cacheValue.verified ? '#00cc51' : '#cc0063';
-    menuIcon = cacheValue.verified ? '<small>&#10004;</small>' : menuIcon;
+    var verification = cacheValue.verified;
+    cacheColor = verification || verification === "uninsured" ? '#00cc51' : '#cc0063';
+    menuIcon = verification ? '<small>&#10004;</small>' : menuIcon;
+    menuIcon = verification === "uninsured" ? '<small>X</small>' : menuIcon;
 
     if (apptStatus.toLowerCase() === 'private') {
       menuIcon = '<small>$</small>';
@@ -5862,7 +5864,10 @@ function _checkAllEligibility() {
           case 55:
             verified = false;
 
-            if (!lowerCaseText.includes("failure-phn") && lowerCaseText.includes("success") || lowerCaseText.includes("health card passed validation") || requestSuccess) {
+            if (lowerCaseText.includes("this is not an insured benefit")) {
+              verified = "uninsured";
+              console.log("Patient not insured");
+            } else if (!lowerCaseText.includes("failure-phn") && lowerCaseText.includes("success") || lowerCaseText.includes("health card passed validation") || lowerCaseText.includes("patient eligible") || requestSuccess) {
               plusSignAppointments(demographic_no);
               verified = true;
               console.log("Success!");
@@ -7043,7 +7048,11 @@ function _emailPatientEForm() {
 
 function handleErrors(response) {
   if (!response.ok) {
-    throw Error(response.statusText);
+    if (response.status === 401) {
+      throw Error("Unauthorized");
+    } else {
+      throw Error(response.statusText);
+    }
   }
 
   return response;

@@ -1382,10 +1382,14 @@ async function checkAllEligibility() {
 
       let verified = false;
 
-      if (
+      if (lowerCaseText.includes("this is not an insured benefit")) {
+        verified = "uninsured";
+        console.log("Patient not insured")
+      } else if (
         (!lowerCaseText.includes("failure-phn") &&
           lowerCaseText.includes("success")) ||
         lowerCaseText.includes("health card passed validation") ||
+        lowerCaseText.includes("patient eligible") ||
         requestSuccess
       ) {
         plusSignAppointments(demographic_no);
@@ -2304,7 +2308,11 @@ async function emailPatientEForm(patientInfo, html, token) {
 
 function handleErrors(response) {
   if (!response.ok) {
-    throw Error(response.statusText);
+    if (response.status === 401) {
+      throw Error("Unauthorized")
+    } else {
+      throw Error(response.statusText);
+    }
   }
 
   return response;
