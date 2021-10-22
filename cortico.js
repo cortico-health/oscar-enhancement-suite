@@ -178,9 +178,14 @@ const init_schedule = function () {
   // note: this is currently set to 30 seconds, which is enough time (the refresh occurs
   // at 60s). Calling window.stop() too early breaks the Oscar menus ("Inbox" "Msg" "Consultations"
   // "Tickler") that are loaded by ajax
+
+  // This no longer seems necessary.
+  //if (!(window.location + '').includes('casemgmt/forward.jsp')) { // Don't break autosave in eChart
+
   window.setTimeout(window.stop, 10000);
 
   // refresh when idle for 1 minute.
+
   let last_interaction = new Date();
   window.addEventListener("click", (e) => {
     last_interaction = new Date();
@@ -332,6 +337,11 @@ async function setupPatientEmailButton() {
     is_eform_page = false;
     const email_parent = document.querySelector("#save div:last-child");
   }
+  if (!email_parent) {
+    // bail
+    console.warn('Cannot find position for email button.')
+    return
+  }
 
   const patient_info = await getPatientInfo();
 
@@ -347,6 +357,19 @@ async function setupPatientEmailButton() {
       // copy document and remove unnecessary stuff
       let html = document.cloneNode(true);
       let doNotPrintList = html.querySelectorAll(".DoNotPrint")
+
+      // convert bg image to data URL.
+      const bg = document.getElementById('BGImage1')
+      if (bg) {
+        let blob = await fetch(bg.src).then(r => r.blob());
+        let dataUrl = await new Promise(resolve => {
+          let reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.readAsDataURL(blob);
+        });
+        bg.src = dataUrl
+      }
+      // now do something with `dataUrl`
 
       let patientFormResponse = await emailPatientEForm(
         patient_info,
@@ -2247,7 +2270,6 @@ async function emailPatientEForm(patientInfo, html, token) {
 
   if (!patientEmail) {
     alert("The patient has no email");
-
     return;
   }
 
