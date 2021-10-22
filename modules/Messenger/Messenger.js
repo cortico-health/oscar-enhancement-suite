@@ -163,15 +163,23 @@ function Messenger() {
       setOpen(false);
     };
 
-    const handleErrors = (response) => {
+    function MessageException(message) {
+      this.message = message;
+      this.name = "MessageException";
+      this.title = "Error";
+    }
+
+    const handleErrors = async (response) => {
+      const result = await response.json();
+      console.log("Error Result Object", result);
       if (!response.ok) {
         if (response.status === 401) {
-          throw Error("Unauthorized");
+          throw new MessageException(result && result.detail);
         } else {
-          throw Error(response.statusText);
+          throw new MessageException(response && response.statusText);
         }
       }
-      return response;
+      return result;
     };
 
     const handleSubmit = async (e) => {
@@ -187,41 +195,37 @@ function Messenger() {
         pdf_html: "<div>Hello World/div>",
       };
 
-      try {
-        const token = await loadExtensionStorageValue("jwt_access_token");
-        if (token) {
-          const url = getCorticoUrl() + "/api/plug-in/email-form/";
-          fetch(url, {
-            method: "POST",
-            body: JSON.stringify(data),
-            mode: "cors",
-            headers: {
-              "Content-type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          })
-            .then(handleErrors)
-            .then((response) => response.json())
-            .then((response) => {
-              console.log("Response", response);
-            })
-            .catch((error) => {
-              console.error("Error", error);
-              throw error;
+      const token = await loadExtensionStorageValue("jwt_access_token");
+      if (token) {
+        const url = getCorticoUrl() + "/api/plug-in/email-form/";
+        fetch(url, {
+          method: "POST",
+          body: JSON.stringify(data),
+          mode: "cors",
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then(handleErrors)
+          .then((response) => {
+            console.log("Response", response);
+            setMessageInfo({
+              title: "Success",
+              content: response.message,
             });
-        } else {
-          throw "Cannot find token";
-        }
-      } catch (e) {
-        setMessageInfo({
-          title: "Error",
-          content: e && e.message,
-        });
-        console.error(e);
-        setShowNotification(true);
-      } finally {
-        setLoading(false);
-        console.log("Loading Finally", loading);
+          })
+          .catch((error) => {
+            console.log("Error Object", error);
+            setMessageInfo({
+              title: error.title,
+              content: error && error.message,
+            });
+          })
+          .finally(() => {
+            setShowNotification(true);
+            setLoading(false);
+          });
       }
     };
 
