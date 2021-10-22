@@ -3,6 +3,7 @@ import { forwardRef } from "preact/compat";
 import corticoIcon from "../../resources/icons/96x96.png";
 import { useState, useRef } from "preact/hooks";
 import { getCorticoUrl, loadExtensionStorageValue } from "../Utils/Utils";
+import Notification from "../Notifications/Notification";
 function Messenger() {
   const container = document.body;
 
@@ -143,6 +144,11 @@ function Messenger() {
   function Content() {
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
+    const [messageInfo, setMessageInfo] = useState({
+      title: null,
+      content: null,
+    });
+    const [showNotification, setShowNotification] = useState(false);
     const email = "aaron@countable.ca";
     const subject = useRef();
     const message = useRef();
@@ -155,6 +161,17 @@ function Messenger() {
     const handleClose = (e) => {
       e.preventDefault();
       setOpen(false);
+    };
+
+    const handleErrors = (response) => {
+      if (!response.ok) {
+        if (response.status === 401) {
+          throw Error("Unauthorized");
+        } else {
+          throw Error(response.statusText);
+        }
+      }
+      return response;
     };
 
     const handleSubmit = async (e) => {
@@ -183,6 +200,7 @@ function Messenger() {
               Authorization: `Bearer ${token}`,
             },
           })
+            .then(handleErrors)
             .then((response) => response.json())
             .then((response) => {
               console.log("Response", response);
@@ -195,7 +213,12 @@ function Messenger() {
           throw "Cannot find token";
         }
       } catch (e) {
+        setMessageInfo({
+          title: "Error",
+          content: e && e.message,
+        });
         console.error(e);
+        setShowNotification(true);
       } finally {
         setLoading(false);
         console.log("Loading Finally", loading);
@@ -286,6 +309,15 @@ function Messenger() {
             </div>
           </div>
         </div>
+        <Notification
+          open={showNotification}
+          close={() => {
+            setShowNotification(false);
+          }}
+          delay={3000}
+          content={messageInfo.content}
+          title={messageInfo.title}
+        />
       </div>
     );
   }
