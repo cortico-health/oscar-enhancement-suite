@@ -732,9 +732,13 @@ function create(_element, options) {
 }
 function loadExtensionStorageValue(key) {
   return new Promise(function (resolve, reject) {
-    chrome.storage.local.get(key, function (result) {
-      resolve(result[key]);
-    });
+    if (window.is_dev) {
+      resolve(window.localStorage.getItem(key));
+    } else {
+      chrome.storage.local.get(key, function (result) {
+        resolve(result[key]);
+      });
+    }
   });
 }
 function htmlToElement(html) {
@@ -792,9 +796,14 @@ function checkCorticoUrl(event) {
   return true;
 }
 function showLoginForm() {
-  chrome.storage.local.set({
-    "jwt_expired": true
-  });
+  if (window.is_dev) {
+    window.localStoraage.setItem("jwt_expired", true);
+  } else {
+    chrome.storage.local.set({
+      "jwt_expired": true
+    });
+  }
+
   alert("Your credentials have expired. Please login again");
   (0,_cortico_Login_Login__WEBPACK_IMPORTED_MODULE_1__.addLoginForm)(chrome);
   var loginForm = document.querySelector(".login-form");
@@ -1742,7 +1751,7 @@ function _corticoSignIn() {
 
           case 5:
             if (!response) {
-              _context.next = 22;
+              _context.next = 19;
               break;
             }
 
@@ -1756,29 +1765,35 @@ function _corticoSignIn() {
             browser = browser ? browser : chrome;
 
             if (!browser) {
-              _context.next = 21;
+              _context.next = 18;
               break;
             }
 
-            browser.storage.local.set({
-              "jwt_access_token": json.access
-            });
-            browser.storage.local.set({
-              "jwt_expired": false
-            });
-            browser.storage.local.set({
-              "jwt_username": username
-            });
+            if (window.is_dev) {
+              window.localStorage.setItem("jwt_access_token", json.access);
+              window.localStorage.setItem("jwt_expired", false);
+              window.localStorage.setItem("jwt_username", username);
+            } else {
+              browser.storage.local.set({
+                "jwt_access_token": json.access
+              });
+              browser.storage.local.set({
+                "jwt_expired": false
+              });
+              browser.storage.local.set({
+                "jwt_username": username
+              });
+            }
+
             openMenu = document.querySelector(".login-form.show");
             openMenu.classList.remove("show");
-            alert("Successfully signed in, the page will now reload");
-            window.location.reload();
+            if (!alert("Successfully signed in, the page will now reload")) window.location.reload();
             return _context.abrupt("return");
 
-          case 21:
+          case 18:
             return _context.abrupt("return");
 
-          case 22:
+          case 19:
           case "end":
             return _context.stop();
         }
@@ -4487,6 +4502,7 @@ var CORTICO = {}; // container for global state. Use this rather than `window`
 var version = 3.8;
 var pubsub = (0,_modules_PubSub_PubSub__WEBPACK_IMPORTED_MODULE_5__.pubSubInit)();
 var oscar = new _modules_core_Oscar_js__WEBPACK_IMPORTED_MODULE_10__.Oscar(window.location.hostname);
+window.is_dev =  true ? true : 0;
 var cortico_media = ["phone", "clinic", "virtual", "", "quiet"];
 
 var init_cortico = function init_cortico() {
@@ -5496,9 +5512,14 @@ function _getCorticoLogin() {
                           switch (_context15.prev = _context15.next) {
                             case 0:
                               if (e.target.className == 'cortico-btn') {
-                                chrome.storage.local.remove(['jwt_access_token', 'jwt_expired']);
-                                alert("Logged out from cortico, reloading...");
-                                window.location.reload();
+                                if (window.is_dev) {
+                                  localStorage.removeItem('jwt_access_token');
+                                  localStorage.removeItem('jwt_expired');
+                                } else {
+                                  chrome.storage.local.remove(['jwt_access_token', 'jwt_expired']);
+                                }
+
+                                if (!alert("Logged out from cortico, reloading...")) window.location.reload();
                               }
 
                             case 1:
@@ -5602,8 +5623,7 @@ function getCorticoUrlOption() {
 
     if (input.value) {
       localStorage.setItem("clinicname", input.value);
-      alert("Your clinic name has changed, the page will now reload");
-      window.location.reload();
+      if (!alert("Your clinic name has changed, the page will now reload")) window.location.reload();
     }
   });
   return container;
@@ -5667,7 +5687,7 @@ function getResetCacheButton() {
               switch (_context2.prev = _context2.next) {
                 case 0:
                   if (!confirm("Are you sure you want to clear your cache?")) {
-                    _context2.next = 8;
+                    _context2.next = 7;
                     break;
                   }
 
@@ -5676,15 +5696,14 @@ function getResetCacheButton() {
                   return chrome.storage.local.clear();
 
                 case 4:
-                  alert("Successfully reset cache, the page will now reload.");
-                  window.location.reload();
-                  _context2.next = 9;
+                  if (!alert("Successfully reset cache, the page will now reload.")) window.location.reload();
+                  _context2.next = 8;
                   break;
 
-                case 8:
+                case 7:
                   console.log("Clear cache cancelled");
 
-                case 9:
+                case 8:
                 case "end":
                   return _context2.stop();
               }
@@ -7295,9 +7314,15 @@ function _emailPatient() {
 
               if ((err + '').includes("Unauthorized")) {
                 alert("Your credentials have expired. Please login again");
-                chrome.storage.local.set({
-                  "jwt_expired": true
-                });
+
+                if (window.is_dev) {
+                  localStorage.setItem("jwt_expired", true);
+                } else {
+                  chrome.storage.local.set({
+                    "jwt_expired": true
+                  });
+                }
+
                 (0,_modules_cortico_Login_Login__WEBPACK_IMPORTED_MODULE_9__.addLoginForm)(chrome);
                 var loginForm = document.querySelector(".login-form");
                 loginForm.classList.add("show");
