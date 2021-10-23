@@ -2341,6 +2341,7 @@ async function emailPatientEForm(patientInfo, html, token) {
       } else {
         alert(`Sending email failed: ${data.message}`)
       }
+      return data
     })
     .catch((err) => {
       console.error("Cortico: Error sending email: ", err)

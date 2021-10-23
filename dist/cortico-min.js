@@ -7145,6 +7145,8 @@ function _emailPatientEForm() {
               } else {
                 alert("Sending email failed: ".concat(data.message));
               }
+
+              return data;
             }).catch(function (err) {
               console.error("Cortico: Error sending email: ", err);
 
