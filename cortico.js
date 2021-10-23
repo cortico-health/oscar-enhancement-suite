@@ -367,35 +367,37 @@ async function setupPatientEmailButton() {
   const patient_info = await getPatientInfo();
 
   const email_btn = create(`
-  <p style='margin-bottom:2em'>
-    <a id='cortico-email-patient' class='cortico-btn'>Email Patient</a>
-  </p>
-  `);
-  email_btn.addEventListener("click", async (e) => {
-    if (!checkCorticoUrl(e)) return;
+    <p style='margin-bottom:2em'>
+      <a id='cortico-email-patient' class='cortico-btn'>Email Patient</a>
+    </p>`, {
+    events: {
+      "click #cortico-email-patient": async (e) => {
+        if (!checkCorticoUrl(e)) return;
 
-    await loadExtensionStorageValue("jwt_access_token").then(async function (access_token) {
+        await loadExtensionStorageValue("jwt_access_token").then(async function (access_token) {
 
 
-      // copy document and prepare it for printing.
-      const html = document.cloneNode(true);
-      await convertImagesToDataURLs(html)
-      // we need to remove scripts to prevent re-rendering
-      // what the sender sees (one issue is JS may revert images from data URLs)
-      stripScripts(html)
-      // it seems we don't need to remove this as it's already
-      // hidden in the print media CSS embedded in all eForms
-      //let doNotPrintList = html.querySelectorAll(".DoNotPrint")
+          // copy document and prepare it for printing.
+          const html = document.cloneNode(true);
+          await convertImagesToDataURLs(html)
+          // we need to remove scripts to prevent re-rendering
+          // what the sender sees (one issue is JS may revert images from data URLs)
+          stripScripts(html)
+          // it seems we don't need to remove this as it's already
+          // hidden in the print media CSS embedded in all eForms
+          //let doNotPrintList = html.querySelectorAll(".DoNotPrint")
 
-      const patientFormResponse = await emailPatientEForm(
+          const patientFormResponse = await emailPatientEForm(
 
-        patient_info,
-        html.documentElement.outerHTML,
-        access_token
-      );
-      console.log('RSP: ', patientFormResponse)
-    })
-  })
+            patient_info,
+            html.documentElement.outerHTML,
+            access_token
+          );
+          console.log('RSP: ', patientFormResponse)
+        })
+      }
+    }
+  }) // end create.
 
   email_parent.appendChild(email_btn);
 }
@@ -2287,7 +2289,6 @@ async function emailPatientEForm(patientInfo, html, token) {
 
   if (!patientEmail) {
     alert("The patient has no email");
-
     return;
   }
 
@@ -2297,6 +2298,10 @@ async function emailPatientEForm(patientInfo, html, token) {
     "clinic_host": getCorticoUrl().replace(/http.?:\/\//, ''),
     "to": patientEmail,
     "pdf_html": html
+  }
+  const subject = document.querySelector('[name="subject"]')
+  if (subject && subject.value) {
+    data.subject = subject.value
   }
 
   return fetch(url, {
