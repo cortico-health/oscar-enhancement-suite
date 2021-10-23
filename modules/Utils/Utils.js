@@ -48,9 +48,11 @@ export function getNamespace() {
 
 export function getCorticoUrl() {
   // FOR TESTING:
-  //return 'http://localhost';
 
   const clinicName = window.localStorage["clinicname"];
+  if (clinicName === 'localhost') {
+    return 'http://localhost' // No HTTPS
+  }
   let suffix = window.localStorage["customUrlSuffix"] || 'cortico.ca';
 
   if (suffix.charAt(0) === ".") {

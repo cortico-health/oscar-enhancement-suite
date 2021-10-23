@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name     Cortico
-// @version  3.8
+// @version  3.8.1
 // @grant    none
 // ==/UserScript==
 
@@ -178,9 +178,14 @@ const init_schedule = function () {
   // note: this is currently set to 30 seconds, which is enough time (the refresh occurs
   // at 60s). Calling window.stop() too early breaks the Oscar menus ("Inbox" "Msg" "Consultations"
   // "Tickler") that are loaded by ajax
+
+  // This no longer seems necessary.
+  //if (!(window.location + '').includes('casemgmt/forward.jsp')) { // Don't break autosave in eChart
+
   window.setTimeout(window.stop, 10000);
 
   // refresh when idle for 1 minute.
+
   let last_interaction = new Date();
   window.addEventListener("click", (e) => {
     last_interaction = new Date();
@@ -321,53 +326,100 @@ function init_appointment_page() {
   }
 }
 
+function stripScripts(el) {
+  var scripts = el.getElementsByTagName('script');
+  var i = scripts.length;
+  while (i--) {
+    scripts[i].parentNode.removeChild(scripts[i]);
+  }
+}
+
+async function convertImagesToDataURLs(el) {
+
+  // convert bg images to data URL.
+  const bg_images = el.querySelectorAll('img')
+  for (let i = 0; i < bg_images.length; i++) {
+    let bg = bg_images[i]
+    try {
+
+      //let bg = document.getElementById('BGImage')
+      const blob = await fetch(bg.src).then(r => r.blob());
+      const dataUrl = await new Promise(resolve => {
+        let reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.readAsDataURL(blob);
+      });
+      bg.src = dataUrl
+
+    } catch (e) { // some images may have cross origin restrictions.
+      console.warn('failed to convert image: ', bg, e)
+    }
+  }
+}
+
 async function setupPatientEmailButton() {
 
   let is_eform_page = true;
   const clinicName = localStorage["clinicname"];
 
-  const email_parent = 
-    document.querySelector(".DoNotPrint td") || 
-    document.querySelector("#BottomButtons") || 
+  const email_parent =
+    document.querySelector(".DoNotPrint td") ||
+    document.querySelector("#BottomButtons") ||
     document.querySelector("#topbar > form") ||
     document.body
-  console.log("email parent", email_parent)
+
   if (!email_parent) {
     is_eform_page = false;
     const email_parent = document.querySelector("#save div:last-child");
+  }
+  if (!email_parent) {
+    // bail
+    console.warn('Cannot find position for email button.')
+    return
   }
 
   const patient_info = await getPatientInfo();
 
   const email_btn = create(`
-  <p style='margin-bottom:2em'>
-    <a id='cortico-email-patient' class='cortico-btn'>Email Patient</a>
-  </p>
-  `);
-  email_btn.addEventListener("click", async (e) => {
-    if (!checkCorticoUrl(e)) return;
+    <p style='margin-bottom:2em'>
+      <a id='cortico-email-patient' class='cortico-btn'>Email Patient</a>
+    </p>`, {
+    events: {
+      "click #cortico-email-patient": async (e) => {
+        if (!checkCorticoUrl(e)) return;
 
-    email_btn.disabled = true
+        await loadExtensionStorageValue("jwt_access_token").then(async function (access_token) {
 
-    await loadExtensionStorageValue("jwt_access_token").then(async function (access_token) {
-      // copy document and remove unnecessary stuff
-      let html = document.cloneNode(true);
-      let doNotPrintList = html.querySelectorAll(".DoNotPrint")
+          // copy document and prepare it for printing.
+          const html = document.cloneNode(true);
+          await convertImagesToDataURLs(html)
+          // we need to remove scripts to prevent re-rendering
+          // what the sender sees (one issue is JS may revert images from data URLs)
+          stripScripts(html)
+          // it seems we don't need to remove this as it's already
+          // hidden in the print media CSS embedded in all eForms
+          //let doNotPrintList = html.querySelectorAll(".DoNotPrint")
 
-      let patientFormResponse = await emailPatientEForm(
-        patient_info,
-        html.documentElement.outerHTML,
-        access_token
-      );
+          const patientFormResponse = await emailPatientEForm(
+            patient_info,
+            html.documentElement.outerHTML,
+            access_token
+          );
+          console.log('RSP: ', patientFormResponse)
+          if (patientFormResponse.success) {
 
-      if (patientFormResponse) email_btn.disabled = false
-  
-      console.log('RSP: ', patientFormResponse)
-    })
-  })
+            document.getElementById('cortico-email-patient').parentNode.appendChild(
+              create(`<p>${patient_info.email} was sent a <a style='text-decoration:underline' target="_blank" href="${patientFormResponse.preview}">document</a>.</p>`)
+            )
+          }
+        })
+      }
+    }
+  }) // end create.
 
   email_parent.appendChild(email_btn);
 }
+
 
 function delegate(element, event, descendentSelector, callback) {
   element.addEventListener(event, function (e) {
@@ -1755,10 +1807,10 @@ function setupPrescriptionButtons() {
           while (element.className != "apptLink") {
             element = element.previousElementSibling;
           }
-  
+
           var apptTitle = element.attributes.title.textContent;
           var pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle);
-  
+
           localStorage.setItem("currentPharmacyCode", pharmacyCode);
         }
       },
@@ -2263,7 +2315,6 @@ async function emailPatientEForm(patientInfo, html, token) {
 
   if (!patientEmail) {
     alert("The patient has no email");
-
     return;
   }
 
