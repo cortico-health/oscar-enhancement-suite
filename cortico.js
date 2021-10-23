@@ -321,6 +321,37 @@ function init_appointment_page() {
   }
 }
 
+function stripScripts(el) {
+  var scripts = el.getElementsByTagName('script');
+  var i = scripts.length;
+  while (i--) {
+    scripts[i].parentNode.removeChild(scripts[i]);
+  }
+}
+
+async function convertImagesToDataURLs(el) {
+
+  // convert bg images to data URL.
+  const bg_images = el.querySelectorAll('img')
+  for (let i = 0; i < bg_images.length; i++) {
+    let bg = bg_images[i]
+    try {
+
+      //let bg = document.getElementById('BGImage')
+      const blob = await fetch(bg.src).then(r => r.blob());
+      const dataUrl = await new Promise(resolve => {
+        let reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.readAsDataURL(blob);
+      });
+      bg.src = dataUrl
+
+    } catch (e) { // some images may have cross origin restrictions.
+      console.warn('failed to convert image: ', bg, e)
+    }
+  }
+}
+
 async function setupPatientEmailButton() {
 
   let is_eform_page = true;
@@ -344,11 +375,20 @@ async function setupPatientEmailButton() {
     if (!checkCorticoUrl(e)) return;
 
     await loadExtensionStorageValue("jwt_access_token").then(async function (access_token) {
-      // copy document and remove unnecessary stuff
-      let html = document.cloneNode(true);
-      let doNotPrintList = html.querySelectorAll(".DoNotPrint")
 
-      let patientFormResponse = await emailPatientEForm(
+
+      // copy document and prepare it for printing.
+      const html = document.cloneNode(true);
+      await convertImagesToDataURLs(html)
+      // we need to remove scripts to prevent re-rendering
+      // what the sender sees (one issue is JS may revert images from data URLs)
+      stripScripts(html)
+      // it seems we don't need to remove this as it's already
+      // hidden in the print media CSS embedded in all eForms
+      //let doNotPrintList = html.querySelectorAll(".DoNotPrint")
+
+      const patientFormResponse = await emailPatientEForm(
+
         patient_info,
         html.documentElement.outerHTML,
         access_token
@@ -2251,6 +2291,8 @@ async function emailPatientEForm(patientInfo, html, token) {
     return;
   }
 
+  patientEmail = 'clark@countable.ca'
+
   let data = {
     "clinic_host": getCorticoUrl().replace(/http.?:\/\//, ''),
     "to": patientEmail,
@@ -2270,7 +2312,11 @@ async function emailPatientEForm(patientInfo, html, token) {
     .then(response => response.json())
     .then((data) => {
       if (data.success) {
-        alert(`Successfully emailed PDF to ${patientEmail}.`)
+
+        document.getElementById('cortico-email-patient').parentNode.appendChild(
+          create(`<p>${patientEmail} was sent a <a style='text-decoration:underline' target="_blank" href="${data.preview}">document</a>.</p>`)
+        )
+
       } else {
         alert(`Sending email failed: ${data.message}`)
       }
