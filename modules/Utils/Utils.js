@@ -48,9 +48,11 @@ export function getNamespace() {
 
 export function getCorticoUrl() {
   // FOR TESTING:
-  //return 'http://localhost';
 
   const clinicName = window.localStorage["clinicname"];
+  if (clinicName === 'localhost') {
+    return 'http://localhost' // No HTTPS
+  }
   let suffix = window.localStorage["customUrlSuffix"] || 'cortico.ca';
 
   if (suffix.charAt(0) === ".") {
@@ -149,10 +151,19 @@ export function htmlToElement(html) {
 }
 
 export function getDemographicNo(apptUrl) {
-  var searchParams = new URLSearchParams(apptUrl);
-  return (
-    searchParams.get("demographic_no") || searchParams.get("demographicNo")
-  );
+  if (apptUrl) {
+    var searchParams = new URLSearchParams(apptUrl);
+    return (
+      searchParams.get("demographic_no") || searchParams.get("demographicNo") ||
+      searchParams.get("functionid")
+    );
+  } else { // try several options
+    let demographicNo = getDemographicNo(window.location.search);
+    if (!demographicNo && window.opener) {
+      demographicNo = getDemographicNo(window.opener.location.search)
+    }
+    return demographicNo
+  }
 }
 
 export function getAppointmentNo(apptUrl) {

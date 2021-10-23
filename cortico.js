@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name     Cortico
-// @version  3.8
+// @version  3.8.1
 // @grant    none
 // ==/UserScript==
 
@@ -134,7 +134,9 @@ const init_cortico = function () {
     route.indexOf("/eform/efmshowform_data.jsp") > -1 ||
     route.indexOf("/casemgmt/forward.jsp") > -1
   ) {
-    setupPatientEmailButton();
+    setupEFormPage();
+  } else if (route.indexOf("dms/documentReport.jsp") > -1) {
+    setupDocumentPage();
   } else if (route.indexOf("/oscarRx/ViewScript2.jsp") > -1) {
     // We need to determine first if the prescription is "delivery"
     const currentPharmacyCode = localStorage.getItem("currentPharmacyCode");
@@ -178,9 +180,14 @@ const init_schedule = function () {
   // note: this is currently set to 30 seconds, which is enough time (the refresh occurs
   // at 60s). Calling window.stop() too early breaks the Oscar menus ("Inbox" "Msg" "Consultations"
   // "Tickler") that are loaded by ajax
+
+  // This no longer seems necessary.
+  //if (!(window.location + '').includes('casemgmt/forward.jsp')) { // Don't break autosave in eChart
+
   window.setTimeout(window.stop, 10000);
 
   // refresh when idle for 1 minute.
+
   let last_interaction = new Date();
   window.addEventListener("click", (e) => {
     last_interaction = new Date();
@@ -352,16 +359,75 @@ async function convertImagesToDataURLs(el) {
   }
 }
 
-async function setupPatientEmailButton() {
+async function setupDocumentPage() {
+
+  const pdf_links =
+    document.querySelectorAll("#privateDocs td:nth-child(2) a");
+
+
+  const patient_info = await getPatientInfo();
+
+  pdf_links.forEach(function (pdf_link) {
+
+    if (pdf_link.href.indexOf('?sort') > -1) return;
+
+    const email_btn = create(`<a class='cortico-btn cortico-btn-small' style='display:inline'> -&gt; PT</a>`, {
+      events: {
+        "click": async (e) => {
+          if (!checkCorticoUrl(e)) return;
+
+          await loadExtensionStorageValue("jwt_access_token").then(async function (access_token) {
+
+            const pdf_link_ext = pdf_link.outerHTML.replace(/\&amp;/g, "&").match(/\'(Manage[^\']+)\'/)[1]
+            console.log(pdf_link_ext)
+
+            const blob = await fetch(pdf_link_ext).then(r => r.blob());
+            const dataUrl = await new Promise(resolve => {
+              let reader = new FileReader();
+              reader.onload = () => resolve(reader.result);
+              reader.readAsDataURL(blob);
+            });
+
+            const patientFormResponse = await emailPatient(
+              patient_info,
+              access_token,
+              { attachment: dataUrl }
+            );
+            console.log('RSP: ', patientFormResponse)
+            if (patientFormResponse.success) {
+              document.querySelector('.documentLists').appendChild(
+                create(`<p>${patient_info.email} was sent a <a style='text-decoration:underline' target="_blank" href="${patientFormResponse.preview}">document</a>.</p>`)
+              )
+            }
+          })
+        }
+      }
+    }) // end create.
+
+    pdf_link.parentNode.appendChild(email_btn);
+  })
+
+}
+
+async function setupEFormPage() {
 
   let is_eform_page = true;
   const clinicName = localStorage["clinicname"];
 
-  const email_parent = document.querySelector(".DoNotPrint td")
-    || document.querySelector("#BottomButtons")
+  const email_parent =
+    document.querySelector(".DoNotPrint td") ||
+    document.querySelector("#BottomButtons") ||
+    document.querySelector("#topbar > form") ||
+    document.body
+
   if (!email_parent) {
     is_eform_page = false;
     const email_parent = document.querySelector("#save div:last-child");
+  }
+  if (!email_parent) {
+    // bail
+    console.warn('Cannot find position for email button.')
+    return
   }
 
   const patient_info = await getPatientInfo();
@@ -376,7 +442,6 @@ async function setupPatientEmailButton() {
 
         await loadExtensionStorageValue("jwt_access_token").then(async function (access_token) {
 
-
           // copy document and prepare it for printing.
           const html = document.cloneNode(true);
           await convertImagesToDataURLs(html)
@@ -387,13 +452,18 @@ async function setupPatientEmailButton() {
           // hidden in the print media CSS embedded in all eForms
           //let doNotPrintList = html.querySelectorAll(".DoNotPrint")
 
-          const patientFormResponse = await emailPatientEForm(
-
+          const patientFormResponse = await emailPatient(
             patient_info,
-            html.documentElement.outerHTML,
-            access_token
+            access_token,
+            { html: html.documentElement.outerHTML }
           );
           console.log('RSP: ', patientFormResponse)
+          if (patientFormResponse.success) {
+
+            document.getElementById('cortico-email-patient').parentNode.appendChild(
+              create(`<p>${patient_info.email} was sent a <a style='text-decoration:underline' target="_blank" href="${patientFormResponse.preview}">document</a>.</p>`)
+            )
+          }
         })
       }
     }
@@ -458,6 +528,10 @@ const init_styles = function () {
   border-color:#5b6ce2;
   color: #5b6ce2;
   text-decoration:none
+  }
+  .cortico-btn-small {
+    height: auto;
+    padding: 2px;
   }
   .cortico-input {
   font-size: 16px;
@@ -1415,10 +1489,14 @@ async function checkAllEligibility() {
 
       let verified = false;
 
-      if (
+      if (lowerCaseText.includes("this is not an insured benefit")) {
+        verified = "uninsured";
+        console.log("Patient not insured")
+      } else if (
         (!lowerCaseText.includes("failure-phn") &&
           lowerCaseText.includes("success")) ||
         lowerCaseText.includes("health card passed validation") ||
+        lowerCaseText.includes("patient eligible") ||
         requestSuccess
       ) {
         plusSignAppointments(demographic_no);
@@ -1774,23 +1852,26 @@ function getPharmacyCodeFromReasonOrNotes(textContent) {
 
 function setupPrescriptionButtons() {
   const providerSchedule = document.querySelector("#providerSchedule");
-  providerSchedule.addEventListener(
-    "click",
-    function (e) {
-      if (e.target.matches('a[title="Prescriptions"]')) {
-        var element = e.target;
-        while (element.className != "apptLink") {
-          element = element.previousElementSibling;
+
+  if (providerSchedule) {
+    providerSchedule.addEventListener(
+      "click",
+      function (e) {
+        if (e.target.matches('a[title="Prescriptions"]')) {
+          var element = e.target;
+          while (element.className != "apptLink") {
+            element = element.previousElementSibling;
+          }
+
+          var apptTitle = element.attributes.title.textContent;
+          var pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle);
+
+          localStorage.setItem("currentPharmacyCode", pharmacyCode);
         }
-
-        var apptTitle = element.attributes.title.textContent;
-        var pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle);
-
-        localStorage.setItem("currentPharmacyCode", pharmacyCode);
-      }
-    },
-    false
-  );
+      },
+      false
+    );
+  }
 }
 
 function sendPatientPrescriptionNotification() {
@@ -1798,7 +1879,7 @@ function sendPatientPrescriptionNotification() {
   const url = `${getCorticoUrl()}/notify-prescription/`;
 
   var formData = new FormData();
-  formData.append("demographic_no", getDemographicFromLocation());
+  formData.append("demographic_no", getDemographicNo());
   formData.append("pharmacy", localStorage.getItem("preferredPharmacy"));
 
   const data = new URLSearchParams(formData);
@@ -1866,7 +1947,7 @@ async function setupPreferredPharmacy(code, demographic_no) {
   if (faxNumber) faxNumber = formatNumber(faxNumber);
   var demographicNo = demographic_no;
   if (!demographic_no) {
-    demographicNo = getDemographicFromLocation();
+    demographicNo = getDemographicNo();
   }
 
   const currPharmacyResults = await getCurrentPharmacy(demographicNo);
@@ -2021,12 +2102,6 @@ async function getDiagnosticFromCortico(appt_no, notes, token) {
       alert("Failed to fetch data. There might be a problem with Cortico or the patient responses do not exist")
     }
   });
-}
-
-function getDemographicFromLocation() {
-  const routeParams = new URLSearchParams(window.location.search);
-
-  return routeParams.get("demographicNo");
 }
 
 async function setupPreferredPharmacies() {
@@ -2242,6 +2317,7 @@ async function init_medium_option() {
 
 
 async function getPatientInfo(demographicNo) {
+  console.log('demo #', demographicNo)
   const result = await getDemographicPageResponse(demographicNo);
   const text = await result.text();
 
@@ -2269,8 +2345,7 @@ function getDemographicPageResponse(demographic) {
 
   const demographicNo =
     demographic ||
-    getDemographicNo(window.location.search) ||
-    getDemographicNo(window.opener.location.search);
+    getDemographicNo();
 
   if (!demographicNo) {
     console.trace();
@@ -2283,7 +2358,7 @@ function getDemographicPageResponse(demographic) {
 }
 
 
-async function emailPatientEForm(patientInfo, html, token) {
+async function emailPatient(patientInfo, token, payload) {
   let url = getCorticoUrl() + "/api/plug-in/email-form/"
   let patientEmail = patientInfo.email || null
 
@@ -2297,7 +2372,11 @@ async function emailPatientEForm(patientInfo, html, token) {
   let data = {
     "clinic_host": getCorticoUrl().replace(/http.?:\/\//, ''),
     "to": patientEmail,
-    "pdf_html": html
+  }
+  if (payload.html) {
+    data.pdf_html = payload.html
+  } else if (payload.attachment) {
+    data.attachment = payload.attachment
   }
   const subject = document.querySelector('[name="subject"]')
   if (subject && subject.value) {
@@ -2316,15 +2395,10 @@ async function emailPatientEForm(patientInfo, html, token) {
   }).then(handleErrors)
     .then(response => response.json())
     .then((data) => {
-      if (data.success) {
-
-        document.getElementById('cortico-email-patient').parentNode.appendChild(
-          create(`<p>${patientEmail} was sent a <a style='text-decoration:underline' target="_blank" href="${data.preview}">document</a>.</p>`)
-        )
-
-      } else {
+      if (!data.success) {
         alert(`Sending email failed: ${data.message}`)
       }
+      return data
     })
     .catch((err) => {
       console.error("Cortico: Error sending email: ", err)
@@ -2343,7 +2417,11 @@ async function emailPatientEForm(patientInfo, html, token) {
 
 function handleErrors(response) {
   if (!response.ok) {
-    throw Error(response.statusText);
+    if (response.status === 401) {
+      throw Error("Unauthorized")
+    } else {
+      throw Error(response.statusText);
+    }
   }
 
   return response;
