@@ -28,7 +28,7 @@ function Notification({
       `}
     >
       <div
-        className={`tw-bg-red-400 tw-rounded-md tw-shadow-lg tw-mb-10 tw-inline-block tw-font-sans ${
+        className={`tw-rounded-md tw-shadow-lg tw-mb-10 tw-inline-block tw-font-sans tw-min-w-[300px] ${
           error ? "tw-bg-red-500" : "tw-bg-cortico-blue"
         }`}
       >

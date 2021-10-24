@@ -1,10 +1,10 @@
 import { render } from "preact";
 import { forwardRef } from "preact/compat";
 import corticoIcon from "../../resources/icons/96x96.png";
-import { useState, useRef } from "preact/hooks";
+import { useState, useRef, useEffect } from "preact/hooks";
 import { getCorticoUrl, loadExtensionStorageValue } from "../Utils/Utils";
 import Notification from "../Notifications/Notification";
-function Messenger() {
+function Messenger(patient) {
   const container = document.body;
 
   function Header({ close, ...props }) {
@@ -53,8 +53,9 @@ function Messenger() {
           <p className="tw-text-xs">To</p>
         </div>
         <div className="tw-pl-2">
-          <p className="tw-text-xs tw-text-opacity-80 text-gray-700 tw-tracking-wider tw-rounded-xl tw-p-2">
-            sample@email.com
+          <p className="tw-text-xs tw-text-opacity-80 text-gray-700 tw-tracking-wider tw-rounded-xl tw-p-2 tw-break-words">
+            {[patient["First Name"], patient["Last Name"]].join(" ")}(
+            {patient.email})
           </p>
         </div>
       </div>
@@ -141,17 +142,23 @@ function Messenger() {
     );
   }
 
-  function Content() {
+  function Content({ patient, ...props }) {
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const [messageInfo, setMessageInfo] = useState({
       title: null,
       content: null,
     });
+    const [email, setEmail] = useState("aaron@countable.ca");
     const [showNotification, setShowNotification] = useState(false);
-    const email = "aaron@countable.ca";
     const subject = useRef();
     const message = useRef();
+
+    useEffect(() => {
+      if (patient?.email) {
+        setEmail(patient.email);
+      }
+    }, [patient?.email]);
 
     const handleOpen = (e) => {
       e.preventDefault();
@@ -212,7 +219,9 @@ function Messenger() {
             console.log("Response", response);
             setMessageInfo({
               title: "Success",
-              content: response.message,
+              content:
+                response.message ||
+                `Message successfully sent to ${patient?.email}`,
             });
           })
           .catch((error) => {
@@ -326,7 +335,7 @@ function Messenger() {
     );
   }
 
-  return render(<Content />, container);
+  return render(<Content patient={patient} />, container);
 }
 
 export default Messenger;

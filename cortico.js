@@ -147,7 +147,7 @@ const init_cortico = async function () {
     if (route.indexOf("/casemgmt/forward.jsp") > -1) {
       const patient_info = await getPatientInfo();
       console.log("Patient Info", patient_info);
-      Messenger();
+      Messenger(patient_info);
     }
   } else if (route.indexOf("/oscarRx/ViewScript2.jsp") > -1) {
     // We need to determine first if the prescription is "delivery"
