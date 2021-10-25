@@ -23,7 +23,7 @@ function Notification({
 
   return (
     <div
-      className={`tw-fixed tw-bottom-0 tw-z-10001 tw-left-0 tw-right-0 tw-transition-transform tw-duration-300 tw-ease-in-out tw-flex tw-justify-center tw-w-full tw-p-2
+      className={`tw-fixed tw-bottom-0 tw-z-10001 tw-left-[50%] tw-translate-x-[-50%] tw-transition-transform tw-duration-300 tw-ease-in-out tw-flex tw-justify-center tw-w-full tw-p-2
       ${open ? "tw-translate-y-0" : "tw-translate-y-[100%]"}
       `}
     >

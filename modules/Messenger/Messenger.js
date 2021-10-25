@@ -54,6 +54,14 @@ function Messenger(patient) {
       setOpen(true);
     };
 
+    const promptLogin = (e) => {
+      setMessageInfo({
+        title: "Log In",
+        content: "Please log in to use this service",
+      });
+      setShowNotification(true);
+    };
+
     const handleClose = (e) => {
       e.preventDefault();
       setOpen(false);
@@ -169,7 +177,7 @@ function Messenger(patient) {
           </form>
         </div>
         <div className="tw-fixed tw-bottom-5 tw-right-5 tw-z-5000 tw-shadow-xl">
-          <MessengerWidget open={handleOpen} />
+          <MessengerWidget open={handleOpen} login={promptLogin} />
         </div>
         <Notification
           open={showNotification}
