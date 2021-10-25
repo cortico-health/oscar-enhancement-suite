@@ -1,146 +1,16 @@
 import { render } from "preact";
-import { forwardRef } from "preact/compat";
 import corticoIcon from "../../resources/icons/96x96.png";
 import { useState, useRef, useEffect } from "preact/hooks";
 import { getCorticoUrl, loadExtensionStorageValue } from "../Utils/Utils";
 import Notification from "../Notifications/Notification";
+import Chat from "./ChatInput";
+import Subject from "./SubjectInput";
+import Header from "./Header";
+import To from "./ToInput";
+import Loader from "./Loader";
+
 function Messenger(patient) {
   const container = document.body;
-
-  function Header({ close, ...props }) {
-    return (
-      <div className="tw-flex tw-rounded-t-md tw-items-top tw-border tw-bg-cortico-blue tw-p-12 tw-shadow-xl">
-        <div className="tw-flex-1" onClick={close}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="tw-h-6 tw-w-6 tw-text-white tw-cursor-pointer tw-shadow-xl"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M14 5l7 7m0 0l-7 7m7-7H3"
-            />
-          </svg>
-        </div>
-        <div className="tw-flex-5">
-          <div className="tw-text-white tw-font-light">Messenger</div>
-          <p className="tw-text-sm tw-text-white tw-mt-2 tw-text-opacity-80 tw-leading-5">
-            Send a message to the patient using this service
-          </p>
-          <div className="tw-mt-3 tw-bg-white tw-inline-block tw-py-1 tw-px-2 tw-rounded-md tw-shadow-2xl">
-            <img
-              className="tw-w-3 tw-h-3 tw-inline-block"
-              src={corticoIcon}
-              alt="Cortico"
-            />
-            <p className="tw-ml-1 tw-inline-block tw-text-xs tw-text-cortico-blue tw-font-medium">
-              Powered By Cortico
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  function To() {
-    return (
-      <div className="tw-flex tw-items-center">
-        <div>
-          <p className="tw-text-xs">To</p>
-        </div>
-        <div className="tw-pl-2">
-          <p className="tw-text-xs tw-text-opacity-80 text-gray-700 tw-tracking-wider tw-rounded-xl tw-p-2 tw-break-words">
-            {[patient["First Name"], patient["Last Name"]].join(" ")}(
-            {patient.email})
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  const Subject = forwardRef((props, ref) => {
-    return (
-      <div className="">
-        <div>
-          <input
-            ref={ref}
-            type="text"
-            class="
-                    tw-mt-0
-                    tw-block
-                    tw-w-full
-                    tw-px-4
-                    tw-py-2
-                    tw-border-0 tw-border-btw-tracking-wider
-                    tw-focus:border-indigo-300 
-                    tw-focus:ring 
-                    tw-focus:ring-indigo-200 
-                    tw-focus:ring-opacity-50 
-                    tw-text-sm tw-text-gray-700 tw-font-sans
-                  "
-            placeholder="Subject"
-          />
-        </div>
-      </div>
-    );
-  });
-
-  const Chat = forwardRef((props, ref) => {
-    return (
-      <div className="">
-        <textarea
-          ref={ref}
-          class="
-                    tw-form-textarea
-                    form-textarea
-                    tw-block
-                    tw-w-full
-                    tw-border-0
-                    tw-focus:border-indigo-300 
-                    tw-focus:ring 
-                    tw-focus:ring-indigo-200 
-                    tw-focus:ring-opacity-50 
-                    tw-resize-none
-                    tw-text-sm
-                    tw-text-gray-600
-                    tw-p-4
-                    tw-font-sans
-                  "
-          rows="8"
-          placeholder="Enter message here"
-        ></textarea>
-      </div>
-    );
-  });
-
-  function Loader() {
-    return (
-      <svg
-        className="tw-animate-spin tw--ml-1 tw-mr-3 tw-h-5 tw-w-5 tw-text-white tw-inline-block"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-      >
-        <circle
-          className="tw-opacity-25"
-          cx="12"
-          cy="12"
-          r="10"
-          stroke="currentColor"
-          stroke-width="4"
-        ></circle>
-        <path
-          className="tw-opacity-75"
-          fill="currentColor"
-          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-        ></path>
-      </svg>
-    );
-  }
 
   function Content({ patient, ...props }) {
     const [loading, setLoading] = useState(false);
@@ -178,7 +48,6 @@ function Messenger(patient) {
 
     const handleErrors = async (response) => {
       const result = await response.json();
-      console.log("Error Result Object", result);
       if (!response.ok) {
         if (response.status === 401) {
           throw new MessageException(result && result.detail);
@@ -248,7 +117,7 @@ function Messenger(patient) {
           <form onSubmit={handleSubmit}>
             <Header close={handleClose} />
             <div className="tw-px-4 tw-py-2">
-              <To />
+              <To patient={patient} />
             </div>
             <hr className="tw-opacity-10" />
             <div className="tw-w-full">
