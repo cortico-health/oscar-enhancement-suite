@@ -6,8 +6,36 @@ import Subject from "./SubjectInput";
 import Header from "./Header";
 import To from "./ToInput";
 import Loader from "./Loader";
-import { SendIcon } from "../Icons/HeroIcons";
+import { MailIcon } from "../Icons/HeroIcons";
 import { getCorticoUrl } from "../Utils/Utils";
+
+function EncounterOption() {
+  return (
+    <label class="tw-inline-flex tw-items-center">
+      <input
+        type="checkbox"
+        class="
+            tw-h-5
+            tw-w-5
+            tw-form-checkbox
+            form-checkbox
+            tw-rounded
+            tw-text-indigo-600
+            tw-shadow-sm
+            tw-focus:border-cortico-blue
+            tw-focus:ring
+            tw-focus:ring-offset-0
+            tw-focus:ring-indigo-200
+            tw-focus:ring-opacity-50
+          "
+        checked
+      />
+      <span class="tw-ml-2 tw-text-sm tw-text-gray-600">
+        Copy Message To Encounter
+      </span>
+    </label>
+  );
+}
 
 function MessengerWindow({ onSubmit, close, patient, loading, ...props }) {
   const [email, setEmail] = useState("aaron@countable.ca");
@@ -46,9 +74,12 @@ function MessengerWindow({ onSubmit, close, patient, loading, ...props }) {
       <div>
         <Chat ref={message} />
       </div>
-      <hr className="tw-opacity-10" />
+      <hr className="tw-opacity-40" />
+      <div className="tw-p-4">
+        <EncounterOption />
+      </div>
 
-      <div className="tw-flex tw-justify-end tw-p-4">
+      <div className="tw-flex tw-justify-end tw-px-4 tw-py-3 tw-bg-gray-100">
         <button
           disabled={loading}
           className="tw-bg-cortico-blue tw-px-3 tw-py-2 tw-rounded-md tw-text-white tw-text-sm tw-flex tw-items-center"
@@ -60,8 +91,8 @@ function MessengerWindow({ onSubmit, close, patient, loading, ...props }) {
             </span>
           ) : (
             <span className="tw-flex tw-items-center">
-              <span>Send Message</span>
-              <SendIcon className="tw-h-4 tw-w-4 tw-ml-2" />
+              <span>Send Email</span>
+              <MailIcon className="tw-h-4 tw-w-4 tw-ml-2" />
             </span>
           )}
         </button>

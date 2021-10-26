@@ -21,11 +21,11 @@ function MessengerWidget({ open, login, loggedIn, ...props }) {
       <MessageIcon className="tw-text-white tw-h-10 tw-w-10 tw-mx-auto" />
       {loggedIn === true ? (
         <p className="tw-text-white tw-text-opacity-80 tw-text-sm tw-text-center tw-mt-2">
-          Message Patient
+          Email Patient
         </p>
       ) : (
         <p className="tw-text-white tw-text-opacity-80 tw-text-sm tw-text-center tw-mt-2">
-          Login To Send Messages
+          Login To Send Email
         </p>
       )}
 
