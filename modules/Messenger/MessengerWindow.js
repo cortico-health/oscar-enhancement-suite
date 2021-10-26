@@ -7,7 +7,7 @@ import Subject from "./SubjectInput";
 import Header from "./Header";
 import To from "./ToInput";
 import Loader from "./Loader";
-import { MailIcon } from "../Icons/HeroIcons";
+import { MailIcon, TextIcon } from "../Icons/HeroIcons";
 import { getCorticoUrl } from "../Utils/Utils";
 
 const EncounterOption = forwardRef((props, ref) => {
@@ -40,6 +40,7 @@ const EncounterOption = forwardRef((props, ref) => {
 
 function MessengerWindow({ onSubmit, close, patient, loading, ...props }) {
   const [email, setEmail] = useState("aaron@countable.ca");
+  const [scheme, setScheme] = useState("email");
   const subject = useRef();
   const message = useRef();
   const encounter = useRef();
@@ -62,6 +63,7 @@ function MessengerWindow({ onSubmit, close, patient, loading, ...props }) {
 
     const opts = {
       encounter: encounter.current.checked,
+      scheme,
     };
     onSubmit(data, opts);
   };
@@ -87,8 +89,19 @@ function MessengerWindow({ onSubmit, close, patient, loading, ...props }) {
 
       <div className="tw-flex tw-justify-end tw-px-4 tw-py-3 tw-bg-gray-100">
         <button
+          disabled={true}
+          className="tw-bg-green-600 tw-px-3 tw-py-2 tw-rounded-md tw-text-white tw-text-sm tw-flex tw-items-center tw-mr-2 tw-disabled:opacity-50 tw-opacity-50"
+          onClick={setScheme("text")}
+        >
+          <span className="tw-flex tw-items-center">
+            <span>Send Text</span>
+            <TextIcon className="tw-h-4 tw-w-4 tw-ml-2" />
+          </span>
+        </button>
+        <button
           disabled={loading}
           className="tw-bg-cortico-blue tw-px-3 tw-py-2 tw-rounded-md tw-text-white tw-text-sm tw-flex tw-items-center"
+          onClick={setScheme("email")}
         >
           {loading === true ? (
             <span class="tw-flex">

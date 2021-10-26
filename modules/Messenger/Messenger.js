@@ -61,7 +61,7 @@ function Messenger(patient) {
 
       const token = await loadExtensionStorageValue("jwt_access_token");
       if (token) {
-        sendEmailForm(data, token)
+        sendMessage(data, token)
           .then(handleErrors)
           .then((response) => {
             setMessageInfo({
