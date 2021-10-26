@@ -1883,6 +1883,7 @@ async function setupPreferredPharmacy(code, demographic_no) {
   const corticoPharmacyText = JSON.parse(respText);
   var faxNumber = corticoPharmacyText[0]["fax_number"] || null;
   var searchTerm = corticoPharmacyText[0]["name"] || null;
+  var fullPharmacyName = searchTerm;
 
   // only use the first word on the pharmacy name to search for list
   // then remove letter or number
@@ -1954,7 +1955,7 @@ async function setupPreferredPharmacy(code, demographic_no) {
         else console.log("Updating preferred pharmacy");
       }
     } else {
-      const msg = `Customer pharmacy ${searchTerm} does not exist in your Oscar pharmacy database!`;
+      const msg = `Customer pharmacy ${fullPharmacyName} does not exist in your Oscar pharmacy database!`;
       storePharmaciesFailureCache(demographicNo, msg);
       displayPharmaciesFailure(demographicNo, msg);
       if (isRxPage) alert(msg);
