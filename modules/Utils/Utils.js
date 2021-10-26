@@ -47,9 +47,11 @@ export function getNamespace() {
 
 export function getCorticoUrl() {
   // FOR TESTING:
-  //return 'http://localhost';
 
   const clinicName = window.localStorage["clinicname"];
+  if (clinicName === "localhost") {
+    return "http://localhost"; // No HTTPS
+  }
   let suffix = window.localStorage["customUrlSuffix"] || "cortico.ca";
 
   if (suffix.charAt(0) === ".") {
@@ -131,9 +133,13 @@ export function create(_element, options, ...children) {
 
 export function loadExtensionStorageValue(key) {
   return new Promise(function (resolve, reject) {
-    chrome.storage.local.get(key, function (result) {
-      resolve(result[key]);
-    });
+    if (window.is_dev) {
+      resolve(window.localStorage.getItem(key));
+    } else {
+      chrome.storage.local.get(key, function (result) {
+        resolve(result[key]);
+      });
+    }
   });
 }
 
@@ -146,10 +152,21 @@ export function htmlToElement(html) {
 }
 
 export function getDemographicNo(apptUrl) {
-  var searchParams = new URLSearchParams(apptUrl);
-  return (
-    searchParams.get("demographic_no") || searchParams.get("demographicNo")
-  );
+  if (apptUrl) {
+    var searchParams = new URLSearchParams(apptUrl);
+    return (
+      searchParams.get("demographic_no") ||
+      searchParams.get("demographicNo") ||
+      searchParams.get("functionid")
+    );
+  } else {
+    // try several options
+    let demographicNo = getDemographicNo(window.location.search);
+    if (!demographicNo && window.opener) {
+      demographicNo = getDemographicNo(window.opener.location.search);
+    }
+    return demographicNo;
+  }
 }
 
 export function getAppointmentNo(apptUrl) {
@@ -197,7 +214,11 @@ export function checkCorticoUrl(event) {
 }
 
 export function showLoginForm() {
-  chrome.storage.local.set({ jwt_expired: true });
+  if (window.is_dev) {
+    window.localStoraage.setItem("jwt_expired", true);
+  } else {
+    chrome.storage.local.set({ jwt_expired: true });
+  }
   alert("Your credentials have expired. Please login again");
 
   addLoginForm(chrome);
