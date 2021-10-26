@@ -38,6 +38,7 @@ function Messenger(patient) {
       title: null,
       content: null,
     });
+
     const [email, setEmail] = useState("aaron@countable.ca");
     const [showNotification, setShowNotification] = useState(false);
     const subject = useRef();

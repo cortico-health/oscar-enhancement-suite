@@ -956,9 +956,9 @@ function MessengerWidget(_ref) {
     onClick: handleClick
   }, h("div", {
     className: "tw-absolute tw--top-1 tw--left-1 text-white tw-bg-gray-100 tw-rounded-full tw-p-1 tw-shadow-md tw-animate-bounce tw-border-cortico-blue"
-  }, h(_Icons_HeroIcons__WEBPACK_IMPORTED_MODULE_4__.InfoIcon, {
+  }, loggedIn === true ? h(_Icons_HeroIcons__WEBPACK_IMPORTED_MODULE_4__.InfoIcon, {
     className: "tw-h-4 tw-w-4 tw-text-cortico-blue"
-  })), h("svg", {
+  }) : ""), h("svg", {
     xmlns: "http://www.w3.org/2000/svg",
     class: "tw-text-white tw-h-10 tw-w-10 tw-mx-auto",
     fill: "none",

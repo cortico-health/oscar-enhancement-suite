@@ -13,7 +13,11 @@ function MessengerWidget({ open, login, loggedIn, ...props }) {
       onClick={handleClick}
     >
       <div className="tw-absolute tw--top-1 tw--left-1 text-white tw-bg-gray-100 tw-rounded-full tw-p-1 tw-shadow-md tw-animate-bounce tw-border-cortico-blue">
-        <InfoIcon className="tw-h-4 tw-w-4 tw-text-cortico-blue" />
+        {loggedIn === true ? (
+          <InfoIcon className="tw-h-4 tw-w-4 tw-text-cortico-blue" />
+        ) : (
+          ""
+        )}
       </div>
       <svg
         xmlns="http://www.w3.org/2000/svg"
