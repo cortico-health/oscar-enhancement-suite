@@ -691,7 +691,7 @@ function MessengerWindow(_ref) {
       loading = _ref.loading,
       props = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__["default"])(_ref, _excluded);
 
-  var _useState = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useState)("aaron@countable.ca"),
+  var _useState = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useState)(null),
       _useState2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState, 2),
       email = _useState2[0],
       setEmail = _useState2[1];
@@ -699,7 +699,8 @@ function MessengerWindow(_ref) {
   var subject = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useRef)();
   var message = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useRef)();
   (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useEffect)(function () {
-    if (patient !== null && patient !== void 0 && patient.email) {//setEmail(patient.email);
+    if (patient !== null && patient !== void 0 && patient.email) {
+      setEmail(patient.email);
     }
   }, [patient === null || patient === void 0 ? void 0 : patient.email]);
 

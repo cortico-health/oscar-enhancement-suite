@@ -10,13 +10,13 @@ import { SendIcon } from "../Icons/HeroIcons";
 import { getCorticoUrl } from "../Utils/Utils";
 
 function MessengerWindow({ onSubmit, close, patient, loading, ...props }) {
-  const [email, setEmail] = useState("aaron@countable.ca");
+  const [email, setEmail] = useState(null);
   const subject = useRef();
   const message = useRef();
 
   useEffect(() => {
     if (patient?.email) {
-      //setEmail(patient.email);
+      setEmail(patient.email);
     }
   }, [patient?.email]);
 
