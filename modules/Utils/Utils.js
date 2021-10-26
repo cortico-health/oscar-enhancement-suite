@@ -226,3 +226,11 @@ export function showLoginForm() {
   const loginForm = document.querySelector(".login-form");
   loginForm.classList.add("show");
 }
+
+export async function isLoggedIn() {
+  if (window.is_dev) {
+    return window.localStorage.getItem("jwt_username") ? true : false;
+  } else {
+    return (await loadExtensionStorageValue("jwt_username")) ? true : false;
+  }
+}

@@ -34,7 +34,6 @@ import { showLoginForm } from "./modules/Utils/Utils";
 import "./index.css";
 import { Modal } from "./modules/Modal/Modal";
 import Messenger from "./modules/Messenger/Messenger";
-import Dashboard from "./modules/cortico/Dashboard";
 const CORTICO = {}; // container for global state. Use this rather than `window`
 import Disclaimer from "./modules/cortico/Disclaimer";
 // manually update this variable with the version in manifest.json
@@ -42,7 +41,7 @@ const version = 3.8;
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
 
-window.is_dev = process.env.NODE_ENV === "development" ? true : false
+window.is_dev = process.env.NODE_ENV === "development" ? true : false;
 const cortico_media = ["phone", "clinic", "virtual", "", "quiet"];
 
 const init_cortico = async function () {
@@ -144,7 +143,6 @@ const init_cortico = async function () {
     route.indexOf("/eform/efmshowform_data.jsp") > -1 ||
     route.indexOf("/casemgmt/forward.jsp") > -1
   ) {
-    setupPatientEmailButton();
     if (route.indexOf("/casemgmt/forward.jsp") > -1) {
       const patient_info = await getPatientInfo();
       console.log("Patient Info", patient_info);
@@ -338,7 +336,7 @@ function init_appointment_page() {
 }
 
 function stripScripts(el) {
-  var scripts = el.getElementsByTagName('script');
+  var scripts = el.getElementsByTagName("script");
   var i = scripts.length;
   while (i--) {
     scripts[i].parentNode.removeChild(scripts[i]);
@@ -346,80 +344,82 @@ function stripScripts(el) {
 }
 
 async function convertImagesToDataURLs(el) {
-
   // convert bg images to data URL.
-  const bg_images = el.querySelectorAll('img')
+  const bg_images = el.querySelectorAll("img");
   for (let i = 0; i < bg_images.length; i++) {
-    let bg = bg_images[i]
+    let bg = bg_images[i];
     try {
-
       //let bg = document.getElementById('BGImage')
-      const blob = await fetch(bg.src).then(r => r.blob());
-      const dataUrl = await new Promise(resolve => {
+      const blob = await fetch(bg.src).then((r) => r.blob());
+      const dataUrl = await new Promise((resolve) => {
         let reader = new FileReader();
         reader.onload = () => resolve(reader.result);
         reader.readAsDataURL(blob);
       });
-      bg.src = dataUrl
-
-    } catch (e) { // some images may have cross origin restrictions.
-      console.warn('failed to convert image: ', bg, e)
+      bg.src = dataUrl;
+    } catch (e) {
+      // some images may have cross origin restrictions.
+      console.warn("failed to convert image: ", bg, e);
     }
   }
 }
 
 async function setupDocumentPage() {
-
-  const pdf_links =
-    document.querySelectorAll("#privateDocs td:nth-child(2) a");
-
+  const pdf_links = document.querySelectorAll("#privateDocs td:nth-child(2) a");
 
   const patient_info = await getPatientInfo();
 
   pdf_links.forEach(function (pdf_link) {
+    if (pdf_link.href.indexOf("?sort") > -1) return;
 
-    if (pdf_link.href.indexOf('?sort') > -1) return;
+    const email_btn = create(
+      `<a class='cortico-btn cortico-btn-small' style='display:inline'> -&gt; PT</a>`,
+      {
+        events: {
+          click: async (e) => {
+            if (!checkCorticoUrl(e)) return;
 
-    const email_btn = create(`<a class='cortico-btn cortico-btn-small' style='display:inline'> -&gt; PT</a>`, {
-      events: {
-        "click": async (e) => {
-          if (!checkCorticoUrl(e)) return;
+            await loadExtensionStorageValue("jwt_access_token").then(
+              async function (access_token) {
+                const pdf_link_ext = pdf_link.outerHTML
+                  .replace(/\&amp;/g, "&")
+                  .match(/\'(Manage[^\']+)\'/)[1];
+                console.log(pdf_link_ext);
 
-          await loadExtensionStorageValue("jwt_access_token").then(async function (access_token) {
+                const blob = await fetch(pdf_link_ext).then((r) => r.blob());
+                const dataUrl = await new Promise((resolve) => {
+                  let reader = new FileReader();
+                  reader.onload = () => resolve(reader.result);
+                  reader.readAsDataURL(blob);
+                });
 
-            const pdf_link_ext = pdf_link.outerHTML.replace(/\&amp;/g, "&").match(/\'(Manage[^\']+)\'/)[1]
-            console.log(pdf_link_ext)
-
-            const blob = await fetch(pdf_link_ext).then(r => r.blob());
-            const dataUrl = await new Promise(resolve => {
-              let reader = new FileReader();
-              reader.onload = () => resolve(reader.result);
-              reader.readAsDataURL(blob);
-            });
-
-            const patientFormResponse = await emailPatient(
-              patient_info,
-              access_token,
-              { attachment: dataUrl }
+                const patientFormResponse = await emailPatient(
+                  patient_info,
+                  access_token,
+                  { attachment: dataUrl }
+                );
+                console.log("RSP: ", patientFormResponse);
+                if (patientFormResponse.success) {
+                  document
+                    .querySelector(".documentLists")
+                    .appendChild(
+                      create(
+                        `<p>${patient_info.email} was sent a <a style='text-decoration:underline' target="_blank" href="${patientFormResponse.preview}">document</a>.</p>`
+                      )
+                    );
+                }
+              }
             );
-            console.log('RSP: ', patientFormResponse)
-            if (patientFormResponse.success) {
-              document.querySelector('.documentLists').appendChild(
-                create(`<p>${patient_info.email} was sent a <a style='text-decoration:underline' target="_blank" href="${patientFormResponse.preview}">document</a>.</p>`)
-              )
-            }
-          })
-        }
+          },
+        },
       }
-    }) // end create.
+    ); // end create.
 
     pdf_link.parentNode.appendChild(email_btn);
-  })
-
+  });
 }
 
 async function setupEFormPage() {
-
   let is_eform_page = true;
   const clinicName = localStorage["clinicname"];
 
@@ -427,7 +427,7 @@ async function setupEFormPage() {
     document.querySelector(".DoNotPrint td") ||
     document.querySelector("#BottomButtons") ||
     document.querySelector("#topbar > form") ||
-    document.body
+    document.body;
 
   if (!email_parent) {
     is_eform_page = false;
@@ -435,54 +435,57 @@ async function setupEFormPage() {
   }
   if (!email_parent) {
     // bail
-    console.warn('Cannot find position for email button.')
-    return
+    console.warn("Cannot find position for email button.");
+    return;
   }
 
   const patient_info = await getPatientInfo();
 
-  const email_btn = create(`
+  const email_btn = create(
+    `
     <p style='margin-bottom:2em'>
       <a id='cortico-email-patient' class='cortico-btn'>Email Patient</a>
-    </p>`, {
-    events: {
-      "click #cortico-email-patient": async (e) => {
-        if (!checkCorticoUrl(e)) return;
+    </p>`,
+    {
+      events: {
+        "click #cortico-email-patient": async (e) => {
+          if (!checkCorticoUrl(e)) return;
 
-        await loadExtensionStorageValue("jwt_access_token").then(async function (access_token) {
+          await loadExtensionStorageValue("jwt_access_token").then(
+            async function (access_token) {
+              // copy document and prepare it for printing.
+              const html = document.cloneNode(true);
+              await convertImagesToDataURLs(html);
+              // we need to remove scripts to prevent re-rendering
+              // what the sender sees (one issue is JS may revert images from data URLs)
+              stripScripts(html);
+              // it seems we don't need to remove this as it's already
+              // hidden in the print media CSS embedded in all eForms
+              //let doNotPrintList = html.querySelectorAll(".DoNotPrint")
 
-          // copy document and prepare it for printing.
-          const html = document.cloneNode(true);
-          await convertImagesToDataURLs(html)
-          // we need to remove scripts to prevent re-rendering
-          // what the sender sees (one issue is JS may revert images from data URLs)
-          stripScripts(html)
-          // it seems we don't need to remove this as it's already
-          // hidden in the print media CSS embedded in all eForms
-          //let doNotPrintList = html.querySelectorAll(".DoNotPrint")
-
-          const patientFormResponse = await emailPatient(
-            patient_info,
-            access_token,
-            { html: html.documentElement.outerHTML }
+              const patientFormResponse = await emailPatient(
+                patient_info,
+                access_token,
+                { html: html.documentElement.outerHTML }
+              );
+              console.log("RSP: ", patientFormResponse);
+              if (patientFormResponse.success) {
+                document
+                  .getElementById("cortico-email-patient")
+                  .parentNode.appendChild(
+                    create(
+                      `<p>${patient_info.email} was sent a <a style='text-decoration:underline' target="_blank" href="${patientFormResponse.preview}">document</a>.</p>`
+                    )
+                  );
+              }
+            }
           );
-          console.log('RSP: ', patientFormResponse)
-          if (patientFormResponse.success) {
-
-            document.getElementById('cortico-email-patient').parentNode.appendChild(
-              create(`<p>${patient_info.email} was sent a <a style='text-decoration:underline' target="_blank" href="${patientFormResponse.preview}">document</a>.</p>`)
-            )
-          }
-        })
-      }
+        },
+      },
     }
-  }) // end create.
+  ); // end create.
 
-      console.log("RSP: ", patientFormResponse);
-    });
-  });
-
-  email_parent && email_parent.appendChild(email_btn);
+  email_parent.appendChild(email_btn);
 }
 
 function delegate(element, event, descendentSelector, callback) {
@@ -1008,12 +1011,12 @@ async function getCorticoLogin() {
       loggedInAsHtml = `<p>${loggedInAsText}</p>`;
       btnEvent = {
         "click .cortico-btn": async (e) => {
-          if (e.target.className == 'cortico-btn') {
+          if (e.target.className == "cortico-btn") {
             if (window.is_dev) {
-              localStorage.removeItem('jwt_access_token')
-              localStorage.removeItem('jwt_expired')
+              localStorage.removeItem("jwt_access_token");
+              localStorage.removeItem("jwt_expired");
             } else {
-              chrome.storage.local.remove(['jwt_access_token', 'jwt_expired']);
+              chrome.storage.local.remove(["jwt_access_token", "jwt_expired"]);
             }
 
             if (!alert("Logged out from cortico, reloading..."))
@@ -1150,19 +1153,21 @@ function getBatchPharmaciesButton() {
 
 function getResetCacheButton() {
   var button = create(
-    `<button class='cortico-btn warning bottom'>Reset Cache</button>`, {
-    events: {
-      "click .cortico-btn.warning.bottom": async (e) => {
-        if (confirm("Are you sure you want to clear your cache?")) {
-          localStorage.clear()
-          await chrome.storage.local.clear()
+    `<button class='cortico-btn warning bottom'>Reset Cache</button>`,
+    {
+      events: {
+        "click .cortico-btn.warning.bottom": async (e) => {
+          if (confirm("Are you sure you want to clear your cache?")) {
+            localStorage.clear();
+            await chrome.storage.local.clear();
 
-          if (!alert("Successfully reset cache, the page will now reload."))
-            window.location.reload()
-        } else {
-          console.log("Clear cache cancelled")
-        }
-      }
+            if (!alert("Successfully reset cache, the page will now reload."))
+              window.location.reload();
+          } else {
+            console.log("Clear cache cancelled");
+          }
+        },
+      },
     }
   );
 
@@ -2353,7 +2358,7 @@ async function init_medium_option() {
 }
 
 async function getPatientInfo(demographicNo) {
-  console.log('demo #', demographicNo)
+  console.log("demo #", demographicNo);
   const result = await getDemographicPageResponse(demographicNo);
   const text = await result.text();
 
@@ -2380,9 +2385,7 @@ function getDemographicPageResponse(demographic) {
   const origin = getOrigin();
   const namespace = getNamespace();
 
-  const demographicNo =
-    demographic ||
-    getDemographicNo();
+  const demographicNo = demographic || getDemographicNo();
 
   if (!demographicNo) {
     console.trace();
@@ -2394,30 +2397,29 @@ function getDemographicPageResponse(demographic) {
   return fetch(url);
 }
 
-
 async function emailPatient(patientInfo, token, payload) {
-  let url = getCorticoUrl() + "/api/plug-in/email-form/"
-  let patientEmail = patientInfo.email || null
+  let url = getCorticoUrl() + "/api/plug-in/email-form/";
+  let patientEmail = patientInfo.email || null;
 
   if (!patientEmail) {
     alert("The patient has no email");
     return;
   }
 
-  patientEmail = 'clark@countable.ca'
+  patientEmail = "clark@countable.ca";
 
   let data = {
-    "clinic_host": getCorticoUrl().replace(/http.?:\/\//, ''),
-    "to": patientEmail,
-  }
+    clinic_host: getCorticoUrl().replace(/http.?:\/\//, ""),
+    to: patientEmail,
+  };
   if (payload.html) {
-    data.pdf_html = payload.html
+    data.pdf_html = payload.html;
   } else if (payload.attachment) {
-    data.attachment = payload.attachment
+    data.attachment = payload.attachment;
   }
-  const subject = document.querySelector('[name="subject"]')
+  const subject = document.querySelector('[name="subject"]');
   if (subject && subject.value) {
-    data.subject = subject.value
+    data.subject = subject.value;
   }
 
   return fetch(url, {
@@ -2434,23 +2436,23 @@ async function emailPatient(patientInfo, token, payload) {
     .then((response) => response.json())
     .then((data) => {
       if (!data.success) {
-        alert(`Sending email failed: ${data.message}`)
+        alert(`Sending email failed: ${data.message}`);
       }
-      return data
+      return data;
     })
     .catch((err) => {
-      console.error("Cortico: Error sending email: ", err)
-      if ((err + '').includes("Unauthorized")) {
-        alert("Your credentials have expired. Please login again")
+      console.error("Cortico: Error sending email: ", err);
+      if ((err + "").includes("Unauthorized")) {
+        alert("Your credentials have expired. Please login again");
         if (window.is_dev) {
-          localStorage.setItem("jwt_expired", true)
+          localStorage.setItem("jwt_expired", true);
         } else {
-          chrome.storage.local.set({ "jwt_expired": true })
+          chrome.storage.local.set({ jwt_expired: true });
         }
 
-        addLoginForm(chrome)
-        const loginForm = document.querySelector(".login-form")
-        loginForm.classList.add("show")
+        addLoginForm(chrome);
+        const loginForm = document.querySelector(".login-form");
+        loginForm.classList.add("show");
       } else {
         alert("Something went wrong with Cortico.");
       }
