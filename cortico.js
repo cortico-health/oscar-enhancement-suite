@@ -1885,11 +1885,14 @@ async function setupPreferredPharmacy(code, demographic_no) {
   var searchTerm = corticoPharmacyText[0]["name"] || null;
 
   // only use the first word on the pharmacy name to search for list
+  // then remove letter or number
   searchTerm = searchTerm ? searchTerm.split(" ")[0] : null;
+  searchTerm = searchTerm.replace(/[^\w\s]/gi, '')
 
   // cleanup fax number to format starting with 1
   // This might be an issue if the oscar pharmacies don't match this format
   if (faxNumber) faxNumber = formatNumber(faxNumber);
+
   var demographicNo = demographic_no;
   if (!demographic_no) {
     demographicNo = getDemographicFromLocation();
@@ -1931,11 +1934,11 @@ async function setupPreferredPharmacy(code, demographic_no) {
           let cleaned_item_name = item_name.replace(/[^\w\s]/gi, '')
           return (
             (item_name.includes(searchTerm.toLowerCase()) ||
-              cleaned_item_name.includes(searchTerm.toLowerCase())) &&
+            cleaned_item_name.includes(searchTerm.toLowerCase())) &&
             item.fax.length > 8 &&
             // either if the fax is the same or the formatted fax has the values
             (formatNumber(item.fax) === faxNumber ||
-              faxNumber.includes(item.fax))
+            faxNumber.includes(item.fax))
           );
         });
       }
