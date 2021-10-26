@@ -5,6 +5,7 @@ import Notification from "../Notifications/Notification";
 import MessengerWidget from "./MessengerWidget";
 import MessengerWindow from "./MessengerWindow";
 import { sendEmailForm } from "../Api/Api";
+import Encounter from "../core/Encounter";
 
 function MessageException(message) {
   this.message = message;
@@ -53,7 +54,8 @@ function Messenger(patient) {
       setShowNotification(true);
     };
 
-    const handleSubmit = async (data) => {
+    const handleSubmit = async (data, opts) => {
+      const { subject, body } = data;
       setLoading(true);
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -68,6 +70,11 @@ function Messenger(patient) {
                 response.message ||
                 `Message successfully sent to ${patient?.email}`,
             });
+
+            if (opts.encounter === true) {
+              const text = `\n\n[${new Date().toLocaleString()} .: Email sent to patient] \n${subject}: ${body}`;
+              addEncounterText(text);
+            }
           })
           .catch((error) => {
             setMessageInfo({
@@ -94,6 +101,22 @@ function Messenger(patient) {
         }
       })();
     }, []);
+
+    const addEncounterText = (text) => {
+      if (document.readyState === "complete") {
+        Encounter.addToCaseNote(text);
+      } else {
+        window.addEventListener(
+          "load",
+          () => {
+            Encounter.addToCaseNote(text);
+          },
+          {
+            once: true,
+          }
+        );
+      }
+    };
 
     return (
       <div className="tailwind tw-font-sans">

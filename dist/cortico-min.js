@@ -296,7 +296,7 @@ function Header(_ref) {
     className: "tw-text-white tw-font-light"
   }, "Messenger"), h("p", {
     className: "tw-text-sm tw-text-white tw-mt-2 tw-text-opacity-80 tw-leading-5"
-  }, "Send a message to the patient using this service"), h("div", {
+  }, "Reach out to the patient with ease using this service."), h("div", {
     className: "tw-mt-3 tw-bg-white tw-inline-block tw-py-1 tw-px-2 tw-rounded-md tw-shadow-2xl"
   }, h("img", {
     className: "tw-w-3 tw-h-3 tw-inline-block",
@@ -373,11 +373,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _MessengerWidget__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./MessengerWidget */ "./modules/Messenger/MessengerWidget.js");
 /* harmony import */ var _MessengerWindow__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./MessengerWindow */ "./modules/Messenger/MessengerWindow.js");
 /* harmony import */ var _Api_Api__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Api/Api */ "./modules/Api/Api.js");
+/* harmony import */ var _core_Encounter__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../core/Encounter */ "./modules/core/Encounter.js");
 /* provided dependency */ var h = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js")["h"];
 
 
 
 var _excluded = ["patient"];
+
 
 
 
@@ -489,23 +491,24 @@ function Messenger(patient) {
     };
 
     var handleSubmit = /*#__PURE__*/function () {
-      var _ref3 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee2(data) {
-        var token;
+      var _ref3 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee2(data, opts) {
+        var subject, body, token;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
+                subject = data.subject, body = data.body;
                 setLoading(true);
-                _context2.next = 3;
+                _context2.next = 4;
                 return new Promise(function (resolve) {
                   return setTimeout(resolve, 1000);
                 });
 
-              case 3:
-                _context2.next = 5;
+              case 4:
+                _context2.next = 6;
                 return (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_6__.loadExtensionStorageValue)("jwt_access_token");
 
-              case 5:
+              case 6:
                 token = _context2.sent;
 
                 if (token) {
@@ -514,6 +517,11 @@ function Messenger(patient) {
                       title: "Success",
                       content: response.message || "Message successfully sent to ".concat(patient === null || patient === void 0 ? void 0 : patient.email)
                     });
+
+                    if (opts.encounter === true) {
+                      var text = "\n\n[".concat(new Date().toLocaleString(), " .: Email sent to patient] \n").concat(subject, ": ").concat(body);
+                      addEncounterText(text);
+                    }
                   }).catch(function (error) {
                     setMessageInfo({
                       title: error.title,
@@ -525,7 +533,7 @@ function Messenger(patient) {
                   });
                 }
 
-              case 7:
+              case 8:
               case "end":
                 return _context2.stop();
             }
@@ -533,7 +541,7 @@ function Messenger(patient) {
         }, _callee2);
       }));
 
-      return function handleSubmit(_x2) {
+      return function handleSubmit(_x2, _x3) {
         return _ref3.apply(this, arguments);
       };
     }();
@@ -570,6 +578,19 @@ function Messenger(patient) {
         }, _callee3, null, [[0, 8]]);
       }))();
     }, []);
+
+    var addEncounterText = function addEncounterText(text) {
+      if (document.readyState === "complete") {
+        _core_Encounter__WEBPACK_IMPORTED_MODULE_11__["default"].addToCaseNote(text);
+      } else {
+        window.addEventListener("load", function () {
+          _core_Encounter__WEBPACK_IMPORTED_MODULE_11__["default"].addToCaseNote(text);
+        }, {
+          once: true
+        });
+      }
+    };
+
     return h("div", {
       className: "tailwind tw-font-sans"
     }, h("div", {
@@ -682,13 +703,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
 /* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
 /* harmony import */ var preact_hooks__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! preact/hooks */ "./node_modules/preact/hooks/dist/hooks.module.js");
-/* harmony import */ var _ChatInput__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ChatInput */ "./modules/Messenger/ChatInput.js");
-/* harmony import */ var _SubjectInput__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SubjectInput */ "./modules/Messenger/SubjectInput.js");
-/* harmony import */ var _Header__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Header */ "./modules/Messenger/Header.js");
-/* harmony import */ var _ToInput__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./ToInput */ "./modules/Messenger/ToInput.js");
-/* harmony import */ var _Loader__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Loader */ "./modules/Messenger/Loader.js");
-/* harmony import */ var _Icons_HeroIcons__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Icons/HeroIcons */ "./modules/Icons/HeroIcons.js");
-/* harmony import */ var _Utils_Utils__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Utils/Utils */ "./modules/Utils/Utils.js");
+/* harmony import */ var preact_compat__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! preact/compat */ "./node_modules/preact/compat/dist/compat.module.js");
+/* harmony import */ var _ChatInput__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ChatInput */ "./modules/Messenger/ChatInput.js");
+/* harmony import */ var _SubjectInput__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SubjectInput */ "./modules/Messenger/SubjectInput.js");
+/* harmony import */ var _Header__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Header */ "./modules/Messenger/Header.js");
+/* harmony import */ var _ToInput__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ToInput */ "./modules/Messenger/ToInput.js");
+/* harmony import */ var _Loader__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Loader */ "./modules/Messenger/Loader.js");
+/* harmony import */ var _Icons_HeroIcons__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Icons/HeroIcons */ "./modules/Icons/HeroIcons.js");
+/* harmony import */ var _Utils_Utils__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../Utils/Utils */ "./modules/Utils/Utils.js");
 /* provided dependency */ var h = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js")["h"];
 
 
@@ -703,17 +725,17 @@ var _excluded = ["onSubmit", "close", "patient", "loading"];
 
 
 
-function EncounterOption() {
+var EncounterOption = (0,preact_compat__WEBPACK_IMPORTED_MODULE_4__.forwardRef)(function (props, ref) {
   return h("label", {
     class: "tw-inline-flex tw-items-center"
   }, h("input", {
+    ref: ref,
     type: "checkbox",
-    class: " tw-h-5 tw-w-5 tw-form-checkbox form-checkbox tw-rounded tw-text-indigo-600 tw-shadow-sm tw-focus:border-cortico-blue tw-focus:ring tw-focus:ring-offset-0 tw-focus:ring-indigo-200 tw-focus:ring-opacity-50 ",
-    checked: true
+    class: " tw-h-5 tw-w-5 tw-form-checkbox form-checkbox tw-rounded tw-text-indigo-600 tw-shadow-sm tw-focus:border-cortico-blue tw-focus:ring tw-focus:ring-offset-0 tw-focus:ring-indigo-200 tw-focus:ring-opacity-50 "
   }), h("span", {
     class: "tw-ml-2 tw-text-sm tw-text-gray-600"
   }, "Copy Message To Encounter"));
-}
+});
 
 function MessengerWindow(_ref) {
   var onSubmit = _ref.onSubmit,
@@ -729,6 +751,7 @@ function MessengerWindow(_ref) {
 
   var subject = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useRef)();
   var message = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useRef)();
+  var encounter = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useRef)();
   (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useEffect)(function () {
     if (patient !== null && patient !== void 0 && patient.email) {//setEmail(patient.email);
     }
@@ -737,49 +760,54 @@ function MessengerWindow(_ref) {
   var submitData = function submitData(e) {
     e.preventDefault();
     var data = {
-      clinic_host: (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_10__.getCorticoUrl)().replace(/http.?:\/\//, ""),
+      clinic_host: (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_11__.getCorticoUrl)().replace(/http.?:\/\//, ""),
       to: email,
       subject: subject.current.value,
       body: message.current.value,
       pdf_html: "<div>Hello World/div>"
     };
-    onSubmit(data);
+    var opts = {
+      encounter: encounter.current.checked
+    };
+    onSubmit(data, opts);
   };
 
   return h("form", {
     onSubmit: submitData
-  }, h(_Header__WEBPACK_IMPORTED_MODULE_6__["default"], {
+  }, h(_Header__WEBPACK_IMPORTED_MODULE_7__["default"], {
     close: close
   }), h("div", {
     className: "tw-px-4 tw-py-2"
-  }, h(_ToInput__WEBPACK_IMPORTED_MODULE_7__["default"], {
+  }, h(_ToInput__WEBPACK_IMPORTED_MODULE_8__["default"], {
     patient: patient
   })), h("hr", {
     className: "tw-opacity-10"
   }), h("div", {
     className: "tw-w-full"
-  }, h(_SubjectInput__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }, h(_SubjectInput__WEBPACK_IMPORTED_MODULE_6__["default"], {
     ref: subject
   })), h("hr", {
     className: "tw-opacity-10"
-  }), h("div", null, h(_ChatInput__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }), h("div", null, h(_ChatInput__WEBPACK_IMPORTED_MODULE_5__["default"], {
     ref: message
   })), h("hr", {
     className: "tw-opacity-40"
   }), h("div", {
     className: "tw-p-4"
-  }, h(EncounterOption, null)), h("div", {
+  }, h(EncounterOption, {
+    ref: encounter
+  })), h("div", {
     className: "tw-flex tw-justify-end tw-px-4 tw-py-3 tw-bg-gray-100"
   }, h("button", {
     disabled: loading,
     className: "tw-bg-cortico-blue tw-px-3 tw-py-2 tw-rounded-md tw-text-white tw-text-sm tw-flex tw-items-center"
   }, loading === true ? h("span", {
     class: "tw-flex"
-  }, h(_Loader__WEBPACK_IMPORTED_MODULE_8__["default"], null), h("span", {
+  }, h(_Loader__WEBPACK_IMPORTED_MODULE_9__["default"], null), h("span", {
     className: "tw-ml-1"
   }, "Sending...")) : h("span", {
     className: "tw-flex tw-items-center"
-  }, h("span", null, "Send Email"), h(_Icons_HeroIcons__WEBPACK_IMPORTED_MODULE_9__.MailIcon, {
+  }, h("span", null, "Send Email"), h(_Icons_HeroIcons__WEBPACK_IMPORTED_MODULE_10__.MailIcon, {
     className: "tw-h-4 tw-w-4 tw-ml-2"
   })))));
 }
@@ -1510,6 +1538,49 @@ var Appointment = /*#__PURE__*/function () {
 
   return Appointment;
 }();
+
+/***/ }),
+
+/***/ "./modules/core/Encounter.js":
+/*!***********************************!*\
+  !*** ./modules/core/Encounter.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+
+
+
+var Encounter = /*#__PURE__*/function () {
+  function Encounter() {
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, Encounter);
+  }
+
+  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Encounter, null, [{
+    key: "getCaseNote",
+    value: function getCaseNote() {
+      var element = document.getElementById("caseNote_note0");
+      return element ? element : null;
+    }
+  }, {
+    key: "addToCaseNote",
+    value: function addToCaseNote(text) {
+      var caseNote = Encounter.getCaseNote();
+      if (!caseNote) return;
+      caseNote.value += text;
+    }
+  }]);
+
+  return Encounter;
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Encounter);
 
 /***/ }),
 

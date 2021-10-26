@@ -1,5 +1,6 @@
 import { render } from "preact";
 import { useState, useEffect, useRef } from "preact/hooks";
+import { forwardRef } from "preact/compat";
 
 import Chat from "./ChatInput";
 import Subject from "./SubjectInput";
@@ -9,38 +10,39 @@ import Loader from "./Loader";
 import { MailIcon } from "../Icons/HeroIcons";
 import { getCorticoUrl } from "../Utils/Utils";
 
-function EncounterOption() {
+const EncounterOption = forwardRef((props, ref) => {
   return (
     <label class="tw-inline-flex tw-items-center">
       <input
+        ref={ref}
         type="checkbox"
         class="
-            tw-h-5
-            tw-w-5
-            tw-form-checkbox
-            form-checkbox
-            tw-rounded
-            tw-text-indigo-600
-            tw-shadow-sm
-            tw-focus:border-cortico-blue
-            tw-focus:ring
-            tw-focus:ring-offset-0
-            tw-focus:ring-indigo-200
-            tw-focus:ring-opacity-50
-          "
-        checked
+                tw-h-5
+                tw-w-5
+                tw-form-checkbox
+                form-checkbox
+                tw-rounded
+                tw-text-indigo-600
+                tw-shadow-sm
+                tw-focus:border-cortico-blue
+                tw-focus:ring
+                tw-focus:ring-offset-0
+                tw-focus:ring-indigo-200
+                tw-focus:ring-opacity-50
+              "
       />
       <span class="tw-ml-2 tw-text-sm tw-text-gray-600">
         Copy Message To Encounter
       </span>
     </label>
   );
-}
+});
 
 function MessengerWindow({ onSubmit, close, patient, loading, ...props }) {
   const [email, setEmail] = useState("aaron@countable.ca");
   const subject = useRef();
   const message = useRef();
+  const encounter = useRef();
 
   useEffect(() => {
     if (patient?.email) {
@@ -57,7 +59,11 @@ function MessengerWindow({ onSubmit, close, patient, loading, ...props }) {
       body: message.current.value,
       pdf_html: "<div>Hello World/div>",
     };
-    onSubmit(data);
+
+    const opts = {
+      encounter: encounter.current.checked,
+    };
+    onSubmit(data, opts);
   };
 
   return (
@@ -76,7 +82,7 @@ function MessengerWindow({ onSubmit, close, patient, loading, ...props }) {
       </div>
       <hr className="tw-opacity-40" />
       <div className="tw-p-4">
-        <EncounterOption />
+        <EncounterOption ref={encounter} />
       </div>
 
       <div className="tw-flex tw-justify-end tw-px-4 tw-py-3 tw-bg-gray-100">
