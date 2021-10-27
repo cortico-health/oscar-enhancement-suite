@@ -516,7 +516,7 @@ function Messenger(patient) {
         messageInfo = _useState10[0],
         setMessageInfo = _useState10[1];
 
-    var _useState11 = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_5__.useState)(true),
+    var _useState11 = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_5__.useState)(false),
         _useState12 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState11, 2),
         showModal = _useState12[0],
         setShowModal = _useState12[1];

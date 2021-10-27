@@ -39,7 +39,7 @@ function Messenger(patient) {
       title: null,
       content: null,
     });
-    const [showModal, setShowModal] = useState(true);
+    const [showModal, setShowModal] = useState(false);
 
     const handleOpen = () => {
       setOpen(true);
