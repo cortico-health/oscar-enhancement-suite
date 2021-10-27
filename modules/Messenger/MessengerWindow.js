@@ -7,7 +7,7 @@ import Subject from "./SubjectInput";
 import Header from "./Header";
 import To from "./ToInput";
 import Loader from "./Loader";
-import { MailIcon, TextIcon } from "../Icons/HeroIcons";
+import { MailIcon, TextIcon, PlusIcon } from "../Icons/HeroIcons";
 import { getCorticoUrl } from "../Utils/Utils";
 
 const EncounterOption = forwardRef((props, ref) => {
@@ -79,8 +79,14 @@ function MessengerWindow({ onSubmit, close, patient, loading, ...props }) {
         <Subject ref={subject} />
       </div>
       <hr className="tw-opacity-10" />
-      <div>
+      <div className="tw-relative">
         <Chat ref={message} />
+        <button
+          onClick={(e) => e.preventDefault()}
+          className="tw-bg-cortico-blue tw-rounded-full tw-p-2 tw-flex tw-items-center tw-justify-center tw-absolute tw-bottom-2 tw-right-2 tw-flex-col"
+        >
+          <PlusIcon className="tw-h-5 tw-w-5 tw-text-white" />
+        </button>
       </div>
       <hr className="tw-opacity-40" />
       <div className="tw-p-4">

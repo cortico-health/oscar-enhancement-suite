@@ -4,7 +4,7 @@ import { loadExtensionStorageValue, isLoggedIn } from "../Utils/Utils";
 import Notification from "../Notifications/Notification";
 import MessengerWidget from "./MessengerWidget";
 import MessengerWindow from "./MessengerWindow";
-import { sendEmailForm } from "../Api/Api";
+import { sendMessage } from "../Api/Api";
 import Encounter from "../core/Encounter";
 
 function MessageException(message) {
