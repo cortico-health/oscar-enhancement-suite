@@ -6,6 +6,8 @@ import MessengerWidget from "./MessengerWidget";
 import MessengerWindow from "./MessengerWindow";
 import { sendMessage } from "../Api/Api";
 import Encounter from "../core/Encounter";
+import PreactModal from "../Modal/PreactModal";
+import SavedReplies from "./SavedReplies";
 
 function MessageException(message) {
   this.message = message;
@@ -37,6 +39,7 @@ function Messenger(patient) {
       title: null,
       content: null,
     });
+    const [showModal, setShowModal] = useState(true);
 
     const handleOpen = () => {
       setOpen(true);
@@ -120,6 +123,14 @@ function Messenger(patient) {
 
     return (
       <div className="tailwind tw-font-sans">
+        <PreactModal
+          show={showModal}
+          close={() => {
+            setShowModal(false);
+          }}
+        >
+          <SavedReplies></SavedReplies>
+        </PreactModal>
         <div
           className={`tw-fixed tw-bottom-5 tw-right-5 tw-bg-white tw-z-10000 tw-max-w-[400px] tw-shadow-xl tw-w-full tw-rounded-md tw-transform tw-transition-transform tw-duration-200 tw-ease-in-out ${
             open ? "tw-translate-x-0" : "tw-translate-x-[430px]"
@@ -130,6 +141,9 @@ function Messenger(patient) {
             loading={loading}
             onSubmit={handleSubmit}
             close={handleClose}
+            showSavedReplies={() => {
+              setShowModal(true);
+            }}
           />
         </div>
         <div className="tw-fixed tw-bottom-5 tw-right-5 tw-z-5000 tw-shadow-xl">
