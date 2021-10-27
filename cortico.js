@@ -1159,7 +1159,9 @@ function getResetCacheButton() {
         "click .cortico-btn.warning.bottom": async (e) => {
           if (confirm("Are you sure you want to clear your cache?")) {
             localStorage.clear();
-            await chrome.storage.local.clear();
+            if (!window.is_dev) {
+              await chrome.storage.local.clear();
+            }
 
             if (!alert("Successfully reset cache, the page will now reload."))
               window.location.reload();
@@ -2058,7 +2060,7 @@ function displayPharmaciesFailure(demograhicNo, msg) {
   );
 }
 
-function storePharmaciesCache(demographicNo) {
+function storePharmaciesCache(demographicNo, hasPharmacy) {
   console.log("storing demographic in cache", demographicNo);
   var _cache = localStorage.getItem("pharmaciesCache");
   var cache = JSON.parse(_cache);
@@ -2077,7 +2079,10 @@ function storePharmaciesCache(demographicNo) {
     demographics = [];
   }
 
-  demographics.push(demographicNo);
+  demographics.push({
+    'demographicNo': demographicNo,
+    'hasPharmacy': hasPharmacy
+  });
 
   cache = {
     date: date,
@@ -2186,6 +2191,7 @@ async function setupPreferredPharmacies() {
         demographics = Array.isArray(cachedDemographics)
           ? cachedDemographics
           : JSON.parse(cachedDemographics);
+        demographics = demographics.map((x) => x.demographicNo)
       }
 
       if (
@@ -2204,15 +2210,17 @@ async function setupPreferredPharmacies() {
         }, 2000);
       });
 
-      storePharmaciesCache(demographicNo);
-
       console.log("Checking if appt has pharmacy codes...");
       const apptTitle = element.attributes.title.textContent;
       const pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle);
       if (!pharmacyCode) {
+        storePharmaciesCache(demographicNo, false);
         console.log("Pharmacy code not found from appt");
         continue;
       }
+      storePharmaciesCache(demographicNo, true);
+
+      console.log("phar", pharmacyCode)
       await setupPreferredPharmacy(pharmacyCode, demographicNo);
     } catch (err) {
       storePharmaciesFailureCache(demographicNo, err.message);
