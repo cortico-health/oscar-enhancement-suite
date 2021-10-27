@@ -768,6 +768,11 @@ function MessengerWindow(_ref) {
       email = _useState2[0],
       setEmail = _useState2[1];
 
+  var _useState3 = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useState)("email"),
+      _useState4 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState3, 2),
+      scheme = _useState4[0],
+      setScheme = _useState4[1];
+
   var subject = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useRef)();
   var message = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useRef)();
   var encounter = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useRef)();
@@ -786,7 +791,8 @@ function MessengerWindow(_ref) {
       pdf_html: "<div>Hello World/div>"
     };
     var opts = {
-      encounter: encounter.current.checked
+      encounter: encounter.current.checked,
+      scheme: scheme
     };
     onSubmit(data, opts);
   };
@@ -819,18 +825,20 @@ function MessengerWindow(_ref) {
     className: "tw-flex tw-justify-end tw-px-4 tw-py-3 tw-bg-gray-100"
   }, h("button", {
     disabled: true,
-    className: "tw-bg-green-600 tw-px-3 tw-py-2 tw-rounded-md tw-text-white tw-text-sm tw-flex tw-items-center tw-mr-2"
-  }, loading === true ? h("span", {
-    class: "tw-flex"
-  }, h(_Loader__WEBPACK_IMPORTED_MODULE_9__["default"], null), h("span", {
-    className: "tw-ml1"
-  }, "Sending...")) : h("span", {
+    className: "tw-bg-green-600 tw-px-3 tw-py-2 tw-rounded-md tw-text-white tw-text-sm tw-flex tw-items-center tw-mr-2 tw-disabled:opacity-50 tw-opacity-50",
+    onClick: function onClick() {
+      setScheme("text");
+    }
+  }, h("span", {
     className: "tw-flex tw-items-center"
   }, h("span", null, "Send Text"), h(_Icons_HeroIcons__WEBPACK_IMPORTED_MODULE_10__.TextIcon, {
     className: "tw-h-4 tw-w-4 tw-ml-2"
   }))), h("button", {
     disabled: loading,
-    className: "tw-bg-cortico-blue tw-px-3 tw-py-2 tw-rounded-md tw-text-white tw-text-sm tw-flex tw-items-center"
+    className: "tw-bg-cortico-blue tw-px-3 tw-py-2 tw-rounded-md tw-text-white tw-text-sm tw-flex tw-items-center",
+    onClick: function onClick() {
+      setScheme("email");
+    }
   }, loading === true ? h("span", {
     class: "tw-flex"
   }, h(_Loader__WEBPACK_IMPORTED_MODULE_9__["default"], null), h("span", {
