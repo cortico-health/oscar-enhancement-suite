@@ -124,7 +124,7 @@ function Messenger(patient) {
     return (
       <div className="tailwind tw-font-sans">
         <PreactModal
-          show={showModal}
+          show={true}
           close={() => {
             setShowModal(false);
           }}
