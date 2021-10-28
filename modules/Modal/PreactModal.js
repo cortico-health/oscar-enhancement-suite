@@ -6,7 +6,7 @@ function PreactModal({ show, close, children, ...props }) {
 
   const handleClick = (e) => {
     const containerElem = container.current;
-    if (containerElem.isSameNode(e.target)) {
+    if (containerElem && containerElem.isSameNode(e.target)) {
       close && close();
     }
   };

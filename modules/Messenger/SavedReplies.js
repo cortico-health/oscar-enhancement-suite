@@ -65,6 +65,7 @@ function Reply({ subject, body, onClick, ...props }) {
 function SavedReplies({ loadReply, ...props }) {
   const [addReply, setAddReply] = useState(false);
   const [replies, setReplies] = useState([]);
+  const [insertCounter, setInsertCounter] = useState(0);
 
   const handleAdd = (data) => {
     const reply = data;
@@ -77,12 +78,14 @@ function SavedReplies({ loadReply, ...props }) {
       const temp = [reply];
       localStorage.setItem("savedReplies", JSON.stringify(temp));
     }
+    setInsertCounter(insertCounter + 1);
   };
   const handleCancel = () => {
     setAddReply(false);
   };
 
   const loadReplies = () => {
+    console.log("This got called");
     let savedReplies = localStorage.getItem("savedReplies");
     if (savedReplies) {
       let temp = JSON.parse(JSON.parse(savedReplies));
@@ -94,7 +97,7 @@ function SavedReplies({ loadReply, ...props }) {
 
   useEffect(() => {
     loadReplies();
-  }, []);
+  }, [insertCounter]);
 
   return (
     <div className="tw-bg-white tw-rounded-lg tw-font-sans tw-w-full tw-shadow-lg tw-max-w-[400px]">
@@ -111,7 +114,11 @@ function SavedReplies({ loadReply, ...props }) {
           </p>
         </div>
       </div>
-      <div className={`tw-bg-gray-100 ${addReply ? "tw-p-0" : "tw-p-4"}`}>
+      <div
+        className={`tw-bg-gray-100 tw-overflow-y-auto tw-h-[300px] ${
+          addReply ? "tw-p-0" : "tw-p-4"
+        }`}
+      >
         {addReply === false ? (
           <div>
             <div className="tw-my-3">

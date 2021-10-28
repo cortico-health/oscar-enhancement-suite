@@ -1,7 +1,12 @@
 import { render } from "preact";
+import { useEffect } from "preact/hooks";
+
 import { forwardRef } from "preact/compat";
 
-const Subject = forwardRef((props, ref) => {
+const Subject = forwardRef(({ value, ...props }, ref) => {
+  useEffect(() => {
+    ref.current.value = value;
+  }, [value]);
   return (
     <div className="">
       <div>

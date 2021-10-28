@@ -111,6 +111,7 @@ function Messenger(patient) {
       console.log("Load reply data", data);
       setSubject(data.subject);
       setBody(data.body);
+      setShowModal(false);
     };
 
     const addEncounterText = (text) => {
@@ -132,7 +133,7 @@ function Messenger(patient) {
     return (
       <div className="tailwind tw-font-sans">
         <PreactModal
-          show={true}
+          show={showModal}
           close={() => {
             setShowModal(false);
           }}
@@ -146,6 +147,8 @@ function Messenger(patient) {
         >
           <MessengerWindow
             patient={patient}
+            defaultSubject={subject}
+            defaultBody={body}
             loading={loading}
             onSubmit={handleSubmit}
             close={handleClose}

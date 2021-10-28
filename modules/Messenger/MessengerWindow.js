@@ -44,6 +44,8 @@ function MessengerWindow({
   patient,
   loading,
   showSavedReplies,
+  defaultSubject,
+  defaultBody,
   ...props
 }) {
   const [email, setEmail] = useState("aaron@countable.ca");
@@ -90,11 +92,11 @@ function MessengerWindow({
           </div>
           <hr className="tw-opacity-10" />
           <div className="tw-w-full">
-            <Subject ref={subject} />
+            <Subject ref={subject} value={defaultSubject} />
           </div>
           <hr className="tw-opacity-10" />
           <div className="tw-relative">
-            <Chat ref={message} />
+            <Chat ref={message} value={defaultBody} />
             <button
               onClick={handleReply}
               className="tw-bg-cortico-blue tw-rounded-full tw-p-2 tw-flex tw-items-center tw-justify-center tw-absolute tw-bottom-2 tw-right-2 tw-flex-col tw-drop-shadow-md"
