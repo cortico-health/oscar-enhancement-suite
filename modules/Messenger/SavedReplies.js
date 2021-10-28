@@ -115,9 +115,9 @@ function SavedReplies({ loadReply, ...props }) {
         </div>
       </div>
       <div
-        className={`tw-bg-gray-100 tw-overflow-y-auto tw-h-[300px] ${
-          addReply ? "tw-p-0" : "tw-p-4"
-        }`}
+        className={`tw-bg-gray-100 tw-overflow-y-auto  ${
+          addReply ? "tw-p-0" : "tw-p-4 tw-h-[300px]"
+        } $`}
       >
         {addReply === false ? (
           <div>

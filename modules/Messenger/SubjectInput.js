@@ -5,7 +5,9 @@ import { forwardRef } from "preact/compat";
 
 const Subject = forwardRef(({ value, ...props }, ref) => {
   useEffect(() => {
-    ref.current.value = value;
+    if (value) {
+      ref.current.value = value;
+    }
   }, [value]);
   return (
     <div className="">

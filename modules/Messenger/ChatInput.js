@@ -4,7 +4,9 @@ import { forwardRef } from "preact/compat";
 
 const Chat = forwardRef(({ value, ...props }, ref) => {
   useEffect(() => {
-    ref.current.value = value;
+    if (value) {
+      ref.current.value = value;
+    }
   }, [value]);
 
   return (
