@@ -1,4 +1,3 @@
-
 import dayjs from "dayjs";
 import { addLoginForm } from "../cortico/Login/Login";
 
@@ -50,13 +49,13 @@ export function getCorticoUrl() {
   // FOR TESTING:
 
   const clinicName = window.localStorage["clinicname"];
-  if (clinicName === 'localhost') {
-    return 'http://localhost' // No HTTPS
+  if (clinicName === "localhost") {
+    return "http://localhost"; // No HTTPS
   }
-  let suffix = window.localStorage["customUrlSuffix"] || 'cortico.ca';
+  let suffix = window.localStorage["customUrlSuffix"] || "cortico.ca";
 
   if (suffix.charAt(0) === ".") {
-    suffix = suffix.substring(1)
+    suffix = suffix.substring(1);
   }
   if (!clinicName) {
     return null;
@@ -89,11 +88,10 @@ export function create(_element, options, ...children) {
   }
   let element;
   if (_element.trim().startsWith("<")) {
-    element = htmlToElement(_element)
+    element = htmlToElement(_element);
   } else {
     element = document.createElement(_element);
   }
-
 
   if (!options) {
     return element;
@@ -111,19 +109,18 @@ export function create(_element, options, ...children) {
 
   if (options.events) {
     for (let event in options.events) {
-      console.log('*', event)
-      const chunks = event.split(' ')
-      const trigger = chunks.shift()
-      const selector = chunks.join(' ')
+      const chunks = event.split(" ");
+      const trigger = chunks.shift();
+      const selector = chunks.join(" ");
       // closure
       const tmp = function (trigger, selector, handler) {
         element.addEventListener(trigger, function (e) {
           let target = selector ? e.target.closest(selector) : e.target;
 
-          if (target) handler({ target: target, originalEvent: e })
-        })
-      }
-      tmp(trigger, selector, options.events[event])
+          if (target) handler({ target: target, originalEvent: e });
+        });
+      };
+      tmp(trigger, selector, options.events[event]);
     }
   }
 
@@ -136,10 +133,14 @@ export function create(_element, options, ...children) {
 
 export function loadExtensionStorageValue(key) {
   return new Promise(function (resolve, reject) {
-    chrome.storage.local.get(key, function (result) {
-      resolve(result[key])
-    })
-  })
+    if (window.is_dev) {
+      resolve(window.localStorage.getItem(key));
+    } else {
+      chrome.storage.local.get(key, function (result) {
+        resolve(result[key]);
+      });
+    }
+  });
 }
 
 export function htmlToElement(html) {
@@ -151,18 +152,27 @@ export function htmlToElement(html) {
 }
 
 export function getDemographicNo(apptUrl) {
-  var searchParams = new URLSearchParams(apptUrl);
-  return (
-    searchParams.get("demographic_no") || searchParams.get("demographicNo")
-  );
+  if (apptUrl) {
+    var searchParams = new URLSearchParams(apptUrl);
+    return (
+      searchParams.get("demographic_no") ||
+      searchParams.get("demographicNo") ||
+      searchParams.get("functionid")
+    );
+  } else {
+    // try several options
+    let demographicNo = getDemographicNo(window.location.search);
+    if (!demographicNo && window.opener) {
+      demographicNo = getDemographicNo(window.opener.location.search);
+    }
+    return demographicNo;
+  }
 }
 
 export function getAppointmentNo(apptUrl) {
-  console.log(apptUrl)
-  var searchParams = new URLSearchParams(apptUrl.split('?')[1]);
-  return (
-    searchParams.get("appointment_no")
-  );
+  console.log(apptUrl);
+  var searchParams = new URLSearchParams(apptUrl.split("?")[1]);
+  return searchParams.get("appointment_no");
 }
 
 export function addToCache(demographic_no, _verified) {
@@ -179,17 +189,17 @@ export function addToCache(demographic_no, _verified) {
 }
 
 export function createSidebarContainer(child, events) {
-  var html = child ? (
-    typeof child === 'string' ? child : child.outerHTML
-  ) : ''
-  var events = events ? events : {}
+  var html = child ? (typeof child === "string" ? child : child.outerHTML) : "";
+  var events = events ? events : {};
 
   var container = create(
     `<div style='width: 100%; padding: 0px 10px; box-sizing: border-box'>
     ${html}
-  </div>`, events)
+  </div>`,
+    events
+  );
 
-  return container
+  return container;
 }
 
 export function checkCorticoUrl(event) {
@@ -204,11 +214,23 @@ export function checkCorticoUrl(event) {
 }
 
 export function showLoginForm() {
-  chrome.storage.local.set({ "jwt_expired": true })
-  alert("Your credentials have expired. Please login again")
+  if (window.is_dev) {
+    window.localStoraage.setItem("jwt_expired", true);
+  } else {
+    chrome.storage.local.set({ jwt_expired: true });
+  }
+  alert("Your credentials have expired. Please login again");
 
-  addLoginForm(chrome)
+  addLoginForm(chrome);
 
-  const loginForm = document.querySelector(".login-form")
-  loginForm.classList.add("show")
+  const loginForm = document.querySelector(".login-form");
+  loginForm.classList.add("show");
+}
+
+export async function isLoggedIn() {
+  if (window.is_dev) {
+    return window.localStorage.getItem("jwt_username") ? true : false;
+  } else {
+    return (await loadExtensionStorageValue("jwt_username")) ? true : false;
+  }
 }
