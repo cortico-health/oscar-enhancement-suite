@@ -40,6 +40,8 @@ function Messenger(patient) {
       content: null,
     });
     const [showModal, setShowModal] = useState(false);
+    const [subject, setSubject] = useState(null);
+    const [body, setBody] = useState(null);
 
     const handleOpen = () => {
       setOpen(true);
@@ -105,6 +107,12 @@ function Messenger(patient) {
       })();
     }, []);
 
+    const loadReply = (data) => {
+      console.log("Load reply data", data);
+      setSubject(data.subject);
+      setBody(data.body);
+    };
+
     const addEncounterText = (text) => {
       if (document.readyState === "complete") {
         Encounter.addToCaseNote(text);
@@ -129,7 +137,7 @@ function Messenger(patient) {
             setShowModal(false);
           }}
         >
-          <SavedReplies></SavedReplies>
+          <SavedReplies loadReply={loadReply}></SavedReplies>
         </PreactModal>
         <div
           className={`tw-fixed tw-bottom-5 tw-right-5 tw-bg-white tw-z-10000 tw-max-w-[400px] tw-shadow-xl tw-w-full tw-rounded-md tw-transform tw-transition-transform tw-duration-200 tw-ease-in-out ${
