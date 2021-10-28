@@ -344,6 +344,31 @@ function stripScripts(el) {
 }
 
 async function convertImagesToDataURLs(el) {
+
+  // convert bg images to data URL.
+  const bg_images = el.querySelectorAll('img')
+  for (let i = 0; i < bg_images.length; i++) {
+    let bg = bg_images[i]
+    try {
+
+      //let bg = document.getElementById('BGImage')
+      const blob = await fetch(bg.src).then(r => r.blob());
+      const dataUrl = await new Promise(resolve => {
+        let reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.readAsDataURL(blob);
+      });
+      bg.src = dataUrl
+
+    } catch (e) { // some images may have cross origin restrictions.
+      console.warn('failed to convert image: ', bg, e)
+    }
+  }
+}
+
+async function setupPatientEmailButton() {
+
+async function convertImagesToDataURLs(el) {
   // convert bg images to data URL.
   const bg_images = el.querySelectorAll("img");
   for (let i = 0; i < bg_images.length; i++) {
@@ -487,6 +512,7 @@ async function setupEFormPage() {
 
   email_parent.appendChild(email_btn);
 }
+
 
 function delegate(element, event, descendentSelector, callback) {
   element.addEventListener(
@@ -1976,13 +2002,17 @@ async function setupPreferredPharmacy(code, demographic_no) {
   const corticoPharmacyText = JSON.parse(respText);
   var faxNumber = corticoPharmacyText[0]["fax_number"] || null;
   var searchTerm = corticoPharmacyText[0]["name"] || null;
+  var fullPharmacyName = searchTerm;
 
   // only use the first word on the pharmacy name to search for list
+  // then remove letter or number
   searchTerm = searchTerm ? searchTerm.split(" ")[0] : null;
+  searchTerm = searchTerm.replace(/[^\w\s]/gi, '')
 
   // cleanup fax number to format starting with 1
   // This might be an issue if the oscar pharmacies don't match this format
   if (faxNumber) faxNumber = formatNumber(faxNumber);
+
   var demographicNo = demographic_no;
   if (!demographic_no) {
     demographicNo = getDemographicNo();
@@ -2024,11 +2054,11 @@ async function setupPreferredPharmacy(code, demographic_no) {
           let cleaned_item_name = item_name.replace(/[^\w\s]/gi, "");
           return (
             (item_name.includes(searchTerm.toLowerCase()) ||
-              cleaned_item_name.includes(searchTerm.toLowerCase())) &&
+            cleaned_item_name.includes(searchTerm.toLowerCase())) &&
             item.fax.length > 8 &&
             // either if the fax is the same or the formatted fax has the values
             (formatNumber(item.fax) === faxNumber ||
-              faxNumber.includes(item.fax))
+            faxNumber.includes(item.fax))
           );
         });
       }
@@ -2044,7 +2074,7 @@ async function setupPreferredPharmacy(code, demographic_no) {
         else console.log("Updating preferred pharmacy");
       }
     } else {
-      const msg = `Customer pharmacy ${searchTerm} does not exist in your Oscar pharmacy database!`;
+      const msg = `Customer pharmacy ${fullPharmacyName} does not exist in your Oscar pharmacy database!`;
       storePharmaciesFailureCache(demographicNo, msg);
       displayPharmaciesFailure(demographicNo, msg);
       if (isRxPage) alert(msg);
