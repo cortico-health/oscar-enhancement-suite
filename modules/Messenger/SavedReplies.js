@@ -36,7 +36,7 @@ function AddReply({ add, cancel, ...props }) {
             onClick={handleAddReply}
             className="tw-px-4 tw-py-2 tw-rounded-lg tw-bg-cortico-blue tw-text-white tw-text-sm tw-flex tw-items-center"
           >
-            <span className="tw-mr-2">Save Reply</span>
+            <span className="tw-mr-2">Save Response</span>
             <PlusIcon className="tw-h-4 tw-w-4 tw-text-white" />
           </button>
         </div>
@@ -45,9 +45,15 @@ function AddReply({ add, cancel, ...props }) {
   );
 }
 
-function Reply({ uuid, subject, body, onClick, onDelete, ...props }) {
+function Reply({ uuid, subject, body, onClick, onDelete, onCancel, ...props }) {
+  const [isDelete, setIsDelete] = useState(false);
+
+  const handleDelete = () => {
+    setIsDelete(false);
+    onDelete(uuid);
+  };
   return (
-    <div className="">
+    <div className="tw-drop-shadow-lg">
       <div
         onClick={() => {
           onClick({ subject, body });
@@ -62,50 +68,38 @@ function Reply({ uuid, subject, body, onClick, onDelete, ...props }) {
         </div>
       </div>
       <div className="tw-bg-gray-200 tw-flex tw-items-center tw-justify-end tw-p-2 tw-rounded-b-lg">
-        <button
-          onClick={() => {
-            onDelete(uuid);
-          }}
-          className="tw-bg-red-500 tw-flex tw-items-center tw-rounded-md tw-p-2"
-        >
-          <span className="tw-mr-2 tw-text-xs tw-text-white">Delete</span>
-          <TrashIcon className="tw-text-white tw-h-4 tw-w-4" />
-        </button>
-      </div>
-    </div>
-  );
-}
-
-function DeleteReply({ uuid, onDeleted, onCancel, ...props }) {
-  const handleCancel = () => {
-    onCancel();
-  };
-  const deleteReply = () => {
-    let savedReplies = localStorage.getItem("savedReplies");
-    if (savedReplies) {
-      let temp = JSON.parse(JSON.parse(savedReplies));
-      const reply = temp.find((r) => r.uuid === uuid);
-      if (reply) {
-        savedReplies = temp.filter((r) => r.uuid !== uuid);
-        onDeleted(savedReplies);
-      }
-    }
-  };
-  return (
-    <div className="tw-font-sans tw-p-6 tw-bg-white">
-      <h2 className="tw-tracking-wider tw-text-xl text-center">
-        Are you sure you want to delete?
-      </h2>
-      <div className="tw-mt-5">
-        <button className="tw-gray-200 tw-text-sm tw-p-4 tw-text-white">
-          No
-        </button>
-        <button
-          onClick={deleteReply}
-          className="tw-cortico-blue tw-text-sm tw-p-4 tw-text-white"
-        >
-          Yes
-        </button>
+        {isDelete === false ? (
+          <button
+            onClick={() => {
+              setIsDelete(true);
+            }}
+            className="tw-bg-red-500 tw-flex tw-items-center tw-rounded-md tw-p-2"
+          >
+            <span className="tw-mr-2 tw-text-xs tw-text-white">Delete</span>
+            <TrashIcon className="tw-text-white tw-h-4 tw-w-4" />
+          </button>
+        ) : (
+          <div className="tw-flex tw-justify-end">
+            <button
+              onClick={() => {
+                setIsDelete(false);
+              }}
+              className="tw-bg-gray-400 tw-mr-2 tw-flex tw-items-center tw-rounded-md tw-p-2"
+            >
+              <span className="tw-mr-2 tw-text-xs tw-text-white">Cancel</span>
+              <LeftArrowIcon className="tw-text-white tw-h-4 tw-w-4" />
+            </button>
+            <button
+              onClick={handleDelete}
+              className="tw-bg-red-500 tw-flex tw-items-center tw-rounded-md tw-p-2"
+            >
+              <span className="tw-mr-2 tw-text-xs tw-text-white">
+                Yes I want to delete
+              </span>
+              <TrashIcon className="tw-text-white tw-h-4 tw-w-4" />
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -115,8 +109,6 @@ function SavedReplies({ loadReply, ...props }) {
   const [addReply, setAddReply] = useState(false);
   const [replies, setReplies] = useState([]);
   const [insertCounter, setInsertCounter] = useState(0);
-  const [deleteReply, setDeleteReply] = useState(false);
-  const [deleteCandidate, setDeleteCandidate] = useState(null);
 
   const handleAdd = (data) => {
     const reply = data;
@@ -130,10 +122,26 @@ function SavedReplies({ loadReply, ...props }) {
       const temp = [reply];
       localStorage.setItem("savedReplies", JSON.stringify(temp));
     }
+    setAddReply(false);
     setInsertCounter(insertCounter + 1);
   };
   const handleCancel = () => {
     setAddReply(false);
+  };
+
+  const deleteReply = (uuid) => {
+    console.log("Delete Request UUID", uuid);
+    let savedReplies = localStorage.getItem("savedReplies");
+    if (savedReplies) {
+      let temp = JSON.parse(JSON.parse(savedReplies));
+      const reply = temp.find((r) => r.uuid === uuid);
+      console.log("Found reply", reply);
+      if (reply) {
+        temp = temp.filter((r) => r.uuid !== uuid);
+        localStorage.setItem("savedReplies", JSON.stringify(temp));
+        setInsertCounter(insertCounter + 1);
+      }
+    }
   };
 
   const loadReplies = () => {
@@ -150,11 +158,6 @@ function SavedReplies({ loadReply, ...props }) {
     loadReplies();
   }, [insertCounter]);
 
-  const handleDelete = (uuid) => {
-    setDeleteReply(true);
-    setDeleteCandidate(uuid);
-  };
-
   return (
     <div className="tw-bg-white tw-rounded-lg tw-font-sans tw-w-full tw-shadow-lg tw-max-w-[400px]">
       <div className="tw-bg-cortico-blue tw-flex tw-rounded-t-lg tw-p-4 tw-items-center">
@@ -163,10 +166,10 @@ function SavedReplies({ loadReply, ...props }) {
         </div>
         <div className="tw-ml-4">
           <h2 className="tw-text-2xl tw-text-white tw-text-opacity-90 tw-tracking-wider">
-            Saved Replies
+            Canned Responses
           </h2>
           <p className="tw-text-xs tw-text-white tw-text-opacity-80">
-            Save or load new replies to your message
+            Save or load new responses to your message
           </p>
         </div>
       </div>
@@ -178,41 +181,30 @@ function SavedReplies({ loadReply, ...props }) {
         {addReply === false ? (
           <div>
             <div className="tw-my-3">
-              {replies.map((reply, index) => {
-                return (
-                  <div className="tw-my-3" key={index}>
-                    <Reply
-                      onClick={(data) => {
-                        loadReply(data);
-                      }}
-                      uuid={reply.uuid}
-                      onDelete={handleDelete}
-                      {...reply}
-                    />
-                  </div>
-                );
-              })}
+              {replies.length > 0 ? (
+                replies.map((reply, index) => {
+                  return (
+                    <div className="tw-my-3" key={index}>
+                      <Reply
+                        onClick={(data) => {
+                          loadReply(data);
+                        }}
+                        uuid={reply.uuid}
+                        onDelete={deleteReply}
+                        {...reply}
+                      />
+                    </div>
+                  );
+                })
+              ) : (
+                <div className="tw-font-sans tw-p-4 tw-text-2xl tw-text-center tw-tracking-widest tw-text-gray-700 tw-text-opacity-60">
+                  No Canned Responses! Click New Response to get started
+                </div>
+              )}
             </div>
           </div>
         ) : (
           <AddReply add={handleAdd} cancel={handleCancel} />
-        )}
-        {deleteReply === true ? (
-          <DeleteReply
-            uuid={deleteCandidate}
-            onCancel={() => {
-              setDeleteReply(false);
-              setDeleteCandidate(null);
-            }}
-            onDeleted={(replies) => {
-              setReplies(replies);
-              setInsertCounter(insertCounter + 1);
-              setDeleteReply(false);
-              setDeleteCandidate(null);
-            }}
-          />
-        ) : (
-          ""
         )}
       </div>
       {addReply === false ? (
@@ -225,7 +217,7 @@ function SavedReplies({ loadReply, ...props }) {
                 }}
                 className="tw-px-4 tw-py-2 tw-rounded-lg tw-bg-cortico-blue tw-text-white tw-text-sm tw-flex tw-items-center"
               >
-                <span className="tw-mr-2">New Reply</span>
+                <span className="tw-mr-2">New Response</span>
                 <PlusIcon className="tw-h-4 tw-w-4 tw-text-white" />
               </button>
             </div>
