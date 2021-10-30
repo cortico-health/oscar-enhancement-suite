@@ -1200,6 +1200,18 @@ function SavedReplies(_ref3) {
   };
 
   (0,preact_hooks__WEBPACK_IMPORTED_MODULE_4__.useEffect)(function () {
+    if (insertCounter === 0) {
+      var savedReplies = localStorage.getItem("savedReplies");
+
+      if (!savedReplies) {
+        handleAdd({
+          uuid: (0,uuid__WEBPACK_IMPORTED_MODULE_9__["default"])(),
+          subject: "TELEHEALTH - LAB REQ TO DO",
+          body: "Hello,\n          Attached is a copy of your lab requisition form\n          Please print and take to the lab \n          OR e-mail it with your name in the subject line to\n          mailmyreqBC@lifelabs.com\n          Please confirm via email once received/completed.\n          Generally, patients are able to book a follow up online 2-3 days after getting their blood work done for a review unless indicated sooner via e-mail. \n          Thank you\n          Medical clinic/doctor name"
+        });
+      }
+    }
+
     loadReplies();
   }, [insertCounter]);
   return h("div", {
