@@ -130,6 +130,12 @@ function Messenger(patient) {
       }
     };
 
+    useEffect(() => {
+      if (localStorage.getItem("name")) {
+        setSubject(`${localStorage.getItem("name")} has sent you a message`);
+      }
+    }, []);
+
     return (
       <div className="tailwind tw-font-sans">
         <PreactModal
