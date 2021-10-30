@@ -27,10 +27,10 @@ const handleErrors = async (response) => {
   return result;
 };
 
-function Messenger(patient) {
-  const container = document.body;
+function Messenger(patient, opts, container) {
+  const _container = container || document.body;
 
-  function Content({ patient, ...props }) {
+  function Content({ patient, encounter, ...props }) {
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const [showNotification, setShowNotification] = useState(false);
@@ -137,7 +137,7 @@ function Messenger(patient) {
     }, []);
 
     return (
-      <div className="tailwind tw-font-sans">
+      <div className="tailwind tw-font-sans tw-fixed tw-z-10005">
         <PreactModal
           show={showModal}
           close={() => {
@@ -161,6 +161,7 @@ function Messenger(patient) {
             showSavedReplies={() => {
               setShowModal(true);
             }}
+            encounter={encounter}
           />
         </div>
         <div className="tw-fixed tw-bottom-5 tw-right-5 tw-z-5000 tw-shadow-xl">
@@ -183,7 +184,10 @@ function Messenger(patient) {
     );
   }
 
-  return render(<Content patient={patient} />, container);
+  return render(
+    <Content patient={patient} encounter={opts.encounter} />,
+    _container
+  );
 }
 
 export default Messenger;

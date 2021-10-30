@@ -143,14 +143,28 @@ const init_cortico = async function () {
     route.indexOf("/eform/efmshowform_data.jsp") > -1 ||
     route.indexOf("/casemgmt/forward.jsp") > -1
   ) {
+    const patient_info = await getPatientInfo();
     if (route.indexOf("/casemgmt/forward.jsp") > -1) {
-      const patient_info = await getPatientInfo();
-      console.log("Patient Info", patient_info);
-      Messenger(patient_info);
+      Messenger(patient_info, {
+        encounter: true,
+      });
+    } else {
+      Messenger(
+        patient_info,
+        {
+          encounter: false,
+        },
+        document.getElementById("eform_container")
+      );
     }
+
     setupEFormPage();
   } else if (route.indexOf("dms/documentReport.jsp") > -1) {
     setupDocumentPage();
+    const patient_info = await getPatientInfo();
+    Messenger(patient_info, {
+      encounter: false,
+    });
   } else if (route.indexOf("/oscarRx/ViewScript2.jsp") > -1) {
     // We need to determine first if the prescription is "delivery"
     const currentPharmacyCode = localStorage.getItem("currentPharmacyCode");
@@ -2430,7 +2444,7 @@ async function emailPatient(patientInfo, token, payload) {
 
   let data = {
     clinic_host: getCorticoUrl().replace(/http.?:\/\//, ""),
-    to: patientEmail,
+    to: "aaron@countable.ca",
   };
   if (payload.html) {
     data.pdf_html = payload.html;

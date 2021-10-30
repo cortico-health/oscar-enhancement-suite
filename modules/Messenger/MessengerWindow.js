@@ -46,6 +46,7 @@ function MessengerWindow({
   showSavedReplies,
   defaultSubject,
   defaultBody,
+  encounter: encounterOption,
   ...props
 }) {
   const [email, setEmail] = useState("aaron@countable.ca");
@@ -105,9 +106,13 @@ function MessengerWindow({
             </button>
           </div>
           <hr className="tw-opacity-40" />
-          <div className="tw-p-4">
-            <EncounterOption ref={encounter} />
-          </div>
+          {encounterOption === true ? (
+            <div className="tw-p-4">
+              <EncounterOption ref={encounter} />
+            </div>
+          ) : (
+            ""
+          )}
         </div>
 
         <div className="tw-flex tw-justify-end tw-px-4 tw-py-3 tw-bg-gray-100">
