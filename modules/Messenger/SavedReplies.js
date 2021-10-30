@@ -1,9 +1,10 @@
 import { render } from "preact";
 import { useState, useRef, useEffect } from "preact/hooks";
 import corticoIcon from "../../resources/icons/96x96.png";
-import { PlusIcon, LeftArrowIcon } from "../Icons/HeroIcons";
+import { PlusIcon, LeftArrowIcon, TrashIcon } from "../Icons/HeroIcons";
 import Subject from "./SubjectInput";
 import Chat from "./ChatInput";
+import { v4 as uuidv4 } from "uuid";
 
 function AddReply({ add, cancel, ...props }) {
   const subject = useRef();
@@ -44,19 +45,67 @@ function AddReply({ add, cancel, ...props }) {
   );
 }
 
-function Reply({ subject, body, onClick, ...props }) {
+function Reply({ uuid, subject, body, onClick, onDelete, ...props }) {
   return (
-    <div
-      onClick={() => {
-        onClick({ subject, body });
-      }}
-      className=" tw-bg-white tw-rounded-lg tw-py-4 tw-cursor-pointer tw-hover:bg-gray-200 tw-max-h-28 tw-font-sans tw-hover:bg-black"
-    >
-      <div className="tw-px-4 tw-mb-2 tw-text-opacity-100 tw-text-black tw-tracking-wider tw-text-sm">
-        {subject}
+    <div className="">
+      <div
+        onClick={() => {
+          onClick({ subject, body });
+        }}
+        className=" tw-bg-white tw-py-4 tw-cursor-pointer tw-rounded-t-lg tw-hover:bg-gray-200 tw-max-h-28 tw-font-sans tw-hover:bg-black tw-relative"
+      >
+        <div className="tw-px-4 tw-mb-2 tw-text-opacity-100 tw-text-black tw-tracking-wider tw-text-sm">
+          {subject}
+        </div>
+        <div className="tw-px-4 tw-text-xs tw-text-opacity-70 tw-text-black tw-line-clamp-3">
+          {body}
+        </div>
       </div>
-      <div className="tw-px-4 tw-text-xs tw-text-opacity-70 tw-text-black tw-line-clamp-3">
-        {body}
+      <div className="tw-bg-gray-200 tw-flex tw-items-center tw-justify-end tw-p-2 tw-rounded-b-lg">
+        <button
+          onClick={() => {
+            onDelete(uuid);
+          }}
+          className="tw-bg-red-500 tw-flex tw-items-center tw-rounded-md tw-p-2"
+        >
+          <span className="tw-mr-2 tw-text-xs tw-text-white">Delete</span>
+          <TrashIcon className="tw-text-white tw-h-4 tw-w-4" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function DeleteReply({ uuid, onDeleted, onCancel, ...props }) {
+  const handleCancel = () => {
+    onCancel();
+  };
+  const deleteReply = () => {
+    let savedReplies = localStorage.getItem("savedReplies");
+    if (savedReplies) {
+      let temp = JSON.parse(JSON.parse(savedReplies));
+      const reply = temp.find((r) => r.uuid === uuid);
+      if (reply) {
+        savedReplies = temp.filter((r) => r.uuid !== uuid);
+        onDeleted(savedReplies);
+      }
+    }
+  };
+  return (
+    <div className="tw-font-sans tw-p-6 tw-bg-white">
+      <h2 className="tw-tracking-wider tw-text-xl text-center">
+        Are you sure you want to delete?
+      </h2>
+      <div className="tw-mt-5">
+        <button className="tw-gray-200 tw-text-sm tw-p-4 tw-text-white">
+          No
+        </button>
+        <button
+          onClick={deleteReply}
+          className="tw-cortico-blue tw-text-sm tw-p-4 tw-text-white"
+        >
+          Yes
+        </button>
       </div>
     </div>
   );
@@ -66,9 +115,12 @@ function SavedReplies({ loadReply, ...props }) {
   const [addReply, setAddReply] = useState(false);
   const [replies, setReplies] = useState([]);
   const [insertCounter, setInsertCounter] = useState(0);
+  const [deleteReply, setDeleteReply] = useState(false);
+  const [deleteCandidate, setDeleteCandidate] = useState(null);
 
   const handleAdd = (data) => {
     const reply = data;
+    reply.uuid = uuidv4();
     let savedReplies = localStorage.getItem("savedReplies");
     if (savedReplies) {
       let temp = JSON.parse(JSON.parse(savedReplies));
@@ -85,7 +137,6 @@ function SavedReplies({ loadReply, ...props }) {
   };
 
   const loadReplies = () => {
-    console.log("This got called");
     let savedReplies = localStorage.getItem("savedReplies");
     if (savedReplies) {
       let temp = JSON.parse(JSON.parse(savedReplies));
@@ -98,6 +149,11 @@ function SavedReplies({ loadReply, ...props }) {
   useEffect(() => {
     loadReplies();
   }, [insertCounter]);
+
+  const handleDelete = (uuid) => {
+    setDeleteReply(true);
+    setDeleteCandidate(uuid);
+  };
 
   return (
     <div className="tw-bg-white tw-rounded-lg tw-font-sans tw-w-full tw-shadow-lg tw-max-w-[400px]">
@@ -129,6 +185,8 @@ function SavedReplies({ loadReply, ...props }) {
                       onClick={(data) => {
                         loadReply(data);
                       }}
+                      uuid={reply.uuid}
+                      onDelete={handleDelete}
                       {...reply}
                     />
                   </div>
@@ -138,6 +196,23 @@ function SavedReplies({ loadReply, ...props }) {
           </div>
         ) : (
           <AddReply add={handleAdd} cancel={handleCancel} />
+        )}
+        {deleteReply === true ? (
+          <DeleteReply
+            uuid={deleteCandidate}
+            onCancel={() => {
+              setDeleteReply(false);
+              setDeleteCandidate(null);
+            }}
+            onDeleted={(replies) => {
+              setReplies(replies);
+              setInsertCounter(insertCounter + 1);
+              setDeleteReply(false);
+              setDeleteCandidate(null);
+            }}
+          />
+        ) : (
+          ""
         )}
       </div>
       {addReply === false ? (
