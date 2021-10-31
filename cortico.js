@@ -384,6 +384,7 @@ async function setupDocumentPage() {
   const patient_info = await getPatientInfo();
 
   pdf_links.forEach(function (pdf_link) {
+    console.log("PDF Link", pdf_link);
     if (pdf_link.href.indexOf("?sort") > -1) return;
 
     const email_btn = create(
@@ -406,7 +407,11 @@ async function setupDocumentPage() {
                   reader.onload = () => resolve(reader.result);
                   reader.readAsDataURL(blob);
                 });
-
+                pubsub.publish("document", {
+                  name: pdf_link.textContent,
+                  data: dataUrl,
+                });
+                /*
                 const patientFormResponse = await emailPatient(
                   patient_info,
                   access_token,
@@ -421,7 +426,7 @@ async function setupDocumentPage() {
                         `<p>${patient_info.email} was sent a <a style='text-decoration:underline' target="_blank" href="${patientFormResponse.preview}">document</a>.</p>`
                       )
                     );
-                }
+                }*/
               }
             );
           },
@@ -1475,7 +1480,7 @@ async function checkAllEligibility() {
       const temp = Object.assign({}, appointmentInfo[i]);
       temp.total = length;
       temp.current = i + 1;
-      pubsub.publish("check-eligibility", temp);
+      publish("check-eligibility", temp);
 
       const demographic_no = appointmentInfo[i].demographic_no;
       let result = null;

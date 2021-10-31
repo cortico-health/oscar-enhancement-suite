@@ -9,6 +9,7 @@ import To from "./ToInput";
 import Loader from "./Loader";
 import { MailIcon, TextIcon, PlusIcon } from "../Icons/HeroIcons";
 import { getCorticoUrl } from "../Utils/Utils";
+import Documents from "./Documents";
 
 const EncounterOption = forwardRef((props, ref) => {
   return (
@@ -40,6 +41,7 @@ const EncounterOption = forwardRef((props, ref) => {
 
 function MessengerWindow({
   onSubmit,
+  open,
   close,
   patient,
   loading,
@@ -54,6 +56,12 @@ function MessengerWindow({
   const subject = useRef();
   const message = useRef();
   const encounter = useRef();
+
+  const [document, setDocument] = useState(null);
+  const [documentData, setDocumentData] = useState({
+    name: null,
+    data: null,
+  });
 
   useEffect(() => {
     if (patient?.email) {
@@ -73,18 +81,42 @@ function MessengerWindow({
       to: email,
       subject: subject.current.value,
       body: message.current.value,
-      pdf_html: "<div>Hello World/div>",
     };
 
+    if (document === true) {
+      data.attachment = documentData.data;
+    }
+
     const opts = {
-      encounter: encounter.current.checked,
+      encounter: encounter && encounter.current && encounter.current.checked,
       scheme,
     };
     onSubmit(data, opts);
   };
 
+  useEffect(() => {
+    pubsub.subscribe("document", (evtName, data) => {
+      setDocument(true);
+      setDocumentData(data);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (document === true) {
+      open && open();
+    }
+  }, [document]);
+
+  const removeDocument = () => {
+    setDocument(false);
+    setDocumentData({
+      name: null,
+      data: null,
+    });
+  };
+
   return (
-    <form onSubmit={submitData}>
+    <form onSubmit={submitData} className="tw-m-0">
       <Header close={close} />
       <div>
         <div>
@@ -109,6 +141,16 @@ function MessengerWindow({
           {encounterOption === true ? (
             <div className="tw-p-4">
               <EncounterOption ref={encounter} />
+            </div>
+          ) : (
+            ""
+          )}
+          {document === true ? (
+            <div className="tw-p-4">
+              <Documents
+                onDelete={removeDocument}
+                name={documentData.name}
+              ></Documents>
             </div>
           ) : (
             ""

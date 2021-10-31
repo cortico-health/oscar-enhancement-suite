@@ -8,6 +8,7 @@ import { sendMessage } from "../Api/Api";
 import Encounter from "../core/Encounter";
 import PreactModal from "../Modal/PreactModal";
 import SavedReplies from "./SavedReplies";
+import { pubSubInit } from "../PubSub/PubSub";
 
 function MessageException(message) {
   this.message = message;
@@ -158,6 +159,7 @@ function Messenger(patient, opts, container) {
             loading={loading}
             onSubmit={handleSubmit}
             close={handleClose}
+            open={handleOpen}
             showSavedReplies={() => {
               setShowModal(true);
             }}
@@ -185,7 +187,11 @@ function Messenger(patient, opts, container) {
   }
 
   return render(
-    <Content patient={patient} encounter={opts.encounter} />,
+    <Content
+      patient={patient}
+      encounter={opts.encounter}
+      document={opts.document}
+    />,
     _container
   );
 }
