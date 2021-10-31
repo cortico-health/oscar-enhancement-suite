@@ -458,6 +458,20 @@ async function setupEFormPage() {
     return;
   }
 
+  await loadExtensionStorageValue("jwt_access_token").then(async function (
+    access_token
+  ) {
+    let html = document.cloneNode(true);
+    await convertImagesToDataURLs(html);
+    stripScripts(html);
+    html = html.documentElement.outerHTML;
+
+    pubsub.publish("eform", {
+      name: "eForm",
+      html,
+    });
+  });
+  /*
   const patient_info = await getPatientInfo();
 
   const email_btn = create(
@@ -505,6 +519,7 @@ async function setupEFormPage() {
   ); // end create.
 
   email_parent.appendChild(email_btn);
+  */
 }
 
 function delegate(element, event, descendentSelector, callback) {

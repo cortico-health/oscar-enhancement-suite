@@ -62,6 +62,7 @@ function MessengerWindow({
     name: null,
     data: null,
   });
+  const [eForm, setEForm] = useState(false);
 
   useEffect(() => {
     if (patient?.email) {
@@ -83,8 +84,13 @@ function MessengerWindow({
       body: message.current.value,
     };
 
-    if (document === true) {
+    if (document === true && eForm === false) {
       data.attachment = documentData.data;
+    }
+
+    if (document === true && eForm === true) {
+      console.log("Document Data", documentData);
+      data.pdf_html = documentData.html;
     }
 
     const opts = {
@@ -99,10 +105,16 @@ function MessengerWindow({
       setDocument(true);
       setDocumentData(data);
     });
+
+    pubsub.subscribe("eform", (evtName, data) => {
+      setDocument(true);
+      setEForm(true);
+      setDocumentData(data);
+    });
   }, []);
 
   useEffect(() => {
-    if (document === true) {
+    if (document === true && eForm === false) {
       open && open();
     }
   }, [document]);

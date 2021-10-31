@@ -138,7 +138,7 @@ function Messenger(patient, opts, container) {
     }, []);
 
     return (
-      <div className="tailwind tw-font-sans tw-fixed tw-z-10005">
+      <div className="tailwind tw-font-sans tw-fixed tw-z-10005 DoNotPrint">
         <PreactModal
           show={showModal}
           close={() => {
