@@ -1192,7 +1192,9 @@ function getResetCacheButton() {
         "click .cortico-btn.warning.bottom": async (e) => {
           if (confirm("Are you sure you want to clear your cache?")) {
             localStorage.clear();
-            await chrome.storage.local.clear();
+            if (!window.is_dev) {
+              await chrome.storage.local.clear();
+            }
 
             if (!alert("Successfully reset cache, the page will now reload."))
               window.location.reload();
@@ -2007,13 +2009,17 @@ async function setupPreferredPharmacy(code, demographic_no) {
   const corticoPharmacyText = JSON.parse(respText);
   var faxNumber = corticoPharmacyText[0]["fax_number"] || null;
   var searchTerm = corticoPharmacyText[0]["name"] || null;
+  var fullPharmacyName = searchTerm;
 
   // only use the first word on the pharmacy name to search for list
+  // then remove letter or number
   searchTerm = searchTerm ? searchTerm.split(" ")[0] : null;
+  searchTerm = searchTerm.replace(/[^\w\s]/gi, "");
 
   // cleanup fax number to format starting with 1
   // This might be an issue if the oscar pharmacies don't match this format
   if (faxNumber) faxNumber = formatNumber(faxNumber);
+
   var demographicNo = demographic_no;
   if (!demographic_no) {
     demographicNo = getDemographicNo();
@@ -2075,7 +2081,7 @@ async function setupPreferredPharmacy(code, demographic_no) {
         else console.log("Updating preferred pharmacy");
       }
     } else {
-      const msg = `Customer pharmacy ${searchTerm} does not exist in your Oscar pharmacy database!`;
+      const msg = `Customer pharmacy ${fullPharmacyName} does not exist in your Oscar pharmacy database!`;
       storePharmaciesFailureCache(demographicNo, msg);
       displayPharmaciesFailure(demographicNo, msg);
       if (isRxPage) alert(msg);
@@ -2091,7 +2097,7 @@ function displayPharmaciesFailure(demograhicNo, msg) {
   );
 }
 
-function storePharmaciesCache(demographicNo) {
+function storePharmaciesCache(demographicNo, hasPharmacy) {
   console.log("storing demographic in cache", demographicNo);
   var _cache = localStorage.getItem("pharmaciesCache");
   var cache = JSON.parse(_cache);
@@ -2110,7 +2116,10 @@ function storePharmaciesCache(demographicNo) {
     demographics = [];
   }
 
-  demographics.push(demographicNo);
+  demographics.push({
+    demographicNo: demographicNo,
+    hasPharmacy: hasPharmacy,
+  });
 
   cache = {
     date: date,
@@ -2239,6 +2248,7 @@ async function setupPreferredPharmacies() {
         demographics = Array.isArray(cachedDemographics)
           ? cachedDemographics
           : JSON.parse(cachedDemographics);
+        demographics = demographics.map((x) => x.demographicNo);
       }
 
       if (
@@ -2257,15 +2267,17 @@ async function setupPreferredPharmacies() {
         }, 2000);
       });
 
-      storePharmaciesCache(demographicNo);
-
       console.log("Checking if appt has pharmacy codes...");
       const apptTitle = element.attributes.title.textContent;
       const pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle);
       if (!pharmacyCode) {
+        storePharmaciesCache(demographicNo, false);
         console.log("Pharmacy code not found from appt");
         continue;
       }
+      storePharmaciesCache(demographicNo, true);
+
+      console.log("phar", pharmacyCode);
       await setupPreferredPharmacy(pharmacyCode, demographicNo);
     } catch (err) {
       storePharmaciesFailureCache(demographicNo, err.message);

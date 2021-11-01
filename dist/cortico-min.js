@@ -1313,7 +1313,8 @@ function MessengerWindow(_ref) {
       setEForm = _useState10[1];
 
   (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useEffect)(function () {
-    if (patient !== null && patient !== void 0 && patient.email) {//setEmail(patient.email);
+    if (patient !== null && patient !== void 0 && patient.email) {
+      setEmail(patient.email);
     }
   }, [patient === null || patient === void 0 ? void 0 : patient.email]);
 
@@ -3094,7 +3095,14 @@ function setAppointmentCheckbox(apptTd, apptInfo, checkCache, pharmaciesCache) {
     return item.appointment_no === appointmentNo;
   }) || {};
   var cacheValue = checkCache[apptInfoItem.demographic_no];
-  var isPharmacyCached = pharmaciesCache.demographics.includes(apptInfoItem.demographic_no);
+  var cachedDemographics = pharmaciesCache.demographics;
+  var demographics = Array.isArray(cachedDemographics) ? cachedDemographics : JSON.parse(cachedDemographics);
+  demographics = demographics.filter(function (x) {
+    return x.hasPharmacy;
+  }).map(function (x) {
+    return x.demographicNo;
+  });
+  var isPharmacyCached = demographics.includes(apptInfoItem.demographic_no);
   var menuIcon = '<small>&#10006;</small>';
   var cacheColor = '#555555';
   var anchor = apptTd.querySelector("a.apptStatus");
@@ -3111,7 +3119,7 @@ function setAppointmentCheckbox(apptTd, apptInfo, checkCache, pharmaciesCache) {
       cacheColor = '#555555';
     }
 
-    var masterRecord = apptTd.querySelector("a.masterbtn");
+    var masterRecord = apptTd.querySelector("a.masterbtn") || apptTd.querySelector("a.masterBtn");
     masterRecord.append((0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_7__.create)("\n    <div class='appointment-checkbox-wrapper'>\n      <div class='appointment-checkbox' style='background-color:".concat(cacheColor, "'>\n        ").concat(menuIcon, "\n      </div>\n    </div>\n    ")));
   }
 
@@ -7898,23 +7906,29 @@ function getResetCacheButton() {
               switch (_context3.prev = _context3.next) {
                 case 0:
                   if (!confirm("Are you sure you want to clear your cache?")) {
-                    _context3.next = 7;
+                    _context3.next = 8;
                     break;
                   }
 
                   localStorage.clear();
-                  _context3.next = 4;
+
+                  if (window.is_dev) {
+                    _context3.next = 5;
+                    break;
+                  }
+
+                  _context3.next = 5;
                   return chrome.storage.local.clear();
 
-                case 4:
+                case 5:
                   if (!alert("Successfully reset cache, the page will now reload.")) window.location.reload();
-                  _context3.next = 8;
+                  _context3.next = 9;
                   break;
 
-                case 7:
+                case 8:
                   console.log("Clear cache cancelled");
 
-                case 8:
+                case 9:
                 case "end":
                   return _context3.stop();
               }
@@ -8805,7 +8819,7 @@ function setupPreferredPharmacy(_x7, _x8) {
 
 function _setupPreferredPharmacy() {
   _setupPreferredPharmacy = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee18(code, demographic_no) {
-    var pharmacyCode, corticoPharmacy, respText, corticoPharmacyText, faxNumber, searchTerm, demographicNo, currPharmacyResults, currPharmacyText, preferredPharmacy, currentlyUsingPharmacy, results, text, json, pharmacyUpdated, isRxPage, pharmacy, setPharmacyResults, setPharmacyText, msg;
+    var pharmacyCode, corticoPharmacy, respText, corticoPharmacyText, faxNumber, searchTerm, fullPharmacyName, demographicNo, currPharmacyResults, currPharmacyText, preferredPharmacy, currentlyUsingPharmacy, results, text, json, pharmacyUpdated, isRxPage, pharmacy, setPharmacyResults, setPharmacyText, msg;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee18$(_context18) {
       while (1) {
         switch (_context18.prev = _context18.next) {
@@ -8828,9 +8842,12 @@ function _setupPreferredPharmacy() {
             respText = _context18.sent;
             corticoPharmacyText = JSON.parse(respText);
             faxNumber = corticoPharmacyText[0]["fax_number"] || null;
-            searchTerm = corticoPharmacyText[0]["name"] || null; // only use the first word on the pharmacy name to search for list
+            searchTerm = corticoPharmacyText[0]["name"] || null;
+            fullPharmacyName = searchTerm; // only use the first word on the pharmacy name to search for list
+            // then remove letter or number
 
-            searchTerm = searchTerm ? searchTerm.split(" ")[0] : null; // cleanup fax number to format starting with 1
+            searchTerm = searchTerm ? searchTerm.split(" ")[0] : null;
+            searchTerm = searchTerm.replace(/[^\w\s]/gi, ""); // cleanup fax number to format starting with 1
             // This might be an issue if the oscar pharmacies don't match this format
 
             if (faxNumber) faxNumber = formatNumber(faxNumber);
@@ -8840,16 +8857,16 @@ function _setupPreferredPharmacy() {
               demographicNo = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getDemographicNo)();
             }
 
-            _context18.next = 17;
+            _context18.next = 19;
             return getCurrentPharmacy(demographicNo);
 
-          case 17:
+          case 19:
             currPharmacyResults = _context18.sent;
             _context18.t0 = JSON;
-            _context18.next = 21;
+            _context18.next = 23;
             return currPharmacyResults.text();
 
-          case 21:
+          case 23:
             _context18.t1 = _context18.sent;
             currPharmacyText = _context18.t0.parse.call(_context18.t0, _context18.t1);
             console.log("Current Pharmacy:", currPharmacyText);
@@ -8863,26 +8880,26 @@ function _setupPreferredPharmacy() {
             console.log("currently using pharmacy ".concat(searchTerm.toLowerCase(), ", ").concat(currentlyUsingPharmacy));
 
             if (!(searchTerm && !currentlyUsingPharmacy)) {
-              _context18.next = 54;
+              _context18.next = 56;
               break;
             }
 
-            _context18.next = 30;
+            _context18.next = 32;
             return getPharmacyResults(searchTerm);
 
-          case 30:
+          case 32:
             results = _context18.sent;
-            _context18.next = 33;
+            _context18.next = 35;
             return results.text();
 
-          case 33:
+          case 35:
             text = _context18.sent;
             json = JSON.parse(text);
             pharmacyUpdated = json.length > 0;
             isRxPage = window.location.href.indexOf("oscarRx/choosePatient.do") > -1;
 
             if (!pharmacyUpdated) {
-              _context18.next = 50;
+              _context18.next = 52;
               break;
             }
 
@@ -8898,33 +8915,33 @@ function _setupPreferredPharmacy() {
             }
 
             if (!pharmacy) {
-              _context18.next = 48;
+              _context18.next = 50;
               break;
             }
 
-            _context18.next = 43;
+            _context18.next = 45;
             return setPreferredPharmacy(pharmacy, demographicNo);
 
-          case 43:
+          case 45:
             setPharmacyResults = _context18.sent;
-            _context18.next = 46;
+            _context18.next = 48;
             return setPharmacyResults.text();
 
-          case 46:
+          case 48:
             setPharmacyText = _context18.sent;
             if (isRxPage) alert("Updating preferred pharmacy, press Ok to reload");else console.log("Updating preferred pharmacy");
 
-          case 48:
-            _context18.next = 54;
+          case 50:
+            _context18.next = 56;
             break;
 
-          case 50:
-            msg = "Customer pharmacy ".concat(searchTerm, " does not exist in your Oscar pharmacy database!");
+          case 52:
+            msg = "Customer pharmacy ".concat(fullPharmacyName, " does not exist in your Oscar pharmacy database!");
             storePharmaciesFailureCache(demographicNo, msg);
             displayPharmaciesFailure(demographicNo, msg);
             if (isRxPage) alert(msg);else console.warn(msg);
 
-          case 54:
+          case 56:
           case "end":
             return _context18.stop();
         }
@@ -8939,7 +8956,7 @@ function displayPharmaciesFailure(demograhicNo, msg) {
   sidebar_panel.appendChild((0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.htmlToElement)("<div>demo#" + demograhicNo + " : " + msg));
 }
 
-function storePharmaciesCache(demographicNo) {
+function storePharmaciesCache(demographicNo, hasPharmacy) {
   console.log("storing demographic in cache", demographicNo);
 
   var _cache = localStorage.getItem("pharmaciesCache");
@@ -8960,7 +8977,10 @@ function storePharmaciesCache(demographicNo) {
     demographics = [];
   }
 
-  demographics.push(demographicNo);
+  demographics.push({
+    demographicNo: demographicNo,
+    hasPharmacy: hasPharmacy
+  });
   cache = {
     date: date,
     demographics: demographics
@@ -9114,7 +9134,7 @@ function _setupPreferredPharmacies() {
 
           case 7:
             if (!(i < appointments.length)) {
-              _context21.next = 52;
+              _context21.next = 54;
               break;
             }
 
@@ -9129,7 +9149,7 @@ function _setupPreferredPharmacies() {
               break;
             }
 
-            return _context21.abrupt("continue", 49);
+            return _context21.abrupt("continue", 51);
 
           case 15:
             element = appointments[i].querySelector("a.apptLink");
@@ -9139,7 +9159,7 @@ function _setupPreferredPharmacies() {
               break;
             }
 
-            return _context21.abrupt("continue", 49);
+            return _context21.abrupt("continue", 51);
 
           case 18:
             demographicNo = null;
@@ -9154,6 +9174,9 @@ function _setupPreferredPharmacies() {
             if (pharmaciesCache && pharmaciesCache["demographics"]) {
               cachedDemographics = pharmaciesCache["demographics"];
               demographics = Array.isArray(cachedDemographics) ? cachedDemographics : JSON.parse(cachedDemographics);
+              demographics = demographics.map(function (x) {
+                return x.demographicNo;
+              });
             }
 
             if (!(demographics && Array.isArray(demographics) && demographics.includes(demographicNo) && pharmaciesCache.date == dayjs__WEBPACK_IMPORTED_MODULE_6___default()().format("YYYY-MM-DD"))) {
@@ -9162,7 +9185,7 @@ function _setupPreferredPharmacies() {
             }
 
             console.log("Demographic ".concat(demographicNo, " is cached, skipping"));
-            return _context21.abrupt("continue", 49);
+            return _context21.abrupt("continue", 51);
 
           case 30:
             _context21.next = 32;
@@ -9173,7 +9196,6 @@ function _setupPreferredPharmacies() {
             });
 
           case 32:
-            storePharmaciesCache(demographicNo);
             console.log("Checking if appt has pharmacy codes...");
             apptTitle = element.attributes.title.textContent;
             pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle);
@@ -9183,33 +9205,36 @@ function _setupPreferredPharmacies() {
               break;
             }
 
+            storePharmaciesCache(demographicNo, false);
             console.log("Pharmacy code not found from appt");
-            return _context21.abrupt("continue", 49);
+            return _context21.abrupt("continue", 51);
 
           case 39:
-            _context21.next = 41;
+            storePharmaciesCache(demographicNo, true);
+            console.log("phar", pharmacyCode);
+            _context21.next = 43;
             return setupPreferredPharmacy(pharmacyCode, demographicNo);
 
-          case 41:
-            _context21.next = 47;
+          case 43:
+            _context21.next = 49;
             break;
 
-          case 43:
-            _context21.prev = 43;
+          case 45:
+            _context21.prev = 45;
             _context21.t0 = _context21["catch"](19);
             storePharmaciesFailureCache(demographicNo, _context21.t0.message);
             displayPharmaciesFailure(demographicNo, _context21.t0.message);
 
-          case 47:
-            _context21.prev = 47;
-            return _context21.finish(47);
-
           case 49:
+            _context21.prev = 49;
+            return _context21.finish(49);
+
+          case 51:
             i++;
             _context21.next = 7;
             break;
 
-          case 52:
+          case 54:
             window.setupPreferredPharmaciesRunning = false;
             pubsub.publish("check-batch-pharmacies", {
               complete: true,
@@ -9217,12 +9242,12 @@ function _setupPreferredPharmacies() {
               error: error
             });
 
-          case 54:
+          case 56:
           case "end":
             return _context21.stop();
         }
       }
-    }, _callee21, null, [[19, 43, 47, 49]]);
+    }, _callee21, null, [[19, 45, 49, 51]]);
   }));
   return _setupPreferredPharmacies.apply(this, arguments);
 }

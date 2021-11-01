@@ -194,7 +194,13 @@ export function setAppointmentCheckbox(apptTd, apptInfo, checkCache, pharmaciesC
   }) || {}
 
   const cacheValue = checkCache[apptInfoItem.demographic_no]
-  const isPharmacyCached = pharmaciesCache.demographics.includes(apptInfoItem.demographic_no)
+  let cachedDemographics = pharmaciesCache.demographics 
+  let demographics = Array.isArray(cachedDemographics)
+    ? cachedDemographics
+    : JSON.parse(cachedDemographics);
+  demographics = demographics.filter(x => x.hasPharmacy).map(x => x.demographicNo)
+
+  const isPharmacyCached = demographics.includes(apptInfoItem.demographic_no)
 
   let menuIcon = '<small>&#10006;</small>';
   let cacheColor = '#555555';
@@ -212,7 +218,7 @@ export function setAppointmentCheckbox(apptTd, apptInfo, checkCache, pharmaciesC
       cacheColor = '#555555';
     }
 
-    let masterRecord = apptTd.querySelector("a.masterbtn");
+    let masterRecord = apptTd.querySelector("a.masterbtn") || apptTd.querySelector("a.masterBtn");
     masterRecord.append(create(`
     <div class='appointment-checkbox-wrapper'>
       <div class='appointment-checkbox' style='background-color:${cacheColor}'>
