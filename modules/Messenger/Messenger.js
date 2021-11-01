@@ -8,7 +8,7 @@ import { sendMessage } from "../Api/Api";
 import Encounter from "../core/Encounter";
 import PreactModal from "../Modal/PreactModal";
 import SavedReplies from "./SavedReplies";
-import { pubSubInit } from "../PubSub/PubSub";
+import Login from "../Login/Login";
 
 function MessageException(message) {
   this.message = message;
@@ -43,6 +43,7 @@ function Messenger(patient, opts, container) {
     const [showModal, setShowModal] = useState(false);
     const [subject, setSubject] = useState(null);
     const [body, setBody] = useState(null);
+    const [showLogin, setShowLogin] = useState(false);
 
     const handleOpen = () => {
       setOpen(true);
@@ -53,11 +54,7 @@ function Messenger(patient, opts, container) {
     };
 
     const promptLogin = () => {
-      setMessageInfo({
-        title: "Log In",
-        content: "Please log in to use this service",
-      });
-      setShowNotification(true);
+      setShowLogin(true);
     };
 
     const handleSubmit = async (data, opts) => {
@@ -146,6 +143,14 @@ function Messenger(patient, opts, container) {
           }}
         >
           <SavedReplies loadReply={loadReply}></SavedReplies>
+        </PreactModal>
+        <PreactModal
+          show={showLogin}
+          close={() => {
+            setShowLogin(false);
+          }}
+        >
+          <Login />
         </PreactModal>
         <div
           className={`tw-fixed tw-bottom-5 tw-right-5 tw-bg-white tw-z-10000 tw-max-w-[400px] tw-shadow-xl tw-w-full tw-rounded-md tw-transform tw-transition-transform tw-duration-200 tw-ease-in-out ${

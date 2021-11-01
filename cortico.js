@@ -156,9 +156,8 @@ const init_cortico = async function () {
         },
         document.getElementById("eform_container")
       );
+      setupEFormPage();
     }
-
-    setupEFormPage();
   } else if (route.indexOf("dms/documentReport.jsp") > -1) {
     setupDocumentPage();
     const patient_info = await getPatientInfo();
