@@ -1313,7 +1313,9 @@ function MessengerWindow(_ref) {
       setEForm = _useState10[1];
 
   (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useEffect)(function () {
-    if (patient !== null && patient !== void 0 && patient.email) {//setEmail(patient.email);
+    if (patient !== null && patient !== void 0 && patient.email) {
+      console.log("Patient email found", patient);
+      setEmail(patient.email);
     }
   }, [patient === null || patient === void 0 ? void 0 : patient.email]);
 

@@ -66,7 +66,8 @@ function MessengerWindow({
 
   useEffect(() => {
     if (patient?.email) {
-      //setEmail(patient.email);
+      console.log("Patient email found", patient);
+      setEmail(patient.email);
     }
   }, [patient?.email]);
 
