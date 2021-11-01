@@ -21,11 +21,11 @@ module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "sendEmailForm": () => (/* binding */ sendEmailForm)
+/* harmony export */   "sendMessage": () => (/* binding */ sendMessage)
 /* harmony export */ });
 /* harmony import */ var _Utils_Utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Utils/Utils */ "./modules/Utils/Utils.js");
 
-function sendEmailForm(data, token) {
+function sendMessage(data, token, opts) {
   var url = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_0__.getCorticoUrl)() + "/api/plug-in/email-form/";
   return fetch(url, {
     method: "POST",
@@ -103,14 +103,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "InfoIcon": () => (/* binding */ InfoIcon),
 /* harmony export */   "SendIcon": () => (/* binding */ SendIcon),
-/* harmony export */   "MessageIcon": () => (/* binding */ MessageIcon)
+/* harmony export */   "MessageIcon": () => (/* binding */ MessageIcon),
+/* harmony export */   "MailIcon": () => (/* binding */ MailIcon),
+/* harmony export */   "TextIcon": () => (/* binding */ TextIcon),
+/* harmony export */   "PlusIcon": () => (/* binding */ PlusIcon),
+/* harmony export */   "LeftArrowIcon": () => (/* binding */ LeftArrowIcon),
+/* harmony export */   "TrashIcon": () => (/* binding */ TrashIcon),
+/* harmony export */   "PaperClipIcon": () => (/* binding */ PaperClipIcon),
+/* harmony export */   "CheckIcon": () => (/* binding */ CheckIcon)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
 /* provided dependency */ var h = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js")["h"];
 
 var _excluded = ["className"],
     _excluded2 = ["className"],
-    _excluded3 = ["className"];
+    _excluded3 = ["className"],
+    _excluded4 = ["className"],
+    _excluded5 = ["className"],
+    _excluded6 = ["className"],
+    _excluded7 = ["className"],
+    _excluded8 = ["className"],
+    _excluded9 = ["className"],
+    _excluded10 = ["className"];
 function InfoIcon(_ref) {
   var className = _ref.className,
       props = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__["default"])(_ref, _excluded);
@@ -162,6 +176,125 @@ function MessageIcon(_ref3) {
     d: "M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
   }));
 }
+function MailIcon(_ref4) {
+  var className = _ref4.className,
+      props = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__["default"])(_ref4, _excluded4);
+
+  return h("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    className: className,
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, h("path", {
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    "stroke-width": "2",
+    d: "M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+  }));
+}
+function TextIcon(_ref5) {
+  var className = _ref5.className,
+      props = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__["default"])(_ref5, _excluded5);
+
+  return h("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    className: className,
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, h("path", {
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    strokeWidth: 2,
+    d: "M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
+  }));
+}
+function PlusIcon(_ref6) {
+  var className = _ref6.className,
+      props = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__["default"])(_ref6, _excluded6);
+
+  return h("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    className: className,
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, h("path", {
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    strokeWidth: 2,
+    d: "M12 6v6m0 0v6m0-6h6m-6 0H6"
+  }));
+}
+function LeftArrowIcon(_ref7) {
+  var className = _ref7.className,
+      props = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__["default"])(_ref7, _excluded7);
+
+  return h("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    className: className,
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, h("path", {
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    strokeWidth: 2,
+    d: "M10 19l-7-7m0 0l7-7m-7 7h18"
+  }));
+}
+function TrashIcon(_ref8) {
+  var className = _ref8.className,
+      props = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__["default"])(_ref8, _excluded8);
+
+  return h("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    className: className,
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, h("path", {
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    strokeWidth: 2,
+    d: "M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+  }));
+}
+function PaperClipIcon(_ref9) {
+  var className = _ref9.className,
+      props = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__["default"])(_ref9, _excluded9);
+
+  return h("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    className: className,
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, h("path", {
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    strokeWidth: 2,
+    d: "M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
+  }));
+}
+function CheckIcon(_ref10) {
+  var className = _ref10.className,
+      props = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__["default"])(_ref10, _excluded10);
+
+  return h("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    className: className,
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, h("path", {
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    strokeWidth: 2,
+    d: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+  }));
+}
 
 /***/ }),
 
@@ -201,6 +334,312 @@ function Loader() {
 
 /***/ }),
 
+/***/ "./modules/Login/Login.js":
+/*!********************************!*\
+  !*** ./modules/Login/Login.js ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var preact_hooks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! preact/hooks */ "./node_modules/preact/hooks/dist/hooks.module.js");
+/* harmony import */ var _resources_icons_96x96_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../resources/icons/96x96.png */ "./resources/icons/96x96.png");
+/* harmony import */ var _LoginWindow__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./LoginWindow */ "./modules/Login/LoginWindow.js");
+/* harmony import */ var _SuccessWindow__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./SuccessWindow */ "./modules/Login/SuccessWindow.js");
+/* harmony import */ var _cortico_Login_Login__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../cortico/Login/Login */ "./modules/cortico/Login/Login.js");
+/* provided dependency */ var h = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js")["h"];
+
+
+
+
+
+
+
+
+
+
+function Login() {
+  var _useState = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_4__.useState)(false),
+      _useState2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_useState, 2),
+      loading = _useState2[0],
+      setLoading = _useState2[1];
+
+  var _useState3 = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_4__.useState)(false),
+      _useState4 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_useState3, 2),
+      success = _useState4[0],
+      setSuccess = _useState4[1];
+
+  var _useState5 = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_4__.useState)(null),
+      _useState6 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_useState5, 2),
+      error = _useState6[0],
+      setError = _useState6[1];
+
+  var handleSubmit = /*#__PURE__*/function () {
+    var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee(data) {
+      var username, password, response, json, browser;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              setLoading(true);
+              console.log("Login Called", data);
+              _context.next = 4;
+              return new Promise(function (resolve) {
+                return setTimeout(resolve, 1000);
+              });
+
+            case 4:
+              username = data.username, password = data.password;
+              _context.prev = 5;
+              _context.next = 8;
+              return (0,_cortico_Login_Login__WEBPACK_IMPORTED_MODULE_8__.signInRequest)(username, password);
+
+            case 8:
+              response = _context.sent;
+              _context.next = 11;
+              return response.json();
+
+            case 11:
+              json = _context.sent;
+              console.log("json", json);
+              browser = browser ? browser : window.chrome;
+
+              if (browser) {
+                if (window.is_dev) {
+                  window.localStorage.setItem("jwt_access_token", json.access);
+                  window.localStorage.setItem("jwt_expired", false);
+                  window.localStorage.setItem("jwt_username", username);
+                } else {
+                  browser.storage.local.set({
+                    jwt_access_token: json.access
+                  });
+                  browser.storage.local.set({
+                    jwt_expired: false
+                  });
+                  browser.storage.local.set({
+                    jwt_username: username
+                  });
+                }
+              }
+
+              setLoading(false);
+              setSuccess(true);
+              _context.next = 23;
+              break;
+
+            case 19:
+              _context.prev = 19;
+              _context.t0 = _context["catch"](5);
+              setLoading(false);
+              setError(true);
+
+            case 23:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[5, 19]]);
+    }));
+
+    return function handleSubmit(_x) {
+      return _ref.apply(this, arguments);
+    };
+  }();
+
+  return h("div", {
+    className: "tw-bg-white tw-rounded-lg tw-p-4 tw-min-w-[300px] tw-font-sans"
+  }, success !== true ? h(_LoginWindow__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    onSubmit: handleSubmit,
+    error: error,
+    loading: loading
+  }) : h(_SuccessWindow__WEBPACK_IMPORTED_MODULE_7__["default"], null));
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Login);
+
+/***/ }),
+
+/***/ "./modules/Login/LoginWindow.js":
+/*!**************************************!*\
+  !*** ./modules/Login/LoginWindow.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var preact_hooks__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! preact/hooks */ "./node_modules/preact/hooks/dist/hooks.module.js");
+/* harmony import */ var _resources_icons_96x96_png__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../resources/icons/96x96.png */ "./resources/icons/96x96.png");
+/* provided dependency */ var h = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js")["h"];
+
+
+var _excluded = ["onSubmit", "error", "loading"];
+
+
+
+
+function LoginWindow(_ref) {
+  var onSubmit = _ref.onSubmit,
+      error = _ref.error,
+      loading = _ref.loading,
+      props = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__["default"])(_ref, _excluded);
+
+  var _useState = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useState)(false),
+      _useState2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState, 2),
+      warnName = _useState2[0],
+      setWarnName = _useState2[1];
+
+  var username = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useRef)();
+  var password = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useRef)();
+
+  var handleSubmit = function handleSubmit(e) {
+    e.preventDefault();
+    var data = {
+      username: username && username.current.value,
+      password: password && password.current.value
+    };
+    onSubmit(data);
+  };
+
+  (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useEffect)(function () {
+    var clinicname = window.localStorage.getItem("clinicname");
+
+    if (!clinicname) {
+      setWarnName(true);
+    }
+  }, []);
+  return h("div", null, h("div", {
+    className: "tw-flex tw-justify-center tw-items-center"
+  }, h("img", {
+    src: _resources_icons_96x96_png__WEBPACK_IMPORTED_MODULE_4__["default"],
+    className: "tw-w-10 tw-h-10"
+  })), h("div", null, h("h2", {
+    class: "tw-mt-6 tw-text-center tw-text-3xl tw-font-extrabold text-gray-900 tw-px-2"
+  }, "Sign in to your account")), warnName === true ? h("div", {
+    className: "tw-bg-yellow-500 tw-text-white tw-my-4 tw-p-2 tw-rounded-lg tw-text-xs"
+  }, "Your clinic is not set. You won't be able to sign in until this is set.") : "", error === true ? h("div", {
+    className: "tw-bg-red-400 tw-text-white tw-my-4 tw-p-2 tw-rounded-lg tw-text-xs"
+  }, "Something went wrong. Please try again.") : "", h("form", {
+    className: "tw-space-y-4 tw-mt-8",
+    onSubmit: handleSubmit
+  }, h("div", null, h("label", {
+    for: "email",
+    className: "tw-block tw-text-sm tw-font-medium tw-text-gray-700"
+  }, "Username"), h("div", {
+    className: "tw-mt-1"
+  }, h("input", {
+    ref: username,
+    id: "username",
+    name: "username",
+    type: "text",
+    placeholder: "Username",
+    required: true,
+    class: "tw-appearance-none tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md tw-shadow-sm tw-placeholder-gray-400 tw-focus:outline-none tw-focus:ring-indigo-500 tw-focus:border-indigo-500 tw-sm:text-sm"
+  }))), h("div", null, h("label", {
+    for: "password",
+    className: "tw-block tw-text-sm tw-font-medium tw-text-gray-700"
+  }, "Password"), h("div", {
+    className: "tw-mt-1"
+  }, h("input", {
+    ref: password,
+    id: "password",
+    name: "password",
+    type: "password",
+    required: true,
+    placeholder: "Enter your password",
+    class: "tw-appearance-none tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md tw-shadow-sm tw-placeholder-gray-400 tw-focus:outline-none tw-focus:ring-indigo-500 tw-focus:border-indigo-500 tw-sm:text-sm"
+  }))), h("div", null, h("button", {
+    type: "submit",
+    class: "tw-w-full tw-flex tw-justify-center tw-py-2 tw-px-4 tw-border tw-border-transparent tw-rounded-md tw-shadow-sm tw-text-sm tw-font-medium tw-text-white tw-bg-cortico-blue tw-hover:bg-indigo-700 tw-focus:outline-none tw-focus:ring-2 tw-focus:ring-offset-2 tw-focus:ring-indigo-500"
+  }, loading === true ? h("span", {
+    className: "tw-flex tw-justify-center"
+  }, h("svg", {
+    class: "tw-animate-spin tw-h-5 tw-w-5 tw-text-white",
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24"
+  }, h("circle", {
+    className: "tw-opacity-25",
+    cx: "12",
+    cy: "12",
+    r: "10",
+    stroke: "currentColor",
+    "stroke-width": "4"
+  }), h("path", {
+    className: "tw-opacity-75",
+    fill: "currentColor",
+    d: "M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+  }))) : h("span", null, "Sign in")))));
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (LoginWindow);
+
+/***/ }),
+
+/***/ "./modules/Login/SuccessWindow.js":
+/*!****************************************!*\
+  !*** ./modules/Login/SuccessWindow.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var preact_hooks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! preact/hooks */ "./node_modules/preact/hooks/dist/hooks.module.js");
+/* harmony import */ var _Icons_HeroIcons_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Icons/HeroIcons.js */ "./modules/Icons/HeroIcons.js");
+/* provided dependency */ var h = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js")["h"];
+
+
+
+
+function SuccessWindow() {
+  var refresh = function refresh() {
+    window.location.reload();
+  };
+
+  (0,preact_hooks__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    setTimeout(refresh, 5000);
+  }, []);
+  return h("div", {
+    className: "tw-py-4"
+  }, h("div", {
+    className: "tw-flex tw-justify-center tw-flex-col tw-items-center"
+  }, h(_Icons_HeroIcons_js__WEBPACK_IMPORTED_MODULE_2__.CheckIcon, {
+    className: "tw-w-10 tw-h-10 tw-text-green-600"
+  }), h("div", null, h("h2", {
+    class: "tw-mt-4 tw-text-center tw-text-3xl tw-font-extrabold text-gray-900 tw-px-2"
+  }, "Sucessfully logged in!")), h("div", null, h("p", {
+    className: "tw-text-sm tw-text-gray-700 tw-text-center tw-mt-2"
+  }, "Your browser will automatically refresh in 5 seconds..."), h("div", {
+    className: "tw-flex tw-flex-col tw-items-center tw-justify-center"
+  }, h("p", {
+    className: "tw-text-sm tw-text-gray-700 tw-text-center tw-mt-2"
+  }, "Not refreshing? Click the button below"), h("button", {
+    onClick: refresh,
+    className: "tw-bg-cortico-blue tw-mt-2 tw-py-2 tw-px-4 tw-text-white tw-rounded-md tw-text-sm"
+  }, "Refresh")))));
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SuccessWindow);
+
+/***/ }),
+
 /***/ "./modules/Messenger/ChatInput.js":
 /*!****************************************!*\
   !*** ./modules/Messenger/ChatInput.js ***!
@@ -212,12 +651,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
-/* harmony import */ var preact_compat__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! preact/compat */ "./node_modules/preact/compat/dist/compat.module.js");
+/* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var preact_hooks__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! preact/hooks */ "./node_modules/preact/hooks/dist/hooks.module.js");
+/* harmony import */ var preact_compat__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! preact/compat */ "./node_modules/preact/compat/dist/compat.module.js");
 /* provided dependency */ var h = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js")["h"];
 
+var _excluded = ["value"];
 
-var Chat = (0,preact_compat__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(function (props, ref) {
+
+
+var Chat = (0,preact_compat__WEBPACK_IMPORTED_MODULE_3__.forwardRef)(function (_ref, ref) {
+  var value = _ref.value,
+      props = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__["default"])(_ref, _excluded);
+
+  (0,preact_hooks__WEBPACK_IMPORTED_MODULE_2__.useEffect)(function () {
+    if (value) {
+      ref.current.value = value;
+    }
+  }, [value]);
   return h("div", {
     className: ""
   }, h("textarea", {
@@ -228,6 +680,46 @@ var Chat = (0,preact_compat__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(function (p
   }));
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Chat);
+
+/***/ }),
+
+/***/ "./modules/Messenger/Documents.js":
+/*!****************************************!*\
+  !*** ./modules/Messenger/Documents.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var _Icons_HeroIcons__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Icons/HeroIcons */ "./modules/Icons/HeroIcons.js");
+/* provided dependency */ var h = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js")["h"];
+
+
+
+function Documents(_ref) {
+  var name = _ref.name,
+      onDelete = _ref.onDelete;
+  return h("div", null, h("div", {
+    className: "tw-flex tw-justify-between tw-items-center"
+  }, h("div", {
+    className: "tw-flex"
+  }, h(_Icons_HeroIcons__WEBPACK_IMPORTED_MODULE_1__.PaperClipIcon, {
+    className: "tw-text-gray-800 tw-w-6 tw-h-6"
+  }), h("div", null, h("p", {
+    className: "tw-ml-2 tw-text-sm tw-text-gray-600"
+  }, name))), h("button", {
+    onClick: onDelete,
+    className: "tw-bg-red-600 tw-rounded-md tw-p-2"
+  }, h(_Icons_HeroIcons__WEBPACK_IMPORTED_MODULE_1__.TrashIcon, {
+    className: "tw-text-white tw-w-4 tw-h-4"
+  }))));
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Documents);
 
 /***/ }),
 
@@ -277,7 +769,7 @@ function Header(_ref) {
     className: "tw-text-white tw-font-light"
   }, "Messenger"), h("p", {
     className: "tw-text-sm tw-text-white tw-mt-2 tw-text-opacity-80 tw-leading-5"
-  }, "Send a message to the patient using this service"), h("div", {
+  }, "Reach out to the patient with ease using this service."), h("div", {
     className: "tw-mt-3 tw-bg-white tw-inline-block tw-py-1 tw-px-2 tw-rounded-md tw-shadow-2xl"
   }, h("img", {
     className: "tw-w-3 tw-h-3 tw-inline-block",
@@ -354,11 +846,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _MessengerWidget__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./MessengerWidget */ "./modules/Messenger/MessengerWidget.js");
 /* harmony import */ var _MessengerWindow__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./MessengerWindow */ "./modules/Messenger/MessengerWindow.js");
 /* harmony import */ var _Api_Api__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Api/Api */ "./modules/Api/Api.js");
+/* harmony import */ var _core_Encounter__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../core/Encounter */ "./modules/core/Encounter.js");
+/* harmony import */ var _Modal_PreactModal__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../Modal/PreactModal */ "./modules/Modal/PreactModal.js");
+/* harmony import */ var _SavedReplies__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./SavedReplies */ "./modules/Messenger/SavedReplies.js");
+/* harmony import */ var _Login_Login__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../Login/Login */ "./modules/Login/Login.js");
 /* provided dependency */ var h = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js")["h"];
 
 
 
-var _excluded = ["patient"];
+var _excluded = ["patient", "encounter"];
+
+
+
+
 
 
 
@@ -418,11 +918,12 @@ var handleErrors = /*#__PURE__*/function () {
   };
 }();
 
-function Messenger(patient) {
-  var container = document.body;
+function Messenger(patient, opts, container) {
+  var _container = container || document.body;
 
   function Content(_ref2) {
     var patient = _ref2.patient,
+        encounter = _ref2.encounter,
         props = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__["default"])(_ref2, _excluded);
 
     var _useState = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_5__.useState)(false),
@@ -453,6 +954,26 @@ function Messenger(patient) {
         messageInfo = _useState10[0],
         setMessageInfo = _useState10[1];
 
+    var _useState11 = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_5__.useState)(false),
+        _useState12 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState11, 2),
+        showModal = _useState12[0],
+        setShowModal = _useState12[1];
+
+    var _useState13 = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_5__.useState)(null),
+        _useState14 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState13, 2),
+        subject = _useState14[0],
+        setSubject = _useState14[1];
+
+    var _useState15 = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_5__.useState)(null),
+        _useState16 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState15, 2),
+        body = _useState16[0],
+        setBody = _useState16[1];
+
+    var _useState17 = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_5__.useState)(false),
+        _useState18 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState17, 2),
+        showLogin = _useState18[0],
+        setShowLogin = _useState18[1];
+
     var handleOpen = function handleOpen() {
       setOpen(true);
     };
@@ -462,39 +983,41 @@ function Messenger(patient) {
     };
 
     var promptLogin = function promptLogin() {
-      setMessageInfo({
-        title: "Log In",
-        content: "Please log in to use this service"
-      });
-      setShowNotification(true);
+      setShowLogin(true);
     };
 
     var handleSubmit = /*#__PURE__*/function () {
-      var _ref3 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee2(data) {
-        var token;
+      var _ref3 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee2(data, opts) {
+        var subject, body, token;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
+                subject = data.subject, body = data.body;
                 setLoading(true);
-                _context2.next = 3;
+                _context2.next = 4;
                 return new Promise(function (resolve) {
                   return setTimeout(resolve, 1000);
                 });
 
-              case 3:
-                _context2.next = 5;
+              case 4:
+                _context2.next = 6;
                 return (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_6__.loadExtensionStorageValue)("jwt_access_token");
 
-              case 5:
+              case 6:
                 token = _context2.sent;
 
                 if (token) {
-                  (0,_Api_Api__WEBPACK_IMPORTED_MODULE_10__.sendEmailForm)(data, token).then(handleErrors).then(function (response) {
+                  (0,_Api_Api__WEBPACK_IMPORTED_MODULE_10__.sendMessage)(data, token).then(handleErrors).then(function (response) {
                     setMessageInfo({
                       title: "Success",
                       content: response.message || "Message successfully sent to ".concat(patient === null || patient === void 0 ? void 0 : patient.email)
                     });
+
+                    if (opts.encounter === true) {
+                      var text = "\n\n[".concat(new Date().toLocaleString(), " .: Email sent to patient] \n").concat(subject, ": ").concat(body);
+                      addEncounterText(text);
+                    }
                   }).catch(function (error) {
                     setMessageInfo({
                       title: error.title,
@@ -506,7 +1029,7 @@ function Messenger(patient) {
                   });
                 }
 
-              case 7:
+              case 8:
               case "end":
                 return _context2.stop();
             }
@@ -514,7 +1037,7 @@ function Messenger(patient) {
         }, _callee2);
       }));
 
-      return function handleSubmit(_x2) {
+      return function handleSubmit(_x2, _x3) {
         return _ref3.apply(this, arguments);
       };
     }();
@@ -551,15 +1074,59 @@ function Messenger(patient) {
         }, _callee3, null, [[0, 8]]);
       }))();
     }, []);
+
+    var loadReply = function loadReply(data) {
+      console.log("Load reply data", data);
+      setSubject(data.subject);
+      setBody(data.body);
+      setShowModal(false);
+    };
+
+    var addEncounterText = function addEncounterText(text) {
+      if (document.readyState === "complete") {
+        _core_Encounter__WEBPACK_IMPORTED_MODULE_11__["default"].addToCaseNote(text);
+      } else {
+        window.addEventListener("load", function () {
+          _core_Encounter__WEBPACK_IMPORTED_MODULE_11__["default"].addToCaseNote(text);
+        }, {
+          once: true
+        });
+      }
+    };
+
+    (0,preact_hooks__WEBPACK_IMPORTED_MODULE_5__.useEffect)(function () {
+      if (localStorage.getItem("name")) {
+        setSubject("".concat(localStorage.getItem("name"), " has sent you a message"));
+      }
+    }, []);
     return h("div", {
-      className: "tailwind tw-font-sans"
-    }, h("div", {
+      className: "tailwind tw-font-sans tw-fixed tw-z-10005 DoNotPrint"
+    }, h(_Modal_PreactModal__WEBPACK_IMPORTED_MODULE_12__["default"], {
+      show: showModal,
+      close: function close() {
+        setShowModal(false);
+      }
+    }, h(_SavedReplies__WEBPACK_IMPORTED_MODULE_13__["default"], {
+      loadReply: loadReply
+    })), h(_Modal_PreactModal__WEBPACK_IMPORTED_MODULE_12__["default"], {
+      show: showLogin,
+      close: function close() {
+        setShowLogin(false);
+      }
+    }, h(_Login_Login__WEBPACK_IMPORTED_MODULE_14__["default"], null)), h("div", {
       className: "tw-fixed tw-bottom-5 tw-right-5 tw-bg-white tw-z-10000 tw-max-w-[400px] tw-shadow-xl tw-w-full tw-rounded-md tw-transform tw-transition-transform tw-duration-200 tw-ease-in-out ".concat(open ? "tw-translate-x-0" : "tw-translate-x-[430px]")
     }, h(_MessengerWindow__WEBPACK_IMPORTED_MODULE_9__["default"], {
       patient: patient,
+      defaultSubject: subject,
+      defaultBody: body,
       loading: loading,
       onSubmit: handleSubmit,
-      close: handleClose
+      close: handleClose,
+      open: handleOpen,
+      showSavedReplies: function showSavedReplies() {
+        setShowModal(true);
+      },
+      encounter: encounter
     })), h("div", {
       className: "tw-fixed tw-bottom-5 tw-right-5 tw-z-5000 tw-shadow-xl"
     }, h(_MessengerWidget__WEBPACK_IMPORTED_MODULE_8__["default"], {
@@ -578,8 +1145,10 @@ function Messenger(patient) {
   }
 
   return (0,preact__WEBPACK_IMPORTED_MODULE_4__.render)(h(Content, {
-    patient: patient
-  }), container);
+    patient: patient,
+    encounter: opts.encounter,
+    document: opts.document
+  }), _container);
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Messenger);
@@ -629,9 +1198,9 @@ function MessengerWidget(_ref) {
     className: "tw-text-white tw-h-10 tw-w-10 tw-mx-auto"
   }), loggedIn === true ? h("p", {
     className: "tw-text-white tw-text-opacity-80 tw-text-sm tw-text-center tw-mt-2"
-  }, "Message Patient") : h("p", {
+  }, "Email Patient") : h("p", {
     className: "tw-text-white tw-text-opacity-80 tw-text-sm tw-text-center tw-mt-2"
-  }, "Login To Send Messages"), h("hr", {
+  }, "Login To Send Email"), h("hr", {
     className: "tw-opacity-20 tw-my-2"
   }), h("div", {
     className: "tw-flex tw-bg-white tw-p-1 tw-rounded-md tw-mt-2"
@@ -663,17 +1232,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
 /* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
 /* harmony import */ var preact_hooks__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! preact/hooks */ "./node_modules/preact/hooks/dist/hooks.module.js");
-/* harmony import */ var _ChatInput__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ChatInput */ "./modules/Messenger/ChatInput.js");
-/* harmony import */ var _SubjectInput__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SubjectInput */ "./modules/Messenger/SubjectInput.js");
-/* harmony import */ var _Header__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Header */ "./modules/Messenger/Header.js");
-/* harmony import */ var _ToInput__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./ToInput */ "./modules/Messenger/ToInput.js");
-/* harmony import */ var _Loader__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Loader */ "./modules/Messenger/Loader.js");
-/* harmony import */ var _Icons_HeroIcons__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Icons/HeroIcons */ "./modules/Icons/HeroIcons.js");
-/* harmony import */ var _Utils_Utils__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Utils/Utils */ "./modules/Utils/Utils.js");
+/* harmony import */ var preact_compat__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! preact/compat */ "./node_modules/preact/compat/dist/compat.module.js");
+/* harmony import */ var _ChatInput__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ChatInput */ "./modules/Messenger/ChatInput.js");
+/* harmony import */ var _SubjectInput__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SubjectInput */ "./modules/Messenger/SubjectInput.js");
+/* harmony import */ var _Header__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Header */ "./modules/Messenger/Header.js");
+/* harmony import */ var _ToInput__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ToInput */ "./modules/Messenger/ToInput.js");
+/* harmony import */ var _Loader__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Loader */ "./modules/Messenger/Loader.js");
+/* harmony import */ var _Icons_HeroIcons__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Icons/HeroIcons */ "./modules/Icons/HeroIcons.js");
+/* harmony import */ var _Utils_Utils__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../Utils/Utils */ "./modules/Utils/Utils.js");
+/* harmony import */ var _Documents__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Documents */ "./modules/Messenger/Documents.js");
 /* provided dependency */ var h = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js")["h"];
 
 
-var _excluded = ["onSubmit", "close", "patient", "loading"];
+var _excluded = ["onSubmit", "open", "close", "patient", "loading", "showSavedReplies", "defaultSubject", "defaultBody", "encounter"];
 
 
 
@@ -683,76 +1254,483 @@ var _excluded = ["onSubmit", "close", "patient", "loading"];
 
 
 
+
+
+var EncounterOption = (0,preact_compat__WEBPACK_IMPORTED_MODULE_4__.forwardRef)(function (props, ref) {
+  return h("label", {
+    class: "tw-inline-flex tw-items-center"
+  }, h("input", {
+    ref: ref,
+    type: "checkbox",
+    class: " tw-h-5 tw-w-5 tw-form-checkbox form-checkbox tw-rounded tw-text-indigo-600 tw-shadow-sm tw-focus:border-cortico-blue tw-focus:ring tw-focus:ring-offset-0 tw-focus:ring-indigo-200 tw-focus:ring-opacity-50 "
+  }), h("span", {
+    class: "tw-ml-2 tw-text-sm tw-text-gray-600"
+  }, "Copy Message To Encounter"));
+});
 
 function MessengerWindow(_ref) {
   var onSubmit = _ref.onSubmit,
+      open = _ref.open,
       close = _ref.close,
       patient = _ref.patient,
       loading = _ref.loading,
+      showSavedReplies = _ref.showSavedReplies,
+      defaultSubject = _ref.defaultSubject,
+      defaultBody = _ref.defaultBody,
+      encounterOption = _ref.encounter,
       props = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__["default"])(_ref, _excluded);
 
-  var _useState = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useState)(null),
+  var _useState = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useState)("aaron@countable.ca"),
       _useState2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState, 2),
       email = _useState2[0],
       setEmail = _useState2[1];
 
+  var _useState3 = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useState)("email"),
+      _useState4 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState3, 2),
+      scheme = _useState4[0],
+      setScheme = _useState4[1];
+
   var subject = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useRef)();
   var message = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useRef)();
+  var encounter = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useRef)();
+
+  var _useState5 = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useState)(null),
+      _useState6 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState5, 2),
+      document = _useState6[0],
+      setDocument = _useState6[1];
+
+  var _useState7 = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useState)({
+    name: null,
+    data: null
+  }),
+      _useState8 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState7, 2),
+      documentData = _useState8[0],
+      setDocumentData = _useState8[1];
+
+  var _useState9 = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useState)(false),
+      _useState10 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState9, 2),
+      eForm = _useState10[0],
+      setEForm = _useState10[1];
+
   (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useEffect)(function () {
     if (patient !== null && patient !== void 0 && patient.email) {
       setEmail(patient.email);
     }
   }, [patient === null || patient === void 0 ? void 0 : patient.email]);
 
+  var handleReply = function handleReply(e) {
+    e.preventDefault();
+    showSavedReplies && showSavedReplies();
+  };
+
   var submitData = function submitData(e) {
     e.preventDefault();
     var data = {
-      clinic_host: (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_10__.getCorticoUrl)().replace(/http.?:\/\//, ""),
+      clinic_host: (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_11__.getCorticoUrl)().replace(/http.?:\/\//, ""),
       to: email,
       subject: subject.current.value,
-      body: message.current.value,
-      pdf_html: "<div>Hello World/div>"
+      body: message.current.value
     };
-    onSubmit(data);
+
+    if (document === true && eForm === false) {
+      data.attachment = documentData.data;
+    }
+
+    if (document === true && eForm === true) {
+      console.log("Document Data", documentData);
+      data.pdf_html = documentData.html;
+    }
+
+    var opts = {
+      encounter: encounter && encounter.current && encounter.current.checked,
+      scheme: scheme
+    };
+    onSubmit(data, opts);
+  };
+
+  (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useEffect)(function () {
+    pubsub.subscribe("document", function (evtName, data) {
+      setDocument(true);
+      setDocumentData(data);
+    });
+    pubsub.subscribe("eform", function (evtName, data) {
+      setDocument(true);
+      setEForm(true);
+      setDocumentData(data);
+    });
+  }, []);
+  (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useEffect)(function () {
+    if (document === true && eForm === false) {
+      open && open();
+    }
+  }, [document]);
+
+  var removeDocument = function removeDocument() {
+    setDocument(false);
+    setDocumentData({
+      name: null,
+      data: null
+    });
   };
 
   return h("form", {
-    onSubmit: submitData
-  }, h(_Header__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    onSubmit: submitData,
+    className: "tw-m-0"
+  }, h(_Header__WEBPACK_IMPORTED_MODULE_7__["default"], {
     close: close
-  }), h("div", {
+  }), h("div", null, h("div", null, h("div", {
     className: "tw-px-4 tw-py-2"
-  }, h(_ToInput__WEBPACK_IMPORTED_MODULE_7__["default"], {
+  }, h(_ToInput__WEBPACK_IMPORTED_MODULE_8__["default"], {
     patient: patient
   })), h("hr", {
     className: "tw-opacity-10"
   }), h("div", {
     className: "tw-w-full"
-  }, h(_SubjectInput__WEBPACK_IMPORTED_MODULE_5__["default"], {
-    ref: subject
-  })), h("hr", {
-    className: "tw-opacity-10"
-  }), h("div", null, h(_ChatInput__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    ref: message
+  }, h(_SubjectInput__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    ref: subject,
+    value: defaultSubject
   })), h("hr", {
     className: "tw-opacity-10"
   }), h("div", {
-    className: "tw-flex tw-justify-end tw-p-4"
+    className: "tw-relative"
+  }, h(_ChatInput__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    ref: message,
+    value: defaultBody
+  }), h("button", {
+    onClick: handleReply,
+    className: "tw-bg-cortico-blue tw-rounded-full tw-p-2 tw-flex tw-items-center tw-justify-center tw-absolute tw-bottom-2 tw-right-2 tw-flex-col tw-drop-shadow-md"
+  }, h(_Icons_HeroIcons__WEBPACK_IMPORTED_MODULE_10__.PlusIcon, {
+    className: "tw-h-5 tw-w-5 tw-text-white"
+  }))), h("hr", {
+    className: "tw-opacity-40"
+  }), encounterOption === true ? h("div", {
+    className: "tw-p-4"
+  }, h(EncounterOption, {
+    ref: encounter
+  })) : "", document === true ? h("div", {
+    className: "tw-p-4"
+  }, h(_Documents__WEBPACK_IMPORTED_MODULE_12__["default"], {
+    onDelete: removeDocument,
+    name: documentData.name
+  })) : ""), h("div", {
+    className: "tw-flex tw-justify-end tw-px-4 tw-py-3 tw-bg-gray-100"
   }, h("button", {
+    disabled: true,
+    className: "tw-bg-green-600 tw-px-3 tw-py-2 tw-rounded-md tw-text-white tw-text-sm tw-flex tw-items-center tw-mr-2 tw-disabled:opacity-50 tw-opacity-50",
+    onClick: function onClick() {
+      setScheme("text");
+    }
+  }, h("span", {
+    className: "tw-flex tw-items-center"
+  }, h("span", null, "Send Text"), h(_Icons_HeroIcons__WEBPACK_IMPORTED_MODULE_10__.TextIcon, {
+    className: "tw-h-4 tw-w-4 tw-ml-2"
+  }))), h("button", {
     disabled: loading,
-    className: "tw-bg-cortico-blue tw-px-3 tw-py-2 tw-rounded-md tw-text-white tw-text-sm tw-flex tw-items-center"
+    className: "tw-bg-cortico-blue tw-px-3 tw-py-2 tw-rounded-md tw-text-white tw-text-sm tw-flex tw-items-center",
+    onClick: function onClick() {
+      setScheme("email");
+    }
   }, loading === true ? h("span", {
     class: "tw-flex"
-  }, h(_Loader__WEBPACK_IMPORTED_MODULE_8__["default"], null), h("span", {
+  }, h(_Loader__WEBPACK_IMPORTED_MODULE_9__["default"], null), h("span", {
     className: "tw-ml-1"
   }, "Sending...")) : h("span", {
     className: "tw-flex tw-items-center"
-  }, h("span", null, "Send Message"), h(_Icons_HeroIcons__WEBPACK_IMPORTED_MODULE_9__.SendIcon, {
+  }, h("span", null, "Send Email"), h(_Icons_HeroIcons__WEBPACK_IMPORTED_MODULE_10__.MailIcon, {
     className: "tw-h-4 tw-w-4 tw-ml-2"
-  })))));
+  }))))));
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MessengerWindow);
+
+/***/ }),
+
+/***/ "./modules/Messenger/SavedReplies.js":
+/*!*******************************************!*\
+  !*** ./modules/Messenger/SavedReplies.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var preact_hooks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! preact/hooks */ "./node_modules/preact/hooks/dist/hooks.module.js");
+/* harmony import */ var _resources_icons_96x96_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../resources/icons/96x96.png */ "./resources/icons/96x96.png");
+/* harmony import */ var _Icons_HeroIcons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Icons/HeroIcons */ "./modules/Icons/HeroIcons.js");
+/* harmony import */ var _SubjectInput__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./SubjectInput */ "./modules/Messenger/SubjectInput.js");
+/* harmony import */ var _ChatInput__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ChatInput */ "./modules/Messenger/ChatInput.js");
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/esm-browser/v4.js");
+/* provided dependency */ var h = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js")["h"];
+
+
+
+var _excluded = ["add", "cancel"],
+    _excluded2 = ["uuid", "subject", "body", "onClick", "onDelete", "onCancel"],
+    _excluded3 = ["loadReply"];
+
+
+
+
+
+
+
+
+function AddReply(_ref) {
+  var add = _ref.add,
+      cancel = _ref.cancel,
+      props = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_2__["default"])(_ref, _excluded);
+
+  var subject = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_4__.useRef)();
+  var chat = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_4__.useRef)();
+
+  var handleAddReply = function handleAddReply(e) {
+    var _subject = subject.current.value;
+    var _chat = chat.current.value;
+    add({
+      subject: _subject,
+      body: _chat
+    });
+  };
+
+  return h("div", null, h("div", {
+    className: "tw-p-4"
+  }, h(_SubjectInput__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    ref: subject
+  }), h("hr", {
+    className: "tw-bg-opacity-25"
+  }), h(_ChatInput__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    ref: chat
+  })), h("div", {
+    className: "tw-p-4 tw-bg-gray-200 tw-flex tw-justify-end tw-rounded-b-lg"
+  }, h("div", {
+    className: "tw-flex tw-justify-end"
+  }, h("button", {
+    onClick: cancel,
+    className: "tw-px-4 tw-py-2 tw-rounded-lg tw-bg-gray-500 tw-text-white tw-text-sm tw-flex tw-items-center tw-mr-2"
+  }, h("span", {
+    className: "tw-mr-2"
+  }, "Cancel"), h(_Icons_HeroIcons__WEBPACK_IMPORTED_MODULE_6__.LeftArrowIcon, {
+    className: "tw-h-4 tw-w-4 tw-text-white"
+  })), h("button", {
+    onClick: handleAddReply,
+    className: "tw-px-4 tw-py-2 tw-rounded-lg tw-bg-cortico-blue tw-text-white tw-text-sm tw-flex tw-items-center"
+  }, h("span", {
+    className: "tw-mr-2"
+  }, "Save Response"), h(_Icons_HeroIcons__WEBPACK_IMPORTED_MODULE_6__.PlusIcon, {
+    className: "tw-h-4 tw-w-4 tw-text-white"
+  })))));
+}
+
+function Reply(_ref2) {
+  var uuid = _ref2.uuid,
+      subject = _ref2.subject,
+      body = _ref2.body,
+      _onClick = _ref2.onClick,
+      onDelete = _ref2.onDelete,
+      onCancel = _ref2.onCancel,
+      props = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_2__["default"])(_ref2, _excluded2);
+
+  var _useState = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_4__.useState)(false),
+      _useState2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_useState, 2),
+      isDelete = _useState2[0],
+      setIsDelete = _useState2[1];
+
+  var handleDelete = function handleDelete() {
+    setIsDelete(false);
+    onDelete(uuid);
+  };
+
+  return h("div", {
+    className: "tw-drop-shadow-lg"
+  }, h("div", {
+    onClick: function onClick() {
+      _onClick({
+        subject: subject,
+        body: body
+      });
+    },
+    className: " tw-bg-white tw-py-4 tw-cursor-pointer tw-rounded-t-lg tw-hover:bg-gray-200 tw-max-h-28 tw-font-sans tw-hover:bg-black tw-relative"
+  }, h("div", {
+    className: "tw-px-4 tw-mb-2 tw-text-opacity-100 tw-text-black tw-tracking-wider tw-text-sm"
+  }, subject), h("div", {
+    className: "tw-px-4 tw-text-xs tw-text-opacity-70 tw-text-black tw-line-clamp-3"
+  }, body)), h("div", {
+    className: "tw-bg-gray-200 tw-flex tw-items-center tw-justify-end tw-p-2 tw-rounded-b-lg"
+  }, isDelete === false ? h("button", {
+    onClick: function onClick() {
+      setIsDelete(true);
+    },
+    className: "tw-bg-red-500 tw-flex tw-items-center tw-rounded-md tw-p-2"
+  }, h("span", {
+    className: "tw-mr-2 tw-text-xs tw-text-white"
+  }, "Delete"), h(_Icons_HeroIcons__WEBPACK_IMPORTED_MODULE_6__.TrashIcon, {
+    className: "tw-text-white tw-h-4 tw-w-4"
+  })) : h("div", {
+    className: "tw-flex tw-justify-end"
+  }, h("button", {
+    onClick: function onClick() {
+      setIsDelete(false);
+    },
+    className: "tw-bg-gray-400 tw-mr-2 tw-flex tw-items-center tw-rounded-md tw-p-2"
+  }, h("span", {
+    className: "tw-mr-2 tw-text-xs tw-text-white"
+  }, "Cancel"), h(_Icons_HeroIcons__WEBPACK_IMPORTED_MODULE_6__.LeftArrowIcon, {
+    className: "tw-text-white tw-h-4 tw-w-4"
+  })), h("button", {
+    onClick: handleDelete,
+    className: "tw-bg-red-500 tw-flex tw-items-center tw-rounded-md tw-p-2"
+  }, h("span", {
+    className: "tw-mr-2 tw-text-xs tw-text-white"
+  }, "Yes I want to delete"), h(_Icons_HeroIcons__WEBPACK_IMPORTED_MODULE_6__.TrashIcon, {
+    className: "tw-text-white tw-h-4 tw-w-4"
+  })))));
+}
+
+function SavedReplies(_ref3) {
+  var loadReply = _ref3.loadReply,
+      props = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_2__["default"])(_ref3, _excluded3);
+
+  var _useState3 = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_4__.useState)(false),
+      _useState4 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_useState3, 2),
+      addReply = _useState4[0],
+      setAddReply = _useState4[1];
+
+  var _useState5 = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_4__.useState)([]),
+      _useState6 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_useState5, 2),
+      replies = _useState6[0],
+      setReplies = _useState6[1];
+
+  var _useState7 = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_4__.useState)(0),
+      _useState8 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_useState7, 2),
+      insertCounter = _useState8[0],
+      setInsertCounter = _useState8[1];
+
+  var handleAdd = function handleAdd(data) {
+    var reply = data;
+    reply.uuid = (0,uuid__WEBPACK_IMPORTED_MODULE_9__["default"])();
+    var savedReplies = localStorage.getItem("savedReplies");
+
+    if (savedReplies) {
+      var temp = JSON.parse(JSON.parse(savedReplies));
+      temp.push(reply);
+      localStorage.setItem("savedReplies", JSON.stringify(temp));
+    } else {
+      var _temp = [reply];
+      localStorage.setItem("savedReplies", JSON.stringify(_temp));
+    }
+
+    setAddReply(false);
+    setInsertCounter(insertCounter + 1);
+  };
+
+  var handleCancel = function handleCancel() {
+    setAddReply(false);
+  };
+
+  var deleteReply = function deleteReply(uuid) {
+    console.log("Delete Request UUID", uuid);
+    var savedReplies = localStorage.getItem("savedReplies");
+
+    if (savedReplies) {
+      var temp = JSON.parse(JSON.parse(savedReplies));
+      var reply = temp.find(function (r) {
+        return r.uuid === uuid;
+      });
+      console.log("Found reply", reply);
+
+      if (reply) {
+        temp = temp.filter(function (r) {
+          return r.uuid !== uuid;
+        });
+        localStorage.setItem("savedReplies", JSON.stringify(temp));
+        setInsertCounter(insertCounter + 1);
+      }
+    }
+  };
+
+  var loadReplies = function loadReplies() {
+    var savedReplies = localStorage.getItem("savedReplies");
+
+    if (savedReplies) {
+      var temp = JSON.parse(JSON.parse(savedReplies));
+      setReplies(temp);
+    } else {
+      setReplies([]);
+    }
+  };
+
+  (0,preact_hooks__WEBPACK_IMPORTED_MODULE_4__.useEffect)(function () {
+    if (insertCounter === 0) {
+      var savedReplies = localStorage.getItem("savedReplies");
+
+      if (!savedReplies) {
+        handleAdd({
+          uuid: (0,uuid__WEBPACK_IMPORTED_MODULE_9__["default"])(),
+          subject: "TELEHEALTH - LAB REQ TO DO",
+          body: "Hello,\n          Attached is a copy of your lab requisition form\n          Please print and take to the lab \n          OR e-mail it with your name in the subject line to\n          mailmyreqBC@lifelabs.com\n          Please confirm via email once received/completed.\n          Generally, patients are able to book a follow up online 2-3 days after getting their blood work done for a review unless indicated sooner via e-mail. \n          Thank you\n          Medical clinic/doctor name"
+        });
+      }
+    }
+
+    loadReplies();
+  }, [insertCounter]);
+  return h("div", {
+    className: "tw-bg-white tw-rounded-lg tw-font-sans tw-w-full tw-shadow-lg tw-max-w-[400px]"
+  }, h("div", {
+    className: "tw-bg-cortico-blue tw-flex tw-rounded-t-lg tw-p-4 tw-items-center"
+  }, h("div", {
+    className: "tw-bg-white tw-rounded-full tw-p-2"
+  }, h("img", {
+    src: _resources_icons_96x96_png__WEBPACK_IMPORTED_MODULE_5__["default"],
+    alt: "Cortico",
+    className: "tw-w-5 tw-h-5"
+  })), h("div", {
+    className: "tw-ml-4"
+  }, h("h2", {
+    className: "tw-text-2xl tw-text-white tw-text-opacity-90 tw-tracking-wider"
+  }, "Canned Responses"), h("p", {
+    className: "tw-text-xs tw-text-white tw-text-opacity-80"
+  }, "Save or load new responses to your message"))), h("div", {
+    className: "tw-bg-gray-100 tw-overflow-y-auto  ".concat(addReply ? "tw-p-0" : "tw-p-4 tw-h-[300px]", " $")
+  }, addReply === false ? h("div", null, h("div", {
+    className: "tw-my-3"
+  }, replies.length > 0 ? replies.map(function (reply, index) {
+    return h("div", {
+      className: "tw-my-3",
+      key: index
+    }, h(Reply, (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({
+      onClick: function onClick(data) {
+        loadReply(data);
+      },
+      uuid: reply.uuid,
+      onDelete: deleteReply
+    }, reply)));
+  }) : h("div", {
+    className: "tw-font-sans tw-p-4 tw-text-2xl tw-text-center tw-tracking-widest tw-text-gray-700 tw-text-opacity-60"
+  }, "No Canned Responses! Click New Response to get started"))) : h(AddReply, {
+    add: handleAdd,
+    cancel: handleCancel
+  })), addReply === false ? h("div", {
+    className: "tw-p-4 tw-bg-gray-200 tw-flex tw-justify-end tw-rounded-b-lg"
+  }, h("div", null, h("div", null, h("button", {
+    onClick: function onClick() {
+      setAddReply(true);
+    },
+    className: "tw-px-4 tw-py-2 tw-rounded-lg tw-bg-cortico-blue tw-text-white tw-text-sm tw-flex tw-items-center"
+  }, h("span", {
+    className: "tw-mr-2"
+  }, "New Response"), h(_Icons_HeroIcons__WEBPACK_IMPORTED_MODULE_6__.PlusIcon, {
+    className: "tw-h-4 tw-w-4 tw-text-white"
+  }))))) : "");
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SavedReplies);
 
 /***/ }),
 
@@ -767,12 +1745,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
-/* harmony import */ var preact_compat__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! preact/compat */ "./node_modules/preact/compat/dist/compat.module.js");
+/* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var preact_hooks__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! preact/hooks */ "./node_modules/preact/hooks/dist/hooks.module.js");
+/* harmony import */ var preact_compat__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! preact/compat */ "./node_modules/preact/compat/dist/compat.module.js");
 /* provided dependency */ var h = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js")["h"];
 
+var _excluded = ["value"];
 
-var Subject = (0,preact_compat__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(function (props, ref) {
+
+
+var Subject = (0,preact_compat__WEBPACK_IMPORTED_MODULE_3__.forwardRef)(function (_ref, ref) {
+  var value = _ref.value,
+      props = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__["default"])(_ref, _excluded);
+
+  (0,preact_hooks__WEBPACK_IMPORTED_MODULE_2__.useEffect)(function () {
+    if (value) {
+      ref.current.value = value;
+    }
+  }, [value]);
   return h("div", {
     className: ""
   }, h("div", null, h("input", {
@@ -912,6 +1903,53 @@ var Modal = /*#__PURE__*/function () {
 
   return Modal;
 }();
+
+/***/ }),
+
+/***/ "./modules/Modal/PreactModal.js":
+/*!**************************************!*\
+  !*** ./modules/Modal/PreactModal.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var preact_hooks__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! preact/hooks */ "./node_modules/preact/hooks/dist/hooks.module.js");
+/* provided dependency */ var h = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js")["h"];
+
+var _excluded = ["show", "close", "children"];
+
+
+
+function PreactModal(_ref) {
+  var show = _ref.show,
+      close = _ref.close,
+      children = _ref.children,
+      props = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__["default"])(_ref, _excluded);
+
+  var container = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_2__.useRef)();
+
+  var handleClick = function handleClick(e) {
+    var containerElem = container.current;
+
+    if (containerElem && containerElem.isSameNode(e.target)) {
+      close && close();
+    }
+  };
+
+  return h(preact__WEBPACK_IMPORTED_MODULE_1__.Fragment, null, show === true ? h("div", {
+    onClick: handleClick,
+    ref: container,
+    className: "tw-fixed tw-inset-0 tw-bg-black tw-bg-opacity-80 tw-flex tw-justify-center tw-items-center tw-z-10002 tw-p-2"
+  }, h("div", null, children)) : "");
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PreactModal);
 
 /***/ }),
 
@@ -1478,6 +2516,49 @@ var Appointment = /*#__PURE__*/function () {
 
   return Appointment;
 }();
+
+/***/ }),
+
+/***/ "./modules/core/Encounter.js":
+/*!***********************************!*\
+  !*** ./modules/core/Encounter.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+
+
+
+var Encounter = /*#__PURE__*/function () {
+  function Encounter() {
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, Encounter);
+  }
+
+  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Encounter, null, [{
+    key: "getCaseNote",
+    value: function getCaseNote() {
+      var element = document.getElementById("caseNote_note0");
+      return element ? element : null;
+    }
+  }, {
+    key: "addToCaseNote",
+    value: function addToCaseNote(text) {
+      var caseNote = Encounter.getCaseNote();
+      if (!caseNote) return;
+      caseNote.value += text;
+    }
+  }]);
+
+  return Encounter;
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Encounter);
 
 /***/ }),
 
@@ -2953,7 +4034,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "/**\nUse a better box model (opinionated).\n*/\n\n.tailwind *,\n.tailwind ::before,\n.tailwind ::after {\n\tbox-sizing: border-box;\n}\n\n/**\nUse a more readable tab size (opinionated).\n*/\n\n.tailwind html {\n\t-moz-tab-size: 4;\n\t-o-tab-size: 4;\n\t   tab-size: 4;\n}\n\n/**\n1. Correct the line height in all browsers.\n2. Prevent adjustments of font size after orientation changes in iOS.\n*/\n\n.tailwind html {\n\tline-height: 1.15; /* 1 */\n\t-webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/**\nRemove the margin in all browsers.\n*/\n\n.tailwind body {\n\tmargin: 0;\n}\n\n/**\nImprove consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n*/\n\n.tailwind body {\n\tfont-family:\n\t\tsystem-ui,\n\t\t-apple-system, /* Firefox supports this but not yet `system-ui` */\n\t\t'Segoe UI',\n\t\tRoboto,\n\t\tHelvetica,\n\t\tArial,\n\t\tsans-serif,\n\t\t'Apple Color Emoji',\n\t\t'Segoe UI Emoji';\n}\n\n/**\n1. Add the correct height in Firefox.\n2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)\n*/\n\n.tailwind hr {\n\theight: 0; /* 1 */\n\tcolor: inherit; /* 2 */\n}\n\n/**\nAdd the correct text decoration in Chrome, Edge, and Safari.\n*/\n\n.tailwind abbr[title] {\n\t-webkit-text-decoration: underline dotted;\n\t        text-decoration: underline dotted;\n}\n\n/**\nAdd the correct font weight in Edge and Safari.\n*/\n\n.tailwind b,\n.tailwind strong {\n\tfont-weight: bolder;\n}\n\n/**\n1. Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n2. Correct the odd 'em' font sizing in all browsers.\n*/\n\n.tailwind code,\n.tailwind kbd,\n.tailwind samp,\n.tailwind pre {\n\tfont-family:\n\t\tui-monospace,\n\t\tSFMono-Regular,\n\t\tConsolas,\n\t\t'Liberation Mono',\n\t\tMenlo,\n\t\tmonospace; /* 1 */\n\tfont-size: 1em; /* 2 */\n}\n\n/**\nAdd the correct font size in all browsers.\n*/\n\n.tailwind small {\n\tfont-size: 80%;\n}\n\n/**\nPrevent 'sub' and 'sup' elements from affecting the line height in all browsers.\n*/\n\n.tailwind sub,\n.tailwind sup {\n\tfont-size: 75%;\n\tline-height: 0;\n\tposition: relative;\n\tvertical-align: baseline;\n}\n\n/*\nText-level semantics\n====================\n*/\n\n.tailwind sub {\n\tbottom: -0.25em;\n}\n\n/*\nGrouping content\n================\n*/\n\n.tailwind sup {\n\ttop: -0.5em;\n}\n\n/**\n1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)\n2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)\n*/\n\n.tailwind table {\n\ttext-indent: 0; /* 1 */\n\tborder-color: inherit; /* 2 */\n}\n\n/**\n1. Change the font styles in all browsers.\n2. Remove the margin in Firefox and Safari.\n*/\n\n.tailwind button,\n.tailwind input,\n.tailwind optgroup,\n.tailwind select,\n.tailwind textarea {\n\tfont-family: inherit; /* 1 */\n\tfont-size: 100%; /* 1 */\n\tline-height: 1.15; /* 1 */\n\tmargin: 0; /* 2 */\n}\n\n/**\nRemove the inheritance of text transform in Edge and Firefox.\n1. Remove the inheritance of text transform in Firefox.\n*/\n\n.tailwind button,\n.tailwind select { /* 1 */\n\ttext-transform: none;\n}\n\n/**\nCorrect the inability to style clickable types in iOS and Safari.\n*/\n\n.tailwind button,\n.tailwind [type='button'],\n.tailwind [type='reset'],\n.tailwind [type='submit'] {\n\t-webkit-appearance: button;\n}\n\n/**\nRemove the inner border and padding in Firefox.\n*/\n\n.tailwind ::-moz-focus-inner {\n\tborder-style: none;\n\tpadding: 0;\n}\n\n/**\nRestore the focus styles unset by the previous rule.\n*/\n\n.tailwind :-moz-focusring {\n\toutline: 1px dotted ButtonText;\n}\n\n/**\nRemove the additional ':invalid' styles in Firefox.\nSee: https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737\n*/\n\n.tailwind :-moz-ui-invalid {\n\tbox-shadow: none;\n}\n\n/**\nRemove the padding so developers are not caught out when they zero out 'fieldset' elements in all browsers.\n*/\n\n.tailwind legend {\n\tpadding: 0;\n}\n\n/**\nAdd the correct vertical alignment in Chrome and Firefox.\n*/\n\n.tailwind progress {\n\tvertical-align: baseline;\n}\n\n/**\nCorrect the cursor style of increment and decrement buttons in Safari.\n*/\n\n.tailwind ::-webkit-inner-spin-button,\n.tailwind ::-webkit-outer-spin-button {\n\theight: auto;\n}\n\n/**\n1. Correct the odd appearance in Chrome and Safari.\n2. Correct the outline style in Safari.\n*/\n\n.tailwind [type='search'] {\n\t-webkit-appearance: textfield; /* 1 */\n\toutline-offset: -2px; /* 2 */\n}\n\n/**\nRemove the inner padding in Chrome and Safari on macOS.\n*/\n\n.tailwind ::-webkit-search-decoration {\n\t-webkit-appearance: none;\n}\n\n/**\n1. Correct the inability to style clickable types in iOS and Safari.\n2. Change font properties to 'inherit' in Safari.\n*/\n\n.tailwind ::-webkit-file-upload-button {\n\t-webkit-appearance: button; /* 1 */\n\tfont: inherit; /* 2 */\n}\n\n/*\nAdd the correct display in Chrome and Safari.\n*/\n\n.tailwind summary {\n\tdisplay: list-item;\n}\n\n/**\n * Removes the default spacing and border for appropriate elements.\n */\n\n.tailwind blockquote,\n.tailwind dl,\n.tailwind dd,\n.tailwind h1,\n.tailwind h2,\n.tailwind h3,\n.tailwind h4,\n.tailwind h5,\n.tailwind h6,\n.tailwind hr,\n.tailwind figure,\n.tailwind p,\n.tailwind pre {\n  margin: 0;\n}\n\n/**\n * Manually forked from SUIT CSS Base: https://github.com/suitcss/base\n * A thin layer on top of normalize.css that provides a starting point more\n * suitable for web applications.\n */\n\n.tailwind button {\n  background-color: transparent;\n  background-image: none;\n}\n\n/*\nInteractive\n===========\n*/\n\n.tailwind fieldset {\n  margin: 0;\n  padding: 0;\n}\n\n/*\nForms\n=====\n*/\n\n.tailwind ol,\n.tailwind ul {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\n\n/**\n * 1. Use the user's configured `sans` font-family (with Tailwind's default\n *    sans-serif font stack as a fallback) as a sane default.\n * 2. Use Tailwind's default \"normal\" line-height so the user isn't forced\n *    to override it to ensure consistency even when using the default theme.\n */\n\n.tailwind html {\n  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"; /* 1 */\n  line-height: 1.5; /* 2 */\n}\n\n/**\n * Inherit font-family and line-height from `html` so users can set them as\n * a class directly on the `html` element.\n */\n\n.tailwind body {\n  font-family: inherit;\n  line-height: inherit;\n}\n\n/**\n * 1. Prevent padding and border from affecting element width.\n *\n *    We used to set this in the html element and inherit from\n *    the parent element for everything else. This caused issues\n *    in shadow-dom-enhanced elements like <details> where the content\n *    is wrapped by a div with box-sizing set to `content-box`.\n *\n *    https://github.com/mozdevs/cssremedy/issues/4\n *\n *\n * 2. Allow adding a border to an element by just adding a border-width.\n *\n *    By default, the way the browser specifies that an element should have no\n *    border is by setting it's border-style to `none` in the user-agent\n *    stylesheet.\n *\n *    In order to easily add borders to elements by just setting the `border-width`\n *    property, we change the default border-style for all elements to `solid`, and\n *    use border-width to hide them instead. This way our `border` utilities only\n *    need to set the `border-width` property instead of the entire `border`\n *    shorthand, making our border utilities much more straightforward to compose.\n *\n *    https://github.com/tailwindcss/tailwindcss/pull/116\n */\n\n.tailwind *,\n.tailwind ::before,\n.tailwind ::after {\n  box-sizing: border-box; /* 1 */\n  border-width: 0; /* 2 */\n  border-style: solid; /* 2 */\n  border-color: currentColor; /* 2 */\n}\n\n/*\n * Ensure horizontal rules are visible by default\n */\n\n.tailwind hr {\n  border-top-width: 1px;\n}\n\n/**\n * Undo the `border-style: none` reset that Normalize applies to images so that\n * our `border-{width}` utilities have the expected effect.\n *\n * The Normalize reset is unnecessary for us since we default the border-width\n * to 0 on all elements.\n *\n * https://github.com/tailwindcss/tailwindcss/issues/362\n */\n\n.tailwind img {\n  border-style: solid;\n}\n\n/**\n * Tailwind custom reset styles\n */\n\n.tailwind textarea {\n  resize: vertical;\n}\n\n/*\nTabular data\n============\n*/\n\n.tailwind input::-moz-placeholder, .tailwind textarea::-moz-placeholder {\n  opacity: 1;\n  color: #9ca3af;\n}\n\n.tailwind input:-ms-input-placeholder, .tailwind textarea:-ms-input-placeholder {\n  opacity: 1;\n  color: #9ca3af;\n}\n\n.tailwind input::placeholder,\n.tailwind textarea::placeholder {\n  opacity: 1;\n  color: #9ca3af;\n}\n\n/*\nSections\n========\n*/\n\n.tailwind button,\n.tailwind [role=\"button\"] {\n  cursor: pointer;\n}\n\n/**\n * Override legacy focus reset from Normalize with modern Firefox focus styles.\n *\n * This is actually an improvement over the new defaults in Firefox in our testing,\n * as it triggers the better focus styles even for links, which still use a dotted\n * outline in Firefox by default.\n */\n\n.tailwind :-moz-focusring {\n\toutline: auto;\n}\n\n/*\nDocument\n========\n*/\n\n.tailwind table {\n  border-collapse: collapse;\n}\n\n/*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */\n\n.tailwind h1,\n.tailwind h2,\n.tailwind h3,\n.tailwind h4,\n.tailwind h5,\n.tailwind h6 {\n  font-size: inherit;\n  font-weight: inherit;\n}\n\n/**\n * Reset links to optimize for opt-in styling instead of\n * opt-out.\n */\n\n.tailwind a {\n  color: inherit;\n  text-decoration: inherit;\n}\n\n/**\n * Reset form element properties that are easy to forget to\n * style explicitly so you don't inadvertently introduce\n * styles that deviate from your design system. These styles\n * supplement a partial reset that is already applied by\n * normalize.css.\n */\n\n.tailwind button,\n.tailwind input,\n.tailwind optgroup,\n.tailwind select,\n.tailwind textarea {\n  padding: 0;\n  line-height: inherit;\n  color: inherit;\n}\n\n/**\n * Use the configured 'mono' font family for elements that\n * are expected to be rendered with a monospace font, falling\n * back to the system monospace stack if there is no configured\n * 'mono' font family.\n */\n\n.tailwind pre,\n.tailwind code,\n.tailwind kbd,\n.tailwind samp {\n  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace;\n}\n\n/**\n * 1. Make replaced elements `display: block` by default as that's\n *    the behavior you want almost all of the time. Inspired by\n *    CSS Remedy, with `svg` added as well.\n *\n *    https://github.com/mozdevs/cssremedy/issues/14\n * \n * 2. Add `vertical-align: middle` to align replaced elements more\n *    sensibly by default when overriding `display` by adding a\n *    utility like `inline`.\n *\n *    This can trigger a poorly considered linting error in some\n *    tools but is included by design.\n * \n *    https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210\n */\n\n.tailwind img,\n.tailwind svg,\n.tailwind video,\n.tailwind canvas,\n.tailwind audio,\n.tailwind iframe,\n.tailwind embed,\n.tailwind object {\n  display: block; /* 1 */\n  vertical-align: middle; /* 2 */\n}\n\n/**\n * Constrain images and videos to the parent width and preserve\n * their intrinsic aspect ratio.\n *\n * https://github.com/mozdevs/cssremedy/issues/14\n */\n\n.tailwind img,\n.tailwind video {\n  max-width: 100%;\n  height: auto;\n}\n\n/**\n * Ensure the default browser behavior of the `hidden` attribute.\n */\n\n.tailwind [hidden] {\n  display: none;\n}\n\n/*! tailwindcss v2.2.17 | MIT License | https://tailwindcss.com\n*/\n\n.tailwind *, .tailwind ::before, .tailwind ::after {\n\t--tw-translate-x: 0;\n\t--tw-translate-y: 0;\n\t--tw-rotate: 0;\n\t--tw-skew-x: 0;\n\t--tw-skew-y: 0;\n\t--tw-scale-x: 1;\n\t--tw-scale-y: 1;\n\t--tw-transform: translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n}\n\n.tailwind *, .tailwind ::before, .tailwind ::after {\n\t--tw-border-opacity: 1;\n\tborder-color: rgba(229, 231, 235, var(--tw-border-opacity));\n}\n\n.tailwind *, .tailwind ::before, .tailwind ::after {\n\t--tw-ring-offset-shadow: 0 0 #0000;\n\t--tw-ring-shadow: 0 0 #0000;\n\t--tw-shadow: 0 0 #0000;\n}\n\n.tailwind .form-input,.tailwind .form-textarea,.tailwind .form-select,.tailwind .form-multiselect {\n\t-webkit-appearance: none;\n\t   -moz-appearance: none;\n\t        appearance: none;\n\tbackground-color: #fff;\n\tborder-color: #6b7280;\n\tborder-width: 1px;\n\tborder-radius: 0px;\n\tpadding-top: 0.5rem;\n\tpadding-right: 0.75rem;\n\tpadding-bottom: 0.5rem;\n\tpadding-left: 0.75rem;\n\tfont-size: 1rem;\n\tline-height: 1.5rem;\n\t--tw-shadow: 0 0 #0000;\n}\n\n.tailwind .form-input:focus, .tailwind .form-textarea:focus, .tailwind .form-select:focus, .tailwind .form-multiselect:focus {\n\toutline: 2px solid transparent;\n\toutline-offset: 2px;\n\t--tw-ring-inset: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-ring-offset-width: 0px;\n\t--tw-ring-offset-color: #fff;\n\t--tw-ring-color: #2563eb;\n\t--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);\n\t--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);\n\tbox-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n\tborder-color: #2563eb;\n}\n\n.tailwind .form-input::-moz-placeholder, .tailwind .form-textarea::-moz-placeholder {\n\tcolor: #6b7280;\n\topacity: 1;\n}\n\n.tailwind .form-input:-ms-input-placeholder, .tailwind .form-textarea:-ms-input-placeholder {\n\tcolor: #6b7280;\n\topacity: 1;\n}\n\n.tailwind .form-input::placeholder,.tailwind .form-textarea::placeholder {\n\tcolor: #6b7280;\n\topacity: 1;\n}\n.tw-fixed {\n\tposition: fixed !important;\n}\n.tw-absolute {\n\tposition: absolute !important;\n}\n.tw-relative {\n\tposition: relative !important;\n}\n.tw-bottom-5 {\n\tbottom: 1.25rem !important;\n}\n.tw-right-5 {\n\tright: 1.25rem !important;\n}\n.tw--top-1 {\n\ttop: -0.25rem !important;\n}\n.tw--left-1 {\n\tleft: -0.25rem !important;\n}\n.tw-bottom-0 {\n\tbottom: 0px !important;\n}\n.tw-left-\\[50\\%\\] {\n\tleft: 50% !important;\n}\n.tw-z-10000 {\n\tz-index: 10000 !important;\n}\n.tw-z-5000 {\n\tz-index: 5000 !important;\n}\n.tw-z-10001 {\n\tz-index: 10001 !important;\n}\n.tw-mx-auto {\n\tmargin-left: auto !important;\n\tmargin-right: auto !important;\n}\n.tw-my-2 {\n\tmargin-top: 0.5rem !important;\n\tmargin-bottom: 0.5rem !important;\n}\n.tw-mt-2 {\n\tmargin-top: 0.5rem !important;\n}\n.tw-mt-3 {\n\tmargin-top: 0.75rem !important;\n}\n.tw-ml-1 {\n\tmargin-left: 0.25rem !important;\n}\n.tw--ml-1 {\n\tmargin-left: -0.25rem !important;\n}\n.tw-mr-3 {\n\tmargin-right: 0.75rem !important;\n}\n.tw-ml-2 {\n\tmargin-left: 0.5rem !important;\n}\n.tw-mt-0 {\n\tmargin-top: 0px !important;\n}\n.tw-mb-10 {\n\tmargin-bottom: 2.5rem !important;\n}\n.tw-mt-10 {\n\tmargin-top: 2.5rem !important;\n}\n.tw-block {\n\tdisplay: block !important;\n}\n.tw-inline-block {\n\tdisplay: inline-block !important;\n}\n.tw-flex {\n\tdisplay: flex !important;\n}\n.tw-h-10 {\n\theight: 2.5rem !important;\n}\n.tw-h-6 {\n\theight: 1.5rem !important;\n}\n.tw-h-3 {\n\theight: 0.75rem !important;\n}\n.tw-h-5 {\n\theight: 1.25rem !important;\n}\n.tw-h-4 {\n\theight: 1rem !important;\n}\n.tw-h-\\[800px\\] {\n\theight: 800px !important;\n}\n.tw-h-full {\n\theight: 100% !important;\n}\n.tw-w-10 {\n\twidth: 2.5rem !important;\n}\n.tw-w-full {\n\twidth: 100% !important;\n}\n.tw-w-6 {\n\twidth: 1.5rem !important;\n}\n.tw-w-3 {\n\twidth: 0.75rem !important;\n}\n.tw-w-5 {\n\twidth: 1.25rem !important;\n}\n.tw-w-24 {\n\twidth: 6rem !important;\n}\n.tw-w-4 {\n\twidth: 1rem !important;\n}\n.tw-w-\\[400px\\] {\n\twidth: 400px !important;\n}\n.tw-w-\\[70px\\] {\n\twidth: 70px !important;\n}\n.tw-w-2\\/3 {\n\twidth: 66.666667% !important;\n}\n.tw-w-\\[300px\\] {\n\twidth: 300px !important;\n}\n.tw-min-w-\\[300px\\] {\n\tmin-width: 300px !important;\n}\n.tw-max-w-\\[400px\\] {\n\tmax-width: 400px !important;\n}\n.tw-max-w-xl {\n\tmax-width: 36rem !important;\n}\n.tw-max-w-3xl {\n\tmax-width: 48rem !important;\n}\n.tw-flex-1 {\n\tflex: 1 1 0% !important;\n}\n.tw-flex-5 {\n\tflex: 5 1 0 !important;\n}\n.tw-translate-x-0 {\n\t--tw-translate-x: 0px !important;\n\ttransform: var(--tw-transform) !important;\n}\n.tw-translate-x-\\[430px\\] {\n\t--tw-translate-x: 430px !important;\n\ttransform: var(--tw-transform) !important;\n}\n.tw-translate-x-\\[-50\\%\\] {\n\t--tw-translate-x: -50% !important;\n\ttransform: var(--tw-transform) !important;\n}\n.tw-translate-y-0 {\n\t--tw-translate-y: 0px !important;\n\ttransform: var(--tw-transform) !important;\n}\n.tw-translate-y-\\[100\\%\\] {\n\t--tw-translate-y: 100% !important;\n\ttransform: var(--tw-transform) !important;\n}\n.tw-transform {\n\ttransform: var(--tw-transform) !important;\n}\n@-webkit-keyframes tw-spin {\n\n\tto {\n\t\ttransform: rotate(360deg);\n\t}\n}\n@keyframes tw-spin {\n\n\tto {\n\t\ttransform: rotate(360deg);\n\t}\n}\n.tw-animate-spin {\n\t-webkit-animation: tw-spin 1s linear infinite !important;\n\t        animation: tw-spin 1s linear infinite !important;\n}\n@-webkit-keyframes tw-bounce {\n\n\t0%, 100% {\n\t\ttransform: translateY(-25%);\n\t\t-webkit-animation-timing-function: cubic-bezier(0.8,0,1,1);\n\t\t        animation-timing-function: cubic-bezier(0.8,0,1,1);\n\t}\n\n\t50% {\n\t\ttransform: none;\n\t\t-webkit-animation-timing-function: cubic-bezier(0,0,0.2,1);\n\t\t        animation-timing-function: cubic-bezier(0,0,0.2,1);\n\t}\n}\n@keyframes tw-bounce {\n\n\t0%, 100% {\n\t\ttransform: translateY(-25%);\n\t\t-webkit-animation-timing-function: cubic-bezier(0.8,0,1,1);\n\t\t        animation-timing-function: cubic-bezier(0.8,0,1,1);\n\t}\n\n\t50% {\n\t\ttransform: none;\n\t\t-webkit-animation-timing-function: cubic-bezier(0,0,0.2,1);\n\t\t        animation-timing-function: cubic-bezier(0,0,0.2,1);\n\t}\n}\n.tw-animate-bounce {\n\t-webkit-animation: tw-bounce 1s infinite !important;\n\t        animation: tw-bounce 1s infinite !important;\n}\n.tw-cursor-pointer {\n\tcursor: pointer !important;\n}\n.tw-resize-none {\n\tresize: none !important;\n}\n.tw-items-center {\n\talign-items: center !important;\n}\n.tw-justify-end {\n\tjustify-content: flex-end !important;\n}\n.tw-justify-center {\n\tjustify-content: center !important;\n}\n.tw-break-words {\n\toverflow-wrap: break-word !important;\n}\n.tw-rounded-md {\n\tborder-radius: 0.375rem !important;\n}\n.tw-rounded-lg {\n\tborder-radius: 0.5rem !important;\n}\n.tw-rounded-full {\n\tborder-radius: 9999px !important;\n}\n.tw-rounded-xl {\n\tborder-radius: 0.75rem !important;\n}\n.tw-rounded-t-md {\n\tborder-top-left-radius: 0.375rem !important;\n\tborder-top-right-radius: 0.375rem !important;\n}\n.tw-rounded-l-md {\n\tborder-top-left-radius: 0.375rem !important;\n\tborder-bottom-left-radius: 0.375rem !important;\n}\n.tw-border-0 {\n\tborder-width: 0px !important;\n}\n.tw-border {\n\tborder-width: 1px !important;\n}\n.tw-border-cortico-blue {\n\tborder-color: rgba(75, 84, 246, 1) !important;\n}\n.tw-bg-cortico-blue {\n\tbackground-color: rgba(75, 84, 246, 1) !important;\n}\n.tw-bg-white {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(255, 255, 255, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-gray-100 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(243, 244, 246, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-red-500 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(239, 68, 68, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-gray-700 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(55, 65, 81, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-blue-700 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(29, 78, 216, var(--tw-bg-opacity)) !important;\n}\n.tw-p-4 {\n\tpadding: 1rem !important;\n}\n.tw-p-12 {\n\tpadding: 3rem !important;\n}\n.tw-p-3 {\n\tpadding: 0.75rem !important;\n}\n.tw-p-1 {\n\tpadding: 0.25rem !important;\n}\n.tw-p-2 {\n\tpadding: 0.5rem !important;\n}\n.tw-p-10 {\n\tpadding: 2.5rem !important;\n}\n.tw-py-1 {\n\tpadding-top: 0.25rem !important;\n\tpadding-bottom: 0.25rem !important;\n}\n.tw-px-2 {\n\tpadding-left: 0.5rem !important;\n\tpadding-right: 0.5rem !important;\n}\n.tw-px-4 {\n\tpadding-left: 1rem !important;\n\tpadding-right: 1rem !important;\n}\n.tw-py-2 {\n\tpadding-top: 0.5rem !important;\n\tpadding-bottom: 0.5rem !important;\n}\n.tw-px-3 {\n\tpadding-left: 0.75rem !important;\n\tpadding-right: 0.75rem !important;\n}\n.tw-pl-2 {\n\tpadding-left: 0.5rem !important;\n}\n.tw-text-center {\n\ttext-align: center !important;\n}\n.tw-font-sans {\n\tfont-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\" !important;\n}\n.tw-text-sm {\n\tfont-size: 0.875rem !important;\n\tline-height: 1.25rem !important;\n}\n.tw-text-xs {\n\tfont-size: 0.75rem !important;\n\tline-height: 1rem !important;\n}\n.tw-text-2xl {\n\tfont-size: 1.5rem !important;\n\tline-height: 2rem !important;\n}\n.tw-text-xl {\n\tfont-size: 1.25rem !important;\n\tline-height: 1.75rem !important;\n}\n.tw-font-light {\n\tfont-weight: 300 !important;\n}\n.tw-font-medium {\n\tfont-weight: 500 !important;\n}\n.tw-font-semibold {\n\tfont-weight: 600 !important;\n}\n.tw-font-bold {\n\tfont-weight: 700 !important;\n}\n.tw-leading-5 {\n\tline-height: 1.25rem !important;\n}\n.tw-tracking-wider {\n\tletter-spacing: 0.05em !important;\n}\n.tw-text-white {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(255, 255, 255, var(--tw-text-opacity)) !important;\n}\n.tw-text-gray-600 {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(75, 85, 99, var(--tw-text-opacity)) !important;\n}\n.tw-text-cortico-blue {\n\tcolor: rgba(75, 84, 246, 1) !important;\n}\n.tw-text-gray-700 {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(55, 65, 81, var(--tw-text-opacity)) !important;\n}\n.tw-text-opacity-80 {\n\t--tw-text-opacity: 0.8 !important;\n}\n.tw-opacity-25 {\n\topacity: 0.25 !important;\n}\n.tw-opacity-75 {\n\topacity: 0.75 !important;\n}\n.tw-opacity-20 {\n\topacity: 0.2 !important;\n}\n.tw-opacity-10 {\n\topacity: 0.1 !important;\n}\n.tw-shadow-xl {\n\t--tw-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;\n\tbox-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;\n}\n.tw-shadow-2xl {\n\t--tw-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;\n\tbox-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;\n}\n.tw-shadow-md {\n\t--tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;\n\tbox-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;\n}\n.tw-shadow-lg {\n\t--tw-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;\n\tbox-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;\n}\n.tw-transition-transform {\n\ttransition-property: transform !important;\n\ttransition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;\n\ttransition-duration: 150ms !important;\n}\n.tw-duration-200 {\n\ttransition-duration: 200ms !important;\n}\n.tw-duration-300 {\n\ttransition-duration: 300ms !important;\n}\n.tw-ease-in-out {\n\ttransition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;\n}\n\n.sidebar-instructions {\n\ttext-align: center;\n\tfont-size: 1.875rem;\n\tline-height: 2.25rem;\n\tfont-weight: 700;\n}\n\n.sidebar-instructions-hidden {\n\tdisplay: none;\n}\n", "",{"version":3,"sources":["webpack://./index.css","webpack://./%3Cinput%20css%20iaDyQX%3E","webpack://./%3Cinput%20css%20jHU74Z%3E","<no source>"],"names":[],"mappings":"AACE;;CAAc;;AAAd;;;CCaD,sBAAsB;ADbP;;AAAd;;CAAc;;AAAd;CCqBD,gBAAgB;CAChB,cAAW;IAAX,WAAW;ADtBI;;AAAd;;;CAAc;;AAAd;CC+BD,iBAAiB,EAAE,MAAM;CACzB,8BAA8B,EAAE,MAAM;ADhCvB;;AAAd;;CAAc;;AAAd;CC6CD,SAAS;AD7CM;;AAAd;;CAAc;;AAAd;CCqDD;;;;;;;;;kBASiB;AD9DF;;AAAd;;;CAAc;;AAAd;CC4ED,SAAS,EAAE,MAAM;CACjB,cAAc,EAAE,MAAM;AD7EP;;AAAd;;CAAc;;AAAd;CC0FD,yCAAiC;SAAjC,iCAAiC;AD1FlB;;AAAd;;CAAc;;AAAd;;CCmGD,mBAAmB;ADnGJ;;AAAd;;;CAAc;;AAAd;;;;CC+GD;;;;;;WAMU,EAAE,MAAM;CAClB,cAAc,EAAE,MAAM;ADtHP;;AAAd;;CAAc;;AAAd;CC8HD,cAAc;AD9HC;;AAAd;;CAAc;;AAAd;;CCuID,cAAc;CACd,cAAc;CACd,kBAAkB;CAClB,wBAAwB;AD1IT;;AAAd;;;CAAc;;AAAd;CC8ID,eAAe;AD9IA;;AAAd;;;CAAc;;AAAd;CCkJD,WAAW;ADlJI;;AAAd;;;CAAc;;AAAd;CCgKD,cAAc,EAAE,MAAM;CACtB,qBAAqB,EAAE,MAAM;ADjKd;;AAAd;;;CAAc;;AAAd;;;;;CCmLD,oBAAoB,EAAE,MAAM;CAC5B,eAAe,EAAE,MAAM;CACvB,iBAAiB,EAAE,MAAM;CACzB,SAAS,EAAE,MAAM;ADtLF;;AAAd;;;CAAc;;AAAd;mBC+LO,MAAM;CACd,oBAAoB;ADhML;;AAAd;;CAAc;;AAAd;;;;CC2MD,0BAA0B;AD3MX;;AAAd;;CAAc;;AAAd;CCmND,kBAAkB;CAClB,UAAU;ADpNK;;AAAd;;CAAc;;AAAd;CC4ND,8BAA8B;AD5Nf;;AAAd;;;CAAc;;AAAd;CCqOD,gBAAgB;ADrOD;;AAAd;;CAAc;;AAAd;CC6OD,UAAU;AD7OK;;AAAd;;CAAc;;AAAd;CCqPD,wBAAwB;ADrPT;;AAAd;;CAAc;;AAAd;;CC8PD,YAAY;AD9PG;;AAAd;;;CAAc;;AAAd;CCuQD,6BAA6B,EAAE,MAAM;CACrC,oBAAoB,EAAE,MAAM;ADxQb;;AAAd;;CAAc;;AAAd;CCgRD,wBAAwB;ADhRT;;AAAd;;;CAAc;;AAAd;CCyRD,0BAA0B,EAAE,MAAM;CAClC,aAAa,EAAE,MAAM;AD1RN;;AAAd;;CAAc;;AAAd;CCuSD,kBAAkB;ADvSH;;AAAd;;EAAc;;AAAd;;;;;;;;;;;;;EEsBA,SAAS;AFtBK;;AAAd;;;;EAAc;;AAAd;EE0BA,6BAA6B;EAC7B,sBAAsB;AF3BR;;AAAd;;;CAAc;;AAAd;EE+BA,SAAS;EACT,UAAU;AFhCI;;AAAd;;;CAAc;;AAAd;;EEqCA,gBAAgB;EAChB,SAAS;EACT,UAAU;AFvCI;;AAAd;;;;;EAAc;;AAAd;EEsDA,4NAAsP,EAAE,MAAM;EAC9P,gBAAgB,EAAE,MAAM;AFvDV;;AAAd;;;EAAc;;AAAd;EEiEA,oBAAoB;EACpB,oBAAoB;AFlEN;;AAAd;;;;;;;;;;;;;;;;;;;;;;;;EAAc;;AAAd;;;EEkGA,sBAAsB,EAAE,MAAM;EAC9B,eAAe,EAAE,MAAM;EACvB,mBAAmB,EAAE,MAAM;EAC3B,0BAA0B,EAAE,MAAM;AFrGpB;;AAAd;;EAAc;;AAAd;EE6GA,qBAAqB;AF7GP;;AAAd;;;;;;;;EAAc;;AAAd;EE2HA,mBAAmB;AF3HL;;AAAd;;EAAc;;AAAd;EE+HA,gBAAgB;AF/HF;;AAAd;;;CAAc;;AAAd;EEoIA,UAAU;EACV,cAAwC;AFrI1B;;AAAd;EEoIA,UAAU;EACV,cAAwC;AFrI1B;;AAAd;;EEoIA,UAAU;EACV,cAAwC;AFrI1B;;AAAd;;;CAAc;;AAAd;;EE0IA,eAAe;AF1ID;;AAAd;;;;;;EAAc;;AAAd;CEsJD,aAAa;AFtJE;;AAAd;;;CAAc;;AAAd;EE0JA,yBAAyB;AF1JX;;AAAd,8FAAc;;AAAd;;;;;;EEmKA,kBAAkB;EAClB,oBAAoB;AFpKN;;AAAd;;;EAAc;;AAAd;EE6KA,cAAc;EACd,wBAAwB;AF9KV;;AAAd;;;;;;EAAc;;AAAd;;;;;EE8LA,UAAU;EACV,oBAAoB;EACpB,cAAc;AFhMA;;AAAd;;;;;EAAc;;AAAd;;;;EE8MA,+GAAyI;AF9M3H;;AAAd;;;;;;;;;;;;;;;EAAc;;AAAd;;;;;;;;EE0OA,cAAc,EAAE,MAAM;EACtB,sBAAsB,EAAE,MAAM;AF3OhB;;AAAd;;;;;EAAc;;AAAd;;EEuPA,eAAe;EACf,YAAY;AFxPE;;AAAd;;EAAc;;AAAd;EEgQA,aAAa;AFhQC;;AAAd;CAAc;;AGDhB;CAAA,oBAAA;CAAA,oBAAA;CAAA,eAAA;CAAA,eAAA;CAAA,eAAA;CAAA,gBAAA;CAAA,gBAAA;CAAA;CAAA;;AAAA;CAAA,uBAAA;CAAA;CAAA;;AAAA;CAAA,mCAAA;CAAA,4BAAA;CAAA;CAAA;;AHCE;CGDF,yBAAA;IAAA,sBAAA;SAAA,iBAAA;CAAA,uBAAA;CAAA,sBAAA;CAAA,kBAAA;CAAA,mBAAA;CAAA,oBAAA;CAAA,uBAAA;CAAA,uBAAA;CAAA,sBAAA;CAAA,gBAAA;CAAA,oBAAA;CAAA,uBAAA;AHCgB;;AAAd;CGDF,+BAAA;CAAA,oBAAA;CAAA,6CAAA;CAAA,4BAAA;CAAA,6BAAA;CAAA,yBAAA;CAAA,4GAAA;CAAA,0GAAA;CAAA,kFAAA;CAAA;AHCgB;;AAAd;CGDF,eAAA;CAAA;AHCgB;;AAAd;CGDF,eAAA;CAAA;AHCgB;;AAAd;CGDF,eAAA;CAAA;AHCgB;AAIhB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,6BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,iCAAA;CAAA;AHKmB;AAAnB;CGLA,mCAAA;CAAA;AHKmB;AAAnB;CGLA,kCAAA;CAAA;AHKmB;AAAnB;CGLA,iCAAA;CAAA;AHKmB;AAAnB;CGLA,kCAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;;CGLA;EAAA;EAAA;AHKmB;AAAnB;;CGLA;EAAA;EAAA;AHKmB;AAAnB;CGLA,yDAAA;SAAA;AHKmB;AAAnB;;CGLA;EAAA,4BAAA;EAAA,2DAAA;UAAA;EAAA;;CAAA;EAAA,gBAAA;EAAA,2DAAA;UAAA;EAAA;AHKmB;AAAnB;;CGLA;EAAA,4BAAA;EAAA,2DAAA;UAAA;EAAA;;CAAA;EAAA,gBAAA;EAAA,2DAAA;UAAA;EAAA;AHKmB;AAAnB;CGLA,oDAAA;SAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,4CAAA;CAAA;AHKmB;AAAnB;CGLA,4CAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,gCAAA;CAAA;AHKmB;AAAnB;CGLA,gCAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,+BAAA;CAAA;AHKmB;AAAnB;CGLA,iCAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,+BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,6BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,gCAAA;CAAA;AHKmB;AAAnB;CGLA,gCAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,gCAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,kGAAA;CAAA;AHKmB;AAAnB;CGLA,8DAAA;CAAA;AHKmB;AAAnB;CGLA,8FAAA;CAAA;AHKmB;AAAnB;CGLA,gGAAA;CAAA;AHKmB;AAAnB;CGLA,0CAAA;CAAA,oEAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;;AGLnB;CAAA,mBAAA;CAAA,oBAAA;CAAA,qBAAA;CAAA;CAAA;;AAAA;CAAA;CAAA","sourcesContent":[".tailwind {\n  @tailwind base;\n}\n\n@tailwind components;\n@tailwind utilities;\n\n.sidebar-instructions {\n  @apply tw-text-3xl tw-text-center tw-font-bold;\n}\n\n.sidebar-instructions-hidden {\n  @apply tw-hidden;\n}\n","/*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */\n\n/*\nDocument\n========\n*/\n\n/**\nUse a better box model (opinionated).\n*/\n\n*,\n::before,\n::after {\n\tbox-sizing: border-box;\n}\n\n/**\nUse a more readable tab size (opinionated).\n*/\n\nhtml {\n\t-moz-tab-size: 4;\n\ttab-size: 4;\n}\n\n/**\n1. Correct the line height in all browsers.\n2. Prevent adjustments of font size after orientation changes in iOS.\n*/\n\nhtml {\n\tline-height: 1.15; /* 1 */\n\t-webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/*\nSections\n========\n*/\n\n/**\nRemove the margin in all browsers.\n*/\n\nbody {\n\tmargin: 0;\n}\n\n/**\nImprove consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n*/\n\nbody {\n\tfont-family:\n\t\tsystem-ui,\n\t\t-apple-system, /* Firefox supports this but not yet `system-ui` */\n\t\t'Segoe UI',\n\t\tRoboto,\n\t\tHelvetica,\n\t\tArial,\n\t\tsans-serif,\n\t\t'Apple Color Emoji',\n\t\t'Segoe UI Emoji';\n}\n\n/*\nGrouping content\n================\n*/\n\n/**\n1. Add the correct height in Firefox.\n2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)\n*/\n\nhr {\n\theight: 0; /* 1 */\n\tcolor: inherit; /* 2 */\n}\n\n/*\nText-level semantics\n====================\n*/\n\n/**\nAdd the correct text decoration in Chrome, Edge, and Safari.\n*/\n\nabbr[title] {\n\ttext-decoration: underline dotted;\n}\n\n/**\nAdd the correct font weight in Edge and Safari.\n*/\n\nb,\nstrong {\n\tfont-weight: bolder;\n}\n\n/**\n1. Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n2. Correct the odd 'em' font sizing in all browsers.\n*/\n\ncode,\nkbd,\nsamp,\npre {\n\tfont-family:\n\t\tui-monospace,\n\t\tSFMono-Regular,\n\t\tConsolas,\n\t\t'Liberation Mono',\n\t\tMenlo,\n\t\tmonospace; /* 1 */\n\tfont-size: 1em; /* 2 */\n}\n\n/**\nAdd the correct font size in all browsers.\n*/\n\nsmall {\n\tfont-size: 80%;\n}\n\n/**\nPrevent 'sub' and 'sup' elements from affecting the line height in all browsers.\n*/\n\nsub,\nsup {\n\tfont-size: 75%;\n\tline-height: 0;\n\tposition: relative;\n\tvertical-align: baseline;\n}\n\nsub {\n\tbottom: -0.25em;\n}\n\nsup {\n\ttop: -0.5em;\n}\n\n/*\nTabular data\n============\n*/\n\n/**\n1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)\n2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)\n*/\n\ntable {\n\ttext-indent: 0; /* 1 */\n\tborder-color: inherit; /* 2 */\n}\n\n/*\nForms\n=====\n*/\n\n/**\n1. Change the font styles in all browsers.\n2. Remove the margin in Firefox and Safari.\n*/\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n\tfont-family: inherit; /* 1 */\n\tfont-size: 100%; /* 1 */\n\tline-height: 1.15; /* 1 */\n\tmargin: 0; /* 2 */\n}\n\n/**\nRemove the inheritance of text transform in Edge and Firefox.\n1. Remove the inheritance of text transform in Firefox.\n*/\n\nbutton,\nselect { /* 1 */\n\ttext-transform: none;\n}\n\n/**\nCorrect the inability to style clickable types in iOS and Safari.\n*/\n\nbutton,\n[type='button'],\n[type='reset'],\n[type='submit'] {\n\t-webkit-appearance: button;\n}\n\n/**\nRemove the inner border and padding in Firefox.\n*/\n\n::-moz-focus-inner {\n\tborder-style: none;\n\tpadding: 0;\n}\n\n/**\nRestore the focus styles unset by the previous rule.\n*/\n\n:-moz-focusring {\n\toutline: 1px dotted ButtonText;\n}\n\n/**\nRemove the additional ':invalid' styles in Firefox.\nSee: https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737\n*/\n\n:-moz-ui-invalid {\n\tbox-shadow: none;\n}\n\n/**\nRemove the padding so developers are not caught out when they zero out 'fieldset' elements in all browsers.\n*/\n\nlegend {\n\tpadding: 0;\n}\n\n/**\nAdd the correct vertical alignment in Chrome and Firefox.\n*/\n\nprogress {\n\tvertical-align: baseline;\n}\n\n/**\nCorrect the cursor style of increment and decrement buttons in Safari.\n*/\n\n::-webkit-inner-spin-button,\n::-webkit-outer-spin-button {\n\theight: auto;\n}\n\n/**\n1. Correct the odd appearance in Chrome and Safari.\n2. Correct the outline style in Safari.\n*/\n\n[type='search'] {\n\t-webkit-appearance: textfield; /* 1 */\n\toutline-offset: -2px; /* 2 */\n}\n\n/**\nRemove the inner padding in Chrome and Safari on macOS.\n*/\n\n::-webkit-search-decoration {\n\t-webkit-appearance: none;\n}\n\n/**\n1. Correct the inability to style clickable types in iOS and Safari.\n2. Change font properties to 'inherit' in Safari.\n*/\n\n::-webkit-file-upload-button {\n\t-webkit-appearance: button; /* 1 */\n\tfont: inherit; /* 2 */\n}\n\n/*\nInteractive\n===========\n*/\n\n/*\nAdd the correct display in Chrome and Safari.\n*/\n\nsummary {\n\tdisplay: list-item;\n}\n","/**\n * Manually forked from SUIT CSS Base: https://github.com/suitcss/base\n * A thin layer on top of normalize.css that provides a starting point more\n * suitable for web applications.\n */\n\n/**\n * Removes the default spacing and border for appropriate elements.\n */\n\nblockquote,\ndl,\ndd,\nh1,\nh2,\nh3,\nh4,\nh5,\nh6,\nhr,\nfigure,\np,\npre {\n  margin: 0;\n}\n\nbutton {\n  background-color: transparent;\n  background-image: none;\n}\n\nfieldset {\n  margin: 0;\n  padding: 0;\n}\n\nol,\nul {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\n\n/**\n * Tailwind custom reset styles\n */\n\n/**\n * 1. Use the user's configured `sans` font-family (with Tailwind's default\n *    sans-serif font stack as a fallback) as a sane default.\n * 2. Use Tailwind's default \"normal\" line-height so the user isn't forced\n *    to override it to ensure consistency even when using the default theme.\n */\n\nhtml {\n  font-family: theme('fontFamily.sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"); /* 1 */\n  line-height: 1.5; /* 2 */\n}\n\n\n/**\n * Inherit font-family and line-height from `html` so users can set them as\n * a class directly on the `html` element.\n */\n\nbody {\n  font-family: inherit;\n  line-height: inherit;\n}\n\n/**\n * 1. Prevent padding and border from affecting element width.\n *\n *    We used to set this in the html element and inherit from\n *    the parent element for everything else. This caused issues\n *    in shadow-dom-enhanced elements like <details> where the content\n *    is wrapped by a div with box-sizing set to `content-box`.\n *\n *    https://github.com/mozdevs/cssremedy/issues/4\n *\n *\n * 2. Allow adding a border to an element by just adding a border-width.\n *\n *    By default, the way the browser specifies that an element should have no\n *    border is by setting it's border-style to `none` in the user-agent\n *    stylesheet.\n *\n *    In order to easily add borders to elements by just setting the `border-width`\n *    property, we change the default border-style for all elements to `solid`, and\n *    use border-width to hide them instead. This way our `border` utilities only\n *    need to set the `border-width` property instead of the entire `border`\n *    shorthand, making our border utilities much more straightforward to compose.\n *\n *    https://github.com/tailwindcss/tailwindcss/pull/116\n */\n\n*,\n::before,\n::after {\n  box-sizing: border-box; /* 1 */\n  border-width: 0; /* 2 */\n  border-style: solid; /* 2 */\n  border-color: currentColor; /* 2 */\n}\n\n/*\n * Ensure horizontal rules are visible by default\n */\n\nhr {\n  border-top-width: 1px;\n}\n\n/**\n * Undo the `border-style: none` reset that Normalize applies to images so that\n * our `border-{width}` utilities have the expected effect.\n *\n * The Normalize reset is unnecessary for us since we default the border-width\n * to 0 on all elements.\n *\n * https://github.com/tailwindcss/tailwindcss/issues/362\n */\n\nimg {\n  border-style: solid;\n}\n\ntextarea {\n  resize: vertical;\n}\n\ninput::placeholder,\ntextarea::placeholder {\n  opacity: 1;\n  color: theme('colors.gray.400', #a1a1aa);\n}\n\nbutton,\n[role=\"button\"] {\n  cursor: pointer;\n}\n\n/**\n * Override legacy focus reset from Normalize with modern Firefox focus styles.\n *\n * This is actually an improvement over the new defaults in Firefox in our testing,\n * as it triggers the better focus styles even for links, which still use a dotted\n * outline in Firefox by default.\n */\n \n:-moz-focusring {\n\toutline: auto;\n}\n\ntable {\n  border-collapse: collapse;\n}\n\nh1,\nh2,\nh3,\nh4,\nh5,\nh6 {\n  font-size: inherit;\n  font-weight: inherit;\n}\n\n/**\n * Reset links to optimize for opt-in styling instead of\n * opt-out.\n */\n\na {\n  color: inherit;\n  text-decoration: inherit;\n}\n\n/**\n * Reset form element properties that are easy to forget to\n * style explicitly so you don't inadvertently introduce\n * styles that deviate from your design system. These styles\n * supplement a partial reset that is already applied by\n * normalize.css.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  padding: 0;\n  line-height: inherit;\n  color: inherit;\n}\n\n/**\n * Use the configured 'mono' font family for elements that\n * are expected to be rendered with a monospace font, falling\n * back to the system monospace stack if there is no configured\n * 'mono' font family.\n */\n\npre,\ncode,\nkbd,\nsamp {\n  font-family: theme('fontFamily.mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace);\n}\n\n/**\n * 1. Make replaced elements `display: block` by default as that's\n *    the behavior you want almost all of the time. Inspired by\n *    CSS Remedy, with `svg` added as well.\n *\n *    https://github.com/mozdevs/cssremedy/issues/14\n * \n * 2. Add `vertical-align: middle` to align replaced elements more\n *    sensibly by default when overriding `display` by adding a\n *    utility like `inline`.\n *\n *    This can trigger a poorly considered linting error in some\n *    tools but is included by design.\n * \n *    https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210\n */\n\nimg,\nsvg,\nvideo,\ncanvas,\naudio,\niframe,\nembed,\nobject {\n  display: block; /* 1 */\n  vertical-align: middle; /* 2 */\n}\n\n/**\n * Constrain images and videos to the parent width and preserve\n * their intrinsic aspect ratio.\n *\n * https://github.com/mozdevs/cssremedy/issues/14\n */\n\nimg,\nvideo {\n  max-width: 100%;\n  height: auto;\n}\n\n/**\n * Ensure the default browser behavior of the `hidden` attribute.\n */\n\n[hidden] {\n  display: none;\n}\n",null],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "/**\nUse a better box model (opinionated).\n*/\n\n.tailwind *,\n.tailwind ::before,\n.tailwind ::after {\n\tbox-sizing: border-box;\n}\n\n/**\nUse a more readable tab size (opinionated).\n*/\n\n.tailwind html {\n\t-moz-tab-size: 4;\n\t-o-tab-size: 4;\n\t   tab-size: 4;\n}\n\n/**\n1. Correct the line height in all browsers.\n2. Prevent adjustments of font size after orientation changes in iOS.\n*/\n\n.tailwind html {\n\tline-height: 1.15; /* 1 */\n\t-webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/**\nRemove the margin in all browsers.\n*/\n\n.tailwind body {\n\tmargin: 0;\n}\n\n/**\nImprove consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n*/\n\n.tailwind body {\n\tfont-family:\n\t\tsystem-ui,\n\t\t-apple-system, /* Firefox supports this but not yet `system-ui` */\n\t\t'Segoe UI',\n\t\tRoboto,\n\t\tHelvetica,\n\t\tArial,\n\t\tsans-serif,\n\t\t'Apple Color Emoji',\n\t\t'Segoe UI Emoji';\n}\n\n/**\n1. Add the correct height in Firefox.\n2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)\n*/\n\n.tailwind hr {\n\theight: 0; /* 1 */\n\tcolor: inherit; /* 2 */\n}\n\n/**\nAdd the correct text decoration in Chrome, Edge, and Safari.\n*/\n\n.tailwind abbr[title] {\n\t-webkit-text-decoration: underline dotted;\n\t        text-decoration: underline dotted;\n}\n\n/**\nAdd the correct font weight in Edge and Safari.\n*/\n\n.tailwind b,\n.tailwind strong {\n\tfont-weight: bolder;\n}\n\n/**\n1. Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n2. Correct the odd 'em' font sizing in all browsers.\n*/\n\n.tailwind code,\n.tailwind kbd,\n.tailwind samp,\n.tailwind pre {\n\tfont-family:\n\t\tui-monospace,\n\t\tSFMono-Regular,\n\t\tConsolas,\n\t\t'Liberation Mono',\n\t\tMenlo,\n\t\tmonospace; /* 1 */\n\tfont-size: 1em; /* 2 */\n}\n\n/**\nAdd the correct font size in all browsers.\n*/\n\n.tailwind small {\n\tfont-size: 80%;\n}\n\n/**\nPrevent 'sub' and 'sup' elements from affecting the line height in all browsers.\n*/\n\n.tailwind sub,\n.tailwind sup {\n\tfont-size: 75%;\n\tline-height: 0;\n\tposition: relative;\n\tvertical-align: baseline;\n}\n\n/*\nText-level semantics\n====================\n*/\n\n.tailwind sub {\n\tbottom: -0.25em;\n}\n\n/*\nGrouping content\n================\n*/\n\n.tailwind sup {\n\ttop: -0.5em;\n}\n\n/**\n1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)\n2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)\n*/\n\n.tailwind table {\n\ttext-indent: 0; /* 1 */\n\tborder-color: inherit; /* 2 */\n}\n\n/**\n1. Change the font styles in all browsers.\n2. Remove the margin in Firefox and Safari.\n*/\n\n.tailwind button,\n.tailwind input,\n.tailwind optgroup,\n.tailwind select,\n.tailwind textarea {\n\tfont-family: inherit; /* 1 */\n\tfont-size: 100%; /* 1 */\n\tline-height: 1.15; /* 1 */\n\tmargin: 0; /* 2 */\n}\n\n/**\nRemove the inheritance of text transform in Edge and Firefox.\n1. Remove the inheritance of text transform in Firefox.\n*/\n\n.tailwind button,\n.tailwind select { /* 1 */\n\ttext-transform: none;\n}\n\n/**\nCorrect the inability to style clickable types in iOS and Safari.\n*/\n\n.tailwind button,\n.tailwind [type='button'],\n.tailwind [type='reset'],\n.tailwind [type='submit'] {\n\t-webkit-appearance: button;\n}\n\n/**\nRemove the inner border and padding in Firefox.\n*/\n\n.tailwind ::-moz-focus-inner {\n\tborder-style: none;\n\tpadding: 0;\n}\n\n/**\nRestore the focus styles unset by the previous rule.\n*/\n\n.tailwind :-moz-focusring {\n\toutline: 1px dotted ButtonText;\n}\n\n/**\nRemove the additional ':invalid' styles in Firefox.\nSee: https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737\n*/\n\n.tailwind :-moz-ui-invalid {\n\tbox-shadow: none;\n}\n\n/**\nRemove the padding so developers are not caught out when they zero out 'fieldset' elements in all browsers.\n*/\n\n.tailwind legend {\n\tpadding: 0;\n}\n\n/**\nAdd the correct vertical alignment in Chrome and Firefox.\n*/\n\n.tailwind progress {\n\tvertical-align: baseline;\n}\n\n/**\nCorrect the cursor style of increment and decrement buttons in Safari.\n*/\n\n.tailwind ::-webkit-inner-spin-button,\n.tailwind ::-webkit-outer-spin-button {\n\theight: auto;\n}\n\n/**\n1. Correct the odd appearance in Chrome and Safari.\n2. Correct the outline style in Safari.\n*/\n\n.tailwind [type='search'] {\n\t-webkit-appearance: textfield; /* 1 */\n\toutline-offset: -2px; /* 2 */\n}\n\n/**\nRemove the inner padding in Chrome and Safari on macOS.\n*/\n\n.tailwind ::-webkit-search-decoration {\n\t-webkit-appearance: none;\n}\n\n/**\n1. Correct the inability to style clickable types in iOS and Safari.\n2. Change font properties to 'inherit' in Safari.\n*/\n\n.tailwind ::-webkit-file-upload-button {\n\t-webkit-appearance: button; /* 1 */\n\tfont: inherit; /* 2 */\n}\n\n/*\nAdd the correct display in Chrome and Safari.\n*/\n\n.tailwind summary {\n\tdisplay: list-item;\n}\n\n/**\n * Removes the default spacing and border for appropriate elements.\n */\n\n.tailwind blockquote,\n.tailwind dl,\n.tailwind dd,\n.tailwind h1,\n.tailwind h2,\n.tailwind h3,\n.tailwind h4,\n.tailwind h5,\n.tailwind h6,\n.tailwind hr,\n.tailwind figure,\n.tailwind p,\n.tailwind pre {\n  margin: 0;\n}\n\n/**\n * Manually forked from SUIT CSS Base: https://github.com/suitcss/base\n * A thin layer on top of normalize.css that provides a starting point more\n * suitable for web applications.\n */\n\n.tailwind button {\n  background-color: transparent;\n  background-image: none;\n}\n\n/*\nInteractive\n===========\n*/\n\n.tailwind fieldset {\n  margin: 0;\n  padding: 0;\n}\n\n/*\nForms\n=====\n*/\n\n.tailwind ol,\n.tailwind ul {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\n\n/**\n * 1. Use the user's configured `sans` font-family (with Tailwind's default\n *    sans-serif font stack as a fallback) as a sane default.\n * 2. Use Tailwind's default \"normal\" line-height so the user isn't forced\n *    to override it to ensure consistency even when using the default theme.\n */\n\n.tailwind html {\n  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"; /* 1 */\n  line-height: 1.5; /* 2 */\n}\n\n/**\n * Inherit font-family and line-height from `html` so users can set them as\n * a class directly on the `html` element.\n */\n\n.tailwind body {\n  font-family: inherit;\n  line-height: inherit;\n}\n\n/**\n * 1. Prevent padding and border from affecting element width.\n *\n *    We used to set this in the html element and inherit from\n *    the parent element for everything else. This caused issues\n *    in shadow-dom-enhanced elements like <details> where the content\n *    is wrapped by a div with box-sizing set to `content-box`.\n *\n *    https://github.com/mozdevs/cssremedy/issues/4\n *\n *\n * 2. Allow adding a border to an element by just adding a border-width.\n *\n *    By default, the way the browser specifies that an element should have no\n *    border is by setting it's border-style to `none` in the user-agent\n *    stylesheet.\n *\n *    In order to easily add borders to elements by just setting the `border-width`\n *    property, we change the default border-style for all elements to `solid`, and\n *    use border-width to hide them instead. This way our `border` utilities only\n *    need to set the `border-width` property instead of the entire `border`\n *    shorthand, making our border utilities much more straightforward to compose.\n *\n *    https://github.com/tailwindcss/tailwindcss/pull/116\n */\n\n.tailwind *,\n.tailwind ::before,\n.tailwind ::after {\n  box-sizing: border-box; /* 1 */\n  border-width: 0; /* 2 */\n  border-style: solid; /* 2 */\n  border-color: currentColor; /* 2 */\n}\n\n/*\n * Ensure horizontal rules are visible by default\n */\n\n.tailwind hr {\n  border-top-width: 1px;\n}\n\n/**\n * Undo the `border-style: none` reset that Normalize applies to images so that\n * our `border-{width}` utilities have the expected effect.\n *\n * The Normalize reset is unnecessary for us since we default the border-width\n * to 0 on all elements.\n *\n * https://github.com/tailwindcss/tailwindcss/issues/362\n */\n\n.tailwind img {\n  border-style: solid;\n}\n\n/**\n * Tailwind custom reset styles\n */\n\n.tailwind textarea {\n  resize: vertical;\n}\n\n/*\nTabular data\n============\n*/\n\n.tailwind input::-moz-placeholder, .tailwind textarea::-moz-placeholder {\n  opacity: 1;\n  color: #9ca3af;\n}\n\n.tailwind input:-ms-input-placeholder, .tailwind textarea:-ms-input-placeholder {\n  opacity: 1;\n  color: #9ca3af;\n}\n\n.tailwind input::placeholder,\n.tailwind textarea::placeholder {\n  opacity: 1;\n  color: #9ca3af;\n}\n\n/*\nSections\n========\n*/\n\n.tailwind button,\n.tailwind [role=\"button\"] {\n  cursor: pointer;\n}\n\n/**\n * Override legacy focus reset from Normalize with modern Firefox focus styles.\n *\n * This is actually an improvement over the new defaults in Firefox in our testing,\n * as it triggers the better focus styles even for links, which still use a dotted\n * outline in Firefox by default.\n */\n\n.tailwind :-moz-focusring {\n\toutline: auto;\n}\n\n/*\nDocument\n========\n*/\n\n.tailwind table {\n  border-collapse: collapse;\n}\n\n/*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */\n\n.tailwind h1,\n.tailwind h2,\n.tailwind h3,\n.tailwind h4,\n.tailwind h5,\n.tailwind h6 {\n  font-size: inherit;\n  font-weight: inherit;\n}\n\n/**\n * Reset links to optimize for opt-in styling instead of\n * opt-out.\n */\n\n.tailwind a {\n  color: inherit;\n  text-decoration: inherit;\n}\n\n/**\n * Reset form element properties that are easy to forget to\n * style explicitly so you don't inadvertently introduce\n * styles that deviate from your design system. These styles\n * supplement a partial reset that is already applied by\n * normalize.css.\n */\n\n.tailwind button,\n.tailwind input,\n.tailwind optgroup,\n.tailwind select,\n.tailwind textarea {\n  padding: 0;\n  line-height: inherit;\n  color: inherit;\n}\n\n/**\n * Use the configured 'mono' font family for elements that\n * are expected to be rendered with a monospace font, falling\n * back to the system monospace stack if there is no configured\n * 'mono' font family.\n */\n\n.tailwind pre,\n.tailwind code,\n.tailwind kbd,\n.tailwind samp {\n  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace;\n}\n\n/**\n * 1. Make replaced elements `display: block` by default as that's\n *    the behavior you want almost all of the time. Inspired by\n *    CSS Remedy, with `svg` added as well.\n *\n *    https://github.com/mozdevs/cssremedy/issues/14\n * \n * 2. Add `vertical-align: middle` to align replaced elements more\n *    sensibly by default when overriding `display` by adding a\n *    utility like `inline`.\n *\n *    This can trigger a poorly considered linting error in some\n *    tools but is included by design.\n * \n *    https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210\n */\n\n.tailwind img,\n.tailwind svg,\n.tailwind video,\n.tailwind canvas,\n.tailwind audio,\n.tailwind iframe,\n.tailwind embed,\n.tailwind object {\n  display: block; /* 1 */\n  vertical-align: middle; /* 2 */\n}\n\n/**\n * Constrain images and videos to the parent width and preserve\n * their intrinsic aspect ratio.\n *\n * https://github.com/mozdevs/cssremedy/issues/14\n */\n\n.tailwind img,\n.tailwind video {\n  max-width: 100%;\n  height: auto;\n}\n\n/**\n * Ensure the default browser behavior of the `hidden` attribute.\n */\n\n.tailwind [hidden] {\n  display: none;\n}\n\n/*! tailwindcss v2.2.17 | MIT License | https://tailwindcss.com\n*/\n\n.tailwind *, .tailwind ::before, .tailwind ::after {\n\t--tw-translate-x: 0;\n\t--tw-translate-y: 0;\n\t--tw-rotate: 0;\n\t--tw-skew-x: 0;\n\t--tw-skew-y: 0;\n\t--tw-scale-x: 1;\n\t--tw-scale-y: 1;\n\t--tw-transform: translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n}\n\n.tailwind *, .tailwind ::before, .tailwind ::after {\n\t--tw-border-opacity: 1;\n\tborder-color: rgba(229, 231, 235, var(--tw-border-opacity));\n}\n\n.tailwind *, .tailwind ::before, .tailwind ::after {\n\t--tw-ring-offset-shadow: 0 0 #0000;\n\t--tw-ring-shadow: 0 0 #0000;\n\t--tw-shadow: 0 0 #0000;\n}\n\n.tailwind *, .tailwind ::before, .tailwind ::after {\n\t--tw-blur: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-brightness: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-contrast: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-grayscale: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-hue-rotate: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-invert: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-saturate: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-sepia: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-drop-shadow: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);\n}\n\n.tailwind .form-input,.tailwind .form-textarea,.tailwind .form-select,.tailwind .form-multiselect {\n\t-webkit-appearance: none;\n\t   -moz-appearance: none;\n\t        appearance: none;\n\tbackground-color: #fff;\n\tborder-color: #6b7280;\n\tborder-width: 1px;\n\tborder-radius: 0px;\n\tpadding-top: 0.5rem;\n\tpadding-right: 0.75rem;\n\tpadding-bottom: 0.5rem;\n\tpadding-left: 0.75rem;\n\tfont-size: 1rem;\n\tline-height: 1.5rem;\n\t--tw-shadow: 0 0 #0000;\n}\n\n.tailwind .form-input:focus, .tailwind .form-textarea:focus, .tailwind .form-select:focus, .tailwind .form-multiselect:focus {\n\toutline: 2px solid transparent;\n\toutline-offset: 2px;\n\t--tw-ring-inset: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-ring-offset-width: 0px;\n\t--tw-ring-offset-color: #fff;\n\t--tw-ring-color: #2563eb;\n\t--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);\n\t--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);\n\tbox-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n\tborder-color: #2563eb;\n}\n\n.tailwind .form-input::-moz-placeholder, .tailwind .form-textarea::-moz-placeholder {\n\tcolor: #6b7280;\n\topacity: 1;\n}\n\n.tailwind .form-input:-ms-input-placeholder, .tailwind .form-textarea:-ms-input-placeholder {\n\tcolor: #6b7280;\n\topacity: 1;\n}\n\n.tailwind .form-input::placeholder,.tailwind .form-textarea::placeholder {\n\tcolor: #6b7280;\n\topacity: 1;\n}\n\n.tailwind .form-checkbox,.tailwind .form-radio {\n\t-webkit-appearance: none;\n\t   -moz-appearance: none;\n\t        appearance: none;\n\tpadding: 0;\n\t-webkit-print-color-adjust: exact;\n\t        color-adjust: exact;\n\tdisplay: inline-block;\n\tvertical-align: middle;\n\tbackground-origin: border-box;\n\t-webkit-user-select: none;\n\t   -moz-user-select: none;\n\t    -ms-user-select: none;\n\t        user-select: none;\n\tflex-shrink: 0;\n\theight: 1rem;\n\twidth: 1rem;\n\tcolor: #2563eb;\n\tbackground-color: #fff;\n\tborder-color: #6b7280;\n\tborder-width: 1px;\n\t--tw-shadow: 0 0 #0000;\n}\n\n.tailwind .form-checkbox {\n\tborder-radius: 0px;\n}\n\n.tailwind .form-checkbox:focus,.tailwind .form-radio:focus {\n\toutline: 2px solid transparent;\n\toutline-offset: 2px;\n\t--tw-ring-inset: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-ring-offset-width: 2px;\n\t--tw-ring-offset-color: #fff;\n\t--tw-ring-color: #2563eb;\n\t--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);\n\t--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);\n\tbox-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n}\n\n.tailwind .form-checkbox:checked,.tailwind .form-radio:checked {\n\tborder-color: transparent;\n\tbackground-color: currentColor;\n\tbackground-size: 100% 100%;\n\tbackground-position: center;\n\tbackground-repeat: no-repeat;\n}\n\n.tailwind .form-checkbox:checked {\n\tbackground-image: url(\"data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e\");\n}\n\n.tailwind .form-checkbox:checked:hover,.tailwind .form-checkbox:checked:focus,.tailwind .form-radio:checked:hover,.tailwind .form-radio:checked:focus {\n\tborder-color: transparent;\n\tbackground-color: currentColor;\n}\n\n.tailwind .form-checkbox:indeterminate {\n\tbackground-image: url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 16 16'%3e%3cpath stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8h8'/%3e%3c/svg%3e\");\n\tborder-color: transparent;\n\tbackground-color: currentColor;\n\tbackground-size: 100% 100%;\n\tbackground-position: center;\n\tbackground-repeat: no-repeat;\n}\n\n.tailwind .form-checkbox:indeterminate:hover,.tailwind .form-checkbox:indeterminate:focus {\n\tborder-color: transparent;\n\tbackground-color: currentColor;\n}\n.tw-fixed {\n\tposition: fixed !important;\n}\n.tw-absolute {\n\tposition: absolute !important;\n}\n.tw-relative {\n\tposition: relative !important;\n}\n.tw-inset-0 {\n\ttop: 0px !important;\n\tright: 0px !important;\n\tbottom: 0px !important;\n\tleft: 0px !important;\n}\n.tw-bottom-5 {\n\tbottom: 1.25rem !important;\n}\n.tw-right-5 {\n\tright: 1.25rem !important;\n}\n.tw--top-1 {\n\ttop: -0.25rem !important;\n}\n.tw--left-1 {\n\tleft: -0.25rem !important;\n}\n.tw-bottom-2 {\n\tbottom: 0.5rem !important;\n}\n.tw-right-2 {\n\tright: 0.5rem !important;\n}\n.tw-bottom-0 {\n\tbottom: 0px !important;\n}\n.tw-left-\\[50\\%\\] {\n\tleft: 50% !important;\n}\n.tw-z-10005 {\n\tz-index: 10005 !important;\n}\n.tw-z-10000 {\n\tz-index: 10000 !important;\n}\n.tw-z-5000 {\n\tz-index: 5000 !important;\n}\n.tw-z-10002 {\n\tz-index: 10002 !important;\n}\n.tw-z-10001 {\n\tz-index: 10001 !important;\n}\n.tw-m-0 {\n\tmargin: 0px !important;\n}\n.tw-mx-auto {\n\tmargin-left: auto !important;\n\tmargin-right: auto !important;\n}\n.tw-my-4 {\n\tmargin-top: 1rem !important;\n\tmargin-bottom: 1rem !important;\n}\n.tw-my-2 {\n\tmargin-top: 0.5rem !important;\n\tmargin-bottom: 0.5rem !important;\n}\n.tw-my-3 {\n\tmargin-top: 0.75rem !important;\n\tmargin-bottom: 0.75rem !important;\n}\n.tw-mt-6 {\n\tmargin-top: 1.5rem !important;\n}\n.tw-mt-8 {\n\tmargin-top: 2rem !important;\n}\n.tw-mt-1 {\n\tmargin-top: 0.25rem !important;\n}\n.tw-mt-4 {\n\tmargin-top: 1rem !important;\n}\n.tw-mt-2 {\n\tmargin-top: 0.5rem !important;\n}\n.tw-ml-2 {\n\tmargin-left: 0.5rem !important;\n}\n.tw-mt-3 {\n\tmargin-top: 0.75rem !important;\n}\n.tw-ml-1 {\n\tmargin-left: 0.25rem !important;\n}\n.tw--ml-1 {\n\tmargin-left: -0.25rem !important;\n}\n.tw-mr-3 {\n\tmargin-right: 0.75rem !important;\n}\n.tw-mr-2 {\n\tmargin-right: 0.5rem !important;\n}\n.tw-mb-2 {\n\tmargin-bottom: 0.5rem !important;\n}\n.tw-ml-4 {\n\tmargin-left: 1rem !important;\n}\n.tw-mt-0 {\n\tmargin-top: 0px !important;\n}\n.tw-mb-10 {\n\tmargin-bottom: 2.5rem !important;\n}\n.tw-mt-10 {\n\tmargin-top: 2.5rem !important;\n}\n.tw-block {\n\tdisplay: block !important;\n}\n.tw-inline-block {\n\tdisplay: inline-block !important;\n}\n.tw-flex {\n\tdisplay: flex !important;\n}\n.tw-inline-flex {\n\tdisplay: inline-flex !important;\n}\n.tw-h-10 {\n\theight: 2.5rem !important;\n}\n.tw-h-5 {\n\theight: 1.25rem !important;\n}\n.tw-h-6 {\n\theight: 1.5rem !important;\n}\n.tw-h-4 {\n\theight: 1rem !important;\n}\n.tw-h-3 {\n\theight: 0.75rem !important;\n}\n.tw-h-\\[300px\\] {\n\theight: 300px !important;\n}\n.tw-h-\\[800px\\] {\n\theight: 800px !important;\n}\n.tw-h-full {\n\theight: 100% !important;\n}\n.tw-max-h-28 {\n\tmax-height: 7rem !important;\n}\n.tw-w-10 {\n\twidth: 2.5rem !important;\n}\n.tw-w-full {\n\twidth: 100% !important;\n}\n.tw-w-5 {\n\twidth: 1.25rem !important;\n}\n.tw-w-6 {\n\twidth: 1.5rem !important;\n}\n.tw-w-4 {\n\twidth: 1rem !important;\n}\n.tw-w-3 {\n\twidth: 0.75rem !important;\n}\n.tw-w-24 {\n\twidth: 6rem !important;\n}\n.tw-w-\\[400px\\] {\n\twidth: 400px !important;\n}\n.tw-w-\\[70px\\] {\n\twidth: 70px !important;\n}\n.tw-w-2\\/3 {\n\twidth: 66.666667% !important;\n}\n.tw-w-\\[300px\\] {\n\twidth: 300px !important;\n}\n.tw-min-w-\\[300px\\] {\n\tmin-width: 300px !important;\n}\n.tw-max-w-\\[400px\\] {\n\tmax-width: 400px !important;\n}\n.tw-max-w-xl {\n\tmax-width: 36rem !important;\n}\n.tw-max-w-3xl {\n\tmax-width: 48rem !important;\n}\n.tw-flex-1 {\n\tflex: 1 1 0% !important;\n}\n.tw-flex-5 {\n\tflex: 5 1 0 !important;\n}\n.tw-translate-x-0 {\n\t--tw-translate-x: 0px !important;\n\ttransform: var(--tw-transform) !important;\n}\n.tw-translate-x-\\[430px\\] {\n\t--tw-translate-x: 430px !important;\n\ttransform: var(--tw-transform) !important;\n}\n.tw-translate-x-\\[-50\\%\\] {\n\t--tw-translate-x: -50% !important;\n\ttransform: var(--tw-transform) !important;\n}\n.tw-translate-y-0 {\n\t--tw-translate-y: 0px !important;\n\ttransform: var(--tw-transform) !important;\n}\n.tw-translate-y-\\[100\\%\\] {\n\t--tw-translate-y: 100% !important;\n\ttransform: var(--tw-transform) !important;\n}\n.tw-transform {\n\ttransform: var(--tw-transform) !important;\n}\n@-webkit-keyframes tw-spin {\n\n\tto {\n\t\ttransform: rotate(360deg);\n\t}\n}\n@keyframes tw-spin {\n\n\tto {\n\t\ttransform: rotate(360deg);\n\t}\n}\n.tw-animate-spin {\n\t-webkit-animation: tw-spin 1s linear infinite !important;\n\t        animation: tw-spin 1s linear infinite !important;\n}\n@-webkit-keyframes tw-bounce {\n\n\t0%, 100% {\n\t\ttransform: translateY(-25%);\n\t\t-webkit-animation-timing-function: cubic-bezier(0.8,0,1,1);\n\t\t        animation-timing-function: cubic-bezier(0.8,0,1,1);\n\t}\n\n\t50% {\n\t\ttransform: none;\n\t\t-webkit-animation-timing-function: cubic-bezier(0,0,0.2,1);\n\t\t        animation-timing-function: cubic-bezier(0,0,0.2,1);\n\t}\n}\n@keyframes tw-bounce {\n\n\t0%, 100% {\n\t\ttransform: translateY(-25%);\n\t\t-webkit-animation-timing-function: cubic-bezier(0.8,0,1,1);\n\t\t        animation-timing-function: cubic-bezier(0.8,0,1,1);\n\t}\n\n\t50% {\n\t\ttransform: none;\n\t\t-webkit-animation-timing-function: cubic-bezier(0,0,0.2,1);\n\t\t        animation-timing-function: cubic-bezier(0,0,0.2,1);\n\t}\n}\n.tw-animate-bounce {\n\t-webkit-animation: tw-bounce 1s infinite !important;\n\t        animation: tw-bounce 1s infinite !important;\n}\n.tw-cursor-pointer {\n\tcursor: pointer !important;\n}\n.tw-resize-none {\n\tresize: none !important;\n}\n.tw-appearance-none {\n\t-webkit-appearance: none !important;\n\t   -moz-appearance: none !important;\n\t        appearance: none !important;\n}\n.tw-flex-col {\n\tflex-direction: column !important;\n}\n.tw-items-center {\n\talign-items: center !important;\n}\n.tw-justify-end {\n\tjustify-content: flex-end !important;\n}\n.tw-justify-center {\n\tjustify-content: center !important;\n}\n.tw-justify-between {\n\tjustify-content: space-between !important;\n}\n.tw-space-y-4 > :not([hidden]) ~ :not([hidden]) {\n\t--tw-space-y-reverse: 0 !important;\n\tmargin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse))) !important;\n\tmargin-bottom: calc(1rem * var(--tw-space-y-reverse)) !important;\n}\n.tw-overflow-y-auto {\n\toverflow-y: auto !important;\n}\n.tw-break-words {\n\toverflow-wrap: break-word !important;\n}\n.tw-rounded-lg {\n\tborder-radius: 0.5rem !important;\n}\n.tw-rounded-md {\n\tborder-radius: 0.375rem !important;\n}\n.tw-rounded-full {\n\tborder-radius: 9999px !important;\n}\n.tw-rounded {\n\tborder-radius: 0.25rem !important;\n}\n.tw-rounded-xl {\n\tborder-radius: 0.75rem !important;\n}\n.tw-rounded-t-md {\n\tborder-top-left-radius: 0.375rem !important;\n\tborder-top-right-radius: 0.375rem !important;\n}\n.tw-rounded-b-lg {\n\tborder-bottom-right-radius: 0.5rem !important;\n\tborder-bottom-left-radius: 0.5rem !important;\n}\n.tw-rounded-t-lg {\n\tborder-top-left-radius: 0.5rem !important;\n\tborder-top-right-radius: 0.5rem !important;\n}\n.tw-rounded-l-md {\n\tborder-top-left-radius: 0.375rem !important;\n\tborder-bottom-left-radius: 0.375rem !important;\n}\n.tw-border {\n\tborder-width: 1px !important;\n}\n.tw-border-0 {\n\tborder-width: 0px !important;\n}\n.tw-border-gray-300 {\n\t--tw-border-opacity: 1 !important;\n\tborder-color: rgba(209, 213, 219, var(--tw-border-opacity)) !important;\n}\n.tw-border-transparent {\n\tborder-color: transparent !important;\n}\n.tw-border-cortico-blue {\n\tborder-color: rgba(75, 84, 246, 1) !important;\n}\n.tw-bg-white {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(255, 255, 255, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-yellow-500 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(245, 158, 11, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-red-400 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(248, 113, 113, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-cortico-blue {\n\tbackground-color: rgba(75, 84, 246, 1) !important;\n}\n.tw-bg-red-600 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(220, 38, 38, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-gray-100 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(243, 244, 246, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-green-600 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(5, 150, 105, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-gray-200 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(229, 231, 235, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-gray-500 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(107, 114, 128, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-red-500 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(239, 68, 68, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-gray-400 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(156, 163, 175, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-black {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(0, 0, 0, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-gray-700 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(55, 65, 81, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-blue-700 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(29, 78, 216, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-opacity-25 {\n\t--tw-bg-opacity: 0.25 !important;\n}\n.tw-bg-opacity-80 {\n\t--tw-bg-opacity: 0.8 !important;\n}\n.tw-p-4 {\n\tpadding: 1rem !important;\n}\n.tw-p-2 {\n\tpadding: 0.5rem !important;\n}\n.tw-p-12 {\n\tpadding: 3rem !important;\n}\n.tw-p-3 {\n\tpadding: 0.75rem !important;\n}\n.tw-p-1 {\n\tpadding: 0.25rem !important;\n}\n.tw-p-0 {\n\tpadding: 0px !important;\n}\n.tw-p-10 {\n\tpadding: 2.5rem !important;\n}\n.tw-px-2 {\n\tpadding-left: 0.5rem !important;\n\tpadding-right: 0.5rem !important;\n}\n.tw-px-3 {\n\tpadding-left: 0.75rem !important;\n\tpadding-right: 0.75rem !important;\n}\n.tw-py-2 {\n\tpadding-top: 0.5rem !important;\n\tpadding-bottom: 0.5rem !important;\n}\n.tw-px-4 {\n\tpadding-left: 1rem !important;\n\tpadding-right: 1rem !important;\n}\n.tw-py-4 {\n\tpadding-top: 1rem !important;\n\tpadding-bottom: 1rem !important;\n}\n.tw-py-1 {\n\tpadding-top: 0.25rem !important;\n\tpadding-bottom: 0.25rem !important;\n}\n.tw-py-3 {\n\tpadding-top: 0.75rem !important;\n\tpadding-bottom: 0.75rem !important;\n}\n.tw-pl-2 {\n\tpadding-left: 0.5rem !important;\n}\n.tw-text-center {\n\ttext-align: center !important;\n}\n.tw-font-sans {\n\tfont-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\" !important;\n}\n.tw-text-3xl {\n\tfont-size: 1.875rem !important;\n\tline-height: 2.25rem !important;\n}\n.tw-text-xs {\n\tfont-size: 0.75rem !important;\n\tline-height: 1rem !important;\n}\n.tw-text-sm {\n\tfont-size: 0.875rem !important;\n\tline-height: 1.25rem !important;\n}\n.tw-text-2xl {\n\tfont-size: 1.5rem !important;\n\tline-height: 2rem !important;\n}\n.tw-text-xl {\n\tfont-size: 1.25rem !important;\n\tline-height: 1.75rem !important;\n}\n.tw-font-extrabold {\n\tfont-weight: 800 !important;\n}\n.tw-font-medium {\n\tfont-weight: 500 !important;\n}\n.tw-font-light {\n\tfont-weight: 300 !important;\n}\n.tw-font-semibold {\n\tfont-weight: 600 !important;\n}\n.tw-font-bold {\n\tfont-weight: 700 !important;\n}\n.tw-leading-5 {\n\tline-height: 1.25rem !important;\n}\n.tw-tracking-wider {\n\tletter-spacing: 0.05em !important;\n}\n.tw-tracking-widest {\n\tletter-spacing: 0.1em !important;\n}\n.tw-text-white {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(255, 255, 255, var(--tw-text-opacity)) !important;\n}\n.tw-text-gray-700 {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(55, 65, 81, var(--tw-text-opacity)) !important;\n}\n.tw-text-green-600 {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(5, 150, 105, var(--tw-text-opacity)) !important;\n}\n.tw-text-gray-600 {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(75, 85, 99, var(--tw-text-opacity)) !important;\n}\n.tw-text-gray-800 {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(31, 41, 55, var(--tw-text-opacity)) !important;\n}\n.tw-text-cortico-blue {\n\tcolor: rgba(75, 84, 246, 1) !important;\n}\n.tw-text-indigo-600 {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(79, 70, 229, var(--tw-text-opacity)) !important;\n}\n.tw-text-black {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(0, 0, 0, var(--tw-text-opacity)) !important;\n}\n.tw-text-opacity-80 {\n\t--tw-text-opacity: 0.8 !important;\n}\n.tw-text-opacity-100 {\n\t--tw-text-opacity: 1 !important;\n}\n.tw-text-opacity-70 {\n\t--tw-text-opacity: 0.7 !important;\n}\n.tw-text-opacity-90 {\n\t--tw-text-opacity: 0.9 !important;\n}\n.tw-text-opacity-60 {\n\t--tw-text-opacity: 0.6 !important;\n}\n.tw-placeholder-gray-400::-moz-placeholder {\n\t--tw-placeholder-opacity: 1 !important;\n\tcolor: rgba(156, 163, 175, var(--tw-placeholder-opacity)) !important;\n}\n.tw-placeholder-gray-400:-ms-input-placeholder {\n\t--tw-placeholder-opacity: 1 !important;\n\tcolor: rgba(156, 163, 175, var(--tw-placeholder-opacity)) !important;\n}\n.tw-placeholder-gray-400::placeholder {\n\t--tw-placeholder-opacity: 1 !important;\n\tcolor: rgba(156, 163, 175, var(--tw-placeholder-opacity)) !important;\n}\n.tw-opacity-25 {\n\topacity: 0.25 !important;\n}\n.tw-opacity-75 {\n\topacity: 0.75 !important;\n}\n.tw-opacity-20 {\n\topacity: 0.2 !important;\n}\n.tw-opacity-10 {\n\topacity: 0.1 !important;\n}\n.tw-opacity-40 {\n\topacity: 0.4 !important;\n}\n.tw-opacity-50 {\n\topacity: 0.5 !important;\n}\n.tw-shadow-sm {\n\t--tw-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;\n\tbox-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;\n}\n.tw-shadow-xl {\n\t--tw-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;\n\tbox-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;\n}\n.tw-shadow-2xl {\n\t--tw-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;\n\tbox-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;\n}\n.tw-shadow-md {\n\t--tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;\n\tbox-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;\n}\n.tw-shadow-lg {\n\t--tw-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;\n\tbox-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;\n}\n.tw-drop-shadow-md {\n\t--tw-drop-shadow: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.07)) drop-shadow(0 2px 2px rgba(0, 0, 0, 0.06)) !important;\n\tfilter: var(--tw-filter) !important;\n}\n.tw-drop-shadow-lg {\n\t--tw-drop-shadow: drop-shadow(0 10px 8px rgba(0, 0, 0, 0.04)) drop-shadow(0 4px 3px rgba(0, 0, 0, 0.1)) !important;\n\tfilter: var(--tw-filter) !important;\n}\n.tw-transition-transform {\n\ttransition-property: transform !important;\n\ttransition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;\n\ttransition-duration: 150ms !important;\n}\n.tw-duration-200 {\n\ttransition-duration: 200ms !important;\n}\n.tw-duration-300 {\n\ttransition-duration: 300ms !important;\n}\n.tw-ease-in-out {\n\ttransition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;\n}\n.tw-line-clamp-3 {\n\toverflow: hidden !important;\n\tdisplay: -webkit-box !important;\n\t-webkit-box-orient: vertical !important;\n\t-webkit-line-clamp: 3 !important;\n}\n\n.sidebar-instructions {\n\ttext-align: center;\n\tfont-size: 1.875rem;\n\tline-height: 2.25rem;\n\tfont-weight: 700;\n}\n\n.sidebar-instructions-hidden {\n\tdisplay: none;\n}\n\n.alert-enter {\n  opacity: 0;\n  transform: scale(0.9);\n}\n.alert-enter-active {\n  opacity: 1;\n  transform: translateX(0);\n  transition: opacity 300ms, transform 300ms;\n}\n.alert-exit {\n  opacity: 1;\n}\n.alert-exit-active {\n  opacity: 0;\n  transform: scale(0.9);\n  transition: opacity 300ms, transform 300ms;\n}\n", "",{"version":3,"sources":["webpack://./index.css","webpack://./%3Cinput%20css%20XNvqWi%3E","webpack://./%3Cinput%20css%20xFmDUg%3E","<no source>"],"names":[],"mappings":"AACE;;CAAc;;AAAd;;;CCaD,sBAAsB;ADbP;;AAAd;;CAAc;;AAAd;CCqBD,gBAAgB;CAChB,cAAW;IAAX,WAAW;ADtBI;;AAAd;;;CAAc;;AAAd;CC+BD,iBAAiB,EAAE,MAAM;CACzB,8BAA8B,EAAE,MAAM;ADhCvB;;AAAd;;CAAc;;AAAd;CC6CD,SAAS;AD7CM;;AAAd;;CAAc;;AAAd;CCqDD;;;;;;;;;kBASiB;AD9DF;;AAAd;;;CAAc;;AAAd;CC4ED,SAAS,EAAE,MAAM;CACjB,cAAc,EAAE,MAAM;AD7EP;;AAAd;;CAAc;;AAAd;CC0FD,yCAAiC;SAAjC,iCAAiC;AD1FlB;;AAAd;;CAAc;;AAAd;;CCmGD,mBAAmB;ADnGJ;;AAAd;;;CAAc;;AAAd;;;;CC+GD;;;;;;WAMU,EAAE,MAAM;CAClB,cAAc,EAAE,MAAM;ADtHP;;AAAd;;CAAc;;AAAd;CC8HD,cAAc;AD9HC;;AAAd;;CAAc;;AAAd;;CCuID,cAAc;CACd,cAAc;CACd,kBAAkB;CAClB,wBAAwB;AD1IT;;AAAd;;;CAAc;;AAAd;CC8ID,eAAe;AD9IA;;AAAd;;;CAAc;;AAAd;CCkJD,WAAW;ADlJI;;AAAd;;;CAAc;;AAAd;CCgKD,cAAc,EAAE,MAAM;CACtB,qBAAqB,EAAE,MAAM;ADjKd;;AAAd;;;CAAc;;AAAd;;;;;CCmLD,oBAAoB,EAAE,MAAM;CAC5B,eAAe,EAAE,MAAM;CACvB,iBAAiB,EAAE,MAAM;CACzB,SAAS,EAAE,MAAM;ADtLF;;AAAd;;;CAAc;;AAAd;mBC+LO,MAAM;CACd,oBAAoB;ADhML;;AAAd;;CAAc;;AAAd;;;;CC2MD,0BAA0B;AD3MX;;AAAd;;CAAc;;AAAd;CCmND,kBAAkB;CAClB,UAAU;ADpNK;;AAAd;;CAAc;;AAAd;CC4ND,8BAA8B;AD5Nf;;AAAd;;;CAAc;;AAAd;CCqOD,gBAAgB;ADrOD;;AAAd;;CAAc;;AAAd;CC6OD,UAAU;AD7OK;;AAAd;;CAAc;;AAAd;CCqPD,wBAAwB;ADrPT;;AAAd;;CAAc;;AAAd;;CC8PD,YAAY;AD9PG;;AAAd;;;CAAc;;AAAd;CCuQD,6BAA6B,EAAE,MAAM;CACrC,oBAAoB,EAAE,MAAM;ADxQb;;AAAd;;CAAc;;AAAd;CCgRD,wBAAwB;ADhRT;;AAAd;;;CAAc;;AAAd;CCyRD,0BAA0B,EAAE,MAAM;CAClC,aAAa,EAAE,MAAM;AD1RN;;AAAd;;CAAc;;AAAd;CCuSD,kBAAkB;ADvSH;;AAAd;;EAAc;;AAAd;;;;;;;;;;;;;EEsBA,SAAS;AFtBK;;AAAd;;;;EAAc;;AAAd;EE0BA,6BAA6B;EAC7B,sBAAsB;AF3BR;;AAAd;;;CAAc;;AAAd;EE+BA,SAAS;EACT,UAAU;AFhCI;;AAAd;;;CAAc;;AAAd;;EEqCA,gBAAgB;EAChB,SAAS;EACT,UAAU;AFvCI;;AAAd;;;;;EAAc;;AAAd;EEsDA,4NAAsP,EAAE,MAAM;EAC9P,gBAAgB,EAAE,MAAM;AFvDV;;AAAd;;;EAAc;;AAAd;EEiEA,oBAAoB;EACpB,oBAAoB;AFlEN;;AAAd;;;;;;;;;;;;;;;;;;;;;;;;EAAc;;AAAd;;;EEkGA,sBAAsB,EAAE,MAAM;EAC9B,eAAe,EAAE,MAAM;EACvB,mBAAmB,EAAE,MAAM;EAC3B,0BAA0B,EAAE,MAAM;AFrGpB;;AAAd;;EAAc;;AAAd;EE6GA,qBAAqB;AF7GP;;AAAd;;;;;;;;EAAc;;AAAd;EE2HA,mBAAmB;AF3HL;;AAAd;;EAAc;;AAAd;EE+HA,gBAAgB;AF/HF;;AAAd;;;CAAc;;AAAd;EEoIA,UAAU;EACV,cAAwC;AFrI1B;;AAAd;EEoIA,UAAU;EACV,cAAwC;AFrI1B;;AAAd;;EEoIA,UAAU;EACV,cAAwC;AFrI1B;;AAAd;;;CAAc;;AAAd;;EE0IA,eAAe;AF1ID;;AAAd;;;;;;EAAc;;AAAd;CEsJD,aAAa;AFtJE;;AAAd;;;CAAc;;AAAd;EE0JA,yBAAyB;AF1JX;;AAAd,8FAAc;;AAAd;;;;;;EEmKA,kBAAkB;EAClB,oBAAoB;AFpKN;;AAAd;;;EAAc;;AAAd;EE6KA,cAAc;EACd,wBAAwB;AF9KV;;AAAd;;;;;;EAAc;;AAAd;;;;;EE8LA,UAAU;EACV,oBAAoB;EACpB,cAAc;AFhMA;;AAAd;;;;;EAAc;;AAAd;;;;EE8MA,+GAAyI;AF9M3H;;AAAd;;;;;;;;;;;;;;;EAAc;;AAAd;;;;;;;;EE0OA,cAAc,EAAE,MAAM;EACtB,sBAAsB,EAAE,MAAM;AF3OhB;;AAAd;;;;;EAAc;;AAAd;;EEuPA,eAAe;EACf,YAAY;AFxPE;;AAAd;;EAAc;;AAAd;EEgQA,aAAa;AFhQC;;AAAd;CAAc;;AGDhB;CAAA,oBAAA;CAAA,oBAAA;CAAA,eAAA;CAAA,eAAA;CAAA,eAAA;CAAA,gBAAA;CAAA,gBAAA;CAAA;CAAA;;AAAA;CAAA,uBAAA;CAAA;CAAA;;AAAA;CAAA,mCAAA;CAAA,4BAAA;CAAA;CAAA;;AAAA;CAAA,uCAAA;CAAA,6CAAA;CAAA,2CAAA;CAAA,4CAAA;CAAA,6CAAA;CAAA,yCAAA;CAAA,2CAAA;CAAA,wCAAA;CAAA,8CAAA;CAAA;CAAA;;AHCE;CGDF,yBAAA;IAAA,sBAAA;SAAA,iBAAA;CAAA,uBAAA;CAAA,sBAAA;CAAA,kBAAA;CAAA,mBAAA;CAAA,oBAAA;CAAA,uBAAA;CAAA,uBAAA;CAAA,sBAAA;CAAA,gBAAA;CAAA,oBAAA;CAAA,uBAAA;AHCgB;;AAAd;CGDF,+BAAA;CAAA,oBAAA;CAAA,6CAAA;CAAA,4BAAA;CAAA,6BAAA;CAAA,yBAAA;CAAA,4GAAA;CAAA,0GAAA;CAAA,kFAAA;CAAA;AHCgB;;AAAd;CGDF,eAAA;CAAA;AHCgB;;AAAd;CGDF,eAAA;CAAA;AHCgB;;AAAd;CGDF,eAAA;CAAA;AHCgB;;AAAd;CGDF,yBAAA;IAAA,sBAAA;SAAA,iBAAA;CAAA,WAAA;CAAA,kCAAA;SAAA,oBAAA;CAAA,sBAAA;CAAA,uBAAA;CAAA,8BAAA;CAAA,0BAAA;IAAA,uBAAA;KAAA,sBAAA;SAAA,kBAAA;CAAA,eAAA;CAAA,aAAA;CAAA,YAAA;CAAA,eAAA;CAAA,uBAAA;CAAA,sBAAA;CAAA,kBAAA;CAAA;AHCgB;;AAAd;CGDF;AHCgB;;AAAd;CGDF,+BAAA;CAAA,oBAAA;CAAA,6CAAA;CAAA,4BAAA;CAAA,6BAAA;CAAA,yBAAA;CAAA,4GAAA;CAAA,0GAAA;CAAA;AHCgB;;AAAd;CGDF,0BAAA;CAAA,+BAAA;CAAA,2BAAA;CAAA,4BAAA;CAAA;AHCgB;;AAAd;CGDF;AHCgB;;AAAd;CGDF,0BAAA;CAAA;AHCgB;;AAAd;CGDF,wOAAA;CAAA,0BAAA;CAAA,+BAAA;CAAA,2BAAA;CAAA,4BAAA;CAAA;AHCgB;;AAAd;CGDF,0BAAA;CAAA;AHCgB;AAIhB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,oBAAA;CAAA,sBAAA;CAAA,uBAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,6BAAA;CAAA;AHKmB;AAAnB;CGLA,4BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,+BAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,iCAAA;CAAA;AHKmB;AAAnB;CGLA,mCAAA;CAAA;AHKmB;AAAnB;CGLA,kCAAA;CAAA;AHKmB;AAAnB;CGLA,iCAAA;CAAA;AHKmB;AAAnB;CGLA,kCAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;;CGLA;EAAA;EAAA;AHKmB;AAAnB;;CGLA;EAAA;EAAA;AHKmB;AAAnB;CGLA,yDAAA;SAAA;AHKmB;AAAnB;;CGLA;EAAA,4BAAA;EAAA,2DAAA;UAAA;EAAA;;CAAA;EAAA,gBAAA;EAAA,2DAAA;UAAA;EAAA;AHKmB;AAAnB;;CGLA;EAAA,4BAAA;EAAA,2DAAA;UAAA;EAAA;;CAAA;EAAA,gBAAA;EAAA,2DAAA;UAAA;EAAA;AHKmB;AAAnB;CGLA,oDAAA;SAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,oCAAA;IAAA,iCAAA;SAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,mCAAA;CAAA,wEAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,4CAAA;CAAA;AHKmB;AAAnB;CGLA,8CAAA;CAAA;AHKmB;AAAnB;CGLA,0CAAA;CAAA;AHKmB;AAAnB;CGLA,4CAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,kCAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,gCAAA;CAAA;AHKmB;AAAnB;CGLA,iCAAA;CAAA;AHKmB;AAAnB;CGLA,+BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,6BAAA;CAAA;AHKmB;AAAnB;CGLA,gCAAA;CAAA;AHKmB;AAAnB;CGLA,gCAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,+BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,+BAAA;CAAA;AHKmB;AAAnB;CGLA,6BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,gCAAA;CAAA;AHKmB;AAAnB;CGLA,gCAAA;CAAA;AHKmB;AAAnB;CGLA,gCAAA;CAAA;AHKmB;AAAnB;CGLA,gCAAA;CAAA;AHKmB;AAAnB;CGLA,gCAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,gCAAA;CAAA;AHKmB;AAAnB;CGLA,gCAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,uCAAA;CAAA;AHKmB;AAAnB;CGLA,uCAAA;CAAA;AHKmB;AAAnB;CGLA,uCAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,wDAAA;CAAA;AHKmB;AAAnB;CGLA,kGAAA;CAAA;AHKmB;AAAnB;CGLA,8DAAA;CAAA;AHKmB;AAAnB;CGLA,8FAAA;CAAA;AHKmB;AAAnB;CGLA,gGAAA;CAAA;AHKmB;AAAnB;CGLA,mHAAA;CAAA;AHKmB;AAAnB;CGLA,mHAAA;CAAA;AHKmB;AAAnB;CGLA,0CAAA;CAAA,oEAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,4BAAA;CAAA,gCAAA;CAAA,wCAAA;CAAA;AHKmB;;AGLnB;CAAA,mBAAA;CAAA,oBAAA;CAAA,qBAAA;CAAA;CAAA;;AAAA;CAAA;CAAA;;AHeA;EACE,UAAU;EACV,qBAAqB;AACvB;AACA;EACE,UAAU;EACV,wBAAwB;EACxB,0CAA0C;AAC5C;AACA;EACE,UAAU;AACZ;AACA;EACE,UAAU;EACV,qBAAqB;EACrB,0CAA0C;AAC5C","sourcesContent":[".tailwind {\n  @tailwind base;\n}\n\n@tailwind components;\n@tailwind utilities;\n\n.sidebar-instructions {\n  @apply tw-text-3xl tw-text-center tw-font-bold;\n}\n\n.sidebar-instructions-hidden {\n  @apply tw-hidden;\n}\n\n.alert-enter {\n  opacity: 0;\n  transform: scale(0.9);\n}\n.alert-enter-active {\n  opacity: 1;\n  transform: translateX(0);\n  transition: opacity 300ms, transform 300ms;\n}\n.alert-exit {\n  opacity: 1;\n}\n.alert-exit-active {\n  opacity: 0;\n  transform: scale(0.9);\n  transition: opacity 300ms, transform 300ms;\n}\n","/*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */\n\n/*\nDocument\n========\n*/\n\n/**\nUse a better box model (opinionated).\n*/\n\n*,\n::before,\n::after {\n\tbox-sizing: border-box;\n}\n\n/**\nUse a more readable tab size (opinionated).\n*/\n\nhtml {\n\t-moz-tab-size: 4;\n\ttab-size: 4;\n}\n\n/**\n1. Correct the line height in all browsers.\n2. Prevent adjustments of font size after orientation changes in iOS.\n*/\n\nhtml {\n\tline-height: 1.15; /* 1 */\n\t-webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/*\nSections\n========\n*/\n\n/**\nRemove the margin in all browsers.\n*/\n\nbody {\n\tmargin: 0;\n}\n\n/**\nImprove consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n*/\n\nbody {\n\tfont-family:\n\t\tsystem-ui,\n\t\t-apple-system, /* Firefox supports this but not yet `system-ui` */\n\t\t'Segoe UI',\n\t\tRoboto,\n\t\tHelvetica,\n\t\tArial,\n\t\tsans-serif,\n\t\t'Apple Color Emoji',\n\t\t'Segoe UI Emoji';\n}\n\n/*\nGrouping content\n================\n*/\n\n/**\n1. Add the correct height in Firefox.\n2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)\n*/\n\nhr {\n\theight: 0; /* 1 */\n\tcolor: inherit; /* 2 */\n}\n\n/*\nText-level semantics\n====================\n*/\n\n/**\nAdd the correct text decoration in Chrome, Edge, and Safari.\n*/\n\nabbr[title] {\n\ttext-decoration: underline dotted;\n}\n\n/**\nAdd the correct font weight in Edge and Safari.\n*/\n\nb,\nstrong {\n\tfont-weight: bolder;\n}\n\n/**\n1. Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n2. Correct the odd 'em' font sizing in all browsers.\n*/\n\ncode,\nkbd,\nsamp,\npre {\n\tfont-family:\n\t\tui-monospace,\n\t\tSFMono-Regular,\n\t\tConsolas,\n\t\t'Liberation Mono',\n\t\tMenlo,\n\t\tmonospace; /* 1 */\n\tfont-size: 1em; /* 2 */\n}\n\n/**\nAdd the correct font size in all browsers.\n*/\n\nsmall {\n\tfont-size: 80%;\n}\n\n/**\nPrevent 'sub' and 'sup' elements from affecting the line height in all browsers.\n*/\n\nsub,\nsup {\n\tfont-size: 75%;\n\tline-height: 0;\n\tposition: relative;\n\tvertical-align: baseline;\n}\n\nsub {\n\tbottom: -0.25em;\n}\n\nsup {\n\ttop: -0.5em;\n}\n\n/*\nTabular data\n============\n*/\n\n/**\n1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)\n2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)\n*/\n\ntable {\n\ttext-indent: 0; /* 1 */\n\tborder-color: inherit; /* 2 */\n}\n\n/*\nForms\n=====\n*/\n\n/**\n1. Change the font styles in all browsers.\n2. Remove the margin in Firefox and Safari.\n*/\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n\tfont-family: inherit; /* 1 */\n\tfont-size: 100%; /* 1 */\n\tline-height: 1.15; /* 1 */\n\tmargin: 0; /* 2 */\n}\n\n/**\nRemove the inheritance of text transform in Edge and Firefox.\n1. Remove the inheritance of text transform in Firefox.\n*/\n\nbutton,\nselect { /* 1 */\n\ttext-transform: none;\n}\n\n/**\nCorrect the inability to style clickable types in iOS and Safari.\n*/\n\nbutton,\n[type='button'],\n[type='reset'],\n[type='submit'] {\n\t-webkit-appearance: button;\n}\n\n/**\nRemove the inner border and padding in Firefox.\n*/\n\n::-moz-focus-inner {\n\tborder-style: none;\n\tpadding: 0;\n}\n\n/**\nRestore the focus styles unset by the previous rule.\n*/\n\n:-moz-focusring {\n\toutline: 1px dotted ButtonText;\n}\n\n/**\nRemove the additional ':invalid' styles in Firefox.\nSee: https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737\n*/\n\n:-moz-ui-invalid {\n\tbox-shadow: none;\n}\n\n/**\nRemove the padding so developers are not caught out when they zero out 'fieldset' elements in all browsers.\n*/\n\nlegend {\n\tpadding: 0;\n}\n\n/**\nAdd the correct vertical alignment in Chrome and Firefox.\n*/\n\nprogress {\n\tvertical-align: baseline;\n}\n\n/**\nCorrect the cursor style of increment and decrement buttons in Safari.\n*/\n\n::-webkit-inner-spin-button,\n::-webkit-outer-spin-button {\n\theight: auto;\n}\n\n/**\n1. Correct the odd appearance in Chrome and Safari.\n2. Correct the outline style in Safari.\n*/\n\n[type='search'] {\n\t-webkit-appearance: textfield; /* 1 */\n\toutline-offset: -2px; /* 2 */\n}\n\n/**\nRemove the inner padding in Chrome and Safari on macOS.\n*/\n\n::-webkit-search-decoration {\n\t-webkit-appearance: none;\n}\n\n/**\n1. Correct the inability to style clickable types in iOS and Safari.\n2. Change font properties to 'inherit' in Safari.\n*/\n\n::-webkit-file-upload-button {\n\t-webkit-appearance: button; /* 1 */\n\tfont: inherit; /* 2 */\n}\n\n/*\nInteractive\n===========\n*/\n\n/*\nAdd the correct display in Chrome and Safari.\n*/\n\nsummary {\n\tdisplay: list-item;\n}\n","/**\n * Manually forked from SUIT CSS Base: https://github.com/suitcss/base\n * A thin layer on top of normalize.css that provides a starting point more\n * suitable for web applications.\n */\n\n/**\n * Removes the default spacing and border for appropriate elements.\n */\n\nblockquote,\ndl,\ndd,\nh1,\nh2,\nh3,\nh4,\nh5,\nh6,\nhr,\nfigure,\np,\npre {\n  margin: 0;\n}\n\nbutton {\n  background-color: transparent;\n  background-image: none;\n}\n\nfieldset {\n  margin: 0;\n  padding: 0;\n}\n\nol,\nul {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\n\n/**\n * Tailwind custom reset styles\n */\n\n/**\n * 1. Use the user's configured `sans` font-family (with Tailwind's default\n *    sans-serif font stack as a fallback) as a sane default.\n * 2. Use Tailwind's default \"normal\" line-height so the user isn't forced\n *    to override it to ensure consistency even when using the default theme.\n */\n\nhtml {\n  font-family: theme('fontFamily.sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"); /* 1 */\n  line-height: 1.5; /* 2 */\n}\n\n\n/**\n * Inherit font-family and line-height from `html` so users can set them as\n * a class directly on the `html` element.\n */\n\nbody {\n  font-family: inherit;\n  line-height: inherit;\n}\n\n/**\n * 1. Prevent padding and border from affecting element width.\n *\n *    We used to set this in the html element and inherit from\n *    the parent element for everything else. This caused issues\n *    in shadow-dom-enhanced elements like <details> where the content\n *    is wrapped by a div with box-sizing set to `content-box`.\n *\n *    https://github.com/mozdevs/cssremedy/issues/4\n *\n *\n * 2. Allow adding a border to an element by just adding a border-width.\n *\n *    By default, the way the browser specifies that an element should have no\n *    border is by setting it's border-style to `none` in the user-agent\n *    stylesheet.\n *\n *    In order to easily add borders to elements by just setting the `border-width`\n *    property, we change the default border-style for all elements to `solid`, and\n *    use border-width to hide them instead. This way our `border` utilities only\n *    need to set the `border-width` property instead of the entire `border`\n *    shorthand, making our border utilities much more straightforward to compose.\n *\n *    https://github.com/tailwindcss/tailwindcss/pull/116\n */\n\n*,\n::before,\n::after {\n  box-sizing: border-box; /* 1 */\n  border-width: 0; /* 2 */\n  border-style: solid; /* 2 */\n  border-color: currentColor; /* 2 */\n}\n\n/*\n * Ensure horizontal rules are visible by default\n */\n\nhr {\n  border-top-width: 1px;\n}\n\n/**\n * Undo the `border-style: none` reset that Normalize applies to images so that\n * our `border-{width}` utilities have the expected effect.\n *\n * The Normalize reset is unnecessary for us since we default the border-width\n * to 0 on all elements.\n *\n * https://github.com/tailwindcss/tailwindcss/issues/362\n */\n\nimg {\n  border-style: solid;\n}\n\ntextarea {\n  resize: vertical;\n}\n\ninput::placeholder,\ntextarea::placeholder {\n  opacity: 1;\n  color: theme('colors.gray.400', #a1a1aa);\n}\n\nbutton,\n[role=\"button\"] {\n  cursor: pointer;\n}\n\n/**\n * Override legacy focus reset from Normalize with modern Firefox focus styles.\n *\n * This is actually an improvement over the new defaults in Firefox in our testing,\n * as it triggers the better focus styles even for links, which still use a dotted\n * outline in Firefox by default.\n */\n \n:-moz-focusring {\n\toutline: auto;\n}\n\ntable {\n  border-collapse: collapse;\n}\n\nh1,\nh2,\nh3,\nh4,\nh5,\nh6 {\n  font-size: inherit;\n  font-weight: inherit;\n}\n\n/**\n * Reset links to optimize for opt-in styling instead of\n * opt-out.\n */\n\na {\n  color: inherit;\n  text-decoration: inherit;\n}\n\n/**\n * Reset form element properties that are easy to forget to\n * style explicitly so you don't inadvertently introduce\n * styles that deviate from your design system. These styles\n * supplement a partial reset that is already applied by\n * normalize.css.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  padding: 0;\n  line-height: inherit;\n  color: inherit;\n}\n\n/**\n * Use the configured 'mono' font family for elements that\n * are expected to be rendered with a monospace font, falling\n * back to the system monospace stack if there is no configured\n * 'mono' font family.\n */\n\npre,\ncode,\nkbd,\nsamp {\n  font-family: theme('fontFamily.mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace);\n}\n\n/**\n * 1. Make replaced elements `display: block` by default as that's\n *    the behavior you want almost all of the time. Inspired by\n *    CSS Remedy, with `svg` added as well.\n *\n *    https://github.com/mozdevs/cssremedy/issues/14\n * \n * 2. Add `vertical-align: middle` to align replaced elements more\n *    sensibly by default when overriding `display` by adding a\n *    utility like `inline`.\n *\n *    This can trigger a poorly considered linting error in some\n *    tools but is included by design.\n * \n *    https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210\n */\n\nimg,\nsvg,\nvideo,\ncanvas,\naudio,\niframe,\nembed,\nobject {\n  display: block; /* 1 */\n  vertical-align: middle; /* 2 */\n}\n\n/**\n * Constrain images and videos to the parent width and preserve\n * their intrinsic aspect ratio.\n *\n * https://github.com/mozdevs/cssremedy/issues/14\n */\n\nimg,\nvideo {\n  max-width: 100%;\n  height: auto;\n}\n\n/**\n * Ensure the default browser behavior of the `hidden` attribute.\n */\n\n[hidden] {\n  display: none;\n}\n",null],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -4935,6 +6016,161 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/uuid/dist/esm-browser/regex.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/uuid/dist/esm-browser/regex.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i);
+
+/***/ }),
+
+/***/ "./node_modules/uuid/dist/esm-browser/rng.js":
+/*!***************************************************!*\
+  !*** ./node_modules/uuid/dist/esm-browser/rng.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ rng)
+/* harmony export */ });
+// Unique ID creation requires a high quality random # generator. In the browser we therefore
+// require the crypto API and do not support built-in fallback to lower quality random number
+// generators (like Math.random()).
+var getRandomValues;
+var rnds8 = new Uint8Array(16);
+function rng() {
+  // lazy load so that environments that need to polyfill have a chance to do so
+  if (!getRandomValues) {
+    // getRandomValues needs to be invoked in a context where "this" is a Crypto implementation. Also,
+    // find the complete implementation of crypto (msCrypto) on IE11.
+    getRandomValues = typeof crypto !== 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto) || typeof msCrypto !== 'undefined' && typeof msCrypto.getRandomValues === 'function' && msCrypto.getRandomValues.bind(msCrypto);
+
+    if (!getRandomValues) {
+      throw new Error('crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported');
+    }
+  }
+
+  return getRandomValues(rnds8);
+}
+
+/***/ }),
+
+/***/ "./node_modules/uuid/dist/esm-browser/stringify.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/uuid/dist/esm-browser/stringify.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _validate_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./validate.js */ "./node_modules/uuid/dist/esm-browser/validate.js");
+
+/**
+ * Convert array of 16 byte values to UUID string format of the form:
+ * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+ */
+
+var byteToHex = [];
+
+for (var i = 0; i < 256; ++i) {
+  byteToHex.push((i + 0x100).toString(16).substr(1));
+}
+
+function stringify(arr) {
+  var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+  // Note: Be careful editing this code!  It's been tuned for performance
+  // and works in ways you may not expect. See https://github.com/uuidjs/uuid/pull/434
+  var uuid = (byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + '-' + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + '-' + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + '-' + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + '-' + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]]).toLowerCase(); // Consistency check for valid UUID.  If this throws, it's likely due to one
+  // of the following:
+  // - One or more input array values don't map to a hex octet (leading to
+  // "undefined" in the uuid)
+  // - Invalid input values for the RFC `version` or `variant` fields
+
+  if (!(0,_validate_js__WEBPACK_IMPORTED_MODULE_0__["default"])(uuid)) {
+    throw TypeError('Stringified UUID is invalid');
+  }
+
+  return uuid;
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (stringify);
+
+/***/ }),
+
+/***/ "./node_modules/uuid/dist/esm-browser/v4.js":
+/*!**************************************************!*\
+  !*** ./node_modules/uuid/dist/esm-browser/v4.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _rng_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./rng.js */ "./node_modules/uuid/dist/esm-browser/rng.js");
+/* harmony import */ var _stringify_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./stringify.js */ "./node_modules/uuid/dist/esm-browser/stringify.js");
+
+
+
+function v4(options, buf, offset) {
+  options = options || {};
+  var rnds = options.random || (options.rng || _rng_js__WEBPACK_IMPORTED_MODULE_0__["default"])(); // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
+
+  rnds[6] = rnds[6] & 0x0f | 0x40;
+  rnds[8] = rnds[8] & 0x3f | 0x80; // Copy bytes to buffer, if provided
+
+  if (buf) {
+    offset = offset || 0;
+
+    for (var i = 0; i < 16; ++i) {
+      buf[offset + i] = rnds[i];
+    }
+
+    return buf;
+  }
+
+  return (0,_stringify_js__WEBPACK_IMPORTED_MODULE_1__["default"])(rnds);
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (v4);
+
+/***/ }),
+
+/***/ "./node_modules/uuid/dist/esm-browser/validate.js":
+/*!********************************************************!*\
+  !*** ./node_modules/uuid/dist/esm-browser/validate.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _regex_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./regex.js */ "./node_modules/uuid/dist/esm-browser/regex.js");
+
+
+function validate(uuid) {
+  return typeof uuid === 'string' && _regex_js__WEBPACK_IMPORTED_MODULE_0__["default"].test(uuid);
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (validate);
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js":
 /*!*********************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js ***!
@@ -5096,6 +6332,37 @@ function _defineProperty(obj, key, value) {
   }
 
   return obj;
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/extends.js":
+/*!************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/extends.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _extends)
+/* harmony export */ });
+function _extends() {
+  _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
 }
 
 /***/ }),
@@ -5422,7 +6689,8 @@ var cortico_media = ["phone", "clinic", "virtual", "", "quiet"];
 
 var init_cortico = /*#__PURE__*/function () {
   var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee() {
-    var anchor, route, oscar_elements, resources_field, cortico_button, isMarkham, patient_info, currentPharmacyCode, additionalNotes, previewFrame;
+    var anchor, route, oscar_elements, resources_field, cortico_button, isMarkham, patient_info, _patient_info, currentPharmacyCode, additionalNotes, previewFrame;
+
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -5490,12 +6758,12 @@ var init_cortico = /*#__PURE__*/function () {
             //cortico_button.addEventListener("click", open_video_appointment_page);
 
             resources_field.addEventListener("change", update_video_button);
-            _context.next = 45;
+            _context.next = 51;
             break;
 
           case 21:
             if (!(route.indexOf("/provider/providercontrol.jsp") > -1)) {
-              _context.next = 34;
+              _context.next = 35;
               break;
             }
 
@@ -5509,6 +6777,7 @@ var init_cortico = /*#__PURE__*/function () {
               dragAndDrop();
             }
 
+            setClinicName();
             addCorticoLogo();
             addMenu();
             (0,_modules_cortico_Appointments_AppointmentMenu__WEBPACK_IMPORTED_MODULE_8__.addAppointmentMenu)();
@@ -5525,17 +6794,12 @@ var init_cortico = /*#__PURE__*/function () {
             }
 
             setupPrescriptionButtons();
-            _context.next = 45;
+            _context.next = 51;
             break;
 
-          case 34:
+          case 35:
             if (!(route.indexOf("/eform/efmformadd_data.jsp") > -1 || route.indexOf("/eform/efmshowform_data.jsp") > -1 || route.indexOf("/casemgmt/forward.jsp") > -1)) {
-              _context.next = 44;
-              break;
-            }
-
-            if (!(route.indexOf("/casemgmt/forward.jsp") > -1)) {
-              _context.next = 41;
+              _context.next = 42;
               break;
             }
 
@@ -5544,18 +6808,41 @@ var init_cortico = /*#__PURE__*/function () {
 
           case 38:
             patient_info = _context.sent;
-            console.log("Patient Info", patient_info);
-            (0,_modules_Messenger_Messenger__WEBPACK_IMPORTED_MODULE_16__["default"])(patient_info);
 
-          case 41:
-            setupEFormPage();
-            _context.next = 45;
+            if (route.indexOf("/casemgmt/forward.jsp") > -1) {
+              (0,_modules_Messenger_Messenger__WEBPACK_IMPORTED_MODULE_16__["default"])(patient_info, {
+                encounter: true
+              });
+            } else {
+              (0,_modules_Messenger_Messenger__WEBPACK_IMPORTED_MODULE_16__["default"])(patient_info, {
+                encounter: false
+              }, document.getElementById("eform_container"));
+              setupEFormPage();
+            }
+
+            _context.next = 51;
             break;
 
-          case 44:
-            if (route.indexOf("dms/documentReport.jsp") > -1) {
-              setupDocumentPage();
-            } else if (route.indexOf("/oscarRx/ViewScript2.jsp") > -1) {
+          case 42:
+            if (!(route.indexOf("dms/documentReport.jsp") > -1)) {
+              _context.next = 50;
+              break;
+            }
+
+            setupDocumentPage();
+            _context.next = 46;
+            return getPatientInfo();
+
+          case 46:
+            _patient_info = _context.sent;
+            (0,_modules_Messenger_Messenger__WEBPACK_IMPORTED_MODULE_16__["default"])(_patient_info, {
+              encounter: false
+            });
+            _context.next = 51;
+            break;
+
+          case 50:
+            if (route.indexOf("/oscarRx/ViewScript2.jsp") > -1) {
               // We need to determine first if the prescription is "delivery"
               currentPharmacyCode = localStorage.getItem("currentPharmacyCode");
 
@@ -5571,10 +6858,10 @@ var init_cortico = /*#__PURE__*/function () {
               }
             }
 
-          case 45:
+          case 51:
             init_styles();
 
-          case 46:
+          case 52:
           case "end":
             return _context.stop();
         }
@@ -5825,6 +7112,7 @@ function _setupDocumentPage() {
           case 3:
             patient_info = _context10.sent;
             pdf_links.forEach(function (pdf_link) {
+              console.log("PDF Link", pdf_link);
               if (pdf_link.href.indexOf("?sort") > -1) return;
               var email_btn = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.create)("<a class='cortico-btn cortico-btn-small' style='display:inline'> -&gt; PT</a>", {
                 events: {
@@ -5845,7 +7133,7 @@ function _setupDocumentPage() {
                               _context9.next = 4;
                               return (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.loadExtensionStorageValue)("jwt_access_token").then( /*#__PURE__*/function () {
                                 var _ref3 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee8(access_token) {
-                                  var pdf_link_ext, blob, dataUrl, patientFormResponse;
+                                  var pdf_link_ext, blob, dataUrl;
                                   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee8$(_context8) {
                                     while (1) {
                                       switch (_context8.prev = _context8.next) {
@@ -5872,20 +7160,28 @@ function _setupDocumentPage() {
 
                                         case 7:
                                           dataUrl = _context8.sent;
-                                          _context8.next = 10;
-                                          return emailPatient(patient_info, access_token, {
-                                            attachment: dataUrl
+                                          pubsub.publish("document", {
+                                            name: pdf_link.textContent,
+                                            data: dataUrl
                                           });
-
-                                        case 10:
-                                          patientFormResponse = _context8.sent;
+                                          /*
+                                          const patientFormResponse = await emailPatient(
+                                            patient_info,
+                                            access_token,
+                                            { attachment: dataUrl }
+                                          );
                                           console.log("RSP: ", patientFormResponse);
-
                                           if (patientFormResponse.success) {
-                                            document.querySelector(".documentLists").appendChild((0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.create)("<p>".concat(patient_info.email, " was sent a <a style='text-decoration:underline' target=\"_blank\" href=\"").concat(patientFormResponse.preview, "\">document</a>.</p>")));
-                                          }
+                                            document
+                                              .querySelector(".documentLists")
+                                              .appendChild(
+                                                create(
+                                                  `<p>${patient_info.email} was sent a <a style='text-decoration:underline' target="_blank" href="${patientFormResponse.preview}">document</a>.</p>`
+                                                )
+                                              );
+                                          }*/
 
-                                        case 13:
+                                        case 9:
                                         case "end":
                                           return _context8.stop();
                                       }
@@ -5933,12 +7229,12 @@ function setupEFormPage() {
 }
 
 function _setupEFormPage() {
-  _setupEFormPage = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee13() {
-    var is_eform_page, clinicName, email_parent, _email_parent, patient_info, email_btn;
+  _setupEFormPage = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee12() {
+    var is_eform_page, clinicName, email_parent, _email_parent;
 
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee13$(_context13) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee12$(_context12) {
       while (1) {
-        switch (_context13.prev = _context13.next) {
+        switch (_context12.prev = _context12.next) {
           case 0:
             is_eform_page = true;
             clinicName = localStorage["clinicname"];
@@ -5950,107 +7246,54 @@ function _setupEFormPage() {
             }
 
             if (email_parent) {
-              _context13.next = 7;
+              _context12.next = 7;
               break;
             }
 
             // bail
             console.warn("Cannot find position for email button.");
-            return _context13.abrupt("return");
+            return _context12.abrupt("return");
 
           case 7:
-            _context13.next = 9;
-            return getPatientInfo();
+            _context12.next = 9;
+            return (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.loadExtensionStorageValue)("jwt_access_token").then( /*#__PURE__*/function () {
+              var _ref4 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee11(access_token) {
+                var html;
+                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee11$(_context11) {
+                  while (1) {
+                    switch (_context11.prev = _context11.next) {
+                      case 0:
+                        html = document.cloneNode(true);
+                        _context11.next = 3;
+                        return convertImagesToDataURLs(html);
+
+                      case 3:
+                        stripScripts(html);
+                        html = html.documentElement.outerHTML;
+                        pubsub.publish("eform", {
+                          name: "eForm",
+                          html: html
+                        });
+
+                      case 6:
+                      case "end":
+                        return _context11.stop();
+                    }
+                  }
+                }, _callee11);
+              }));
+
+              return function (_x18) {
+                return _ref4.apply(this, arguments);
+              };
+            }());
 
           case 9:
-            patient_info = _context13.sent;
-            email_btn = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.create)("\n    <p style='margin-bottom:2em'>\n      <a id='cortico-email-patient' class='cortico-btn'>Email Patient</a>\n    </p>", {
-              events: {
-                "click #cortico-email-patient": function () {
-                  var _clickCorticoEmailPatient = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee12(e) {
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee12$(_context12) {
-                      while (1) {
-                        switch (_context12.prev = _context12.next) {
-                          case 0:
-                            if ((0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.checkCorticoUrl)(e)) {
-                              _context12.next = 2;
-                              break;
-                            }
-
-                            return _context12.abrupt("return");
-
-                          case 2:
-                            _context12.next = 4;
-                            return (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.loadExtensionStorageValue)("jwt_access_token").then( /*#__PURE__*/function () {
-                              var _ref4 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee11(access_token) {
-                                var html, patientFormResponse;
-                                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee11$(_context11) {
-                                  while (1) {
-                                    switch (_context11.prev = _context11.next) {
-                                      case 0:
-                                        // copy document and prepare it for printing.
-                                        html = document.cloneNode(true);
-                                        _context11.next = 3;
-                                        return convertImagesToDataURLs(html);
-
-                                      case 3:
-                                        // we need to remove scripts to prevent re-rendering
-                                        // what the sender sees (one issue is JS may revert images from data URLs)
-                                        stripScripts(html); // it seems we don't need to remove this as it's already
-                                        // hidden in the print media CSS embedded in all eForms
-                                        //let doNotPrintList = html.querySelectorAll(".DoNotPrint")
-
-                                        _context11.next = 6;
-                                        return emailPatient(patient_info, access_token, {
-                                          html: html.documentElement.outerHTML
-                                        });
-
-                                      case 6:
-                                        patientFormResponse = _context11.sent;
-                                        console.log("RSP: ", patientFormResponse);
-
-                                        if (patientFormResponse.success) {
-                                          document.getElementById("cortico-email-patient").parentNode.appendChild((0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.create)("<p>".concat(patient_info.email, " was sent a <a style='text-decoration:underline' target=\"_blank\" href=\"").concat(patientFormResponse.preview, "\">document</a>.</p>")));
-                                        }
-
-                                      case 9:
-                                      case "end":
-                                        return _context11.stop();
-                                    }
-                                  }
-                                }, _callee11);
-                              }));
-
-                              return function (_x19) {
-                                return _ref4.apply(this, arguments);
-                              };
-                            }());
-
-                          case 4:
-                          case "end":
-                            return _context12.stop();
-                        }
-                      }
-                    }, _callee12);
-                  }));
-
-                  function clickCorticoEmailPatient(_x18) {
-                    return _clickCorticoEmailPatient.apply(this, arguments);
-                  }
-
-                  return clickCorticoEmailPatient;
-                }()
-              }
-            }); // end create.
-
-            email_parent.appendChild(email_btn);
-
-          case 12:
           case "end":
-            return _context13.stop();
+            return _context12.stop();
         }
       }
-    }, _callee13);
+    }, _callee12);
   }));
   return _setupEFormPage.apply(this, arguments);
 }
@@ -6131,18 +7374,18 @@ function createSideBar() {
 }
 
 function _createSideBar() {
-  _createSideBar = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee14() {
+  _createSideBar = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee13() {
     var sidebar, styleSheet, styles;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee14$(_context14) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee13$(_context13) {
       while (1) {
-        switch (_context14.prev = _context14.next) {
+        switch (_context13.prev = _context13.next) {
           case 0:
             if (!window.corticoSidebar) {
-              _context14.next = 2;
+              _context13.next = 2;
               break;
             }
 
-            return _context14.abrupt("return");
+            return _context13.abrupt("return");
 
           case 2:
             sidebar = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.create)("\n  <div class='cortico-sidebar'>\n    <a href=\"https://cortico.ca\"><img src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGEAAABhCAYAAADGBs+jAAAACXBIWXMAAAsSAAALEgHS3X78AAAEqklEQVR4nO2dvXHbMBSAX3RpVNkb2BvYmcAaQIUa1nEmiDYIR1AmsFyrSe7Ux9lAniDWBlbF0jnIjzYlUyRAvAc8kO+707mxAAofQeLvAZ9eXl4gJaZZcQ4A1wAwObrsDQA8rFfj56R+EAAkI2GaFabg5wDwteVf7wFguV6NHwJdmjfiJeCdnwPAd8ev/jTfS6FmiJaAAswdfdUxiUcAuF2vxhviSyNFrAQCASVGxERyjRgJuIYPEAoATOMX8SWSIk4CsYCSm2lWzAjTI0WUBCYBJTlDmiSIkcAswHCFzVxxiJAQQEDJcQdPBNElBBQA2NMWR1QJgQUYLgPl40Q0CREEiCWKBBVwSHAJkQWIHNQLKkFADRA5hhRs7EiAgN16NT6PlHcjQWqCkHfAImLejbBLECJgO1gJglpBs0EOZQsS8E36pA6LBGEClpGvoRVyCSrAHVIJKqAbZBJUQHdIJKgAP7wlqAB/vCSoABo6S1ABdHSSoAJocZagAuhxkqACeLCWoAL4sJKgAnhplaAC+GmUoALC8PlULirAnUo83cZlEql2ol8F2DHNCrOib4afm5ov/cXYiGWTlA8SVEA7WEYmiPGH5Vd2Zo57vRrXLs8/kKAC2sHl9cuOZVQbuvUmQQW0gwJMGZ15JPNBRLV1pAIawJt06SkAsIwPlmPuJUyzYq4CWskJy8hEDb29H/aPo2lWPBMY9iGFVtA/4mTNy/rSPJZG06y4VQGtzBnSNGVuyn7/OIoZx5VKR4yrjKJLSGkogi2iFFDCBVMGTaQ0FMF6k5pmb4xwqV4PxnXgPLQEFVDDCNfuhyBJAdybV5n0R4HiuFKvAY+c6Y4CbEPTh0cQV23Yp1tK2DFl0pd3AFeo1T7dEY7mcWRiLcA007DnLpL1avyEe+pRco/pvg7g4WQD5XPPSQBWyzvJInAAj6oRs6sOhVSbqBMiEV0ElGNXYkXgE2NG8OjeHc8nUM6sbTFK0qq11TJB0teJnVLAQRmdmujPsbrYZvQbt760WmFg+UOkT/AsLDbKrWI2zZ3XldHJbRUwo1v81NWMLRbkwiVE1fFOSmGeIcdHed0YXFlGefkSrsN6bwvMsNy0yWldTSWNLlU5iWbuUfkYnpoKvkrIDUZ8nqW9HnMKtcHIxHOVgvTmqxchNhgxhfeHYAq1tyK4NxgxLYg7wiR7KYLlnYCPnwXjtGCv3hGkErDw8xOLY6npjQhvCVjwE+xPhJ6v7oWIzhKwXbyJvGYJBhvHDO/DuxPGuQhbkn9Ze7WOcLhCRXji3URVEf6Q9BNUhB9knTUV0R3SHrOK6Ab5sIWKcIdl7EhFuME6n0AUaEfBF8kb1LKOogqqEb9wulYk7PMJQkRcMIU8kZDK9CYFb4F6kfI/SbD4BAE14kzPWZMhQiVAfBF62F2JoFaTCKIddqci3ol67KOKeCX6AaiBRYjsNYs4CjigCJEnDgbrrNnA3KEb9mF3tjDXiOEeducKk4jhHnbXFWIRu8EedudLRYRPxGRtjJg0xEqAdxHXGBPnymMKAkBa66gJh8XGW4wRS2ZpZDISSnANrBFi/pYDcuZuN8syTSyd+Dv/AAD4D9nFlj4ll12bAAAAAElFTkSuQmCC\"  alt=\"Cortico\" style=\"margin-bottom: 25px;\" /></a>\n    <div class='cortico-sidebar-close'>Close</div>\n  </div>\n  ", {
@@ -6160,14 +7403,14 @@ function _createSideBar() {
             window.corticoSidebar = sidebar; //var newUiOption = getNewUIOption();
             //sidebar.appendChild(newUiOption);
 
-            _context14.t0 = sidebar;
-            _context14.next = 7;
+            _context13.t0 = sidebar;
+            _context13.next = 7;
             return getCorticoLogin();
 
           case 7:
-            _context14.t1 = _context14.sent;
+            _context13.t1 = _context13.sent;
 
-            _context14.t0.appendChild.call(_context14.t0, _context14.t1);
+            _context13.t0.appendChild.call(_context13.t0, _context13.t1);
 
             sidebar.appendChild(getCorticoUrlOption());
             sidebar.appendChild(getRecallStatusOption());
@@ -6181,14 +7424,14 @@ function _createSideBar() {
             styleSheet = styleSheetFactory("cortico_sidebar");
             styles = "\n    .cortico-sidebar { position: fixed; top: 0; right: 0; bottom: 0; width: 300px; background-color: white; height: 100%; z-index: 10000; }\n    .cortico-sidebar { transition: transform 0.25s ease-in; transform: translateX(300px); }\n    .cortico-sidebar { display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 1px 5px 5px rgb(0, 0, 0); }\n    .cortico-sidebar-show { transform: translateX(0); }\n    .cortico-sidebar-close { cursor:pointer; position: absolute; top: 10px; right: 10px; z-index: 500; }\n  ";
             styleSheet.innerText = styles;
-            return _context14.abrupt("return", sidebar);
+            return _context13.abrupt("return", sidebar);
 
           case 22:
           case "end":
-            return _context14.stop();
+            return _context13.stop();
         }
       }
-    }, _callee14);
+    }, _callee13);
   }));
   return _createSideBar.apply(this, arguments);
 }
@@ -6228,22 +7471,22 @@ function addMenu(_x2) {
 }
 
 function _addMenu() {
-  _addMenu = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee15(container) {
+  _addMenu = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee14(container) {
     var navigation, menu, sidebar;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee15$(_context15) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee14$(_context14) {
       while (1) {
-        switch (_context15.prev = _context15.next) {
+        switch (_context14.prev = _context14.next) {
           case 0:
             navigation = document.querySelector("#firstMenu #navList") || document.querySelector("#firstMenu #navlist");
             menu = document.createElement("li");
             menu.textContent = "Cortico";
             menu.style.color = "rgb(75, 84, 246)";
             menu.style.cursor = "pointer";
-            _context15.next = 7;
+            _context14.next = 7;
             return createSideBar();
 
           case 7:
-            sidebar = _context15.sent;
+            sidebar = _context14.sent;
             menu.addEventListener("click", function () {
               sidebar.classList.toggle("cortico-sidebar-show");
 
@@ -6274,10 +7517,10 @@ function _addMenu() {
 
           case 13:
           case "end":
-            return _context15.stop();
+            return _context14.stop();
         }
       }
-    }, _callee15);
+    }, _callee14);
   }));
   return _addMenu.apply(this, arguments);
 }
@@ -6437,20 +7680,20 @@ function getCorticoLogin() {
 }
 
 function _getCorticoLogin() {
-  _getCorticoLogin = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee17() {
+  _getCorticoLogin = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee16() {
     var container, jwt_expired, loginButton, loggedInAsText, loggedInAsHtml, btnEvent;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee17$(_context17) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee16$(_context16) {
       while (1) {
-        switch (_context17.prev = _context17.next) {
+        switch (_context16.prev = _context16.next) {
           case 0:
             container = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.create)("<div></div>");
 
             if ((0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getCorticoUrl)()) {
-              _context17.next = 3;
+              _context16.next = 3;
               break;
             }
 
-            return _context17.abrupt("return", container);
+            return _context16.abrupt("return", container);
 
           case 3:
             jwt_expired = null;
@@ -6467,13 +7710,13 @@ function _getCorticoLogin() {
                 }
               }
             };
-            _context17.next = 10;
+            _context16.next = 10;
             return (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.loadExtensionStorageValue)("jwt_username").then(function (username) {
               loggedInAsText = "Logged in as ".concat(username);
             });
 
           case 10:
-            _context17.next = 12;
+            _context16.next = 12;
             return (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.loadExtensionStorageValue)("jwt_expired").then(function (expired) {
               jwt_expired = expired;
 
@@ -6482,10 +7725,10 @@ function _getCorticoLogin() {
                 loggedInAsHtml = "<p>".concat(loggedInAsText, "</p>");
                 btnEvent = {
                   "click .cortico-btn": function () {
-                    var _clickCorticoBtn = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee16(e) {
-                      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee16$(_context16) {
+                    var _clickCorticoBtn = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee15(e) {
+                      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee15$(_context15) {
                         while (1) {
-                          switch (_context16.prev = _context16.next) {
+                          switch (_context15.prev = _context15.next) {
                             case 0:
                               if (e.target.className == "cortico-btn") {
                                 if (window.is_dev) {
@@ -6500,13 +7743,13 @@ function _getCorticoLogin() {
 
                             case 1:
                             case "end":
-                              return _context16.stop();
+                              return _context15.stop();
                           }
                         }
-                      }, _callee16);
+                      }, _callee15);
                     }));
 
-                    function clickCorticoBtn(_x20) {
+                    function clickCorticoBtn(_x19) {
                       return _clickCorticoBtn.apply(this, arguments);
                     }
 
@@ -6520,14 +7763,14 @@ function _getCorticoLogin() {
             container = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.create)("<div class='login-form-button'>\n    ".concat(loginButton.outerHTML, "\n    ").concat(loggedInAsHtml, "\n    </div>"), {
               events: btnEvent
             });
-            return _context17.abrupt("return", container);
+            return _context16.abrupt("return", container);
 
           case 14:
           case "end":
-            return _context17.stop();
+            return _context16.stop();
         }
       }
-    }, _callee17);
+    }, _callee16);
   }));
   return _getCorticoLogin.apply(this, arguments);
 }
@@ -7004,19 +8247,19 @@ function checkAllEligibility() {
 }
 
 function _checkAllEligibility() {
-  _checkAllEligibility = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee18() {
+  _checkAllEligibility = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee17() {
     var nodes, appointmentInfo, length, providerNo, error, i, temp, demographic_no, result, patientInfo, healthNumber, province, text, lowerCaseText, requestSuccess, _text, jsonRes, verified;
 
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee18$(_context18) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee17$(_context17) {
       while (1) {
-        switch (_context18.prev = _context18.next) {
+        switch (_context17.prev = _context17.next) {
           case 0:
             if (!(window.checkAllEligibilityRunning === true)) {
-              _context18.next = 2;
+              _context17.next = 2;
               break;
             }
 
-            return _context18.abrupt("return", alert("Check Already Running"));
+            return _context17.abrupt("return", alert("Check Already Running"));
 
           case 2:
             clearFailureCache();
@@ -7033,53 +8276,53 @@ function _checkAllEligibility() {
             providerNo = getProviderNoFromTd(nodes[0]);
             error = false;
             window.checkAllEligibilityRunning = true;
-            _context18.prev = 12;
+            _context17.prev = 12;
             i = 0;
 
           case 14:
             if (!(i < length)) {
-              _context18.next = 64;
+              _context17.next = 64;
               break;
             }
 
             temp = Object.assign({}, appointmentInfo[i]);
             temp.total = length;
             temp.current = i + 1;
-            pubsub.publish("check-eligibility", temp);
+            publish("check-eligibility", temp);
             demographic_no = appointmentInfo[i].demographic_no;
             result = null; // empty appointment node, do not check
 
             if (!(!demographic_no || demographic_no == 0)) {
-              _context18.next = 23;
+              _context17.next = 23;
               break;
             }
 
-            return _context18.abrupt("continue", 61);
+            return _context17.abrupt("continue", 61);
 
           case 23:
             // In cases where the first appointment in the schedule is an empty
             // appointment, get the providerNo from the node itself
             if (!providerNo) providerNo = getProviderNoFromTd(nodes[i]);
-            _context18.next = 26;
+            _context17.next = 26;
             return getPatientInfo(demographic_no);
 
           case 26:
-            patientInfo = _context18.sent;
+            patientInfo = _context17.sent;
             healthNumber = patientInfo["Health Ins"].replace(/\s+/g, " ").trim();
             province = patientInfo["Province"].replace(/\s+/g, " ").trim();
-            _context18.prev = 29;
-            _context18.next = 32;
+            _context17.prev = 29;
+            _context17.next = 32;
             return checkEligiblity(demographic_no, (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getOrigin)(), (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getNamespace)(), providerNo, healthNumber, province);
 
           case 32:
-            result = _context18.sent;
-            _context18.next = 38;
+            result = _context17.sent;
+            _context17.next = 38;
             break;
 
           case 35:
-            _context18.prev = 35;
-            _context18.t0 = _context18["catch"](29);
-            console.error(_context18.t0);
+            _context17.prev = 35;
+            _context17.t0 = _context17["catch"](29);
+            console.error(_context17.t0);
 
           case 38:
             text = null;
@@ -7087,15 +8330,15 @@ function _checkAllEligibility() {
             requestSuccess = false;
 
             if (!(result && result.status === 200)) {
-              _context18.next = 49;
+              _context17.next = 49;
               break;
             }
 
-            _context18.next = 44;
+            _context17.next = 44;
             return result.text();
 
           case 44:
-            _text = _context18.sent;
+            _text = _context17.sent;
             lowerCaseText = _text.toLowerCase();
 
             if (oscar.isOscarGoHost()) {
@@ -7106,7 +8349,7 @@ function _checkAllEligibility() {
               }
             }
 
-            _context18.next = 51;
+            _context17.next = 51;
             break;
 
           case 49:
@@ -7115,13 +8358,13 @@ function _checkAllEligibility() {
 
           case 51:
             if (!lowerCaseText.includes("error in teleplan connection")) {
-              _context18.next = 55;
+              _context17.next = 55;
               break;
             }
 
             alert("Automatic Eligiblity Check Aborted. \n" + text);
             error = true;
-            return _context18.abrupt("break", 64);
+            return _context17.abrupt("break", 64);
 
           case 55:
             verified = false;
@@ -7141,7 +8384,7 @@ function _checkAllEligibility() {
 
             (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.addToCache)(demographic_no, verified);
             console.log("Cached.");
-            _context18.next = 61;
+            _context17.next = 61;
             return new Promise(function (resolve, reject) {
               setTimeout(function () {
                 resolve();
@@ -7150,35 +8393,35 @@ function _checkAllEligibility() {
 
           case 61:
             i++;
-            _context18.next = 14;
+            _context17.next = 14;
             break;
 
           case 64:
-            _context18.next = 70;
+            _context17.next = 70;
             break;
 
           case 66:
-            _context18.prev = 66;
-            _context18.t1 = _context18["catch"](12);
-            console.log(_context18.t1);
-            alert(_context18.t1);
+            _context17.prev = 66;
+            _context17.t1 = _context17["catch"](12);
+            console.log(_context17.t1);
+            alert(_context17.t1);
 
           case 70:
-            _context18.prev = 70;
+            _context17.prev = 70;
             window.checkAllEligibilityRunning = false;
             pubsub.publish("check-eligibility", {
               complete: true,
               total: length,
               error: error
             });
-            return _context18.finish(70);
+            return _context17.finish(70);
 
           case 74:
           case "end":
-            return _context18.stop();
+            return _context17.stop();
         }
       }
-    }, _callee18, null, [[12, 66, 70, 74], [29, 35]]);
+    }, _callee17, null, [[12, 66, 70, 74], [29, 35]]);
   }));
   return _checkAllEligibility.apply(this, arguments);
 }
@@ -7575,11 +8818,11 @@ function setupPreferredPharmacy(_x7, _x8) {
 }
 
 function _setupPreferredPharmacy() {
-  _setupPreferredPharmacy = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee19(code, demographic_no) {
+  _setupPreferredPharmacy = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee18(code, demographic_no) {
     var pharmacyCode, corticoPharmacy, respText, corticoPharmacyText, faxNumber, searchTerm, fullPharmacyName, demographicNo, currPharmacyResults, currPharmacyText, preferredPharmacy, currentlyUsingPharmacy, results, text, json, pharmacyUpdated, isRxPage, pharmacy, setPharmacyResults, setPharmacyText, msg;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee19$(_context19) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee18$(_context18) {
       while (1) {
-        switch (_context19.prev = _context19.next) {
+        switch (_context18.prev = _context18.next) {
           case 0:
             pharmacyCode = localStorage.getItem("currentPharmacyCode");
 
@@ -7587,16 +8830,16 @@ function _setupPreferredPharmacy() {
               pharmacyCode = code;
             }
 
-            _context19.next = 4;
+            _context18.next = 4;
             return getPharmacyDetails(pharmacyCode);
 
           case 4:
-            corticoPharmacy = _context19.sent;
-            _context19.next = 7;
+            corticoPharmacy = _context18.sent;
+            _context18.next = 7;
             return corticoPharmacy.text();
 
           case 7:
-            respText = _context19.sent;
+            respText = _context18.sent;
             corticoPharmacyText = JSON.parse(respText);
             faxNumber = corticoPharmacyText[0]["fax_number"] || null;
             searchTerm = corticoPharmacyText[0]["name"] || null;
@@ -7614,18 +8857,18 @@ function _setupPreferredPharmacy() {
               demographicNo = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getDemographicNo)();
             }
 
-            _context19.next = 19;
+            _context18.next = 19;
             return getCurrentPharmacy(demographicNo);
 
           case 19:
-            currPharmacyResults = _context19.sent;
-            _context19.t0 = JSON;
-            _context19.next = 23;
+            currPharmacyResults = _context18.sent;
+            _context18.t0 = JSON;
+            _context18.next = 23;
             return currPharmacyResults.text();
 
           case 23:
-            _context19.t1 = _context19.sent;
-            currPharmacyText = _context19.t0.parse.call(_context19.t0, _context19.t1);
+            _context18.t1 = _context18.sent;
+            currPharmacyText = _context18.t0.parse.call(_context18.t0, _context18.t1);
             console.log("Current Pharmacy:", currPharmacyText);
 
             if (currPharmacyText) {
@@ -7637,26 +8880,26 @@ function _setupPreferredPharmacy() {
             console.log("currently using pharmacy ".concat(searchTerm.toLowerCase(), ", ").concat(currentlyUsingPharmacy));
 
             if (!(searchTerm && !currentlyUsingPharmacy)) {
-              _context19.next = 56;
+              _context18.next = 56;
               break;
             }
 
-            _context19.next = 32;
+            _context18.next = 32;
             return getPharmacyResults(searchTerm);
 
           case 32:
-            results = _context19.sent;
-            _context19.next = 35;
+            results = _context18.sent;
+            _context18.next = 35;
             return results.text();
 
           case 35:
-            text = _context19.sent;
+            text = _context18.sent;
             json = JSON.parse(text);
             pharmacyUpdated = json.length > 0;
             isRxPage = window.location.href.indexOf("oscarRx/choosePatient.do") > -1;
 
             if (!pharmacyUpdated) {
-              _context19.next = 52;
+              _context18.next = 52;
               break;
             }
 
@@ -7672,24 +8915,24 @@ function _setupPreferredPharmacy() {
             }
 
             if (!pharmacy) {
-              _context19.next = 50;
+              _context18.next = 50;
               break;
             }
 
-            _context19.next = 45;
+            _context18.next = 45;
             return setPreferredPharmacy(pharmacy, demographicNo);
 
           case 45:
-            setPharmacyResults = _context19.sent;
-            _context19.next = 48;
+            setPharmacyResults = _context18.sent;
+            _context18.next = 48;
             return setPharmacyResults.text();
 
           case 48:
-            setPharmacyText = _context19.sent;
+            setPharmacyText = _context18.sent;
             if (isRxPage) alert("Updating preferred pharmacy, press Ok to reload");else console.log("Updating preferred pharmacy");
 
           case 50:
-            _context19.next = 56;
+            _context18.next = 56;
             break;
 
           case 52:
@@ -7700,10 +8943,10 @@ function _setupPreferredPharmacy() {
 
           case 56:
           case "end":
-            return _context19.stop();
+            return _context18.stop();
         }
       }
-    }, _callee19);
+    }, _callee18);
   }));
   return _setupPreferredPharmacy.apply(this, arguments);
 }
@@ -7771,6 +9014,58 @@ function storePharmaciesFailureCache(demographicNo, message) {
     failures: failures
   };
   localStorage.setItem("pharmaciesCacheFailure", JSON.stringify(cache));
+}
+
+function setClinicName() {
+  return _setClinicName.apply(this, arguments);
+}
+
+function _setClinicName() {
+  _setClinicName = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee19() {
+    var token, url;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee19$(_context19) {
+      while (1) {
+        switch (_context19.prev = _context19.next) {
+          case 0:
+            if (!localStorage.getItem("name")) {
+              _context19.next = 2;
+              break;
+            }
+
+            return _context19.abrupt("return");
+
+          case 2:
+            _context19.next = 4;
+            return (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.loadExtensionStorageValue)("jwt_access_token");
+
+          case 4:
+            token = _context19.sent;
+
+            if (token) {
+              url = "".concat((0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getCorticoUrl)(), "/api/public/clinic-settings/");
+              fetch(url, {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: "Bearer " + token
+                }
+              }).then(function (response) {
+                return response.json();
+              }).then(function (response) {
+                return localStorage.setItem("name", response.clinic_name);
+              }).catch(function (error) {
+                return console.error(error);
+              });
+            }
+
+          case 6:
+          case "end":
+            return _context19.stop();
+        }
+      }
+    }, _callee19);
+  }));
+  return _setClinicName.apply(this, arguments);
 }
 
 function getDiagnosticFromCortico(_x9, _x10, _x11) {
@@ -8022,7 +9317,7 @@ function _init_diagnostic_viewer_button() {
                             }, _callee22);
                           }));
 
-                          return function (_x22) {
+                          return function (_x21) {
                             return _ref5.apply(this, arguments);
                           };
                         }());
@@ -8037,7 +9332,7 @@ function _init_diagnostic_viewer_button() {
               return _open_diagnostic_viewer.apply(this, arguments);
             };
 
-            open_diagnostic_viewer = function _open_diagnostic_view(_x21) {
+            open_diagnostic_viewer = function _open_diagnostic_view(_x20) {
               return _open_diagnostic_viewer.apply(this, arguments);
             };
 
@@ -8129,7 +9424,7 @@ function _init_recall_button() {
               return _send_patient_recall_email.apply(this, arguments);
             };
 
-            send_patient_recall_email = function _send_patient_recall_(_x23) {
+            send_patient_recall_email = function _send_patient_recall_(_x22) {
               return _send_patient_recall_email.apply(this, arguments);
             };
 
@@ -8270,7 +9565,7 @@ function _emailPatient() {
             patientEmail = "clark@countable.ca";
             data = {
               clinic_host: (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getCorticoUrl)().replace(/http.?:\/\//, ""),
-              to: patientEmail
+              to: "aaron@countable.ca"
             };
 
             if (payload.html) {

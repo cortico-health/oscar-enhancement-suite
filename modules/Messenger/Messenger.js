@@ -4,7 +4,11 @@ import { loadExtensionStorageValue, isLoggedIn } from "../Utils/Utils";
 import Notification from "../Notifications/Notification";
 import MessengerWidget from "./MessengerWidget";
 import MessengerWindow from "./MessengerWindow";
-import { sendEmailForm } from "../Api/Api";
+import { sendMessage } from "../Api/Api";
+import Encounter from "../core/Encounter";
+import PreactModal from "../Modal/PreactModal";
+import SavedReplies from "./SavedReplies";
+import Login from "../Login/Login";
 
 function MessageException(message) {
   this.message = message;
@@ -24,10 +28,10 @@ const handleErrors = async (response) => {
   return result;
 };
 
-function Messenger(patient) {
-  const container = document.body;
+function Messenger(patient, opts, container) {
+  const _container = container || document.body;
 
-  function Content({ patient, ...props }) {
+  function Content({ patient, encounter, ...props }) {
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const [showNotification, setShowNotification] = useState(false);
@@ -36,6 +40,10 @@ function Messenger(patient) {
       title: null,
       content: null,
     });
+    const [showModal, setShowModal] = useState(false);
+    const [subject, setSubject] = useState(null);
+    const [body, setBody] = useState(null);
+    const [showLogin, setShowLogin] = useState(false);
 
     const handleOpen = () => {
       setOpen(true);
@@ -46,20 +54,17 @@ function Messenger(patient) {
     };
 
     const promptLogin = () => {
-      setMessageInfo({
-        title: "Log In",
-        content: "Please log in to use this service",
-      });
-      setShowNotification(true);
+      setShowLogin(true);
     };
 
-    const handleSubmit = async (data) => {
+    const handleSubmit = async (data, opts) => {
+      const { subject, body } = data;
       setLoading(true);
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       const token = await loadExtensionStorageValue("jwt_access_token");
       if (token) {
-        sendEmailForm(data, token)
+        sendMessage(data, token)
           .then(handleErrors)
           .then((response) => {
             setMessageInfo({
@@ -68,6 +73,11 @@ function Messenger(patient) {
                 response.message ||
                 `Message successfully sent to ${patient?.email}`,
             });
+
+            if (opts.encounter === true) {
+              const text = `\n\n[${new Date().toLocaleString()} .: Email sent to patient] \n${subject}: ${body}`;
+              addEncounterText(text);
+            }
           })
           .catch((error) => {
             setMessageInfo({
@@ -95,8 +105,53 @@ function Messenger(patient) {
       })();
     }, []);
 
+    const loadReply = (data) => {
+      console.log("Load reply data", data);
+      setSubject(data.subject);
+      setBody(data.body);
+      setShowModal(false);
+    };
+
+    const addEncounterText = (text) => {
+      if (document.readyState === "complete") {
+        Encounter.addToCaseNote(text);
+      } else {
+        window.addEventListener(
+          "load",
+          () => {
+            Encounter.addToCaseNote(text);
+          },
+          {
+            once: true,
+          }
+        );
+      }
+    };
+
+    useEffect(() => {
+      if (localStorage.getItem("name")) {
+        setSubject(`${localStorage.getItem("name")} has sent you a message`);
+      }
+    }, []);
+
     return (
-      <div className="tailwind tw-font-sans">
+      <div className="tailwind tw-font-sans tw-fixed tw-z-10005 DoNotPrint">
+        <PreactModal
+          show={showModal}
+          close={() => {
+            setShowModal(false);
+          }}
+        >
+          <SavedReplies loadReply={loadReply}></SavedReplies>
+        </PreactModal>
+        <PreactModal
+          show={showLogin}
+          close={() => {
+            setShowLogin(false);
+          }}
+        >
+          <Login />
+        </PreactModal>
         <div
           className={`tw-fixed tw-bottom-5 tw-right-5 tw-bg-white tw-z-10000 tw-max-w-[400px] tw-shadow-xl tw-w-full tw-rounded-md tw-transform tw-transition-transform tw-duration-200 tw-ease-in-out ${
             open ? "tw-translate-x-0" : "tw-translate-x-[430px]"
@@ -104,9 +159,16 @@ function Messenger(patient) {
         >
           <MessengerWindow
             patient={patient}
+            defaultSubject={subject}
+            defaultBody={body}
             loading={loading}
             onSubmit={handleSubmit}
             close={handleClose}
+            open={handleOpen}
+            showSavedReplies={() => {
+              setShowModal(true);
+            }}
+            encounter={encounter}
           />
         </div>
         <div className="tw-fixed tw-bottom-5 tw-right-5 tw-z-5000 tw-shadow-xl">
@@ -129,7 +191,14 @@ function Messenger(patient) {
     );
   }
 
-  return render(<Content patient={patient} />, container);
+  return render(
+    <Content
+      patient={patient}
+      encounter={opts.encounter}
+      document={opts.document}
+    />,
+    _container
+  );
 }
 
 export default Messenger;
