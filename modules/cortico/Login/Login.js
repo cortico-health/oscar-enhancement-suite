@@ -1,4 +1,3 @@
-
 import "./Login.css";
 import { CorticoIcon } from "../../Icons/CorticoIcon";
 import { create, getCorticoUrl } from "../../Utils/Utils";
@@ -43,8 +42,8 @@ export function loginForm(browser) {
           const loginUserName = document.getElementById("loginUsername").value;
           const loginPassword = document.getElementById("loginPassword").value;
 
-          corticoSignIn(loginUserName, loginPassword, browser)
-        }
+          corticoSignIn(loginUserName, loginPassword, browser);
+        },
       },
     }
   );
@@ -53,54 +52,59 @@ export function loginForm(browser) {
 }
 
 export async function corticoSignIn(username, password, browser) {
-  const response = await signInRequest(username, password)
+  const response = await signInRequest(username, password);
 
   if (!response.ok) {
-    return alert('Login failed. Check username and password.')
+    return alert("Login failed. Check username and password.");
   }
 
   if (response) {
-    const json = JSON.parse(await response.text())
+    const json = JSON.parse(await response.text());
 
     browser = browser ? browser : chrome;
-
     if (browser) {
-      browser.storage.local.set({ "jwt_access_token": json.access })
-      browser.storage.local.set({ "jwt_expired": false })
-      browser.storage.local.set({ "jwt_username": username })
+      if (window.is_dev) {
+        window.localStorage.setItem("jwt_access_token", json.access);
+        window.localStorage.setItem("jwt_expired", false);
+        window.localStorage.setItem("jwt_username", username);
+      } else {
+        browser.storage.local.set({ jwt_access_token: json.access });
+        browser.storage.local.set({ jwt_expired: false });
+        browser.storage.local.set({ jwt_username: username });
+      }
 
       const openMenu = document.querySelector(".login-form.show");
       openMenu.classList.remove("show");
 
-      alert("Successfully signed in, the page will now reload")
-      window.location.reload()
+      if (!alert("Successfully signed in, the page will now reload"))
+        window.location.reload();
 
-      return
+      return;
     }
 
-    return
+    return;
   }
 }
 
 export async function signInRequest(username, password) {
   const data = {
-    "username": username,
-    "password": password
-  }
-  const url = getCorticoUrl() + '/api/token/';
+    username: username,
+    password: password,
+  };
+  const url = getCorticoUrl() + "/api/token/";
 
   return fetch(url, {
-    "method": 'POST',
-    "headers": {
-      "Content-Type": "application/json"
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
     },
-    "body": JSON.stringify(data)
+    body: JSON.stringify(data),
   }).catch((err) => {
-    console.error(err)
-    if (('' + err).includes('Failed to fetch')) {
-      alert('Cortico instance cannot be reached. Check clinic name.')
+    console.error(err);
+    if (("" + err).includes("Failed to fetch")) {
+      alert("Cortico instance cannot be reached. Check clinic name.");
     } else {
-      alert('Cortico: Unknown Login Error: ' + err)
+      alert("Cortico: Unknown Login Error: " + err);
     }
-  })
+  });
 }

@@ -1,297 +1,6 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js":
-/*!*********************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js ***!
-  \*********************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ _arrayLikeToArray)
-/* harmony export */ });
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i];
-  }
-
-  return arr2;
-}
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js":
-/*!*******************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js ***!
-  \*******************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ _arrayWithHoles)
-/* harmony export */ });
-function _arrayWithHoles(arr) {
-  if (Array.isArray(arr)) return arr;
-}
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js":
-/*!*********************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js ***!
-  \*********************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ _asyncToGenerator)
-/* harmony export */ });
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
-  try {
-    var info = gen[key](arg);
-    var value = info.value;
-  } catch (error) {
-    reject(error);
-    return;
-  }
-
-  if (info.done) {
-    resolve(value);
-  } else {
-    Promise.resolve(value).then(_next, _throw);
-  }
-}
-
-function _asyncToGenerator(fn) {
-  return function () {
-    var self = this,
-        args = arguments;
-    return new Promise(function (resolve, reject) {
-      var gen = fn.apply(self, args);
-
-      function _next(value) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
-      }
-
-      function _throw(err) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
-      }
-
-      _next(undefined);
-    });
-  };
-}
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js":
-/*!*******************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/esm/classCallCheck.js ***!
-  \*******************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ _classCallCheck)
-/* harmony export */ });
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/esm/createClass.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/esm/createClass.js ***!
-  \****************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ _createClass)
-/* harmony export */ });
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, descriptor.key, descriptor);
-  }
-}
-
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  return Constructor;
-}
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js":
-/*!*******************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/esm/defineProperty.js ***!
-  \*******************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ _defineProperty)
-/* harmony export */ });
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js":
-/*!*************************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js ***!
-  \*************************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ _iterableToArrayLimit)
-/* harmony export */ });
-function _iterableToArrayLimit(arr, i) {
-  var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
-
-  if (_i == null) return;
-  var _arr = [];
-  var _n = true;
-  var _d = false;
-
-  var _s, _e;
-
-  try {
-    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
-      _arr.push(_s.value);
-
-      if (i && _arr.length === i) break;
-    }
-  } catch (err) {
-    _d = true;
-    _e = err;
-  } finally {
-    try {
-      if (!_n && _i["return"] != null) _i["return"]();
-    } finally {
-      if (_d) throw _e;
-    }
-  }
-
-  return _arr;
-}
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/esm/nonIterableRest.js":
-/*!********************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/esm/nonIterableRest.js ***!
-  \********************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ _nonIterableRest)
-/* harmony export */ });
-function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/esm/readOnlyError.js":
-/*!******************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/esm/readOnlyError.js ***!
-  \******************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ _readOnlyError)
-/* harmony export */ });
-function _readOnlyError(name) {
-  throw new TypeError("\"" + name + "\" is read-only");
-}
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/esm/slicedToArray.js":
-/*!******************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/esm/slicedToArray.js ***!
-  \******************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ _slicedToArray)
-/* harmony export */ });
-/* harmony import */ var _arrayWithHoles_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./arrayWithHoles.js */ "./node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js");
-/* harmony import */ var _iterableToArrayLimit_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./iterableToArrayLimit.js */ "./node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js");
-/* harmony import */ var _unsupportedIterableToArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./unsupportedIterableToArray.js */ "./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js");
-/* harmony import */ var _nonIterableRest_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./nonIterableRest.js */ "./node_modules/@babel/runtime/helpers/esm/nonIterableRest.js");
-
-
-
-
-function _slicedToArray(arr, i) {
-  return (0,_arrayWithHoles_js__WEBPACK_IMPORTED_MODULE_0__.default)(arr) || (0,_iterableToArrayLimit_js__WEBPACK_IMPORTED_MODULE_1__.default)(arr, i) || (0,_unsupportedIterableToArray_js__WEBPACK_IMPORTED_MODULE_2__.default)(arr, i) || (0,_nonIterableRest_js__WEBPACK_IMPORTED_MODULE_3__.default)();
-}
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js":
-/*!*******************************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js ***!
-  \*******************************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ _unsupportedIterableToArray)
-/* harmony export */ });
-/* harmony import */ var _arrayLikeToArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./arrayLikeToArray.js */ "./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js");
-
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return (0,_arrayLikeToArray_js__WEBPACK_IMPORTED_MODULE_0__.default)(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(o);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return (0,_arrayLikeToArray_js__WEBPACK_IMPORTED_MODULE_0__.default)(o, minLen);
-}
-
-/***/ }),
-
 /***/ "./node_modules/@babel/runtime/regenerator/index.js":
 /*!**********************************************************!*\
   !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
@@ -300,6 +9,34 @@ function _unsupportedIterableToArray(o, minLen) {
 
 module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/regenerator-runtime/runtime.js");
 
+
+/***/ }),
+
+/***/ "./modules/Api/Api.js":
+/*!****************************!*\
+  !*** ./modules/Api/Api.js ***!
+  \****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "sendEmailForm": () => (/* binding */ sendEmailForm)
+/* harmony export */ });
+/* harmony import */ var _Utils_Utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Utils/Utils */ "./modules/Utils/Utils.js");
+
+function sendEmailForm(data, token) {
+  var url = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_0__.getCorticoUrl)() + "/api/plug-in/email-form/";
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data),
+    mode: "cors",
+    headers: {
+      "Content-type": "application/json",
+      Authorization: "Bearer ".concat(token)
+    }
+  });
+}
 
 /***/ }),
 
@@ -317,7 +54,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _resources_icons_96x96_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../resources/icons/96x96.png */ "./resources/icons/96x96.png");
 
 var image = document.createElement("img");
-image.setAttribute("src", _resources_icons_96x96_png__WEBPACK_IMPORTED_MODULE_0__.default);
+image.setAttribute("src", _resources_icons_96x96_png__WEBPACK_IMPORTED_MODULE_0__["default"]);
 image.setAttribute("alt", "Cortico");
 var CorticoIcon = function CorticoIcon(_ref) {
   var attrs = _ref.attrs;
@@ -352,6 +89,79 @@ __webpack_require__.r(__webpack_exports__);
 var Ellipsis = function Ellipsis() {
   return (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_0__.htmlToElement)("\n    <div class=\"ellip-dot-container\">\n      <div class=\"ellip-dot\"></div>\n      <div class=\"ellip-dot\"></div>\n      <div class=\"ellip-dot\"></div>\n    </div>\n  ");
 };
+
+/***/ }),
+
+/***/ "./modules/Icons/HeroIcons.js":
+/*!************************************!*\
+  !*** ./modules/Icons/HeroIcons.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "InfoIcon": () => (/* binding */ InfoIcon),
+/* harmony export */   "SendIcon": () => (/* binding */ SendIcon),
+/* harmony export */   "MessageIcon": () => (/* binding */ MessageIcon)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
+/* provided dependency */ var h = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js")["h"];
+
+var _excluded = ["className"],
+    _excluded2 = ["className"],
+    _excluded3 = ["className"];
+function InfoIcon(_ref) {
+  var className = _ref.className,
+      props = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__["default"])(_ref, _excluded);
+
+  return h("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    className: className,
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, h("path", {
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    strokeWidth: 2,
+    d: "M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+  }));
+}
+function SendIcon(_ref2) {
+  var className = _ref2.className,
+      props = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__["default"])(_ref2, _excluded2);
+
+  return h("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    className: className,
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, h("path", {
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    "stroke-width": "2",
+    d: "M13 5l7 7-7 7M5 5l7 7-7 7"
+  }));
+}
+function MessageIcon(_ref3) {
+  var className = _ref3.className,
+      props = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__["default"])(_ref3, _excluded3);
+
+  return h("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    class: "tw-text-white tw-h-10 tw-w-10 tw-mx-auto",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, h("path", {
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    "stroke-width": "2",
+    d: "M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
+  }));
+}
 
 /***/ }),
 
@@ -391,6 +201,628 @@ function Loader() {
 
 /***/ }),
 
+/***/ "./modules/Messenger/ChatInput.js":
+/*!****************************************!*\
+  !*** ./modules/Messenger/ChatInput.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var preact_compat__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! preact/compat */ "./node_modules/preact/compat/dist/compat.module.js");
+/* provided dependency */ var h = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js")["h"];
+
+
+var Chat = (0,preact_compat__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(function (props, ref) {
+  return h("div", {
+    className: ""
+  }, h("textarea", {
+    ref: ref,
+    class: " tw-form-textarea form-textarea tw-block tw-w-full tw-border-0 tw-focus:border-indigo-300  tw-focus:ring  tw-focus:ring-indigo-200  tw-focus:ring-opacity-50  tw-resize-none tw-text-sm tw-text-gray-600 tw-p-4 tw-font-sans ",
+    rows: "8",
+    placeholder: "Enter message here"
+  }));
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Chat);
+
+/***/ }),
+
+/***/ "./modules/Messenger/Header.js":
+/*!*************************************!*\
+  !*** ./modules/Messenger/Header.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var _resources_icons_96x96_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../resources/icons/96x96.png */ "./resources/icons/96x96.png");
+/* provided dependency */ var h = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js")["h"];
+
+var _excluded = ["close"];
+
+
+
+function Header(_ref) {
+  var close = _ref.close,
+      props = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__["default"])(_ref, _excluded);
+
+  return h("div", {
+    className: "tw-flex tw-rounded-t-md tw-items-top tw-border tw-bg-cortico-blue tw-p-12 tw-shadow-xl"
+  }, h("div", {
+    className: "tw-flex-1",
+    onClick: close
+  }, h("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    className: "tw-h-6 tw-w-6 tw-text-white tw-cursor-pointer tw-shadow-xl",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, h("path", {
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    "stroke-width": "2",
+    d: "M14 5l7 7m0 0l-7 7m7-7H3"
+  }))), h("div", {
+    className: "tw-flex-5"
+  }, h("div", {
+    className: "tw-text-white tw-font-light"
+  }, "Messenger"), h("p", {
+    className: "tw-text-sm tw-text-white tw-mt-2 tw-text-opacity-80 tw-leading-5"
+  }, "Send a message to the patient using this service"), h("div", {
+    className: "tw-mt-3 tw-bg-white tw-inline-block tw-py-1 tw-px-2 tw-rounded-md tw-shadow-2xl"
+  }, h("img", {
+    className: "tw-w-3 tw-h-3 tw-inline-block",
+    src: _resources_icons_96x96_png__WEBPACK_IMPORTED_MODULE_2__["default"],
+    alt: "Cortico"
+  }), h("p", {
+    className: "tw-ml-1 tw-inline-block tw-text-xs tw-text-cortico-blue tw-font-medium"
+  }, "Powered By Cortico"))));
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Header);
+
+/***/ }),
+
+/***/ "./modules/Messenger/Loader.js":
+/*!*************************************!*\
+  !*** ./modules/Messenger/Loader.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* provided dependency */ var h = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js")["h"];
+
+
+function Loader() {
+  return h("svg", {
+    className: "tw-animate-spin tw--ml-1 tw-mr-3 tw-h-5 tw-w-5 tw-text-white tw-inline-block",
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24"
+  }, h("circle", {
+    className: "tw-opacity-25",
+    cx: "12",
+    cy: "12",
+    r: "10",
+    stroke: "currentColor",
+    "stroke-width": "4"
+  }), h("path", {
+    className: "tw-opacity-75",
+    fill: "currentColor",
+    d: "M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+  }));
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Loader);
+
+/***/ }),
+
+/***/ "./modules/Messenger/Messenger.js":
+/*!****************************************!*\
+  !*** ./modules/Messenger/Messenger.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var preact_hooks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! preact/hooks */ "./node_modules/preact/hooks/dist/hooks.module.js");
+/* harmony import */ var _Utils_Utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Utils/Utils */ "./modules/Utils/Utils.js");
+/* harmony import */ var _Notifications_Notification__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Notifications/Notification */ "./modules/Notifications/Notification.js");
+/* harmony import */ var _MessengerWidget__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./MessengerWidget */ "./modules/Messenger/MessengerWidget.js");
+/* harmony import */ var _MessengerWindow__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./MessengerWindow */ "./modules/Messenger/MessengerWindow.js");
+/* harmony import */ var _Api_Api__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Api/Api */ "./modules/Api/Api.js");
+/* provided dependency */ var h = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js")["h"];
+
+
+
+var _excluded = ["patient"];
+
+
+
+
+
+
+
+
+
+function MessageException(message) {
+  this.message = message;
+  this.name = "MessageException";
+  this.title = "Error";
+}
+
+var handleErrors = /*#__PURE__*/function () {
+  var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee(response) {
+    var result;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return response.json();
+
+          case 2:
+            result = _context.sent;
+
+            if (response.ok) {
+              _context.next = 9;
+              break;
+            }
+
+            if (!(response.status === 401)) {
+              _context.next = 8;
+              break;
+            }
+
+            throw new MessageException(result && result.detail);
+
+          case 8:
+            throw new MessageException(response && response.statusText);
+
+          case 9:
+            return _context.abrupt("return", result);
+
+          case 10:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+
+  return function handleErrors(_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+function Messenger(patient) {
+  var container = document.body;
+
+  function Content(_ref2) {
+    var patient = _ref2.patient,
+        props = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__["default"])(_ref2, _excluded);
+
+    var _useState = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_5__.useState)(false),
+        _useState2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState, 2),
+        loading = _useState2[0],
+        setLoading = _useState2[1];
+
+    var _useState3 = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_5__.useState)(false),
+        _useState4 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState3, 2),
+        open = _useState4[0],
+        setOpen = _useState4[1];
+
+    var _useState5 = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_5__.useState)(false),
+        _useState6 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState5, 2),
+        showNotification = _useState6[0],
+        setShowNotification = _useState6[1];
+
+    var _useState7 = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_5__.useState)(false),
+        _useState8 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState7, 2),
+        loggedIn = _useState8[0],
+        setLoggedIn = _useState8[1];
+
+    var _useState9 = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_5__.useState)({
+      title: null,
+      content: null
+    }),
+        _useState10 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState9, 2),
+        messageInfo = _useState10[0],
+        setMessageInfo = _useState10[1];
+
+    var handleOpen = function handleOpen() {
+      setOpen(true);
+    };
+
+    var handleClose = function handleClose() {
+      setOpen(false);
+    };
+
+    var promptLogin = function promptLogin() {
+      setMessageInfo({
+        title: "Log In",
+        content: "Please log in to use this service"
+      });
+      setShowNotification(true);
+    };
+
+    var handleSubmit = /*#__PURE__*/function () {
+      var _ref3 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee2(data) {
+        var token;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                setLoading(true);
+                _context2.next = 3;
+                return new Promise(function (resolve) {
+                  return setTimeout(resolve, 1000);
+                });
+
+              case 3:
+                _context2.next = 5;
+                return (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_6__.loadExtensionStorageValue)("jwt_access_token");
+
+              case 5:
+                token = _context2.sent;
+
+                if (token) {
+                  (0,_Api_Api__WEBPACK_IMPORTED_MODULE_10__.sendEmailForm)(data, token).then(handleErrors).then(function (response) {
+                    setMessageInfo({
+                      title: "Success",
+                      content: response.message || "Message successfully sent to ".concat(patient === null || patient === void 0 ? void 0 : patient.email)
+                    });
+                  }).catch(function (error) {
+                    setMessageInfo({
+                      title: error.title,
+                      content: error && error.message
+                    });
+                  }).finally(function () {
+                    setShowNotification(true);
+                    setLoading(false);
+                  });
+                }
+
+              case 7:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      return function handleSubmit(_x2) {
+        return _ref3.apply(this, arguments);
+      };
+    }();
+
+    (0,preact_hooks__WEBPACK_IMPORTED_MODULE_5__.useEffect)(function () {
+      (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee3() {
+        var result;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.prev = 0;
+                _context3.next = 3;
+                return (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_6__.isLoggedIn)();
+
+              case 3:
+                result = _context3.sent;
+                console.log("is logged in result?", result);
+                setLoggedIn(result);
+                _context3.next = 12;
+                break;
+
+              case 8:
+                _context3.prev = 8;
+                _context3.t0 = _context3["catch"](0);
+                console.error(_context3.t0);
+                setLoggedIn(false);
+
+              case 12:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, null, [[0, 8]]);
+      }))();
+    }, []);
+    return h("div", {
+      className: "tailwind tw-font-sans"
+    }, h("div", {
+      className: "tw-fixed tw-bottom-5 tw-right-5 tw-bg-white tw-z-10000 tw-max-w-[400px] tw-shadow-xl tw-w-full tw-rounded-md tw-transform tw-transition-transform tw-duration-200 tw-ease-in-out ".concat(open ? "tw-translate-x-0" : "tw-translate-x-[430px]")
+    }, h(_MessengerWindow__WEBPACK_IMPORTED_MODULE_9__["default"], {
+      patient: patient,
+      loading: loading,
+      onSubmit: handleSubmit,
+      close: handleClose
+    })), h("div", {
+      className: "tw-fixed tw-bottom-5 tw-right-5 tw-z-5000 tw-shadow-xl"
+    }, h(_MessengerWidget__WEBPACK_IMPORTED_MODULE_8__["default"], {
+      open: handleOpen,
+      login: promptLogin,
+      loggedIn: loggedIn
+    })), h(_Notifications_Notification__WEBPACK_IMPORTED_MODULE_7__["default"], {
+      open: showNotification,
+      close: function close() {
+        setShowNotification(false);
+      },
+      delay: 3000,
+      content: messageInfo.content,
+      title: messageInfo.title
+    }));
+  }
+
+  return (0,preact__WEBPACK_IMPORTED_MODULE_4__.render)(h(Content, {
+    patient: patient
+  }), container);
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Messenger);
+
+/***/ }),
+
+/***/ "./modules/Messenger/MessengerWidget.js":
+/*!**********************************************!*\
+  !*** ./modules/Messenger/MessengerWidget.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var _resources_icons_96x96_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../resources/icons/96x96.png */ "./resources/icons/96x96.png");
+/* harmony import */ var _Icons_HeroIcons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Icons/HeroIcons */ "./modules/Icons/HeroIcons.js");
+/* provided dependency */ var h = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js")["h"];
+
+var _excluded = ["open", "login", "loggedIn"];
+
+
+
+
+function MessengerWidget(_ref) {
+  var open = _ref.open,
+      login = _ref.login,
+      loggedIn = _ref.loggedIn,
+      props = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__["default"])(_ref, _excluded);
+
+  var handleClick = function handleClick() {
+    loggedIn === true ? open() : login();
+  };
+
+  return h("div", {
+    className: "tw-bg-cortico-blue tw-rounded-lg tw-p-3 tw-w-24 tw-cursor-pointer tw-relative",
+    onClick: handleClick
+  }, h("div", {
+    className: "tw-absolute tw--top-1 tw--left-1 text-white tw-bg-gray-100 tw-rounded-full tw-p-1 tw-shadow-md tw-animate-bounce tw-border-cortico-blue"
+  }, loggedIn === false ? h(_Icons_HeroIcons__WEBPACK_IMPORTED_MODULE_3__.InfoIcon, {
+    className: "tw-h-4 tw-w-4 tw-text-cortico-blue"
+  }) : ""), h(_Icons_HeroIcons__WEBPACK_IMPORTED_MODULE_3__.MessageIcon, {
+    className: "tw-text-white tw-h-10 tw-w-10 tw-mx-auto"
+  }), loggedIn === true ? h("p", {
+    className: "tw-text-white tw-text-opacity-80 tw-text-sm tw-text-center tw-mt-2"
+  }, "Message Patient") : h("p", {
+    className: "tw-text-white tw-text-opacity-80 tw-text-sm tw-text-center tw-mt-2"
+  }, "Login To Send Messages"), h("hr", {
+    className: "tw-opacity-20 tw-my-2"
+  }), h("div", {
+    className: "tw-flex tw-bg-white tw-p-1 tw-rounded-md tw-mt-2"
+  }, h("img", {
+    className: "tw-w-4 tw-h-4",
+    src: _resources_icons_96x96_png__WEBPACK_IMPORTED_MODULE_2__["default"],
+    alt: "Cortico"
+  }), h("div", {
+    className: "tw-text-cortico-blue tw-text-xs tw-font-semibold tw-ml-1"
+  }, "Cortico")));
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MessengerWidget);
+
+/***/ }),
+
+/***/ "./modules/Messenger/MessengerWindow.js":
+/*!**********************************************!*\
+  !*** ./modules/Messenger/MessengerWindow.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var preact_hooks__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! preact/hooks */ "./node_modules/preact/hooks/dist/hooks.module.js");
+/* harmony import */ var _ChatInput__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ChatInput */ "./modules/Messenger/ChatInput.js");
+/* harmony import */ var _SubjectInput__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SubjectInput */ "./modules/Messenger/SubjectInput.js");
+/* harmony import */ var _Header__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Header */ "./modules/Messenger/Header.js");
+/* harmony import */ var _ToInput__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./ToInput */ "./modules/Messenger/ToInput.js");
+/* harmony import */ var _Loader__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Loader */ "./modules/Messenger/Loader.js");
+/* harmony import */ var _Icons_HeroIcons__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Icons/HeroIcons */ "./modules/Icons/HeroIcons.js");
+/* harmony import */ var _Utils_Utils__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Utils/Utils */ "./modules/Utils/Utils.js");
+/* provided dependency */ var h = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js")["h"];
+
+
+var _excluded = ["onSubmit", "close", "patient", "loading"];
+
+
+
+
+
+
+
+
+
+
+function MessengerWindow(_ref) {
+  var onSubmit = _ref.onSubmit,
+      close = _ref.close,
+      patient = _ref.patient,
+      loading = _ref.loading,
+      props = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__["default"])(_ref, _excluded);
+
+  var _useState = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useState)(null),
+      _useState2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState, 2),
+      email = _useState2[0],
+      setEmail = _useState2[1];
+
+  var subject = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useRef)();
+  var message = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useRef)();
+  (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useEffect)(function () {
+    if (patient !== null && patient !== void 0 && patient.email) {
+      setEmail(patient.email);
+    }
+  }, [patient === null || patient === void 0 ? void 0 : patient.email]);
+
+  var submitData = function submitData(e) {
+    e.preventDefault();
+    var data = {
+      clinic_host: (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_10__.getCorticoUrl)().replace(/http.?:\/\//, ""),
+      to: email,
+      subject: subject.current.value,
+      body: message.current.value,
+      pdf_html: "<div>Hello World/div>"
+    };
+    onSubmit(data);
+  };
+
+  return h("form", {
+    onSubmit: submitData
+  }, h(_Header__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    close: close
+  }), h("div", {
+    className: "tw-px-4 tw-py-2"
+  }, h(_ToInput__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    patient: patient
+  })), h("hr", {
+    className: "tw-opacity-10"
+  }), h("div", {
+    className: "tw-w-full"
+  }, h(_SubjectInput__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    ref: subject
+  })), h("hr", {
+    className: "tw-opacity-10"
+  }), h("div", null, h(_ChatInput__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    ref: message
+  })), h("hr", {
+    className: "tw-opacity-10"
+  }), h("div", {
+    className: "tw-flex tw-justify-end tw-p-4"
+  }, h("button", {
+    disabled: loading,
+    className: "tw-bg-cortico-blue tw-px-3 tw-py-2 tw-rounded-md tw-text-white tw-text-sm tw-flex tw-items-center"
+  }, loading === true ? h("span", {
+    class: "tw-flex"
+  }, h(_Loader__WEBPACK_IMPORTED_MODULE_8__["default"], null), h("span", {
+    className: "tw-ml-1"
+  }, "Sending...")) : h("span", {
+    className: "tw-flex tw-items-center"
+  }, h("span", null, "Send Message"), h(_Icons_HeroIcons__WEBPACK_IMPORTED_MODULE_9__.SendIcon, {
+    className: "tw-h-4 tw-w-4 tw-ml-2"
+  })))));
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MessengerWindow);
+
+/***/ }),
+
+/***/ "./modules/Messenger/SubjectInput.js":
+/*!*******************************************!*\
+  !*** ./modules/Messenger/SubjectInput.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var preact_compat__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! preact/compat */ "./node_modules/preact/compat/dist/compat.module.js");
+/* provided dependency */ var h = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js")["h"];
+
+
+var Subject = (0,preact_compat__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(function (props, ref) {
+  return h("div", {
+    className: ""
+  }, h("div", null, h("input", {
+    ref: ref,
+    type: "text",
+    class: " tw-mt-0 tw-block tw-w-full tw-px-4 tw-py-2 tw-border-0 tw-border-btw-tracking-wider tw-focus:border-indigo-300  tw-focus:ring  tw-focus:ring-indigo-200  tw-focus:ring-opacity-50  tw-text-sm tw-text-gray-700 tw-font-sans ",
+    placeholder: "Subject"
+  })));
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Subject);
+
+/***/ }),
+
+/***/ "./modules/Messenger/ToInput.js":
+/*!**************************************!*\
+  !*** ./modules/Messenger/ToInput.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* provided dependency */ var h = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js")["h"];
+
+var _excluded = ["patient"];
+
+
+function To(_ref) {
+  var patient = _ref.patient,
+      props = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__["default"])(_ref, _excluded);
+
+  return h("div", {
+    className: "tw-flex tw-items-center"
+  }, h("div", null, h("p", {
+    className: "tw-text-xs"
+  }, "To")), h("div", {
+    className: "tw-pl-2"
+  }, h("p", {
+    className: "tw-text-xs tw-text-opacity-80 text-gray-700 tw-tracking-wider tw-rounded-xl tw-p-2 tw-break-words"
+  }, [patient["First Name"], patient["Last Name"]].join(" "), "(", patient.email, ")")));
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (To);
+
+/***/ }),
+
 /***/ "./modules/Modal/Modal.js":
 /*!********************************!*\
   !*** ./modules/Modal/Modal.js ***!
@@ -414,7 +846,7 @@ var Modal = /*#__PURE__*/function () {
   function Modal() {
     var _this = this;
 
-    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__.default)(this, Modal);
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, Modal);
 
     this.modalContainer = null;
     this.modal = null;
@@ -451,7 +883,7 @@ var Modal = /*#__PURE__*/function () {
     }
   }
 
-  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__.default)(Modal, [{
+  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Modal, [{
     key: "setContent",
     value: function setContent(content) {
       if (!content) {
@@ -480,6 +912,102 @@ var Modal = /*#__PURE__*/function () {
 
   return Modal;
 }();
+
+/***/ }),
+
+/***/ "./modules/Notifications/Notification.js":
+/*!***********************************************!*\
+  !*** ./modules/Notifications/Notification.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
+/* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var preact_hooks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! preact/hooks */ "./node_modules/preact/hooks/dist/hooks.module.js");
+/* harmony import */ var _resources_icons_96x96_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../resources/icons/96x96.png */ "./resources/icons/96x96.png");
+/* provided dependency */ var h = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js")["h"];
+
+
+var _excluded = ["open", "close", "title", "content", "position", "delay", "error"];
+
+
+
+
+
+function Notification(_ref) {
+  var open = _ref.open,
+      close = _ref.close,
+      title = _ref.title,
+      content = _ref.content,
+      position = _ref.position,
+      delay = _ref.delay,
+      error = _ref.error,
+      props = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__["default"])(_ref, _excluded);
+
+  (0,preact_hooks__WEBPACK_IMPORTED_MODULE_4__.useEffect)(function () {
+    (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              if (!(open === true)) {
+                _context.next = 4;
+                break;
+              }
+
+              _context.next = 3;
+              return new Promise(function (resolve) {
+                return setTimeout(resolve, delay);
+              });
+
+            case 3:
+              close && close();
+
+            case 4:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  }, [open]);
+  return h("div", {
+    className: "tw-fixed tw-bottom-0 tw-z-10001 tw-left-[50%] tw-translate-x-[-50%] tw-transition-transform tw-duration-300 tw-ease-in-out tw-flex tw-justify-center tw-w-full tw-p-2\n      ".concat(open ? "tw-translate-y-0" : "tw-translate-y-[100%]", "\n      ")
+  }, h("div", {
+    className: "tw-rounded-md tw-shadow-lg tw-mb-10 tw-inline-block tw-font-sans tw-min-w-[300px] ".concat(error ? "tw-bg-red-500" : "tw-bg-cortico-blue")
+  }, h("div", {
+    className: "tw-flex tw-p-4 tw-items-center"
+  }, h("div", {
+    className: "tw-bg-white tw-p-1 tw-rounded-md"
+  }, h("img", {
+    className: "tw-h-4 tw-w-4",
+    src: _resources_icons_96x96_png__WEBPACK_IMPORTED_MODULE_5__["default"],
+    alt: "Cortico"
+  })), title ? h("p", {
+    className: "tw-text-white tw-font-semibold tw-ml-2 "
+  }, title) : ""), h("hr", {
+    className: "tw-opacity-10"
+  }), h("p", {
+    className: "tw-max-w-xl tw-text-sm tw-text-white tw-p-4"
+  }, content), h("hr", {
+    className: "tw-opacity-10"
+  }), h("div", {
+    className: "tw-flex tw-justify-end tw-px-4 tw-py-2"
+  }, h("button", {
+    className: "tw-bg-gray-700 tw-p-2 tw-rounded-md tw-text-sm tw-text-white",
+    onClick: close
+  }, "Dismiss"))));
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Notification);
 
 /***/ }),
 
@@ -587,11 +1115,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "addToCache": () => (/* binding */ addToCache),
 /* harmony export */   "createSidebarContainer": () => (/* binding */ createSidebarContainer),
 /* harmony export */   "checkCorticoUrl": () => (/* binding */ checkCorticoUrl),
-/* harmony export */   "showLoginForm": () => (/* binding */ showLoginForm)
+/* harmony export */   "showLoginForm": () => (/* binding */ showLoginForm),
+/* harmony export */   "isLoggedIn": () => (/* binding */ isLoggedIn)
 /* harmony export */ });
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js");
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _cortico_Login_Login__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../cortico/Login/Login */ "./modules/cortico/Login/Login.js");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js");
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _cortico_Login_Login__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../cortico/Login/Login */ "./modules/cortico/Login/Login.js");
+
+
 
 
 function debounce(func, wait, immediate) {
@@ -639,11 +1173,11 @@ function getCorticoUrl() {
   // FOR TESTING:
   var clinicName = window.localStorage["clinicname"];
 
-  if (clinicName === 'localhost') {
-    return 'http://localhost'; // No HTTPS
+  if (clinicName === "localhost") {
+    return "http://localhost"; // No HTTPS
   }
 
-  var suffix = window.localStorage["customUrlSuffix"] || 'cortico.ca';
+  var suffix = window.localStorage["customUrlSuffix"] || "cortico.ca";
 
   if (suffix.charAt(0) === ".") {
     suffix = suffix.substring(1);
@@ -702,10 +1236,9 @@ function create(_element, options) {
 
   if (options.events) {
     for (var event in options.events) {
-      console.log('*', event);
-      var chunks = event.split(' ');
+      var chunks = event.split(" ");
       var trigger = chunks.shift();
-      var selector = chunks.join(' '); // closure
+      var selector = chunks.join(" "); // closure
 
       var tmp = function tmp(trigger, selector, handler) {
         element.addEventListener(trigger, function (e) {
@@ -732,9 +1265,13 @@ function create(_element, options) {
 }
 function loadExtensionStorageValue(key) {
   return new Promise(function (resolve, reject) {
-    chrome.storage.local.get(key, function (result) {
-      resolve(result[key]);
-    });
+    if (window.is_dev) {
+      resolve(window.localStorage.getItem(key));
+    } else {
+      chrome.storage.local.get(key, function (result) {
+        resolve(result[key]);
+      });
+    }
   });
 }
 function htmlToElement(html) {
@@ -743,12 +1280,28 @@ function htmlToElement(html) {
   return placeholder.children.length ? placeholder.firstElementChild : undefined;
 }
 function getDemographicNo(apptUrl) {
+<<<<<<< HEAD
   var searchParams = new URLSearchParams(apptUrl);
   return searchParams.get("demographic_no") || searchParams.get("demographicNo") || searchParams.get("efmdemographic_no");
+=======
+  if (apptUrl) {
+    var searchParams = new URLSearchParams(apptUrl);
+    return searchParams.get("demographic_no") || searchParams.get("demographicNo") || searchParams.get("functionid");
+  } else {
+    // try several options
+    var demographicNo = getDemographicNo(window.location.search);
+
+    if (!demographicNo && window.opener) {
+      demographicNo = getDemographicNo(window.opener.location.search);
+    }
+
+    return demographicNo;
+  }
+>>>>>>> 6850c324ad7db1c178e48a26b2e4f4f56f4d8792
 }
 function getAppointmentNo(apptUrl) {
   console.log(apptUrl);
-  var searchParams = new URLSearchParams(apptUrl.split('?')[1]);
+  var searchParams = new URLSearchParams(apptUrl.split("?")[1]);
   return searchParams.get("appointment_no");
 }
 function addToCache(demographic_no, _verified) {
@@ -756,7 +1309,7 @@ function addToCache(demographic_no, _verified) {
 
   var _cache = window.localStorage.getItem("checkCache");
 
-  var _today = dayjs__WEBPACK_IMPORTED_MODULE_0___default()().format("YYYY-MM-DD");
+  var _today = dayjs__WEBPACK_IMPORTED_MODULE_2___default()().format("YYYY-MM-DD");
 
   var cache = JSON.parse(_cache) || {};
   cache[demographic_no] = {
@@ -766,7 +1319,7 @@ function addToCache(demographic_no, _verified) {
   window.localStorage.setItem("checkCache", JSON.stringify(cache));
 }
 function createSidebarContainer(child, events) {
-  var html = child ? typeof child === 'string' ? child : child.outerHTML : '';
+  var html = child ? typeof child === "string" ? child : child.outerHTML : "";
   var events = events ? events : {};
   var container = create("<div style='width: 100%; padding: 0px 10px; box-sizing: border-box'>\n    ".concat(html, "\n  </div>"), events);
   return container;
@@ -781,13 +1334,64 @@ function checkCorticoUrl(event) {
   return true;
 }
 function showLoginForm() {
-  chrome.storage.local.set({
-    "jwt_expired": true
-  });
+  if (window.is_dev) {
+    window.localStoraage.setItem("jwt_expired", true);
+  } else {
+    chrome.storage.local.set({
+      jwt_expired: true
+    });
+  }
+
   alert("Your credentials have expired. Please login again");
-  (0,_cortico_Login_Login__WEBPACK_IMPORTED_MODULE_1__.addLoginForm)(chrome);
+  (0,_cortico_Login_Login__WEBPACK_IMPORTED_MODULE_3__.addLoginForm)(chrome);
   var loginForm = document.querySelector(".login-form");
   loginForm.classList.add("show");
+}
+function isLoggedIn() {
+  return _isLoggedIn.apply(this, arguments);
+}
+
+function _isLoggedIn() {
+  _isLoggedIn = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            if (!window.is_dev) {
+              _context.next = 4;
+              break;
+            }
+
+            return _context.abrupt("return", window.localStorage.getItem("jwt_username") ? true : false);
+
+          case 4:
+            _context.next = 6;
+            return loadExtensionStorageValue("jwt_username");
+
+          case 6:
+            if (!_context.sent) {
+              _context.next = 10;
+              break;
+            }
+
+            _context.t0 = true;
+            _context.next = 11;
+            break;
+
+          case 10:
+            _context.t0 = false;
+
+          case 11:
+            return _context.abrupt("return", _context.t0);
+
+          case 12:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+  return _isLoggedIn.apply(this, arguments);
 }
 
 /***/ }),
@@ -809,13 +1413,13 @@ __webpack_require__.r(__webpack_exports__);
 
 var Appointment = /*#__PURE__*/function () {
   function Appointment(apptTd) {
-    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__.default)(this, Appointment);
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, Appointment);
 
     this.element = null;
     this.element = apptTd;
   }
 
-  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__.default)(Appointment, [{
+  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Appointment, [{
     key: "getEncounterBtnUrl",
     value: function getEncounterBtnUrl() {
       if (!this.element) {
@@ -915,7 +1519,7 @@ var fetch = __webpack_require__(/*! fetch-retry */ "./node_modules/fetch-retry/i
 
 var Masterfile = /*#__PURE__*/function () {
   function Masterfile(apptTd) {
-    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__.default)(this, Masterfile);
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__["default"])(this, Masterfile);
 
     this.apptTD = null;
     this.url = null;
@@ -931,7 +1535,7 @@ var Masterfile = /*#__PURE__*/function () {
    */
 
 
-  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__.default)(Masterfile, [{
+  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__["default"])(Masterfile, [{
     key: "getMasterFileUrl",
     value: function getMasterFileUrl(apptTd) {
       if (!apptTd) {
@@ -963,7 +1567,7 @@ var Masterfile = /*#__PURE__*/function () {
   }, {
     key: "fetchPage",
     value: function () {
-      var _fetchPage = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee() {
+      var _fetchPage = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee() {
         var url, result, page, container;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee$(_context) {
           while (1) {
@@ -1103,7 +1707,7 @@ var Oscar = /*#__PURE__*/function () {
   function Oscar() {
     var hostname = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : window.location.hostname;
 
-    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__.default)(this, Oscar);
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, Oscar);
 
     this.hostname = null;
     this.hostname = hostname;
@@ -1115,7 +1719,7 @@ var Oscar = /*#__PURE__*/function () {
     }
   }
 
-  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__.default)(Oscar, [{
+  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Oscar, [{
     key: "isJuno",
     value: function isJuno() {
       var isJunoHost = this.hostname.indexOf(".junoemr.com") !== -1;
@@ -1273,7 +1877,7 @@ function appointmentMenu(apptTd) {
   }); // additional one-off event listener for initial render.
 
   wrapper.addEventListener("click", /*#__PURE__*/function () {
-    var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee(e) {
+    var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee(e) {
       var menu, left;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
         while (1) {
@@ -1322,7 +1926,7 @@ function renderPatientInfo(_x2) {
 }
 
 function _renderPatientInfo() {
-  _renderPatientInfo = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2(apptTd) {
+  _renderPatientInfo = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2(apptTd) {
     var masterFile, contactInfoContainer, loaderContainer, result, email, phoneNumbers, homePhone, workPhone, cellphone, html;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee2$(_context2) {
       while (1) {
@@ -1415,7 +2019,14 @@ function setAppointmentCheckbox(apptTd, apptInfo, checkCache, pharmaciesCache) {
     return item.appointment_no === appointmentNo;
   }) || {};
   var cacheValue = checkCache[apptInfoItem.demographic_no];
-  var isPharmacyCached = pharmaciesCache.demographics.includes(apptInfoItem.demographic_no);
+  var cachedDemographics = pharmaciesCache.demographics;
+  var demographics = Array.isArray(cachedDemographics) ? cachedDemographics : JSON.parse(cachedDemographics);
+  demographics = demographics.filter(function (x) {
+    return x.hasPharmacy;
+  }).map(function (x) {
+    return x.demographicNo;
+  });
+  var isPharmacyCached = demographics.includes(apptInfoItem.demographic_no);
   var menuIcon = '<small>&#10006;</small>';
   var cacheColor = '#555555';
   var anchor = apptTd.querySelector("a.apptStatus");
@@ -1432,7 +2043,7 @@ function setAppointmentCheckbox(apptTd, apptInfo, checkCache, pharmaciesCache) {
       cacheColor = '#555555';
     }
 
-    var masterRecord = apptTd.querySelector("a.masterbtn");
+    var masterRecord = apptTd.querySelector("a.masterbtn") || apptTd.querySelector("a.masterBtn");
     masterRecord.append((0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_7__.create)("\n    <div class='appointment-checkbox-wrapper'>\n      <div class='appointment-checkbox' style='background-color:".concat(cacheColor, "'>\n        ").concat(menuIcon, "\n      </div>\n    </div>\n    ")));
   }
 
@@ -1542,70 +2153,6 @@ function getAppointmentInfo(apptNodes) {
 
 /***/ }),
 
-/***/ "./modules/cortico/Dashboard/Sidebar.js":
-/*!**********************************************!*\
-  !*** ./modules/cortico/Dashboard/Sidebar.js ***!
-  \**********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* export default binding */ __WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _resources_icons_96x96_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../resources/icons/96x96.png */ "./resources/icons/96x96.png");
-/* provided dependency */ var h = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js")["h"];
-
-/* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__() {
-  return h("div", {
-    className: "tw-flex tw-h-full tw-w-[400px]"
-  }, h("div", {
-    className: "tw-bg-blue-700 tw-w-[70px] tw-h-full tw-p-2 text-center tw-rounded-l-md"
-  }, h("img", {
-    src: _resources_icons_96x96_png__WEBPACK_IMPORTED_MODULE_0__.default,
-    className: "tw-w-2/3 tw-inline-block tw-mx-auto"
-  })), h("div", {
-    className: "tw-p-4 tw-bg-gray-100 tw-w-[300px]"
-  }, "Easy Menu"));
-}
-
-/***/ }),
-
-/***/ "./modules/cortico/Dashboard/index.js":
-/*!********************************************!*\
-  !*** ./modules/cortico/Dashboard/index.js ***!
-  \********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* export default binding */ __WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _Dashboard_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Dashboard.css */ "./modules/cortico/Dashboard/Dashboard.css");
-/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
-/* harmony import */ var _Sidebar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Sidebar */ "./modules/cortico/Dashboard/Sidebar.js");
-/* provided dependency */ var h = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js")["h"];
-
-
-
-/* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__() {
-  var container = document.querySelector(".cortico-modal");
-
-  var Dashboard = function Dashboard() {
-    return h("div", {
-      className: "tw-flex tw-text-xl tw-h-[800px]"
-    }, h(_Sidebar__WEBPACK_IMPORTED_MODULE_2__.default, null), h("div", {
-      className: "tw-w-full tw-p-4"
-    }, "Content goes here"));
-  };
-
-  console.log("its failing here");
-  return (0,preact__WEBPACK_IMPORTED_MODULE_1__.render)(h(Dashboard, null), container);
-}
-
-/***/ }),
-
 /***/ "./modules/cortico/Disclaimer.js":
 /*!***************************************!*\
   !*** ./modules/cortico/Disclaimer.js ***!
@@ -1710,7 +2257,7 @@ function corticoSignIn(_x, _x2, _x3) {
 }
 
 function _corticoSignIn() {
-  _corticoSignIn = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee(username, password, browser) {
+  _corticoSignIn = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee(username, password, browser) {
     var response, json, openMenu;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
       while (1) {
@@ -1727,11 +2274,11 @@ function _corticoSignIn() {
               break;
             }
 
-            return _context.abrupt("return", alert('Login failed. Check username and password.'));
+            return _context.abrupt("return", alert("Login failed. Check username and password."));
 
           case 5:
             if (!response) {
-              _context.next = 22;
+              _context.next = 19;
               break;
             }
 
@@ -1745,29 +2292,35 @@ function _corticoSignIn() {
             browser = browser ? browser : chrome;
 
             if (!browser) {
-              _context.next = 21;
+              _context.next = 18;
               break;
             }
 
-            browser.storage.local.set({
-              "jwt_access_token": json.access
-            });
-            browser.storage.local.set({
-              "jwt_expired": false
-            });
-            browser.storage.local.set({
-              "jwt_username": username
-            });
+            if (window.is_dev) {
+              window.localStorage.setItem("jwt_access_token", json.access);
+              window.localStorage.setItem("jwt_expired", false);
+              window.localStorage.setItem("jwt_username", username);
+            } else {
+              browser.storage.local.set({
+                jwt_access_token: json.access
+              });
+              browser.storage.local.set({
+                jwt_expired: false
+              });
+              browser.storage.local.set({
+                jwt_username: username
+              });
+            }
+
             openMenu = document.querySelector(".login-form.show");
             openMenu.classList.remove("show");
-            alert("Successfully signed in, the page will now reload");
-            window.location.reload();
+            if (!alert("Successfully signed in, the page will now reload")) window.location.reload();
             return _context.abrupt("return");
 
-          case 21:
+          case 18:
             return _context.abrupt("return");
 
-          case 22:
+          case 19:
           case "end":
             return _context.stop();
         }
@@ -1782,30 +2335,30 @@ function signInRequest(_x4, _x5) {
 }
 
 function _signInRequest() {
-  _signInRequest = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2(username, password) {
+  _signInRequest = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2(username, password) {
     var data, url;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
             data = {
-              "username": username,
-              "password": password
+              username: username,
+              password: password
             };
-            url = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_4__.getCorticoUrl)() + '/api/token/';
+            url = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_4__.getCorticoUrl)() + "/api/token/";
             return _context2.abrupt("return", fetch(url, {
-              "method": 'POST',
-              "headers": {
+              method: "POST",
+              headers: {
                 "Content-Type": "application/json"
               },
-              "body": JSON.stringify(data)
+              body: JSON.stringify(data)
             }).catch(function (err) {
               console.error(err);
 
-              if (('' + err).includes('Failed to fetch')) {
-                alert('Cortico instance cannot be reached. Check clinic name.');
+              if (("" + err).includes("Failed to fetch")) {
+                alert("Cortico instance cannot be reached. Check clinic name.");
               } else {
-                alert('Cortico: Unknown Login Error: ' + err);
+                alert("Cortico: Unknown Login Error: " + err);
               }
             }));
 
@@ -2375,7 +2928,7 @@ delete __self__.fetch.polyfill;
 // var ctx = global.fetch ? global : __self__;
 var ctx = __self__; // this line disable service worker support temporarily
 exports = ctx.fetch // To enable: import fetch from 'cross-fetch'
-exports.default = ctx.fetch // For TypeScript consumers without esModuleInterop.
+exports["default"] = ctx.fetch // For TypeScript consumers without esModuleInterop.
 exports.fetch = ctx.fetch // To enable: import {fetch} from 'cross-fetch'
 exports.Headers = ctx.Headers
 exports.Request = ctx.Request
@@ -2405,7 +2958,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
+<<<<<<< HEAD
 ___CSS_LOADER_EXPORT___.push([module.id, ".tailwind {\n  /*! tailwindcss v2.2.6 | MIT License | https://tailwindcss.com\n*/\n}\n\n/**\nUse a better box model (opinionated).\n*/\n\n.tailwind *,\n.tailwind ::before,\n.tailwind ::after {\n\tbox-sizing: border-box;\n}\n\n/**\nUse a more readable tab size (opinionated).\n*/\n\n.tailwind html {\n\t-moz-tab-size: 4;\n\t-o-tab-size: 4;\n\t   tab-size: 4;\n}\n\n/**\n1. Correct the line height in all browsers.\n2. Prevent adjustments of font size after orientation changes in iOS.\n*/\n\n.tailwind html {\n\tline-height: 1.15; /* 1 */\n\t-webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/**\nRemove the margin in all browsers.\n*/\n\n.tailwind body {\n\tmargin: 0;\n}\n\n/**\nImprove consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n*/\n\n.tailwind body {\n\tfont-family:\n\t\tsystem-ui,\n\t\t-apple-system, /* Firefox supports this but not yet `system-ui` */\n\t\t'Segoe UI',\n\t\tRoboto,\n\t\tHelvetica,\n\t\tArial,\n\t\tsans-serif,\n\t\t'Apple Color Emoji',\n\t\t'Segoe UI Emoji';\n}\n\n/**\n1. Add the correct height in Firefox.\n2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)\n*/\n\n.tailwind hr {\n\theight: 0; /* 1 */\n\tcolor: inherit; /* 2 */\n}\n\n/**\nAdd the correct text decoration in Chrome, Edge, and Safari.\n*/\n\n.tailwind abbr[title] {\n\t-webkit-text-decoration: underline dotted;\n\t        text-decoration: underline dotted;\n}\n\n/**\nAdd the correct font weight in Edge and Safari.\n*/\n\n.tailwind b,\n.tailwind strong {\n\tfont-weight: bolder;\n}\n\n/**\n1. Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n2. Correct the odd 'em' font sizing in all browsers.\n*/\n\n.tailwind code,\n.tailwind kbd,\n.tailwind samp,\n.tailwind pre {\n\tfont-family:\n\t\tui-monospace,\n\t\tSFMono-Regular,\n\t\tConsolas,\n\t\t'Liberation Mono',\n\t\tMenlo,\n\t\tmonospace; /* 1 */\n\tfont-size: 1em; /* 2 */\n}\n\n/**\nAdd the correct font size in all browsers.\n*/\n\n.tailwind small {\n\tfont-size: 80%;\n}\n\n/**\nPrevent 'sub' and 'sup' elements from affecting the line height in all browsers.\n*/\n\n.tailwind sub,\n.tailwind sup {\n\tfont-size: 75%;\n\tline-height: 0;\n\tposition: relative;\n\tvertical-align: baseline;\n}\n\n/*\nText-level semantics\n====================\n*/\n\n.tailwind sub {\n\tbottom: -0.25em;\n}\n\n/*\nGrouping content\n================\n*/\n\n.tailwind sup {\n\ttop: -0.5em;\n}\n\n/**\n1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)\n2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)\n*/\n\n.tailwind table {\n\ttext-indent: 0; /* 1 */\n\tborder-color: inherit; /* 2 */\n}\n\n/**\n1. Change the font styles in all browsers.\n2. Remove the margin in Firefox and Safari.\n*/\n\n.tailwind button,\n.tailwind input,\n.tailwind optgroup,\n.tailwind select,\n.tailwind textarea {\n\tfont-family: inherit; /* 1 */\n\tfont-size: 100%; /* 1 */\n\tline-height: 1.15; /* 1 */\n\tmargin: 0; /* 2 */\n}\n\n/**\nRemove the inheritance of text transform in Edge and Firefox.\n1. Remove the inheritance of text transform in Firefox.\n*/\n\n.tailwind button,\n.tailwind select { /* 1 */\n\ttext-transform: none;\n}\n\n/**\nCorrect the inability to style clickable types in iOS and Safari.\n*/\n\n.tailwind button,\n.tailwind [type='button'],\n.tailwind [type='reset'],\n.tailwind [type='submit'] {\n\t-webkit-appearance: button;\n}\n\n/**\nRemove the inner border and padding in Firefox.\n*/\n\n.tailwind ::-moz-focus-inner {\n\tborder-style: none;\n\tpadding: 0;\n}\n\n/**\nRestore the focus styles unset by the previous rule.\n*/\n\n.tailwind :-moz-focusring {\n\toutline: 1px dotted ButtonText;\n}\n\n/**\nRemove the additional ':invalid' styles in Firefox.\nSee: https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737\n*/\n\n.tailwind :-moz-ui-invalid {\n\tbox-shadow: none;\n}\n\n/**\nRemove the padding so developers are not caught out when they zero out 'fieldset' elements in all browsers.\n*/\n\n.tailwind legend {\n\tpadding: 0;\n}\n\n/**\nAdd the correct vertical alignment in Chrome and Firefox.\n*/\n\n.tailwind progress {\n\tvertical-align: baseline;\n}\n\n/**\nCorrect the cursor style of increment and decrement buttons in Safari.\n*/\n\n.tailwind ::-webkit-inner-spin-button,\n.tailwind ::-webkit-outer-spin-button {\n\theight: auto;\n}\n\n/**\n1. Correct the odd appearance in Chrome and Safari.\n2. Correct the outline style in Safari.\n*/\n\n.tailwind [type='search'] {\n\t-webkit-appearance: textfield; /* 1 */\n\toutline-offset: -2px; /* 2 */\n}\n\n/**\nRemove the inner padding in Chrome and Safari on macOS.\n*/\n\n.tailwind ::-webkit-search-decoration {\n\t-webkit-appearance: none;\n}\n\n/**\n1. Correct the inability to style clickable types in iOS and Safari.\n2. Change font properties to 'inherit' in Safari.\n*/\n\n.tailwind ::-webkit-file-upload-button {\n\t-webkit-appearance: button; /* 1 */\n\tfont: inherit; /* 2 */\n}\n\n/*\nAdd the correct display in Chrome and Safari.\n*/\n\n.tailwind summary {\n\tdisplay: list-item;\n}\n\n/**\n * Removes the default spacing and border for appropriate elements.\n */\n\n.tailwind blockquote,\n.tailwind dl,\n.tailwind dd,\n.tailwind h1,\n.tailwind h2,\n.tailwind h3,\n.tailwind h4,\n.tailwind h5,\n.tailwind h6,\n.tailwind hr,\n.tailwind figure,\n.tailwind p,\n.tailwind pre {\n  margin: 0;\n}\n\n/**\n * Manually forked from SUIT CSS Base: https://github.com/suitcss/base\n * A thin layer on top of normalize.css that provides a starting point more\n * suitable for web applications.\n */\n\n.tailwind button {\n  background-color: transparent;\n  background-image: none;\n}\n\n/*\nInteractive\n===========\n*/\n\n.tailwind fieldset {\n  margin: 0;\n  padding: 0;\n}\n\n/*\nForms\n=====\n*/\n\n.tailwind ol,\n.tailwind ul {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\n\n/**\n * 1. Use the user's configured `sans` font-family (with Tailwind's default\n *    sans-serif font stack as a fallback) as a sane default.\n * 2. Use Tailwind's default \"normal\" line-height so the user isn't forced\n *    to override it to ensure consistency even when using the default theme.\n */\n\n.tailwind html {\n  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"; /* 1 */\n  line-height: 1.5; /* 2 */\n}\n\n/**\n * Inherit font-family and line-height from `html` so users can set them as\n * a class directly on the `html` element.\n */\n\n.tailwind body {\n  font-family: inherit;\n  line-height: inherit;\n}\n\n/**\n * 1. Prevent padding and border from affecting element width.\n *\n *    We used to set this in the html element and inherit from\n *    the parent element for everything else. This caused issues\n *    in shadow-dom-enhanced elements like <details> where the content\n *    is wrapped by a div with box-sizing set to `content-box`.\n *\n *    https://github.com/mozdevs/cssremedy/issues/4\n *\n *\n * 2. Allow adding a border to an element by just adding a border-width.\n *\n *    By default, the way the browser specifies that an element should have no\n *    border is by setting it's border-style to `none` in the user-agent\n *    stylesheet.\n *\n *    In order to easily add borders to elements by just setting the `border-width`\n *    property, we change the default border-style for all elements to `solid`, and\n *    use border-width to hide them instead. This way our `border` utilities only\n *    need to set the `border-width` property instead of the entire `border`\n *    shorthand, making our border utilities much more straightforward to compose.\n *\n *    https://github.com/tailwindcss/tailwindcss/pull/116\n */\n\n.tailwind *,\n.tailwind ::before,\n.tailwind ::after {\n  box-sizing: border-box; /* 1 */\n  border-width: 0; /* 2 */\n  border-style: solid; /* 2 */\n  border-color: currentColor; /* 2 */\n}\n\n/*\n * Ensure horizontal rules are visible by default\n */\n\n.tailwind hr {\n  border-top-width: 1px;\n}\n\n/**\n * Undo the `border-style: none` reset that Normalize applies to images so that\n * our `border-{width}` utilities have the expected effect.\n *\n * The Normalize reset is unnecessary for us since we default the border-width\n * to 0 on all elements.\n *\n * https://github.com/tailwindcss/tailwindcss/issues/362\n */\n\n.tailwind img {\n  border-style: solid;\n}\n\n/**\n * Tailwind custom reset styles\n */\n\n.tailwind textarea {\n  resize: vertical;\n}\n\n/*\nTabular data\n============\n*/\n\n.tailwind input::-moz-placeholder, .tailwind textarea::-moz-placeholder {\n  opacity: 1;\n  color: #9ca3af;\n}\n\n.tailwind input:-ms-input-placeholder, .tailwind textarea:-ms-input-placeholder {\n  opacity: 1;\n  color: #9ca3af;\n}\n\n.tailwind input::placeholder,\n.tailwind textarea::placeholder {\n  opacity: 1;\n  color: #9ca3af;\n}\n\n/*\nSections\n========\n*/\n\n.tailwind button,\n.tailwind [role=\"button\"] {\n  cursor: pointer;\n}\n\n/*\nDocument\n========\n*/\n\n.tailwind table {\n  border-collapse: collapse;\n}\n\n/*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */\n\n.tailwind h1,\n.tailwind h2,\n.tailwind h3,\n.tailwind h4,\n.tailwind h5,\n.tailwind h6 {\n  font-size: inherit;\n  font-weight: inherit;\n}\n\n/**\n * Reset links to optimize for opt-in styling instead of\n * opt-out.\n */\n\n.tailwind a {\n  color: inherit;\n  text-decoration: inherit;\n}\n\n/**\n * Reset form element properties that are easy to forget to\n * style explicitly so you don't inadvertently introduce\n * styles that deviate from your design system. These styles\n * supplement a partial reset that is already applied by\n * normalize.css.\n */\n\n.tailwind button,\n.tailwind input,\n.tailwind optgroup,\n.tailwind select,\n.tailwind textarea {\n  padding: 0;\n  line-height: inherit;\n  color: inherit;\n}\n\n/**\n * Use the configured 'mono' font family for elements that\n * are expected to be rendered with a monospace font, falling\n * back to the system monospace stack if there is no configured\n * 'mono' font family.\n */\n\n.tailwind pre,\n.tailwind code,\n.tailwind kbd,\n.tailwind samp {\n  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace;\n}\n\n/**\n * 1. Make replaced elements `display: block` by default as that's\n *    the behavior you want almost all of the time. Inspired by\n *    CSS Remedy, with `svg` added as well.\n *\n *    https://github.com/mozdevs/cssremedy/issues/14\n * \n * 2. Add `vertical-align: middle` to align replaced elements more\n *    sensibly by default when overriding `display` by adding a\n *    utility like `inline`.\n *\n *    This can trigger a poorly considered linting error in some\n *    tools but is included by design.\n * \n *    https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210\n */\n\n.tailwind img,\n.tailwind svg,\n.tailwind video,\n.tailwind canvas,\n.tailwind audio,\n.tailwind iframe,\n.tailwind embed,\n.tailwind object {\n  display: block; /* 1 */\n  vertical-align: middle; /* 2 */\n}\n\n/**\n * Constrain images and videos to the parent width and preserve\n * their intrinsic aspect ratio.\n *\n * https://github.com/mozdevs/cssremedy/issues/14\n */\n\n.tailwind img,\n.tailwind video {\n  max-width: 100%;\n  height: auto;\n}\n\n/**\n * Ensure the default browser behavior of the `hidden` attribute.\n */\n\n.tailwind [hidden] {\n  display: none;\n}\n.tw-mx-auto {\n  margin-left: auto !important;\n  margin-right: auto !important;\n}\n.tw-my-2 {\n  margin-top: 0.5rem !important;\n  margin-bottom: 0.5rem !important;\n}\n.tw-mt-10 {\n  margin-top: 2.5rem !important;\n}\n.tw-inline-block {\n  display: inline-block !important;\n}\n.tw-flex {\n  display: flex !important;\n}\n.tw-h-\\[800px\\] {\n  height: 800px !important;\n}\n.tw-h-full {\n  height: 100% !important;\n}\n.tw-w-full {\n  width: 100% !important;\n}\n.tw-w-\\[400px\\] {\n  width: 400px !important;\n}\n.tw-w-\\[70px\\] {\n  width: 70px !important;\n}\n.tw-w-2\\/3 {\n  width: 66.666667% !important;\n}\n.tw-w-\\[300px\\] {\n  width: 300px !important;\n}\n.tw-max-w-3xl {\n  max-width: 48rem !important;\n}\n.tw-justify-end {\n  justify-content: flex-end !important;\n}\n.tw-rounded-xl {\n  border-radius: 0.75rem !important;\n}\n.tw-rounded-l-md {\n  border-top-left-radius: 0.375rem !important;\n  border-bottom-left-radius: 0.375rem !important;\n}\n.tw-bg-cortico-blue {\n  background-color: rgba(75, 84, 246, 1) !important;\n}\n.tw-bg-white {\n  --tw-bg-opacity: 1 !important;\n  background-color: rgba(255, 255, 255, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-blue-700 {\n  --tw-bg-opacity: 1 !important;\n  background-color: rgba(29, 78, 216, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-gray-100 {\n  --tw-bg-opacity: 1 !important;\n  background-color: rgba(243, 244, 246, var(--tw-bg-opacity)) !important;\n}\n.tw-p-10 {\n  padding: 2.5rem !important;\n}\n.tw-p-4 {\n  padding: 1rem !important;\n}\n.tw-p-2 {\n  padding: 0.5rem !important;\n}\n.tw-px-4 {\n  padding-left: 1rem !important;\n  padding-right: 1rem !important;\n}\n.tw-py-2 {\n  padding-top: 0.5rem !important;\n  padding-bottom: 0.5rem !important;\n}\n.tw-text-2xl {\n  font-size: 1.5rem !important;\n  line-height: 2rem !important;\n}\n.tw-text-xl {\n  font-size: 1.25rem !important;\n  line-height: 1.75rem !important;\n}\n.tw-font-bold {\n  font-weight: 700 !important;\n}\n.tw-text-white {\n  --tw-text-opacity: 1 !important;\n  color: rgba(255, 255, 255, var(--tw-text-opacity)) !important;\n}\n.tw-text-cortico-blue {\n  color: rgba(75, 84, 246, 1) !important;\n}\n\n.sidebar-instructions {\n  text-align: center;\n  font-size: 1.875rem;\n  line-height: 2.25rem;\n  font-weight: 700;\n}\n\n.sidebar-instructions-hidden {\n  display: none;\n}\n", "",{"version":3,"sources":["webpack://./index.css","webpack://./%3Cinput%20css%20FAbSDC%3E","webpack://./%3Cinput%20css%20brToqE%3E","<no source>"],"names":[],"mappings":"AAAA;EACE;CAAc;AAChB;;AADE;;CAAc;;AAAd;;;CCaD,sBAAsB;ADbP;;AAAd;;CAAc;;AAAd;CCqBD,gBAAgB;CAChB,cAAW;IAAX,WAAW;ADtBI;;AAAd;;;CAAc;;AAAd;CC+BD,iBAAiB,EAAE,MAAM;CACzB,8BAA8B,EAAE,MAAM;ADhCvB;;AAAd;;CAAc;;AAAd;CC6CD,SAAS;AD7CM;;AAAd;;CAAc;;AAAd;CCqDD;;;;;;;;;kBASiB;AD9DF;;AAAd;;;CAAc;;AAAd;CC4ED,SAAS,EAAE,MAAM;CACjB,cAAc,EAAE,MAAM;AD7EP;;AAAd;;CAAc;;AAAd;CC0FD,yCAAiC;SAAjC,iCAAiC;AD1FlB;;AAAd;;CAAc;;AAAd;;CCmGD,mBAAmB;ADnGJ;;AAAd;;;CAAc;;AAAd;;;;CC+GD;;;;;;WAMU,EAAE,MAAM;CAClB,cAAc,EAAE,MAAM;ADtHP;;AAAd;;CAAc;;AAAd;CC8HD,cAAc;AD9HC;;AAAd;;CAAc;;AAAd;;CCuID,cAAc;CACd,cAAc;CACd,kBAAkB;CAClB,wBAAwB;AD1IT;;AAAd;;;CAAc;;AAAd;CC8ID,eAAe;AD9IA;;AAAd;;;CAAc;;AAAd;CCkJD,WAAW;ADlJI;;AAAd;;;CAAc;;AAAd;CCgKD,cAAc,EAAE,MAAM;CACtB,qBAAqB,EAAE,MAAM;ADjKd;;AAAd;;;CAAc;;AAAd;;;;;CCmLD,oBAAoB,EAAE,MAAM;CAC5B,eAAe,EAAE,MAAM;CACvB,iBAAiB,EAAE,MAAM;CACzB,SAAS,EAAE,MAAM;ADtLF;;AAAd;;;CAAc;;AAAd;mBC+LO,MAAM;CACd,oBAAoB;ADhML;;AAAd;;CAAc;;AAAd;;;;CC2MD,0BAA0B;AD3MX;;AAAd;;CAAc;;AAAd;CCmND,kBAAkB;CAClB,UAAU;ADpNK;;AAAd;;CAAc;;AAAd;CC4ND,8BAA8B;AD5Nf;;AAAd;;;CAAc;;AAAd;CCqOD,gBAAgB;ADrOD;;AAAd;;CAAc;;AAAd;CC6OD,UAAU;AD7OK;;AAAd;;CAAc;;AAAd;CCqPD,wBAAwB;ADrPT;;AAAd;;CAAc;;AAAd;;CC8PD,YAAY;AD9PG;;AAAd;;;CAAc;;AAAd;CCuQD,6BAA6B,EAAE,MAAM;CACrC,oBAAoB,EAAE,MAAM;ADxQb;;AAAd;;CAAc;;AAAd;CCgRD,wBAAwB;ADhRT;;AAAd;;;CAAc;;AAAd;CCyRD,0BAA0B,EAAE,MAAM;CAClC,aAAa,EAAE,MAAM;AD1RN;;AAAd;;CAAc;;AAAd;CCuSD,kBAAkB;ADvSH;;AAAd;;EAAc;;AAAd;;;;;;;;;;;;;EEsBA,SAAS;AFtBK;;AAAd;;;;EAAc;;AAAd;EE0BA,6BAA6B;EAC7B,sBAAsB;AF3BR;;AAAd;;;CAAc;;AAAd;EE+BA,SAAS;EACT,UAAU;AFhCI;;AAAd;;;CAAc;;AAAd;;EEqCA,gBAAgB;EAChB,SAAS;EACT,UAAU;AFvCI;;AAAd;;;;;EAAc;;AAAd;EEsDA,4NAAsP,EAAE,MAAM;EAC9P,gBAAgB,EAAE,MAAM;AFvDV;;AAAd;;;EAAc;;AAAd;EEiEA,oBAAoB;EACpB,oBAAoB;AFlEN;;AAAd;;;;;;;;;;;;;;;;;;;;;;;;EAAc;;AAAd;;;EEkGA,sBAAsB,EAAE,MAAM;EAC9B,eAAe,EAAE,MAAM;EACvB,mBAAmB,EAAE,MAAM;EAC3B,0BAA0B,EAAE,MAAM;AFrGpB;;AAAd;;EAAc;;AAAd;EE6GA,qBAAqB;AF7GP;;AAAd;;;;;;;;EAAc;;AAAd;EE2HA,mBAAmB;AF3HL;;AAAd;;EAAc;;AAAd;EE+HA,gBAAgB;AF/HF;;AAAd;;;CAAc;;AAAd;EEoIA,UAAU;EACV,cAAwC;AFrI1B;;AAAd;EEoIA,UAAU;EACV,cAAwC;AFrI1B;;AAAd;;EEoIA,UAAU;EACV,cAAwC;AFrI1B;;AAAd;;;CAAc;;AAAd;;EE0IA,eAAe;AF1ID;;AAAd;;;CAAc;;AAAd;EE8IA,yBAAyB;AF9IX;;AAAd,8FAAc;;AAAd;;;;;;EEuJA,kBAAkB;EAClB,oBAAoB;AFxJN;;AAAd;;;EAAc;;AAAd;EEiKA,cAAc;EACd,wBAAwB;AFlKV;;AAAd;;;;;;EAAc;;AAAd;;;;;EEkLA,UAAU;EACV,oBAAoB;EACpB,cAAc;AFpLA;;AAAd;;;;;EAAc;;AAAd;;;;EEkMA,+GAAyI;AFlM3H;;AAAd;;;;;;;;;;;;;;;EAAc;;AAAd;;;;;;;;EE8NA,cAAc,EAAE,MAAM;EACtB,sBAAsB,EAAE,MAAM;AF/NhB;;AAAd;;;;;EAAc;;AAAd;;EE2OA,eAAe;EACf,YAAY;AF5OE;;AAAd;;EAAc;;AAAd;EEoPA,aAAa;AFpPC;AAIhB;EGLA,6BAAA;EAAA;AHKmB;AAAnB;EGLA,8BAAA;EAAA;AHKmB;AAAnB;EGLA;AHKmB;AAAnB;EGLA;AHKmB;AAAnB;EGLA;AHKmB;AAAnB;EGLA;AHKmB;AAAnB;EGLA;AHKmB;AAAnB;EGLA;AHKmB;AAAnB;EGLA;AHKmB;AAAnB;EGLA;AHKmB;AAAnB;EGLA;AHKmB;AAAnB;EGLA;AHKmB;AAAnB;EGLA;AHKmB;AAAnB;EGLA;AHKmB;AAAnB;EGLA;AHKmB;AAAnB;EGLA,4CAAA;EAAA;AHKmB;AAAnB;EGLA;AHKmB;AAAnB;EGLA,8BAAA;EAAA;AHKmB;AAAnB;EGLA,8BAAA;EAAA;AHKmB;AAAnB;EGLA,8BAAA;EAAA;AHKmB;AAAnB;EGLA;AHKmB;AAAnB;EGLA;AHKmB;AAAnB;EGLA;AHKmB;AAAnB;EGLA,8BAAA;EAAA;AHKmB;AAAnB;EGLA,+BAAA;EAAA;AHKmB;AAAnB;EGLA,6BAAA;EAAA;AHKmB;AAAnB;EGLA,8BAAA;EAAA;AHKmB;AAAnB;EGLA;AHKmB;AAAnB;EGLA,gCAAA;EAAA;AHKmB;AAAnB;EGLA;AHKmB;;AGLnB;EAAA,mBAAA;EAAA,oBAAA;EAAA,qBAAA;EAAA;CAAA;;AAAA;EAAA;CAAA","sourcesContent":[".tailwind {\n  @tailwind base;\n}\n\n@tailwind components;\n@tailwind utilities;\n\n.sidebar-instructions {\n  @apply tw-text-3xl tw-text-center tw-font-bold;\n}\n\n.sidebar-instructions-hidden {\n  @apply tw-hidden;\n}\n","/*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */\n\n/*\nDocument\n========\n*/\n\n/**\nUse a better box model (opinionated).\n*/\n\n*,\n::before,\n::after {\n\tbox-sizing: border-box;\n}\n\n/**\nUse a more readable tab size (opinionated).\n*/\n\nhtml {\n\t-moz-tab-size: 4;\n\ttab-size: 4;\n}\n\n/**\n1. Correct the line height in all browsers.\n2. Prevent adjustments of font size after orientation changes in iOS.\n*/\n\nhtml {\n\tline-height: 1.15; /* 1 */\n\t-webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/*\nSections\n========\n*/\n\n/**\nRemove the margin in all browsers.\n*/\n\nbody {\n\tmargin: 0;\n}\n\n/**\nImprove consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n*/\n\nbody {\n\tfont-family:\n\t\tsystem-ui,\n\t\t-apple-system, /* Firefox supports this but not yet `system-ui` */\n\t\t'Segoe UI',\n\t\tRoboto,\n\t\tHelvetica,\n\t\tArial,\n\t\tsans-serif,\n\t\t'Apple Color Emoji',\n\t\t'Segoe UI Emoji';\n}\n\n/*\nGrouping content\n================\n*/\n\n/**\n1. Add the correct height in Firefox.\n2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)\n*/\n\nhr {\n\theight: 0; /* 1 */\n\tcolor: inherit; /* 2 */\n}\n\n/*\nText-level semantics\n====================\n*/\n\n/**\nAdd the correct text decoration in Chrome, Edge, and Safari.\n*/\n\nabbr[title] {\n\ttext-decoration: underline dotted;\n}\n\n/**\nAdd the correct font weight in Edge and Safari.\n*/\n\nb,\nstrong {\n\tfont-weight: bolder;\n}\n\n/**\n1. Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n2. Correct the odd 'em' font sizing in all browsers.\n*/\n\ncode,\nkbd,\nsamp,\npre {\n\tfont-family:\n\t\tui-monospace,\n\t\tSFMono-Regular,\n\t\tConsolas,\n\t\t'Liberation Mono',\n\t\tMenlo,\n\t\tmonospace; /* 1 */\n\tfont-size: 1em; /* 2 */\n}\n\n/**\nAdd the correct font size in all browsers.\n*/\n\nsmall {\n\tfont-size: 80%;\n}\n\n/**\nPrevent 'sub' and 'sup' elements from affecting the line height in all browsers.\n*/\n\nsub,\nsup {\n\tfont-size: 75%;\n\tline-height: 0;\n\tposition: relative;\n\tvertical-align: baseline;\n}\n\nsub {\n\tbottom: -0.25em;\n}\n\nsup {\n\ttop: -0.5em;\n}\n\n/*\nTabular data\n============\n*/\n\n/**\n1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)\n2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)\n*/\n\ntable {\n\ttext-indent: 0; /* 1 */\n\tborder-color: inherit; /* 2 */\n}\n\n/*\nForms\n=====\n*/\n\n/**\n1. Change the font styles in all browsers.\n2. Remove the margin in Firefox and Safari.\n*/\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n\tfont-family: inherit; /* 1 */\n\tfont-size: 100%; /* 1 */\n\tline-height: 1.15; /* 1 */\n\tmargin: 0; /* 2 */\n}\n\n/**\nRemove the inheritance of text transform in Edge and Firefox.\n1. Remove the inheritance of text transform in Firefox.\n*/\n\nbutton,\nselect { /* 1 */\n\ttext-transform: none;\n}\n\n/**\nCorrect the inability to style clickable types in iOS and Safari.\n*/\n\nbutton,\n[type='button'],\n[type='reset'],\n[type='submit'] {\n\t-webkit-appearance: button;\n}\n\n/**\nRemove the inner border and padding in Firefox.\n*/\n\n::-moz-focus-inner {\n\tborder-style: none;\n\tpadding: 0;\n}\n\n/**\nRestore the focus styles unset by the previous rule.\n*/\n\n:-moz-focusring {\n\toutline: 1px dotted ButtonText;\n}\n\n/**\nRemove the additional ':invalid' styles in Firefox.\nSee: https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737\n*/\n\n:-moz-ui-invalid {\n\tbox-shadow: none;\n}\n\n/**\nRemove the padding so developers are not caught out when they zero out 'fieldset' elements in all browsers.\n*/\n\nlegend {\n\tpadding: 0;\n}\n\n/**\nAdd the correct vertical alignment in Chrome and Firefox.\n*/\n\nprogress {\n\tvertical-align: baseline;\n}\n\n/**\nCorrect the cursor style of increment and decrement buttons in Safari.\n*/\n\n::-webkit-inner-spin-button,\n::-webkit-outer-spin-button {\n\theight: auto;\n}\n\n/**\n1. Correct the odd appearance in Chrome and Safari.\n2. Correct the outline style in Safari.\n*/\n\n[type='search'] {\n\t-webkit-appearance: textfield; /* 1 */\n\toutline-offset: -2px; /* 2 */\n}\n\n/**\nRemove the inner padding in Chrome and Safari on macOS.\n*/\n\n::-webkit-search-decoration {\n\t-webkit-appearance: none;\n}\n\n/**\n1. Correct the inability to style clickable types in iOS and Safari.\n2. Change font properties to 'inherit' in Safari.\n*/\n\n::-webkit-file-upload-button {\n\t-webkit-appearance: button; /* 1 */\n\tfont: inherit; /* 2 */\n}\n\n/*\nInteractive\n===========\n*/\n\n/*\nAdd the correct display in Chrome and Safari.\n*/\n\nsummary {\n\tdisplay: list-item;\n}\n","/**\n * Manually forked from SUIT CSS Base: https://github.com/suitcss/base\n * A thin layer on top of normalize.css that provides a starting point more\n * suitable for web applications.\n */\n\n/**\n * Removes the default spacing and border for appropriate elements.\n */\n\nblockquote,\ndl,\ndd,\nh1,\nh2,\nh3,\nh4,\nh5,\nh6,\nhr,\nfigure,\np,\npre {\n  margin: 0;\n}\n\nbutton {\n  background-color: transparent;\n  background-image: none;\n}\n\nfieldset {\n  margin: 0;\n  padding: 0;\n}\n\nol,\nul {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\n\n/**\n * Tailwind custom reset styles\n */\n\n/**\n * 1. Use the user's configured `sans` font-family (with Tailwind's default\n *    sans-serif font stack as a fallback) as a sane default.\n * 2. Use Tailwind's default \"normal\" line-height so the user isn't forced\n *    to override it to ensure consistency even when using the default theme.\n */\n\nhtml {\n  font-family: theme('fontFamily.sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"); /* 1 */\n  line-height: 1.5; /* 2 */\n}\n\n\n/**\n * Inherit font-family and line-height from `html` so users can set them as\n * a class directly on the `html` element.\n */\n\nbody {\n  font-family: inherit;\n  line-height: inherit;\n}\n\n/**\n * 1. Prevent padding and border from affecting element width.\n *\n *    We used to set this in the html element and inherit from\n *    the parent element for everything else. This caused issues\n *    in shadow-dom-enhanced elements like <details> where the content\n *    is wrapped by a div with box-sizing set to `content-box`.\n *\n *    https://github.com/mozdevs/cssremedy/issues/4\n *\n *\n * 2. Allow adding a border to an element by just adding a border-width.\n *\n *    By default, the way the browser specifies that an element should have no\n *    border is by setting it's border-style to `none` in the user-agent\n *    stylesheet.\n *\n *    In order to easily add borders to elements by just setting the `border-width`\n *    property, we change the default border-style for all elements to `solid`, and\n *    use border-width to hide them instead. This way our `border` utilities only\n *    need to set the `border-width` property instead of the entire `border`\n *    shorthand, making our border utilities much more straightforward to compose.\n *\n *    https://github.com/tailwindcss/tailwindcss/pull/116\n */\n\n*,\n::before,\n::after {\n  box-sizing: border-box; /* 1 */\n  border-width: 0; /* 2 */\n  border-style: solid; /* 2 */\n  border-color: currentColor; /* 2 */\n}\n\n/*\n * Ensure horizontal rules are visible by default\n */\n\nhr {\n  border-top-width: 1px;\n}\n\n/**\n * Undo the `border-style: none` reset that Normalize applies to images so that\n * our `border-{width}` utilities have the expected effect.\n *\n * The Normalize reset is unnecessary for us since we default the border-width\n * to 0 on all elements.\n *\n * https://github.com/tailwindcss/tailwindcss/issues/362\n */\n\nimg {\n  border-style: solid;\n}\n\ntextarea {\n  resize: vertical;\n}\n\ninput::placeholder,\ntextarea::placeholder {\n  opacity: 1;\n  color: theme('colors.gray.400', #a1a1aa);\n}\n\nbutton,\n[role=\"button\"] {\n  cursor: pointer;\n}\n\ntable {\n  border-collapse: collapse;\n}\n\nh1,\nh2,\nh3,\nh4,\nh5,\nh6 {\n  font-size: inherit;\n  font-weight: inherit;\n}\n\n/**\n * Reset links to optimize for opt-in styling instead of\n * opt-out.\n */\n\na {\n  color: inherit;\n  text-decoration: inherit;\n}\n\n/**\n * Reset form element properties that are easy to forget to\n * style explicitly so you don't inadvertently introduce\n * styles that deviate from your design system. These styles\n * supplement a partial reset that is already applied by\n * normalize.css.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  padding: 0;\n  line-height: inherit;\n  color: inherit;\n}\n\n/**\n * Use the configured 'mono' font family for elements that\n * are expected to be rendered with a monospace font, falling\n * back to the system monospace stack if there is no configured\n * 'mono' font family.\n */\n\npre,\ncode,\nkbd,\nsamp {\n  font-family: theme('fontFamily.mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace);\n}\n\n/**\n * 1. Make replaced elements `display: block` by default as that's\n *    the behavior you want almost all of the time. Inspired by\n *    CSS Remedy, with `svg` added as well.\n *\n *    https://github.com/mozdevs/cssremedy/issues/14\n * \n * 2. Add `vertical-align: middle` to align replaced elements more\n *    sensibly by default when overriding `display` by adding a\n *    utility like `inline`.\n *\n *    This can trigger a poorly considered linting error in some\n *    tools but is included by design.\n * \n *    https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210\n */\n\nimg,\nsvg,\nvideo,\ncanvas,\naudio,\niframe,\nembed,\nobject {\n  display: block; /* 1 */\n  vertical-align: middle; /* 2 */\n}\n\n/**\n * Constrain images and videos to the parent width and preserve\n * their intrinsic aspect ratio.\n *\n * https://github.com/mozdevs/cssremedy/issues/14\n */\n\nimg,\nvideo {\n  max-width: 100%;\n  height: auto;\n}\n\n/**\n * Ensure the default browser behavior of the `hidden` attribute.\n */\n\n[hidden] {\n  display: none;\n}\n",null],"sourceRoot":""}]);
+=======
+___CSS_LOADER_EXPORT___.push([module.id, "/**\nUse a better box model (opinionated).\n*/\n\n.tailwind *,\n.tailwind ::before,\n.tailwind ::after {\n\tbox-sizing: border-box;\n}\n\n/**\nUse a more readable tab size (opinionated).\n*/\n\n.tailwind html {\n\t-moz-tab-size: 4;\n\t-o-tab-size: 4;\n\t   tab-size: 4;\n}\n\n/**\n1. Correct the line height in all browsers.\n2. Prevent adjustments of font size after orientation changes in iOS.\n*/\n\n.tailwind html {\n\tline-height: 1.15; /* 1 */\n\t-webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/**\nRemove the margin in all browsers.\n*/\n\n.tailwind body {\n\tmargin: 0;\n}\n\n/**\nImprove consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n*/\n\n.tailwind body {\n\tfont-family:\n\t\tsystem-ui,\n\t\t-apple-system, /* Firefox supports this but not yet `system-ui` */\n\t\t'Segoe UI',\n\t\tRoboto,\n\t\tHelvetica,\n\t\tArial,\n\t\tsans-serif,\n\t\t'Apple Color Emoji',\n\t\t'Segoe UI Emoji';\n}\n\n/**\n1. Add the correct height in Firefox.\n2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)\n*/\n\n.tailwind hr {\n\theight: 0; /* 1 */\n\tcolor: inherit; /* 2 */\n}\n\n/**\nAdd the correct text decoration in Chrome, Edge, and Safari.\n*/\n\n.tailwind abbr[title] {\n\t-webkit-text-decoration: underline dotted;\n\t        text-decoration: underline dotted;\n}\n\n/**\nAdd the correct font weight in Edge and Safari.\n*/\n\n.tailwind b,\n.tailwind strong {\n\tfont-weight: bolder;\n}\n\n/**\n1. Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n2. Correct the odd 'em' font sizing in all browsers.\n*/\n\n.tailwind code,\n.tailwind kbd,\n.tailwind samp,\n.tailwind pre {\n\tfont-family:\n\t\tui-monospace,\n\t\tSFMono-Regular,\n\t\tConsolas,\n\t\t'Liberation Mono',\n\t\tMenlo,\n\t\tmonospace; /* 1 */\n\tfont-size: 1em; /* 2 */\n}\n\n/**\nAdd the correct font size in all browsers.\n*/\n\n.tailwind small {\n\tfont-size: 80%;\n}\n\n/**\nPrevent 'sub' and 'sup' elements from affecting the line height in all browsers.\n*/\n\n.tailwind sub,\n.tailwind sup {\n\tfont-size: 75%;\n\tline-height: 0;\n\tposition: relative;\n\tvertical-align: baseline;\n}\n\n/*\nText-level semantics\n====================\n*/\n\n.tailwind sub {\n\tbottom: -0.25em;\n}\n\n/*\nGrouping content\n================\n*/\n\n.tailwind sup {\n\ttop: -0.5em;\n}\n\n/**\n1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)\n2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)\n*/\n\n.tailwind table {\n\ttext-indent: 0; /* 1 */\n\tborder-color: inherit; /* 2 */\n}\n\n/**\n1. Change the font styles in all browsers.\n2. Remove the margin in Firefox and Safari.\n*/\n\n.tailwind button,\n.tailwind input,\n.tailwind optgroup,\n.tailwind select,\n.tailwind textarea {\n\tfont-family: inherit; /* 1 */\n\tfont-size: 100%; /* 1 */\n\tline-height: 1.15; /* 1 */\n\tmargin: 0; /* 2 */\n}\n\n/**\nRemove the inheritance of text transform in Edge and Firefox.\n1. Remove the inheritance of text transform in Firefox.\n*/\n\n.tailwind button,\n.tailwind select { /* 1 */\n\ttext-transform: none;\n}\n\n/**\nCorrect the inability to style clickable types in iOS and Safari.\n*/\n\n.tailwind button,\n.tailwind [type='button'],\n.tailwind [type='reset'],\n.tailwind [type='submit'] {\n\t-webkit-appearance: button;\n}\n\n/**\nRemove the inner border and padding in Firefox.\n*/\n\n.tailwind ::-moz-focus-inner {\n\tborder-style: none;\n\tpadding: 0;\n}\n\n/**\nRestore the focus styles unset by the previous rule.\n*/\n\n.tailwind :-moz-focusring {\n\toutline: 1px dotted ButtonText;\n}\n\n/**\nRemove the additional ':invalid' styles in Firefox.\nSee: https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737\n*/\n\n.tailwind :-moz-ui-invalid {\n\tbox-shadow: none;\n}\n\n/**\nRemove the padding so developers are not caught out when they zero out 'fieldset' elements in all browsers.\n*/\n\n.tailwind legend {\n\tpadding: 0;\n}\n\n/**\nAdd the correct vertical alignment in Chrome and Firefox.\n*/\n\n.tailwind progress {\n\tvertical-align: baseline;\n}\n\n/**\nCorrect the cursor style of increment and decrement buttons in Safari.\n*/\n\n.tailwind ::-webkit-inner-spin-button,\n.tailwind ::-webkit-outer-spin-button {\n\theight: auto;\n}\n\n/**\n1. Correct the odd appearance in Chrome and Safari.\n2. Correct the outline style in Safari.\n*/\n\n.tailwind [type='search'] {\n\t-webkit-appearance: textfield; /* 1 */\n\toutline-offset: -2px; /* 2 */\n}\n\n/**\nRemove the inner padding in Chrome and Safari on macOS.\n*/\n\n.tailwind ::-webkit-search-decoration {\n\t-webkit-appearance: none;\n}\n\n/**\n1. Correct the inability to style clickable types in iOS and Safari.\n2. Change font properties to 'inherit' in Safari.\n*/\n\n.tailwind ::-webkit-file-upload-button {\n\t-webkit-appearance: button; /* 1 */\n\tfont: inherit; /* 2 */\n}\n\n/*\nAdd the correct display in Chrome and Safari.\n*/\n\n.tailwind summary {\n\tdisplay: list-item;\n}\n\n/**\n * Removes the default spacing and border for appropriate elements.\n */\n\n.tailwind blockquote,\n.tailwind dl,\n.tailwind dd,\n.tailwind h1,\n.tailwind h2,\n.tailwind h3,\n.tailwind h4,\n.tailwind h5,\n.tailwind h6,\n.tailwind hr,\n.tailwind figure,\n.tailwind p,\n.tailwind pre {\n  margin: 0;\n}\n\n/**\n * Manually forked from SUIT CSS Base: https://github.com/suitcss/base\n * A thin layer on top of normalize.css that provides a starting point more\n * suitable for web applications.\n */\n\n.tailwind button {\n  background-color: transparent;\n  background-image: none;\n}\n\n/*\nInteractive\n===========\n*/\n\n.tailwind fieldset {\n  margin: 0;\n  padding: 0;\n}\n\n/*\nForms\n=====\n*/\n\n.tailwind ol,\n.tailwind ul {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\n\n/**\n * 1. Use the user's configured `sans` font-family (with Tailwind's default\n *    sans-serif font stack as a fallback) as a sane default.\n * 2. Use Tailwind's default \"normal\" line-height so the user isn't forced\n *    to override it to ensure consistency even when using the default theme.\n */\n\n.tailwind html {\n  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"; /* 1 */\n  line-height: 1.5; /* 2 */\n}\n\n/**\n * Inherit font-family and line-height from `html` so users can set them as\n * a class directly on the `html` element.\n */\n\n.tailwind body {\n  font-family: inherit;\n  line-height: inherit;\n}\n\n/**\n * 1. Prevent padding and border from affecting element width.\n *\n *    We used to set this in the html element and inherit from\n *    the parent element for everything else. This caused issues\n *    in shadow-dom-enhanced elements like <details> where the content\n *    is wrapped by a div with box-sizing set to `content-box`.\n *\n *    https://github.com/mozdevs/cssremedy/issues/4\n *\n *\n * 2. Allow adding a border to an element by just adding a border-width.\n *\n *    By default, the way the browser specifies that an element should have no\n *    border is by setting it's border-style to `none` in the user-agent\n *    stylesheet.\n *\n *    In order to easily add borders to elements by just setting the `border-width`\n *    property, we change the default border-style for all elements to `solid`, and\n *    use border-width to hide them instead. This way our `border` utilities only\n *    need to set the `border-width` property instead of the entire `border`\n *    shorthand, making our border utilities much more straightforward to compose.\n *\n *    https://github.com/tailwindcss/tailwindcss/pull/116\n */\n\n.tailwind *,\n.tailwind ::before,\n.tailwind ::after {\n  box-sizing: border-box; /* 1 */\n  border-width: 0; /* 2 */\n  border-style: solid; /* 2 */\n  border-color: currentColor; /* 2 */\n}\n\n/*\n * Ensure horizontal rules are visible by default\n */\n\n.tailwind hr {\n  border-top-width: 1px;\n}\n\n/**\n * Undo the `border-style: none` reset that Normalize applies to images so that\n * our `border-{width}` utilities have the expected effect.\n *\n * The Normalize reset is unnecessary for us since we default the border-width\n * to 0 on all elements.\n *\n * https://github.com/tailwindcss/tailwindcss/issues/362\n */\n\n.tailwind img {\n  border-style: solid;\n}\n\n/**\n * Tailwind custom reset styles\n */\n\n.tailwind textarea {\n  resize: vertical;\n}\n\n/*\nTabular data\n============\n*/\n\n.tailwind input::-moz-placeholder, .tailwind textarea::-moz-placeholder {\n  opacity: 1;\n  color: #9ca3af;\n}\n\n.tailwind input:-ms-input-placeholder, .tailwind textarea:-ms-input-placeholder {\n  opacity: 1;\n  color: #9ca3af;\n}\n\n.tailwind input::placeholder,\n.tailwind textarea::placeholder {\n  opacity: 1;\n  color: #9ca3af;\n}\n\n/*\nSections\n========\n*/\n\n.tailwind button,\n.tailwind [role=\"button\"] {\n  cursor: pointer;\n}\n\n/**\n * Override legacy focus reset from Normalize with modern Firefox focus styles.\n *\n * This is actually an improvement over the new defaults in Firefox in our testing,\n * as it triggers the better focus styles even for links, which still use a dotted\n * outline in Firefox by default.\n */\n\n.tailwind :-moz-focusring {\n\toutline: auto;\n}\n\n/*\nDocument\n========\n*/\n\n.tailwind table {\n  border-collapse: collapse;\n}\n\n/*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */\n\n.tailwind h1,\n.tailwind h2,\n.tailwind h3,\n.tailwind h4,\n.tailwind h5,\n.tailwind h6 {\n  font-size: inherit;\n  font-weight: inherit;\n}\n\n/**\n * Reset links to optimize for opt-in styling instead of\n * opt-out.\n */\n\n.tailwind a {\n  color: inherit;\n  text-decoration: inherit;\n}\n\n/**\n * Reset form element properties that are easy to forget to\n * style explicitly so you don't inadvertently introduce\n * styles that deviate from your design system. These styles\n * supplement a partial reset that is already applied by\n * normalize.css.\n */\n\n.tailwind button,\n.tailwind input,\n.tailwind optgroup,\n.tailwind select,\n.tailwind textarea {\n  padding: 0;\n  line-height: inherit;\n  color: inherit;\n}\n\n/**\n * Use the configured 'mono' font family for elements that\n * are expected to be rendered with a monospace font, falling\n * back to the system monospace stack if there is no configured\n * 'mono' font family.\n */\n\n.tailwind pre,\n.tailwind code,\n.tailwind kbd,\n.tailwind samp {\n  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace;\n}\n\n/**\n * 1. Make replaced elements `display: block` by default as that's\n *    the behavior you want almost all of the time. Inspired by\n *    CSS Remedy, with `svg` added as well.\n *\n *    https://github.com/mozdevs/cssremedy/issues/14\n * \n * 2. Add `vertical-align: middle` to align replaced elements more\n *    sensibly by default when overriding `display` by adding a\n *    utility like `inline`.\n *\n *    This can trigger a poorly considered linting error in some\n *    tools but is included by design.\n * \n *    https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210\n */\n\n.tailwind img,\n.tailwind svg,\n.tailwind video,\n.tailwind canvas,\n.tailwind audio,\n.tailwind iframe,\n.tailwind embed,\n.tailwind object {\n  display: block; /* 1 */\n  vertical-align: middle; /* 2 */\n}\n\n/**\n * Constrain images and videos to the parent width and preserve\n * their intrinsic aspect ratio.\n *\n * https://github.com/mozdevs/cssremedy/issues/14\n */\n\n.tailwind img,\n.tailwind video {\n  max-width: 100%;\n  height: auto;\n}\n\n/**\n * Ensure the default browser behavior of the `hidden` attribute.\n */\n\n.tailwind [hidden] {\n  display: none;\n}\n\n/*! tailwindcss v2.2.17 | MIT License | https://tailwindcss.com\n*/\n\n.tailwind *, .tailwind ::before, .tailwind ::after {\n\t--tw-translate-x: 0;\n\t--tw-translate-y: 0;\n\t--tw-rotate: 0;\n\t--tw-skew-x: 0;\n\t--tw-skew-y: 0;\n\t--tw-scale-x: 1;\n\t--tw-scale-y: 1;\n\t--tw-transform: translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n}\n\n.tailwind *, .tailwind ::before, .tailwind ::after {\n\t--tw-border-opacity: 1;\n\tborder-color: rgba(229, 231, 235, var(--tw-border-opacity));\n}\n\n.tailwind *, .tailwind ::before, .tailwind ::after {\n\t--tw-ring-offset-shadow: 0 0 #0000;\n\t--tw-ring-shadow: 0 0 #0000;\n\t--tw-shadow: 0 0 #0000;\n}\n\n.tailwind .form-input,.tailwind .form-textarea,.tailwind .form-select,.tailwind .form-multiselect {\n\t-webkit-appearance: none;\n\t   -moz-appearance: none;\n\t        appearance: none;\n\tbackground-color: #fff;\n\tborder-color: #6b7280;\n\tborder-width: 1px;\n\tborder-radius: 0px;\n\tpadding-top: 0.5rem;\n\tpadding-right: 0.75rem;\n\tpadding-bottom: 0.5rem;\n\tpadding-left: 0.75rem;\n\tfont-size: 1rem;\n\tline-height: 1.5rem;\n\t--tw-shadow: 0 0 #0000;\n}\n\n.tailwind .form-input:focus, .tailwind .form-textarea:focus, .tailwind .form-select:focus, .tailwind .form-multiselect:focus {\n\toutline: 2px solid transparent;\n\toutline-offset: 2px;\n\t--tw-ring-inset: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-ring-offset-width: 0px;\n\t--tw-ring-offset-color: #fff;\n\t--tw-ring-color: #2563eb;\n\t--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);\n\t--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);\n\tbox-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n\tborder-color: #2563eb;\n}\n\n.tailwind .form-input::-moz-placeholder, .tailwind .form-textarea::-moz-placeholder {\n\tcolor: #6b7280;\n\topacity: 1;\n}\n\n.tailwind .form-input:-ms-input-placeholder, .tailwind .form-textarea:-ms-input-placeholder {\n\tcolor: #6b7280;\n\topacity: 1;\n}\n\n.tailwind .form-input::placeholder,.tailwind .form-textarea::placeholder {\n\tcolor: #6b7280;\n\topacity: 1;\n}\n.tw-fixed {\n\tposition: fixed !important;\n}\n.tw-absolute {\n\tposition: absolute !important;\n}\n.tw-relative {\n\tposition: relative !important;\n}\n.tw-bottom-5 {\n\tbottom: 1.25rem !important;\n}\n.tw-right-5 {\n\tright: 1.25rem !important;\n}\n.tw--top-1 {\n\ttop: -0.25rem !important;\n}\n.tw--left-1 {\n\tleft: -0.25rem !important;\n}\n.tw-bottom-0 {\n\tbottom: 0px !important;\n}\n.tw-left-\\[50\\%\\] {\n\tleft: 50% !important;\n}\n.tw-z-10000 {\n\tz-index: 10000 !important;\n}\n.tw-z-5000 {\n\tz-index: 5000 !important;\n}\n.tw-z-10001 {\n\tz-index: 10001 !important;\n}\n.tw-mx-auto {\n\tmargin-left: auto !important;\n\tmargin-right: auto !important;\n}\n.tw-my-2 {\n\tmargin-top: 0.5rem !important;\n\tmargin-bottom: 0.5rem !important;\n}\n.tw-mt-2 {\n\tmargin-top: 0.5rem !important;\n}\n.tw-mt-3 {\n\tmargin-top: 0.75rem !important;\n}\n.tw-ml-1 {\n\tmargin-left: 0.25rem !important;\n}\n.tw--ml-1 {\n\tmargin-left: -0.25rem !important;\n}\n.tw-mr-3 {\n\tmargin-right: 0.75rem !important;\n}\n.tw-ml-2 {\n\tmargin-left: 0.5rem !important;\n}\n.tw-mt-0 {\n\tmargin-top: 0px !important;\n}\n.tw-mb-10 {\n\tmargin-bottom: 2.5rem !important;\n}\n.tw-mt-10 {\n\tmargin-top: 2.5rem !important;\n}\n.tw-block {\n\tdisplay: block !important;\n}\n.tw-inline-block {\n\tdisplay: inline-block !important;\n}\n.tw-flex {\n\tdisplay: flex !important;\n}\n.tw-h-10 {\n\theight: 2.5rem !important;\n}\n.tw-h-6 {\n\theight: 1.5rem !important;\n}\n.tw-h-3 {\n\theight: 0.75rem !important;\n}\n.tw-h-5 {\n\theight: 1.25rem !important;\n}\n.tw-h-4 {\n\theight: 1rem !important;\n}\n.tw-h-\\[800px\\] {\n\theight: 800px !important;\n}\n.tw-h-full {\n\theight: 100% !important;\n}\n.tw-w-10 {\n\twidth: 2.5rem !important;\n}\n.tw-w-full {\n\twidth: 100% !important;\n}\n.tw-w-6 {\n\twidth: 1.5rem !important;\n}\n.tw-w-3 {\n\twidth: 0.75rem !important;\n}\n.tw-w-5 {\n\twidth: 1.25rem !important;\n}\n.tw-w-24 {\n\twidth: 6rem !important;\n}\n.tw-w-4 {\n\twidth: 1rem !important;\n}\n.tw-w-\\[400px\\] {\n\twidth: 400px !important;\n}\n.tw-w-\\[70px\\] {\n\twidth: 70px !important;\n}\n.tw-w-2\\/3 {\n\twidth: 66.666667% !important;\n}\n.tw-w-\\[300px\\] {\n\twidth: 300px !important;\n}\n.tw-min-w-\\[300px\\] {\n\tmin-width: 300px !important;\n}\n.tw-max-w-\\[400px\\] {\n\tmax-width: 400px !important;\n}\n.tw-max-w-xl {\n\tmax-width: 36rem !important;\n}\n.tw-max-w-3xl {\n\tmax-width: 48rem !important;\n}\n.tw-flex-1 {\n\tflex: 1 1 0% !important;\n}\n.tw-flex-5 {\n\tflex: 5 1 0 !important;\n}\n.tw-translate-x-0 {\n\t--tw-translate-x: 0px !important;\n\ttransform: var(--tw-transform) !important;\n}\n.tw-translate-x-\\[430px\\] {\n\t--tw-translate-x: 430px !important;\n\ttransform: var(--tw-transform) !important;\n}\n.tw-translate-x-\\[-50\\%\\] {\n\t--tw-translate-x: -50% !important;\n\ttransform: var(--tw-transform) !important;\n}\n.tw-translate-y-0 {\n\t--tw-translate-y: 0px !important;\n\ttransform: var(--tw-transform) !important;\n}\n.tw-translate-y-\\[100\\%\\] {\n\t--tw-translate-y: 100% !important;\n\ttransform: var(--tw-transform) !important;\n}\n.tw-transform {\n\ttransform: var(--tw-transform) !important;\n}\n@-webkit-keyframes tw-spin {\n\n\tto {\n\t\ttransform: rotate(360deg);\n\t}\n}\n@keyframes tw-spin {\n\n\tto {\n\t\ttransform: rotate(360deg);\n\t}\n}\n.tw-animate-spin {\n\t-webkit-animation: tw-spin 1s linear infinite !important;\n\t        animation: tw-spin 1s linear infinite !important;\n}\n@-webkit-keyframes tw-bounce {\n\n\t0%, 100% {\n\t\ttransform: translateY(-25%);\n\t\t-webkit-animation-timing-function: cubic-bezier(0.8,0,1,1);\n\t\t        animation-timing-function: cubic-bezier(0.8,0,1,1);\n\t}\n\n\t50% {\n\t\ttransform: none;\n\t\t-webkit-animation-timing-function: cubic-bezier(0,0,0.2,1);\n\t\t        animation-timing-function: cubic-bezier(0,0,0.2,1);\n\t}\n}\n@keyframes tw-bounce {\n\n\t0%, 100% {\n\t\ttransform: translateY(-25%);\n\t\t-webkit-animation-timing-function: cubic-bezier(0.8,0,1,1);\n\t\t        animation-timing-function: cubic-bezier(0.8,0,1,1);\n\t}\n\n\t50% {\n\t\ttransform: none;\n\t\t-webkit-animation-timing-function: cubic-bezier(0,0,0.2,1);\n\t\t        animation-timing-function: cubic-bezier(0,0,0.2,1);\n\t}\n}\n.tw-animate-bounce {\n\t-webkit-animation: tw-bounce 1s infinite !important;\n\t        animation: tw-bounce 1s infinite !important;\n}\n.tw-cursor-pointer {\n\tcursor: pointer !important;\n}\n.tw-resize-none {\n\tresize: none !important;\n}\n.tw-items-center {\n\talign-items: center !important;\n}\n.tw-justify-end {\n\tjustify-content: flex-end !important;\n}\n.tw-justify-center {\n\tjustify-content: center !important;\n}\n.tw-break-words {\n\toverflow-wrap: break-word !important;\n}\n.tw-rounded-md {\n\tborder-radius: 0.375rem !important;\n}\n.tw-rounded-lg {\n\tborder-radius: 0.5rem !important;\n}\n.tw-rounded-full {\n\tborder-radius: 9999px !important;\n}\n.tw-rounded-xl {\n\tborder-radius: 0.75rem !important;\n}\n.tw-rounded-t-md {\n\tborder-top-left-radius: 0.375rem !important;\n\tborder-top-right-radius: 0.375rem !important;\n}\n.tw-rounded-l-md {\n\tborder-top-left-radius: 0.375rem !important;\n\tborder-bottom-left-radius: 0.375rem !important;\n}\n.tw-border-0 {\n\tborder-width: 0px !important;\n}\n.tw-border {\n\tborder-width: 1px !important;\n}\n.tw-border-cortico-blue {\n\tborder-color: rgba(75, 84, 246, 1) !important;\n}\n.tw-bg-cortico-blue {\n\tbackground-color: rgba(75, 84, 246, 1) !important;\n}\n.tw-bg-white {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(255, 255, 255, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-gray-100 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(243, 244, 246, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-red-500 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(239, 68, 68, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-gray-700 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(55, 65, 81, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-blue-700 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(29, 78, 216, var(--tw-bg-opacity)) !important;\n}\n.tw-p-4 {\n\tpadding: 1rem !important;\n}\n.tw-p-12 {\n\tpadding: 3rem !important;\n}\n.tw-p-3 {\n\tpadding: 0.75rem !important;\n}\n.tw-p-1 {\n\tpadding: 0.25rem !important;\n}\n.tw-p-2 {\n\tpadding: 0.5rem !important;\n}\n.tw-p-10 {\n\tpadding: 2.5rem !important;\n}\n.tw-py-1 {\n\tpadding-top: 0.25rem !important;\n\tpadding-bottom: 0.25rem !important;\n}\n.tw-px-2 {\n\tpadding-left: 0.5rem !important;\n\tpadding-right: 0.5rem !important;\n}\n.tw-px-4 {\n\tpadding-left: 1rem !important;\n\tpadding-right: 1rem !important;\n}\n.tw-py-2 {\n\tpadding-top: 0.5rem !important;\n\tpadding-bottom: 0.5rem !important;\n}\n.tw-px-3 {\n\tpadding-left: 0.75rem !important;\n\tpadding-right: 0.75rem !important;\n}\n.tw-pl-2 {\n\tpadding-left: 0.5rem !important;\n}\n.tw-text-center {\n\ttext-align: center !important;\n}\n.tw-font-sans {\n\tfont-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\" !important;\n}\n.tw-text-sm {\n\tfont-size: 0.875rem !important;\n\tline-height: 1.25rem !important;\n}\n.tw-text-xs {\n\tfont-size: 0.75rem !important;\n\tline-height: 1rem !important;\n}\n.tw-text-2xl {\n\tfont-size: 1.5rem !important;\n\tline-height: 2rem !important;\n}\n.tw-text-xl {\n\tfont-size: 1.25rem !important;\n\tline-height: 1.75rem !important;\n}\n.tw-font-light {\n\tfont-weight: 300 !important;\n}\n.tw-font-medium {\n\tfont-weight: 500 !important;\n}\n.tw-font-semibold {\n\tfont-weight: 600 !important;\n}\n.tw-font-bold {\n\tfont-weight: 700 !important;\n}\n.tw-leading-5 {\n\tline-height: 1.25rem !important;\n}\n.tw-tracking-wider {\n\tletter-spacing: 0.05em !important;\n}\n.tw-text-white {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(255, 255, 255, var(--tw-text-opacity)) !important;\n}\n.tw-text-gray-600 {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(75, 85, 99, var(--tw-text-opacity)) !important;\n}\n.tw-text-cortico-blue {\n\tcolor: rgba(75, 84, 246, 1) !important;\n}\n.tw-text-gray-700 {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(55, 65, 81, var(--tw-text-opacity)) !important;\n}\n.tw-text-opacity-80 {\n\t--tw-text-opacity: 0.8 !important;\n}\n.tw-opacity-25 {\n\topacity: 0.25 !important;\n}\n.tw-opacity-75 {\n\topacity: 0.75 !important;\n}\n.tw-opacity-20 {\n\topacity: 0.2 !important;\n}\n.tw-opacity-10 {\n\topacity: 0.1 !important;\n}\n.tw-shadow-xl {\n\t--tw-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;\n\tbox-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;\n}\n.tw-shadow-2xl {\n\t--tw-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;\n\tbox-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;\n}\n.tw-shadow-md {\n\t--tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;\n\tbox-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;\n}\n.tw-shadow-lg {\n\t--tw-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;\n\tbox-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;\n}\n.tw-transition-transform {\n\ttransition-property: transform !important;\n\ttransition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;\n\ttransition-duration: 150ms !important;\n}\n.tw-duration-200 {\n\ttransition-duration: 200ms !important;\n}\n.tw-duration-300 {\n\ttransition-duration: 300ms !important;\n}\n.tw-ease-in-out {\n\ttransition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;\n}\n\n.sidebar-instructions {\n\ttext-align: center;\n\tfont-size: 1.875rem;\n\tline-height: 2.25rem;\n\tfont-weight: 700;\n}\n\n.sidebar-instructions-hidden {\n\tdisplay: none;\n}\n", "",{"version":3,"sources":["webpack://./index.css","webpack://./%3Cinput%20css%20hU37TN%3E","webpack://./%3Cinput%20css%20Ja4aqB%3E","<no source>"],"names":[],"mappings":"AACE;;CAAc;;AAAd;;;CCaD,sBAAsB;ADbP;;AAAd;;CAAc;;AAAd;CCqBD,gBAAgB;CAChB,cAAW;IAAX,WAAW;ADtBI;;AAAd;;;CAAc;;AAAd;CC+BD,iBAAiB,EAAE,MAAM;CACzB,8BAA8B,EAAE,MAAM;ADhCvB;;AAAd;;CAAc;;AAAd;CC6CD,SAAS;AD7CM;;AAAd;;CAAc;;AAAd;CCqDD;;;;;;;;;kBASiB;AD9DF;;AAAd;;;CAAc;;AAAd;CC4ED,SAAS,EAAE,MAAM;CACjB,cAAc,EAAE,MAAM;AD7EP;;AAAd;;CAAc;;AAAd;CC0FD,yCAAiC;SAAjC,iCAAiC;AD1FlB;;AAAd;;CAAc;;AAAd;;CCmGD,mBAAmB;ADnGJ;;AAAd;;;CAAc;;AAAd;;;;CC+GD;;;;;;WAMU,EAAE,MAAM;CAClB,cAAc,EAAE,MAAM;ADtHP;;AAAd;;CAAc;;AAAd;CC8HD,cAAc;AD9HC;;AAAd;;CAAc;;AAAd;;CCuID,cAAc;CACd,cAAc;CACd,kBAAkB;CAClB,wBAAwB;AD1IT;;AAAd;;;CAAc;;AAAd;CC8ID,eAAe;AD9IA;;AAAd;;;CAAc;;AAAd;CCkJD,WAAW;ADlJI;;AAAd;;;CAAc;;AAAd;CCgKD,cAAc,EAAE,MAAM;CACtB,qBAAqB,EAAE,MAAM;ADjKd;;AAAd;;;CAAc;;AAAd;;;;;CCmLD,oBAAoB,EAAE,MAAM;CAC5B,eAAe,EAAE,MAAM;CACvB,iBAAiB,EAAE,MAAM;CACzB,SAAS,EAAE,MAAM;ADtLF;;AAAd;;;CAAc;;AAAd;mBC+LO,MAAM;CACd,oBAAoB;ADhML;;AAAd;;CAAc;;AAAd;;;;CC2MD,0BAA0B;AD3MX;;AAAd;;CAAc;;AAAd;CCmND,kBAAkB;CAClB,UAAU;ADpNK;;AAAd;;CAAc;;AAAd;CC4ND,8BAA8B;AD5Nf;;AAAd;;;CAAc;;AAAd;CCqOD,gBAAgB;ADrOD;;AAAd;;CAAc;;AAAd;CC6OD,UAAU;AD7OK;;AAAd;;CAAc;;AAAd;CCqPD,wBAAwB;ADrPT;;AAAd;;CAAc;;AAAd;;CC8PD,YAAY;AD9PG;;AAAd;;;CAAc;;AAAd;CCuQD,6BAA6B,EAAE,MAAM;CACrC,oBAAoB,EAAE,MAAM;ADxQb;;AAAd;;CAAc;;AAAd;CCgRD,wBAAwB;ADhRT;;AAAd;;;CAAc;;AAAd;CCyRD,0BAA0B,EAAE,MAAM;CAClC,aAAa,EAAE,MAAM;AD1RN;;AAAd;;CAAc;;AAAd;CCuSD,kBAAkB;ADvSH;;AAAd;;EAAc;;AAAd;;;;;;;;;;;;;EEsBA,SAAS;AFtBK;;AAAd;;;;EAAc;;AAAd;EE0BA,6BAA6B;EAC7B,sBAAsB;AF3BR;;AAAd;;;CAAc;;AAAd;EE+BA,SAAS;EACT,UAAU;AFhCI;;AAAd;;;CAAc;;AAAd;;EEqCA,gBAAgB;EAChB,SAAS;EACT,UAAU;AFvCI;;AAAd;;;;;EAAc;;AAAd;EEsDA,4NAAsP,EAAE,MAAM;EAC9P,gBAAgB,EAAE,MAAM;AFvDV;;AAAd;;;EAAc;;AAAd;EEiEA,oBAAoB;EACpB,oBAAoB;AFlEN;;AAAd;;;;;;;;;;;;;;;;;;;;;;;;EAAc;;AAAd;;;EEkGA,sBAAsB,EAAE,MAAM;EAC9B,eAAe,EAAE,MAAM;EACvB,mBAAmB,EAAE,MAAM;EAC3B,0BAA0B,EAAE,MAAM;AFrGpB;;AAAd;;EAAc;;AAAd;EE6GA,qBAAqB;AF7GP;;AAAd;;;;;;;;EAAc;;AAAd;EE2HA,mBAAmB;AF3HL;;AAAd;;EAAc;;AAAd;EE+HA,gBAAgB;AF/HF;;AAAd;;;CAAc;;AAAd;EEoIA,UAAU;EACV,cAAwC;AFrI1B;;AAAd;EEoIA,UAAU;EACV,cAAwC;AFrI1B;;AAAd;;EEoIA,UAAU;EACV,cAAwC;AFrI1B;;AAAd;;;CAAc;;AAAd;;EE0IA,eAAe;AF1ID;;AAAd;;;;;;EAAc;;AAAd;CEsJD,aAAa;AFtJE;;AAAd;;;CAAc;;AAAd;EE0JA,yBAAyB;AF1JX;;AAAd,8FAAc;;AAAd;;;;;;EEmKA,kBAAkB;EAClB,oBAAoB;AFpKN;;AAAd;;;EAAc;;AAAd;EE6KA,cAAc;EACd,wBAAwB;AF9KV;;AAAd;;;;;;EAAc;;AAAd;;;;;EE8LA,UAAU;EACV,oBAAoB;EACpB,cAAc;AFhMA;;AAAd;;;;;EAAc;;AAAd;;;;EE8MA,+GAAyI;AF9M3H;;AAAd;;;;;;;;;;;;;;;EAAc;;AAAd;;;;;;;;EE0OA,cAAc,EAAE,MAAM;EACtB,sBAAsB,EAAE,MAAM;AF3OhB;;AAAd;;;;;EAAc;;AAAd;;EEuPA,eAAe;EACf,YAAY;AFxPE;;AAAd;;EAAc;;AAAd;EEgQA,aAAa;AFhQC;;AAAd;CAAc;;AGDhB;CAAA,oBAAA;CAAA,oBAAA;CAAA,eAAA;CAAA,eAAA;CAAA,eAAA;CAAA,gBAAA;CAAA,gBAAA;CAAA;CAAA;;AAAA;CAAA,uBAAA;CAAA;CAAA;;AAAA;CAAA,mCAAA;CAAA,4BAAA;CAAA;CAAA;;AHCE;CGDF,yBAAA;IAAA,sBAAA;SAAA,iBAAA;CAAA,uBAAA;CAAA,sBAAA;CAAA,kBAAA;CAAA,mBAAA;CAAA,oBAAA;CAAA,uBAAA;CAAA,uBAAA;CAAA,sBAAA;CAAA,gBAAA;CAAA,oBAAA;CAAA,uBAAA;AHCgB;;AAAd;CGDF,+BAAA;CAAA,oBAAA;CAAA,6CAAA;CAAA,4BAAA;CAAA,6BAAA;CAAA,yBAAA;CAAA,4GAAA;CAAA,0GAAA;CAAA,kFAAA;CAAA;AHCgB;;AAAd;CGDF,eAAA;CAAA;AHCgB;;AAAd;CGDF,eAAA;CAAA;AHCgB;;AAAd;CGDF,eAAA;CAAA;AHCgB;AAIhB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,6BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,iCAAA;CAAA;AHKmB;AAAnB;CGLA,mCAAA;CAAA;AHKmB;AAAnB;CGLA,kCAAA;CAAA;AHKmB;AAAnB;CGLA,iCAAA;CAAA;AHKmB;AAAnB;CGLA,kCAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;;CGLA;EAAA;EAAA;AHKmB;AAAnB;;CGLA;EAAA;EAAA;AHKmB;AAAnB;CGLA,yDAAA;SAAA;AHKmB;AAAnB;;CGLA;EAAA,4BAAA;EAAA,2DAAA;UAAA;EAAA;;CAAA;EAAA,gBAAA;EAAA,2DAAA;UAAA;EAAA;AHKmB;AAAnB;;CGLA;EAAA,4BAAA;EAAA,2DAAA;UAAA;EAAA;;CAAA;EAAA,gBAAA;EAAA,2DAAA;UAAA;EAAA;AHKmB;AAAnB;CGLA,oDAAA;SAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,4CAAA;CAAA;AHKmB;AAAnB;CGLA,4CAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,gCAAA;CAAA;AHKmB;AAAnB;CGLA,gCAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,+BAAA;CAAA;AHKmB;AAAnB;CGLA,iCAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,+BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,6BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,gCAAA;CAAA;AHKmB;AAAnB;CGLA,gCAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,gCAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,kGAAA;CAAA;AHKmB;AAAnB;CGLA,8DAAA;CAAA;AHKmB;AAAnB;CGLA,8FAAA;CAAA;AHKmB;AAAnB;CGLA,gGAAA;CAAA;AHKmB;AAAnB;CGLA,0CAAA;CAAA,oEAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;;AGLnB;CAAA,mBAAA;CAAA,oBAAA;CAAA,qBAAA;CAAA;CAAA;;AAAA;CAAA;CAAA","sourcesContent":[".tailwind {\n  @tailwind base;\n}\n\n@tailwind components;\n@tailwind utilities;\n\n.sidebar-instructions {\n  @apply tw-text-3xl tw-text-center tw-font-bold;\n}\n\n.sidebar-instructions-hidden {\n  @apply tw-hidden;\n}\n","/*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */\n\n/*\nDocument\n========\n*/\n\n/**\nUse a better box model (opinionated).\n*/\n\n*,\n::before,\n::after {\n\tbox-sizing: border-box;\n}\n\n/**\nUse a more readable tab size (opinionated).\n*/\n\nhtml {\n\t-moz-tab-size: 4;\n\ttab-size: 4;\n}\n\n/**\n1. Correct the line height in all browsers.\n2. Prevent adjustments of font size after orientation changes in iOS.\n*/\n\nhtml {\n\tline-height: 1.15; /* 1 */\n\t-webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/*\nSections\n========\n*/\n\n/**\nRemove the margin in all browsers.\n*/\n\nbody {\n\tmargin: 0;\n}\n\n/**\nImprove consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n*/\n\nbody {\n\tfont-family:\n\t\tsystem-ui,\n\t\t-apple-system, /* Firefox supports this but not yet `system-ui` */\n\t\t'Segoe UI',\n\t\tRoboto,\n\t\tHelvetica,\n\t\tArial,\n\t\tsans-serif,\n\t\t'Apple Color Emoji',\n\t\t'Segoe UI Emoji';\n}\n\n/*\nGrouping content\n================\n*/\n\n/**\n1. Add the correct height in Firefox.\n2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)\n*/\n\nhr {\n\theight: 0; /* 1 */\n\tcolor: inherit; /* 2 */\n}\n\n/*\nText-level semantics\n====================\n*/\n\n/**\nAdd the correct text decoration in Chrome, Edge, and Safari.\n*/\n\nabbr[title] {\n\ttext-decoration: underline dotted;\n}\n\n/**\nAdd the correct font weight in Edge and Safari.\n*/\n\nb,\nstrong {\n\tfont-weight: bolder;\n}\n\n/**\n1. Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n2. Correct the odd 'em' font sizing in all browsers.\n*/\n\ncode,\nkbd,\nsamp,\npre {\n\tfont-family:\n\t\tui-monospace,\n\t\tSFMono-Regular,\n\t\tConsolas,\n\t\t'Liberation Mono',\n\t\tMenlo,\n\t\tmonospace; /* 1 */\n\tfont-size: 1em; /* 2 */\n}\n\n/**\nAdd the correct font size in all browsers.\n*/\n\nsmall {\n\tfont-size: 80%;\n}\n\n/**\nPrevent 'sub' and 'sup' elements from affecting the line height in all browsers.\n*/\n\nsub,\nsup {\n\tfont-size: 75%;\n\tline-height: 0;\n\tposition: relative;\n\tvertical-align: baseline;\n}\n\nsub {\n\tbottom: -0.25em;\n}\n\nsup {\n\ttop: -0.5em;\n}\n\n/*\nTabular data\n============\n*/\n\n/**\n1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)\n2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)\n*/\n\ntable {\n\ttext-indent: 0; /* 1 */\n\tborder-color: inherit; /* 2 */\n}\n\n/*\nForms\n=====\n*/\n\n/**\n1. Change the font styles in all browsers.\n2. Remove the margin in Firefox and Safari.\n*/\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n\tfont-family: inherit; /* 1 */\n\tfont-size: 100%; /* 1 */\n\tline-height: 1.15; /* 1 */\n\tmargin: 0; /* 2 */\n}\n\n/**\nRemove the inheritance of text transform in Edge and Firefox.\n1. Remove the inheritance of text transform in Firefox.\n*/\n\nbutton,\nselect { /* 1 */\n\ttext-transform: none;\n}\n\n/**\nCorrect the inability to style clickable types in iOS and Safari.\n*/\n\nbutton,\n[type='button'],\n[type='reset'],\n[type='submit'] {\n\t-webkit-appearance: button;\n}\n\n/**\nRemove the inner border and padding in Firefox.\n*/\n\n::-moz-focus-inner {\n\tborder-style: none;\n\tpadding: 0;\n}\n\n/**\nRestore the focus styles unset by the previous rule.\n*/\n\n:-moz-focusring {\n\toutline: 1px dotted ButtonText;\n}\n\n/**\nRemove the additional ':invalid' styles in Firefox.\nSee: https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737\n*/\n\n:-moz-ui-invalid {\n\tbox-shadow: none;\n}\n\n/**\nRemove the padding so developers are not caught out when they zero out 'fieldset' elements in all browsers.\n*/\n\nlegend {\n\tpadding: 0;\n}\n\n/**\nAdd the correct vertical alignment in Chrome and Firefox.\n*/\n\nprogress {\n\tvertical-align: baseline;\n}\n\n/**\nCorrect the cursor style of increment and decrement buttons in Safari.\n*/\n\n::-webkit-inner-spin-button,\n::-webkit-outer-spin-button {\n\theight: auto;\n}\n\n/**\n1. Correct the odd appearance in Chrome and Safari.\n2. Correct the outline style in Safari.\n*/\n\n[type='search'] {\n\t-webkit-appearance: textfield; /* 1 */\n\toutline-offset: -2px; /* 2 */\n}\n\n/**\nRemove the inner padding in Chrome and Safari on macOS.\n*/\n\n::-webkit-search-decoration {\n\t-webkit-appearance: none;\n}\n\n/**\n1. Correct the inability to style clickable types in iOS and Safari.\n2. Change font properties to 'inherit' in Safari.\n*/\n\n::-webkit-file-upload-button {\n\t-webkit-appearance: button; /* 1 */\n\tfont: inherit; /* 2 */\n}\n\n/*\nInteractive\n===========\n*/\n\n/*\nAdd the correct display in Chrome and Safari.\n*/\n\nsummary {\n\tdisplay: list-item;\n}\n","/**\n * Manually forked from SUIT CSS Base: https://github.com/suitcss/base\n * A thin layer on top of normalize.css that provides a starting point more\n * suitable for web applications.\n */\n\n/**\n * Removes the default spacing and border for appropriate elements.\n */\n\nblockquote,\ndl,\ndd,\nh1,\nh2,\nh3,\nh4,\nh5,\nh6,\nhr,\nfigure,\np,\npre {\n  margin: 0;\n}\n\nbutton {\n  background-color: transparent;\n  background-image: none;\n}\n\nfieldset {\n  margin: 0;\n  padding: 0;\n}\n\nol,\nul {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\n\n/**\n * Tailwind custom reset styles\n */\n\n/**\n * 1. Use the user's configured `sans` font-family (with Tailwind's default\n *    sans-serif font stack as a fallback) as a sane default.\n * 2. Use Tailwind's default \"normal\" line-height so the user isn't forced\n *    to override it to ensure consistency even when using the default theme.\n */\n\nhtml {\n  font-family: theme('fontFamily.sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"); /* 1 */\n  line-height: 1.5; /* 2 */\n}\n\n\n/**\n * Inherit font-family and line-height from `html` so users can set them as\n * a class directly on the `html` element.\n */\n\nbody {\n  font-family: inherit;\n  line-height: inherit;\n}\n\n/**\n * 1. Prevent padding and border from affecting element width.\n *\n *    We used to set this in the html element and inherit from\n *    the parent element for everything else. This caused issues\n *    in shadow-dom-enhanced elements like <details> where the content\n *    is wrapped by a div with box-sizing set to `content-box`.\n *\n *    https://github.com/mozdevs/cssremedy/issues/4\n *\n *\n * 2. Allow adding a border to an element by just adding a border-width.\n *\n *    By default, the way the browser specifies that an element should have no\n *    border is by setting it's border-style to `none` in the user-agent\n *    stylesheet.\n *\n *    In order to easily add borders to elements by just setting the `border-width`\n *    property, we change the default border-style for all elements to `solid`, and\n *    use border-width to hide them instead. This way our `border` utilities only\n *    need to set the `border-width` property instead of the entire `border`\n *    shorthand, making our border utilities much more straightforward to compose.\n *\n *    https://github.com/tailwindcss/tailwindcss/pull/116\n */\n\n*,\n::before,\n::after {\n  box-sizing: border-box; /* 1 */\n  border-width: 0; /* 2 */\n  border-style: solid; /* 2 */\n  border-color: currentColor; /* 2 */\n}\n\n/*\n * Ensure horizontal rules are visible by default\n */\n\nhr {\n  border-top-width: 1px;\n}\n\n/**\n * Undo the `border-style: none` reset that Normalize applies to images so that\n * our `border-{width}` utilities have the expected effect.\n *\n * The Normalize reset is unnecessary for us since we default the border-width\n * to 0 on all elements.\n *\n * https://github.com/tailwindcss/tailwindcss/issues/362\n */\n\nimg {\n  border-style: solid;\n}\n\ntextarea {\n  resize: vertical;\n}\n\ninput::placeholder,\ntextarea::placeholder {\n  opacity: 1;\n  color: theme('colors.gray.400', #a1a1aa);\n}\n\nbutton,\n[role=\"button\"] {\n  cursor: pointer;\n}\n\n/**\n * Override legacy focus reset from Normalize with modern Firefox focus styles.\n *\n * This is actually an improvement over the new defaults in Firefox in our testing,\n * as it triggers the better focus styles even for links, which still use a dotted\n * outline in Firefox by default.\n */\n \n:-moz-focusring {\n\toutline: auto;\n}\n\ntable {\n  border-collapse: collapse;\n}\n\nh1,\nh2,\nh3,\nh4,\nh5,\nh6 {\n  font-size: inherit;\n  font-weight: inherit;\n}\n\n/**\n * Reset links to optimize for opt-in styling instead of\n * opt-out.\n */\n\na {\n  color: inherit;\n  text-decoration: inherit;\n}\n\n/**\n * Reset form element properties that are easy to forget to\n * style explicitly so you don't inadvertently introduce\n * styles that deviate from your design system. These styles\n * supplement a partial reset that is already applied by\n * normalize.css.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  padding: 0;\n  line-height: inherit;\n  color: inherit;\n}\n\n/**\n * Use the configured 'mono' font family for elements that\n * are expected to be rendered with a monospace font, falling\n * back to the system monospace stack if there is no configured\n * 'mono' font family.\n */\n\npre,\ncode,\nkbd,\nsamp {\n  font-family: theme('fontFamily.mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace);\n}\n\n/**\n * 1. Make replaced elements `display: block` by default as that's\n *    the behavior you want almost all of the time. Inspired by\n *    CSS Remedy, with `svg` added as well.\n *\n *    https://github.com/mozdevs/cssremedy/issues/14\n * \n * 2. Add `vertical-align: middle` to align replaced elements more\n *    sensibly by default when overriding `display` by adding a\n *    utility like `inline`.\n *\n *    This can trigger a poorly considered linting error in some\n *    tools but is included by design.\n * \n *    https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210\n */\n\nimg,\nsvg,\nvideo,\ncanvas,\naudio,\niframe,\nembed,\nobject {\n  display: block; /* 1 */\n  vertical-align: middle; /* 2 */\n}\n\n/**\n * Constrain images and videos to the parent width and preserve\n * their intrinsic aspect ratio.\n *\n * https://github.com/mozdevs/cssremedy/issues/14\n */\n\nimg,\nvideo {\n  max-width: 100%;\n  height: auto;\n}\n\n/**\n * Ensure the default browser behavior of the `hidden` attribute.\n */\n\n[hidden] {\n  display: none;\n}\n",null],"sourceRoot":""}]);
+>>>>>>> 6850c324ad7db1c178e48a26b2e4f4f56f4d8792
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2514,33 +3071,6 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, "td.appt {\n  overflow: visible;\n}\n\n.color-primary {\n  color: #5b6ce2;\n}\n\n.appointment-menu {\n  background-color: #5b6ce2;\n  color: white;\n  position: absolute;\n  top: 0px;\n  right: 0;\n  padding: 1.5rem;\n  border-radius: 0.5rem;\n  border: 1px solid #d8ddff;\n  display: none;\n  z-index: 1500;\n  font-size: 12px;\n  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3),\n    0 10px 10px -5px rgba(0, 0, 0, 0.15);\n}\n\n.appointment-menu-wrapper.rx-synced::after {\n  content: '';\n  position: absolute;\n  z-index: 10;\n  top: -10px;\n  left: 10px;\n  width: 10px;\n  height: 10px;\n  opacity: 0.7;\n  /*background: green;*/\n  background-image: url(\"data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!-- Svg Vector Icons : http://www.onlinewebfonts.com/icon --%3E%3C!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'%3E%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 1000 1000' enable-background='new 0 0 1000 1000' xml:space='preserve'%3E%3Cmetadata%3E Svg Vector Icons : http://www.onlinewebfonts.com/icon %3C/metadata%3E%3Cg%3E%3Cg transform='translate(0.000000,512.000000) scale(0.100000,-0.100000)'%3E%3Cpath d='M990.8,1085.4v-3932.6h688.9h688.9v1464v1464h694.7h696.6L4682.3-1144c507.1-673.6,926.2-1236.3,930.1-1247.8c7.7-21-321.5-463.1-1552-2076.3L3823.1-4780h801.8h801.8l493.7,660.2c352.1,472.7,497.6,656.4,512.9,641.1c11.5-11.5,237.3-306.2,499.5-656.4l478.4-635.3l799.9-5.8c438.2-1.9,798,0,798,5.8c0,5.7-403.8,535.8-899.4,1176.9c-493.7,643-899.4,1176.9-899.4,1186.5c0,11.5,398,555,886,1211.3c488,654.5,893.7,1201.8,901.4,1215.2c11.5,17.2-143.5,23-748.3,23h-761.6L6952-665.6c-294.7-388.5-539.7-708.1-545.4-706.2c-13.4,0-1226.7,1582.6-1226.7,1597.9c0,7.6,76.5,32.5,170.3,55.5c746.3,189.5,1322.4,715.7,1552,1421.9c101.4,306.2,124.4,474.6,124.4,855.4c-1.9,384.7-34.5,591.3-143.5,903.3c-283.2,799.9-924.3,1320.4-1863.9,1511.8c-134,26.8-392.3,32.5-2089.8,38.3L990.8,5020V1085.4z M4770.4,3730.2c191.4-68.9,302.4-128.2,428.7-231.6c287.1-235.4,442.1-616.2,417.2-1016.2c-40.2-599-415.3-1023.8-1012.3-1146.3c-124.4-24.9-315.8-30.6-1192.2-30.6h-1043v1243.9v1245.8l1125.2-5.7l1123.3-5.7L4770.4,3730.2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\");\n}\n\n.appointment-menu.show {\n  display: block;\n}\n\n.appointment-menu a {\n  color: white !important;\n  text-decoration: underline;\n}\n\n.appointment-menu a:hover {\n  color: #d8ddff !important;\n}\n\n.appointment-menu ul {\n  padding: 0;\n  margin: 0;\n  list-style: none;\n}\n\n.appointment-menu ul li,\n.contactInfo > div {\n  margin: 1px 0;\n  color: white !important;\n}\n\n.appointment-menu-container {\n  position: absolute;\n  display: flex;\n  background-color: #5b6ce2;\n  padding: 1px 5px;\n  border: 1px solid #d8ddff;\n  top: -8px;\n  border-radius: 50%;\n  box-shadow: 0 3px 3px 2px rgba(0, 0, 0, 0.3);\n  left: 7.5px;\n}\n\n.appointment-menu-wrapper {\n  display: inline-block;\n  position: relative;\n  top: -5px;\n  cursor: pointer;\n}\n\n.appointment-menu-header {\n  background-color: white;\n  border-radius: 0.5rem;\n  padding: 5px 10px;\n  display: flex;\n  align-items: top;\n  margin-bottom: 5px;\n}\n\n.appointment-menu-heading {\n  margin: 0;\n  padding: 0;\n  margin-left: 5px;\n  font-size: 14px;\n}\n\n.appointment-menu-hr {\n  margin: 0;\n  padding: 0;\n  margin: 5px 0;\n  border: 0;\n  border-top: 1px solid rgba(255, 255, 255, 0.3);\n}\n\n.appointment-menu-subheading {\n  color: #d8ddff;\n  font-size: 12px;\n}\n\n.appointment-menu-close {\n  position: absolute;\n  top: 0;\n  right: 0;\n  font-size: 1.2rem;\n  padding: 0 5px;\n  color: white;\n}\n\n.appointment-checkbox-wrapper {\n  display: inline-block;\n  position: relative;\n  top: 1px;\n}\n\n.appointment-checkbox {\n  top: -8px;\n  left: -1px;\n  position: absolute;\n  padding: 1px 2.5px;\n  background-color: #5b6ce2;\n  border: 1px solid #d8ddff;\n  border-radius: 50%;\n  cursor: pointer;\n  font-size: 6px;\n}", "",{"version":3,"sources":["webpack://./modules/cortico/Appointments/AppointmentMenu.css"],"names":[],"mappings":"AAAA;EACE,iBAAiB;AACnB;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,yBAAyB;EACzB,YAAY;EACZ,kBAAkB;EAClB,QAAQ;EACR,QAAQ;EACR,eAAe;EACf,qBAAqB;EACrB,yBAAyB;EACzB,aAAa;EACb,aAAa;EACb,eAAe;EACf;wCACsC;AACxC;;AAEA;EACE,WAAW;EACX,kBAAkB;EAClB,WAAW;EACX,UAAU;EACV,UAAU;EACV,WAAW;EACX,YAAY;EACZ,YAAY;EACZ,qBAAqB;EACrB,8mDAA8mD;AAChnD;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,uBAAuB;EACvB,0BAA0B;AAC5B;;AAEA;EACE,yBAAyB;AAC3B;;AAEA;EACE,UAAU;EACV,SAAS;EACT,gBAAgB;AAClB;;AAEA;;EAEE,aAAa;EACb,uBAAuB;AACzB;;AAEA;EACE,kBAAkB;EAClB,aAAa;EACb,yBAAyB;EACzB,gBAAgB;EAChB,yBAAyB;EACzB,SAAS;EACT,kBAAkB;EAClB,4CAA4C;EAC5C,WAAW;AACb;;AAEA;EACE,qBAAqB;EACrB,kBAAkB;EAClB,SAAS;EACT,eAAe;AACjB;;AAEA;EACE,uBAAuB;EACvB,qBAAqB;EACrB,iBAAiB;EACjB,aAAa;EACb,gBAAgB;EAChB,kBAAkB;AACpB;;AAEA;EACE,SAAS;EACT,UAAU;EACV,gBAAgB;EAChB,eAAe;AACjB;;AAEA;EACE,SAAS;EACT,UAAU;EACV,aAAa;EACb,SAAS;EACT,8CAA8C;AAChD;;AAEA;EACE,cAAc;EACd,eAAe;AACjB;;AAEA;EACE,kBAAkB;EAClB,MAAM;EACN,QAAQ;EACR,iBAAiB;EACjB,cAAc;EACd,YAAY;AACd;;AAEA;EACE,qBAAqB;EACrB,kBAAkB;EAClB,QAAQ;AACV;;AAEA;EACE,SAAS;EACT,UAAU;EACV,kBAAkB;EAClB,kBAAkB;EAClB,yBAAyB;EACzB,yBAAyB;EACzB,kBAAkB;EAClB,eAAe;EACf,cAAc;AAChB","sourcesContent":["td.appt {\n  overflow: visible;\n}\n\n.color-primary {\n  color: #5b6ce2;\n}\n\n.appointment-menu {\n  background-color: #5b6ce2;\n  color: white;\n  position: absolute;\n  top: 0px;\n  right: 0;\n  padding: 1.5rem;\n  border-radius: 0.5rem;\n  border: 1px solid #d8ddff;\n  display: none;\n  z-index: 1500;\n  font-size: 12px;\n  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3),\n    0 10px 10px -5px rgba(0, 0, 0, 0.15);\n}\n\n.appointment-menu-wrapper.rx-synced::after {\n  content: '';\n  position: absolute;\n  z-index: 10;\n  top: -10px;\n  left: 10px;\n  width: 10px;\n  height: 10px;\n  opacity: 0.7;\n  /*background: green;*/\n  background-image: url(\"data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!-- Svg Vector Icons : http://www.onlinewebfonts.com/icon --%3E%3C!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'%3E%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 1000 1000' enable-background='new 0 0 1000 1000' xml:space='preserve'%3E%3Cmetadata%3E Svg Vector Icons : http://www.onlinewebfonts.com/icon %3C/metadata%3E%3Cg%3E%3Cg transform='translate(0.000000,512.000000) scale(0.100000,-0.100000)'%3E%3Cpath d='M990.8,1085.4v-3932.6h688.9h688.9v1464v1464h694.7h696.6L4682.3-1144c507.1-673.6,926.2-1236.3,930.1-1247.8c7.7-21-321.5-463.1-1552-2076.3L3823.1-4780h801.8h801.8l493.7,660.2c352.1,472.7,497.6,656.4,512.9,641.1c11.5-11.5,237.3-306.2,499.5-656.4l478.4-635.3l799.9-5.8c438.2-1.9,798,0,798,5.8c0,5.7-403.8,535.8-899.4,1176.9c-493.7,643-899.4,1176.9-899.4,1186.5c0,11.5,398,555,886,1211.3c488,654.5,893.7,1201.8,901.4,1215.2c11.5,17.2-143.5,23-748.3,23h-761.6L6952-665.6c-294.7-388.5-539.7-708.1-545.4-706.2c-13.4,0-1226.7,1582.6-1226.7,1597.9c0,7.6,76.5,32.5,170.3,55.5c746.3,189.5,1322.4,715.7,1552,1421.9c101.4,306.2,124.4,474.6,124.4,855.4c-1.9,384.7-34.5,591.3-143.5,903.3c-283.2,799.9-924.3,1320.4-1863.9,1511.8c-134,26.8-392.3,32.5-2089.8,38.3L990.8,5020V1085.4z M4770.4,3730.2c191.4-68.9,302.4-128.2,428.7-231.6c287.1-235.4,442.1-616.2,417.2-1016.2c-40.2-599-415.3-1023.8-1012.3-1146.3c-124.4-24.9-315.8-30.6-1192.2-30.6h-1043v1243.9v1245.8l1125.2-5.7l1123.3-5.7L4770.4,3730.2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\");\n}\n\n.appointment-menu.show {\n  display: block;\n}\n\n.appointment-menu a {\n  color: white !important;\n  text-decoration: underline;\n}\n\n.appointment-menu a:hover {\n  color: #d8ddff !important;\n}\n\n.appointment-menu ul {\n  padding: 0;\n  margin: 0;\n  list-style: none;\n}\n\n.appointment-menu ul li,\n.contactInfo > div {\n  margin: 1px 0;\n  color: white !important;\n}\n\n.appointment-menu-container {\n  position: absolute;\n  display: flex;\n  background-color: #5b6ce2;\n  padding: 1px 5px;\n  border: 1px solid #d8ddff;\n  top: -8px;\n  border-radius: 50%;\n  box-shadow: 0 3px 3px 2px rgba(0, 0, 0, 0.3);\n  left: 7.5px;\n}\n\n.appointment-menu-wrapper {\n  display: inline-block;\n  position: relative;\n  top: -5px;\n  cursor: pointer;\n}\n\n.appointment-menu-header {\n  background-color: white;\n  border-radius: 0.5rem;\n  padding: 5px 10px;\n  display: flex;\n  align-items: top;\n  margin-bottom: 5px;\n}\n\n.appointment-menu-heading {\n  margin: 0;\n  padding: 0;\n  margin-left: 5px;\n  font-size: 14px;\n}\n\n.appointment-menu-hr {\n  margin: 0;\n  padding: 0;\n  margin: 5px 0;\n  border: 0;\n  border-top: 1px solid rgba(255, 255, 255, 0.3);\n}\n\n.appointment-menu-subheading {\n  color: #d8ddff;\n  font-size: 12px;\n}\n\n.appointment-menu-close {\n  position: absolute;\n  top: 0;\n  right: 0;\n  font-size: 1.2rem;\n  padding: 0 5px;\n  color: white;\n}\n\n.appointment-checkbox-wrapper {\n  display: inline-block;\n  position: relative;\n  top: 1px;\n}\n\n.appointment-checkbox {\n  top: -8px;\n  left: -1px;\n  position: absolute;\n  padding: 1px 2.5px;\n  background-color: #5b6ce2;\n  border: 1px solid #d8ddff;\n  border-radius: 50%;\n  cursor: pointer;\n  font-size: 6px;\n}"],"sourceRoot":""}]);
-// Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].use[2]!./modules/cortico/Dashboard/Dashboard.css":
-/*!*************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].use[2]!./modules/cortico/Dashboard/Dashboard.css ***!
-  \*************************************************************************************************************************************************************/
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/cssWithMappingToString.js */ "./node_modules/css-loader/dist/runtime/cssWithMappingToString.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
-// Imports
-
-
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, ".dashboard-container {\n    min-height: 800px;\n    overflow: auto\n}\n", "",{"version":3,"sources":["<no source>"],"names":[],"mappings":"AAAA;IAAA,kBAAA;IAAA;CAAA","sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2676,6 +3206,10 @@ module.exports = function cssWithMappingToString(item) {
       content = _item[1],
       cssMapping = _item[3];
 
+  if (!cssMapping) {
+    return content;
+  }
+
   if (typeof btoa === "function") {
     // eslint-disable-next-line no-undef
     var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(cssMapping))));
@@ -2698,7 +3232,7 @@ module.exports = function cssWithMappingToString(item) {
   \*****************************************/
 /***/ (function(module) {
 
-!function(t,e){ true?module.exports=e():0}(this,(function(){"use strict";var t=1e3,e=6e4,n=36e5,r="millisecond",i="second",s="minute",u="hour",a="day",o="week",f="month",h="quarter",c="year",d="date",$="Invalid Date",l=/^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[^0-9]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/,y=/\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g,M={name:"en",weekdays:"Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"),months:"January_February_March_April_May_June_July_August_September_October_November_December".split("_")},m=function(t,e,n){var r=String(t);return!r||r.length>=e?t:""+Array(e+1-r.length).join(n)+t},g={s:m,z:function(t){var e=-t.utcOffset(),n=Math.abs(e),r=Math.floor(n/60),i=n%60;return(e<=0?"+":"-")+m(r,2,"0")+":"+m(i,2,"0")},m:function t(e,n){if(e.date()<n.date())return-t(n,e);var r=12*(n.year()-e.year())+(n.month()-e.month()),i=e.clone().add(r,f),s=n-i<0,u=e.clone().add(r+(s?-1:1),f);return+(-(r+(n-i)/(s?i-u:u-i))||0)},a:function(t){return t<0?Math.ceil(t)||0:Math.floor(t)},p:function(t){return{M:f,y:c,w:o,d:a,D:d,h:u,m:s,s:i,ms:r,Q:h}[t]||String(t||"").toLowerCase().replace(/s$/,"")},u:function(t){return void 0===t}},D="en",v={};v[D]=M;var p=function(t){return t instanceof _},S=function(t,e,n){var r;if(!t)return D;if("string"==typeof t)v[t]&&(r=t),e&&(v[t]=e,r=t);else{var i=t.name;v[i]=t,r=i}return!n&&r&&(D=r),r||!n&&D},w=function(t,e){if(p(t))return t.clone();var n="object"==typeof e?e:{};return n.date=t,n.args=arguments,new _(n)},O=g;O.l=S,O.i=p,O.w=function(t,e){return w(t,{locale:e.$L,utc:e.$u,x:e.$x,$offset:e.$offset})};var _=function(){function M(t){this.$L=S(t.locale,null,!0),this.parse(t)}var m=M.prototype;return m.parse=function(t){this.$d=function(t){var e=t.date,n=t.utc;if(null===e)return new Date(NaN);if(O.u(e))return new Date;if(e instanceof Date)return new Date(e);if("string"==typeof e&&!/Z$/i.test(e)){var r=e.match(l);if(r){var i=r[2]-1||0,s=(r[7]||"0").substring(0,3);return n?new Date(Date.UTC(r[1],i,r[3]||1,r[4]||0,r[5]||0,r[6]||0,s)):new Date(r[1],i,r[3]||1,r[4]||0,r[5]||0,r[6]||0,s)}}return new Date(e)}(t),this.$x=t.x||{},this.init()},m.init=function(){var t=this.$d;this.$y=t.getFullYear(),this.$M=t.getMonth(),this.$D=t.getDate(),this.$W=t.getDay(),this.$H=t.getHours(),this.$m=t.getMinutes(),this.$s=t.getSeconds(),this.$ms=t.getMilliseconds()},m.$utils=function(){return O},m.isValid=function(){return!(this.$d.toString()===$)},m.isSame=function(t,e){var n=w(t);return this.startOf(e)<=n&&n<=this.endOf(e)},m.isAfter=function(t,e){return w(t)<this.startOf(e)},m.isBefore=function(t,e){return this.endOf(e)<w(t)},m.$g=function(t,e,n){return O.u(t)?this[e]:this.set(n,t)},m.unix=function(){return Math.floor(this.valueOf()/1e3)},m.valueOf=function(){return this.$d.getTime()},m.startOf=function(t,e){var n=this,r=!!O.u(e)||e,h=O.p(t),$=function(t,e){var i=O.w(n.$u?Date.UTC(n.$y,e,t):new Date(n.$y,e,t),n);return r?i:i.endOf(a)},l=function(t,e){return O.w(n.toDate()[t].apply(n.toDate("s"),(r?[0,0,0,0]:[23,59,59,999]).slice(e)),n)},y=this.$W,M=this.$M,m=this.$D,g="set"+(this.$u?"UTC":"");switch(h){case c:return r?$(1,0):$(31,11);case f:return r?$(1,M):$(0,M+1);case o:var D=this.$locale().weekStart||0,v=(y<D?y+7:y)-D;return $(r?m-v:m+(6-v),M);case a:case d:return l(g+"Hours",0);case u:return l(g+"Minutes",1);case s:return l(g+"Seconds",2);case i:return l(g+"Milliseconds",3);default:return this.clone()}},m.endOf=function(t){return this.startOf(t,!1)},m.$set=function(t,e){var n,o=O.p(t),h="set"+(this.$u?"UTC":""),$=(n={},n[a]=h+"Date",n[d]=h+"Date",n[f]=h+"Month",n[c]=h+"FullYear",n[u]=h+"Hours",n[s]=h+"Minutes",n[i]=h+"Seconds",n[r]=h+"Milliseconds",n)[o],l=o===a?this.$D+(e-this.$W):e;if(o===f||o===c){var y=this.clone().set(d,1);y.$d[$](l),y.init(),this.$d=y.set(d,Math.min(this.$D,y.daysInMonth())).$d}else $&&this.$d[$](l);return this.init(),this},m.set=function(t,e){return this.clone().$set(t,e)},m.get=function(t){return this[O.p(t)]()},m.add=function(r,h){var d,$=this;r=Number(r);var l=O.p(h),y=function(t){var e=w($);return O.w(e.date(e.date()+Math.round(t*r)),$)};if(l===f)return this.set(f,this.$M+r);if(l===c)return this.set(c,this.$y+r);if(l===a)return y(1);if(l===o)return y(7);var M=(d={},d[s]=e,d[u]=n,d[i]=t,d)[l]||1,m=this.$d.getTime()+r*M;return O.w(m,this)},m.subtract=function(t,e){return this.add(-1*t,e)},m.format=function(t){var e=this;if(!this.isValid())return $;var n=t||"YYYY-MM-DDTHH:mm:ssZ",r=O.z(this),i=this.$locale(),s=this.$H,u=this.$m,a=this.$M,o=i.weekdays,f=i.months,h=function(t,r,i,s){return t&&(t[r]||t(e,n))||i[r].substr(0,s)},c=function(t){return O.s(s%12||12,t,"0")},d=i.meridiem||function(t,e,n){var r=t<12?"AM":"PM";return n?r.toLowerCase():r},l={YY:String(this.$y).slice(-2),YYYY:this.$y,M:a+1,MM:O.s(a+1,2,"0"),MMM:h(i.monthsShort,a,f,3),MMMM:h(f,a),D:this.$D,DD:O.s(this.$D,2,"0"),d:String(this.$W),dd:h(i.weekdaysMin,this.$W,o,2),ddd:h(i.weekdaysShort,this.$W,o,3),dddd:o[this.$W],H:String(s),HH:O.s(s,2,"0"),h:c(1),hh:c(2),a:d(s,u,!0),A:d(s,u,!1),m:String(u),mm:O.s(u,2,"0"),s:String(this.$s),ss:O.s(this.$s,2,"0"),SSS:O.s(this.$ms,3,"0"),Z:r};return n.replace(y,(function(t,e){return e||l[t]||r.replace(":","")}))},m.utcOffset=function(){return 15*-Math.round(this.$d.getTimezoneOffset()/15)},m.diff=function(r,d,$){var l,y=O.p(d),M=w(r),m=(M.utcOffset()-this.utcOffset())*e,g=this-M,D=O.m(this,M);return D=(l={},l[c]=D/12,l[f]=D,l[h]=D/3,l[o]=(g-m)/6048e5,l[a]=(g-m)/864e5,l[u]=g/n,l[s]=g/e,l[i]=g/t,l)[y]||g,$?D:O.a(D)},m.daysInMonth=function(){return this.endOf(f).$D},m.$locale=function(){return v[this.$L]},m.locale=function(t,e){if(!t)return this.$L;var n=this.clone(),r=S(t,e,!0);return r&&(n.$L=r),n},m.clone=function(){return O.w(this.$d,this)},m.toDate=function(){return new Date(this.valueOf())},m.toJSON=function(){return this.isValid()?this.toISOString():null},m.toISOString=function(){return this.$d.toISOString()},m.toString=function(){return this.$d.toUTCString()},M}(),b=_.prototype;return w.prototype=b,[["$ms",r],["$s",i],["$m",s],["$H",u],["$W",a],["$M",f],["$y",c],["$D",d]].forEach((function(t){b[t[1]]=function(e){return this.$g(e,t[0],t[1])}})),w.extend=function(t,e){return t.$i||(t(e,_,w),t.$i=!0),w},w.locale=S,w.isDayjs=p,w.unix=function(t){return w(1e3*t)},w.en=v[D],w.Ls=v,w.p={},w}));
+!function(t,e){ true?module.exports=e():0}(this,(function(){"use strict";var t=1e3,e=6e4,n=36e5,r="millisecond",i="second",s="minute",u="hour",a="day",o="week",f="month",h="quarter",c="year",d="date",$="Invalid Date",l=/^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[Tt\s]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/,y=/\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g,M={name:"en",weekdays:"Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"),months:"January_February_March_April_May_June_July_August_September_October_November_December".split("_")},m=function(t,e,n){var r=String(t);return!r||r.length>=e?t:""+Array(e+1-r.length).join(n)+t},g={s:m,z:function(t){var e=-t.utcOffset(),n=Math.abs(e),r=Math.floor(n/60),i=n%60;return(e<=0?"+":"-")+m(r,2,"0")+":"+m(i,2,"0")},m:function t(e,n){if(e.date()<n.date())return-t(n,e);var r=12*(n.year()-e.year())+(n.month()-e.month()),i=e.clone().add(r,f),s=n-i<0,u=e.clone().add(r+(s?-1:1),f);return+(-(r+(n-i)/(s?i-u:u-i))||0)},a:function(t){return t<0?Math.ceil(t)||0:Math.floor(t)},p:function(t){return{M:f,y:c,w:o,d:a,D:d,h:u,m:s,s:i,ms:r,Q:h}[t]||String(t||"").toLowerCase().replace(/s$/,"")},u:function(t){return void 0===t}},D="en",v={};v[D]=M;var p=function(t){return t instanceof _},S=function(t,e,n){var r;if(!t)return D;if("string"==typeof t)v[t]&&(r=t),e&&(v[t]=e,r=t);else{var i=t.name;v[i]=t,r=i}return!n&&r&&(D=r),r||!n&&D},w=function(t,e){if(p(t))return t.clone();var n="object"==typeof e?e:{};return n.date=t,n.args=arguments,new _(n)},O=g;O.l=S,O.i=p,O.w=function(t,e){return w(t,{locale:e.$L,utc:e.$u,x:e.$x,$offset:e.$offset})};var _=function(){function M(t){this.$L=S(t.locale,null,!0),this.parse(t)}var m=M.prototype;return m.parse=function(t){this.$d=function(t){var e=t.date,n=t.utc;if(null===e)return new Date(NaN);if(O.u(e))return new Date;if(e instanceof Date)return new Date(e);if("string"==typeof e&&!/Z$/i.test(e)){var r=e.match(l);if(r){var i=r[2]-1||0,s=(r[7]||"0").substring(0,3);return n?new Date(Date.UTC(r[1],i,r[3]||1,r[4]||0,r[5]||0,r[6]||0,s)):new Date(r[1],i,r[3]||1,r[4]||0,r[5]||0,r[6]||0,s)}}return new Date(e)}(t),this.$x=t.x||{},this.init()},m.init=function(){var t=this.$d;this.$y=t.getFullYear(),this.$M=t.getMonth(),this.$D=t.getDate(),this.$W=t.getDay(),this.$H=t.getHours(),this.$m=t.getMinutes(),this.$s=t.getSeconds(),this.$ms=t.getMilliseconds()},m.$utils=function(){return O},m.isValid=function(){return!(this.$d.toString()===$)},m.isSame=function(t,e){var n=w(t);return this.startOf(e)<=n&&n<=this.endOf(e)},m.isAfter=function(t,e){return w(t)<this.startOf(e)},m.isBefore=function(t,e){return this.endOf(e)<w(t)},m.$g=function(t,e,n){return O.u(t)?this[e]:this.set(n,t)},m.unix=function(){return Math.floor(this.valueOf()/1e3)},m.valueOf=function(){return this.$d.getTime()},m.startOf=function(t,e){var n=this,r=!!O.u(e)||e,h=O.p(t),$=function(t,e){var i=O.w(n.$u?Date.UTC(n.$y,e,t):new Date(n.$y,e,t),n);return r?i:i.endOf(a)},l=function(t,e){return O.w(n.toDate()[t].apply(n.toDate("s"),(r?[0,0,0,0]:[23,59,59,999]).slice(e)),n)},y=this.$W,M=this.$M,m=this.$D,g="set"+(this.$u?"UTC":"");switch(h){case c:return r?$(1,0):$(31,11);case f:return r?$(1,M):$(0,M+1);case o:var D=this.$locale().weekStart||0,v=(y<D?y+7:y)-D;return $(r?m-v:m+(6-v),M);case a:case d:return l(g+"Hours",0);case u:return l(g+"Minutes",1);case s:return l(g+"Seconds",2);case i:return l(g+"Milliseconds",3);default:return this.clone()}},m.endOf=function(t){return this.startOf(t,!1)},m.$set=function(t,e){var n,o=O.p(t),h="set"+(this.$u?"UTC":""),$=(n={},n[a]=h+"Date",n[d]=h+"Date",n[f]=h+"Month",n[c]=h+"FullYear",n[u]=h+"Hours",n[s]=h+"Minutes",n[i]=h+"Seconds",n[r]=h+"Milliseconds",n)[o],l=o===a?this.$D+(e-this.$W):e;if(o===f||o===c){var y=this.clone().set(d,1);y.$d[$](l),y.init(),this.$d=y.set(d,Math.min(this.$D,y.daysInMonth())).$d}else $&&this.$d[$](l);return this.init(),this},m.set=function(t,e){return this.clone().$set(t,e)},m.get=function(t){return this[O.p(t)]()},m.add=function(r,h){var d,$=this;r=Number(r);var l=O.p(h),y=function(t){var e=w($);return O.w(e.date(e.date()+Math.round(t*r)),$)};if(l===f)return this.set(f,this.$M+r);if(l===c)return this.set(c,this.$y+r);if(l===a)return y(1);if(l===o)return y(7);var M=(d={},d[s]=e,d[u]=n,d[i]=t,d)[l]||1,m=this.$d.getTime()+r*M;return O.w(m,this)},m.subtract=function(t,e){return this.add(-1*t,e)},m.format=function(t){var e=this,n=this.$locale();if(!this.isValid())return n.invalidDate||$;var r=t||"YYYY-MM-DDTHH:mm:ssZ",i=O.z(this),s=this.$H,u=this.$m,a=this.$M,o=n.weekdays,f=n.months,h=function(t,n,i,s){return t&&(t[n]||t(e,r))||i[n].substr(0,s)},c=function(t){return O.s(s%12||12,t,"0")},d=n.meridiem||function(t,e,n){var r=t<12?"AM":"PM";return n?r.toLowerCase():r},l={YY:String(this.$y).slice(-2),YYYY:this.$y,M:a+1,MM:O.s(a+1,2,"0"),MMM:h(n.monthsShort,a,f,3),MMMM:h(f,a),D:this.$D,DD:O.s(this.$D,2,"0"),d:String(this.$W),dd:h(n.weekdaysMin,this.$W,o,2),ddd:h(n.weekdaysShort,this.$W,o,3),dddd:o[this.$W],H:String(s),HH:O.s(s,2,"0"),h:c(1),hh:c(2),a:d(s,u,!0),A:d(s,u,!1),m:String(u),mm:O.s(u,2,"0"),s:String(this.$s),ss:O.s(this.$s,2,"0"),SSS:O.s(this.$ms,3,"0"),Z:i};return r.replace(y,(function(t,e){return e||l[t]||i.replace(":","")}))},m.utcOffset=function(){return 15*-Math.round(this.$d.getTimezoneOffset()/15)},m.diff=function(r,d,$){var l,y=O.p(d),M=w(r),m=(M.utcOffset()-this.utcOffset())*e,g=this-M,D=O.m(this,M);return D=(l={},l[c]=D/12,l[f]=D,l[h]=D/3,l[o]=(g-m)/6048e5,l[a]=(g-m)/864e5,l[u]=g/n,l[s]=g/e,l[i]=g/t,l)[y]||g,$?D:O.a(D)},m.daysInMonth=function(){return this.endOf(f).$D},m.$locale=function(){return v[this.$L]},m.locale=function(t,e){if(!t)return this.$L;var n=this.clone(),r=S(t,e,!0);return r&&(n.$L=r),n},m.clone=function(){return O.w(this.$d,this)},m.toDate=function(){return new Date(this.valueOf())},m.toJSON=function(){return this.isValid()?this.toISOString():null},m.toISOString=function(){return this.$d.toISOString()},m.toString=function(){return this.$d.toUTCString()},M}(),b=_.prototype;return w.prototype=b,[["$ms",r],["$s",i],["$m",s],["$H",u],["$W",a],["$M",f],["$y",c],["$D",d]].forEach((function(t){b[t[1]]=function(e){return this.$g(e,t[0],t[1])}})),w.extend=function(t,e){return t.$i||(t(e,_,w),t.$i=!0),w},w.locale=S,w.isDayjs=p,w.unix=function(t){return w(1e3*t)},w.en=v[D],w.Ls=v,w.p={},w}));
 
 /***/ }),
 
@@ -2878,6 +3412,61 @@ function ArgumentError(message) {
 
 /***/ }),
 
+/***/ "./node_modules/preact/compat/dist/compat.module.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/preact/compat/dist/compat.module.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "useCallback": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useCallback),
+/* harmony export */   "useContext": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useContext),
+/* harmony export */   "useDebugValue": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useDebugValue),
+/* harmony export */   "useEffect": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useEffect),
+/* harmony export */   "useErrorBoundary": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useErrorBoundary),
+/* harmony export */   "useImperativeHandle": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useImperativeHandle),
+/* harmony export */   "useLayoutEffect": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useLayoutEffect),
+/* harmony export */   "useMemo": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useMemo),
+/* harmony export */   "useReducer": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useReducer),
+/* harmony export */   "useRef": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useRef),
+/* harmony export */   "useState": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useState),
+/* harmony export */   "createElement": () => (/* reexport safe */ preact__WEBPACK_IMPORTED_MODULE_1__.createElement),
+/* harmony export */   "createContext": () => (/* reexport safe */ preact__WEBPACK_IMPORTED_MODULE_1__.createContext),
+/* harmony export */   "createRef": () => (/* reexport safe */ preact__WEBPACK_IMPORTED_MODULE_1__.createRef),
+/* harmony export */   "Fragment": () => (/* reexport safe */ preact__WEBPACK_IMPORTED_MODULE_1__.Fragment),
+/* harmony export */   "Component": () => (/* reexport safe */ preact__WEBPACK_IMPORTED_MODULE_1__.Component),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "version": () => (/* binding */ nn),
+/* harmony export */   "Children": () => (/* binding */ k),
+/* harmony export */   "render": () => (/* binding */ B),
+/* harmony export */   "hydrate": () => (/* binding */ H),
+/* harmony export */   "unmountComponentAtNode": () => (/* binding */ un),
+/* harmony export */   "createPortal": () => (/* binding */ W),
+/* harmony export */   "createFactory": () => (/* binding */ tn),
+/* harmony export */   "cloneElement": () => (/* binding */ rn),
+/* harmony export */   "isValidElement": () => (/* binding */ en),
+/* harmony export */   "findDOMNode": () => (/* binding */ on),
+/* harmony export */   "PureComponent": () => (/* binding */ E),
+/* harmony export */   "memo": () => (/* binding */ g),
+/* harmony export */   "forwardRef": () => (/* binding */ x),
+/* harmony export */   "flushSync": () => (/* binding */ cn),
+/* harmony export */   "unstable_batchedUpdates": () => (/* binding */ ln),
+/* harmony export */   "StrictMode": () => (/* binding */ fn),
+/* harmony export */   "Suspense": () => (/* binding */ L),
+/* harmony export */   "SuspenseList": () => (/* binding */ M),
+/* harmony export */   "lazy": () => (/* binding */ F),
+/* harmony export */   "__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED": () => (/* binding */ X)
+/* harmony export */ });
+/* harmony import */ var preact_hooks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact/hooks */ "./node_modules/preact/hooks/dist/hooks.module.js");
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+function S(n,t){for(var e in t)n[e]=t[e];return n}function C(n,t){for(var e in n)if("__source"!==e&&!(e in t))return!0;for(var r in t)if("__source"!==r&&n[r]!==t[r])return!0;return!1}function E(n){this.props=n}function g(n,t){function e(n){var e=this.props.ref,r=e==n.ref;return!r&&e&&(e.call?e(null):e.current=null),t?!t(this.props,n)||!r:C(this.props,n)}function r(t){return this.shouldComponentUpdate=e,(0,preact__WEBPACK_IMPORTED_MODULE_1__.createElement)(n,t)}return r.displayName="Memo("+(n.displayName||n.name)+")",r.prototype.isReactComponent=!0,r.__f=!0,r}(E.prototype=new preact__WEBPACK_IMPORTED_MODULE_1__.Component).isPureReactComponent=!0,E.prototype.shouldComponentUpdate=function(n,t){return C(this.props,n)||C(this.state,t)};var w=preact__WEBPACK_IMPORTED_MODULE_1__.options.__b;preact__WEBPACK_IMPORTED_MODULE_1__.options.__b=function(n){n.type&&n.type.__f&&n.ref&&(n.props.ref=n.ref,n.ref=null),w&&w(n)};var R="undefined"!=typeof Symbol&&Symbol.for&&Symbol.for("react.forward_ref")||3911;function x(n){function t(t,e){var r=S({},t);return delete r.ref,n(r,(e=t.ref||e)&&("object"!=typeof e||"current"in e)?e:null)}return t.$$typeof=R,t.render=t,t.prototype.isReactComponent=t.__f=!0,t.displayName="ForwardRef("+(n.displayName||n.name)+")",t}var N=function(n,t){return null==n?null:(0,preact__WEBPACK_IMPORTED_MODULE_1__.toChildArray)((0,preact__WEBPACK_IMPORTED_MODULE_1__.toChildArray)(n).map(t))},k={map:N,forEach:N,count:function(n){return n?(0,preact__WEBPACK_IMPORTED_MODULE_1__.toChildArray)(n).length:0},only:function(n){var t=(0,preact__WEBPACK_IMPORTED_MODULE_1__.toChildArray)(n);if(1!==t.length)throw"Children.only";return t[0]},toArray:preact__WEBPACK_IMPORTED_MODULE_1__.toChildArray},A=preact__WEBPACK_IMPORTED_MODULE_1__.options.__e;preact__WEBPACK_IMPORTED_MODULE_1__.options.__e=function(n,t,e){if(n.then)for(var r,u=t;u=u.__;)if((r=u.__c)&&r.__c)return null==t.__e&&(t.__e=e.__e,t.__k=e.__k),r.__c(n,t);A(n,t,e)};var O=preact__WEBPACK_IMPORTED_MODULE_1__.options.unmount;function L(){this.__u=0,this.t=null,this.__b=null}function U(n){var t=n.__.__c;return t&&t.__e&&t.__e(n)}function F(n){var t,e,r;function u(u){if(t||(t=n()).then(function(n){e=n.default||n},function(n){r=n}),r)throw r;if(!e)throw t;return (0,preact__WEBPACK_IMPORTED_MODULE_1__.createElement)(e,u)}return u.displayName="Lazy",u.__f=!0,u}function M(){this.u=null,this.o=null}preact__WEBPACK_IMPORTED_MODULE_1__.options.unmount=function(n){var t=n.__c;t&&t.__R&&t.__R(),t&&!0===n.__h&&(n.type=null),O&&O(n)},(L.prototype=new preact__WEBPACK_IMPORTED_MODULE_1__.Component).__c=function(n,t){var e=t.__c,r=this;null==r.t&&(r.t=[]),r.t.push(e);var u=U(r.__v),o=!1,i=function(){o||(o=!0,e.__R=null,u?u(l):l())};e.__R=i;var l=function(){if(!--r.__u){if(r.state.__e){var n=r.state.__e;r.__v.__k[0]=function n(t,e,r){return t&&(t.__v=null,t.__k=t.__k&&t.__k.map(function(t){return n(t,e,r)}),t.__c&&t.__c.__P===e&&(t.__e&&r.insertBefore(t.__e,t.__d),t.__c.__e=!0,t.__c.__P=r)),t}(n,n.__c.__P,n.__c.__O)}var t;for(r.setState({__e:r.__b=null});t=r.t.pop();)t.forceUpdate()}},c=!0===t.__h;r.__u++||c||r.setState({__e:r.__b=r.__v.__k[0]}),n.then(i,i)},L.prototype.componentWillUnmount=function(){this.t=[]},L.prototype.render=function(n,t){if(this.__b){if(this.__v.__k){var e=document.createElement("div"),r=this.__v.__k[0].__c;this.__v.__k[0]=function n(t,e,r){return t&&(t.__c&&t.__c.__H&&(t.__c.__H.__.forEach(function(n){"function"==typeof n.__c&&n.__c()}),t.__c.__H=null),null!=(t=S({},t)).__c&&(t.__c.__P===r&&(t.__c.__P=e),t.__c=null),t.__k=t.__k&&t.__k.map(function(t){return n(t,e,r)})),t}(this.__b,e,r.__O=r.__P)}this.__b=null}var u=t.__e&&(0,preact__WEBPACK_IMPORTED_MODULE_1__.createElement)(preact__WEBPACK_IMPORTED_MODULE_1__.Fragment,null,n.fallback);return u&&(u.__h=null),[(0,preact__WEBPACK_IMPORTED_MODULE_1__.createElement)(preact__WEBPACK_IMPORTED_MODULE_1__.Fragment,null,t.__e?null:n.children),u]};var T=function(n,t,e){if(++e[1]===e[0]&&n.o.delete(t),n.props.revealOrder&&("t"!==n.props.revealOrder[0]||!n.o.size))for(e=n.u;e;){for(;e.length>3;)e.pop()();if(e[1]<e[0])break;n.u=e=e[2]}};function D(n){return this.getChildContext=function(){return n.context},n.children}function I(n){var t=this,e=n.i;t.componentWillUnmount=function(){(0,preact__WEBPACK_IMPORTED_MODULE_1__.render)(null,t.l),t.l=null,t.i=null},t.i&&t.i!==e&&t.componentWillUnmount(),n.__v?(t.l||(t.i=e,t.l={nodeType:1,parentNode:e,childNodes:[],appendChild:function(n){this.childNodes.push(n),t.i.appendChild(n)},insertBefore:function(n,e){this.childNodes.push(n),t.i.appendChild(n)},removeChild:function(n){this.childNodes.splice(this.childNodes.indexOf(n)>>>1,1),t.i.removeChild(n)}}),(0,preact__WEBPACK_IMPORTED_MODULE_1__.render)((0,preact__WEBPACK_IMPORTED_MODULE_1__.createElement)(D,{context:t.context},n.__v),t.l)):t.l&&t.componentWillUnmount()}function W(n,t){return (0,preact__WEBPACK_IMPORTED_MODULE_1__.createElement)(I,{__v:n,i:t})}(M.prototype=new preact__WEBPACK_IMPORTED_MODULE_1__.Component).__e=function(n){var t=this,e=U(t.__v),r=t.o.get(n);return r[0]++,function(u){var o=function(){t.props.revealOrder?(r.push(u),T(t,n,r)):u()};e?e(o):o()}},M.prototype.render=function(n){this.u=null,this.o=new Map;var t=(0,preact__WEBPACK_IMPORTED_MODULE_1__.toChildArray)(n.children);n.revealOrder&&"b"===n.revealOrder[0]&&t.reverse();for(var e=t.length;e--;)this.o.set(t[e],this.u=[1,0,this.u]);return n.children},M.prototype.componentDidUpdate=M.prototype.componentDidMount=function(){var n=this;this.o.forEach(function(t,e){T(n,e,t)})};var j="undefined"!=typeof Symbol&&Symbol.for&&Symbol.for("react.element")||60103,P=/^(?:accent|alignment|arabic|baseline|cap|clip(?!PathU)|color|dominant|fill|flood|font|glyph(?!R)|horiz|marker(?!H|W|U)|overline|paint|stop|strikethrough|stroke|text(?!L)|underline|unicode|units|v|vector|vert|word|writing|x(?!C))[A-Z]/,V="undefined"!=typeof document,z=function(n){return("undefined"!=typeof Symbol&&"symbol"==typeof Symbol()?/fil|che|rad/i:/fil|che|ra/i).test(n)};function B(n,t,e){return null==t.__k&&(t.textContent=""),(0,preact__WEBPACK_IMPORTED_MODULE_1__.render)(n,t),"function"==typeof e&&e(),n?n.__c:null}function H(n,t,e){return (0,preact__WEBPACK_IMPORTED_MODULE_1__.hydrate)(n,t),"function"==typeof e&&e(),n?n.__c:null}preact__WEBPACK_IMPORTED_MODULE_1__.Component.prototype.isReactComponent={},["componentWillMount","componentWillReceiveProps","componentWillUpdate"].forEach(function(n){Object.defineProperty(preact__WEBPACK_IMPORTED_MODULE_1__.Component.prototype,n,{configurable:!0,get:function(){return this["UNSAFE_"+n]},set:function(t){Object.defineProperty(this,n,{configurable:!0,writable:!0,value:t})}})});var Z=preact__WEBPACK_IMPORTED_MODULE_1__.options.event;function Y(){}function $(){return this.cancelBubble}function q(){return this.defaultPrevented}preact__WEBPACK_IMPORTED_MODULE_1__.options.event=function(n){return Z&&(n=Z(n)),n.persist=Y,n.isPropagationStopped=$,n.isDefaultPrevented=q,n.nativeEvent=n};var G,J={configurable:!0,get:function(){return this.class}},K=preact__WEBPACK_IMPORTED_MODULE_1__.options.vnode;preact__WEBPACK_IMPORTED_MODULE_1__.options.vnode=function(n){var t=n.type,e=n.props,r=e;if("string"==typeof t){var u=-1===t.indexOf("-");for(var o in r={},e){var i=e[o];V&&"children"===o&&"noscript"===t||"value"===o&&"defaultValue"in e&&null==i||("defaultValue"===o&&"value"in e&&null==e.value?o="value":"download"===o&&!0===i?i="":/ondoubleclick/i.test(o)?o="ondblclick":/^onchange(textarea|input)/i.test(o+t)&&!z(e.type)?o="oninput":/^on(Ani|Tra|Tou|BeforeInp)/.test(o)?o=o.toLowerCase():u&&P.test(o)?o=o.replace(/[A-Z0-9]/,"-$&").toLowerCase():null===i&&(i=void 0),r[o]=i)}"select"==t&&r.multiple&&Array.isArray(r.value)&&(r.value=(0,preact__WEBPACK_IMPORTED_MODULE_1__.toChildArray)(e.children).forEach(function(n){n.props.selected=-1!=r.value.indexOf(n.props.value)})),"select"==t&&null!=r.defaultValue&&(r.value=(0,preact__WEBPACK_IMPORTED_MODULE_1__.toChildArray)(e.children).forEach(function(n){n.props.selected=r.multiple?-1!=r.defaultValue.indexOf(n.props.value):r.defaultValue==n.props.value})),n.props=r}t&&e.class!=e.className&&(J.enumerable="className"in e,null!=e.className&&(r.class=e.className),Object.defineProperty(r,"className",J)),n.$$typeof=j,K&&K(n)};var Q=preact__WEBPACK_IMPORTED_MODULE_1__.options.__r;preact__WEBPACK_IMPORTED_MODULE_1__.options.__r=function(n){Q&&Q(n),G=n.__c};var X={ReactCurrentDispatcher:{current:{readContext:function(n){return G.__n[n.__c].props.value}}}},nn="17.0.2";function tn(n){return preact__WEBPACK_IMPORTED_MODULE_1__.createElement.bind(null,n)}function en(n){return!!n&&n.$$typeof===j}function rn(n){return en(n)?preact__WEBPACK_IMPORTED_MODULE_1__.cloneElement.apply(null,arguments):n}function un(n){return!!n.__k&&((0,preact__WEBPACK_IMPORTED_MODULE_1__.render)(null,n),!0)}function on(n){return n&&(n.base||1===n.nodeType&&n)||null}var ln=function(n,t){return n(t)},cn=function(n,t){return n(t)},fn=preact__WEBPACK_IMPORTED_MODULE_1__.Fragment;/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({useState:preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useState,useReducer:preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useReducer,useEffect:preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useEffect,useLayoutEffect:preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useLayoutEffect,useRef:preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useRef,useImperativeHandle:preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useImperativeHandle,useMemo:preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useMemo,useCallback:preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useCallback,useContext:preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useContext,useDebugValue:preact_hooks__WEBPACK_IMPORTED_MODULE_0__.useDebugValue,version:"17.0.2",Children:k,render:B,hydrate:H,unmountComponentAtNode:un,createPortal:W,createElement:preact__WEBPACK_IMPORTED_MODULE_1__.createElement,createContext:preact__WEBPACK_IMPORTED_MODULE_1__.createContext,createFactory:tn,cloneElement:rn,createRef:preact__WEBPACK_IMPORTED_MODULE_1__.createRef,Fragment:preact__WEBPACK_IMPORTED_MODULE_1__.Fragment,isValidElement:en,findDOMNode:on,Component:preact__WEBPACK_IMPORTED_MODULE_1__.Component,PureComponent:E,memo:g,forwardRef:x,flushSync:cn,unstable_batchedUpdates:ln,StrictMode:preact__WEBPACK_IMPORTED_MODULE_1__.Fragment,Suspense:L,SuspenseList:M,lazy:F,__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED:X});
+//# sourceMappingURL=compat.module.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/preact/dist/preact.module.js":
 /*!***************************************************!*\
   !*** ./node_modules/preact/dist/preact.module.js ***!
@@ -2900,8 +3489,36 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "toChildArray": () => (/* binding */ A),
 /* harmony export */   "options": () => (/* binding */ l)
 /* harmony export */ });
-var n,l,u,i,t,o,r,f,e={},c=[],s=/acit|ex(?:s|g|n|p|$)|rph|grid|ows|mnc|ntw|ine[ch]|zoo|^ord|itera/i;function a(n,l){for(var u in l)n[u]=l[u];return n}function h(n){var l=n.parentNode;l&&l.removeChild(n)}function v(l,u,i){var t,o,r,f={};for(r in u)"key"==r?t=u[r]:"ref"==r?o=u[r]:f[r]=u[r];if(arguments.length>2&&(f.children=arguments.length>3?n.call(arguments,2):i),"function"==typeof l&&null!=l.defaultProps)for(r in l.defaultProps)void 0===f[r]&&(f[r]=l.defaultProps[r]);return y(l,f,t,o,null)}function y(n,i,t,o,r){var f={type:n,props:i,key:t,ref:o,__k:null,__:null,__b:0,__e:null,__d:void 0,__c:null,__h:null,constructor:void 0,__v:null==r?++u:r};return null!=l.vnode&&l.vnode(f),f}function p(){return{current:null}}function d(n){return n.children}function _(n,l){this.props=n,this.context=l}function k(n,l){if(null==l)return n.__?k(n.__,n.__.__k.indexOf(n)+1):null;for(var u;l<n.__k.length;l++)if(null!=(u=n.__k[l])&&null!=u.__e)return u.__e;return"function"==typeof n.type?k(n):null}function b(n){var l,u;if(null!=(n=n.__)&&null!=n.__c){for(n.__e=n.__c.base=null,l=0;l<n.__k.length;l++)if(null!=(u=n.__k[l])&&null!=u.__e){n.__e=n.__c.base=u.__e;break}return b(n)}}function m(n){(!n.__d&&(n.__d=!0)&&t.push(n)&&!g.__r++||r!==l.debounceRendering)&&((r=l.debounceRendering)||o)(g)}function g(){for(var n;g.__r=t.length;)n=t.sort(function(n,l){return n.__v.__b-l.__v.__b}),t=[],n.some(function(n){var l,u,i,t,o,r;n.__d&&(o=(t=(l=n).__v).__e,(r=l.__P)&&(u=[],(i=a({},t)).__v=t.__v+1,j(r,t,i,l.__n,void 0!==r.ownerSVGElement,null!=t.__h?[o]:null,u,null==o?k(t):o,t.__h),z(u,t),t.__e!=o&&b(t)))})}function w(n,l,u,i,t,o,r,f,s,a){var h,v,p,_,b,m,g,w=i&&i.__k||c,A=w.length;for(u.__k=[],h=0;h<l.length;h++)if(null!=(_=u.__k[h]=null==(_=l[h])||"boolean"==typeof _?null:"string"==typeof _||"number"==typeof _||"bigint"==typeof _?y(null,_,null,null,_):Array.isArray(_)?y(d,{children:_},null,null,null):_.__b>0?y(_.type,_.props,_.key,null,_.__v):_)){if(_.__=u,_.__b=u.__b+1,null===(p=w[h])||p&&_.key==p.key&&_.type===p.type)w[h]=void 0;else for(v=0;v<A;v++){if((p=w[v])&&_.key==p.key&&_.type===p.type){w[v]=void 0;break}p=null}j(n,_,p=p||e,t,o,r,f,s,a),b=_.__e,(v=_.ref)&&p.ref!=v&&(g||(g=[]),p.ref&&g.push(p.ref,null,_),g.push(v,_.__c||b,_)),null!=b?(null==m&&(m=b),"function"==typeof _.type&&null!=_.__k&&_.__k===p.__k?_.__d=s=x(_,s,n):s=P(n,_,p,w,b,s),a||"option"!==u.type?"function"==typeof u.type&&(u.__d=s):n.value=""):s&&p.__e==s&&s.parentNode!=n&&(s=k(p))}for(u.__e=m,h=A;h--;)null!=w[h]&&("function"==typeof u.type&&null!=w[h].__e&&w[h].__e==u.__d&&(u.__d=k(i,h+1)),N(w[h],w[h]));if(g)for(h=0;h<g.length;h++)M(g[h],g[++h],g[++h])}function x(n,l,u){var i,t;for(i=0;i<n.__k.length;i++)(t=n.__k[i])&&(t.__=n,l="function"==typeof t.type?x(t,l,u):P(u,t,t,n.__k,t.__e,l));return l}function A(n,l){return l=l||[],null==n||"boolean"==typeof n||(Array.isArray(n)?n.some(function(n){A(n,l)}):l.push(n)),l}function P(n,l,u,i,t,o){var r,f,e;if(void 0!==l.__d)r=l.__d,l.__d=void 0;else if(null==u||t!=o||null==t.parentNode)n:if(null==o||o.parentNode!==n)n.appendChild(t),r=null;else{for(f=o,e=0;(f=f.nextSibling)&&e<i.length;e+=2)if(f==t)break n;n.insertBefore(t,o),r=o}return void 0!==r?r:t.nextSibling}function C(n,l,u,i,t){var o;for(o in u)"children"===o||"key"===o||o in l||H(n,o,null,u[o],i);for(o in l)t&&"function"!=typeof l[o]||"children"===o||"key"===o||"value"===o||"checked"===o||u[o]===l[o]||H(n,o,l[o],u[o],i)}function $(n,l,u){"-"===l[0]?n.setProperty(l,u):n[l]=null==u?"":"number"!=typeof u||s.test(l)?u:u+"px"}function H(n,l,u,i,t){var o;n:if("style"===l)if("string"==typeof u)n.style.cssText=u;else{if("string"==typeof i&&(n.style.cssText=i=""),i)for(l in i)u&&l in u||$(n.style,l,"");if(u)for(l in u)i&&u[l]===i[l]||$(n.style,l,u[l])}else if("o"===l[0]&&"n"===l[1])o=l!==(l=l.replace(/Capture$/,"")),l=l.toLowerCase()in n?l.toLowerCase().slice(2):l.slice(2),n.l||(n.l={}),n.l[l+o]=u,u?i||n.addEventListener(l,o?T:I,o):n.removeEventListener(l,o?T:I,o);else if("dangerouslySetInnerHTML"!==l){if(t)l=l.replace(/xlink[H:h]/,"h").replace(/sName$/,"s");else if("href"!==l&&"list"!==l&&"form"!==l&&"tabIndex"!==l&&"download"!==l&&l in n)try{n[l]=null==u?"":u;break n}catch(n){}"function"==typeof u||(null!=u&&(!1!==u||"a"===l[0]&&"r"===l[1])?n.setAttribute(l,u):n.removeAttribute(l))}}function I(n){this.l[n.type+!1](l.event?l.event(n):n)}function T(n){this.l[n.type+!0](l.event?l.event(n):n)}function j(n,u,i,t,o,r,f,e,c){var s,h,v,y,p,k,b,m,g,x,A,P=u.type;if(void 0!==u.constructor)return null;null!=i.__h&&(c=i.__h,e=u.__e=i.__e,u.__h=null,r=[e]),(s=l.__b)&&s(u);try{n:if("function"==typeof P){if(m=u.props,g=(s=P.contextType)&&t[s.__c],x=s?g?g.props.value:s.__:t,i.__c?b=(h=u.__c=i.__c).__=h.__E:("prototype"in P&&P.prototype.render?u.__c=h=new P(m,x):(u.__c=h=new _(m,x),h.constructor=P,h.render=O),g&&g.sub(h),h.props=m,h.state||(h.state={}),h.context=x,h.__n=t,v=h.__d=!0,h.__h=[]),null==h.__s&&(h.__s=h.state),null!=P.getDerivedStateFromProps&&(h.__s==h.state&&(h.__s=a({},h.__s)),a(h.__s,P.getDerivedStateFromProps(m,h.__s))),y=h.props,p=h.state,v)null==P.getDerivedStateFromProps&&null!=h.componentWillMount&&h.componentWillMount(),null!=h.componentDidMount&&h.__h.push(h.componentDidMount);else{if(null==P.getDerivedStateFromProps&&m!==y&&null!=h.componentWillReceiveProps&&h.componentWillReceiveProps(m,x),!h.__e&&null!=h.shouldComponentUpdate&&!1===h.shouldComponentUpdate(m,h.__s,x)||u.__v===i.__v){h.props=m,h.state=h.__s,u.__v!==i.__v&&(h.__d=!1),h.__v=u,u.__e=i.__e,u.__k=i.__k,u.__k.forEach(function(n){n&&(n.__=u)}),h.__h.length&&f.push(h);break n}null!=h.componentWillUpdate&&h.componentWillUpdate(m,h.__s,x),null!=h.componentDidUpdate&&h.__h.push(function(){h.componentDidUpdate(y,p,k)})}h.context=x,h.props=m,h.state=h.__s,(s=l.__r)&&s(u),h.__d=!1,h.__v=u,h.__P=n,s=h.render(h.props,h.state,h.context),h.state=h.__s,null!=h.getChildContext&&(t=a(a({},t),h.getChildContext())),v||null==h.getSnapshotBeforeUpdate||(k=h.getSnapshotBeforeUpdate(y,p)),A=null!=s&&s.type===d&&null==s.key?s.props.children:s,w(n,Array.isArray(A)?A:[A],u,i,t,o,r,f,e,c),h.base=u.__e,u.__h=null,h.__h.length&&f.push(h),b&&(h.__E=h.__=null),h.__e=!1}else null==r&&u.__v===i.__v?(u.__k=i.__k,u.__e=i.__e):u.__e=L(i.__e,u,i,t,o,r,f,c);(s=l.diffed)&&s(u)}catch(n){u.__v=null,(c||null!=r)&&(u.__e=e,u.__h=!!c,r[r.indexOf(e)]=null),l.__e(n,u,i)}}function z(n,u){l.__c&&l.__c(u,n),n.some(function(u){try{n=u.__h,u.__h=[],n.some(function(n){n.call(u)})}catch(n){l.__e(n,u.__v)}})}function L(l,u,i,t,o,r,f,c){var s,a,v,y=i.props,p=u.props,d=u.type,_=0;if("svg"===d&&(o=!0),null!=r)for(;_<r.length;_++)if((s=r[_])&&(s===l||(d?s.localName==d:3==s.nodeType))){l=s,r[_]=null;break}if(null==l){if(null===d)return document.createTextNode(p);l=o?document.createElementNS("http://www.w3.org/2000/svg",d):document.createElement(d,p.is&&p),r=null,c=!1}if(null===d)y===p||c&&l.data===p||(l.data=p);else{if(r=r&&n.call(l.childNodes),a=(y=i.props||e).dangerouslySetInnerHTML,v=p.dangerouslySetInnerHTML,!c){if(null!=r)for(y={},_=0;_<l.attributes.length;_++)y[l.attributes[_].name]=l.attributes[_].value;(v||a)&&(v&&(a&&v.__html==a.__html||v.__html===l.innerHTML)||(l.innerHTML=v&&v.__html||""))}if(C(l,p,y,o,c),v)u.__k=[];else if(_=u.props.children,w(l,Array.isArray(_)?_:[_],u,i,t,o&&"foreignObject"!==d,r,f,r?r[0]:i.__k&&k(i,0),c),null!=r)for(_=r.length;_--;)null!=r[_]&&h(r[_]);c||("value"in p&&void 0!==(_=p.value)&&(_!==l.value||"progress"===d&&!_)&&H(l,"value",_,y.value,!1),"checked"in p&&void 0!==(_=p.checked)&&_!==l.checked&&H(l,"checked",_,y.checked,!1))}return l}function M(n,u,i){try{"function"==typeof n?n(u):n.current=u}catch(n){l.__e(n,i)}}function N(n,u,i){var t,o;if(l.unmount&&l.unmount(n),(t=n.ref)&&(t.current&&t.current!==n.__e||M(t,null,u)),null!=(t=n.__c)){if(t.componentWillUnmount)try{t.componentWillUnmount()}catch(n){l.__e(n,u)}t.base=t.__P=null}if(t=n.__k)for(o=0;o<t.length;o++)t[o]&&N(t[o],u,"function"!=typeof n.type);i||null==n.__e||h(n.__e),n.__e=n.__d=void 0}function O(n,l,u){return this.constructor(n,u)}function S(u,i,t){var o,r,f;l.__&&l.__(u,i),r=(o="function"==typeof t)?null:t&&t.__k||i.__k,f=[],j(i,u=(!o&&t||i).__k=v(d,null,[u]),r||e,e,void 0!==i.ownerSVGElement,!o&&t?[t]:r?null:i.firstChild?n.call(i.childNodes):null,f,!o&&t?t:r?r.__e:i.firstChild,o),z(f,u)}function q(n,l){S(n,l,q)}function B(l,u,i){var t,o,r,f=a({},l.props);for(r in u)"key"==r?t=u[r]:"ref"==r?o=u[r]:f[r]=u[r];return arguments.length>2&&(f.children=arguments.length>3?n.call(arguments,2):i),y(l.type,f,t||l.key,o||l.ref,null)}function D(n,l){var u={__c:l="__cC"+f++,__:n,Consumer:function(n,l){return n.children(l)},Provider:function(n){var u,i;return this.getChildContext||(u=[],(i={})[l]=this,this.getChildContext=function(){return i},this.shouldComponentUpdate=function(n){this.props.value!==n.value&&u.some(m)},this.sub=function(n){u.push(n);var l=n.componentWillUnmount;n.componentWillUnmount=function(){u.splice(u.indexOf(n),1),l&&l.call(n)}}),n.children}};return u.Provider.__=u.Consumer.contextType=u}n=c.slice,l={__e:function(n,l){for(var u,i,t;l=l.__;)if((u=l.__c)&&!u.__)try{if((i=u.constructor)&&null!=i.getDerivedStateFromError&&(u.setState(i.getDerivedStateFromError(n)),t=u.__d),null!=u.componentDidCatch&&(u.componentDidCatch(n),t=u.__d),t)return u.__E=u}catch(l){n=l}throw n}},u=0,i=function(n){return null!=n&&void 0===n.constructor},_.prototype.setState=function(n,l){var u;u=null!=this.__s&&this.__s!==this.state?this.__s:this.__s=a({},this.state),"function"==typeof n&&(n=n(a({},u),this.props)),n&&a(u,n),null!=n&&this.__v&&(l&&this.__h.push(l),m(this))},_.prototype.forceUpdate=function(n){this.__v&&(this.__e=!0,n&&this.__h.push(n),m(this))},_.prototype.render=d,t=[],o="function"==typeof Promise?Promise.prototype.then.bind(Promise.resolve()):setTimeout,g.__r=0,f=0;
+var n,l,u,i,t,r,o,f,e={},c=[],s=/acit|ex(?:s|g|n|p|$)|rph|grid|ows|mnc|ntw|ine[ch]|zoo|^ord|itera/i;function a(n,l){for(var u in l)n[u]=l[u];return n}function h(n){var l=n.parentNode;l&&l.removeChild(n)}function v(l,u,i){var t,r,o,f={};for(o in u)"key"==o?t=u[o]:"ref"==o?r=u[o]:f[o]=u[o];if(arguments.length>2&&(f.children=arguments.length>3?n.call(arguments,2):i),"function"==typeof l&&null!=l.defaultProps)for(o in l.defaultProps)void 0===f[o]&&(f[o]=l.defaultProps[o]);return y(l,f,t,r,null)}function y(n,i,t,r,o){var f={type:n,props:i,key:t,ref:r,__k:null,__:null,__b:0,__e:null,__d:void 0,__c:null,__h:null,constructor:void 0,__v:null==o?++u:o};return null==o&&null!=l.vnode&&l.vnode(f),f}function p(){return{current:null}}function d(n){return n.children}function _(n,l){this.props=n,this.context=l}function k(n,l){if(null==l)return n.__?k(n.__,n.__.__k.indexOf(n)+1):null;for(var u;l<n.__k.length;l++)if(null!=(u=n.__k[l])&&null!=u.__e)return u.__e;return"function"==typeof n.type?k(n):null}function b(n){var l,u;if(null!=(n=n.__)&&null!=n.__c){for(n.__e=n.__c.base=null,l=0;l<n.__k.length;l++)if(null!=(u=n.__k[l])&&null!=u.__e){n.__e=n.__c.base=u.__e;break}return b(n)}}function m(n){(!n.__d&&(n.__d=!0)&&t.push(n)&&!g.__r++||o!==l.debounceRendering)&&((o=l.debounceRendering)||r)(g)}function g(){for(var n;g.__r=t.length;)n=t.sort(function(n,l){return n.__v.__b-l.__v.__b}),t=[],n.some(function(n){var l,u,i,t,r,o;n.__d&&(r=(t=(l=n).__v).__e,(o=l.__P)&&(u=[],(i=a({},t)).__v=t.__v+1,j(o,t,i,l.__n,void 0!==o.ownerSVGElement,null!=t.__h?[r]:null,u,null==r?k(t):r,t.__h),z(u,t),t.__e!=r&&b(t)))})}function w(n,l,u,i,t,r,o,f,s,a){var h,v,p,_,b,m,g,w=i&&i.__k||c,A=w.length;for(u.__k=[],h=0;h<l.length;h++)if(null!=(_=u.__k[h]=null==(_=l[h])||"boolean"==typeof _?null:"string"==typeof _||"number"==typeof _||"bigint"==typeof _?y(null,_,null,null,_):Array.isArray(_)?y(d,{children:_},null,null,null):_.__b>0?y(_.type,_.props,_.key,null,_.__v):_)){if(_.__=u,_.__b=u.__b+1,null===(p=w[h])||p&&_.key==p.key&&_.type===p.type)w[h]=void 0;else for(v=0;v<A;v++){if((p=w[v])&&_.key==p.key&&_.type===p.type){w[v]=void 0;break}p=null}j(n,_,p=p||e,t,r,o,f,s,a),b=_.__e,(v=_.ref)&&p.ref!=v&&(g||(g=[]),p.ref&&g.push(p.ref,null,_),g.push(v,_.__c||b,_)),null!=b?(null==m&&(m=b),"function"==typeof _.type&&_.__k===p.__k?_.__d=s=x(_,s,n):s=P(n,_,p,w,b,s),"function"==typeof u.type&&(u.__d=s)):s&&p.__e==s&&s.parentNode!=n&&(s=k(p))}for(u.__e=m,h=A;h--;)null!=w[h]&&("function"==typeof u.type&&null!=w[h].__e&&w[h].__e==u.__d&&(u.__d=k(i,h+1)),N(w[h],w[h]));if(g)for(h=0;h<g.length;h++)M(g[h],g[++h],g[++h])}function x(n,l,u){for(var i,t=n.__k,r=0;t&&r<t.length;r++)(i=t[r])&&(i.__=n,l="function"==typeof i.type?x(i,l,u):P(u,i,i,t,i.__e,l));return l}function A(n,l){return l=l||[],null==n||"boolean"==typeof n||(Array.isArray(n)?n.some(function(n){A(n,l)}):l.push(n)),l}function P(n,l,u,i,t,r){var o,f,e;if(void 0!==l.__d)o=l.__d,l.__d=void 0;else if(null==u||t!=r||null==t.parentNode)n:if(null==r||r.parentNode!==n)n.appendChild(t),o=null;else{for(f=r,e=0;(f=f.nextSibling)&&e<i.length;e+=2)if(f==t)break n;n.insertBefore(t,r),o=r}return void 0!==o?o:t.nextSibling}function C(n,l,u,i,t){var r;for(r in u)"children"===r||"key"===r||r in l||H(n,r,null,u[r],i);for(r in l)t&&"function"!=typeof l[r]||"children"===r||"key"===r||"value"===r||"checked"===r||u[r]===l[r]||H(n,r,l[r],u[r],i)}function $(n,l,u){"-"===l[0]?n.setProperty(l,u):n[l]=null==u?"":"number"!=typeof u||s.test(l)?u:u+"px"}function H(n,l,u,i,t){var r;n:if("style"===l)if("string"==typeof u)n.style.cssText=u;else{if("string"==typeof i&&(n.style.cssText=i=""),i)for(l in i)u&&l in u||$(n.style,l,"");if(u)for(l in u)i&&u[l]===i[l]||$(n.style,l,u[l])}else if("o"===l[0]&&"n"===l[1])r=l!==(l=l.replace(/Capture$/,"")),l=l.toLowerCase()in n?l.toLowerCase().slice(2):l.slice(2),n.l||(n.l={}),n.l[l+r]=u,u?i||n.addEventListener(l,r?T:I,r):n.removeEventListener(l,r?T:I,r);else if("dangerouslySetInnerHTML"!==l){if(t)l=l.replace(/xlink[H:h]/,"h").replace(/sName$/,"s");else if("href"!==l&&"list"!==l&&"form"!==l&&"tabIndex"!==l&&"download"!==l&&l in n)try{n[l]=null==u?"":u;break n}catch(n){}"function"==typeof u||(null!=u&&(!1!==u||"a"===l[0]&&"r"===l[1])?n.setAttribute(l,u):n.removeAttribute(l))}}function I(n){this.l[n.type+!1](l.event?l.event(n):n)}function T(n){this.l[n.type+!0](l.event?l.event(n):n)}function j(n,u,i,t,r,o,f,e,c){var s,h,v,y,p,k,b,m,g,x,A,P=u.type;if(void 0!==u.constructor)return null;null!=i.__h&&(c=i.__h,e=u.__e=i.__e,u.__h=null,o=[e]),(s=l.__b)&&s(u);try{n:if("function"==typeof P){if(m=u.props,g=(s=P.contextType)&&t[s.__c],x=s?g?g.props.value:s.__:t,i.__c?b=(h=u.__c=i.__c).__=h.__E:("prototype"in P&&P.prototype.render?u.__c=h=new P(m,x):(u.__c=h=new _(m,x),h.constructor=P,h.render=O),g&&g.sub(h),h.props=m,h.state||(h.state={}),h.context=x,h.__n=t,v=h.__d=!0,h.__h=[]),null==h.__s&&(h.__s=h.state),null!=P.getDerivedStateFromProps&&(h.__s==h.state&&(h.__s=a({},h.__s)),a(h.__s,P.getDerivedStateFromProps(m,h.__s))),y=h.props,p=h.state,v)null==P.getDerivedStateFromProps&&null!=h.componentWillMount&&h.componentWillMount(),null!=h.componentDidMount&&h.__h.push(h.componentDidMount);else{if(null==P.getDerivedStateFromProps&&m!==y&&null!=h.componentWillReceiveProps&&h.componentWillReceiveProps(m,x),!h.__e&&null!=h.shouldComponentUpdate&&!1===h.shouldComponentUpdate(m,h.__s,x)||u.__v===i.__v){h.props=m,h.state=h.__s,u.__v!==i.__v&&(h.__d=!1),h.__v=u,u.__e=i.__e,u.__k=i.__k,u.__k.forEach(function(n){n&&(n.__=u)}),h.__h.length&&f.push(h);break n}null!=h.componentWillUpdate&&h.componentWillUpdate(m,h.__s,x),null!=h.componentDidUpdate&&h.__h.push(function(){h.componentDidUpdate(y,p,k)})}h.context=x,h.props=m,h.state=h.__s,(s=l.__r)&&s(u),h.__d=!1,h.__v=u,h.__P=n,s=h.render(h.props,h.state,h.context),h.state=h.__s,null!=h.getChildContext&&(t=a(a({},t),h.getChildContext())),v||null==h.getSnapshotBeforeUpdate||(k=h.getSnapshotBeforeUpdate(y,p)),A=null!=s&&s.type===d&&null==s.key?s.props.children:s,w(n,Array.isArray(A)?A:[A],u,i,t,r,o,f,e,c),h.base=u.__e,u.__h=null,h.__h.length&&f.push(h),b&&(h.__E=h.__=null),h.__e=!1}else null==o&&u.__v===i.__v?(u.__k=i.__k,u.__e=i.__e):u.__e=L(i.__e,u,i,t,r,o,f,c);(s=l.diffed)&&s(u)}catch(n){u.__v=null,(c||null!=o)&&(u.__e=e,u.__h=!!c,o[o.indexOf(e)]=null),l.__e(n,u,i)}}function z(n,u){l.__c&&l.__c(u,n),n.some(function(u){try{n=u.__h,u.__h=[],n.some(function(n){n.call(u)})}catch(n){l.__e(n,u.__v)}})}function L(l,u,i,t,r,o,f,c){var s,a,v,y=i.props,p=u.props,d=u.type,_=0;if("svg"===d&&(r=!0),null!=o)for(;_<o.length;_++)if((s=o[_])&&(s===l||(d?s.localName==d:3==s.nodeType))){l=s,o[_]=null;break}if(null==l){if(null===d)return document.createTextNode(p);l=r?document.createElementNS("http://www.w3.org/2000/svg",d):document.createElement(d,p.is&&p),o=null,c=!1}if(null===d)y===p||c&&l.data===p||(l.data=p);else{if(o=o&&n.call(l.childNodes),a=(y=i.props||e).dangerouslySetInnerHTML,v=p.dangerouslySetInnerHTML,!c){if(null!=o)for(y={},_=0;_<l.attributes.length;_++)y[l.attributes[_].name]=l.attributes[_].value;(v||a)&&(v&&(a&&v.__html==a.__html||v.__html===l.innerHTML)||(l.innerHTML=v&&v.__html||""))}if(C(l,p,y,r,c),v)u.__k=[];else if(_=u.props.children,w(l,Array.isArray(_)?_:[_],u,i,t,r&&"foreignObject"!==d,o,f,o?o[0]:i.__k&&k(i,0),c),null!=o)for(_=o.length;_--;)null!=o[_]&&h(o[_]);c||("value"in p&&void 0!==(_=p.value)&&(_!==l.value||"progress"===d&&!_)&&H(l,"value",_,y.value,!1),"checked"in p&&void 0!==(_=p.checked)&&_!==l.checked&&H(l,"checked",_,y.checked,!1))}return l}function M(n,u,i){try{"function"==typeof n?n(u):n.current=u}catch(n){l.__e(n,i)}}function N(n,u,i){var t,r;if(l.unmount&&l.unmount(n),(t=n.ref)&&(t.current&&t.current!==n.__e||M(t,null,u)),null!=(t=n.__c)){if(t.componentWillUnmount)try{t.componentWillUnmount()}catch(n){l.__e(n,u)}t.base=t.__P=null}if(t=n.__k)for(r=0;r<t.length;r++)t[r]&&N(t[r],u,"function"!=typeof n.type);i||null==n.__e||h(n.__e),n.__e=n.__d=void 0}function O(n,l,u){return this.constructor(n,u)}function S(u,i,t){var r,o,f;l.__&&l.__(u,i),o=(r="function"==typeof t)?null:t&&t.__k||i.__k,f=[],j(i,u=(!r&&t||i).__k=v(d,null,[u]),o||e,e,void 0!==i.ownerSVGElement,!r&&t?[t]:o?null:i.firstChild?n.call(i.childNodes):null,f,!r&&t?t:o?o.__e:i.firstChild,r),z(f,u)}function q(n,l){S(n,l,q)}function B(l,u,i){var t,r,o,f=a({},l.props);for(o in u)"key"==o?t=u[o]:"ref"==o?r=u[o]:f[o]=u[o];return arguments.length>2&&(f.children=arguments.length>3?n.call(arguments,2):i),y(l.type,f,t||l.key,r||l.ref,null)}function D(n,l){var u={__c:l="__cC"+f++,__:n,Consumer:function(n,l){return n.children(l)},Provider:function(n){var u,i;return this.getChildContext||(u=[],(i={})[l]=this,this.getChildContext=function(){return i},this.shouldComponentUpdate=function(n){this.props.value!==n.value&&u.some(m)},this.sub=function(n){u.push(n);var l=n.componentWillUnmount;n.componentWillUnmount=function(){u.splice(u.indexOf(n),1),l&&l.call(n)}}),n.children}};return u.Provider.__=u.Consumer.contextType=u}n=c.slice,l={__e:function(n,l){for(var u,i,t;l=l.__;)if((u=l.__c)&&!u.__)try{if((i=u.constructor)&&null!=i.getDerivedStateFromError&&(u.setState(i.getDerivedStateFromError(n)),t=u.__d),null!=u.componentDidCatch&&(u.componentDidCatch(n),t=u.__d),t)return u.__E=u}catch(l){n=l}throw n}},u=0,i=function(n){return null!=n&&void 0===n.constructor},_.prototype.setState=function(n,l){var u;u=null!=this.__s&&this.__s!==this.state?this.__s:this.__s=a({},this.state),"function"==typeof n&&(n=n(a({},u),this.props)),n&&a(u,n),null!=n&&this.__v&&(l&&this.__h.push(l),m(this))},_.prototype.forceUpdate=function(n){this.__v&&(this.__e=!0,n&&this.__h.push(n),m(this))},_.prototype.render=d,t=[],r="function"==typeof Promise?Promise.prototype.then.bind(Promise.resolve()):setTimeout,g.__r=0,f=0;
 //# sourceMappingURL=preact.module.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/preact/hooks/dist/hooks.module.js":
+/*!********************************************************!*\
+  !*** ./node_modules/preact/hooks/dist/hooks.module.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "useState": () => (/* binding */ l),
+/* harmony export */   "useReducer": () => (/* binding */ p),
+/* harmony export */   "useEffect": () => (/* binding */ y),
+/* harmony export */   "useLayoutEffect": () => (/* binding */ h),
+/* harmony export */   "useRef": () => (/* binding */ s),
+/* harmony export */   "useImperativeHandle": () => (/* binding */ _),
+/* harmony export */   "useMemo": () => (/* binding */ A),
+/* harmony export */   "useCallback": () => (/* binding */ F),
+/* harmony export */   "useContext": () => (/* binding */ T),
+/* harmony export */   "useDebugValue": () => (/* binding */ d),
+/* harmony export */   "useErrorBoundary": () => (/* binding */ q)
+/* harmony export */ });
+/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+var t,u,r,o=0,i=[],c=preact__WEBPACK_IMPORTED_MODULE_0__.options.__b,f=preact__WEBPACK_IMPORTED_MODULE_0__.options.__r,e=preact__WEBPACK_IMPORTED_MODULE_0__.options.diffed,a=preact__WEBPACK_IMPORTED_MODULE_0__.options.__c,v=preact__WEBPACK_IMPORTED_MODULE_0__.options.unmount;function m(t,r){preact__WEBPACK_IMPORTED_MODULE_0__.options.__h&&preact__WEBPACK_IMPORTED_MODULE_0__.options.__h(u,t,o||r),o=0;var i=u.__H||(u.__H={__:[],__h:[]});return t>=i.__.length&&i.__.push({}),i.__[t]}function l(n){return o=1,p(w,n)}function p(n,r,o){var i=m(t++,2);return i.t=n,i.__c||(i.__=[o?o(r):w(void 0,r),function(n){var t=i.t(i.__[0],n);i.__[0]!==t&&(i.__=[t,i.__[1]],i.__c.setState({}))}],i.__c=u),i.__}function y(r,o){var i=m(t++,3);!preact__WEBPACK_IMPORTED_MODULE_0__.options.__s&&k(i.__H,o)&&(i.__=r,i.__H=o,u.__H.__h.push(i))}function h(r,o){var i=m(t++,4);!preact__WEBPACK_IMPORTED_MODULE_0__.options.__s&&k(i.__H,o)&&(i.__=r,i.__H=o,u.__h.push(i))}function s(n){return o=5,A(function(){return{current:n}},[])}function _(n,t,u){o=6,h(function(){"function"==typeof n?n(t()):n&&(n.current=t())},null==u?u:u.concat(n))}function A(n,u){var r=m(t++,7);return k(r.__H,u)&&(r.__=n(),r.__H=u,r.__h=n),r.__}function F(n,t){return o=8,A(function(){return n},t)}function T(n){var r=u.context[n.__c],o=m(t++,9);return o.c=n,r?(null==o.__&&(o.__=!0,r.sub(u)),r.props.value):n.__}function d(t,u){preact__WEBPACK_IMPORTED_MODULE_0__.options.useDebugValue&&preact__WEBPACK_IMPORTED_MODULE_0__.options.useDebugValue(u?u(t):t)}function q(n){var r=m(t++,10),o=l();return r.__=n,u.componentDidCatch||(u.componentDidCatch=function(n){r.__&&r.__(n),o[1](n)}),[o[0],function(){o[1](void 0)}]}function x(){i.forEach(function(t){if(t.__P)try{t.__H.__h.forEach(g),t.__H.__h.forEach(j),t.__H.__h=[]}catch(u){t.__H.__h=[],preact__WEBPACK_IMPORTED_MODULE_0__.options.__e(u,t.__v)}}),i=[]}preact__WEBPACK_IMPORTED_MODULE_0__.options.__b=function(n){u=null,c&&c(n)},preact__WEBPACK_IMPORTED_MODULE_0__.options.__r=function(n){f&&f(n),t=0;var r=(u=n.__c).__H;r&&(r.__h.forEach(g),r.__h.forEach(j),r.__h=[])},preact__WEBPACK_IMPORTED_MODULE_0__.options.diffed=function(t){e&&e(t);var o=t.__c;o&&o.__H&&o.__H.__h.length&&(1!==i.push(o)&&r===preact__WEBPACK_IMPORTED_MODULE_0__.options.requestAnimationFrame||((r=preact__WEBPACK_IMPORTED_MODULE_0__.options.requestAnimationFrame)||function(n){var t,u=function(){clearTimeout(r),b&&cancelAnimationFrame(t),setTimeout(n)},r=setTimeout(u,100);b&&(t=requestAnimationFrame(u))})(x)),u=null},preact__WEBPACK_IMPORTED_MODULE_0__.options.__c=function(t,u){u.some(function(t){try{t.__h.forEach(g),t.__h=t.__h.filter(function(n){return!n.__||j(n)})}catch(r){u.some(function(n){n.__h&&(n.__h=[])}),u=[],preact__WEBPACK_IMPORTED_MODULE_0__.options.__e(r,t.__v)}}),a&&a(t,u)},preact__WEBPACK_IMPORTED_MODULE_0__.options.unmount=function(t){v&&v(t);var u=t.__c;if(u&&u.__H)try{u.__H.__.forEach(g)}catch(t){preact__WEBPACK_IMPORTED_MODULE_0__.options.__e(t,u.__v)}};var b="function"==typeof requestAnimationFrame;function g(n){var t=u;"function"==typeof n.__c&&n.__c(),u=t}function j(n){var t=u;n.__c=n.__(),u=t}function k(n,t){return!n||n.length!==t.length||t.some(function(t,u){return t!==n[u]})}function w(n,t){return"function"==typeof t?t(n):t}
+//# sourceMappingURL=hooks.module.js.map
 
 
 /***/ }),
@@ -3000,9 +3617,9 @@ var runtime = (function (exports) {
   // This is a polyfill for %IteratorPrototype% for environments that
   // don't natively support it.
   var IteratorPrototype = {};
-  IteratorPrototype[iteratorSymbol] = function () {
+  define(IteratorPrototype, iteratorSymbol, function () {
     return this;
-  };
+  });
 
   var getProto = Object.getPrototypeOf;
   var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
@@ -3016,8 +3633,9 @@ var runtime = (function (exports) {
 
   var Gp = GeneratorFunctionPrototype.prototype =
     Generator.prototype = Object.create(IteratorPrototype);
-  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
-  GeneratorFunctionPrototype.constructor = GeneratorFunction;
+  GeneratorFunction.prototype = GeneratorFunctionPrototype;
+  define(Gp, "constructor", GeneratorFunctionPrototype);
+  define(GeneratorFunctionPrototype, "constructor", GeneratorFunction);
   GeneratorFunction.displayName = define(
     GeneratorFunctionPrototype,
     toStringTagSymbol,
@@ -3131,9 +3749,9 @@ var runtime = (function (exports) {
   }
 
   defineIteratorMethods(AsyncIterator.prototype);
-  AsyncIterator.prototype[asyncIteratorSymbol] = function () {
+  define(AsyncIterator.prototype, asyncIteratorSymbol, function () {
     return this;
-  };
+  });
   exports.AsyncIterator = AsyncIterator;
 
   // Note that simple async functions are implemented on top of
@@ -3326,13 +3944,13 @@ var runtime = (function (exports) {
   // iterator prototype chain incorrectly implement this, causing the Generator
   // object to not be returned from this call. This ensures that doesn't happen.
   // See https://github.com/facebook/regenerator/issues/274 for more details.
-  Gp[iteratorSymbol] = function() {
+  define(Gp, iteratorSymbol, function() {
     return this;
-  };
+  });
 
-  Gp.toString = function() {
+  define(Gp, "toString", function() {
     return "[object Generator]";
-  };
+  });
 
   function pushTryEntry(locs) {
     var entry = { tryLoc: locs[0] };
@@ -3651,14 +4269,19 @@ try {
 } catch (accidentalStrictMode) {
   // This module should not be running in strict mode, so the above
   // assignment should always work unless something is misconfigured. Just
-  // in case runtime.js accidentally runs in strict mode, we can escape
+  // in case runtime.js accidentally runs in strict mode, in modern engines
+  // we can explicitly access globalThis. In older engines we can escape
   // strict mode using a global Function call. This could conceivably fail
   // if a Content Security Policy forbids using Function, but in that case
   // the proper solution is to fix the accidental strict mode problem. If
   // you've misconfigured your bundler to force strict mode and applied a
   // CSP to forbid Function, and you're not willing to fix either of those
   // problems, please detail your unique predicament in a GitHub issue.
-  Function("r", "regeneratorRuntime = r")(runtime);
+  if (typeof globalThis === "object") {
+    globalThis.regeneratorRuntime = runtime;
+  } else {
+    Function("r", "regeneratorRuntime = r")(runtime);
+  }
 }
 
 
@@ -3709,12 +4332,12 @@ options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWi
 options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
 options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
 
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_index_css__WEBPACK_IMPORTED_MODULE_6__.default, options);
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_index_css__WEBPACK_IMPORTED_MODULE_6__["default"], options);
 
 
 
 
-       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_index_css__WEBPACK_IMPORTED_MODULE_6__.default && _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_index_css__WEBPACK_IMPORTED_MODULE_6__.default.locals ? _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_index_css__WEBPACK_IMPORTED_MODULE_6__.default.locals : undefined);
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_index_css__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_index_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_index_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
 
 
 /***/ }),
@@ -3764,12 +4387,12 @@ options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWi
 options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
 options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
 
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Ellipsis_css__WEBPACK_IMPORTED_MODULE_6__.default, options);
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Ellipsis_css__WEBPACK_IMPORTED_MODULE_6__["default"], options);
 
 
 
 
-       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Ellipsis_css__WEBPACK_IMPORTED_MODULE_6__.default && _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Ellipsis_css__WEBPACK_IMPORTED_MODULE_6__.default.locals ? _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Ellipsis_css__WEBPACK_IMPORTED_MODULE_6__.default.locals : undefined);
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Ellipsis_css__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Ellipsis_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Ellipsis_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
 
 
 /***/ }),
@@ -3819,12 +4442,12 @@ options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWi
 options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
 options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
 
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Loader_css__WEBPACK_IMPORTED_MODULE_6__.default, options);
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Loader_css__WEBPACK_IMPORTED_MODULE_6__["default"], options);
 
 
 
 
-       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Loader_css__WEBPACK_IMPORTED_MODULE_6__.default && _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Loader_css__WEBPACK_IMPORTED_MODULE_6__.default.locals ? _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Loader_css__WEBPACK_IMPORTED_MODULE_6__.default.locals : undefined);
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Loader_css__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Loader_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Loader_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
 
 
 /***/ }),
@@ -3874,12 +4497,12 @@ options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWi
 options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
 options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
 
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Modal_css__WEBPACK_IMPORTED_MODULE_6__.default, options);
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Modal_css__WEBPACK_IMPORTED_MODULE_6__["default"], options);
 
 
 
 
-       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Modal_css__WEBPACK_IMPORTED_MODULE_6__.default && _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Modal_css__WEBPACK_IMPORTED_MODULE_6__.default.locals ? _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Modal_css__WEBPACK_IMPORTED_MODULE_6__.default.locals : undefined);
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Modal_css__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Modal_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Modal_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
 
 
 /***/ }),
@@ -3929,67 +4552,12 @@ options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWi
 options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
 options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
 
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_AppointmentMenu_css__WEBPACK_IMPORTED_MODULE_6__.default, options);
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_AppointmentMenu_css__WEBPACK_IMPORTED_MODULE_6__["default"], options);
 
 
 
 
-       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_AppointmentMenu_css__WEBPACK_IMPORTED_MODULE_6__.default && _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_AppointmentMenu_css__WEBPACK_IMPORTED_MODULE_6__.default.locals ? _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_AppointmentMenu_css__WEBPACK_IMPORTED_MODULE_6__.default.locals : undefined);
-
-
-/***/ }),
-
-/***/ "./modules/cortico/Dashboard/Dashboard.css":
-/*!*************************************************!*\
-  !*** ./modules/cortico/Dashboard/Dashboard.css ***!
-  \*************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Dashboard_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].use[2]!./Dashboard.css */ "./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].use[2]!./modules/cortico/Dashboard/Dashboard.css");
-
-      
-      
-      
-      
-      
-      
-      
-      
-      
-
-var options = {};
-
-options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
-options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
-
-      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
-    
-options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
-options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
-
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Dashboard_css__WEBPACK_IMPORTED_MODULE_6__.default, options);
-
-
-
-
-       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Dashboard_css__WEBPACK_IMPORTED_MODULE_6__.default && _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Dashboard_css__WEBPACK_IMPORTED_MODULE_6__.default.locals ? _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Dashboard_css__WEBPACK_IMPORTED_MODULE_6__.default.locals : undefined);
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_AppointmentMenu_css__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_AppointmentMenu_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_AppointmentMenu_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
 
 
 /***/ }),
@@ -4039,12 +4607,12 @@ options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWi
 options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
 options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
 
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Login_css__WEBPACK_IMPORTED_MODULE_6__.default, options);
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Login_css__WEBPACK_IMPORTED_MODULE_6__["default"], options);
 
 
 
 
-       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Login_css__WEBPACK_IMPORTED_MODULE_6__.default && _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Login_css__WEBPACK_IMPORTED_MODULE_6__.default.locals ? _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Login_css__WEBPACK_IMPORTED_MODULE_6__.default.locals : undefined);
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Login_css__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Login_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Login_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
 
 
 /***/ }),
@@ -4058,13 +4626,13 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 "use strict";
 
 
-var stylesInDom = [];
+var stylesInDOM = [];
 
 function getIndexByIdentifier(identifier) {
   var result = -1;
 
-  for (var i = 0; i < stylesInDom.length; i++) {
-    if (stylesInDom[i].identifier === identifier) {
+  for (var i = 0; i < stylesInDOM.length; i++) {
+    if (stylesInDOM[i].identifier === identifier) {
       result = i;
       break;
     }
@@ -4083,20 +4651,24 @@ function modulesToDom(list, options) {
     var count = idCountMap[id] || 0;
     var identifier = "".concat(id, " ").concat(count);
     idCountMap[id] = count + 1;
-    var index = getIndexByIdentifier(identifier);
+    var indexByIdentifier = getIndexByIdentifier(identifier);
     var obj = {
       css: item[1],
       media: item[2],
-      sourceMap: item[3]
+      sourceMap: item[3],
+      supports: item[4],
+      layer: item[5]
     };
 
-    if (index !== -1) {
-      stylesInDom[index].references++;
-      stylesInDom[index].updater(obj);
+    if (indexByIdentifier !== -1) {
+      stylesInDOM[indexByIdentifier].references++;
+      stylesInDOM[indexByIdentifier].updater(obj);
     } else {
-      stylesInDom.push({
+      var updater = addElementStyle(obj, options);
+      options.byIndex = i;
+      stylesInDOM.splice(i, 0, {
         identifier: identifier,
-        updater: addStyle(obj, options),
+        updater: updater,
         references: 1
       });
     }
@@ -4107,12 +4679,13 @@ function modulesToDom(list, options) {
   return identifiers;
 }
 
-function addStyle(obj, options) {
+function addElementStyle(obj, options) {
   var api = options.domAPI(options);
   api.update(obj);
-  return function updateStyle(newObj) {
+
+  var updater = function updater(newObj) {
     if (newObj) {
-      if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap) {
+      if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap && newObj.supports === obj.supports && newObj.layer === obj.layer) {
         return;
       }
 
@@ -4121,6 +4694,8 @@ function addStyle(obj, options) {
       api.remove();
     }
   };
+
+  return updater;
 }
 
 module.exports = function (list, options) {
@@ -4133,7 +4708,7 @@ module.exports = function (list, options) {
     for (var i = 0; i < lastIdentifiers.length; i++) {
       var identifier = lastIdentifiers[i];
       var index = getIndexByIdentifier(identifier);
-      stylesInDom[index].references--;
+      stylesInDOM[index].references--;
     }
 
     var newLastIdentifiers = modulesToDom(newList, options);
@@ -4143,10 +4718,10 @@ module.exports = function (list, options) {
 
       var _index = getIndexByIdentifier(_identifier);
 
-      if (stylesInDom[_index].references === 0) {
-        stylesInDom[_index].updater();
+      if (stylesInDOM[_index].references === 0) {
+        stylesInDOM[_index].updater();
 
-        stylesInDom.splice(_index, 1);
+        stylesInDOM.splice(_index, 1);
       }
     }
 
@@ -4216,10 +4791,10 @@ module.exports = insertBySelector;
 
 /* istanbul ignore next  */
 function insertStyleElement(options) {
-  var style = document.createElement("style");
-  options.setAttributes(style, options.attributes);
-  options.insert(style);
-  return style;
+  var element = document.createElement("style");
+  options.setAttributes(element, options.attributes);
+  options.insert(element, options.options);
+  return element;
 }
 
 module.exports = insertStyleElement;
@@ -4236,11 +4811,11 @@ module.exports = insertStyleElement;
 
 
 /* istanbul ignore next  */
-function setAttributesWithoutAttributes(style) {
+function setAttributesWithoutAttributes(styleElement) {
   var nonce =  true ? __webpack_require__.nc : 0;
 
   if (nonce) {
-    style.setAttribute("nonce", nonce);
+    styleElement.setAttribute("nonce", nonce);
   }
 }
 
@@ -4258,16 +4833,38 @@ module.exports = setAttributesWithoutAttributes;
 
 
 /* istanbul ignore next  */
-function apply(style, options, obj) {
-  var css = obj.css;
-  var media = obj.media;
-  var sourceMap = obj.sourceMap;
+function apply(styleElement, options, obj) {
+  var css = "";
 
-  if (media) {
-    style.setAttribute("media", media);
-  } else {
-    style.removeAttribute("media");
+  if (obj.supports) {
+    css += "@supports (".concat(obj.supports, ") {");
   }
+
+  if (obj.media) {
+    css += "@media ".concat(obj.media, " {");
+  }
+
+  var needLayer = typeof obj.layer !== "undefined";
+
+  if (needLayer) {
+    css += "@layer".concat(obj.layer.length > 0 ? " ".concat(obj.layer) : "", " {");
+  }
+
+  css += obj.css;
+
+  if (needLayer) {
+    css += "}";
+  }
+
+  if (obj.media) {
+    css += "}";
+  }
+
+  if (obj.supports) {
+    css += "}";
+  }
+
+  var sourceMap = obj.sourceMap;
 
   if (sourceMap && typeof btoa !== "undefined") {
     css += "\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), " */");
@@ -4276,28 +4873,28 @@ function apply(style, options, obj) {
   /* istanbul ignore if  */
 
 
-  options.styleTagTransform(css, style);
+  options.styleTagTransform(css, styleElement, options.options);
 }
 
-function removeStyleElement(style) {
+function removeStyleElement(styleElement) {
   // istanbul ignore if
-  if (style.parentNode === null) {
+  if (styleElement.parentNode === null) {
     return false;
   }
 
-  style.parentNode.removeChild(style);
+  styleElement.parentNode.removeChild(styleElement);
 }
 /* istanbul ignore next  */
 
 
 function domAPI(options) {
-  var style = options.insertStyleElement(options);
+  var styleElement = options.insertStyleElement(options);
   return {
     update: function update(obj) {
-      apply(style, options, obj);
+      apply(styleElement, options, obj);
     },
     remove: function remove() {
-      removeStyleElement(style);
+      removeStyleElement(styleElement);
     }
   };
 }
@@ -4316,15 +4913,15 @@ module.exports = domAPI;
 
 
 /* istanbul ignore next  */
-function styleTagTransform(css, style) {
-  if (style.styleSheet) {
-    style.styleSheet.cssText = css;
+function styleTagTransform(css, styleElement) {
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css;
   } else {
-    while (style.firstChild) {
-      style.removeChild(style.firstChild);
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild);
     }
 
-    style.appendChild(document.createTextNode(css));
+    styleElement.appendChild(document.createTextNode(css));
   }
 }
 
@@ -4344,6 +4941,359 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGEAAABhCAYAAADGBs+jAAAACXBIWXMAAAsSAAALEgHS3X78AAAEqklEQVR4nO2dvXHbMBSAX3RpVNkb2BvYmcAaQIUa1nEmiDYIR1AmsFyrSe7Ux9lAniDWBlbF0jnIjzYlUyRAvAc8kO+707mxAAofQeLvAZ9eXl4gJaZZcQ4A1wAwObrsDQA8rFfj56R+EAAkI2GaFabg5wDwteVf7wFguV6NHwJdmjfiJeCdnwPAd8ev/jTfS6FmiJaAAswdfdUxiUcAuF2vxhviSyNFrAQCASVGxERyjRgJuIYPEAoATOMX8SWSIk4CsYCSm2lWzAjTI0WUBCYBJTlDmiSIkcAswHCFzVxxiJAQQEDJcQdPBNElBBQA2NMWR1QJgQUYLgPl40Q0CREEiCWKBBVwSHAJkQWIHNQLKkFADRA5hhRs7EiAgN16NT6PlHcjQWqCkHfAImLejbBLECJgO1gJglpBs0EOZQsS8E36pA6LBGEClpGvoRVyCSrAHVIJKqAbZBJUQHdIJKgAP7wlqAB/vCSoABo6S1ABdHSSoAJocZagAuhxkqACeLCWoAL4sJKgAnhplaAC+GmUoALC8PlULirAnUo83cZlEql2ol8F2DHNCrOib4afm5ov/cXYiGWTlA8SVEA7WEYmiPGH5Vd2Zo57vRrXLs8/kKAC2sHl9cuOZVQbuvUmQQW0gwJMGZ15JPNBRLV1pAIawJt06SkAsIwPlmPuJUyzYq4CWskJy8hEDb29H/aPo2lWPBMY9iGFVtA/4mTNy/rSPJZG06y4VQGtzBnSNGVuyn7/OIoZx5VKR4yrjKJLSGkogi2iFFDCBVMGTaQ0FMF6k5pmb4xwqV4PxnXgPLQEFVDDCNfuhyBJAdybV5n0R4HiuFKvAY+c6Y4CbEPTh0cQV23Yp1tK2DFl0pd3AFeo1T7dEY7mcWRiLcA007DnLpL1avyEe+pRco/pvg7g4WQD5XPPSQBWyzvJInAAj6oRs6sOhVSbqBMiEV0ElGNXYkXgE2NG8OjeHc8nUM6sbTFK0qq11TJB0teJnVLAQRmdmujPsbrYZvQbt760WmFg+UOkT/AsLDbKrWI2zZ3XldHJbRUwo1v81NWMLRbkwiVE1fFOSmGeIcdHed0YXFlGefkSrsN6bwvMsNy0yWldTSWNLlU5iWbuUfkYnpoKvkrIDUZ8nqW9HnMKtcHIxHOVgvTmqxchNhgxhfeHYAq1tyK4NxgxLYg7wiR7KYLlnYCPnwXjtGCv3hGkErDw8xOLY6npjQhvCVjwE+xPhJ6v7oWIzhKwXbyJvGYJBhvHDO/DuxPGuQhbkn9Ze7WOcLhCRXji3URVEf6Q9BNUhB9knTUV0R3SHrOK6Ab5sIWKcIdl7EhFuME6n0AUaEfBF8kb1LKOogqqEb9wulYk7PMJQkRcMIU8kZDK9CYFb4F6kfI/SbD4BAE14kzPWZMhQiVAfBF62F2JoFaTCKIddqci3ol67KOKeCX6AaiBRYjsNYs4CjigCJEnDgbrrNnA3KEb9mF3tjDXiOEeducKk4jhHnbXFWIRu8EedudLRYRPxGRtjJg0xEqAdxHXGBPnymMKAkBa66gJh8XGW4wRS2ZpZDISSnANrBFi/pYDcuZuN8syTSyd+Dv/AAD4D9nFlj4ll12bAAAAAElFTkSuQmCC");
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _arrayLikeToArray)
+/* harmony export */ });
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+
+  return arr2;
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _arrayWithHoles)
+/* harmony export */ });
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _asyncToGenerator)
+/* harmony export */ });
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
+  try {
+    var info = gen[key](arg);
+    var value = info.value;
+  } catch (error) {
+    reject(error);
+    return;
+  }
+
+  if (info.done) {
+    resolve(value);
+  } else {
+    Promise.resolve(value).then(_next, _throw);
+  }
+}
+
+function _asyncToGenerator(fn) {
+  return function () {
+    var self = this,
+        args = arguments;
+    return new Promise(function (resolve, reject) {
+      var gen = fn.apply(self, args);
+
+      function _next(value) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
+      }
+
+      function _throw(err) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
+      }
+
+      _next(undefined);
+    });
+  };
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/classCallCheck.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _classCallCheck)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/createClass.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/createClass.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _createClass)
+/* harmony export */ });
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/defineProperty.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _defineProperty)
+/* harmony export */ });
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _iterableToArrayLimit)
+/* harmony export */ });
+function _iterableToArrayLimit(arr, i) {
+  var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
+
+  if (_i == null) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+
+  var _s, _e;
+
+  try {
+    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/nonIterableRest.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/nonIterableRest.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _nonIterableRest)
+/* harmony export */ });
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _objectWithoutProperties)
+/* harmony export */ });
+/* harmony import */ var _objectWithoutPropertiesLoose_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./objectWithoutPropertiesLoose.js */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js");
+
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {};
+  var target = (0,_objectWithoutPropertiesLoose_js__WEBPACK_IMPORTED_MODULE_0__["default"])(source, excluded);
+  var key, i;
+
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+      target[key] = source[key];
+    }
+  }
+
+  return target;
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _objectWithoutPropertiesLoose)
+/* harmony export */ });
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/readOnlyError.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/readOnlyError.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _readOnlyError)
+/* harmony export */ });
+function _readOnlyError(name) {
+  throw new TypeError("\"" + name + "\" is read-only");
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/slicedToArray.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/slicedToArray.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _slicedToArray)
+/* harmony export */ });
+/* harmony import */ var _arrayWithHoles_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./arrayWithHoles.js */ "./node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js");
+/* harmony import */ var _iterableToArrayLimit_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./iterableToArrayLimit.js */ "./node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js");
+/* harmony import */ var _unsupportedIterableToArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./unsupportedIterableToArray.js */ "./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js");
+/* harmony import */ var _nonIterableRest_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./nonIterableRest.js */ "./node_modules/@babel/runtime/helpers/esm/nonIterableRest.js");
+
+
+
+
+function _slicedToArray(arr, i) {
+  return (0,_arrayWithHoles_js__WEBPACK_IMPORTED_MODULE_0__["default"])(arr) || (0,_iterableToArrayLimit_js__WEBPACK_IMPORTED_MODULE_1__["default"])(arr, i) || (0,_unsupportedIterableToArray_js__WEBPACK_IMPORTED_MODULE_2__["default"])(arr, i) || (0,_nonIterableRest_js__WEBPACK_IMPORTED_MODULE_3__["default"])();
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _unsupportedIterableToArray)
+/* harmony export */ });
+/* harmony import */ var _arrayLikeToArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./arrayLikeToArray.js */ "./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js");
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return (0,_arrayLikeToArray_js__WEBPACK_IMPORTED_MODULE_0__["default"])(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return (0,_arrayLikeToArray_js__WEBPACK_IMPORTED_MODULE_0__["default"])(o, minLen);
+}
 
 /***/ })
 
@@ -4425,8 +5375,8 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
 /* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
-/* harmony import */ var _babel_runtime_helpers_readOnlyError__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/readOnlyError */ "./node_modules/@babel/runtime/helpers/esm/readOnlyError.js");
+/* harmony import */ var _babel_runtime_helpers_readOnlyError__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/readOnlyError */ "./node_modules/@babel/runtime/helpers/esm/readOnlyError.js");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _modules_PubSub_PubSub__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/PubSub/PubSub */ "./modules/PubSub/PubSub.js");
@@ -4442,7 +5392,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_Icons_CorticoIcon__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./modules/Icons/CorticoIcon */ "./modules/Icons/CorticoIcon.js");
 /* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./index.css */ "./index.css");
 /* harmony import */ var _modules_Modal_Modal__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./modules/Modal/Modal */ "./modules/Modal/Modal.js");
-/* harmony import */ var _modules_cortico_Dashboard__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./modules/cortico/Dashboard */ "./modules/cortico/Dashboard/index.js");
+/* harmony import */ var _modules_Messenger_Messenger__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./modules/Messenger/Messenger */ "./modules/Messenger/Messenger.js");
 /* harmony import */ var _modules_cortico_Disclaimer__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./modules/cortico/Disclaimer */ "./modules/cortico/Disclaimer.js");
 
 
@@ -4476,111 +5426,175 @@ var CORTICO = {}; // container for global state. Use this rather than `window`
 var version = '3.8.1';
 var pubsub = (0,_modules_PubSub_PubSub__WEBPACK_IMPORTED_MODULE_5__.pubSubInit)();
 var oscar = new _modules_core_Oscar_js__WEBPACK_IMPORTED_MODULE_10__.Oscar(window.location.hostname);
+window.is_dev =  true ? true : 0;
 var cortico_media = ["phone", "clinic", "virtual", "", "quiet"];
 
-var init_cortico = function init_cortico() {
-  // create an element to indicate the library is loaded in the dom, and to contain fixed menus/elements.
-  var anchor = document.createElement("div");
-  anchor.id = "cortico_anchor";
-  document.body.appendChild(anchor);
-  var route = "" + window.location;
-  var oscar_elements = Array.from(document.getElementsByTagName("script")).filter(function (s) {
-    return s.src.indexOf("/Oscar.js") > 0 || s.src.indexOf("/oscar/js/") > 0 || s.src.indexOf("/appointment.js") > 0 || s.src.indexOf("phr/phr.js" > -1) // Encounter page
-    ;
-  }); // some pages have no scripts, but they have other elements.
+var init_cortico = /*#__PURE__*/function () {
+  var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee() {
+    var anchor, route, oscar_elements, resources_field, cortico_button, isMarkham, patient_info, currentPharmacyCode, additionalNotes, previewFrame;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            // create an element to indicate the library is loaded in the dom, and to contain fixed menus/elements.
+            anchor = document.createElement("div");
+            anchor.id = "cortico_anchor";
+            document.body.appendChild(anchor);
+            route = "" + window.location;
+            oscar_elements = Array.from(document.getElementsByTagName("script")).filter(function (s) {
+              return s.src.indexOf("/Oscar.js") > 0 || s.src.indexOf("/oscar/js/") > 0 || s.src.indexOf("/appointment.js") > 0 || s.src.indexOf("phr/phr.js" > -1) // Encounter page
+              ;
+            }); // some pages have no scripts, but they have other elements.
 
-  if (!oscar_elements) {
-    document.querySelectorAll("div.DoNotPrint>table"), (0,_babel_runtime_helpers_readOnlyError__WEBPACK_IMPORTED_MODULE_3__.default)("oscar_elements");
-  } // do not run unless we're on an Oscar page.
-
-
-  if (oscar_elements.length === 0) {
-    console.log("Cortico could not find any oscar script");
-    return;
-  }
-
-  console.log("cortico plug-in initializing, version:", version);
-  window.pubsub = pubsub;
-  /*
-  const modal = new Modal();
-  modal.setContent(Dashboard());
-  modal.show();
-  */
-
-  if (route.indexOf("/appointment/addappointment.jsp") > -1 || route.indexOf("/appointment/appointmentcontrol.jsp") > -1) {
-    init_appointment_page();
-
-    if ((window.location.href + '').includes("appointment_no")) {
-      init_recall_button();
-      init_diagnostic_viewer_button();
-    } // only show on add appointment
+            if (!oscar_elements) {
+              document.querySelectorAll("div.DoNotPrint>table"), (0,_babel_runtime_helpers_readOnlyError__WEBPACK_IMPORTED_MODULE_2__["default"])("oscar_elements");
+            } // do not run unless we're on an Oscar page.
 
 
-    if (route.indexOf("/appointment/addappointment.jsp") > -1) {
-      init_medium_option();
-    } // Temporary fix, adding event listener does not work inside init_appointment_page
-    // Note: event listeners inside init_recall_button seems to be working fine
+            if (!(oscar_elements.length === 0)) {
+              _context.next = 9;
+              break;
+            }
+
+            console.log("Cortico could not find any oscar script");
+            return _context.abrupt("return");
+
+          case 9:
+            console.log("cortico plug-in initializing, version:", version);
+            window.pubsub = pubsub;
+            /*
+            const modal = new Modal();
+            modal.setContent(Dashboard());
+            modal.show();
+            */
+
+            if (!(route.indexOf("/appointment/addappointment.jsp") > -1 || route.indexOf("/appointment/appointmentcontrol.jsp") > -1)) {
+              _context.next = 21;
+              break;
+            }
+
+            init_appointment_page();
+
+            if ((window.location.href + "").includes("appointment_no")) {
+              init_recall_button();
+              init_diagnostic_viewer_button();
+            } // only show on add appointment
 
 
-    var resources_field = document.querySelector('[name="resources"]');
-    var cortico_button = document.getElementById("cortico-video-appt-btn"); // open a windows to the cortico video page for this appointment.
+            if (route.indexOf("/appointment/addappointment.jsp") > -1) {
+              init_medium_option();
+            } // Temporary fix, adding event listener does not work inside init_appointment_page
+            // Note: event listeners inside init_recall_button seems to be working fine
 
-    window.addEventListener("click", function (e) {
-      if (e.target.id === "cortico-video-appt-btn") {
-        if (!(0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.checkCorticoUrl)(e.originalEvent)) return;
-        open_video_appointment_page(e);
+
+            resources_field = document.querySelector('[name="resources"]');
+            cortico_button = document.getElementById("cortico-video-appt-btn"); // open a windows to the cortico video page for this appointment.
+
+            window.addEventListener("click", function (e) {
+              if (e.target.id === "cortico-video-appt-btn") {
+                if (!(0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.checkCorticoUrl)(e.originalEvent)) return;
+                open_video_appointment_page(e);
+              }
+            }); //You need to delegate
+            //cortico_button.addEventListener("click", open_video_appointment_page);
+
+            resources_field.addEventListener("change", update_video_button);
+            _context.next = 45;
+            break;
+
+          case 21:
+            if (!(route.indexOf("/provider/providercontrol.jsp") > -1)) {
+              _context.next = 34;
+              break;
+            }
+
+            init_schedule();
+            /**
+             * Drag and drop - disabled for stability reasons.
+             * TODO: fixme?
+             */
+
+            if (!oscar.isJuno() && !oscar.isKaiOscarHost()) {
+              dragAndDrop();
+            }
+
+            addCorticoLogo();
+            addMenu();
+            (0,_modules_cortico_Appointments_AppointmentMenu__WEBPACK_IMPORTED_MODULE_8__.addAppointmentMenu)();
+            (0,_modules_cortico_Login_Login__WEBPACK_IMPORTED_MODULE_9__.addLoginForm)(chrome);
+
+            if (!oscar.isJuno() && !oscar.containsKaiBar()) {
+              plusSignFromCache();
+            }
+
+            isMarkham = window.location.href.includes("mmfcc");
+
+            if (isMarkham) {
+              plusSignFromCache();
+            }
+
+            setupPrescriptionButtons();
+            _context.next = 45;
+            break;
+
+          case 34:
+            if (!(route.indexOf("/eform/efmformadd_data.jsp") > -1 || route.indexOf("/eform/efmshowform_data.jsp") > -1 || route.indexOf("/casemgmt/forward.jsp") > -1)) {
+              _context.next = 44;
+              break;
+            }
+
+            if (!(route.indexOf("/casemgmt/forward.jsp") > -1)) {
+              _context.next = 41;
+              break;
+            }
+
+            _context.next = 38;
+            return getPatientInfo();
+
+          case 38:
+            patient_info = _context.sent;
+            console.log("Patient Info", patient_info);
+            (0,_modules_Messenger_Messenger__WEBPACK_IMPORTED_MODULE_16__["default"])(patient_info);
+
+          case 41:
+            setupEFormPage();
+            _context.next = 45;
+            break;
+
+          case 44:
+            if (route.indexOf("dms/documentReport.jsp") > -1) {
+              setupDocumentPage();
+            } else if (route.indexOf("/oscarRx/ViewScript2.jsp") > -1) {
+              // We need to determine first if the prescription is "delivery"
+              currentPharmacyCode = localStorage.getItem("currentPharmacyCode");
+
+              if (currentPharmacyCode.toLowerCase().indexOf("dlvr") > -1) {
+                additionalNotes = document.getElementById("additionalNotes");
+                additionalNotes.value = "FOR DELIVERY"; // make sure the preview frame is loaded before adding the notes
+
+                previewFrame = document.getElementById("preview");
+                previewFrame.addEventListener("load", function () {
+                  // addNotes is a function in oscar
+                  addNotes();
+                }); // setupFaxButton();
+              }
+            }
+
+          case 45:
+            init_styles();
+
+          case 46:
+          case "end":
+            return _context.stop();
+        }
       }
-    }); //You need to delegate
-    //cortico_button.addEventListener("click", open_video_appointment_page);
+    }, _callee);
+  }));
 
-    resources_field.addEventListener("change", update_video_button);
-  } else if (route.indexOf("/provider/providercontrol.jsp") > -1) {
-    init_schedule();
-    /**
-     * Drag and drop - disabled for stability reasons.
-     * TODO: fixme?
-     */
-
-    if (!oscar.isJuno() && !oscar.isKaiOscarHost()) {
-      dragAndDrop();
-    }
-
-    addCorticoLogo();
-    addMenu();
-    (0,_modules_cortico_Appointments_AppointmentMenu__WEBPACK_IMPORTED_MODULE_8__.addAppointmentMenu)();
-    (0,_modules_cortico_Login_Login__WEBPACK_IMPORTED_MODULE_9__.addLoginForm)(chrome);
-
-    if (!oscar.isJuno() && !oscar.containsKaiBar()) {
-      plusSignFromCache();
-    }
-
-    var isMarkham = window.location.href.includes("mmfcc");
-
-    if (isMarkham) {
-      plusSignFromCache();
-    }
-
-    setupPrescriptionButtons();
-  } else if (route.indexOf("/eform/efmformadd_data.jsp") > -1 || route.indexOf("/eform/efmshowform_data.jsp") > -1 || route.indexOf("/casemgmt/forward.jsp") > -1) {
-    setupPatientEmailButton();
-  } else if (route.indexOf("/oscarRx/ViewScript2.jsp") > -1) {
-    // We need to determine first if the prescription is "delivery"
-    var currentPharmacyCode = localStorage.getItem("currentPharmacyCode");
-
-    if (currentPharmacyCode.toLowerCase().indexOf("dlvr") > -1) {
-      var additionalNotes = document.getElementById("additionalNotes");
-      additionalNotes.value = "FOR DELIVERY"; // make sure the preview frame is loaded before adding the notes
-
-      var previewFrame = document.getElementById("preview");
-      previewFrame.addEventListener("load", function () {
-        // addNotes is a function in oscar
-        addNotes();
-      }); // setupFaxButton();
-    }
-  }
-
-  init_styles();
-};
+  return function init_cortico() {
+    return _ref.apply(this, arguments);
+  };
+}();
 
 var init_schedule = function init_schedule() {
   if (!(oscar.isOscarGoHost() || oscar.isKaiOscarHost() || oscar.containsKaiBar() || oscar.containsOscarGoOceanScript())) {
@@ -4710,7 +5724,7 @@ function init_appointment_page() {
 }
 
 function stripScripts(el) {
-  var scripts = el.getElementsByTagName('script');
+  var scripts = el.getElementsByTagName("script");
   var i = scripts.length;
 
   while (i--) {
@@ -4723,38 +5737,38 @@ function convertImagesToDataURLs(_x) {
 }
 
 function _convertImagesToDataURLs() {
-  _convertImagesToDataURLs = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee6(el) {
+  _convertImagesToDataURLs = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee7(el) {
     var bg_images, i, bg;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee6$(_context6) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee7$(_context7) {
       while (1) {
-        switch (_context6.prev = _context6.next) {
+        switch (_context7.prev = _context7.next) {
           case 0:
             // convert bg images to data URL.
-            bg_images = el.querySelectorAll('img');
+            bg_images = el.querySelectorAll("img");
             i = 0;
 
           case 2:
             if (!(i < bg_images.length)) {
-              _context6.next = 14;
+              _context7.next = 14;
               break;
             }
 
             bg = bg_images[i];
-            _context6.prev = 4;
-            return _context6.delegateYield( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee5() {
+            _context7.prev = 4;
+            return _context7.delegateYield( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee6() {
               var blob, dataUrl;
-              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee5$(_context5) {
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee6$(_context6) {
                 while (1) {
-                  switch (_context5.prev = _context5.next) {
+                  switch (_context6.prev = _context6.next) {
                     case 0:
-                      _context5.next = 2;
+                      _context6.next = 2;
                       return fetch(bg.src).then(function (r) {
                         return r.blob();
                       });
 
                     case 2:
-                      blob = _context5.sent;
-                      _context5.next = 5;
+                      blob = _context6.sent;
+                      _context6.next = 5;
                       return new Promise(function (resolve) {
                         var reader = new FileReader();
 
@@ -4766,53 +5780,174 @@ function _convertImagesToDataURLs() {
                       });
 
                     case 5:
-                      dataUrl = _context5.sent;
+                      dataUrl = _context6.sent;
                       bg.src = dataUrl;
 
                     case 7:
                     case "end":
-                      return _context5.stop();
+                      return _context6.stop();
                   }
                 }
-              }, _callee5);
+              }, _callee6);
             })(), "t0", 6);
 
           case 6:
-            _context6.next = 11;
+            _context7.next = 11;
             break;
 
           case 8:
-            _context6.prev = 8;
-            _context6.t1 = _context6["catch"](4);
+            _context7.prev = 8;
+            _context7.t1 = _context7["catch"](4);
             // some images may have cross origin restrictions.
-            console.warn('failed to convert image: ', bg, _context6.t1);
+            console.warn("failed to convert image: ", bg, _context7.t1);
 
           case 11:
             i++;
-            _context6.next = 2;
+            _context7.next = 2;
             break;
 
           case 14:
           case "end":
-            return _context6.stop();
+            return _context7.stop();
         }
       }
-    }, _callee6, null, [[4, 8]]);
+    }, _callee7, null, [[4, 8]]);
   }));
   return _convertImagesToDataURLs.apply(this, arguments);
 }
 
-function setupPatientEmailButton() {
-  return _setupPatientEmailButton.apply(this, arguments);
+function setupDocumentPage() {
+  return _setupDocumentPage.apply(this, arguments);
 }
 
-function _setupPatientEmailButton() {
-  _setupPatientEmailButton = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee9() {
+function _setupDocumentPage() {
+  _setupDocumentPage = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee10() {
+    var pdf_links, patient_info;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee10$(_context10) {
+      while (1) {
+        switch (_context10.prev = _context10.next) {
+          case 0:
+            pdf_links = document.querySelectorAll("#privateDocs td:nth-child(2) a");
+            _context10.next = 3;
+            return getPatientInfo();
+
+          case 3:
+            patient_info = _context10.sent;
+            pdf_links.forEach(function (pdf_link) {
+              if (pdf_link.href.indexOf("?sort") > -1) return;
+              var email_btn = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.create)("<a class='cortico-btn cortico-btn-small' style='display:inline'> -&gt; PT</a>", {
+                events: {
+                  click: function () {
+                    var _click = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee9(e) {
+                      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee9$(_context9) {
+                        while (1) {
+                          switch (_context9.prev = _context9.next) {
+                            case 0:
+                              if ((0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.checkCorticoUrl)(e)) {
+                                _context9.next = 2;
+                                break;
+                              }
+
+                              return _context9.abrupt("return");
+
+                            case 2:
+                              _context9.next = 4;
+                              return (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.loadExtensionStorageValue)("jwt_access_token").then( /*#__PURE__*/function () {
+                                var _ref3 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee8(access_token) {
+                                  var pdf_link_ext, blob, dataUrl, patientFormResponse;
+                                  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee8$(_context8) {
+                                    while (1) {
+                                      switch (_context8.prev = _context8.next) {
+                                        case 0:
+                                          pdf_link_ext = pdf_link.outerHTML.replace(/\&amp;/g, "&").match(/\'(Manage[^\']+)\'/)[1];
+                                          console.log(pdf_link_ext);
+                                          _context8.next = 4;
+                                          return fetch(pdf_link_ext).then(function (r) {
+                                            return r.blob();
+                                          });
+
+                                        case 4:
+                                          blob = _context8.sent;
+                                          _context8.next = 7;
+                                          return new Promise(function (resolve) {
+                                            var reader = new FileReader();
+
+                                            reader.onload = function () {
+                                              return resolve(reader.result);
+                                            };
+
+                                            reader.readAsDataURL(blob);
+                                          });
+
+                                        case 7:
+                                          dataUrl = _context8.sent;
+                                          _context8.next = 10;
+                                          return emailPatient(patient_info, access_token, {
+                                            attachment: dataUrl
+                                          });
+
+                                        case 10:
+                                          patientFormResponse = _context8.sent;
+                                          console.log("RSP: ", patientFormResponse);
+
+                                          if (patientFormResponse.success) {
+                                            document.querySelector(".documentLists").appendChild((0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.create)("<p>".concat(patient_info.email, " was sent a <a style='text-decoration:underline' target=\"_blank\" href=\"").concat(patientFormResponse.preview, "\">document</a>.</p>")));
+                                          }
+
+                                        case 13:
+                                        case "end":
+                                          return _context8.stop();
+                                      }
+                                    }
+                                  }, _callee8);
+                                }));
+
+                                return function (_x17) {
+                                  return _ref3.apply(this, arguments);
+                                };
+                              }());
+
+                            case 4:
+                            case "end":
+                              return _context9.stop();
+                          }
+                        }
+                      }, _callee9);
+                    }));
+
+                    function click(_x16) {
+                      return _click.apply(this, arguments);
+                    }
+
+                    return click;
+                  }()
+                }
+              }); // end create.
+
+              pdf_link.parentNode.appendChild(email_btn);
+            });
+
+          case 5:
+          case "end":
+            return _context10.stop();
+        }
+      }
+    }, _callee10);
+  }));
+  return _setupDocumentPage.apply(this, arguments);
+}
+
+function setupEFormPage() {
+  return _setupEFormPage.apply(this, arguments);
+}
+
+function _setupEFormPage() {
+  _setupEFormPage = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee13() {
     var is_eform_page, clinicName, email_parent, _email_parent, patient_info, email_btn;
 
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee9$(_context9) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee13$(_context13) {
       while (1) {
-        switch (_context9.prev = _context9.next) {
+        switch (_context13.prev = _context13.next) {
           case 0:
             is_eform_page = true;
             clinicName = localStorage["clinicname"];
@@ -4824,47 +5959,47 @@ function _setupPatientEmailButton() {
             }
 
             if (email_parent) {
-              _context9.next = 7;
+              _context13.next = 7;
               break;
             }
 
             // bail
-            console.warn('Cannot find position for email button.');
-            return _context9.abrupt("return");
+            console.warn("Cannot find position for email button.");
+            return _context13.abrupt("return");
 
           case 7:
-            _context9.next = 9;
+            _context13.next = 9;
             return getPatientInfo();
 
           case 9:
-            patient_info = _context9.sent;
+            patient_info = _context13.sent;
             email_btn = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.create)("\n    <p style='margin-bottom:2em'>\n      <a id='cortico-email-patient' class='cortico-btn'>Email Patient</a>\n    </p>", {
               events: {
                 "click #cortico-email-patient": function () {
-                  var _clickCorticoEmailPatient = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee8(e) {
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee8$(_context8) {
+                  var _clickCorticoEmailPatient = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee12(e) {
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee12$(_context12) {
                       while (1) {
-                        switch (_context8.prev = _context8.next) {
+                        switch (_context12.prev = _context12.next) {
                           case 0:
                             if ((0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.checkCorticoUrl)(e)) {
-                              _context8.next = 2;
+                              _context12.next = 2;
                               break;
                             }
 
-                            return _context8.abrupt("return");
+                            return _context12.abrupt("return");
 
                           case 2:
-                            _context8.next = 4;
+                            _context12.next = 4;
                             return (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.loadExtensionStorageValue)("jwt_access_token").then( /*#__PURE__*/function () {
-                              var _ref2 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee7(access_token) {
+                              var _ref4 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee11(access_token) {
                                 var html, patientFormResponse;
-                                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee7$(_context7) {
+                                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee11$(_context11) {
                                   while (1) {
-                                    switch (_context7.prev = _context7.next) {
+                                    switch (_context11.prev = _context11.next) {
                                       case 0:
                                         // copy document and prepare it for printing.
                                         html = document.cloneNode(true);
-                                        _context7.next = 3;
+                                        _context11.next = 3;
                                         return convertImagesToDataURLs(html);
 
                                       case 3:
@@ -4874,39 +6009,41 @@ function _setupPatientEmailButton() {
                                         // hidden in the print media CSS embedded in all eForms
                                         //let doNotPrintList = html.querySelectorAll(".DoNotPrint")
 
-                                        _context7.next = 6;
-                                        return emailPatientEForm(patient_info, html.documentElement.outerHTML, access_token);
+                                        _context11.next = 6;
+                                        return emailPatient(patient_info, access_token, {
+                                          html: html.documentElement.outerHTML
+                                        });
 
                                       case 6:
-                                        patientFormResponse = _context7.sent;
-                                        console.log('RSP: ', patientFormResponse);
+                                        patientFormResponse = _context11.sent;
+                                        console.log("RSP: ", patientFormResponse);
 
                                         if (patientFormResponse.success) {
-                                          document.getElementById('cortico-email-patient').parentNode.appendChild((0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.create)("<p>".concat(patient_info.email, " was sent a <a style='text-decoration:underline' target=\"_blank\" href=\"").concat(patientFormResponse.preview, "\">document</a>.</p>")));
+                                          document.getElementById("cortico-email-patient").parentNode.appendChild((0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.create)("<p>".concat(patient_info.email, " was sent a <a style='text-decoration:underline' target=\"_blank\" href=\"").concat(patientFormResponse.preview, "\">document</a>.</p>")));
                                         }
 
                                       case 9:
                                       case "end":
-                                        return _context7.stop();
+                                        return _context11.stop();
                                     }
                                   }
-                                }, _callee7);
+                                }, _callee11);
                               }));
 
-                              return function (_x17) {
-                                return _ref2.apply(this, arguments);
+                              return function (_x19) {
+                                return _ref4.apply(this, arguments);
                               };
                             }());
 
                           case 4:
                           case "end":
-                            return _context8.stop();
+                            return _context12.stop();
                         }
                       }
-                    }, _callee8);
+                    }, _callee12);
                   }));
 
-                  function clickCorticoEmailPatient(_x16) {
+                  function clickCorticoEmailPatient(_x18) {
                     return _clickCorticoEmailPatient.apply(this, arguments);
                   }
 
@@ -4919,12 +6056,12 @@ function _setupPatientEmailButton() {
 
           case 12:
           case "end":
-            return _context9.stop();
+            return _context13.stop();
         }
       }
-    }, _callee9);
+    }, _callee13);
   }));
-  return _setupPatientEmailButton.apply(this, arguments);
+  return _setupEFormPage.apply(this, arguments);
 }
 
 function delegate(element, event, descendentSelector, callback) {
@@ -4938,7 +6075,7 @@ function delegate(element, event, descendentSelector, callback) {
 }
 
 var init_styles = function init_styles() {
-  var style = ".cortico-btn {\n  -webkit-appearance:none;\n  -moz-appearance:none;\n  appearance:none;\n  margin: 0.5rem;\n  background:#5b6ce2;\n  border: 1px solid #d8ddff;\n  border-radius:.5rem;\n  color:#fff;\n  cursor:pointer;\n  display:inline-block;\n  font-family:Montserrat,sans-serif;\n  font-size:.8rem;\n  font-weight:600;\n  height:30px;\n  line-height:1.2rem;\n  box-shadow: 0 3px 3px 2px rgba(0, 0, 0, 0.3);\n  outline:0;\n  padding:0 1rem;\n  text-align:center;\n  text-decoration:none;\n  transition:background .2s,border .2s,box-shadow .2s,color .2s;\n  -webkit-user-select:none;\n  -moz-user-select:none;\n  -ms-user-select:none;\n  user-select:none;\n  vertical-align:middle;\n  white-space:nowrap;\n  }\n  .cortico-btn:focus {\n  box-shadow:0 0 0 .1rem rgba(92,112,255,.2)\n  }\n  .cortico-btn:focus,\n  .cortico-btn:hover {\n  background:white;\n  border-color:#5b6ce2;\n  color: #5b6ce2;\n  text-decoration:none\n  }\n  .cortico-btn.active,\n  .cortico-btn:active {\n  background:white;\n  border-color:#5b6ce2;\n  color: #5b6ce2;\n  text-decoration:none\n  }\n  .cortico-input {\n  font-size: 16px;\n  padding: 5px 5px;\n  margin: 0px 10px;\n  width: 35%;\n  background-color: transparent;\n  border: 1px solid rgb(75, 84, 246);\n  }\n  .cortico-input.disabled {\n  background-color: #DDD;\n  color: #999;\n  }\n  .cortico-btn.inline {\n  width: 100%;\n  display: inline-block;\n  margin: 10px auto;\n  }\n  .bottom {\n  position: absolute;\n  bottom: 1px;\n  left: 10px;\n  }\n  .warning {\n  background-color: #cc3300;\n  }\n  ";
+  var style = ".cortico-btn {\n  -webkit-appearance:none;\n  -moz-appearance:none;\n  appearance:none;\n  margin: 0.5rem;\n  background:#5b6ce2;\n  border: 1px solid #d8ddff;\n  border-radius:.5rem;\n  color:#fff;\n  cursor:pointer;\n  display:inline-block;\n  font-family:Montserrat,sans-serif;\n  font-size:.8rem;\n  font-weight:600;\n  height:30px;\n  line-height:1.2rem;\n  box-shadow: 0 3px 3px 2px rgba(0, 0, 0, 0.3);\n  outline:0;\n  padding:0 1rem;\n  text-align:center;\n  text-decoration:none;\n  transition:background .2s,border .2s,box-shadow .2s,color .2s;\n  -webkit-user-select:none;\n  -moz-user-select:none;\n  -ms-user-select:none;\n  user-select:none;\n  vertical-align:middle;\n  white-space:nowrap;\n  }\n  .cortico-btn:focus {\n  box-shadow:0 0 0 .1rem rgba(92,112,255,.2)\n  }\n  .cortico-btn:focus,\n  .cortico-btn:hover {\n  background:white;\n  border-color:#5b6ce2;\n  color: #5b6ce2;\n  text-decoration:none\n  }\n  .cortico-btn.active,\n  .cortico-btn:active {\n  background:white;\n  border-color:#5b6ce2;\n  color: #5b6ce2;\n  text-decoration:none\n  }\n  .cortico-btn-small {\n    height: auto;\n    padding: 2px;\n  }\n  .cortico-input {\n  font-size: 16px;\n  padding: 5px 5px;\n  margin: 0px 10px;\n  width: 35%;\n  background-color: transparent;\n  border: 1px solid rgb(75, 84, 246);\n  }\n  .cortico-input.disabled {\n  background-color: #DDD;\n  color: #999;\n  }\n  .cortico-btn.inline {\n  width: 100%;\n  display: inline-block;\n  margin: 10px auto;\n  }\n  .bottom {\n  position: absolute;\n  bottom: 1px;\n  left: 10px;\n  }\n  .warning {\n  background-color: #cc3300;\n  }\n  ";
 
   if (!(oscar.isKaiOscarHost() || oscar.containsKaiBar())) {
     style += "\n  .infirmaryView:first-child {\n  /*position:fixed;*/\n  margin-left: 57px;\n  padding: 1px 15px;\n\n  }";
@@ -5003,23 +6140,23 @@ function createSideBar() {
 }
 
 function _createSideBar() {
-  _createSideBar = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee10() {
+  _createSideBar = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee14() {
     var sidebar, styleSheet, styles;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee10$(_context10) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee14$(_context14) {
       while (1) {
-        switch (_context10.prev = _context10.next) {
+        switch (_context14.prev = _context14.next) {
           case 0:
             if (!window.corticoSidebar) {
-              _context10.next = 2;
+              _context14.next = 2;
               break;
             }
 
-            return _context10.abrupt("return");
+            return _context14.abrupt("return");
 
           case 2:
             sidebar = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.create)("\n  <div class='cortico-sidebar'>\n    <a href=\"https://cortico.ca\"><img src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGEAAABhCAYAAADGBs+jAAAACXBIWXMAAAsSAAALEgHS3X78AAAEqklEQVR4nO2dvXHbMBSAX3RpVNkb2BvYmcAaQIUa1nEmiDYIR1AmsFyrSe7Ux9lAniDWBlbF0jnIjzYlUyRAvAc8kO+707mxAAofQeLvAZ9eXl4gJaZZcQ4A1wAwObrsDQA8rFfj56R+EAAkI2GaFabg5wDwteVf7wFguV6NHwJdmjfiJeCdnwPAd8ev/jTfS6FmiJaAAswdfdUxiUcAuF2vxhviSyNFrAQCASVGxERyjRgJuIYPEAoATOMX8SWSIk4CsYCSm2lWzAjTI0WUBCYBJTlDmiSIkcAswHCFzVxxiJAQQEDJcQdPBNElBBQA2NMWR1QJgQUYLgPl40Q0CREEiCWKBBVwSHAJkQWIHNQLKkFADRA5hhRs7EiAgN16NT6PlHcjQWqCkHfAImLejbBLECJgO1gJglpBs0EOZQsS8E36pA6LBGEClpGvoRVyCSrAHVIJKqAbZBJUQHdIJKgAP7wlqAB/vCSoABo6S1ABdHSSoAJocZagAuhxkqACeLCWoAL4sJKgAnhplaAC+GmUoALC8PlULirAnUo83cZlEql2ol8F2DHNCrOib4afm5ov/cXYiGWTlA8SVEA7WEYmiPGH5Vd2Zo57vRrXLs8/kKAC2sHl9cuOZVQbuvUmQQW0gwJMGZ15JPNBRLV1pAIawJt06SkAsIwPlmPuJUyzYq4CWskJy8hEDb29H/aPo2lWPBMY9iGFVtA/4mTNy/rSPJZG06y4VQGtzBnSNGVuyn7/OIoZx5VKR4yrjKJLSGkogi2iFFDCBVMGTaQ0FMF6k5pmb4xwqV4PxnXgPLQEFVDDCNfuhyBJAdybV5n0R4HiuFKvAY+c6Y4CbEPTh0cQV23Yp1tK2DFl0pd3AFeo1T7dEY7mcWRiLcA007DnLpL1avyEe+pRco/pvg7g4WQD5XPPSQBWyzvJInAAj6oRs6sOhVSbqBMiEV0ElGNXYkXgE2NG8OjeHc8nUM6sbTFK0qq11TJB0teJnVLAQRmdmujPsbrYZvQbt760WmFg+UOkT/AsLDbKrWI2zZ3XldHJbRUwo1v81NWMLRbkwiVE1fFOSmGeIcdHed0YXFlGefkSrsN6bwvMsNy0yWldTSWNLlU5iWbuUfkYnpoKvkrIDUZ8nqW9HnMKtcHIxHOVgvTmqxchNhgxhfeHYAq1tyK4NxgxLYg7wiR7KYLlnYCPnwXjtGCv3hGkErDw8xOLY6npjQhvCVjwE+xPhJ6v7oWIzhKwXbyJvGYJBhvHDO/DuxPGuQhbkn9Ze7WOcLhCRXji3URVEf6Q9BNUhB9knTUV0R3SHrOK6Ab5sIWKcIdl7EhFuME6n0AUaEfBF8kb1LKOogqqEb9wulYk7PMJQkRcMIU8kZDK9CYFb4F6kfI/SbD4BAE14kzPWZMhQiVAfBF62F2JoFaTCKIddqci3ol67KOKeCX6AaiBRYjsNYs4CjigCJEnDgbrrNnA3KEb9mF3tjDXiOEeducKk4jhHnbXFWIRu8EedudLRYRPxGRtjJg0xEqAdxHXGBPnymMKAkBa66gJh8XGW4wRS2ZpZDISSnANrBFi/pYDcuZuN8syTSyd+Dv/AAD4D9nFlj4ll12bAAAAAElFTkSuQmCC\"  alt=\"Cortico\" style=\"margin-bottom: 25px;\" /></a>\n    <div class='cortico-sidebar-close'>Close</div>\n  </div>\n  ", {
               events: {
-                'click .cortico-sidebar-close': function clickCorticoSidebarClose() {
+                "click .cortico-sidebar-close": function clickCorticoSidebarClose() {
                   sidebar.classList.remove("cortico-sidebar-show");
 
                   if (window.localStorage["firstRun"] === "true") {
@@ -5032,14 +6169,14 @@ function _createSideBar() {
             window.corticoSidebar = sidebar; //var newUiOption = getNewUIOption();
             //sidebar.appendChild(newUiOption);
 
-            _context10.t0 = sidebar;
-            _context10.next = 7;
+            _context14.t0 = sidebar;
+            _context14.next = 7;
             return getCorticoLogin();
 
           case 7:
-            _context10.t1 = _context10.sent;
+            _context14.t1 = _context14.sent;
 
-            _context10.t0.appendChild.call(_context10.t0, _context10.t1);
+            _context14.t0.appendChild.call(_context14.t0, _context14.t1);
 
             sidebar.appendChild(getCorticoUrlOption());
             sidebar.appendChild(getRecallStatusOption());
@@ -5053,14 +6190,14 @@ function _createSideBar() {
             styleSheet = styleSheetFactory("cortico_sidebar");
             styles = "\n    .cortico-sidebar { position: fixed; top: 0; right: 0; bottom: 0; width: 300px; background-color: white; height: 100%; z-index: 10000; }\n    .cortico-sidebar { transition: transform 0.25s ease-in; transform: translateX(300px); }\n    .cortico-sidebar { display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 1px 5px 5px rgb(0, 0, 0); }\n    .cortico-sidebar-show { transform: translateX(0); }\n    .cortico-sidebar-close { cursor:pointer; position: absolute; top: 10px; right: 10px; z-index: 500; }\n  ";
             styleSheet.innerText = styles;
-            return _context10.abrupt("return", sidebar);
+            return _context14.abrupt("return", sidebar);
 
           case 22:
           case "end":
-            return _context10.stop();
+            return _context14.stop();
         }
       }
-    }, _callee10);
+    }, _callee14);
   }));
   return _createSideBar.apply(this, arguments);
 }
@@ -5100,22 +6237,22 @@ function addMenu(_x2) {
 }
 
 function _addMenu() {
-  _addMenu = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee11(container) {
+  _addMenu = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee15(container) {
     var navigation, menu, sidebar;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee11$(_context11) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee15$(_context15) {
       while (1) {
-        switch (_context11.prev = _context11.next) {
+        switch (_context15.prev = _context15.next) {
           case 0:
             navigation = document.querySelector("#firstMenu #navList") || document.querySelector("#firstMenu #navlist");
             menu = document.createElement("li");
             menu.textContent = "Cortico";
             menu.style.color = "rgb(75, 84, 246)";
             menu.style.cursor = "pointer";
-            _context11.next = 7;
+            _context15.next = 7;
             return createSideBar();
 
           case 7:
-            sidebar = _context11.sent;
+            sidebar = _context15.sent;
             menu.addEventListener("click", function () {
               sidebar.classList.toggle("cortico-sidebar-show");
 
@@ -5129,7 +6266,7 @@ function _addMenu() {
 
               if (!opened) {
                 var modal = new _modules_Modal_Modal__WEBPACK_IMPORTED_MODULE_15__.Modal();
-                modal.setContent((0,_modules_cortico_Disclaimer__WEBPACK_IMPORTED_MODULE_17__.default)());
+                modal.setContent((0,_modules_cortico_Disclaimer__WEBPACK_IMPORTED_MODULE_17__["default"])());
                 modal.show();
                 window.localStorage["disclaimer"] = true;
               }
@@ -5146,10 +6283,10 @@ function _addMenu() {
 
           case 13:
           case "end":
-            return _context11.stop();
+            return _context15.stop();
         }
       }
-    }, _callee11);
+    }, _callee15);
   }));
   return _addMenu.apply(this, arguments);
 }
@@ -5309,43 +6446,43 @@ function getCorticoLogin() {
 }
 
 function _getCorticoLogin() {
-  _getCorticoLogin = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee13() {
+  _getCorticoLogin = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee17() {
     var container, jwt_expired, loginButton, loggedInAsText, loggedInAsHtml, btnEvent;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee13$(_context13) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee17$(_context17) {
       while (1) {
-        switch (_context13.prev = _context13.next) {
+        switch (_context17.prev = _context17.next) {
           case 0:
-            container = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.create)('<div></div>');
+            container = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.create)("<div></div>");
 
             if ((0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getCorticoUrl)()) {
-              _context13.next = 3;
+              _context17.next = 3;
               break;
             }
 
-            return _context13.abrupt("return", container);
+            return _context17.abrupt("return", container);
 
           case 3:
             jwt_expired = null;
             loginButton = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.create)("<button class='cortico-btn'>Sign in at Cortico</button>");
-            loggedInAsText = '';
-            loggedInAsHtml = '';
+            loggedInAsText = "";
+            loggedInAsHtml = "";
             btnEvent = {
               "click .cortico-btn": function clickCorticoBtn(e) {
                 if (!(0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.checkCorticoUrl)(e.originalEvent)) return;
 
-                if (e.target.className == 'cortico-btn') {
+                if (e.target.className == "cortico-btn") {
                   var loginForm = document.querySelector(".login-form");
                   loginForm.classList.add("show");
                 }
               }
             };
-            _context13.next = 10;
+            _context17.next = 10;
             return (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.loadExtensionStorageValue)("jwt_username").then(function (username) {
               loggedInAsText = "Logged in as ".concat(username);
             });
 
           case 10:
-            _context13.next = 12;
+            _context17.next = 12;
             return (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.loadExtensionStorageValue)("jwt_expired").then(function (expired) {
               jwt_expired = expired;
 
@@ -5354,26 +6491,31 @@ function _getCorticoLogin() {
                 loggedInAsHtml = "<p>".concat(loggedInAsText, "</p>");
                 btnEvent = {
                   "click .cortico-btn": function () {
-                    var _clickCorticoBtn = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee12(e) {
-                      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee12$(_context12) {
+                    var _clickCorticoBtn = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee16(e) {
+                      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee16$(_context16) {
                         while (1) {
-                          switch (_context12.prev = _context12.next) {
+                          switch (_context16.prev = _context16.next) {
                             case 0:
-                              if (e.target.className == 'cortico-btn') {
-                                chrome.storage.local.remove(['jwt_access_token', 'jwt_expired']);
-                                alert("Logged out from cortico, reloading...");
-                                window.location.reload();
+                              if (e.target.className == "cortico-btn") {
+                                if (window.is_dev) {
+                                  localStorage.removeItem("jwt_access_token");
+                                  localStorage.removeItem("jwt_expired");
+                                } else {
+                                  chrome.storage.local.remove(["jwt_access_token", "jwt_expired"]);
+                                }
+
+                                if (!alert("Logged out from cortico, reloading...")) window.location.reload();
                               }
 
                             case 1:
                             case "end":
-                              return _context12.stop();
+                              return _context16.stop();
                           }
                         }
-                      }, _callee12);
+                      }, _callee16);
                     }));
 
-                    function clickCorticoBtn(_x18) {
+                    function clickCorticoBtn(_x20) {
                       return _clickCorticoBtn.apply(this, arguments);
                     }
 
@@ -5387,14 +6529,14 @@ function _getCorticoLogin() {
             container = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.create)("<div class='login-form-button'>\n    ".concat(loginButton.outerHTML, "\n    ").concat(loggedInAsHtml, "\n    </div>"), {
               events: btnEvent
             });
-            return _context13.abrupt("return", container);
+            return _context17.abrupt("return", container);
 
           case 14:
           case "end":
-            return _context13.stop();
+            return _context17.stop();
         }
       }
-    }, _callee13);
+    }, _callee17);
   }));
   return _getCorticoLogin.apply(this, arguments);
 }
@@ -5466,8 +6608,7 @@ function getCorticoUrlOption() {
 
     if (input.value) {
       localStorage.setItem("clinicname", input.value);
-      alert("Your clinic name has changed, the page will now reload");
-      window.location.reload();
+      if (!alert("Your clinic name has changed, the page will now reload")) window.location.reload();
     }
   });
   return container;
@@ -5478,21 +6619,21 @@ function getEligButton() {
   var container = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.createSidebarContainer)(button, {
     events: {
       "click .cortico-btn.inline": function () {
-        var _clickCorticoBtnInline = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee(e) {
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee$(_context) {
+        var _clickCorticoBtnInline = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee2(e) {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee2$(_context2) {
             while (1) {
-              switch (_context.prev = _context.next) {
+              switch (_context2.prev = _context2.next) {
                 case 0:
                   console.log("Check Eligibility Start");
-                  _context.next = 3;
+                  _context2.next = 3;
                   return checkAllEligibility();
 
                 case 3:
                 case "end":
-                  return _context.stop();
+                  return _context2.stop();
               }
             }
-          }, _callee);
+          }, _callee2);
         }));
 
         function clickCorticoBtnInline(_x3) {
@@ -5525,24 +6666,29 @@ function getResetCacheButton() {
   var button = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.create)("<button class='cortico-btn warning bottom'>Reset Cache</button>", {
     events: {
       "click .cortico-btn.warning.bottom": function () {
-        var _clickCorticoBtnWarningBottom = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee2(e) {
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee2$(_context2) {
+        var _clickCorticoBtnWarningBottom = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee3(e) {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee3$(_context3) {
             while (1) {
-              switch (_context2.prev = _context2.next) {
+              switch (_context3.prev = _context3.next) {
                 case 0:
                   if (!confirm("Are you sure you want to clear your cache?")) {
-                    _context2.next = 8;
+                    _context3.next = 8;
                     break;
                   }
 
                   localStorage.clear();
-                  _context2.next = 4;
+
+                  if (window.is_dev) {
+                    _context3.next = 5;
+                    break;
+                  }
+
+                  _context3.next = 5;
                   return chrome.storage.local.clear();
 
-                case 4:
-                  alert("Successfully reset cache, the page will now reload.");
-                  window.location.reload();
-                  _context2.next = 9;
+                case 5:
+                  if (!alert("Successfully reset cache, the page will now reload.")) window.location.reload();
+                  _context3.next = 9;
                   break;
 
                 case 8:
@@ -5550,10 +6696,10 @@ function getResetCacheButton() {
 
                 case 9:
                 case "end":
-                  return _context2.stop();
+                  return _context3.stop();
               }
             }
-          }, _callee2);
+          }, _callee3);
         }));
 
         function clickCorticoBtnWarningBottom(_x4) {
@@ -5674,19 +6820,19 @@ function dragAndDrop() {
 
 
   function _drop_handler() {
-    _drop_handler = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee3(ev) {
+    _drop_handler = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee4(ev) {
       var newStartTime, apptLink, apptLinkText, apptUrl, origin, namespace, result, text, temp, formData, originalStartTime, apptDate, duration, newEndTime, _newStartTime, _newEndTime, apptDoctor, targetDoctor, isSameDoctor, doctor, parent;
 
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee3$(_context3) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee4$(_context4) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context4.prev = _context4.next) {
             case 0:
               if (isValidDragItem()) {
-                _context3.next = 2;
+                _context4.next = 2;
                 break;
               }
 
-              return _context3.abrupt("return");
+              return _context4.abrupt("return");
 
             case 2:
               handleColors(ev.target); // Sibling table cell has the start time
@@ -5696,12 +6842,12 @@ function dragAndDrop() {
               apptLink = (0,_modules_cortico_Appointments_Appointments__WEBPACK_IMPORTED_MODULE_7__.getAppointmentLink)(dragSelectedTarget);
 
               if (apptLink) {
-                _context3.next = 8;
+                _context4.next = 8;
                 break;
               }
 
               alert("No Valid Appointment Link Found");
-              return _context3.abrupt("return", false);
+              return _context4.abrupt("return", false);
 
             case 8:
               apptLinkText = apptLink.attributes.onclick.textContent; //Get the URL and Take out the "../" in front
@@ -5710,16 +6856,16 @@ function dragAndDrop() {
 
               origin = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getOrigin)();
               namespace = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getNamespace)();
-              _context3.next = 14;
+              _context4.next = 14;
               return appointmentEditRequest(origin, namespace, apptUrl);
 
             case 14:
-              result = _context3.sent;
-              _context3.next = 17;
+              result = _context4.sent;
+              _context4.next = 17;
               return result.text();
 
             case 17:
-              text = _context3.sent;
+              text = _context4.sent;
               //Make an element in memory, and we're gonna place the contents of the fetched page here, so we can grab the formdata
               temp = document.createElement("div");
               temp.style.display = "none";
@@ -5734,12 +6880,12 @@ function dragAndDrop() {
               _newEndTime = dayjs__WEBPACK_IMPORTED_MODULE_6___default()(apptDate + "T" + newStartTime).add(duration, "minute");
 
               if (isSameDay(_newStartTime, _newEndTime)) {
-                _context3.next = 31;
+                _context4.next = 31;
                 break;
               }
 
               alert("Cannot overlap to the next day");
-              return _context3.abrupt("return");
+              return _context4.abrupt("return");
 
             case 31:
               apptDoctor = formData.get("provider_no");
@@ -5750,20 +6896,20 @@ function dragAndDrop() {
               formData.set("end_time", newEndTime);
 
               if (!isSameDoctor) {
-                _context3.next = 49;
+                _context4.next = 49;
                 break;
               }
 
-              _context3.next = 40;
+              _context4.next = 40;
               return updateAppointment(origin, namespace, formData);
 
             case 40:
-              result = _context3.sent;
-              _context3.next = 43;
+              result = _context4.sent;
+              _context4.next = 43;
               return result.text();
 
             case 43:
-              text = _context3.sent;
+              text = _context4.sent;
               parent = ev.target.parentElement;
               parent.insertBefore(dragSelectedTarget, ev.target);
               updateAppointmentAnchorLinks(dragSelectedTarget, {
@@ -5773,7 +6919,7 @@ function dragAndDrop() {
                 start_time: newStartTime,
                 provider_no: targetDoctor
               });
-              _context3.next = 50;
+              _context4.next = 50;
               break;
 
             case 49:
@@ -5786,10 +6932,10 @@ function dragAndDrop() {
 
             case 50:
             case "end":
-              return _context3.stop();
+              return _context4.stop();
           }
         }
-      }, _callee3);
+      }, _callee4);
     }));
     return _drop_handler.apply(this, arguments);
   }
@@ -5867,19 +7013,19 @@ function checkAllEligibility() {
 }
 
 function _checkAllEligibility() {
-  _checkAllEligibility = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee14() {
+  _checkAllEligibility = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee18() {
     var nodes, appointmentInfo, length, providerNo, error, i, temp, demographic_no, result, patientInfo, healthNumber, province, text, lowerCaseText, requestSuccess, _text, jsonRes, verified;
 
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee14$(_context14) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee18$(_context18) {
       while (1) {
-        switch (_context14.prev = _context14.next) {
+        switch (_context18.prev = _context18.next) {
           case 0:
             if (!(window.checkAllEligibilityRunning === true)) {
-              _context14.next = 2;
+              _context18.next = 2;
               break;
             }
 
-            return _context14.abrupt("return", alert("Check Already Running"));
+            return _context18.abrupt("return", alert("Check Already Running"));
 
           case 2:
             clearFailureCache();
@@ -5896,12 +7042,12 @@ function _checkAllEligibility() {
             providerNo = getProviderNoFromTd(nodes[0]);
             error = false;
             window.checkAllEligibilityRunning = true;
-            _context14.prev = 12;
+            _context18.prev = 12;
             i = 0;
 
           case 14:
             if (!(i < length)) {
-              _context14.next = 64;
+              _context18.next = 64;
               break;
             }
 
@@ -5913,36 +7059,36 @@ function _checkAllEligibility() {
             result = null; // empty appointment node, do not check
 
             if (!(!demographic_no || demographic_no == 0)) {
-              _context14.next = 23;
+              _context18.next = 23;
               break;
             }
 
-            return _context14.abrupt("continue", 61);
+            return _context18.abrupt("continue", 61);
 
           case 23:
             // In cases where the first appointment in the schedule is an empty
             // appointment, get the providerNo from the node itself
             if (!providerNo) providerNo = getProviderNoFromTd(nodes[i]);
-            _context14.next = 26;
+            _context18.next = 26;
             return getPatientInfo(demographic_no);
 
           case 26:
-            patientInfo = _context14.sent;
-            healthNumber = patientInfo["Health Ins"].replace(/\s+/g, ' ').trim();
-            province = patientInfo["Province"].replace(/\s+/g, ' ').trim();
-            _context14.prev = 29;
-            _context14.next = 32;
+            patientInfo = _context18.sent;
+            healthNumber = patientInfo["Health Ins"].replace(/\s+/g, " ").trim();
+            province = patientInfo["Province"].replace(/\s+/g, " ").trim();
+            _context18.prev = 29;
+            _context18.next = 32;
             return checkEligiblity(demographic_no, (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getOrigin)(), (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getNamespace)(), providerNo, healthNumber, province);
 
           case 32:
-            result = _context14.sent;
-            _context14.next = 38;
+            result = _context18.sent;
+            _context18.next = 38;
             break;
 
           case 35:
-            _context14.prev = 35;
-            _context14.t0 = _context14["catch"](29);
-            console.error(_context14.t0);
+            _context18.prev = 35;
+            _context18.t0 = _context18["catch"](29);
+            console.error(_context18.t0);
 
           case 38:
             text = null;
@@ -5950,15 +7096,15 @@ function _checkAllEligibility() {
             requestSuccess = false;
 
             if (!(result && result.status === 200)) {
-              _context14.next = 49;
+              _context18.next = 49;
               break;
             }
 
-            _context14.next = 44;
+            _context18.next = 44;
             return result.text();
 
           case 44:
-            _text = _context14.sent;
+            _text = _context18.sent;
             lowerCaseText = _text.toLowerCase();
 
             if (oscar.isOscarGoHost()) {
@@ -5969,7 +7115,7 @@ function _checkAllEligibility() {
               }
             }
 
-            _context14.next = 51;
+            _context18.next = 51;
             break;
 
           case 49:
@@ -5978,13 +7124,13 @@ function _checkAllEligibility() {
 
           case 51:
             if (!lowerCaseText.includes("error in teleplan connection")) {
-              _context14.next = 55;
+              _context18.next = 55;
               break;
             }
 
             alert("Automatic Eligiblity Check Aborted. \n" + text);
             error = true;
-            return _context14.abrupt("break", 64);
+            return _context18.abrupt("break", 64);
 
           case 55:
             verified = false;
@@ -6004,7 +7150,7 @@ function _checkAllEligibility() {
 
             (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.addToCache)(demographic_no, verified);
             console.log("Cached.");
-            _context14.next = 61;
+            _context18.next = 61;
             return new Promise(function (resolve, reject) {
               setTimeout(function () {
                 resolve();
@@ -6013,35 +7159,35 @@ function _checkAllEligibility() {
 
           case 61:
             i++;
-            _context14.next = 14;
+            _context18.next = 14;
             break;
 
           case 64:
-            _context14.next = 70;
+            _context18.next = 70;
             break;
 
           case 66:
-            _context14.prev = 66;
-            _context14.t1 = _context14["catch"](12);
-            console.log(_context14.t1);
-            alert(_context14.t1);
+            _context18.prev = 66;
+            _context18.t1 = _context18["catch"](12);
+            console.log(_context18.t1);
+            alert(_context18.t1);
 
           case 70:
-            _context14.prev = 70;
+            _context18.prev = 70;
             window.checkAllEligibilityRunning = false;
             pubsub.publish("check-eligibility", {
               complete: true,
               total: length,
               error: error
             });
-            return _context14.finish(70);
+            return _context18.finish(70);
 
           case 74:
           case "end":
-            return _context14.stop();
+            return _context18.stop();
         }
       }
-    }, _callee14, null, [[12, 66, 70, 74], [29, 35]]);
+    }, _callee18, null, [[12, 66, 70, 74], [29, 35]]);
   }));
   return _checkAllEligibility.apply(this, arguments);
 }
@@ -6052,7 +7198,7 @@ function getPharmacyResults(searchTerm) {
   var url = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getOrigin)() + "/" + (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getNamespace)() + "/" + newLocal;
   return fetch(url, {
     method: "GET",
-    headers: (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__.default)({
+    headers: (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__["default"])({
       Accept: "text/javascript, text/html, application/xml, text/xml, */*",
       "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
     }, "Content-Type", "application/json")
@@ -6064,7 +7210,7 @@ function getCurrentPharmacy(demographicNo) {
   var url = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getOrigin)() + "/" + (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getNamespace)() + "/" + newLocal;
   return fetch(url, {
     method: "GET",
-    headers: (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__.default)({
+    headers: (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__["default"])({
       Accept: "text/javascript, text/html, application/xml, text/xml, */*",
       "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
     }, "Content-Type", "application/json")
@@ -6110,7 +7256,7 @@ function checkEligiblity(demographicNo, origin, namespace, providerNo, healthNum
 
   if (oscar.isOscarGoHost() && province === "ON") {
     var _healthNumber$split = healthNumber.split(" "),
-        _healthNumber$split2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__.default)(_healthNumber$split, 2),
+        _healthNumber$split2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_healthNumber$split, 2),
         hin = _healthNumber$split2[0],
         ver = _healthNumber$split2[1];
 
@@ -6295,8 +7441,8 @@ function plusSignFromCache() {
 }
 /**
  * Parse strings of the form ['key1:value1', 'key2:value2'] -> {key1: value1, key2: value2}
- * @param {} stringArray 
- * @returns 
+ * @param {} stringArray
+ * @returns
  */
 
 
@@ -6364,7 +7510,7 @@ function sendPatientPrescriptionNotification() {
   var clinicName = localStorage["clinicname"];
   var url = "".concat((0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getCorticoUrl)(), "/notify-prescription/");
   var formData = new FormData();
-  formData.append("demographic_no", getDemographicFromLocation());
+  formData.append("demographic_no", (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getDemographicNo)());
   formData.append("pharmacy", localStorage.getItem("preferredPharmacy"));
   var data = new URLSearchParams(formData);
   return fetch(url, {
@@ -6380,39 +7526,39 @@ function sendPatientPrescriptionNotification() {
 function setupFaxButton() {
   var prescriptionFrame = document.getElementById("AutoNumber1");
   prescriptionFrame.addEventListener("click", /*#__PURE__*/function () {
-    var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee4(e) {
+    var _ref2 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee5(e) {
       var result, text, json;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee4$(_context4) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee5$(_context5) {
         while (1) {
-          switch (_context4.prev = _context4.next) {
+          switch (_context5.prev = _context5.next) {
             case 0:
               if (!e.target.matches("#faxBUtton, #faxAndPasteButton")) {
-                _context4.next = 8;
+                _context5.next = 8;
                 break;
               }
 
-              _context4.next = 3;
+              _context5.next = 3;
               return sendPatientPrescriptionNotification();
 
             case 3:
-              result = _context4.sent;
-              _context4.next = 6;
+              result = _context5.sent;
+              _context5.next = 6;
               return result.text();
 
             case 6:
-              text = _context4.sent;
+              text = _context5.sent;
               json = JSON.parse(text);
 
             case 8:
             case "end":
-              return _context4.stop();
+              return _context5.stop();
           }
         }
-      }, _callee4);
+      }, _callee5);
     }));
 
     return function (_x6) {
-      return _ref.apply(this, arguments);
+      return _ref2.apply(this, arguments);
     };
   }(), false);
 }
@@ -6438,11 +7584,11 @@ function setupPreferredPharmacy(_x7, _x8) {
 }
 
 function _setupPreferredPharmacy() {
-  _setupPreferredPharmacy = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee15(code, demographic_no) {
-    var pharmacyCode, corticoPharmacy, respText, corticoPharmacyText, faxNumber, searchTerm, demographicNo, currPharmacyResults, currPharmacyText, preferredPharmacy, currentlyUsingPharmacy, results, text, json, pharmacyUpdated, isRxPage, pharmacy, setPharmacyResults, setPharmacyText, msg;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee15$(_context15) {
+  _setupPreferredPharmacy = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee19(code, demographic_no) {
+    var pharmacyCode, corticoPharmacy, respText, corticoPharmacyText, faxNumber, searchTerm, fullPharmacyName, demographicNo, currPharmacyResults, currPharmacyText, preferredPharmacy, currentlyUsingPharmacy, results, text, json, pharmacyUpdated, isRxPage, pharmacy, setPharmacyResults, setPharmacyText, msg;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee19$(_context19) {
       while (1) {
-        switch (_context15.prev = _context15.next) {
+        switch (_context19.prev = _context19.next) {
           case 0:
             pharmacyCode = localStorage.getItem("currentPharmacyCode");
 
@@ -6450,42 +7596,45 @@ function _setupPreferredPharmacy() {
               pharmacyCode = code;
             }
 
-            _context15.next = 4;
+            _context19.next = 4;
             return getPharmacyDetails(pharmacyCode);
 
           case 4:
-            corticoPharmacy = _context15.sent;
-            _context15.next = 7;
+            corticoPharmacy = _context19.sent;
+            _context19.next = 7;
             return corticoPharmacy.text();
 
           case 7:
-            respText = _context15.sent;
+            respText = _context19.sent;
             corticoPharmacyText = JSON.parse(respText);
             faxNumber = corticoPharmacyText[0]["fax_number"] || null;
-            searchTerm = corticoPharmacyText[0]["name"] || null; // only use the first word on the pharmacy name to search for list
+            searchTerm = corticoPharmacyText[0]["name"] || null;
+            fullPharmacyName = searchTerm; // only use the first word on the pharmacy name to search for list
+            // then remove letter or number
 
-            searchTerm = searchTerm ? searchTerm.split(" ")[0] : null; // cleanup fax number to format starting with 1
+            searchTerm = searchTerm ? searchTerm.split(" ")[0] : null;
+            searchTerm = searchTerm.replace(/[^\w\s]/gi, ""); // cleanup fax number to format starting with 1
             // This might be an issue if the oscar pharmacies don't match this format
 
             if (faxNumber) faxNumber = formatNumber(faxNumber);
             demographicNo = demographic_no;
 
             if (!demographic_no) {
-              demographicNo = getDemographicFromLocation();
+              demographicNo = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getDemographicNo)();
             }
 
-            _context15.next = 17;
+            _context19.next = 19;
             return getCurrentPharmacy(demographicNo);
 
-          case 17:
-            currPharmacyResults = _context15.sent;
-            _context15.t0 = JSON;
-            _context15.next = 21;
+          case 19:
+            currPharmacyResults = _context19.sent;
+            _context19.t0 = JSON;
+            _context19.next = 23;
             return currPharmacyResults.text();
 
-          case 21:
-            _context15.t1 = _context15.sent;
-            currPharmacyText = _context15.t0.parse.call(_context15.t0, _context15.t1);
+          case 23:
+            _context19.t1 = _context19.sent;
+            currPharmacyText = _context19.t0.parse.call(_context19.t0, _context19.t1);
             console.log("Current Pharmacy:", currPharmacyText);
 
             if (currPharmacyText) {
@@ -6497,26 +7646,26 @@ function _setupPreferredPharmacy() {
             console.log("currently using pharmacy ".concat(searchTerm.toLowerCase(), ", ").concat(currentlyUsingPharmacy));
 
             if (!(searchTerm && !currentlyUsingPharmacy)) {
-              _context15.next = 54;
+              _context19.next = 56;
               break;
             }
 
-            _context15.next = 30;
+            _context19.next = 32;
             return getPharmacyResults(searchTerm);
 
-          case 30:
-            results = _context15.sent;
-            _context15.next = 33;
+          case 32:
+            results = _context19.sent;
+            _context19.next = 35;
             return results.text();
 
-          case 33:
-            text = _context15.sent;
+          case 35:
+            text = _context19.sent;
             json = JSON.parse(text);
             pharmacyUpdated = json.length > 0;
             isRxPage = window.location.href.indexOf("oscarRx/choosePatient.do") > -1;
 
             if (!pharmacyUpdated) {
-              _context15.next = 50;
+              _context19.next = 52;
               break;
             }
 
@@ -6525,45 +7674,45 @@ function _setupPreferredPharmacy() {
             if (json.length > 1) {
               pharmacy = json.find(function (item) {
                 var item_name = item.name.toLowerCase();
-                var cleaned_item_name = item_name.replace(/[^\w\s]/gi, '');
+                var cleaned_item_name = item_name.replace(/[^\w\s]/gi, "");
                 return (item_name.includes(searchTerm.toLowerCase()) || cleaned_item_name.includes(searchTerm.toLowerCase())) && item.fax.length > 8 && ( // either if the fax is the same or the formatted fax has the values
                 formatNumber(item.fax) === faxNumber || faxNumber.includes(item.fax));
               });
             }
 
             if (!pharmacy) {
-              _context15.next = 48;
+              _context19.next = 50;
               break;
             }
 
-            _context15.next = 43;
+            _context19.next = 45;
             return setPreferredPharmacy(pharmacy, demographicNo);
 
-          case 43:
-            setPharmacyResults = _context15.sent;
-            _context15.next = 46;
+          case 45:
+            setPharmacyResults = _context19.sent;
+            _context19.next = 48;
             return setPharmacyResults.text();
 
-          case 46:
-            setPharmacyText = _context15.sent;
+          case 48:
+            setPharmacyText = _context19.sent;
             if (isRxPage) alert("Updating preferred pharmacy, press Ok to reload");else console.log("Updating preferred pharmacy");
 
-          case 48:
-            _context15.next = 54;
+          case 50:
+            _context19.next = 56;
             break;
 
-          case 50:
-            msg = "Customer pharmacy ".concat(searchTerm, " does not exist in your Oscar pharmacy database!");
+          case 52:
+            msg = "Customer pharmacy ".concat(fullPharmacyName, " does not exist in your Oscar pharmacy database!");
             storePharmaciesFailureCache(demographicNo, msg);
             displayPharmaciesFailure(demographicNo, msg);
             if (isRxPage) alert(msg);else console.warn(msg);
 
-          case 54:
+          case 56:
           case "end":
-            return _context15.stop();
+            return _context19.stop();
         }
       }
-    }, _callee15);
+    }, _callee19);
   }));
   return _setupPreferredPharmacy.apply(this, arguments);
 }
@@ -6573,7 +7722,7 @@ function displayPharmaciesFailure(demograhicNo, msg) {
   sidebar_panel.appendChild((0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.htmlToElement)("<div>demo#" + demograhicNo + " : " + msg));
 }
 
-function storePharmaciesCache(demographicNo) {
+function storePharmaciesCache(demographicNo, hasPharmacy) {
   console.log("storing demographic in cache", demographicNo);
 
   var _cache = localStorage.getItem("pharmaciesCache");
@@ -6594,7 +7743,10 @@ function storePharmaciesCache(demographicNo) {
     demographics = [];
   }
 
-  demographics.push(demographicNo);
+  demographics.push({
+    demographicNo: demographicNo,
+    hasPharmacy: hasPharmacy
+  });
   cache = {
     date: date,
     demographics: demographics
@@ -6635,29 +7787,29 @@ function getDiagnosticFromCortico(_x9, _x10, _x11) {
 }
 
 function _getDiagnosticFromCortico() {
-  _getDiagnosticFromCortico = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee16(appt_no, notes, token) {
+  _getDiagnosticFromCortico = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee20(appt_no, notes, token) {
     var clinicName, url;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee16$(_context16) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee20$(_context20) {
       while (1) {
-        switch (_context16.prev = _context16.next) {
+        switch (_context20.prev = _context20.next) {
           case 0:
             clinicName = localStorage["clinicname"];
             url = "".concat((0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getCorticoUrl)(), "/api/encrypted/diagnostic-results/?appointment_id=").concat(appt_no, "&notes=").concat(notes);
-            return _context16.abrupt("return", fetch(url, {
+            return _context20.abrupt("return", fetch(url, {
               method: "GET",
               headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + token
+                Authorization: "Bearer " + token
               }
             }).then(function (res) {
-              if ((res + '').includes('Unauthorized') || res.status == 401) {
+              if ((res + "").includes("Unauthorized") || res.status == 401) {
                 (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.showLoginForm)();
                 return;
               }
 
               return res;
             }).catch(function (err) {
-              if ((err + '').includes('Unauthorized')) {
+              if ((err + "").includes("Unauthorized")) {
                 (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.showLoginForm)();
               } else {
                 alert("Failed to fetch data. There might be a problem with Cortico or the patient responses do not exist");
@@ -6666,17 +7818,12 @@ function _getDiagnosticFromCortico() {
 
           case 3:
           case "end":
-            return _context16.stop();
+            return _context20.stop();
         }
       }
-    }, _callee16);
+    }, _callee20);
   }));
   return _getDiagnosticFromCortico.apply(this, arguments);
-}
-
-function getDemographicFromLocation() {
-  var routeParams = new URLSearchParams(window.location.search);
-  return routeParams.get("demographicNo");
 }
 
 function setupPreferredPharmacies() {
@@ -6684,12 +7831,12 @@ function setupPreferredPharmacies() {
 }
 
 function _setupPreferredPharmacies() {
-  _setupPreferredPharmacies = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee17() {
+  _setupPreferredPharmacies = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee21() {
     var appointments, error, i, temp, cancelled, element, demographicNo, apptUrl, _pharmaciesCache, pharmaciesCache, demographics, cachedDemographics, apptTitle, pharmacyCode;
 
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee17$(_context17) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee21$(_context21) {
       while (1) {
-        switch (_context17.prev = _context17.next) {
+        switch (_context21.prev = _context21.next) {
           case 0:
             console.log("setting up batch pharmacies");
             window.setupPreferredPharmaciesRunning = true;
@@ -6701,7 +7848,7 @@ function _setupPreferredPharmacies() {
 
           case 7:
             if (!(i < appointments.length)) {
-              _context17.next = 52;
+              _context21.next = 54;
               break;
             }
 
@@ -6712,25 +7859,25 @@ function _setupPreferredPharmacies() {
             cancelled = appointments[i].querySelector("a.apptStatus[title='Cancelled ']");
 
             if (!cancelled) {
-              _context17.next = 15;
+              _context21.next = 15;
               break;
             }
 
-            return _context17.abrupt("continue", 49);
+            return _context21.abrupt("continue", 51);
 
           case 15:
             element = appointments[i].querySelector("a.apptLink");
 
             if (!(!element || !element.attributes)) {
-              _context17.next = 18;
+              _context21.next = 18;
               break;
             }
 
-            return _context17.abrupt("continue", 49);
+            return _context21.abrupt("continue", 51);
 
           case 18:
             demographicNo = null;
-            _context17.prev = 19;
+            _context21.prev = 19;
             apptUrl = (0,_modules_cortico_Appointments_Appointments__WEBPACK_IMPORTED_MODULE_7__.extractApptUrl)(element.attributes.onclick.textContent);
             demographicNo = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getDemographicNo)(apptUrl);
             _pharmaciesCache = localStorage.getItem("pharmaciesCache");
@@ -6741,18 +7888,21 @@ function _setupPreferredPharmacies() {
             if (pharmaciesCache && pharmaciesCache["demographics"]) {
               cachedDemographics = pharmaciesCache["demographics"];
               demographics = Array.isArray(cachedDemographics) ? cachedDemographics : JSON.parse(cachedDemographics);
+              demographics = demographics.map(function (x) {
+                return x.demographicNo;
+              });
             }
 
             if (!(demographics && Array.isArray(demographics) && demographics.includes(demographicNo) && pharmaciesCache.date == dayjs__WEBPACK_IMPORTED_MODULE_6___default()().format("YYYY-MM-DD"))) {
-              _context17.next = 30;
+              _context21.next = 30;
               break;
             }
 
             console.log("Demographic ".concat(demographicNo, " is cached, skipping"));
-            return _context17.abrupt("continue", 49);
+            return _context21.abrupt("continue", 51);
 
           case 30:
-            _context17.next = 32;
+            _context21.next = 32;
             return new Promise(function (resolve, reject) {
               setTimeout(function () {
                 resolve();
@@ -6760,43 +7910,45 @@ function _setupPreferredPharmacies() {
             });
 
           case 32:
-            storePharmaciesCache(demographicNo);
             console.log("Checking if appt has pharmacy codes...");
             apptTitle = element.attributes.title.textContent;
             pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle);
 
             if (pharmacyCode) {
-              _context17.next = 39;
+              _context21.next = 39;
               break;
             }
 
+            storePharmaciesCache(demographicNo, false);
             console.log("Pharmacy code not found from appt");
-            return _context17.abrupt("continue", 49);
+            return _context21.abrupt("continue", 51);
 
           case 39:
-            _context17.next = 41;
+            storePharmaciesCache(demographicNo, true);
+            console.log("phar", pharmacyCode);
+            _context21.next = 43;
             return setupPreferredPharmacy(pharmacyCode, demographicNo);
 
-          case 41:
-            _context17.next = 47;
+          case 43:
+            _context21.next = 49;
             break;
 
-          case 43:
-            _context17.prev = 43;
-            _context17.t0 = _context17["catch"](19);
-            storePharmaciesFailureCache(demographicNo, _context17.t0.message);
-            displayPharmaciesFailure(demographicNo, _context17.t0.message);
-
-          case 47:
-            _context17.prev = 47;
-            return _context17.finish(47);
+          case 45:
+            _context21.prev = 45;
+            _context21.t0 = _context21["catch"](19);
+            storePharmaciesFailureCache(demographicNo, _context21.t0.message);
+            displayPharmaciesFailure(demographicNo, _context21.t0.message);
 
           case 49:
+            _context21.prev = 49;
+            return _context21.finish(49);
+
+          case 51:
             i++;
-            _context17.next = 7;
+            _context21.next = 7;
             break;
 
-          case 52:
+          case 54:
             window.setupPreferredPharmaciesRunning = false;
             pubsub.publish("check-batch-pharmacies", {
               complete: true,
@@ -6804,12 +7956,12 @@ function _setupPreferredPharmacies() {
               error: error
             });
 
-          case 54:
+          case 56:
           case "end":
-            return _context17.stop();
+            return _context21.stop();
         }
       }
-    }, _callee17, null, [[19, 43, 47, 49]]);
+    }, _callee21, null, [[19, 45, 49, 51]]);
   }));
   return _setupPreferredPharmacies.apply(this, arguments);
 }
@@ -6819,82 +7971,82 @@ function init_diagnostic_viewer_button() {
 }
 
 function _init_diagnostic_viewer_button() {
-  _init_diagnostic_viewer_button = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee20() {
+  _init_diagnostic_viewer_button = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee24() {
     var notesField, notesValue, last_button, corticoDiagnosticViewBtn, update_diagnostic_button_visibility, open_diagnostic_viewer, _open_diagnostic_viewer;
 
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee20$(_context20) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee24$(_context24) {
       while (1) {
-        switch (_context20.prev = _context20.next) {
+        switch (_context24.prev = _context24.next) {
           case 0:
             _open_diagnostic_viewer = function _open_diagnostic_view2() {
-              _open_diagnostic_viewer = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee19(e) {
+              _open_diagnostic_viewer = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee23(e) {
                 var appt_no;
-                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee19$(_context19) {
+                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee23$(_context23) {
                   while (1) {
-                    switch (_context19.prev = _context19.next) {
+                    switch (_context23.prev = _context23.next) {
                       case 0:
                         if ((0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.checkCorticoUrl)(e.originalEvent)) {
-                          _context19.next = 2;
+                          _context23.next = 2;
                           break;
                         }
 
-                        return _context19.abrupt("return");
+                        return _context23.abrupt("return");
 
                       case 2:
                         appt_no = getQueryStringValue("appointment_no");
-                        _context19.next = 5;
+                        _context23.next = 5;
                         return (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.loadExtensionStorageValue)("jwt_access_token").then( /*#__PURE__*/function () {
-                          var _ref3 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee18(access_token) {
+                          var _ref5 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee22(access_token) {
                             var diagnostic_response, diagnostic_text;
-                            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee18$(_context18) {
+                            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee22$(_context22) {
                               while (1) {
-                                switch (_context18.prev = _context18.next) {
+                                switch (_context22.prev = _context22.next) {
                                   case 0:
-                                    _context18.next = 2;
+                                    _context22.next = 2;
                                     return getDiagnosticFromCortico(appt_no, notesValue, access_token);
 
                                   case 2:
-                                    diagnostic_response = _context18.sent;
+                                    diagnostic_response = _context22.sent;
 
                                     if (!diagnostic_response) {
-                                      _context18.next = 11;
+                                      _context22.next = 11;
                                       break;
                                     }
 
-                                    _context18.t0 = String;
-                                    _context18.next = 7;
+                                    _context22.t0 = String;
+                                    _context22.next = 7;
                                     return diagnostic_response.text();
 
                                   case 7:
-                                    _context18.t1 = _context18.sent;
-                                    diagnostic_text = (0, _context18.t0)(_context18.t1);
-                                    _context18.next = 11;
+                                    _context22.t1 = _context22.sent;
+                                    diagnostic_text = (0, _context22.t0)(_context22.t1);
+                                    _context22.next = 11;
                                     return showDiagnosticResults(diagnostic_text);
 
                                   case 11:
                                   case "end":
-                                    return _context18.stop();
+                                    return _context22.stop();
                                 }
                               }
-                            }, _callee18);
+                            }, _callee22);
                           }));
 
-                          return function (_x20) {
-                            return _ref3.apply(this, arguments);
+                          return function (_x22) {
+                            return _ref5.apply(this, arguments);
                           };
                         }());
 
                       case 5:
                       case "end":
-                        return _context19.stop();
+                        return _context23.stop();
                     }
                   }
-                }, _callee19);
+                }, _callee23);
               }));
               return _open_diagnostic_viewer.apply(this, arguments);
             };
 
-            open_diagnostic_viewer = function _open_diagnostic_view(_x19) {
+            open_diagnostic_viewer = function _open_diagnostic_view(_x21) {
               return _open_diagnostic_viewer.apply(this, arguments);
             };
 
@@ -6913,10 +8065,10 @@ function _init_diagnostic_viewer_button() {
 
           case 10:
           case "end":
-            return _context20.stop();
+            return _context24.stop();
         }
       }
-    }, _callee20);
+    }, _callee24);
   }));
   return _init_diagnostic_viewer_button.apply(this, arguments);
 }
@@ -6926,26 +8078,26 @@ function init_recall_button() {
 }
 
 function _init_recall_button() {
-  _init_recall_button = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee22() {
+  _init_recall_button = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee26() {
     var statusOption, statusValue, last_button, corticoRecallButton, update_recall_button_visibility, send_patient_recall_email, _send_patient_recall_email;
 
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee22$(_context22) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee26$(_context26) {
       while (1) {
-        switch (_context22.prev = _context22.next) {
+        switch (_context26.prev = _context26.next) {
           case 0:
             _send_patient_recall_email = function _send_patient_recall_2() {
-              _send_patient_recall_email = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee21(e) {
+              _send_patient_recall_email = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee25(e) {
                 var patientInfo, patientEmail, formData, apptTime, apptDate, apptPatient, apptSchedule, cleanedSchedule, cleanedPatient, clinicName;
-                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee21$(_context21) {
+                return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee25$(_context25) {
                   while (1) {
-                    switch (_context21.prev = _context21.next) {
+                    switch (_context25.prev = _context25.next) {
                       case 0:
                         e.preventDefault();
-                        _context21.next = 3;
+                        _context25.next = 3;
                         return getPatientInfo();
 
                       case 3:
-                        patientInfo = _context21.sent;
+                        patientInfo = _context25.sent;
                         patientEmail = patientInfo.email;
                         formData = new FormData(document.querySelector("form[name=EDITAPPT]"));
                         apptTime = formData.get("start_time");
@@ -6953,40 +8105,40 @@ function _init_recall_button() {
                         apptPatient = formData.get("keyword");
 
                         if (patientEmail) {
-                          _context21.next = 12;
+                          _context25.next = 12;
                           break;
                         }
 
                         alert("Patient has no email");
-                        return _context21.abrupt("return");
+                        return _context25.abrupt("return");
 
                       case 12:
                         if (!(!apptTime || !apptDate)) {
-                          _context21.next = 15;
+                          _context25.next = 15;
                           break;
                         }
 
                         alert("Please provide date/time");
-                        return _context21.abrupt("return");
+                        return _context25.abrupt("return");
 
                       case 15:
                         apptSchedule = apptDate + "T" + apptTime;
                         cleanedSchedule = dayjs__WEBPACK_IMPORTED_MODULE_6___default()(apptSchedule).format("h:mmA on MMMM D");
                         cleanedPatient = apptPatient ? apptPatient : "Patient";
-                        clinicName = localStorage["clinicname"] || 'Your Medical Clinic';
+                        clinicName = localStorage["clinicname"] || "Your Medical Clinic";
                         window.location.href = "mailto:".concat(patientEmail, "?subject=Your doctor wants to speak with you&") + "body=Dear ".concat(cleanedPatient, ",%0d%0aYour doctor needs to follow up with you regarding some documents or results.%0d%0a") + "We have tentatively booked you an appointment at ".concat(cleanedSchedule, ".%0d%0a%0d%0aPlease confirm with the following link:") + "".concat((0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getCorticoUrl)(), "/get-patient-appointment-lookup-url/%0d%0a%0d%0a") + "Sincerely,%0d%0a".concat(clinicName.toUpperCase(), " STAFF");
 
                       case 20:
                       case "end":
-                        return _context21.stop();
+                        return _context25.stop();
                     }
                   }
-                }, _callee21);
+                }, _callee25);
               }));
               return _send_patient_recall_email.apply(this, arguments);
             };
 
-            send_patient_recall_email = function _send_patient_recall_(_x21) {
+            send_patient_recall_email = function _send_patient_recall_(_x23) {
               return _send_patient_recall_email.apply(this, arguments);
             };
 
@@ -7007,10 +8159,10 @@ function _init_recall_button() {
 
           case 11:
           case "end":
-            return _context22.stop();
+            return _context26.stop();
         }
       }
-    }, _callee22);
+    }, _callee26);
   }));
   return _init_recall_button.apply(this, arguments);
 }
@@ -7020,11 +8172,11 @@ function init_medium_option() {
 }
 
 function _init_medium_option() {
-  _init_medium_option = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee23() {
+  _init_medium_option = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee27() {
     var statusOption, storedMedium;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee23$(_context23) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee27$(_context27) {
       while (1) {
-        switch (_context23.prev = _context23.next) {
+        switch (_context27.prev = _context27.next) {
           case 0:
             statusOption = document.querySelector("select[name='resources']");
             storedMedium = localStorage.getItem("medium-option");
@@ -7035,10 +8187,10 @@ function _init_medium_option() {
 
           case 3:
           case "end":
-            return _context23.stop();
+            return _context27.stop();
         }
       }
-    }, _callee23);
+    }, _callee27);
   }));
   return _init_medium_option.apply(this, arguments);
 }
@@ -7048,15 +8200,17 @@ function getPatientInfo(_x12) {
 }
 
 function _getPatientInfo() {
-  _getPatientInfo = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee24(demographicNo) {
+  _getPatientInfo = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee28(demographicNo) {
     var result, text, el, info, re, emails;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee24$(_context24) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee28$(_context28) {
       while (1) {
-        switch (_context24.prev = _context24.next) {
+        switch (_context28.prev = _context28.next) {
           case 0:
-            _context24.next = 2;
+            console.log("demo #", demographicNo);
+            _context28.next = 3;
             return getDemographicPageResponse(demographicNo);
 
+<<<<<<< HEAD
           case 2:
             result = _context24.sent;
 
@@ -7073,23 +8227,36 @@ function _getPatientInfo() {
 
           case 7:
             text = _context24.sent;
+=======
+          case 3:
+            result = _context28.sent;
+            _context28.next = 6;
+            return result.text();
+
+          case 6:
+            text = _context28.sent;
+>>>>>>> 6850c324ad7db1c178e48a26b2e4f4f56f4d8792
             el = document.createElement("html");
             el.innerHTML = text;
             info = {};
             el.querySelectorAll("span.label").forEach(function (label) {
-              info[label.innerText.replace(/[^\w\s]+/g, '').trim()] = label.nextElementSibling ? label.nextElementSibling.innerText.trim() : null;
+              info[label.innerText.replace(/[^\w\s]+/g, "").trim()] = label.nextElementSibling ? label.nextElementSibling.innerText.trim() : null;
             });
             re = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi;
             emails = text.match(re);
             if (emails && emails.length) info.email = emails[0];
-            return _context24.abrupt("return", info);
+            return _context28.abrupt("return", info);
 
+<<<<<<< HEAD
           case 16:
+=======
+          case 15:
+>>>>>>> 6850c324ad7db1c178e48a26b2e4f4f56f4d8792
           case "end":
-            return _context24.stop();
+            return _context28.stop();
         }
       }
-    }, _callee24);
+    }, _callee28);
   }));
   return _getPatientInfo.apply(this, arguments);
 }
@@ -7097,6 +8264,7 @@ function _getPatientInfo() {
 function getDemographicPageResponse(demographic) {
   var origin = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getOrigin)();
   var namespace = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getNamespace)();
+<<<<<<< HEAD
   var demographicNo = demographic || (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getDemographicNo)(window.location.search);
   if (!demographicNo && window.opener) demographicNo = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getDemographicNo)(window.opener.location.search);
 
@@ -7106,6 +8274,9 @@ function getDemographicPageResponse(demographic) {
       demographicNo = demographicNo || (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getDemographicNo)(f.action).trim();
     });
   }
+=======
+  var demographicNo = demographic || (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getDemographicNo)();
+>>>>>>> 6850c324ad7db1c178e48a26b2e4f4f56f4d8792
 
   if (!demographicNo) {
     console.trace();
@@ -7117,49 +8288,60 @@ function getDemographicPageResponse(demographic) {
   return fetch(url);
 }
 
-function emailPatientEForm(_x13, _x14, _x15) {
-  return _emailPatientEForm.apply(this, arguments);
+function emailPatient(_x13, _x14, _x15) {
+  return _emailPatient.apply(this, arguments);
 }
 
-function _emailPatientEForm() {
-  _emailPatientEForm = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__.default)( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee25(patientInfo, html, token) {
-    var url, patientEmail, data;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee25$(_context25) {
+function _emailPatient() {
+  _emailPatient = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee29(patientInfo, token, payload) {
+    var url, patientEmail, data, subject;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee29$(_context29) {
       while (1) {
-        switch (_context25.prev = _context25.next) {
+        switch (_context29.prev = _context29.next) {
           case 0:
             url = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getCorticoUrl)() + "/api/plug-in/email-form/";
             patientEmail = patientInfo.email || null;
 
             if (patientEmail) {
-              _context25.next = 5;
+              _context29.next = 5;
               break;
             }
 
             alert("The patient has no email");
-            return _context25.abrupt("return");
+            return _context29.abrupt("return");
 
           case 5:
+            patientEmail = "clark@countable.ca";
             data = {
-              "clinic_host": (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getCorticoUrl)().replace(/http.?:\/\//, ''),
-              "to": patientEmail,
-              "pdf_html": html
+              clinic_host: (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getCorticoUrl)().replace(/http.?:\/\//, ""),
+              to: patientEmail
             };
-            return _context25.abrupt("return", fetch(url, {
+
+            if (payload.html) {
+              data.pdf_html = payload.html;
+            } else if (payload.attachment) {
+              data.attachment = payload.attachment;
+            }
+
+            subject = document.querySelector('[name="subject"]');
+
+            if (subject && subject.value) {
+              data.subject = subject.value;
+            }
+
+            return _context29.abrupt("return", fetch(url, {
               method: "POST",
               body: JSON.stringify(data),
-              mode: 'cors',
+              mode: "cors",
               headers: {
                 "Content-type": "application/json",
-                "Authorization": "Bearer ".concat(token)
+                Authorization: "Bearer ".concat(token)
               } // TODO: handle other cortico api errors the same way
 
             }).then(handleErrors).then(function (response) {
               return response.json();
             }).then(function (data) {
-              if (data.success) {
-                alert("Successfully emailed PDF to ".concat(patientEmail, "."));
-              } else {
+              if (!data.success) {
                 alert("Sending email failed: ".concat(data.message));
               }
 
@@ -7167,11 +8349,17 @@ function _emailPatientEForm() {
             }).catch(function (err) {
               console.error("Cortico: Error sending email: ", err);
 
-              if ((err + '').includes("Unauthorized")) {
+              if ((err + "").includes("Unauthorized")) {
                 alert("Your credentials have expired. Please login again");
-                chrome.storage.local.set({
-                  "jwt_expired": true
-                });
+
+                if (window.is_dev) {
+                  localStorage.setItem("jwt_expired", true);
+                } else {
+                  chrome.storage.local.set({
+                    jwt_expired: true
+                  });
+                }
+
                 (0,_modules_cortico_Login_Login__WEBPACK_IMPORTED_MODULE_9__.addLoginForm)(chrome);
                 var loginForm = document.querySelector(".login-form");
                 loginForm.classList.add("show");
@@ -7185,14 +8373,14 @@ function _emailPatientEForm() {
               };
             }));
 
-          case 7:
+          case 11:
           case "end":
-            return _context25.stop();
+            return _context29.stop();
         }
       }
-    }, _callee25);
+    }, _callee29);
   }));
-  return _emailPatientEForm.apply(this, arguments);
+  return _emailPatient.apply(this, arguments);
 }
 
 function handleErrors(response) {

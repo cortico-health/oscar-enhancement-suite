@@ -11,7 +11,7 @@ module.exports = {
   watchOptions: {
     aggregateTimeout: 600,
     poll: 1000,
-    ignored: /dist/
+    ignored: /dist/,
   },
   cache: false,
   devtool: "source-map",
@@ -20,6 +20,9 @@ module.exports = {
     new webpack.ProvidePlugin({
       h: ["preact", "h"],
     }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('development')
+    })
   ],
 
   module: {
