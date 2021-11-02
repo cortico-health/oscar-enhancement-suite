@@ -37,6 +37,7 @@ import Messenger from "./modules/Messenger/Messenger";
 const CORTICO = {}; // container for global state. Use this rather than `window`
 import Disclaimer from "./modules/cortico/Disclaimer";
 // manually update this variable with the version in manifest.json
+import LoginOscar from "./modules/Login/LoginOscar";
 const version = 3.8;
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
@@ -115,6 +116,7 @@ const init_cortico = async function () {
     resources_field.addEventListener("change", update_video_button);
   } else if (route.indexOf("/provider/providercontrol.jsp") > -1) {
     init_schedule();
+    LoginOscar();
 
     /**
      * Drag and drop - disabled for stability reasons.
@@ -1025,11 +1027,12 @@ async function getCorticoLogin() {
   let btnEvent = {
     "click .cortico-btn": (e) => {
       if (!checkCorticoUrl(e.originalEvent)) return;
-
+      /*
       if (e.target.className == "cortico-btn") {
         const loginForm = document.querySelector(".login-form");
         loginForm.classList.add("show");
-      }
+      }*/
+      pubsub.publish("signin");
     },
   };
   await loadExtensionStorageValue("jwt_username").then(function (username) {

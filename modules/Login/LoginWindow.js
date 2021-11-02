@@ -65,6 +65,7 @@ function LoginWindow({ onSubmit, error, loading, ...props }) {
               type="text"
               placeholder="Username"
               required
+              autocomplete
               class="tw-appearance-none tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md tw-shadow-sm tw-placeholder-gray-400 tw-focus:outline-none tw-focus:ring-indigo-500 tw-focus:border-indigo-500 tw-sm:text-sm"
             />
           </div>
@@ -82,6 +83,7 @@ function LoginWindow({ onSubmit, error, loading, ...props }) {
               id="password"
               name="password"
               type="password"
+              autocomplete
               required
               placeholder="Enter your password"
               class="tw-appearance-none tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md tw-shadow-sm tw-placeholder-gray-400 tw-focus:outline-none tw-focus:ring-indigo-500 tw-focus:border-indigo-500 tw-sm:text-sm"

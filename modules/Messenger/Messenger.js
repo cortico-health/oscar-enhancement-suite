@@ -88,6 +88,7 @@ function Messenger(patient, opts, container) {
           .finally(() => {
             setShowNotification(true);
             setLoading(false);
+            handleClose();
           });
       }
     };
