@@ -153,7 +153,8 @@ export function htmlToElement(html) {
 export function getDemographicNo(apptUrl) {
   var searchParams = new URLSearchParams(apptUrl);
   return (
-    searchParams.get("demographic_no") || searchParams.get("demographicNo")
+    searchParams.get("demographic_no") || searchParams.get("demographicNo") ||
+    searchParams.get("efmdemographic_no")
   );
 }
 

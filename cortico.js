@@ -27,7 +27,7 @@ import Dashboard from "./modules/cortico/Dashboard";
 const CORTICO = {}; // container for global state. Use this rather than `window`
 import Disclaimer from "./modules/cortico/Disclaimer";
 // manually update this variable with the version in manifest.json
-const version = 3.8;
+const version = '3.8.1';
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
 
@@ -2269,6 +2269,9 @@ async function init_medium_option() {
 
 async function getPatientInfo(demographicNo) {
   const result = await getDemographicPageResponse(demographicNo);
+  if (!result) {
+    return {}
+  }
   const text = await result.text();
 
   var el = document.createElement("html");
@@ -2293,10 +2296,20 @@ function getDemographicPageResponse(demographic) {
   const origin = getOrigin();
   const namespace = getNamespace();
 
-  const demographicNo =
+  let demographicNo =
     demographic ||
-    getDemographicNo(window.location.search) ||
-    getDemographicNo(window.opener.location.search);
+    getDemographicNo(window.location.search);
+
+  if (!demographicNo && window.opener)
+    demographicNo = getDemographicNo(window.opener.location.search);
+
+  if (!demographicNo) {
+    // TODO: always try this when getting demo #.
+    document.querySelectorAll('form').forEach(function (f) {
+      demographicNo = demographicNo || getDemographicNo(f.action).trim()
+    })
+
+  }
 
   if (!demographicNo) {
     console.trace();
@@ -2354,6 +2367,10 @@ async function emailPatientEForm(patientInfo, html, token) {
         loginForm.classList.add("show")
       } else {
         alert("Something went wrong with Cortico.")
+      }
+      return {
+        success: false,
+        message: err
       }
     });
 }
