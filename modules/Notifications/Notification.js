@@ -1,6 +1,7 @@
 import { render } from "preact";
 import { useEffect } from "preact/hooks";
 import corticoIcon from "../../resources/icons/96x96.png";
+import { CloseIcon } from "../../modules/Icons/HeroIcons";
 
 function Notification({
   open,
@@ -28,30 +29,26 @@ function Notification({
       `}
     >
       <div
-        className={`tw-rounded-md tw-shadow-lg tw-mb-10 tw-inline-block tw-font-sans tw-min-w-[300px] ${
-          error ? "tw-bg-red-500" : "tw-bg-cortico-blue"
+        className={`tw-rounded-md tw-shadow-lg tw-mb-10 tw-inline-block tw-font-sans tw-min-w-[300px] tw-max-w-[400px] tw-border ${
+          error ? "tw-bg-white" : "tw-bg-white"
         }`}
       >
-        <div className="tw-flex tw-p-4 tw-items-center">
-          <div className="tw-bg-white tw-p-1 tw-rounded-md">
+        <div className="tw-flex tw-p-4 tw-items-start">
+          <div className="tw-bg-white tw-rounded-md tw-flex-shrink-0 tw-mt-[3px]">
             <img className="tw-h-4 tw-w-4" src={corticoIcon} alt="Cortico" />
           </div>
-          {title ? (
-            <p className="tw-text-white tw-font-semibold tw-ml-2 ">{title}</p>
-          ) : (
-            ""
-          )}
-        </div>
-        <hr className="tw-opacity-10" />
-        <p className="tw-max-w-xl tw-text-sm tw-text-white tw-p-4">{content}</p>
-        <hr className="tw-opacity-10" />
-        <div className="tw-flex tw-justify-end tw-px-4 tw-py-2">
-          <button
-            className="tw-bg-gray-700 tw-p-2 tw-rounded-md tw-text-sm tw-text-white"
-            onClick={close}
-          >
-            Dismiss
-          </button>
+          <div className="tw-ml-3 tw-w-0 tw-flex-1">
+            <p className={`tw-text-gray-900 tw-font-medium tw-text-sm`}>
+              {title}
+            </p>
+            <p className="tw-max-w-xl tw-text-sm tw-text-gray-500 tw-mt-1">
+              {content}
+            </p>
+          </div>
+          <div className="tw-cursor-pointer" onClick={close}>
+            <span className="tw-sr-only">Close</span>
+            <CloseIcon className="tw-w-5 tw-h-5 tw-text-gray-500" />
+          </div>
         </div>
       </div>
     </div>
