@@ -152,13 +152,6 @@ export function htmlToElement(html) {
 }
 
 export function getDemographicNo(apptUrl) {
-<<<<<<< HEAD
-  var searchParams = new URLSearchParams(apptUrl);
-  return (
-    searchParams.get("demographic_no") || searchParams.get("demographicNo") ||
-    searchParams.get("efmdemographic_no")
-  );
-=======
   if (apptUrl) {
     var searchParams = new URLSearchParams(apptUrl);
     return (
@@ -174,7 +167,6 @@ export function getDemographicNo(apptUrl) {
     }
     return demographicNo;
   }
->>>>>>> 6850c324ad7db1c178e48a26b2e4f4f56f4d8792
 }
 
 export function getAppointmentNo(apptUrl) {
