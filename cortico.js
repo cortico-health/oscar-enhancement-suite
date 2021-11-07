@@ -37,7 +37,7 @@ import Messenger from "./modules/Messenger/Messenger";
 const CORTICO = {}; // container for global state. Use this rather than `window`
 import Disclaimer from "./modules/cortico/Disclaimer";
 // manually update this variable with the version in manifest.json
-const version = '3.8.1';
+const version = '3.9';
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
 
