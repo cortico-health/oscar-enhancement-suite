@@ -37,7 +37,7 @@ import Messenger from "./modules/Messenger/Messenger";
 const CORTICO = {}; // container for global state. Use this rather than `window`
 import Disclaimer from "./modules/cortico/Disclaimer";
 // manually update this variable with the version in manifest.json
-const version = '3.8.1';
+const version = '2021.11.7';
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
 
@@ -140,8 +140,9 @@ const init_cortico = async function () {
     setupPrescriptionButtons();
   } else if (
     route.indexOf("/eform/efmformadd_data.jsp") > -1 ||
-    route.indexOf("/eform/efmshowform_data.jsp") > -1 ||
-    route.indexOf("/casemgmt/forward.jsp") > -1
+    route.indexOf("/eform/efmshowform_data.jsp") > -1
+    // TODO: enable messaging again.
+    || route.indexOf("/casemgmt/forward.jsp") > -1
   ) {
     if (route.indexOf("/casemgmt/forward.jsp") > -1) {
       const patient_info = await getPatientInfo();
@@ -605,8 +606,8 @@ function getQueryStringValue(key) {
     window.location.search.replace(
       new RegExp(
         "^(?:.*[&\\?]" +
-          encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") +
-          "(?:\\=([^&]*))?)?.*$",
+        encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") +
+        "(?:\\=([^&]*))?)?.*$",
         "i"
       ),
       "$1"
@@ -1514,7 +1515,7 @@ async function checkAllEligibility() {
       }
 
       if (lowerCaseText.includes("error in teleplan connection")) {
-        alert("Automatic Eligiblity Check Aborted. \n" + text);
+        alert("Cannot connect to Teleplan. \n" + text);
         error = true;
         break;
       }
@@ -2434,8 +2435,6 @@ async function emailPatient(patientInfo, token, payload) {
     alert("The patient has no email");
     return;
   }
-
-  patientEmail = "clark@countable.ca";
 
   let data = {
     clinic_host: getCorticoUrl().replace(/http.?:\/\//, ""),
