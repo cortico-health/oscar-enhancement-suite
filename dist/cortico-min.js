@@ -5414,7 +5414,7 @@ var CORTICO = {}; // container for global state. Use this rather than `window`
 
  // manually update this variable with the version in manifest.json
 
-var version = '3.9';
+var version = '2021.11.7';
 var pubsub = (0,_modules_PubSub_PubSub__WEBPACK_IMPORTED_MODULE_5__.pubSubInit)();
 var oscar = new _modules_core_Oscar_js__WEBPACK_IMPORTED_MODULE_10__.Oscar(window.location.hostname);
 window.is_dev =  true ? true : 0;
