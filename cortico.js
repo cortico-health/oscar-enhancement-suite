@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name     Cortico
-// @version  3.8.1
+// @version  3.9.1
 // @grant    none
 // ==/UserScript==
 
@@ -142,7 +142,7 @@ const init_cortico = async function () {
     route.indexOf("/eform/efmformadd_data.jsp") > -1 ||
     route.indexOf("/eform/efmshowform_data.jsp") > -1
     // TODO: enable messaging again.
-    || route.indexOf("/casemgmt/forward.jsp") > -1
+    // || route.indexOf("/casemgmt/forward.jsp") > -1
   ) {
     if (route.indexOf("/casemgmt/forward.jsp") > -1) {
       const patient_info = await getPatientInfo();
