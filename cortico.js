@@ -37,7 +37,9 @@ import Messenger from "./modules/Messenger/Messenger";
 const CORTICO = {}; // container for global state. Use this rather than `window`
 import Disclaimer from "./modules/cortico/Disclaimer";
 // manually update this variable with the version in manifest.json
-const version = '2021.11.7';
+
+import LoginOscar from "./modules/Login/LoginOscar";
+const version = '3.9.1';
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
 
@@ -115,6 +117,7 @@ const init_cortico = async function () {
     resources_field.addEventListener("change", update_video_button);
   } else if (route.indexOf("/provider/providercontrol.jsp") > -1) {
     init_schedule();
+    LoginOscar();
 
     /**
      * Drag and drop - disabled for stability reasons.
@@ -123,7 +126,7 @@ const init_cortico = async function () {
     if (!oscar.isJuno() && !oscar.isKaiOscarHost()) {
       dragAndDrop();
     }
-
+    setClinicName();
     addCorticoLogo();
     addMenu();
     addAppointmentMenu();
@@ -143,14 +146,28 @@ const init_cortico = async function () {
     route.indexOf("/eform/efmshowform_data.jsp") > -1
     || route.indexOf("/casemgmt/forward.jsp") > -1
   ) {
+    const patient_info = await getPatientInfo();
     if (route.indexOf("/casemgmt/forward.jsp") > -1) {
-      const patient_info = await getPatientInfo();
       console.log("Patient Info", patient_info);
-      //Messenger(patient_info);
+      Messenger(patient_info, {
+        encounter: true,
+      });
+    } else {
+      Messenger(
+        patient_info,
+        {
+          encounter: false,
+        },
+        document.getElementById("eform_container")
+      );
+      setupEFormPage();
     }
-    setupEFormPage();
   } else if (route.indexOf("dms/documentReport.jsp") > -1) {
     setupDocumentPage();
+    const patient_info = await getPatientInfo();
+    Messenger(patient_info, {
+      encounter: false,
+    });
   } else if (route.indexOf("/oscarRx/ViewScript2.jsp") > -1) {
     // We need to determine first if the prescription is "delivery"
     const currentPharmacyCode = localStorage.getItem("currentPharmacyCode");
@@ -370,6 +387,7 @@ async function setupDocumentPage() {
   const patient_info = await getPatientInfo();
 
   pdf_links.forEach(function (pdf_link) {
+    console.log("PDF Link", pdf_link);
     if (pdf_link.href.indexOf("?sort") > -1) return;
 
     const email_btn = create(
@@ -392,7 +410,11 @@ async function setupDocumentPage() {
                   reader.onload = () => resolve(reader.result);
                   reader.readAsDataURL(blob);
                 });
-
+                pubsub.publish("document", {
+                  name: pdf_link.textContent,
+                  data: dataUrl,
+                });
+                /*
                 const patientFormResponse = await emailPatient(
                   patient_info,
                   access_token,
@@ -407,7 +429,7 @@ async function setupDocumentPage() {
                         `<p>${patient_info.email} was sent a <a style='text-decoration:underline' target="_blank" href="${patientFormResponse.preview}">document</a>.</p>`
                       )
                     );
-                }
+                }*/
               }
             );
           },
@@ -439,6 +461,20 @@ async function setupEFormPage() {
     return;
   }
 
+  await loadExtensionStorageValue("jwt_access_token").then(async function (
+    access_token
+  ) {
+    let html = document.cloneNode(true);
+    await convertImagesToDataURLs(html);
+    stripScripts(html);
+    html = html.documentElement.outerHTML;
+
+    pubsub.publish("eform", {
+      name: "eForm",
+      html,
+    });
+  });
+  /*
   const patient_info = await getPatientInfo();
 
   const email_btn = create(
@@ -486,6 +522,7 @@ async function setupEFormPage() {
   ); // end create.
 
   email_parent.appendChild(email_btn);
+  */
 }
 
 function delegate(element, event, descendentSelector, callback) {
@@ -992,11 +1029,12 @@ async function getCorticoLogin() {
   let btnEvent = {
     "click .cortico-btn": (e) => {
       if (!checkCorticoUrl(e.originalEvent)) return;
-
+      /*
       if (e.target.className == "cortico-btn") {
         const loginForm = document.querySelector(".login-form");
         loginForm.classList.add("show");
-      }
+      }*/
+      pubsub.publish("signin");
     },
   };
   await loadExtensionStorageValue("jwt_username").then(function (username) {
@@ -1463,7 +1501,7 @@ async function checkAllEligibility() {
       const temp = Object.assign({}, appointmentInfo[i]);
       temp.total = length;
       temp.current = i + 1;
-      pubsub.publish("check-eligibility", temp);
+      publish("check-eligibility", temp);
 
       const demographic_no = appointmentInfo[i].demographic_no;
       let result = null;
@@ -2123,6 +2161,26 @@ function storePharmaciesFailureCache(demographicNo, message) {
   localStorage.setItem("pharmaciesCacheFailure", JSON.stringify(cache));
 }
 
+async function setClinicName() {
+  if (localStorage.getItem("name")) {
+    return;
+  }
+  const token = await loadExtensionStorageValue("jwt_access_token");
+  if (token) {
+    const url = `${getCorticoUrl()}/api/public/clinic-settings/`;
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => localStorage.setItem("name", response.clinic_name))
+      .catch((error) => console.error(error));
+  }
+}
+
 async function getDiagnosticFromCortico(appt_no, notes, token) {
   const clinicName = localStorage["clinicname"];
   const url = `${getCorticoUrl()}/api/encrypted/diagnostic-results/?appointment_id=${appt_no}&notes=${notes}`;
@@ -2437,7 +2495,7 @@ async function emailPatient(patientInfo, token, payload) {
 
   let data = {
     clinic_host: getCorticoUrl().replace(/http.?:\/\//, ""),
-    to: patientEmail,
+    to: "aaron@countable.ca",
   };
   if (payload.html) {
     data.pdf_html = payload.html;

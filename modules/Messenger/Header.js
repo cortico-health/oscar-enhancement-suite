@@ -23,7 +23,7 @@ function Header({ close, ...props }) {
       <div className="tw-flex-5">
         <div className="tw-text-white tw-font-light">Messenger</div>
         <p className="tw-text-sm tw-text-white tw-mt-2 tw-text-opacity-80 tw-leading-5">
-          Send a message to the patient using this service
+          Reach out to the patient with ease using this service.
         </p>
         <div className="tw-mt-3 tw-bg-white tw-inline-block tw-py-1 tw-px-2 tw-rounded-md tw-shadow-2xl">
           <img
