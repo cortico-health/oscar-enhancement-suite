@@ -141,13 +141,12 @@ const init_cortico = async function () {
   } else if (
     route.indexOf("/eform/efmformadd_data.jsp") > -1 ||
     route.indexOf("/eform/efmshowform_data.jsp") > -1
-    // TODO: enable messaging again.
-    // || route.indexOf("/casemgmt/forward.jsp") > -1
+    || route.indexOf("/casemgmt/forward.jsp") > -1
   ) {
     if (route.indexOf("/casemgmt/forward.jsp") > -1) {
       const patient_info = await getPatientInfo();
       console.log("Patient Info", patient_info);
-      Messenger(patient_info);
+      //Messenger(patient_info);
     }
     setupEFormPage();
   } else if (route.indexOf("dms/documentReport.jsp") > -1) {
