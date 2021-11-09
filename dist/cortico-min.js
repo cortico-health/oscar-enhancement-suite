@@ -6775,7 +6775,7 @@ var cortico_media = ["phone", "clinic", "virtual", "", "quiet"];
 
 var init_cortico = /*#__PURE__*/function () {
   var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee() {
-    var anchor, route, oscar_elements, resources_field, cortico_button, isMarkham, patient_info, messengerContainer, _patient_info, currentPharmacyCode, additionalNotes, previewFrame;
+    var anchor, route, oscar_elements, resources_field, cortico_button, isMarkham, patient_info, messengerContainer, _messengerContainer, _patient_info, currentPharmacyCode, additionalNotes, previewFrame;
 
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee$(_context) {
       while (1) {
@@ -6844,7 +6844,7 @@ var init_cortico = /*#__PURE__*/function () {
             //cortico_button.addEventListener("click", open_video_appointment_page);
 
             resources_field.addEventListener("change", update_video_button);
-            _context.next = 54;
+            _context.next = 56;
             break;
 
           case 21:
@@ -6881,7 +6881,7 @@ var init_cortico = /*#__PURE__*/function () {
             }
 
             setupPrescriptionButtons();
-            _context.next = 54;
+            _context.next = 56;
             break;
 
           case 36:
@@ -6909,28 +6909,30 @@ var init_cortico = /*#__PURE__*/function () {
               setupEFormPage();
             }
 
-            _context.next = 54;
+            _context.next = 56;
             break;
 
           case 45:
             if (!(route.indexOf("dms/documentReport.jsp") > -1)) {
-              _context.next = 53;
+              _context.next = 55;
               break;
             }
 
             setupDocumentPage();
-            _context.next = 49;
+            _messengerContainer = document.createElement("div");
+            document.body.prepend(_messengerContainer);
+            _context.next = 51;
             return getPatientInfo();
 
-          case 49:
+          case 51:
             _patient_info = _context.sent;
             (0,_modules_Messenger_Messenger__WEBPACK_IMPORTED_MODULE_16__["default"])(_patient_info, {
               encounter: false
-            });
-            _context.next = 54;
+            }, document.body, _messengerContainer);
+            _context.next = 56;
             break;
 
-          case 53:
+          case 55:
             if (route.indexOf("/oscarRx/ViewScript2.jsp") > -1) {
               // We need to determine first if the prescription is "delivery"
               currentPharmacyCode = localStorage.getItem("currentPharmacyCode");
@@ -6947,10 +6949,10 @@ var init_cortico = /*#__PURE__*/function () {
               }
             }
 
-          case 54:
+          case 56:
             init_styles();
 
-          case 55:
+          case 57:
           case "end":
             return _context.stop();
         }

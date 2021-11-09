@@ -170,10 +170,17 @@ const init_cortico = async function () {
     }
   } else if (route.indexOf("dms/documentReport.jsp") > -1) {
     setupDocumentPage();
+    const messengerContainer = document.createElement("div");
+    document.body.prepend(messengerContainer);
     const patient_info = await getPatientInfo();
-    Messenger(patient_info, {
-      encounter: false,
-    });
+    Messenger(
+      patient_info,
+      {
+        encounter: false,
+      },
+      document.body,
+      messengerContainer
+    );
   } else if (route.indexOf("/oscarRx/ViewScript2.jsp") > -1) {
     // We need to determine first if the prescription is "delivery"
     const currentPharmacyCode = localStorage.getItem("currentPharmacyCode");
