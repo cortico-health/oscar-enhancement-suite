@@ -1,6 +1,8 @@
 # Oscar Enhancement Suite
 
-A suite of tools developed by [Cortico Health Technologies](https://cortico.ca) to improve the Oscar experience of Cortico users. It includes some oft-requested quality of life improvements for Oscar, unrelated to Cortico. Clinics who do not use Cortico may still use this plug-in, but support will be a best-effort basis in that case. Please log any problems in the GitHub issues.
+A suite of tools developed by [Cortico Health Technologies](https://cortico.ca) to improve the Oscar experience of Cortico users AND anyone else who wishes to use it. It includes some oft-requested quality of life improvements for Oscar, unrelated to Cortico. Clinics who do not use Cortico may still use this plug-in, but support will be a best-effort basis in that case. Please log any problems in the GitHub issues.
+
+This repository is Open Source (GPL V2), with the intention that any Oscar service provider may integrate some functionality directly into the EMR to avoid the need for this plug-in. If you do, we would love to be notified that you no longer need that feature, and that we can feature-flag it out for users of your EMR.
 
 # General Oscar Quality of Life Features:
 

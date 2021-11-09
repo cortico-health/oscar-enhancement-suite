@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name     Cortico
-// @version  3.8.1
+// @version  3.9.1
 // @grant    none
 // ==/UserScript==
 
@@ -37,8 +37,9 @@ import Messenger from "./modules/Messenger/Messenger";
 const CORTICO = {}; // container for global state. Use this rather than `window`
 import Disclaimer from "./modules/cortico/Disclaimer";
 // manually update this variable with the version in manifest.json
+
 import LoginOscar from "./modules/Login/LoginOscar";
-const version = 3.8;
+const version = "3.9.1";
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
 
@@ -1565,7 +1566,7 @@ async function checkAllEligibility() {
       }
 
       if (lowerCaseText.includes("error in teleplan connection")) {
-        alert("Automatic Eligiblity Check Aborted. \n" + text);
+        alert("Cannot connect to Teleplan. \n" + text);
         error = true;
         break;
       }
@@ -2443,6 +2444,9 @@ async function init_medium_option() {
 async function getPatientInfo(demographicNo) {
   console.log("demo #", demographicNo);
   const result = await getDemographicPageResponse(demographicNo);
+  if (!result) {
+    return {};
+  }
   const text = await result.text();
 
   var el = document.createElement("html");
@@ -2468,7 +2472,18 @@ function getDemographicPageResponse(demographic) {
   const origin = getOrigin();
   const namespace = getNamespace();
 
-  const demographicNo = demographic || getDemographicNo();
+  let demographicNo = demographic || getDemographicNo(window.location.search);
+
+  if (!demographicNo && window.opener)
+    demographicNo = getDemographicNo(window.opener.location.search);
+
+  if (!demographicNo) {
+    // TODO: always try this when getting demo #.
+    document.querySelectorAll("form").forEach(function (f) {
+      demographicNo = demographicNo || getDemographicNo(f.action).trim();
+    });
+  }
+  //const demographicNo = demographic || getDemographicNo();
 
   if (!demographicNo) {
     console.trace();
@@ -2488,8 +2503,6 @@ async function emailPatient(patientInfo, token, payload) {
     alert("The patient has no email");
     return;
   }
-
-  patientEmail = "clark@countable.ca";
 
   let data = {
     clinic_host: getCorticoUrl().replace(/http.?:\/\//, ""),
@@ -2539,6 +2552,10 @@ async function emailPatient(patientInfo, token, payload) {
       } else {
         alert("Something went wrong with Cortico.");
       }
+      return {
+        success: false,
+        message: err,
+      };
     });
 }
 

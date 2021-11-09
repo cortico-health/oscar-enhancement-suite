@@ -2981,7 +2981,7 @@ __webpack_require__.r(__webpack_exports__);
 
 function addAppointmentMenu() {
   var appointments = (0,_Appointments__WEBPACK_IMPORTED_MODULE_3__.getAppointments)();
-  var checkCache = JSON.parse(localStorage.checkCache || '{}');
+  var checkCache = JSON.parse(localStorage.checkCache || "{}");
   var pharmaciesCache = JSON.parse(localStorage.pharmaciesCache || '{"demographics":[]}');
   var apptInfo = (0,_Appointments__WEBPACK_IMPORTED_MODULE_3__.getAppointmentInfo)(appointments);
   console.log(apptInfo);
@@ -3016,7 +3016,7 @@ function appointmentMenu(apptTd) {
     events: {
       "click .appointment-menu-container": function clickAppointmentMenuContainer(e) {
         // close button doesn't re-open
-        if (e.target.className == 'appointment-menu-close') {
+        if (e.target.className == "appointment-menu-close") {
           return;
         }
 
@@ -3026,7 +3026,7 @@ function appointmentMenu(apptTd) {
           openMenu.classList.remove("show");
         }
 
-        var menu = wrapper.querySelector('.appointment-menu');
+        var menu = wrapper.querySelector(".appointment-menu");
         menu.classList.toggle("show");
       },
       "click .appointment-menu-close": function clickAppointmentMenuClose(e) {
@@ -3047,7 +3047,7 @@ function appointmentMenu(apptTd) {
               return renderPatientInfo(apptTd);
 
             case 2:
-              menu = wrapper.querySelector('.appointment-menu');
+              menu = wrapper.querySelector(".appointment-menu");
               left = menu.getBoundingClientRect().left;
 
               if (left < 0) {
@@ -3187,31 +3187,34 @@ function setAppointmentCheckbox(apptTd, apptInfo, checkCache, pharmaciesCache) {
     return x.demographicNo;
   });
   var isPharmacyCached = demographics.includes(apptInfoItem.demographic_no);
-  var menuIcon = '<small>&#10006;</small>';
-  var cacheColor = '#555555';
+  var menuIcon = "<small>&#10006;</small>";
+  var cacheColor = "#555555";
   var anchor = apptTd.querySelector("a.apptStatus");
   var apptStatus = anchor ? anchor.querySelector("img").title : "";
 
   if (cacheValue != undefined) {
     var verification = cacheValue.verified;
-    cacheColor = verification || verification === "uninsured" ? '#00cc51' : '#cc0063';
-    menuIcon = verification ? '<small>&#10004;</small>' : menuIcon;
-    menuIcon = verification === "uninsured" ? '<small>X</small>' : menuIcon;
+    cacheColor = verification || verification === "uninsured" ? "#00cc51" : "#cc0063";
+    menuIcon = verification ? "<small>&#10004;</small>" : menuIcon;
+    menuIcon = verification === "uninsured" ? "<small>X</small>" : menuIcon;
 
-    if (apptStatus.toLowerCase() === 'private') {
-      menuIcon = '<small>$</small>';
-      cacheColor = '#555555';
-    }
+    if (apptStatus.toLowerCase() === "private") {
+      menuIcon = "<small>$</small>";
+      cacheColor = "#555555";
+    } // update menu color
 
+
+    var menu = apptTd.querySelector("div.appointment-menu-container");
+    menu.style = "background-color: ".concat(cacheColor);
     var masterRecord = apptTd.querySelector("a.masterbtn") || apptTd.querySelector("a.masterBtn");
-    masterRecord.append((0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_7__.create)("\n    <div class='appointment-checkbox-wrapper'>\n      <div class='appointment-checkbox' style='background-color:".concat(cacheColor, "'>\n        ").concat(menuIcon, "\n      </div>\n    </div>\n    ")));
+    masterRecord.append((0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_7__.create)(menuIcon));
   }
 
   if (isPharmacyCached) {
-    cacheColor = '#00cc51';
-    menuIcon = '<small>&#10004;</small>';
+    cacheColor = "#00cc51";
+    menuIcon = "<small>&#10004;</small>";
     var rx = apptTd.querySelector("a[title='Prescriptions']");
-    rx.innerHTML = ' Rx';
+    rx.innerHTML = " Rx";
     rx.append((0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_7__.create)("\n      <div class='appointment-checkbox-wrapper'>\n        <div class='appointment-checkbox' style='background-color:".concat(cacheColor, "'>\n          ").concat(menuIcon, "\n        </div>\n      </div>\n      ")));
   }
 }
@@ -6744,7 +6747,7 @@ __webpack_require__.r(__webpack_exports__);
 
 // ==UserScript==
 // @name     Cortico
-// @version  3.8.1
+// @version  3.9.1
 // @grant    none
 // ==/UserScript==
 
@@ -6767,7 +6770,7 @@ var CORTICO = {}; // container for global state. Use this rather than `window`
  // manually update this variable with the version in manifest.json
 
 
-var version = 3.8;
+var version = "3.9.1";
 var pubsub = (0,_modules_PubSub_PubSub__WEBPACK_IMPORTED_MODULE_5__.pubSubInit)();
 var oscar = new _modules_core_Oscar_js__WEBPACK_IMPORTED_MODULE_10__.Oscar(window.location.hostname);
 window.is_dev =  true ? true : 0;
@@ -8455,7 +8458,7 @@ function _checkAllEligibility() {
               break;
             }
 
-            alert("Automatic Eligiblity Check Aborted. \n" + text);
+            alert("Cannot connect to Teleplan. \n" + text);
             error = true;
             return _context17.abrupt("break", 64);
 
@@ -9591,10 +9594,19 @@ function _getPatientInfo() {
 
           case 3:
             result = _context28.sent;
-            _context28.next = 6;
-            return result.text();
+
+            if (result) {
+              _context28.next = 6;
+              break;
+            }
+
+            return _context28.abrupt("return", {});
 
           case 6:
+            _context28.next = 8;
+            return result.text();
+
+          case 8:
             text = _context28.sent;
             el = document.createElement("html");
             el.innerHTML = text;
@@ -9607,7 +9619,7 @@ function _getPatientInfo() {
             if (emails && emails.length) info.email = emails[0];
             return _context28.abrupt("return", info);
 
-          case 15:
+          case 17:
           case "end":
             return _context28.stop();
         }
@@ -9620,7 +9632,16 @@ function _getPatientInfo() {
 function getDemographicPageResponse(demographic) {
   var origin = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getOrigin)();
   var namespace = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getNamespace)();
-  var demographicNo = demographic || (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getDemographicNo)();
+  var demographicNo = demographic || (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getDemographicNo)(window.location.search);
+  if (!demographicNo && window.opener) demographicNo = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getDemographicNo)(window.opener.location.search);
+
+  if (!demographicNo) {
+    // TODO: always try this when getting demo #.
+    document.querySelectorAll("form").forEach(function (f) {
+      demographicNo = demographicNo || (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getDemographicNo)(f.action).trim();
+    });
+  } //const demographicNo = demographic || getDemographicNo();
+
 
   if (!demographicNo) {
     console.trace();
@@ -9655,7 +9676,6 @@ function _emailPatient() {
             return _context29.abrupt("return");
 
           case 5:
-            patientEmail = "clark@countable.ca";
             data = {
               clinic_host: (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_12__.getCorticoUrl)().replace(/http.?:\/\//, ""),
               to: "aaron@countable.ca"
@@ -9710,9 +9730,14 @@ function _emailPatient() {
               } else {
                 alert("Something went wrong with Cortico.");
               }
+
+              return {
+                success: false,
+                message: err
+              };
             }));
 
-          case 11:
+          case 10:
           case "end":
             return _context29.stop();
         }
