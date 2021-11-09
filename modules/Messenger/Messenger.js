@@ -28,7 +28,7 @@ const handleErrors = async (response) => {
   return result;
 };
 
-function Messenger(patient, opts, container) {
+function Messenger(patient, opts, container, replaceNode) {
   const _container = container || document.body;
 
   function Content({ patient, encounter, ...props }) {
@@ -198,7 +198,8 @@ function Messenger(patient, opts, container) {
       encounter={opts.encounter}
       document={opts.document}
     />,
-    _container
+    _container,
+    replaceNode
   );
 }
 

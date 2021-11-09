@@ -146,17 +146,25 @@ const init_cortico = async function () {
     route.indexOf("/casemgmt/forward.jsp") > -1
   ) {
     const patient_info = await getPatientInfo();
+    const messengerContainer = document.createElement("div");
+    document.body.prepend(messengerContainer);
     if (route.indexOf("/casemgmt/forward.jsp") > -1) {
-      Messenger(patient_info, {
-        encounter: true,
-      });
+      Messenger(
+        patient_info,
+        {
+          encounter: true,
+        },
+        document.body,
+        messengerContainer
+      );
     } else {
       Messenger(
         patient_info,
         {
           encounter: false,
         },
-        document.getElementById("eform_container")
+        document.body,
+        messengerContainer
       );
       setupEFormPage();
     }
