@@ -13,7 +13,7 @@ const Chat = forwardRef(({ value, ...props }, ref) => {
     <div className="">
       <textarea
         ref={ref}
-        class="
+        className="
                     tw-form-textarea
                     form-textarea
                     tw-block
@@ -28,6 +28,7 @@ const Chat = forwardRef(({ value, ...props }, ref) => {
                     tw-text-gray-600
                     tw-p-4
                     tw-font-sans
+                    
                   "
         rows="8"
         placeholder="Enter message here"
