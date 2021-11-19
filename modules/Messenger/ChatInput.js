@@ -28,7 +28,7 @@ const Chat = forwardRef(({ value, ...props }, ref) => {
                     tw-text-gray-600
                     tw-p-4
                     tw-font-sans
-                    
+                    tw-relative
                   "
         rows="8"
         placeholder="Enter message here"
