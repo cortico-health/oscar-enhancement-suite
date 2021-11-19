@@ -1515,7 +1515,7 @@ async function checkAllEligibility() {
       const temp = Object.assign({}, appointmentInfo[i]);
       temp.total = length;
       temp.current = i + 1;
-      publish("check-eligibility", temp);
+      pubsub.publish("check-eligibility", temp);
 
       const demographic_no = appointmentInfo[i].demographic_no;
       let result = null;
@@ -2026,8 +2026,18 @@ async function setupPreferredPharmacy(code, demographic_no) {
   const corticoPharmacy = await getPharmacyDetails(pharmacyCode);
   const respText = await corticoPharmacy.text();
   const corticoPharmacyText = JSON.parse(respText);
+
+  if (corticoPharmacyText.length <= 0) {
+    const msg = `Cortico pharmacy not found`;
+    storePharmaciesFailureCache(demographicNo, msg);
+    displayPharmaciesFailure(demographicNo, msg);
+
+    return;
+  }
+
   var faxNumber = corticoPharmacyText[0]["fax_number"] || null;
   var searchTerm = corticoPharmacyText[0]["name"] || null;
+
   var fullPharmacyName = searchTerm;
 
   // only use the first word on the pharmacy name to search for list
