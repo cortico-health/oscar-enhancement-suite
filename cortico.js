@@ -1033,11 +1033,9 @@ async function getCorticoLogin() {
   var container = create("<div></div>");
   if (!getCorticoUrl()) return container;
 
-  let jwt_expired = null;
   let loginButton = create(
     `<button class='cortico-btn'>Sign in at Cortico</button>`
   );
-  let loggedInAsText = "";
   let loggedInAsHtml = "";
 
   let btnEvent = {
@@ -1051,33 +1049,30 @@ async function getCorticoLogin() {
       pubsub.publish("signin");
     },
   };
-  await loadExtensionStorageValue("jwt_username").then(function (username) {
-    loggedInAsText = `Logged in as ${username}`;
-  });
 
-  await loadExtensionStorageValue("jwt_expired").then(function (expired) {
-    jwt_expired = expired;
+  const loggedInAsText = await loadExtensionStorageValue("jwt_username");
+  const jwt_expired =
+    (await loadExtensionStorageValue("jwt_expired")) ||
+    localStorage.getItem("jwt_expired");
 
-    if (jwt_expired === false) {
-      loginButton = create(`<button class='cortico-btn'>Log out</button>`);
-      loggedInAsHtml = `<p>${loggedInAsText}</p>`;
-      btnEvent = {
-        "click .cortico-btn": async (e) => {
-          if (e.target.className == "cortico-btn") {
-            if (window.is_dev) {
-              localStorage.removeItem("jwt_access_token");
-              localStorage.removeItem("jwt_expired");
-            } else {
-              chrome.storage.local.remove(["jwt_access_token", "jwt_expired"]);
-            }
-
-            if (!alert("Logged out from cortico, reloading..."))
-              window.location.reload();
+  if (jwt_expired === false || jwt_expired === "false") {
+    loginButton = create(`<button class='cortico-btn'>Log out</button>`);
+    btnEvent = {
+      "click .cortico-btn": async (e) => {
+        if (e.target.className == "cortico-btn") {
+          if (window.is_dev) {
+            localStorage.removeItem("jwt_access_token");
+            localStorage.removeItem("jwt_expired");
+          } else {
+            chrome.storage.local.remove(["jwt_access_token", "jwt_expired"]);
           }
-        },
-      };
-    }
-  });
+
+          if (!alert("Logged out from cortico, reloading..."))
+            window.location.reload();
+        }
+      },
+    };
+  }
 
   var container = create(
     `<div class='login-form-button'>

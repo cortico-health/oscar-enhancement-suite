@@ -2,7 +2,7 @@ import { render } from "preact";
 import { useState, useRef, useEffect } from "preact/hooks";
 import corticoIcon from "../../resources/icons/96x96.png";
 
-function LoginWindow({ onSubmit, error, loading, ...props }) {
+function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
   const [warnName, setWarnName] = useState(false);
 
   const username = useRef();
@@ -44,7 +44,7 @@ function LoginWindow({ onSubmit, error, loading, ...props }) {
       )}
       {error === true ? (
         <div className="tw-bg-red-400 tw-text-white tw-my-4 tw-p-2 tw-rounded-lg tw-text-xs">
-          Something went wrong. Please try again.
+          {errorMessage || "Something went wrong. Please try again."}
         </div>
       ) : (
         ""
