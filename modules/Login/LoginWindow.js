@@ -43,7 +43,7 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
         ""
       )}
       {error === true ? (
-        <div className="tw-bg-red-400 tw-text-white tw-my-4 tw-p-2 tw-rounded-lg tw-text-xs">
+        <div className="tw-bg-red-400 tw-text-white tw-my-2 tw-p-2 tw-rounded-lg tw-text-xs">
           {errorMessage || "Something went wrong. Please try again."}
         </div>
       ) : (
