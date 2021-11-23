@@ -9,17 +9,22 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const handleSubmit = async (data) => {
+    setErrorMessage(null);
     setLoading(true);
-    console.log("Login Called", data);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     const { username, password } = data;
 
     try {
       const response = await signInRequest(username, password);
       const json = await response.json();
-      console.log("json", json);
+
+      if (response.status !== 200) {
+        setErrorMessage(json.detail || response.statusText);
+        throw new Error(json.detail || response.statusText);
+      }
 
       const browser = browser ? browser : window.chrome;
       if (browser) {
@@ -44,7 +49,12 @@ function Login() {
   return (
     <div className="tw-bg-white tw-rounded-lg tw-p-4 tw-min-w-[300px] tw-font-sans">
       {success !== true ? (
-        <LoginWindow onSubmit={handleSubmit} error={error} loading={loading} />
+        <LoginWindow
+          onSubmit={handleSubmit}
+          error={error}
+          loading={loading}
+          errorMessage={errorMessage}
+        />
       ) : (
         <SuccessWindow />
       )}

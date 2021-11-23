@@ -89,6 +89,9 @@ const init_cortico = async function () {
     route.indexOf("/appointment/appointmentcontrol.jsp") > -1
   ) {
     init_appointment_page();
+    const loginContainer = document.createElement("div");
+    document.body.prepend(loginContainer);
+    LoginOscar(document.body, loginContainer);
 
     if ((window.location.href + "").includes("appointment_no")) {
       init_recall_button();
@@ -1033,11 +1036,9 @@ async function getCorticoLogin() {
   var container = create("<div></div>");
   if (!getCorticoUrl()) return container;
 
-  let jwt_expired = null;
   let loginButton = create(
     `<button class='cortico-btn'>Sign in at Cortico</button>`
   );
-  let loggedInAsText = "";
   let loggedInAsHtml = "";
 
   let btnEvent = {
@@ -1051,33 +1052,30 @@ async function getCorticoLogin() {
       pubsub.publish("signin");
     },
   };
-  await loadExtensionStorageValue("jwt_username").then(function (username) {
-    loggedInAsText = `Logged in as ${username}`;
-  });
 
-  await loadExtensionStorageValue("jwt_expired").then(function (expired) {
-    jwt_expired = expired;
+  const loggedInAsText = await loadExtensionStorageValue("jwt_username");
+  const jwt_expired =
+    (await loadExtensionStorageValue("jwt_expired")) ||
+    localStorage.getItem("jwt_expired");
 
-    if (jwt_expired === false) {
-      loginButton = create(`<button class='cortico-btn'>Log out</button>`);
-      loggedInAsHtml = `<p>${loggedInAsText}</p>`;
-      btnEvent = {
-        "click .cortico-btn": async (e) => {
-          if (e.target.className == "cortico-btn") {
-            if (window.is_dev) {
-              localStorage.removeItem("jwt_access_token");
-              localStorage.removeItem("jwt_expired");
-            } else {
-              chrome.storage.local.remove(["jwt_access_token", "jwt_expired"]);
-            }
-
-            if (!alert("Logged out from cortico, reloading..."))
-              window.location.reload();
+  if (jwt_expired === false || jwt_expired === "false") {
+    loginButton = create(`<button class='cortico-btn'>Log out</button>`);
+    btnEvent = {
+      "click .cortico-btn": async (e) => {
+        if (e.target.className == "cortico-btn") {
+          if (window.is_dev) {
+            localStorage.removeItem("jwt_access_token");
+            localStorage.removeItem("jwt_expired");
+          } else {
+            chrome.storage.local.remove(["jwt_access_token", "jwt_expired"]);
           }
-        },
-      };
-    }
-  });
+
+          if (!alert("Logged out from cortico, reloading..."))
+            window.location.reload();
+        }
+      },
+    };
+  }
 
   var container = create(
     `<div class='login-form-button'>
@@ -2216,6 +2214,7 @@ async function getDiagnosticFromCortico(appt_no, notes, token) {
     },
   })
     .then((res) => {
+      console.log("IT GOT HEREEEE");
       if ((res + "").includes("Unauthorized") || res.status == 401) {
         showLoginForm();
 
@@ -2350,12 +2349,12 @@ async function init_diagnostic_viewer_button() {
 
   async function open_diagnostic_viewer(e) {
     if (!checkCorticoUrl(e.originalEvent)) return;
-
     const appt_no = getQueryStringValue("appointment_no");
+    const access_token =
+      (await loadExtensionStorageValue("jwt_access_token")) ||
+      localStorage.getItem("jwt_access_token");
 
-    await loadExtensionStorageValue("jwt_access_token").then(async function (
-      access_token
-    ) {
+    if (access_token) {
       const diagnostic_response = await getDiagnosticFromCortico(
         appt_no,
         notesValue,
@@ -2363,10 +2362,11 @@ async function init_diagnostic_viewer_button() {
       );
       if (diagnostic_response) {
         const diagnostic_text = String(await diagnostic_response.text());
-
         await showDiagnosticResults(diagnostic_text);
       }
-    });
+    } else {
+      pubsub.publish("signin");
+    }
   }
 
   update_diagnostic_button_visibility();

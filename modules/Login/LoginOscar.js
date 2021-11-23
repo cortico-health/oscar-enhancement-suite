@@ -4,7 +4,7 @@ import { useState, useEffect } from "preact/hooks";
 import Login from "./Login";
 import PreactModal from "../Modal/PreactModal";
 
-function LoginOscar(container) {
+function LoginOscar(container, replaceNode) {
   const _container = container || document.body;
 
   function Content({ ...props }) {
@@ -30,7 +30,7 @@ function LoginOscar(container) {
     );
   }
 
-  return render(<Content />, _container);
+  return render(<Content />, _container, replaceNode);
 }
 
 export default LoginOscar;
