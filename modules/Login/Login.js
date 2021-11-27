@@ -27,6 +27,8 @@ function Login() {
       }
 
       const browser = browser ? browser : window.chrome;
+      console.log("Browser", browser);
+      console.log("is Dev", window.is_dev);
       if (browser) {
         if (window.is_dev) {
           window.localStorage.setItem("jwt_access_token", json.access);
@@ -37,6 +39,11 @@ function Login() {
           browser.storage.local.set({ jwt_expired: false });
           browser.storage.local.set({ jwt_username: username });
         }
+      } else {
+        //Nieve approach
+        window.localStorage.setItem("jwt_access_token", json.access);
+        window.localStorage.setItem("jwt_expired", false);
+        window.localStorage.setItem("jwt_username", username);
       }
       setLoading(false);
       setSuccess(true);

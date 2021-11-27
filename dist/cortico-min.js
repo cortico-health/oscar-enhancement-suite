@@ -444,6 +444,8 @@ function Login() {
 
             case 15:
               browser = browser ? browser : window.chrome;
+              console.log("Browser", browser);
+              console.log("is Dev", window.is_dev);
 
               if (browser) {
                 if (window.is_dev) {
@@ -461,25 +463,30 @@ function Login() {
                     jwt_username: username
                   });
                 }
+              } else {
+                //Nieve approach
+                window.localStorage.setItem("jwt_access_token", json.access);
+                window.localStorage.setItem("jwt_expired", false);
+                window.localStorage.setItem("jwt_username", username);
               }
 
               setLoading(false);
               setSuccess(true);
-              _context.next = 25;
+              _context.next = 27;
               break;
 
-            case 21:
-              _context.prev = 21;
+            case 23:
+              _context.prev = 23;
               _context.t0 = _context["catch"](5);
               setLoading(false);
               setError(true);
 
-            case 25:
+            case 27:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[5, 21]]);
+      }, _callee, null, [[5, 23]]);
     }));
 
     return function handleSubmit(_x) {
