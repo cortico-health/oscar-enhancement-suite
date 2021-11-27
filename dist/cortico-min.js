@@ -8372,14 +8372,17 @@ function _checkAllEligibility() {
       while (1) {
         switch (_context17.prev = _context17.next) {
           case 0:
+            //localStorage.removeItem("checkCache")
+            console.log("Check all got here");
+
             if (!(window.checkAllEligibilityRunning === true)) {
-              _context17.next = 2;
+              _context17.next = 3;
               break;
             }
 
             return _context17.abrupt("return", alert("Check Already Running"));
 
-          case 2:
+          case 3:
             clearFailureCache();
             nodes = document.querySelectorAll("td.appt");
             appointmentInfo = (0,_modules_cortico_Appointments_Appointments__WEBPACK_IMPORTED_MODULE_7__.getAppointmentInfo)(nodes);
@@ -8394,12 +8397,12 @@ function _checkAllEligibility() {
             providerNo = getProviderNoFromTd(nodes[0]);
             error = false;
             window.checkAllEligibilityRunning = true;
-            _context17.prev = 12;
+            _context17.prev = 13;
             i = 0;
 
-          case 14:
+          case 15:
             if (!(i < length)) {
-              _context17.next = 64;
+              _context17.next = 65;
               break;
             }
 
@@ -8411,51 +8414,51 @@ function _checkAllEligibility() {
             result = null; // empty appointment node, do not check
 
             if (!(!demographic_no || demographic_no == 0)) {
-              _context17.next = 23;
+              _context17.next = 24;
               break;
             }
 
-            return _context17.abrupt("continue", 61);
+            return _context17.abrupt("continue", 62);
 
-          case 23:
+          case 24:
             // In cases where the first appointment in the schedule is an empty
             // appointment, get the providerNo from the node itself
             if (!providerNo) providerNo = getProviderNoFromTd(nodes[i]);
-            _context17.next = 26;
+            _context17.next = 27;
             return getPatientInfo(demographic_no);
 
-          case 26:
+          case 27:
             patientInfo = _context17.sent;
             healthNumber = patientInfo["Health Ins"].replace(/\s+/g, " ").trim();
             province = patientInfo["Province"].replace(/\s+/g, " ").trim();
-            _context17.prev = 29;
-            _context17.next = 32;
+            _context17.prev = 30;
+            _context17.next = 33;
             return checkEligiblity(demographic_no, (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_11__.getOrigin)(), (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_11__.getNamespace)(), providerNo, healthNumber, province);
 
-          case 32:
+          case 33:
             result = _context17.sent;
-            _context17.next = 38;
+            _context17.next = 39;
             break;
 
-          case 35:
-            _context17.prev = 35;
-            _context17.t0 = _context17["catch"](29);
+          case 36:
+            _context17.prev = 36;
+            _context17.t0 = _context17["catch"](30);
             console.error(_context17.t0);
 
-          case 38:
+          case 39:
             text = null;
             lowerCaseText = null;
             requestSuccess = false;
 
             if (!(result && result.status === 200)) {
-              _context17.next = 49;
+              _context17.next = 50;
               break;
             }
 
-            _context17.next = 44;
+            _context17.next = 45;
             return result.text();
 
-          case 44:
+          case 45:
             _text = _context17.sent;
             lowerCaseText = _text.toLowerCase();
 
@@ -8467,24 +8470,24 @@ function _checkAllEligibility() {
               }
             }
 
-            _context17.next = 51;
+            _context17.next = 52;
             break;
 
-          case 49:
+          case 50:
             text = "Failed to fetch";
             lowerCaseText = "Failed to fetch";
 
-          case 51:
+          case 52:
             if (!lowerCaseText.includes("error in teleplan connection")) {
-              _context17.next = 55;
+              _context17.next = 56;
               break;
             }
 
             alert("Cannot connect to Teleplan. \n" + text);
             error = true;
-            return _context17.abrupt("break", 64);
+            return _context17.abrupt("break", 65);
 
-          case 55:
+          case 56:
             verified = false;
 
             if (lowerCaseText.includes("this is not an insured benefit")) {
@@ -8502,44 +8505,44 @@ function _checkAllEligibility() {
 
             (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_11__.addToCache)(demographic_no, verified);
             console.log("Cached.");
-            _context17.next = 61;
+            _context17.next = 62;
             return new Promise(function (resolve, reject) {
               setTimeout(function () {
                 resolve();
               }, 1500);
             });
 
-          case 61:
+          case 62:
             i++;
-            _context17.next = 14;
+            _context17.next = 15;
             break;
 
-          case 64:
-            _context17.next = 70;
+          case 65:
+            _context17.next = 71;
             break;
 
-          case 66:
-            _context17.prev = 66;
-            _context17.t1 = _context17["catch"](12);
+          case 67:
+            _context17.prev = 67;
+            _context17.t1 = _context17["catch"](13);
             console.log(_context17.t1);
             alert(_context17.t1);
 
-          case 70:
-            _context17.prev = 70;
+          case 71:
+            _context17.prev = 71;
             window.checkAllEligibilityRunning = false;
             pubsub.publish("check-eligibility", {
               complete: true,
               total: length,
               error: error
             });
-            return _context17.finish(70);
+            return _context17.finish(71);
 
-          case 74:
+          case 75:
           case "end":
             return _context17.stop();
         }
       }
-    }, _callee17, null, [[12, 66, 70, 74], [29, 35]]);
+    }, _callee17, null, [[13, 67, 71, 75], [30, 36]]);
   }));
   return _checkAllEligibility.apply(this, arguments);
 }
@@ -9694,6 +9697,11 @@ function getDemographicPageResponse(demographic) {
   }
 
   var url = "".concat(origin, "/").concat(namespace, "/demographic/demographiccontrol.jsp?demographic_no=").concat(demographicNo, "&displaymode=edit&dboperation=search_detail");
+
+  if (origin.includes("skymedical")) {
+    url = "/demographic/demographiccontrol.jsp?demographic_no=".concat(demographicNo, "&displaymode=edit&dboperation=search_detail");
+  }
+
   return fetch(url);
 }
 

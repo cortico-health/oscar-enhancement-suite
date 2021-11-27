@@ -1487,7 +1487,7 @@ function isDateExpired(past, now, days) {
 
 async function checkAllEligibility() {
   //localStorage.removeItem("checkCache")
-
+  console.log("Check all got here");
   if (window.checkAllEligibilityRunning === true) {
     return alert("Check Already Running");
   }
@@ -1529,6 +1529,7 @@ async function checkAllEligibility() {
         .replace(/\s+/g, " ")
         .trim();
       const province = patientInfo["Province"].replace(/\s+/g, " ").trim();
+
       try {
         result = await checkEligiblity(
           demographic_no,
@@ -2499,7 +2500,11 @@ function getDemographicPageResponse(demographic) {
     console.error("Failed to load demographics.");
     return "";
   }
-  const url = `${origin}/${namespace}/demographic/demographiccontrol.jsp?demographic_no=${demographicNo}&displaymode=edit&dboperation=search_detail`;
+  let url = `${origin}/${namespace}/demographic/demographiccontrol.jsp?demographic_no=${demographicNo}&displaymode=edit&dboperation=search_detail`;
+
+  if (origin.includes("skymedical")) {
+    url = `/demographic/demographiccontrol.jsp?demographic_no=${demographicNo}&displaymode=edit&dboperation=search_detail`;
+  }
 
   return fetch(url);
 }
