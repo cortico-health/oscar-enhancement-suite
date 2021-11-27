@@ -13,7 +13,6 @@ import {
   getAppointmentInfo,
 } from "./modules/cortico/Appointments/Appointments";
 import { addAppointmentMenu } from "./modules/cortico/Appointments/AppointmentMenu";
-import { addLoginForm } from "./modules/cortico/Login/Login";
 import { Oscar } from "./modules/core/Oscar.js";
 import "element-closest-polyfill";
 import { getOrigin, getNamespace, htmlToElement } from "./modules/Utils/Utils";
@@ -133,7 +132,7 @@ const init_cortico = async function () {
     addCorticoLogo();
     addMenu();
     addAppointmentMenu();
-    addLoginForm(chrome);
+    //addLoginForm(chrome);
     if (!oscar.isJuno() && !oscar.containsKaiBar()) {
       plusSignFromCache();
     }
@@ -2556,7 +2555,7 @@ async function emailPatient(patientInfo, token, payload) {
           chrome.storage.local.set({ jwt_expired: true });
         }
 
-        addLoginForm(chrome);
+        //addLoginForm(chrome);
         const loginForm = document.querySelector(".login-form");
         loginForm.classList.add("show");
       } else {
