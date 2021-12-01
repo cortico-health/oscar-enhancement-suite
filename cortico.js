@@ -1699,6 +1699,10 @@ function checkEligiblity(
     `${origin}/${namespace}/billing/CA/BC/ManageTeleplan.do?` +
     `demographic=${demographicNo}&method=checkElig`;
 
+  if (origin.includes("skymedical")) {
+    url = `/demographic/demographiccontrol.jsp?demographic_no=${demographicNo}&displaymode=edit&dboperation=search_detail`;
+  }
+
   // Taken from oscar, they bust cache with this
   const ran_number = Math.round(Math.random() * 1000000);
   url += "&rand=" + ran_number;
