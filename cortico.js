@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name     Cortico
-// @version  3.9.1
+// @version  2021.12.03
 // @grant    none
 // ==/UserScript==
 
@@ -38,7 +38,7 @@ import Disclaimer from "./modules/cortico/Disclaimer";
 // manually update this variable with the version in manifest.json
 
 import LoginOscar from "./modules/Login/LoginOscar";
-const version = "3.9.1";
+const version = "2021.12.03";
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
 
@@ -119,7 +119,9 @@ const init_cortico = async function () {
     resources_field.addEventListener("change", update_video_button);
   } else if (route.indexOf("/provider/providercontrol.jsp") > -1) {
     init_schedule();
-    LoginOscar();
+    const loginContainer = document.createElement("div");
+    document.body.prepend(loginContainer);
+    LoginOscar(document.body, loginContainer);
 
     /**
      * Drag and drop - disabled for stability reasons.
@@ -129,6 +131,7 @@ const init_cortico = async function () {
       dragAndDrop();
     }
     setClinicName();
+
     addCorticoLogo();
     addMenu();
     addAppointmentMenu();
@@ -658,8 +661,8 @@ function getQueryStringValue(key) {
     window.location.search.replace(
       new RegExp(
         "^(?:.*[&\\?]" +
-          encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") +
-          "(?:\\=([^&]*))?)?.*$",
+        encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") +
+        "(?:\\=([^&]*))?)?.*$",
         "i"
       ),
       "$1"
@@ -684,15 +687,15 @@ function addCorticoLogo() {
     document.querySelector("#firstMenu #navList") ||
     document.querySelector("#firstMenu #navlist");
   var listitem = create(`
-    <li>
-      <a href="https://cortico.health"></a>
+    <li style="background:white;border-radius:2px;padding:2px">
+      <a target="_blank" href="https://cortico.health"></a>
     </li>
   `);
 
   const corticoLogo = CorticoIcon({
     attrs: {
       height: "15",
-      style: "position:relative; top: 2px;",
+      style: "position:relative; top: 3px;",
     },
   });
 
@@ -815,6 +818,10 @@ async function addMenu(container) {
   menu.textContent = "Cortico";
   menu.style.color = "rgb(75, 84, 246)";
   menu.style.cursor = "pointer";
+  menu.style.backgroundColor = 'white';
+  menu.style.borderRadius = '2px';
+  menu.style.padding = '2px';
+  menu.style.marginLeft = '2px';
 
   var sidebar = await createSideBar();
   menu.addEventListener("click", function () {

@@ -5,7 +5,6 @@ import Login from "./Login";
 import PreactModal from "../Modal/PreactModal";
 
 function LoginOscar(container, replaceNode) {
-  const _container = container || document.body;
 
   function Content({ ...props }) {
     const [showModal, setShowModal] = useState(false);
@@ -30,7 +29,7 @@ function LoginOscar(container, replaceNode) {
     );
   }
 
-  return render(<Content />, _container, replaceNode);
+  return render(<Content />, container, replaceNode);
 }
 
 export default LoginOscar;
