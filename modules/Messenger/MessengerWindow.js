@@ -51,7 +51,7 @@ function MessengerWindow({
   encounter: encounterOption,
   ...props
 }) {
-  const [email, setEmail] = useState("aaron@countable.ca");
+  const [email, setEmail] = useState("test@example.com");
   const [scheme, setScheme] = useState("email");
   const subject = useRef();
   const message = useRef();

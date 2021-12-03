@@ -2520,69 +2520,69 @@ function getDemographicPageResponse(demographic) {
   return fetch(url);
 }
 
-async function emailPatient(patientInfo, token, payload) {
-  let url = getCorticoUrl() + "/api/plug-in/email-form/";
-  let patientEmail = patientInfo.email || null;
+// async function emailPatient(patientInfo, token, payload) {
+//   let url = getCorticoUrl() + "/api/plug-in/email-form/";
+//   let patientEmail = patientInfo.email || null;
 
-  if (!patientEmail) {
-    alert("The patient has no email");
-    return;
-  }
+//   if (!patientEmail) {
+//     alert("The patient has no email");
+//     return;
+//   }
 
-  let data = {
-    clinic_host: getCorticoUrl().replace(/http.?:\/\//, ""),
-    to: "aaron@countable.ca",
-  };
-  if (payload.html) {
-    data.pdf_html = payload.html;
-  } else if (payload.attachment) {
-    data.attachment = payload.attachment;
-  }
-  const subject = document.querySelector('[name="subject"]');
-  if (subject && subject.value) {
-    data.subject = subject.value;
-  }
+//   let data = {
+//     clinic_host: getCorticoUrl().replace(/http.?:\/\//, ""),
+//     to: patientEmail,
+//   };
+//   if (payload.html) {
+//     data.pdf_html = payload.html;
+//   } else if (payload.attachment) {
+//     data.attachment = payload.attachment;
+//   }
+//   const subject = document.querySelector('[name="subject"]');
+//   if (subject && subject.value) {
+//     data.subject = subject.value;
+//   }
 
-  return fetch(url, {
-    method: "POST",
-    body: JSON.stringify(data),
-    mode: "cors",
-    headers: {
-      "Content-type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    // TODO: handle other cortico api errors the same way
-  })
-    .then(handleErrors)
-    .then((response) => response.json())
-    .then((data) => {
-      if (!data.success) {
-        alert(`Sending email failed: ${data.message}`);
-      }
-      return data;
-    })
-    .catch((err) => {
-      console.error("Cortico: Error sending email: ", err);
-      if ((err + "").includes("Unauthorized")) {
-        alert("Your credentials have expired. Please login again");
-        if (window.is_dev) {
-          localStorage.setItem("jwt_expired", true);
-        } else {
-          chrome.storage.local.set({ jwt_expired: true });
-        }
+//   return fetch(url, {
+//     method: "POST",
+//     body: JSON.stringify(data),
+//     mode: "cors",
+//     headers: {
+//       "Content-type": "application/json",
+//       Authorization: `Bearer ${token}`,
+//     },
+//     // TODO: handle other cortico api errors the same way
+//   })
+//     .then(handleErrors)
+//     .then((response) => response.json())
+//     .then((data) => {
+//       if (!data.success) {
+//         alert(`Sending email failed: ${data.message}`);
+//       }
+//       return data;
+//     })
+//     .catch((err) => {
+//       console.error("Cortico: Error sending email: ", err);
+//       if ((err + "").includes("Unauthorized")) {
+//         alert("Your credentials have expired. Please login again");
+//         if (window.is_dev) {
+//           localStorage.setItem("jwt_expired", true);
+//         } else {
+//           chrome.storage.local.set({ jwt_expired: true });
+//         }
 
-        //addLoginForm(chrome);
-        const loginForm = document.querySelector(".login-form");
-        loginForm.classList.add("show");
-      } else {
-        alert("Something went wrong with Cortico.");
-      }
-      return {
-        success: false,
-        message: err,
-      };
-    });
-}
+//         //addLoginForm(chrome);
+//         const loginForm = document.querySelector(".login-form");
+//         loginForm.classList.add("show");
+//       } else {
+//         alert("Something went wrong with Cortico.");
+//       }
+//       return {
+//         success: false,
+//         message: err,
+//       };
+//     });
+// }
 
 function handleErrors(response) {
   if (!response.ok) {

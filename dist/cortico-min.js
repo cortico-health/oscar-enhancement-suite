@@ -998,7 +998,7 @@ var handleErrors = /*#__PURE__*/function () {
               break;
             }
 
-            throw new MessageException(result && result.detail);
+            throw new MessageException(result && result.message);
 
           case 8:
             throw new MessageException(response && response.statusText);
@@ -1120,6 +1120,7 @@ function Messenger(patient, opts, container, replaceNode) {
                       addEncounterText(text);
                     }
                   }).catch(function (error) {
+                    console.error(error);
                     setMessageInfo({
                       title: error.title,
                       content: error && error.message
@@ -1382,7 +1383,7 @@ function MessengerWindow(_ref) {
       encounterOption = _ref.encounter,
       props = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__["default"])(_ref, _excluded);
 
-  var _useState = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useState)("aaron@countable.ca"),
+  var _useState = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useState)("test@example.com"),
       _useState2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState, 2),
       email = _useState2[0],
       setEmail = _useState2[1];
@@ -7306,7 +7307,7 @@ function _setupDocumentPage() {
                                   }, _callee8);
                                 }));
 
-                                return function (_x17) {
+                                return function (_x14) {
                                   return _ref3.apply(this, arguments);
                                 };
                               }());
@@ -7319,7 +7320,7 @@ function _setupDocumentPage() {
                       }, _callee9);
                     }));
 
-                    function click(_x16) {
+                    function click(_x13) {
                       return _click.apply(this, arguments);
                     }
 
@@ -7400,7 +7401,7 @@ function _setupEFormPage() {
                 }, _callee11);
               }));
 
-              return function (_x18) {
+              return function (_x15) {
                 return _ref4.apply(this, arguments);
               };
             }());
@@ -7880,7 +7881,7 @@ function _getCorticoLogin() {
                     }, _callee15);
                   }));
 
-                  function clickCorticoBtn(_x19) {
+                  function clickCorticoBtn(_x16) {
                     return _clickCorticoBtn.apply(this, arguments);
                   }
 
@@ -9491,7 +9492,7 @@ function _init_diagnostic_viewer_button() {
               return _open_diagnostic_viewer.apply(this, arguments);
             };
 
-            open_diagnostic_viewer = function _open_diagnostic_view(_x20) {
+            open_diagnostic_viewer = function _open_diagnostic_view(_x17) {
               return _open_diagnostic_viewer.apply(this, arguments);
             };
 
@@ -9583,7 +9584,7 @@ function _init_recall_button() {
               return _send_patient_recall_email.apply(this, arguments);
             };
 
-            send_patient_recall_email = function _send_patient_recall_(_x21) {
+            send_patient_recall_email = function _send_patient_recall_(_x18) {
               return _send_patient_recall_email.apply(this, arguments);
             };
 
@@ -9719,102 +9720,66 @@ function getDemographicPageResponse(demographic) {
   }
 
   return fetch(url);
-}
+} // async function emailPatient(patientInfo, token, payload) {
+//   let url = getCorticoUrl() + "/api/plug-in/email-form/";
+//   let patientEmail = patientInfo.email || null;
+//   if (!patientEmail) {
+//     alert("The patient has no email");
+//     return;
+//   }
+//   let data = {
+//     clinic_host: getCorticoUrl().replace(/http.?:\/\//, ""),
+//     to: patientEmail,
+//   };
+//   if (payload.html) {
+//     data.pdf_html = payload.html;
+//   } else if (payload.attachment) {
+//     data.attachment = payload.attachment;
+//   }
+//   const subject = document.querySelector('[name="subject"]');
+//   if (subject && subject.value) {
+//     data.subject = subject.value;
+//   }
+//   return fetch(url, {
+//     method: "POST",
+//     body: JSON.stringify(data),
+//     mode: "cors",
+//     headers: {
+//       "Content-type": "application/json",
+//       Authorization: `Bearer ${token}`,
+//     },
+//     // TODO: handle other cortico api errors the same way
+//   })
+//     .then(handleErrors)
+//     .then((response) => response.json())
+//     .then((data) => {
+//       if (!data.success) {
+//         alert(`Sending email failed: ${data.message}`);
+//       }
+//       return data;
+//     })
+//     .catch((err) => {
+//       console.error("Cortico: Error sending email: ", err);
+//       if ((err + "").includes("Unauthorized")) {
+//         alert("Your credentials have expired. Please login again");
+//         if (window.is_dev) {
+//           localStorage.setItem("jwt_expired", true);
+//         } else {
+//           chrome.storage.local.set({ jwt_expired: true });
+//         }
+//         //addLoginForm(chrome);
+//         const loginForm = document.querySelector(".login-form");
+//         loginForm.classList.add("show");
+//       } else {
+//         alert("Something went wrong with Cortico.");
+//       }
+//       return {
+//         success: false,
+//         message: err,
+//       };
+//     });
+// }
 
-function emailPatient(_x13, _x14, _x15) {
-  return _emailPatient.apply(this, arguments);
-}
-
-function _emailPatient() {
-  _emailPatient = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee28(patientInfo, token, payload) {
-    var url, patientEmail, data, subject;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee28$(_context28) {
-      while (1) {
-        switch (_context28.prev = _context28.next) {
-          case 0:
-            url = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_11__.getCorticoUrl)() + "/api/plug-in/email-form/";
-            patientEmail = patientInfo.email || null;
-
-            if (patientEmail) {
-              _context28.next = 5;
-              break;
-            }
-
-            alert("The patient has no email");
-            return _context28.abrupt("return");
-
-          case 5:
-            data = {
-              clinic_host: (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_11__.getCorticoUrl)().replace(/http.?:\/\//, ""),
-              to: "aaron@countable.ca"
-            };
-
-            if (payload.html) {
-              data.pdf_html = payload.html;
-            } else if (payload.attachment) {
-              data.attachment = payload.attachment;
-            }
-
-            subject = document.querySelector('[name="subject"]');
-
-            if (subject && subject.value) {
-              data.subject = subject.value;
-            }
-
-            return _context28.abrupt("return", fetch(url, {
-              method: "POST",
-              body: JSON.stringify(data),
-              mode: "cors",
-              headers: {
-                "Content-type": "application/json",
-                Authorization: "Bearer ".concat(token)
-              } // TODO: handle other cortico api errors the same way
-
-            }).then(handleErrors).then(function (response) {
-              return response.json();
-            }).then(function (data) {
-              if (!data.success) {
-                alert("Sending email failed: ".concat(data.message));
-              }
-
-              return data;
-            }).catch(function (err) {
-              console.error("Cortico: Error sending email: ", err);
-
-              if ((err + "").includes("Unauthorized")) {
-                alert("Your credentials have expired. Please login again");
-
-                if (window.is_dev) {
-                  localStorage.setItem("jwt_expired", true);
-                } else {
-                  chrome.storage.local.set({
-                    jwt_expired: true
-                  });
-                } //addLoginForm(chrome);
-
-
-                //addLoginForm(chrome);
-                var loginForm = document.querySelector(".login-form");
-                loginForm.classList.add("show");
-              } else {
-                alert("Something went wrong with Cortico.");
-              }
-
-              return {
-                success: false,
-                message: err
-              };
-            }));
-
-          case 10:
-          case "end":
-            return _context28.stop();
-        }
-      }
-    }, _callee28);
-  }));
-  return _emailPatient.apply(this, arguments);
-}
 
 function handleErrors(response) {
   if (!response.ok) {

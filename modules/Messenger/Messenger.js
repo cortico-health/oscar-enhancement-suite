@@ -20,7 +20,7 @@ const handleErrors = async (response) => {
   const result = await response.json();
   if (!response.ok) {
     if (response.status === 401) {
-      throw new MessageException(result && result.detail);
+      throw new MessageException(result && result.message);
     } else {
       throw new MessageException(response && response.statusText);
     }
@@ -80,6 +80,7 @@ function Messenger(patient, opts, container, replaceNode) {
             }
           })
           .catch((error) => {
+            console.error(error)
             setMessageInfo({
               title: error.title,
               content: error && error.message,
@@ -154,9 +155,8 @@ function Messenger(patient, opts, container, replaceNode) {
           <Login />
         </PreactModal>
         <div
-          className={`tw-fixed tw-bottom-5 tw-right-5 tw-bg-white tw-z-10000 tw-max-w-[400px] tw-shadow-xl tw-w-full tw-rounded-md tw-transform tw-transition-transform tw-duration-200 tw-ease-in-out ${
-            open ? "tw-translate-x-0" : "tw-translate-x-[430px]"
-          }`}
+          className={`tw-fixed tw-bottom-5 tw-right-5 tw-bg-white tw-z-10000 tw-max-w-[400px] tw-shadow-xl tw-w-full tw-rounded-md tw-transform tw-transition-transform tw-duration-200 tw-ease-in-out ${open ? "tw-translate-x-0" : "tw-translate-x-[430px]"
+            }`}
         >
           <MessengerWindow
             patient={patient}
