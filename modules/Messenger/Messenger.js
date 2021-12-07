@@ -16,22 +16,27 @@ function MessageException(message) {
   this.title = "Error";
 }
 
-const handleErrors = async (response) => {
-  const result = await response.json();
-  if (!response.ok) {
-    if (response.status === 401) {
-      throw new MessageException(result && result.message);
-    } else {
-      throw new MessageException(response && response.statusText);
-    }
-  }
-  return result;
-};
-
 function Messenger(patient, opts, container, replaceNode) {
   const _container = container || document.body;
 
   function Content({ patient, encounter, ...props }) {
+
+    const handleErrors = async (response) => {
+      const result = await response.json();
+      if (!response.ok) {
+        if (response.status === 401) {
+          const resultMessage = result && (result.message || result.detail)
+          if (resultMessage === "Given token not valid for any token type") {
+            promptLogin()
+          }
+          throw new MessageException(resultMessage);
+        } else {
+          throw new MessageException(response && response.statusText);
+        }
+      }
+      return result;
+    };
+
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const [showNotification, setShowNotification] = useState(false);
