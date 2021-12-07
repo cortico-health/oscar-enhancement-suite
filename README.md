@@ -135,7 +135,8 @@ docker-compose run pkg
 
 Then, upload cortico-firefox.zip on https://addons.mozilla.org/en-CA/developers/addon/
 
-Indicate the plug-in does not use remote code (which is the case). The plug-in does use compilers, which requires submitting the source code. We can do by uploading the generated source zip ```
+Indicate the plug-in does not use remote code (which is the case). The plug-in does use compilers, which requires submitting the source code. We can do by uploading the generated source zip
+```
 oscar-enhancement-suite.zip
 ```
 
