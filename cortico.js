@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name     Cortico
-// @version  2021.12.6
+// @version  2021.12.7
 // @grant    none
 // ==/UserScript==
 
@@ -38,7 +38,7 @@ import Disclaimer from "./modules/cortico/Disclaimer";
 // manually update this variable with the version in manifest.json
 
 import LoginOscar from "./modules/Login/LoginOscar";
-const version = "2021.12.6";
+const version = "2021.12.7";
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
 
@@ -559,7 +559,15 @@ function delegate(element, event, descendentSelector, callback) {
 }
 
 const init_styles = function () {
-  var style = `.cortico-btn {
+  var style = `
+  @media print
+  {    
+      .no-print, .no-print *
+      {
+          display: none !important;
+      }
+  }  
+  .cortico-btn {
   -webkit-appearance:none;
   -moz-appearance:none;
   appearance:none;

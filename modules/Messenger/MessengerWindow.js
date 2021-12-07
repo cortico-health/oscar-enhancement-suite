@@ -129,7 +129,7 @@ function MessengerWindow({
   };
 
   return (
-    <form onSubmit={submitData} className="tw-m-0">
+    <form onSubmit={submitData} className="tw-m-0 no-print">
       <Header close={close} />
       <div>
         <div>
