@@ -173,7 +173,7 @@ function MessengerWindow({
         <div className="tw-flex tw-justify-end tw-px-4 tw-py-3 tw-bg-gray-100">
           <button
             disabled={true}
-            className="tw-bg-green-600 tw-px-3 tw-py-2 tw-rounded-md tw-text-white tw-text-sm tw-flex tw-items-center tw-mr-2 tw-disabled:opacity-50 tw-opacity-50"
+            className="tw-bg-green-600 tw-px-3 tw-py-2 tw-rounded-md tw-text-white tw-text-sm tw-flex tw-items-center tw-mr-2 tw-disabled:opacity-50 tw-opacity-50 tw-hidden"
             onClick={() => {
               setScheme("text");
             }}
