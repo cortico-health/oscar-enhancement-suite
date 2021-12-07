@@ -174,3 +174,4 @@ As you may know, Browser Plug-ins have some special security considerations. Her
 - Any API calls are made encrypted over HTTPS/TLS.
 - In the future: OTN certification for the plug-in's message system is on the roadmap (along with associated PIA and TRA) as Coritco has done for our Telehealth. _note_: for now, only attached files are securely sent to patients in the messaging system, and the message is emailed as plain text like a typical secure email system (PauBox for example). While some HIPAA eligible systems use this approach, we do not recommend sending PHI without end-to-end encryption. In the future we will support this.
 - The plug-in does not load 3rd party code from CDN. It's all bundled locally.
+- The plug-in uses permission restrictions to avoid accessing sites other than Oscar on your PC. (see manifest.json)
