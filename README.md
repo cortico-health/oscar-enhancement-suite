@@ -160,3 +160,12 @@ This extension provides additional functionality to Cortico customers who use Os
 Are you using remote code?
 
 - No
+
+# Privacy and Security Considerations
+
+As you may know, Browser Plug-ins have some special security considerations. Here are some strategies to ensure it's as secure as possible.
+- The system is Open Source, so anyone can review and audit it. This transparency on what's added to the plug-in acts as an extra layer of assurance that nobody can hide anything undesirable in it (since doing that can be caught in review, and is traceable forever). Code is never loaded directly from Cortico's server. It's all auditable by the Firefox and Chrome store admins.
+- The plug-in avoids storing PHI (personal health information) locally or in Cortico servers. PHI remains only in your EMR.
+- Any API calls are made encrypted over HTTPS/TLS.
+- In the future: OTN certification for the plug-in's message system is on the roadmap (along with associated PIA and TRA) as Coritco has done for our Telehealth.
+- The plug-in does not load 3rd party code from CDN. It's all bundled locally.
