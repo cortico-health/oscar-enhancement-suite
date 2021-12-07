@@ -15,6 +15,10 @@ Drag and Drop:
 
 ![Oscar Schedule Drag and Drop](dnd.gif)
 
+Patient Messaging:
+
+![Patient Messaging](messaging.png)
+
 Cortico Control Panel:
 
 ![Cortico Controls](cortico-control.png)
