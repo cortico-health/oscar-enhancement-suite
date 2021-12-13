@@ -132,15 +132,28 @@ export function create(_element, options, ...children) {
 }
 
 export function loadExtensionStorageValue(key) {
+  const browser = browser || chrome
   return new Promise(function (resolve, reject) {
     if (window.is_dev) {
       resolve(window.localStorage.getItem(key));
     } else {
-      chrome.storage.local.get(key, function (result) {
+      browser.storage.local.get(key, function (result) {
         resolve(result[key]);
       });
     }
   });
+}
+
+export function saveExtensionStorageValue(key, value) {
+  const browser = browser || chrome
+  if (window.is_dev) {
+    window.localStorage.setItem(key, value);
+  } else {
+    let to_set = {}
+    to_set[key] = value;
+    browser.storage.local.set(to_set);
+  }
+
 }
 
 export function htmlToElement(html) {
@@ -214,11 +227,8 @@ export function checkCorticoUrl(event) {
 }
 
 export function showLoginForm() {
-  if (window.is_dev) {
-    window.localStoraage.setItem("jwt_expired", true);
-  } else {
-    chrome.storage.local.set({ jwt_expired: true });
-  }
+
+  saveExtensionStorageValue("jwt_expired", true);
   alert("Your credentials have expired. Please login again");
 
   addLoginForm(chrome);

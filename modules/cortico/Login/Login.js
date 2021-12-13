@@ -1,6 +1,9 @@
 import "./Login.css";
 import { CorticoIcon } from "../../Icons/CorticoIcon";
 import { create, getCorticoUrl } from "../../Utils/Utils";
+import {
+  saveExtensionStorageValue,
+} from "../../Utils/Utils";
 
 export function addLoginForm(browser) {
   const currentUser = localStorage.getItem("currentUser");
@@ -61,28 +64,18 @@ export async function corticoSignIn(username, password, browser) {
   if (response) {
     const json = JSON.parse(await response.text());
 
-    browser = browser ? browser : chrome;
-    if (browser) {
-      if (window.is_dev) {
-        window.localStorage.setItem("jwt_access_token", json.access);
-        window.localStorage.setItem("jwt_expired", false);
-        window.localStorage.setItem("jwt_username", username);
-      } else {
-        browser.storage.local.set({ jwt_access_token: json.access });
-        browser.storage.local.set({ jwt_expired: false });
-        browser.storage.local.set({ jwt_username: username });
-      }
+    saveExtensionStorageValue("jwt_access_token", json.access);
+    saveExtensionStorageValue("jwt_expired", false);
+    saveExtensionStorageValue("jwt_username", username);
 
-      const openMenu = document.querySelector(".login-form.show");
-      openMenu.classList.remove("show");
+    const openMenu = document.querySelector(".login-form.show");
+    openMenu.classList.remove("show");
 
-      if (!alert("Successfully signed in, the page will now reload"))
-        window.location.reload();
+    if (!alert("Successfully signed in, the page will now reload"))
+      window.location.reload();
 
-      return;
-    }
-
-    return;
+  } else {
+    alert('No response from Cortico.')
   }
 }
 
