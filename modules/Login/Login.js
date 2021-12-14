@@ -3,7 +3,7 @@ import { useState } from "preact/hooks";
 import corticoIcon from "../../resources/icons/96x96.png";
 import LoginWindow from "./LoginWindow";
 import SuccessWindow from "./SuccessWindow";
-import { saveExtensionStorageValue } from "../Utils/Utils";
+import { saveExtensionStorageValue, getCorticoUrl } from "../Utils/Utils";
 
 async function signInRequest(username, password) {
   const data = {

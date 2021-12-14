@@ -400,7 +400,7 @@ function _signInRequest() {
               username: username,
               password: password
             };
-            url = getCorticoUrl() + "/api/token/";
+            url = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_8__.getCorticoUrl)() + "/api/token/";
             return _context2.abrupt("return", fetch(url, {
               method: "POST",
               headers: {
