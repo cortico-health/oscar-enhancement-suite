@@ -4,12 +4,9 @@ import corticoIcon from "../../resources/icons/96x96.png";
 import LoginWindow from "./LoginWindow";
 import SuccessWindow from "./SuccessWindow";
 import { signInRequest } from "../cortico/Login/Login";
-import {
-  saveExtensionStorageValue,
-} from "../Utils/Utils";
+import { saveExtensionStorageValue } from "../Utils/Utils";
 
 function Login() {
-
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(null);
@@ -38,8 +35,8 @@ function Login() {
       setSuccess(true);
     } catch (error) {
       setLoading(false);
-      console.error(error)
-      setErrorMessage(error.message)
+      console.error(error);
+      setErrorMessage(error.message);
       setError(true);
     }
   };

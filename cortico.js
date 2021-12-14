@@ -414,10 +414,13 @@ async function setupDocumentPage() {
       {
         events: {
           click: async (e) => {
-            if (!checkCorticoUrl(e)) return;
+            if (!checkCorticoUrl(e)) {
+              pubsub.publish("promptLogin");
+              return;
+            }
 
-            await loadExtensionStorageValue("jwt_access_token").then(
-              async function (access_token) {
+            await loadExtensionStorageValue("jwt_access_token")
+              .then(async function (access_token) {
                 const pdf_link_ext = pdf_link.outerHTML
                   .replace(/\&amp;/g, "&")
                   .match(/\'(Manage[^\']+)\'/)[1];
@@ -449,8 +452,10 @@ async function setupDocumentPage() {
                       )
                     );
                 }*/
-              }
-            );
+              })
+              .catch((e) => {
+                console.log("No access token", e);
+              });
           },
         },
       }
@@ -669,8 +674,8 @@ function getQueryStringValue(key) {
     window.location.search.replace(
       new RegExp(
         "^(?:.*[&\\?]" +
-        encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") +
-        "(?:\\=([^&]*))?)?.*$",
+          encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") +
+          "(?:\\=([^&]*))?)?.*$",
         "i"
       ),
       "$1"
@@ -826,10 +831,10 @@ async function addMenu(container) {
   menu.textContent = "Cortico";
   menu.style.color = "rgb(75, 84, 246)";
   menu.style.cursor = "pointer";
-  menu.style.backgroundColor = 'white';
-  menu.style.borderRadius = '2px';
-  menu.style.padding = '2px';
-  menu.style.marginLeft = '2px';
+  menu.style.backgroundColor = "white";
+  menu.style.borderRadius = "2px";
+  menu.style.padding = "2px";
+  menu.style.marginLeft = "2px";
 
   var sidebar = await createSideBar();
   menu.addEventListener("click", function () {
@@ -1081,7 +1086,7 @@ async function getCorticoLogin() {
             localStorage.removeItem("jwt_access_token");
             localStorage.removeItem("jwt_expired");
           } else {
-            const browser = browser || chrome
+            const browser = browser || chrome;
             browser.storage.local.remove(["jwt_access_token", "jwt_expired"]);
           }
 
@@ -1225,7 +1230,7 @@ function getResetCacheButton() {
           if (confirm("Are you sure you want to clear your cache?")) {
             localStorage.clear();
             if (!window.is_dev) {
-              const browser = browser || chrome
+              const browser = browser || chrome;
               await browser.storage.local.clear();
             }
 

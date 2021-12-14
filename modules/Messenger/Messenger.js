@@ -9,6 +9,7 @@ import Encounter from "../core/Encounter";
 import PreactModal from "../Modal/PreactModal";
 import SavedReplies from "./SavedReplies";
 import Login from "../Login/Login";
+import { pubSubInit } from "../PubSub/PubSub";
 
 function MessageException(message) {
   this.message = message;
@@ -20,14 +21,13 @@ function Messenger(patient, opts, container, replaceNode) {
   const _container = container || document.body;
 
   function Content({ patient, encounter, ...props }) {
-
     const handleErrors = async (response) => {
       const result = await response.json();
       if (!response.ok) {
         if (response.status === 401) {
-          const resultMessage = result && (result.message || result.detail)
+          const resultMessage = result && (result.message || result.detail);
           if (resultMessage === "Given token not valid for any token type") {
-            promptLogin()
+            promptLogin();
           }
           throw new MessageException(resultMessage);
         } else {
@@ -58,6 +58,13 @@ function Messenger(patient, opts, container, replaceNode) {
       setOpen(false);
     };
 
+    useEffect(() => {
+      pubsub.subscribe("promptLogin", () => {
+        console.log("got here");
+        setShowLogin(true);
+      });
+    }, []);
+
     const promptLogin = () => {
       setShowLogin(true);
     };
@@ -85,7 +92,7 @@ function Messenger(patient, opts, container, replaceNode) {
             }
           })
           .catch((error) => {
-            console.error(error)
+            console.error(error);
             setMessageInfo({
               title: error.title,
               content: error && error.message,
@@ -160,8 +167,9 @@ function Messenger(patient, opts, container, replaceNode) {
           <Login />
         </PreactModal>
         <div
-          className={`tw-fixed tw-bottom-5 tw-right-5 tw-bg-white tw-z-10000 tw-max-w-[400px] tw-shadow-xl tw-w-full tw-rounded-md tw-transform tw-transition-transform tw-duration-200 tw-ease-in-out ${open ? "tw-translate-x-0" : "tw-translate-x-[430px]"
-            }`}
+          className={`tw-fixed tw-bottom-5 tw-right-5 tw-bg-white tw-z-10000 tw-max-w-[400px] tw-shadow-xl tw-w-full tw-rounded-md tw-transform tw-transition-transform tw-duration-200 tw-ease-in-out ${
+            open ? "tw-translate-x-0" : "tw-translate-x-[430px]"
+          }`}
         >
           <MessengerWindow
             patient={patient}
