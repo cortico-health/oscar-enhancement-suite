@@ -3,8 +3,30 @@ import { useState } from "preact/hooks";
 import corticoIcon from "../../resources/icons/96x96.png";
 import LoginWindow from "./LoginWindow";
 import SuccessWindow from "./SuccessWindow";
-import { signInRequest } from "../cortico/Login/Login";
 import { saveExtensionStorageValue } from "../Utils/Utils";
+
+async function signInRequest(username, password) {
+  const data = {
+    username: username,
+    password: password,
+  };
+  const url = getCorticoUrl() + "/api/token/";
+
+  return fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  }).catch((err) => {
+    console.error(err);
+    if (("" + err).includes("Failed to fetch")) {
+      alert("Cortico instance cannot be reached. Check clinic name.");
+    } else {
+      alert("Cortico: Unknown Login Error: " + err);
+    }
+  });
+}
 
 function Login() {
   const [loading, setLoading] = useState(false);

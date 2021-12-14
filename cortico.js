@@ -2242,7 +2242,7 @@ async function getDiagnosticFromCortico(appt_no, notes, token) {
     .then((res) => {
       console.log("IT GOT HEREEEE");
       if ((res + "").includes("Unauthorized") || res.status == 401) {
-        showLoginForm();
+        pubsub.publish("signin");
 
         return;
       }
@@ -2251,7 +2251,7 @@ async function getDiagnosticFromCortico(appt_no, notes, token) {
     })
     .catch((err) => {
       if ((err + "").includes("Unauthorized")) {
-        showLoginForm();
+        pubsub.publish("signin");
       } else {
         alert(
           "Failed to fetch data. There might be a problem with Cortico or the patient responses do not exist"
@@ -2374,7 +2374,11 @@ async function init_diagnostic_viewer_button() {
   }
 
   async function open_diagnostic_viewer(e) {
-    if (!checkCorticoUrl(e.originalEvent)) return;
+    console.log("Clicked");
+    if (!checkCorticoUrl(e.originalEvent)) {
+      pubsub.publish("signin");
+      return;
+    }
     const appt_no = getQueryStringValue("appointment_no");
     const access_token =
       (await loadExtensionStorageValue("jwt_access_token")) ||

@@ -1,5 +1,4 @@
 import dayjs from "dayjs";
-import { addLoginForm } from "../cortico/Login/Login";
 
 export function debounce(func, wait, immediate) {
   var timeout;
@@ -219,22 +218,4 @@ export function checkCorticoUrl(event) {
     return false;
   }
   return true;
-}
-
-export function showLoginForm() {
-  saveExtensionStorageValue("jwt_expired", true);
-  alert("Your credentials have expired. Please login again");
-
-  addLoginForm(chrome);
-
-  const loginForm = document.querySelector(".login-form");
-  loginForm.classList.add("show");
-}
-
-export async function isLoggedIn() {
-  if (window.is_dev) {
-    return window.localStorage.getItem("jwt_username") ? true : false;
-  } else {
-    return (await loadExtensionStorageValue("jwt_username")) ? true : false;
-  }
 }
