@@ -1,5 +1,4 @@
 import dayjs from "dayjs";
-import { addLoginForm } from "../cortico/Login/Login";
 
 export function debounce(func, wait, immediate) {
   var timeout;
@@ -132,7 +131,7 @@ export function create(_element, options, ...children) {
 }
 
 export function loadExtensionStorageValue(key) {
-  const browser = browser || chrome
+  const browser = browser || chrome;
   return new Promise(function (resolve, reject) {
     if (window.is_dev) {
       resolve(window.localStorage.getItem(key));
@@ -145,15 +144,14 @@ export function loadExtensionStorageValue(key) {
 }
 
 export function saveExtensionStorageValue(key, value) {
-  const browser = browser || chrome
+  const browser = browser || chrome;
   if (window.is_dev) {
     window.localStorage.setItem(key, value);
   } else {
-    let to_set = {}
+    let to_set = {};
     to_set[key] = value;
     browser.storage.local.set(to_set);
   }
-
 }
 
 export function htmlToElement(html) {
@@ -217,30 +215,12 @@ export function createSidebarContainer(child, events) {
 
 export function checkCorticoUrl(event) {
   if (!getCorticoUrl()) {
-    event.preventDefault();
-    alert("Please set the cortico URL to use this feature.");
-
     return false;
   }
-
   return true;
 }
 
-export function showLoginForm() {
-
-  saveExtensionStorageValue("jwt_expired", true);
-  alert("Your credentials have expired. Please login again");
-
-  addLoginForm(chrome);
-
-  const loginForm = document.querySelector(".login-form");
-  loginForm.classList.add("show");
-}
-
 export async function isLoggedIn() {
-  if (window.is_dev) {
-    return window.localStorage.getItem("jwt_username") ? true : false;
-  } else {
-    return (await loadExtensionStorageValue("jwt_username")) ? true : false;
-  }
+  const token = await loadExtensionStorageValue("jwt_access_token");
+  return !!token;
 }

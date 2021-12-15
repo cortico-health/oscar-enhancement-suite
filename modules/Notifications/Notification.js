@@ -8,6 +8,7 @@ function Notification({
   close,
   title,
   content,
+  preview,
   position,
   delay,
   error,
@@ -44,6 +45,11 @@ function Notification({
             <p className="tw-max-w-xl tw-text-sm tw-text-gray-500 tw-mt-1">
               {content}
             </p>
+            {preview && (
+              <p className="tw-max-w-xl tw-text-sm tw-text-gray-500 tw-mt-1">
+                Preview at <a href={preview}>{preview}</a>
+              </p>
+            )}
           </div>
           <div className="tw-cursor-pointer" onClick={close}>
             <span className="tw-sr-only">Close</span>

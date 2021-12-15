@@ -11,7 +11,7 @@ import SavedReplies from "./SavedReplies";
 import Login from "../Login/Login";
 
 function MessageException(message) {
-  this.message = message;
+  this.message = message || "Error has occured";
   this.name = "MessageException";
   this.title = "Error";
 }
@@ -20,14 +20,13 @@ function Messenger(patient, opts, container, replaceNode) {
   const _container = container || document.body;
 
   function Content({ patient, encounter, ...props }) {
-
     const handleErrors = async (response) => {
       const result = await response.json();
       if (!response.ok) {
         if (response.status === 401) {
-          const resultMessage = result && (result.message || result.detail)
+          const resultMessage = result && (result.message || result.detail);
           if (resultMessage === "Given token not valid for any token type") {
-            promptLogin()
+            promptLogin();
           }
           throw new MessageException(resultMessage);
         } else {
@@ -44,6 +43,7 @@ function Messenger(patient, opts, container, replaceNode) {
     const [messageInfo, setMessageInfo] = useState({
       title: null,
       content: null,
+      preview: null,
     });
     const [showModal, setShowModal] = useState(false);
     const [subject, setSubject] = useState(null);
@@ -58,34 +58,56 @@ function Messenger(patient, opts, container, replaceNode) {
       setOpen(false);
     };
 
+    useEffect(() => {
+      pubsub.subscribe("promptLogin", () => {
+        console.log("got here");
+        setShowLogin(true);
+      });
+    }, []);
+
     const promptLogin = () => {
       setShowLogin(true);
     };
 
     const handleSubmit = async (data, opts) => {
-      const { subject, body } = data;
+      const { to, subject, body } = data;
+
       setLoading(true);
       await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      if (!to) {
+        setMessageInfo({
+          title: "Error",
+          content: "Please Enter A Recipient",
+        });
+        setShowNotification(true);
+        setLoading(false);
+        return;
+      }
 
       const token = await loadExtensionStorageValue("jwt_access_token");
       if (token) {
         sendMessage(data, token)
           .then(handleErrors)
           .then((response) => {
-            setMessageInfo({
-              title: "Success",
-              content:
-                response.message ||
-                `Message successfully sent to ${patient?.email}`,
-            });
+            if (response.success === "true" || response.success === true) {
+              setMessageInfo({
+                title: "Success",
+                content:
+                  response.message || `Message successfully sent to ${to}`,
+                preview: response.preview,
+              });
 
-            if (opts.encounter === true) {
-              const text = `\n\n[${new Date().toLocaleString()} .: Email sent to patient] \n${subject}: ${body}`;
-              addEncounterText(text);
+              if (opts.encounter === true) {
+                const text = `\n\n[${new Date().toLocaleString()} .: Email sent to patient] \n${subject}: ${body}`;
+                addEncounterText(text);
+              }
+            } else {
+              throw new MessageException(response?.message);
             }
           })
           .catch((error) => {
-            console.error(error)
+            console.error(error);
             setMessageInfo({
               title: error.title,
               content: error && error.message,
@@ -103,7 +125,6 @@ function Messenger(patient, opts, container, replaceNode) {
       (async () => {
         try {
           const result = await isLoggedIn();
-          console.log("is logged in result?", result);
           setLoggedIn(result);
         } catch (error) {
           console.error(error);
@@ -113,7 +134,6 @@ function Messenger(patient, opts, container, replaceNode) {
     }, []);
 
     const loadReply = (data) => {
-      console.log("Load reply data", data);
       setSubject(data.subject);
       setBody(data.body);
       setShowModal(false);
@@ -160,8 +180,9 @@ function Messenger(patient, opts, container, replaceNode) {
           <Login />
         </PreactModal>
         <div
-          className={`tw-fixed tw-bottom-5 tw-right-5 tw-bg-white tw-z-10000 tw-max-w-[400px] tw-shadow-xl tw-w-full tw-rounded-md tw-transform tw-transition-transform tw-duration-200 tw-ease-in-out ${open ? "tw-translate-x-0" : "tw-translate-x-[430px]"
-            }`}
+          className={`tw-fixed tw-bottom-5 tw-right-5 tw-bg-white tw-z-10000 tw-max-w-[400px] tw-shadow-xl tw-w-full tw-rounded-md tw-transform tw-transition-transform tw-duration-200 tw-ease-in-out ${
+            open ? "tw-translate-x-0" : "tw-translate-x-[430px]"
+          }`}
         >
           <MessengerWindow
             patient={patient}
@@ -192,6 +213,7 @@ function Messenger(patient, opts, container, replaceNode) {
           delay={3000}
           content={messageInfo.content}
           title={messageInfo.title}
+          preview={messageInfo.preview}
         />
       </div>
     );

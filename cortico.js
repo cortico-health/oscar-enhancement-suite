@@ -173,7 +173,7 @@ const init_cortico = async function () {
   ) {
     const patient_info = await getPatientInfo();
     const messengerContainer = document.createElement("div");
-    document.body.prepend(messengerContainer);
+    document.body.append(messengerContainer);
     if (route.indexOf("/casemgmt/forward.jsp") > -1) {
       Messenger(
         patient_info,
@@ -197,8 +197,9 @@ const init_cortico = async function () {
   } else if (route.indexOf("dms/documentReport.jsp") > -1) {
     setupDocumentPage();
     const messengerContainer = document.createElement("div");
-    document.body.prepend(messengerContainer);
+    document.body.append(messengerContainer);
     const patient_info = await getPatientInfo();
+
     Messenger(
       patient_info,
       {
@@ -434,10 +435,13 @@ async function setupDocumentPage() {
       {
         events: {
           click: async (e) => {
-            if (!checkCorticoUrl(e)) return;
+            if (!checkCorticoUrl(e)) {
+              pubsub.publish("promptLogin");
+              return;
+            }
 
-            await loadExtensionStorageValue("jwt_access_token").then(
-              async function (access_token) {
+            await loadExtensionStorageValue("jwt_access_token")
+              .then(async function (access_token) {
                 const pdf_link_ext = pdf_link.outerHTML
                   .replace(/\&amp;/g, "&")
                   .match(/\'(Manage[^\']+)\'/)[1];
@@ -469,8 +473,10 @@ async function setupDocumentPage() {
                       )
                     );
                 }*/
-              }
-            );
+              })
+              .catch((e) => {
+                console.log("No access token", e);
+              });
           },
         },
       }
@@ -846,10 +852,10 @@ async function addMenu(container) {
   menu.textContent = "Cortico";
   menu.style.color = "rgb(75, 84, 246)";
   menu.style.cursor = "pointer";
-  menu.style.backgroundColor = 'white';
-  menu.style.borderRadius = '2px';
-  menu.style.padding = '2px';
-  menu.style.marginLeft = '2px';
+  menu.style.backgroundColor = "white";
+  menu.style.borderRadius = "2px";
+  menu.style.padding = "2px";
+  menu.style.marginLeft = "2px";
 
   var sidebar = await createSideBar();
   menu.addEventListener("click", function () {
@@ -1101,7 +1107,7 @@ async function getCorticoLogin() {
             localStorage.removeItem("jwt_access_token");
             localStorage.removeItem("jwt_expired");
           } else {
-            const browser = browser || chrome
+            const browser = browser || chrome;
             browser.storage.local.remove(["jwt_access_token", "jwt_expired"]);
           }
 
@@ -1245,7 +1251,7 @@ function getResetCacheButton() {
           if (confirm("Are you sure you want to clear your cache?")) {
             localStorage.clear();
             if (!window.is_dev) {
-              const browser = browser || chrome
+              const browser = browser || chrome;
               await browser.storage.local.clear();
             }
 
@@ -2257,7 +2263,7 @@ async function getDiagnosticFromCortico(appt_no, notes, token) {
     .then((res) => {
       console.log("IT GOT HEREEEE");
       if ((res + "").includes("Unauthorized") || res.status == 401) {
-        showLoginForm();
+        pubsub.publish("signin");
 
         return;
       }
@@ -2266,7 +2272,7 @@ async function getDiagnosticFromCortico(appt_no, notes, token) {
     })
     .catch((err) => {
       if ((err + "").includes("Unauthorized")) {
-        showLoginForm();
+        pubsub.publish("signin");
       } else {
         alert(
           "Failed to fetch data. There might be a problem with Cortico or the patient responses do not exist"
@@ -2389,7 +2395,11 @@ async function init_diagnostic_viewer_button() {
   }
 
   async function open_diagnostic_viewer(e) {
-    if (!checkCorticoUrl(e.originalEvent)) return;
+    console.log("Clicked");
+    if (!checkCorticoUrl(e.originalEvent)) {
+      pubsub.publish("signin");
+      return;
+    }
     const appt_no = getQueryStringValue("appointment_no");
     const access_token =
       (await loadExtensionStorageValue("jwt_access_token")) ||
@@ -2493,8 +2503,7 @@ async function init_medium_option() {
 }
 
 async function getPatientInfo(demographicNo) {
-  console.log("demo #", demographicNo);
-  console.trace()
+
   const result = await getDemographicPageResponse(demographicNo);
   if (!result) {
     return {};

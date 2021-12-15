@@ -364,8 +364,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
@@ -373,8 +373,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _resources_icons_96x96_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../resources/icons/96x96.png */ "./resources/icons/96x96.png");
 /* harmony import */ var _LoginWindow__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./LoginWindow */ "./modules/Login/LoginWindow.js");
 /* harmony import */ var _SuccessWindow__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./SuccessWindow */ "./modules/Login/SuccessWindow.js");
-/* harmony import */ var _cortico_Login_Login__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../cortico/Login/Login */ "./modules/cortico/Login/Login.js");
-/* harmony import */ var _Utils_Utils__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Utils/Utils */ "./modules/Utils/Utils.js");
+/* harmony import */ var _Utils_Utils__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Utils/Utils */ "./modules/Utils/Utils.js");
 /* provided dependency */ var h = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js")["h"];
 
 
@@ -386,30 +385,71 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+function signInRequest(_x, _x2) {
+  return _signInRequest.apply(this, arguments);
+}
+
+function _signInRequest() {
+  _signInRequest = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee2(username, password) {
+    var data, url;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            data = {
+              username: username,
+              password: password
+            };
+            url = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_8__.getCorticoUrl)() + "/api/token/";
+            return _context2.abrupt("return", fetch(url, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify(data)
+            }).catch(function (err) {
+              console.error(err);
+
+              if (("" + err).includes("Failed to fetch")) {
+                alert("Cortico instance cannot be reached. Check clinic name.");
+              } else {
+                alert("Cortico: Unknown Login Error: " + err);
+              }
+            }));
+
+          case 3:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2);
+  }));
+  return _signInRequest.apply(this, arguments);
+}
 
 function Login() {
   var _useState = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_4__.useState)(false),
-      _useState2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_useState, 2),
+      _useState2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState, 2),
       loading = _useState2[0],
       setLoading = _useState2[1];
 
   var _useState3 = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_4__.useState)(false),
-      _useState4 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_useState3, 2),
+      _useState4 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState3, 2),
       success = _useState4[0],
       setSuccess = _useState4[1];
 
   var _useState5 = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_4__.useState)(null),
-      _useState6 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_useState5, 2),
+      _useState6 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState5, 2),
       error = _useState6[0],
       setError = _useState6[1];
 
   var _useState7 = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_4__.useState)(null),
-      _useState8 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_useState7, 2),
+      _useState8 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState7, 2),
       errorMessage = _useState8[0],
       setErrorMessage = _useState8[1];
 
   var handleSubmit = /*#__PURE__*/function () {
-    var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee(data) {
+    var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().mark(function _callee(data) {
       var username, password, response, json;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default().wrap(function _callee$(_context) {
         while (1) {
@@ -426,7 +466,7 @@ function Login() {
               username = data.username, password = data.password;
               _context.prev = 5;
               _context.next = 8;
-              return (0,_cortico_Login_Login__WEBPACK_IMPORTED_MODULE_8__.signInRequest)(username, password);
+              return signInRequest(username, password);
 
             case 8:
               response = _context.sent;
@@ -445,9 +485,9 @@ function Login() {
               throw new Error(json.detail || response.statusText);
 
             case 15:
-              (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_9__.saveExtensionStorageValue)("jwt_access_token", json.access);
-              (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_9__.saveExtensionStorageValue)("jwt_expired", false);
-              (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_9__.saveExtensionStorageValue)("jwt_username", username);
+              (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_8__.saveExtensionStorageValue)("jwt_access_token", json.access);
+              (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_8__.saveExtensionStorageValue)("jwt_expired", false);
+              (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_8__.saveExtensionStorageValue)("jwt_username", username);
               setLoading(false);
               setSuccess(true);
               _context.next = 28;
@@ -469,7 +509,7 @@ function Login() {
       }, _callee, null, [[5, 22]]);
     }));
 
-    return function handleSubmit(_x) {
+    return function handleSubmit(_x3) {
       return _ref.apply(this, arguments);
     };
   }();
@@ -950,7 +990,7 @@ var _excluded = ["patient", "encounter"];
 
 
 function MessageException(message) {
-  this.message = message;
+  this.message = message || "Error has occured";
   this.name = "MessageException";
   this.title = "Error";
 }
@@ -1035,7 +1075,8 @@ function Messenger(patient, opts, container, replaceNode) {
 
     var _useState9 = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_5__.useState)({
       title: null,
-      content: null
+      content: null,
+      preview: null
     }),
         _useState10 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState9, 2),
         messageInfo = _useState10[0],
@@ -1069,18 +1110,25 @@ function Messenger(patient, opts, container, replaceNode) {
       setOpen(false);
     };
 
+    (0,preact_hooks__WEBPACK_IMPORTED_MODULE_5__.useEffect)(function () {
+      pubsub.subscribe("promptLogin", function () {
+        console.log("got here");
+        setShowLogin(true);
+      });
+    }, []);
+
     var promptLogin = function promptLogin() {
       setShowLogin(true);
     };
 
     var handleSubmit = /*#__PURE__*/function () {
       var _ref3 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee2(data, opts) {
-        var subject, body, token;
+        var to, subject, body, token;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                subject = data.subject, body = data.body;
+                to = data.to, subject = data.subject, body = data.body;
                 setLoading(true);
                 _context2.next = 4;
                 return new Promise(function (resolve) {
@@ -1088,22 +1136,41 @@ function Messenger(patient, opts, container, replaceNode) {
                 });
 
               case 4:
-                _context2.next = 6;
+                if (to) {
+                  _context2.next = 9;
+                  break;
+                }
+
+                setMessageInfo({
+                  title: "Error",
+                  content: "Please Enter A Recipient"
+                });
+                setShowNotification(true);
+                setLoading(false);
+                return _context2.abrupt("return");
+
+              case 9:
+                _context2.next = 11;
                 return (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_6__.loadExtensionStorageValue)("jwt_access_token");
 
-              case 6:
+              case 11:
                 token = _context2.sent;
 
                 if (token) {
                   (0,_Api_Api__WEBPACK_IMPORTED_MODULE_10__.sendMessage)(data, token).then(handleErrors).then(function (response) {
-                    setMessageInfo({
-                      title: "Success",
-                      content: response.message || "Message successfully sent to ".concat(patient === null || patient === void 0 ? void 0 : patient.email)
-                    });
+                    if (response.success === "true" || response.success === true) {
+                      setMessageInfo({
+                        title: "Success",
+                        content: response.message || "Message successfully sent to ".concat(to),
+                        preview: response.preview
+                      });
 
-                    if (opts.encounter === true) {
-                      var text = "\n\n[".concat(new Date().toLocaleString(), " .: Email sent to patient] \n").concat(subject, ": ").concat(body);
-                      addEncounterText(text);
+                      if (opts.encounter === true) {
+                        var text = "\n\n[".concat(new Date().toLocaleString(), " .: Email sent to patient] \n").concat(subject, ": ").concat(body);
+                        addEncounterText(text);
+                      }
+                    } else {
+                      throw new MessageException(response === null || response === void 0 ? void 0 : response.message);
                     }
                   }).catch(function (error) {
                     console.error(error);
@@ -1118,7 +1185,7 @@ function Messenger(patient, opts, container, replaceNode) {
                   });
                 }
 
-              case 8:
+              case 13:
               case "end":
                 return _context2.stop();
             }
@@ -1144,28 +1211,26 @@ function Messenger(patient, opts, container, replaceNode) {
 
               case 3:
                 result = _context3.sent;
-                console.log("is logged in result?", result);
                 setLoggedIn(result);
-                _context3.next = 12;
+                _context3.next = 11;
                 break;
 
-              case 8:
-                _context3.prev = 8;
+              case 7:
+                _context3.prev = 7;
                 _context3.t0 = _context3["catch"](0);
                 console.error(_context3.t0);
                 setLoggedIn(false);
 
-              case 12:
+              case 11:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[0, 8]]);
+        }, _callee3, null, [[0, 7]]);
       }))();
     }, []);
 
     var loadReply = function loadReply(data) {
-      console.log("Load reply data", data);
       setSubject(data.subject);
       setBody(data.body);
       setShowModal(false);
@@ -1229,7 +1294,8 @@ function Messenger(patient, opts, container, replaceNode) {
       },
       delay: 3000,
       content: messageInfo.content,
-      title: messageInfo.title
+      title: messageInfo.title,
+      preview: messageInfo.preview
     }));
   }
 
@@ -1379,6 +1445,7 @@ function MessengerWindow(_ref) {
       scheme = _useState4[0],
       setScheme = _useState4[1];
 
+  var to = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useRef)();
   var subject = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useRef)();
   var message = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useRef)();
   var encounter = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_3__.useRef)();
@@ -1417,7 +1484,7 @@ function MessengerWindow(_ref) {
     e.preventDefault();
     var data = {
       clinic_host: (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_11__.getCorticoUrl)().replace(/http.?:\/\//, ""),
-      to: email,
+      to: to.current.value,
       subject: subject.current.value,
       body: message.current.value
     };
@@ -1471,6 +1538,7 @@ function MessengerWindow(_ref) {
   }), h("div", null, h("div", null, h("div", {
     className: "tw-px-4 tw-py-2"
   }, h(_ToInput__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    ref: to,
     patient: patient
   })), h("hr", {
     className: "tw-opacity-10"
@@ -1880,26 +1948,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
 /* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
+/* harmony import */ var preact_compat__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! preact/compat */ "./node_modules/preact/compat/dist/compat.module.js");
 /* provided dependency */ var h = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js")["h"];
 
 var _excluded = ["patient"];
 
 
-function To(_ref) {
+var To = (0,preact_compat__WEBPACK_IMPORTED_MODULE_2__.forwardRef)(function (_ref, ref) {
   var patient = _ref.patient,
       props = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__["default"])(_ref, _excluded);
 
   return h("div", {
-    className: "tw-flex tw-items-center"
+    className: "tw-flex tw-items-center tw-w-full"
   }, h("div", null, h("p", {
     className: "tw-text-xs"
   }, "To")), h("div", {
-    className: "tw-pl-2"
-  }, h("p", {
-    className: "tw-text-xs tw-text-opacity-80 text-gray-700 tw-tracking-wider tw-rounded-xl tw-p-2 tw-break-words"
-  }, [patient["First Name"], patient["Last Name"]].join(" "), "(", patient.email, ")")));
-}
-
+    className: "tw-pl-2 tw-w-full"
+  }, h("input", {
+    ref: ref,
+    type: "text",
+    className: "tw-text-xs tw-text-opacity-80 text-gray-700 tw-tracking-wider tw-p-2 tw-break-words tw-bg-transparent tw-w-full",
+    defaultValue: patient === null || patient === void 0 ? void 0 : patient.email
+  })));
+});
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (To);
 
 /***/ }),
@@ -2065,7 +2136,7 @@ __webpack_require__.r(__webpack_exports__);
 /* provided dependency */ var h = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js")["h"];
 
 
-var _excluded = ["open", "close", "title", "content", "position", "delay", "error"];
+var _excluded = ["open", "close", "title", "content", "preview", "position", "delay", "error"];
 
 
 
@@ -2077,6 +2148,7 @@ function Notification(_ref) {
       close = _ref.close,
       title = _ref.title,
       content = _ref.content,
+      preview = _ref.preview,
       position = _ref.position,
       delay = _ref.delay,
       error = _ref.error,
@@ -2127,7 +2199,11 @@ function Notification(_ref) {
     className: "tw-text-gray-900 tw-font-medium tw-text-sm"
   }, title), h("p", {
     className: "tw-max-w-xl tw-text-sm tw-text-gray-500 tw-mt-1"
-  }, content)), h("div", {
+  }, content), preview && h("p", {
+    className: "tw-max-w-xl tw-text-sm tw-text-gray-500 tw-mt-1"
+  }, "Preview at ", h("a", {
+    href: preview
+  }, preview))), h("div", {
     className: "tw-cursor-pointer",
     onClick: close
   }, h("span", {
@@ -2246,7 +2322,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "addToCache": () => (/* binding */ addToCache),
 /* harmony export */   "createSidebarContainer": () => (/* binding */ createSidebarContainer),
 /* harmony export */   "checkCorticoUrl": () => (/* binding */ checkCorticoUrl),
-/* harmony export */   "showLoginForm": () => (/* binding */ showLoginForm),
 /* harmony export */   "isLoggedIn": () => (/* binding */ isLoggedIn)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
@@ -2254,8 +2329,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js");
 /* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _cortico_Login_Login__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../cortico/Login/Login */ "./modules/cortico/Login/Login.js");
-
 
 
 
@@ -2464,19 +2537,10 @@ function createSidebarContainer(child, events) {
 }
 function checkCorticoUrl(event) {
   if (!getCorticoUrl()) {
-    event.preventDefault();
-    alert("Please set the cortico URL to use this feature.");
     return false;
   }
 
   return true;
-}
-function showLoginForm() {
-  saveExtensionStorageValue("jwt_expired", true);
-  alert("Your credentials have expired. Please login again");
-  (0,_cortico_Login_Login__WEBPACK_IMPORTED_MODULE_3__.addLoginForm)(chrome);
-  var loginForm = document.querySelector(".login-form");
-  loginForm.classList.add("show");
 }
 function isLoggedIn() {
   return _isLoggedIn.apply(this, arguments);
@@ -2484,38 +2548,19 @@ function isLoggedIn() {
 
 function _isLoggedIn() {
   _isLoggedIn = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee() {
+    var token;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            if (!window.is_dev) {
-              _context.next = 4;
-              break;
-            }
+            _context.next = 2;
+            return loadExtensionStorageValue("jwt_access_token");
 
-            return _context.abrupt("return", window.localStorage.getItem("jwt_username") ? true : false);
+          case 2:
+            token = _context.sent;
+            return _context.abrupt("return", !!token);
 
           case 4:
-            _context.next = 6;
-            return loadExtensionStorageValue("jwt_username");
-
-          case 6:
-            if (!_context.sent) {
-              _context.next = 10;
-              break;
-            }
-
-            _context.t0 = true;
-            _context.next = 11;
-            break;
-
-          case 10:
-            _context.t0 = false;
-
-          case 11:
-            return _context.abrupt("return", _context.t0);
-
-          case 12:
           case "end":
             return _context.stop();
         }
@@ -3378,161 +3423,6 @@ function Disclaimer() {
 
 /***/ }),
 
-/***/ "./modules/cortico/Login/Login.js":
-/*!****************************************!*\
-  !*** ./modules/cortico/Login/Login.js ***!
-  \****************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "addLoginForm": () => (/* binding */ addLoginForm),
-/* harmony export */   "loginForm": () => (/* binding */ loginForm),
-/* harmony export */   "corticoSignIn": () => (/* binding */ corticoSignIn),
-/* harmony export */   "signInRequest": () => (/* binding */ signInRequest)
-/* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _Login_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Login.css */ "./modules/cortico/Login/Login.css");
-/* harmony import */ var _Icons_CorticoIcon__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Icons/CorticoIcon */ "./modules/Icons/CorticoIcon.js");
-/* harmony import */ var _Utils_Utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Utils/Utils */ "./modules/Utils/Utils.js");
-
-
-
-
-
-
-function addLoginForm(browser) {
-  var currentUser = localStorage.getItem("currentUser"); // if (getCorticoUrl() && currentUser == null)
-
-  document.body.appendChild(loginForm(browser));
-}
-function loginForm(browser) {
-  var corticoIcon = (0,_Icons_CorticoIcon__WEBPACK_IMPORTED_MODULE_3__.CorticoIcon)({
-    attrs: {
-      height: "15"
-    }
-  });
-  var wrapper = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_4__.create)("<div class='login-form-wrapper'>\n      <div class='login-form-container'>\n        <div class='login-form'>\n          <div class='login-form-close'>x</div>\n          <div class='login-form-header'>\n            ".concat(corticoIcon.outerHTML, "\n            <h5 class='color-primary login-form-heading'>Cortico</h5>\n          </div>\n          <h5 class='color-primary login-form-subheading'>Cortico Login Form</h5>\n          <input type='text' placeholder='Username' id='loginUsername' />\n          <input type='password' placeholder='Password' id='loginPassword' />\n          <button type='button' id='loginButton'>Sign in</button>\n        </div>\n      </div>\n    </div>"), {
-    events: {
-      "click .login-form-close": function clickLoginFormClose(e) {
-        var openMenu = document.querySelector(".login-form.show");
-        openMenu.classList.remove("show");
-      },
-      "click #loginButton": function clickLoginButton(e) {
-        var loginUserName = document.getElementById("loginUsername").value;
-        var loginPassword = document.getElementById("loginPassword").value;
-        corticoSignIn(loginUserName, loginPassword, browser);
-      }
-    }
-  });
-  return wrapper;
-}
-function corticoSignIn(_x, _x2, _x3) {
-  return _corticoSignIn.apply(this, arguments);
-}
-
-function _corticoSignIn() {
-  _corticoSignIn = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee(username, password, browser) {
-    var response, json, openMenu;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            _context.next = 2;
-            return signInRequest(username, password);
-
-          case 2:
-            response = _context.sent;
-
-            if (response.ok) {
-              _context.next = 5;
-              break;
-            }
-
-            return _context.abrupt("return", alert("Login failed. Check username and password."));
-
-          case 5:
-            if (!response) {
-              _context.next = 19;
-              break;
-            }
-
-            _context.t0 = JSON;
-            _context.next = 9;
-            return response.text();
-
-          case 9:
-            _context.t1 = _context.sent;
-            json = _context.t0.parse.call(_context.t0, _context.t1);
-            (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_4__.saveExtensionStorageValue)("jwt_access_token", json.access);
-            (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_4__.saveExtensionStorageValue)("jwt_expired", false);
-            (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_4__.saveExtensionStorageValue)("jwt_username", username);
-            openMenu = document.querySelector(".login-form.show");
-            openMenu.classList.remove("show");
-            if (!alert("Successfully signed in, the page will now reload")) window.location.reload();
-            _context.next = 20;
-            break;
-
-          case 19:
-            alert('No response from Cortico.');
-
-          case 20:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee);
-  }));
-  return _corticoSignIn.apply(this, arguments);
-}
-
-function signInRequest(_x4, _x5) {
-  return _signInRequest.apply(this, arguments);
-}
-
-function _signInRequest() {
-  _signInRequest = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().mark(function _callee2(username, password) {
-    var data, url;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default().wrap(function _callee2$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            data = {
-              username: username,
-              password: password
-            };
-            url = (0,_Utils_Utils__WEBPACK_IMPORTED_MODULE_4__.getCorticoUrl)() + "/api/token/";
-            return _context2.abrupt("return", fetch(url, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json"
-              },
-              body: JSON.stringify(data)
-            }).catch(function (err) {
-              console.error(err);
-
-              if (("" + err).includes("Failed to fetch")) {
-                alert("Cortico instance cannot be reached. Check clinic name.");
-              } else {
-                alert("Cortico: Unknown Login Error: " + err);
-              }
-            }));
-
-          case 3:
-          case "end":
-            return _context2.stop();
-        }
-      }
-    }, _callee2);
-  }));
-  return _signInRequest.apply(this, arguments);
-}
-
-/***/ }),
-
 /***/ "./node_modules/cross-fetch/dist/browser-ponyfill.js":
 /*!***********************************************************!*\
   !*** ./node_modules/cross-fetch/dist/browser-ponyfill.js ***!
@@ -4117,7 +4007,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "/**\nUse a better box model (opinionated).\n*/\n\n.tailwind *,\n.tailwind ::before,\n.tailwind ::after {\n\tbox-sizing: border-box;\n}\n\n/**\nUse a more readable tab size (opinionated).\n*/\n\n.tailwind html {\n\t-moz-tab-size: 4;\n\t-o-tab-size: 4;\n\t   tab-size: 4;\n}\n\n/**\n1. Correct the line height in all browsers.\n2. Prevent adjustments of font size after orientation changes in iOS.\n*/\n\n.tailwind html {\n\tline-height: 1.15; /* 1 */\n\t-webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/**\nRemove the margin in all browsers.\n*/\n\n.tailwind body {\n\tmargin: 0;\n}\n\n/**\nImprove consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n*/\n\n.tailwind body {\n\tfont-family:\n\t\tsystem-ui,\n\t\t-apple-system, /* Firefox supports this but not yet `system-ui` */\n\t\t'Segoe UI',\n\t\tRoboto,\n\t\tHelvetica,\n\t\tArial,\n\t\tsans-serif,\n\t\t'Apple Color Emoji',\n\t\t'Segoe UI Emoji';\n}\n\n/**\n1. Add the correct height in Firefox.\n2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)\n*/\n\n.tailwind hr {\n\theight: 0; /* 1 */\n\tcolor: inherit; /* 2 */\n}\n\n/**\nAdd the correct text decoration in Chrome, Edge, and Safari.\n*/\n\n.tailwind abbr[title] {\n\t-webkit-text-decoration: underline dotted;\n\t        text-decoration: underline dotted;\n}\n\n/**\nAdd the correct font weight in Edge and Safari.\n*/\n\n.tailwind b,\n.tailwind strong {\n\tfont-weight: bolder;\n}\n\n/**\n1. Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n2. Correct the odd 'em' font sizing in all browsers.\n*/\n\n.tailwind code,\n.tailwind kbd,\n.tailwind samp,\n.tailwind pre {\n\tfont-family:\n\t\tui-monospace,\n\t\tSFMono-Regular,\n\t\tConsolas,\n\t\t'Liberation Mono',\n\t\tMenlo,\n\t\tmonospace; /* 1 */\n\tfont-size: 1em; /* 2 */\n}\n\n/**\nAdd the correct font size in all browsers.\n*/\n\n.tailwind small {\n\tfont-size: 80%;\n}\n\n/**\nPrevent 'sub' and 'sup' elements from affecting the line height in all browsers.\n*/\n\n.tailwind sub,\n.tailwind sup {\n\tfont-size: 75%;\n\tline-height: 0;\n\tposition: relative;\n\tvertical-align: baseline;\n}\n\n/*\nText-level semantics\n====================\n*/\n\n.tailwind sub {\n\tbottom: -0.25em;\n}\n\n/*\nGrouping content\n================\n*/\n\n.tailwind sup {\n\ttop: -0.5em;\n}\n\n/**\n1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)\n2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)\n*/\n\n.tailwind table {\n\ttext-indent: 0; /* 1 */\n\tborder-color: inherit; /* 2 */\n}\n\n/**\n1. Change the font styles in all browsers.\n2. Remove the margin in Firefox and Safari.\n*/\n\n.tailwind button,\n.tailwind input,\n.tailwind optgroup,\n.tailwind select,\n.tailwind textarea {\n\tfont-family: inherit; /* 1 */\n\tfont-size: 100%; /* 1 */\n\tline-height: 1.15; /* 1 */\n\tmargin: 0; /* 2 */\n}\n\n/**\nRemove the inheritance of text transform in Edge and Firefox.\n1. Remove the inheritance of text transform in Firefox.\n*/\n\n.tailwind button,\n.tailwind select { /* 1 */\n\ttext-transform: none;\n}\n\n/**\nCorrect the inability to style clickable types in iOS and Safari.\n*/\n\n.tailwind button,\n.tailwind [type='button'],\n.tailwind [type='reset'],\n.tailwind [type='submit'] {\n\t-webkit-appearance: button;\n}\n\n/**\nRemove the inner border and padding in Firefox.\n*/\n\n.tailwind ::-moz-focus-inner {\n\tborder-style: none;\n\tpadding: 0;\n}\n\n/**\nRestore the focus styles unset by the previous rule.\n*/\n\n.tailwind :-moz-focusring {\n\toutline: 1px dotted ButtonText;\n}\n\n/**\nRemove the additional ':invalid' styles in Firefox.\nSee: https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737\n*/\n\n.tailwind :-moz-ui-invalid {\n\tbox-shadow: none;\n}\n\n/**\nRemove the padding so developers are not caught out when they zero out 'fieldset' elements in all browsers.\n*/\n\n.tailwind legend {\n\tpadding: 0;\n}\n\n/**\nAdd the correct vertical alignment in Chrome and Firefox.\n*/\n\n.tailwind progress {\n\tvertical-align: baseline;\n}\n\n/**\nCorrect the cursor style of increment and decrement buttons in Safari.\n*/\n\n.tailwind ::-webkit-inner-spin-button,\n.tailwind ::-webkit-outer-spin-button {\n\theight: auto;\n}\n\n/**\n1. Correct the odd appearance in Chrome and Safari.\n2. Correct the outline style in Safari.\n*/\n\n.tailwind [type='search'] {\n\t-webkit-appearance: textfield; /* 1 */\n\toutline-offset: -2px; /* 2 */\n}\n\n/**\nRemove the inner padding in Chrome and Safari on macOS.\n*/\n\n.tailwind ::-webkit-search-decoration {\n\t-webkit-appearance: none;\n}\n\n/**\n1. Correct the inability to style clickable types in iOS and Safari.\n2. Change font properties to 'inherit' in Safari.\n*/\n\n.tailwind ::-webkit-file-upload-button {\n\t-webkit-appearance: button; /* 1 */\n\tfont: inherit; /* 2 */\n}\n\n/*\nAdd the correct display in Chrome and Safari.\n*/\n\n.tailwind summary {\n\tdisplay: list-item;\n}\n\n/**\n * Removes the default spacing and border for appropriate elements.\n */\n\n.tailwind blockquote,\n.tailwind dl,\n.tailwind dd,\n.tailwind h1,\n.tailwind h2,\n.tailwind h3,\n.tailwind h4,\n.tailwind h5,\n.tailwind h6,\n.tailwind hr,\n.tailwind figure,\n.tailwind p,\n.tailwind pre {\n  margin: 0;\n}\n\n/**\n * Manually forked from SUIT CSS Base: https://github.com/suitcss/base\n * A thin layer on top of normalize.css that provides a starting point more\n * suitable for web applications.\n */\n\n.tailwind button {\n  background-color: transparent;\n  background-image: none;\n}\n\n/*\nInteractive\n===========\n*/\n\n.tailwind fieldset {\n  margin: 0;\n  padding: 0;\n}\n\n/*\nForms\n=====\n*/\n\n.tailwind ol,\n.tailwind ul {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\n\n/**\n * 1. Use the user's configured `sans` font-family (with Tailwind's default\n *    sans-serif font stack as a fallback) as a sane default.\n * 2. Use Tailwind's default \"normal\" line-height so the user isn't forced\n *    to override it to ensure consistency even when using the default theme.\n */\n\n.tailwind html {\n  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"; /* 1 */\n  line-height: 1.5; /* 2 */\n}\n\n/**\n * Inherit font-family and line-height from `html` so users can set them as\n * a class directly on the `html` element.\n */\n\n.tailwind body {\n  font-family: inherit;\n  line-height: inherit;\n}\n\n/**\n * 1. Prevent padding and border from affecting element width.\n *\n *    We used to set this in the html element and inherit from\n *    the parent element for everything else. This caused issues\n *    in shadow-dom-enhanced elements like <details> where the content\n *    is wrapped by a div with box-sizing set to `content-box`.\n *\n *    https://github.com/mozdevs/cssremedy/issues/4\n *\n *\n * 2. Allow adding a border to an element by just adding a border-width.\n *\n *    By default, the way the browser specifies that an element should have no\n *    border is by setting it's border-style to `none` in the user-agent\n *    stylesheet.\n *\n *    In order to easily add borders to elements by just setting the `border-width`\n *    property, we change the default border-style for all elements to `solid`, and\n *    use border-width to hide them instead. This way our `border` utilities only\n *    need to set the `border-width` property instead of the entire `border`\n *    shorthand, making our border utilities much more straightforward to compose.\n *\n *    https://github.com/tailwindcss/tailwindcss/pull/116\n */\n\n.tailwind *,\n.tailwind ::before,\n.tailwind ::after {\n  box-sizing: border-box; /* 1 */\n  border-width: 0; /* 2 */\n  border-style: solid; /* 2 */\n  border-color: currentColor; /* 2 */\n}\n\n/*\n * Ensure horizontal rules are visible by default\n */\n\n.tailwind hr {\n  border-top-width: 1px;\n}\n\n/**\n * Undo the `border-style: none` reset that Normalize applies to images so that\n * our `border-{width}` utilities have the expected effect.\n *\n * The Normalize reset is unnecessary for us since we default the border-width\n * to 0 on all elements.\n *\n * https://github.com/tailwindcss/tailwindcss/issues/362\n */\n\n.tailwind img {\n  border-style: solid;\n}\n\n/**\n * Tailwind custom reset styles\n */\n\n.tailwind textarea {\n  resize: vertical;\n}\n\n/*\nTabular data\n============\n*/\n\n.tailwind input::-moz-placeholder, .tailwind textarea::-moz-placeholder {\n  opacity: 1;\n  color: #9ca3af;\n}\n\n.tailwind input:-ms-input-placeholder, .tailwind textarea:-ms-input-placeholder {\n  opacity: 1;\n  color: #9ca3af;\n}\n\n.tailwind input::placeholder,\n.tailwind textarea::placeholder {\n  opacity: 1;\n  color: #9ca3af;\n}\n\n/*\nSections\n========\n*/\n\n.tailwind button,\n.tailwind [role=\"button\"] {\n  cursor: pointer;\n}\n\n/**\n * Override legacy focus reset from Normalize with modern Firefox focus styles.\n *\n * This is actually an improvement over the new defaults in Firefox in our testing,\n * as it triggers the better focus styles even for links, which still use a dotted\n * outline in Firefox by default.\n */\n\n.tailwind :-moz-focusring {\n\toutline: auto;\n}\n\n/*\nDocument\n========\n*/\n\n.tailwind table {\n  border-collapse: collapse;\n}\n\n/*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */\n\n.tailwind h1,\n.tailwind h2,\n.tailwind h3,\n.tailwind h4,\n.tailwind h5,\n.tailwind h6 {\n  font-size: inherit;\n  font-weight: inherit;\n}\n\n/**\n * Reset links to optimize for opt-in styling instead of\n * opt-out.\n */\n\n.tailwind a {\n  color: inherit;\n  text-decoration: inherit;\n}\n\n/**\n * Reset form element properties that are easy to forget to\n * style explicitly so you don't inadvertently introduce\n * styles that deviate from your design system. These styles\n * supplement a partial reset that is already applied by\n * normalize.css.\n */\n\n.tailwind button,\n.tailwind input,\n.tailwind optgroup,\n.tailwind select,\n.tailwind textarea {\n  padding: 0;\n  line-height: inherit;\n  color: inherit;\n}\n\n/**\n * Use the configured 'mono' font family for elements that\n * are expected to be rendered with a monospace font, falling\n * back to the system monospace stack if there is no configured\n * 'mono' font family.\n */\n\n.tailwind pre,\n.tailwind code,\n.tailwind kbd,\n.tailwind samp {\n  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace;\n}\n\n/**\n * 1. Make replaced elements `display: block` by default as that's\n *    the behavior you want almost all of the time. Inspired by\n *    CSS Remedy, with `svg` added as well.\n *\n *    https://github.com/mozdevs/cssremedy/issues/14\n * \n * 2. Add `vertical-align: middle` to align replaced elements more\n *    sensibly by default when overriding `display` by adding a\n *    utility like `inline`.\n *\n *    This can trigger a poorly considered linting error in some\n *    tools but is included by design.\n * \n *    https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210\n */\n\n.tailwind img,\n.tailwind svg,\n.tailwind video,\n.tailwind canvas,\n.tailwind audio,\n.tailwind iframe,\n.tailwind embed,\n.tailwind object {\n  display: block; /* 1 */\n  vertical-align: middle; /* 2 */\n}\n\n/**\n * Constrain images and videos to the parent width and preserve\n * their intrinsic aspect ratio.\n *\n * https://github.com/mozdevs/cssremedy/issues/14\n */\n\n.tailwind img,\n.tailwind video {\n  max-width: 100%;\n  height: auto;\n}\n\n/**\n * Ensure the default browser behavior of the `hidden` attribute.\n */\n\n.tailwind [hidden] {\n  display: none;\n}\n\n/*! tailwindcss v2.2.17 | MIT License | https://tailwindcss.com\n*/\n\n.tailwind *, .tailwind ::before, .tailwind ::after {\n\t--tw-translate-x: 0;\n\t--tw-translate-y: 0;\n\t--tw-rotate: 0;\n\t--tw-skew-x: 0;\n\t--tw-skew-y: 0;\n\t--tw-scale-x: 1;\n\t--tw-scale-y: 1;\n\t--tw-transform: translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n}\n\n.tailwind *, .tailwind ::before, .tailwind ::after {\n\t--tw-border-opacity: 1;\n\tborder-color: rgba(229, 231, 235, var(--tw-border-opacity));\n}\n\n.tailwind *, .tailwind ::before, .tailwind ::after {\n\t--tw-ring-offset-shadow: 0 0 #0000;\n\t--tw-ring-shadow: 0 0 #0000;\n\t--tw-shadow: 0 0 #0000;\n}\n\n.tailwind *, .tailwind ::before, .tailwind ::after {\n\t--tw-blur: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-brightness: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-contrast: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-grayscale: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-hue-rotate: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-invert: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-saturate: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-sepia: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-drop-shadow: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);\n}\n\n.tailwind .form-input,.tailwind .form-textarea,.tailwind .form-select,.tailwind .form-multiselect {\n\t-webkit-appearance: none;\n\t   -moz-appearance: none;\n\t        appearance: none;\n\tbackground-color: #fff;\n\tborder-color: #6b7280;\n\tborder-width: 1px;\n\tborder-radius: 0px;\n\tpadding-top: 0.5rem;\n\tpadding-right: 0.75rem;\n\tpadding-bottom: 0.5rem;\n\tpadding-left: 0.75rem;\n\tfont-size: 1rem;\n\tline-height: 1.5rem;\n\t--tw-shadow: 0 0 #0000;\n}\n\n.tailwind .form-input:focus, .tailwind .form-textarea:focus, .tailwind .form-select:focus, .tailwind .form-multiselect:focus {\n\toutline: 2px solid transparent;\n\toutline-offset: 2px;\n\t--tw-ring-inset: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-ring-offset-width: 0px;\n\t--tw-ring-offset-color: #fff;\n\t--tw-ring-color: #2563eb;\n\t--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);\n\t--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);\n\tbox-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n\tborder-color: #2563eb;\n}\n\n.tailwind .form-input::-moz-placeholder, .tailwind .form-textarea::-moz-placeholder {\n\tcolor: #6b7280;\n\topacity: 1;\n}\n\n.tailwind .form-input:-ms-input-placeholder, .tailwind .form-textarea:-ms-input-placeholder {\n\tcolor: #6b7280;\n\topacity: 1;\n}\n\n.tailwind .form-input::placeholder,.tailwind .form-textarea::placeholder {\n\tcolor: #6b7280;\n\topacity: 1;\n}\n\n.tailwind .form-checkbox,.tailwind .form-radio {\n\t-webkit-appearance: none;\n\t   -moz-appearance: none;\n\t        appearance: none;\n\tpadding: 0;\n\t-webkit-print-color-adjust: exact;\n\t        color-adjust: exact;\n\tdisplay: inline-block;\n\tvertical-align: middle;\n\tbackground-origin: border-box;\n\t-webkit-user-select: none;\n\t   -moz-user-select: none;\n\t    -ms-user-select: none;\n\t        user-select: none;\n\tflex-shrink: 0;\n\theight: 1rem;\n\twidth: 1rem;\n\tcolor: #2563eb;\n\tbackground-color: #fff;\n\tborder-color: #6b7280;\n\tborder-width: 1px;\n\t--tw-shadow: 0 0 #0000;\n}\n\n.tailwind .form-checkbox {\n\tborder-radius: 0px;\n}\n\n.tailwind .form-checkbox:focus,.tailwind .form-radio:focus {\n\toutline: 2px solid transparent;\n\toutline-offset: 2px;\n\t--tw-ring-inset: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-ring-offset-width: 2px;\n\t--tw-ring-offset-color: #fff;\n\t--tw-ring-color: #2563eb;\n\t--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);\n\t--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);\n\tbox-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n}\n\n.tailwind .form-checkbox:checked,.tailwind .form-radio:checked {\n\tborder-color: transparent;\n\tbackground-color: currentColor;\n\tbackground-size: 100% 100%;\n\tbackground-position: center;\n\tbackground-repeat: no-repeat;\n}\n\n.tailwind .form-checkbox:checked {\n\tbackground-image: url(\"data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e\");\n}\n\n.tailwind .form-checkbox:checked:hover,.tailwind .form-checkbox:checked:focus,.tailwind .form-radio:checked:hover,.tailwind .form-radio:checked:focus {\n\tborder-color: transparent;\n\tbackground-color: currentColor;\n}\n\n.tailwind .form-checkbox:indeterminate {\n\tbackground-image: url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 16 16'%3e%3cpath stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8h8'/%3e%3c/svg%3e\");\n\tborder-color: transparent;\n\tbackground-color: currentColor;\n\tbackground-size: 100% 100%;\n\tbackground-position: center;\n\tbackground-repeat: no-repeat;\n}\n\n.tailwind .form-checkbox:indeterminate:hover,.tailwind .form-checkbox:indeterminate:focus {\n\tborder-color: transparent;\n\tbackground-color: currentColor;\n}\n.tw-sr-only {\n\tposition: absolute !important;\n\twidth: 1px !important;\n\theight: 1px !important;\n\tpadding: 0 !important;\n\tmargin: -1px !important;\n\toverflow: hidden !important;\n\tclip: rect(0, 0, 0, 0) !important;\n\twhite-space: nowrap !important;\n\tborder-width: 0 !important;\n}\n.tw-fixed {\n\tposition: fixed !important;\n}\n.tw-absolute {\n\tposition: absolute !important;\n}\n.tw-relative {\n\tposition: relative !important;\n}\n.tw-inset-0 {\n\ttop: 0px !important;\n\tright: 0px !important;\n\tbottom: 0px !important;\n\tleft: 0px !important;\n}\n.tw-bottom-5 {\n\tbottom: 1.25rem !important;\n}\n.tw-right-5 {\n\tright: 1.25rem !important;\n}\n.tw--top-1 {\n\ttop: -0.25rem !important;\n}\n.tw--left-1 {\n\tleft: -0.25rem !important;\n}\n.tw-bottom-2 {\n\tbottom: 0.5rem !important;\n}\n.tw-right-2 {\n\tright: 0.5rem !important;\n}\n.tw-bottom-0 {\n\tbottom: 0px !important;\n}\n.tw-left-\\[50\\%\\] {\n\tleft: 50% !important;\n}\n.tw-z-10005 {\n\tz-index: 10005 !important;\n}\n.tw-z-10000 {\n\tz-index: 10000 !important;\n}\n.tw-z-5000 {\n\tz-index: 5000 !important;\n}\n.tw-z-10002 {\n\tz-index: 10002 !important;\n}\n.tw-z-10001 {\n\tz-index: 10001 !important;\n}\n.tw-m-0 {\n\tmargin: 0px !important;\n}\n.tw-mx-auto {\n\tmargin-left: auto !important;\n\tmargin-right: auto !important;\n}\n.tw-my-4 {\n\tmargin-top: 1rem !important;\n\tmargin-bottom: 1rem !important;\n}\n.tw-my-2 {\n\tmargin-top: 0.5rem !important;\n\tmargin-bottom: 0.5rem !important;\n}\n.tw-my-3 {\n\tmargin-top: 0.75rem !important;\n\tmargin-bottom: 0.75rem !important;\n}\n.tw-mt-6 {\n\tmargin-top: 1.5rem !important;\n}\n.tw-mt-8 {\n\tmargin-top: 2rem !important;\n}\n.tw-mt-1 {\n\tmargin-top: 0.25rem !important;\n}\n.tw-mt-4 {\n\tmargin-top: 1rem !important;\n}\n.tw-mt-2 {\n\tmargin-top: 0.5rem !important;\n}\n.tw-ml-2 {\n\tmargin-left: 0.5rem !important;\n}\n.tw-mt-3 {\n\tmargin-top: 0.75rem !important;\n}\n.tw-ml-1 {\n\tmargin-left: 0.25rem !important;\n}\n.tw--ml-1 {\n\tmargin-left: -0.25rem !important;\n}\n.tw-mr-3 {\n\tmargin-right: 0.75rem !important;\n}\n.tw-mr-2 {\n\tmargin-right: 0.5rem !important;\n}\n.tw-mb-2 {\n\tmargin-bottom: 0.5rem !important;\n}\n.tw-ml-4 {\n\tmargin-left: 1rem !important;\n}\n.tw-mt-0 {\n\tmargin-top: 0px !important;\n}\n.tw-mb-10 {\n\tmargin-bottom: 2.5rem !important;\n}\n.tw-mt-\\[3px\\] {\n\tmargin-top: 3px !important;\n}\n.tw-ml-3 {\n\tmargin-left: 0.75rem !important;\n}\n.tw-mt-10 {\n\tmargin-top: 2.5rem !important;\n}\n.tw-block {\n\tdisplay: block !important;\n}\n.tw-inline-block {\n\tdisplay: inline-block !important;\n}\n.tw-flex {\n\tdisplay: flex !important;\n}\n.tw-inline-flex {\n\tdisplay: inline-flex !important;\n}\n.tw-hidden {\n\tdisplay: none !important;\n}\n.tw-h-10 {\n\theight: 2.5rem !important;\n}\n.tw-h-5 {\n\theight: 1.25rem !important;\n}\n.tw-h-6 {\n\theight: 1.5rem !important;\n}\n.tw-h-4 {\n\theight: 1rem !important;\n}\n.tw-h-3 {\n\theight: 0.75rem !important;\n}\n.tw-h-\\[300px\\] {\n\theight: 300px !important;\n}\n.tw-h-\\[800px\\] {\n\theight: 800px !important;\n}\n.tw-h-full {\n\theight: 100% !important;\n}\n.tw-max-h-28 {\n\tmax-height: 7rem !important;\n}\n.tw-w-10 {\n\twidth: 2.5rem !important;\n}\n.tw-w-full {\n\twidth: 100% !important;\n}\n.tw-w-5 {\n\twidth: 1.25rem !important;\n}\n.tw-w-6 {\n\twidth: 1.5rem !important;\n}\n.tw-w-4 {\n\twidth: 1rem !important;\n}\n.tw-w-3 {\n\twidth: 0.75rem !important;\n}\n.tw-w-24 {\n\twidth: 6rem !important;\n}\n.tw-w-0 {\n\twidth: 0px !important;\n}\n.tw-w-\\[400px\\] {\n\twidth: 400px !important;\n}\n.tw-w-\\[70px\\] {\n\twidth: 70px !important;\n}\n.tw-w-2\\/3 {\n\twidth: 66.666667% !important;\n}\n.tw-w-\\[300px\\] {\n\twidth: 300px !important;\n}\n.tw-min-w-\\[300px\\] {\n\tmin-width: 300px !important;\n}\n.tw-max-w-\\[400px\\] {\n\tmax-width: 400px !important;\n}\n.tw-max-w-xl {\n\tmax-width: 36rem !important;\n}\n.tw-max-w-3xl {\n\tmax-width: 48rem !important;\n}\n.tw-flex-1 {\n\tflex: 1 1 0% !important;\n}\n.tw-flex-5 {\n\tflex: 5 1 0 !important;\n}\n.tw-flex-shrink-0 {\n\tflex-shrink: 0 !important;\n}\n.tw-translate-x-0 {\n\t--tw-translate-x: 0px !important;\n\ttransform: var(--tw-transform) !important;\n}\n.tw-translate-x-\\[430px\\] {\n\t--tw-translate-x: 430px !important;\n\ttransform: var(--tw-transform) !important;\n}\n.tw-translate-x-\\[-50\\%\\] {\n\t--tw-translate-x: -50% !important;\n\ttransform: var(--tw-transform) !important;\n}\n.tw-translate-y-0 {\n\t--tw-translate-y: 0px !important;\n\ttransform: var(--tw-transform) !important;\n}\n.tw-translate-y-\\[100\\%\\] {\n\t--tw-translate-y: 100% !important;\n\ttransform: var(--tw-transform) !important;\n}\n.tw-transform {\n\ttransform: var(--tw-transform) !important;\n}\n@-webkit-keyframes tw-spin {\n\n\tto {\n\t\ttransform: rotate(360deg);\n\t}\n}\n@keyframes tw-spin {\n\n\tto {\n\t\ttransform: rotate(360deg);\n\t}\n}\n.tw-animate-spin {\n\t-webkit-animation: tw-spin 1s linear infinite !important;\n\t        animation: tw-spin 1s linear infinite !important;\n}\n@-webkit-keyframes tw-bounce {\n\n\t0%, 100% {\n\t\ttransform: translateY(-25%);\n\t\t-webkit-animation-timing-function: cubic-bezier(0.8,0,1,1);\n\t\t        animation-timing-function: cubic-bezier(0.8,0,1,1);\n\t}\n\n\t50% {\n\t\ttransform: none;\n\t\t-webkit-animation-timing-function: cubic-bezier(0,0,0.2,1);\n\t\t        animation-timing-function: cubic-bezier(0,0,0.2,1);\n\t}\n}\n@keyframes tw-bounce {\n\n\t0%, 100% {\n\t\ttransform: translateY(-25%);\n\t\t-webkit-animation-timing-function: cubic-bezier(0.8,0,1,1);\n\t\t        animation-timing-function: cubic-bezier(0.8,0,1,1);\n\t}\n\n\t50% {\n\t\ttransform: none;\n\t\t-webkit-animation-timing-function: cubic-bezier(0,0,0.2,1);\n\t\t        animation-timing-function: cubic-bezier(0,0,0.2,1);\n\t}\n}\n.tw-animate-bounce {\n\t-webkit-animation: tw-bounce 1s infinite !important;\n\t        animation: tw-bounce 1s infinite !important;\n}\n.tw-cursor-pointer {\n\tcursor: pointer !important;\n}\n.tw-resize-none {\n\tresize: none !important;\n}\n.tw-appearance-none {\n\t-webkit-appearance: none !important;\n\t   -moz-appearance: none !important;\n\t        appearance: none !important;\n}\n.tw-flex-col {\n\tflex-direction: column !important;\n}\n.tw-items-start {\n\talign-items: flex-start !important;\n}\n.tw-items-center {\n\talign-items: center !important;\n}\n.tw-justify-end {\n\tjustify-content: flex-end !important;\n}\n.tw-justify-center {\n\tjustify-content: center !important;\n}\n.tw-justify-between {\n\tjustify-content: space-between !important;\n}\n.tw-space-y-4 > :not([hidden]) ~ :not([hidden]) {\n\t--tw-space-y-reverse: 0 !important;\n\tmargin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse))) !important;\n\tmargin-bottom: calc(1rem * var(--tw-space-y-reverse)) !important;\n}\n.tw-overflow-y-auto {\n\toverflow-y: auto !important;\n}\n.tw-break-words {\n\toverflow-wrap: break-word !important;\n}\n.tw-rounded-lg {\n\tborder-radius: 0.5rem !important;\n}\n.tw-rounded-md {\n\tborder-radius: 0.375rem !important;\n}\n.tw-rounded-full {\n\tborder-radius: 9999px !important;\n}\n.tw-rounded {\n\tborder-radius: 0.25rem !important;\n}\n.tw-rounded-xl {\n\tborder-radius: 0.75rem !important;\n}\n.tw-rounded-t-md {\n\tborder-top-left-radius: 0.375rem !important;\n\tborder-top-right-radius: 0.375rem !important;\n}\n.tw-rounded-b-lg {\n\tborder-bottom-right-radius: 0.5rem !important;\n\tborder-bottom-left-radius: 0.5rem !important;\n}\n.tw-rounded-t-lg {\n\tborder-top-left-radius: 0.5rem !important;\n\tborder-top-right-radius: 0.5rem !important;\n}\n.tw-rounded-l-md {\n\tborder-top-left-radius: 0.375rem !important;\n\tborder-bottom-left-radius: 0.375rem !important;\n}\n.tw-border {\n\tborder-width: 1px !important;\n}\n.tw-border-0 {\n\tborder-width: 0px !important;\n}\n.tw-border-gray-300 {\n\t--tw-border-opacity: 1 !important;\n\tborder-color: rgba(209, 213, 219, var(--tw-border-opacity)) !important;\n}\n.tw-border-transparent {\n\tborder-color: transparent !important;\n}\n.tw-border-cortico-blue {\n\tborder-color: rgba(75, 84, 246, 1) !important;\n}\n.tw-bg-white {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(255, 255, 255, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-yellow-500 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(245, 158, 11, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-red-400 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(248, 113, 113, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-cortico-blue {\n\tbackground-color: rgba(75, 84, 246, 1) !important;\n}\n.tw-bg-red-600 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(220, 38, 38, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-gray-100 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(243, 244, 246, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-green-600 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(5, 150, 105, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-gray-200 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(229, 231, 235, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-gray-500 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(107, 114, 128, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-red-500 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(239, 68, 68, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-gray-400 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(156, 163, 175, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-black {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(0, 0, 0, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-blue-700 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(29, 78, 216, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-opacity-25 {\n\t--tw-bg-opacity: 0.25 !important;\n}\n.tw-bg-opacity-80 {\n\t--tw-bg-opacity: 0.8 !important;\n}\n.tw-p-4 {\n\tpadding: 1rem !important;\n}\n.tw-p-2 {\n\tpadding: 0.5rem !important;\n}\n.tw-p-12 {\n\tpadding: 3rem !important;\n}\n.tw-p-3 {\n\tpadding: 0.75rem !important;\n}\n.tw-p-1 {\n\tpadding: 0.25rem !important;\n}\n.tw-p-0 {\n\tpadding: 0px !important;\n}\n.tw-p-10 {\n\tpadding: 2.5rem !important;\n}\n.tw-px-2 {\n\tpadding-left: 0.5rem !important;\n\tpadding-right: 0.5rem !important;\n}\n.tw-px-3 {\n\tpadding-left: 0.75rem !important;\n\tpadding-right: 0.75rem !important;\n}\n.tw-py-2 {\n\tpadding-top: 0.5rem !important;\n\tpadding-bottom: 0.5rem !important;\n}\n.tw-px-4 {\n\tpadding-left: 1rem !important;\n\tpadding-right: 1rem !important;\n}\n.tw-py-4 {\n\tpadding-top: 1rem !important;\n\tpadding-bottom: 1rem !important;\n}\n.tw-py-1 {\n\tpadding-top: 0.25rem !important;\n\tpadding-bottom: 0.25rem !important;\n}\n.tw-py-3 {\n\tpadding-top: 0.75rem !important;\n\tpadding-bottom: 0.75rem !important;\n}\n.tw-pl-2 {\n\tpadding-left: 0.5rem !important;\n}\n.tw-text-center {\n\ttext-align: center !important;\n}\n.tw-font-sans {\n\tfont-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\" !important;\n}\n.tw-text-3xl {\n\tfont-size: 1.875rem !important;\n\tline-height: 2.25rem !important;\n}\n.tw-text-xs {\n\tfont-size: 0.75rem !important;\n\tline-height: 1rem !important;\n}\n.tw-text-sm {\n\tfont-size: 0.875rem !important;\n\tline-height: 1.25rem !important;\n}\n.tw-text-2xl {\n\tfont-size: 1.5rem !important;\n\tline-height: 2rem !important;\n}\n.tw-text-xl {\n\tfont-size: 1.25rem !important;\n\tline-height: 1.75rem !important;\n}\n.tw-font-extrabold {\n\tfont-weight: 800 !important;\n}\n.tw-font-medium {\n\tfont-weight: 500 !important;\n}\n.tw-font-light {\n\tfont-weight: 300 !important;\n}\n.tw-font-semibold {\n\tfont-weight: 600 !important;\n}\n.tw-font-bold {\n\tfont-weight: 700 !important;\n}\n.tw-leading-5 {\n\tline-height: 1.25rem !important;\n}\n.tw-tracking-wider {\n\tletter-spacing: 0.05em !important;\n}\n.tw-tracking-widest {\n\tletter-spacing: 0.1em !important;\n}\n.tw-text-white {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(255, 255, 255, var(--tw-text-opacity)) !important;\n}\n.tw-text-gray-700 {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(55, 65, 81, var(--tw-text-opacity)) !important;\n}\n.tw-text-green-600 {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(5, 150, 105, var(--tw-text-opacity)) !important;\n}\n.tw-text-gray-600 {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(75, 85, 99, var(--tw-text-opacity)) !important;\n}\n.tw-text-gray-800 {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(31, 41, 55, var(--tw-text-opacity)) !important;\n}\n.tw-text-cortico-blue {\n\tcolor: rgba(75, 84, 246, 1) !important;\n}\n.tw-text-indigo-600 {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(79, 70, 229, var(--tw-text-opacity)) !important;\n}\n.tw-text-black {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(0, 0, 0, var(--tw-text-opacity)) !important;\n}\n.tw-text-gray-900 {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(17, 24, 39, var(--tw-text-opacity)) !important;\n}\n.tw-text-gray-500 {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(107, 114, 128, var(--tw-text-opacity)) !important;\n}\n.tw-text-opacity-80 {\n\t--tw-text-opacity: 0.8 !important;\n}\n.tw-text-opacity-100 {\n\t--tw-text-opacity: 1 !important;\n}\n.tw-text-opacity-70 {\n\t--tw-text-opacity: 0.7 !important;\n}\n.tw-text-opacity-90 {\n\t--tw-text-opacity: 0.9 !important;\n}\n.tw-text-opacity-60 {\n\t--tw-text-opacity: 0.6 !important;\n}\n.tw-placeholder-gray-400::-moz-placeholder {\n\t--tw-placeholder-opacity: 1 !important;\n\tcolor: rgba(156, 163, 175, var(--tw-placeholder-opacity)) !important;\n}\n.tw-placeholder-gray-400:-ms-input-placeholder {\n\t--tw-placeholder-opacity: 1 !important;\n\tcolor: rgba(156, 163, 175, var(--tw-placeholder-opacity)) !important;\n}\n.tw-placeholder-gray-400::placeholder {\n\t--tw-placeholder-opacity: 1 !important;\n\tcolor: rgba(156, 163, 175, var(--tw-placeholder-opacity)) !important;\n}\n.tw-opacity-25 {\n\topacity: 0.25 !important;\n}\n.tw-opacity-75 {\n\topacity: 0.75 !important;\n}\n.tw-opacity-20 {\n\topacity: 0.2 !important;\n}\n.tw-opacity-10 {\n\topacity: 0.1 !important;\n}\n.tw-opacity-40 {\n\topacity: 0.4 !important;\n}\n.tw-opacity-50 {\n\topacity: 0.5 !important;\n}\n.tw-shadow-sm {\n\t--tw-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;\n\tbox-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;\n}\n.tw-shadow-xl {\n\t--tw-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;\n\tbox-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;\n}\n.tw-shadow-2xl {\n\t--tw-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;\n\tbox-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;\n}\n.tw-shadow-md {\n\t--tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;\n\tbox-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;\n}\n.tw-shadow-lg {\n\t--tw-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;\n\tbox-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;\n}\n.tw-drop-shadow-md {\n\t--tw-drop-shadow: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.07)) drop-shadow(0 2px 2px rgba(0, 0, 0, 0.06)) !important;\n\tfilter: var(--tw-filter) !important;\n}\n.tw-drop-shadow-lg {\n\t--tw-drop-shadow: drop-shadow(0 10px 8px rgba(0, 0, 0, 0.04)) drop-shadow(0 4px 3px rgba(0, 0, 0, 0.1)) !important;\n\tfilter: var(--tw-filter) !important;\n}\n.tw-transition-transform {\n\ttransition-property: transform !important;\n\ttransition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;\n\ttransition-duration: 150ms !important;\n}\n.tw-duration-200 {\n\ttransition-duration: 200ms !important;\n}\n.tw-duration-300 {\n\ttransition-duration: 300ms !important;\n}\n.tw-ease-in-out {\n\ttransition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;\n}\n.tw-line-clamp-3 {\n\toverflow: hidden !important;\n\tdisplay: -webkit-box !important;\n\t-webkit-box-orient: vertical !important;\n\t-webkit-line-clamp: 3 !important;\n}\n\n.sidebar-instructions {\n\ttext-align: center;\n\tfont-size: 1.875rem;\n\tline-height: 2.25rem;\n\tfont-weight: 700;\n}\n\n.sidebar-instructions-hidden {\n\tdisplay: none;\n}\n\n.alert-enter {\n  opacity: 0;\n  transform: scale(0.9);\n}\n.alert-enter-active {\n  opacity: 1;\n  transform: translateX(0);\n  transition: opacity 300ms, transform 300ms;\n}\n.alert-exit {\n  opacity: 1;\n}\n.alert-exit-active {\n  opacity: 0;\n  transform: scale(0.9);\n  transition: opacity 300ms, transform 300ms;\n}\n", "",{"version":3,"sources":["webpack://./index.css","webpack://./%3Cinput%20css%20qjBaTZ%3E","webpack://./%3Cinput%20css%20pRufcy%3E","<no source>"],"names":[],"mappings":"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+BAAA;CAAA,2BAAA;CAAA,4BAAA;CAAA;AHCgB;;AAAd;CGDF;AHCgB;;AAAd;CGDF,0BAAA;CAAA;AHCgB;;AAAd;CGDF,wOAAA;CAAA,0BAAA;CAAA,+BAAA;CAAA,2BAAA;CAAA,4BAAA;CAAA;AHCgB;;AAAd;CGDF,0BAAA;CAAA;AHCgB;AAIhB;CGLA,8BAAA;CAAA,sBAAA;CAAA,uBAAA;CAAA,sBAAA;CAAA,wBAAA;CAAA,4BAAA;CAAA,kCAAA;CAAA,+BAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,oBAAA;CAAA,sBAAA;CAAA,uBAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,6BAAA;CAAA;AHKmB;AAAnB;CGLA,4BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,+BAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,iCAAA;CAAA;AHKmB;AAAnB;CGLA,mCAAA;CAAA;AHKmB;AAAnB;CGLA,kCAAA;CAAA;AHKmB;AAAnB;CGLA,iCAAA;CAAA;AHKmB;AAAnB;CGLA,kCAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;;CGLA;EAAA;EAAA;AHKmB;AAAnB;;CGLA;EAAA;EAAA;AHKmB;AAAnB;CGLA,yDAAA;SAAA;AHKmB;AAAnB;;CGLA;EAAA,4BAAA;EAAA,2DAAA;UAAA;EAAA;;CAAA;EAAA,gBAAA;EAAA,2DAAA;UAAA;EAAA;AHKmB;AAAnB;;CGLA;EAAA,4BAAA;EAAA,2DAAA;UAAA;EAAA;;CAAA;EAAA,gBAAA;EAAA,2DAAA;UAAA;EAAA;AHKmB;AAAnB;CGLA,oDAAA;SAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,oCAAA;IAAA,iCAAA;SAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,mCAAA;CAAA,wEAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,4CAA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","sourcesContent":[".tailwind {  \n  @tailwind base;\n}\n\n@tailwind components;\n@tailwind utilities;\n\n.sidebar-instructions {\n  @apply tw-text-3xl tw-text-center tw-font-bold;\n}\n\n.sidebar-instructions-hidden {\n  @apply tw-hidden;\n}\n\n.alert-enter {\n  opacity: 0;\n  transform: scale(0.9);\n}\n.alert-enter-active {\n  opacity: 1;\n  transform: translateX(0);\n  transition: opacity 300ms, transform 300ms;\n}\n.alert-exit {\n  opacity: 1;\n}\n.alert-exit-active {\n  opacity: 0;\n  transform: scale(0.9);\n  transition: opacity 300ms, transform 300ms;\n}\n","/*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */\n\n/*\nDocument\n========\n*/\n\n/**\nUse a better box model (opinionated).\n*/\n\n*,\n::before,\n::after {\n\tbox-sizing: border-box;\n}\n\n/**\nUse a more readable tab size (opinionated).\n*/\n\nhtml {\n\t-moz-tab-size: 4;\n\ttab-size: 4;\n}\n\n/**\n1. Correct the line height in all browsers.\n2. Prevent adjustments of font size after orientation changes in iOS.\n*/\n\nhtml {\n\tline-height: 1.15; /* 1 */\n\t-webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/*\nSections\n========\n*/\n\n/**\nRemove the margin in all browsers.\n*/\n\nbody {\n\tmargin: 0;\n}\n\n/**\nImprove consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n*/\n\nbody {\n\tfont-family:\n\t\tsystem-ui,\n\t\t-apple-system, /* Firefox supports this but not yet `system-ui` */\n\t\t'Segoe UI',\n\t\tRoboto,\n\t\tHelvetica,\n\t\tArial,\n\t\tsans-serif,\n\t\t'Apple Color Emoji',\n\t\t'Segoe UI Emoji';\n}\n\n/*\nGrouping content\n================\n*/\n\n/**\n1. Add the correct height in Firefox.\n2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)\n*/\n\nhr {\n\theight: 0; /* 1 */\n\tcolor: inherit; /* 2 */\n}\n\n/*\nText-level semantics\n====================\n*/\n\n/**\nAdd the correct text decoration in Chrome, Edge, and Safari.\n*/\n\nabbr[title] {\n\ttext-decoration: underline dotted;\n}\n\n/**\nAdd the correct font weight in Edge and Safari.\n*/\n\nb,\nstrong {\n\tfont-weight: bolder;\n}\n\n/**\n1. Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n2. Correct the odd 'em' font sizing in all browsers.\n*/\n\ncode,\nkbd,\nsamp,\npre {\n\tfont-family:\n\t\tui-monospace,\n\t\tSFMono-Regular,\n\t\tConsolas,\n\t\t'Liberation Mono',\n\t\tMenlo,\n\t\tmonospace; /* 1 */\n\tfont-size: 1em; /* 2 */\n}\n\n/**\nAdd the correct font size in all browsers.\n*/\n\nsmall {\n\tfont-size: 80%;\n}\n\n/**\nPrevent 'sub' and 'sup' elements from affecting the line height in all browsers.\n*/\n\nsub,\nsup {\n\tfont-size: 75%;\n\tline-height: 0;\n\tposition: relative;\n\tvertical-align: baseline;\n}\n\nsub {\n\tbottom: -0.25em;\n}\n\nsup {\n\ttop: -0.5em;\n}\n\n/*\nTabular data\n============\n*/\n\n/**\n1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)\n2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)\n*/\n\ntable {\n\ttext-indent: 0; /* 1 */\n\tborder-color: inherit; /* 2 */\n}\n\n/*\nForms\n=====\n*/\n\n/**\n1. Change the font styles in all browsers.\n2. Remove the margin in Firefox and Safari.\n*/\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n\tfont-family: inherit; /* 1 */\n\tfont-size: 100%; /* 1 */\n\tline-height: 1.15; /* 1 */\n\tmargin: 0; /* 2 */\n}\n\n/**\nRemove the inheritance of text transform in Edge and Firefox.\n1. Remove the inheritance of text transform in Firefox.\n*/\n\nbutton,\nselect { /* 1 */\n\ttext-transform: none;\n}\n\n/**\nCorrect the inability to style clickable types in iOS and Safari.\n*/\n\nbutton,\n[type='button'],\n[type='reset'],\n[type='submit'] {\n\t-webkit-appearance: button;\n}\n\n/**\nRemove the inner border and padding in Firefox.\n*/\n\n::-moz-focus-inner {\n\tborder-style: none;\n\tpadding: 0;\n}\n\n/**\nRestore the focus styles unset by the previous rule.\n*/\n\n:-moz-focusring {\n\toutline: 1px dotted ButtonText;\n}\n\n/**\nRemove the additional ':invalid' styles in Firefox.\nSee: https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737\n*/\n\n:-moz-ui-invalid {\n\tbox-shadow: none;\n}\n\n/**\nRemove the padding so developers are not caught out when they zero out 'fieldset' elements in all browsers.\n*/\n\nlegend {\n\tpadding: 0;\n}\n\n/**\nAdd the correct vertical alignment in Chrome and Firefox.\n*/\n\nprogress {\n\tvertical-align: baseline;\n}\n\n/**\nCorrect the cursor style of increment and decrement buttons in Safari.\n*/\n\n::-webkit-inner-spin-button,\n::-webkit-outer-spin-button {\n\theight: auto;\n}\n\n/**\n1. Correct the odd appearance in Chrome and Safari.\n2. Correct the outline style in Safari.\n*/\n\n[type='search'] {\n\t-webkit-appearance: textfield; /* 1 */\n\toutline-offset: -2px; /* 2 */\n}\n\n/**\nRemove the inner padding in Chrome and Safari on macOS.\n*/\n\n::-webkit-search-decoration {\n\t-webkit-appearance: none;\n}\n\n/**\n1. Correct the inability to style clickable types in iOS and Safari.\n2. Change font properties to 'inherit' in Safari.\n*/\n\n::-webkit-file-upload-button {\n\t-webkit-appearance: button; /* 1 */\n\tfont: inherit; /* 2 */\n}\n\n/*\nInteractive\n===========\n*/\n\n/*\nAdd the correct display in Chrome and Safari.\n*/\n\nsummary {\n\tdisplay: list-item;\n}\n","/**\n * Manually forked from SUIT CSS Base: https://github.com/suitcss/base\n * A thin layer on top of normalize.css that provides a starting point more\n * suitable for web applications.\n */\n\n/**\n * Removes the default spacing and border for appropriate elements.\n */\n\nblockquote,\ndl,\ndd,\nh1,\nh2,\nh3,\nh4,\nh5,\nh6,\nhr,\nfigure,\np,\npre {\n  margin: 0;\n}\n\nbutton {\n  background-color: transparent;\n  background-image: none;\n}\n\nfieldset {\n  margin: 0;\n  padding: 0;\n}\n\nol,\nul {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\n\n/**\n * Tailwind custom reset styles\n */\n\n/**\n * 1. Use the user's configured `sans` font-family (with Tailwind's default\n *    sans-serif font stack as a fallback) as a sane default.\n * 2. Use Tailwind's default \"normal\" line-height so the user isn't forced\n *    to override it to ensure consistency even when using the default theme.\n */\n\nhtml {\n  font-family: theme('fontFamily.sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"); /* 1 */\n  line-height: 1.5; /* 2 */\n}\n\n\n/**\n * Inherit font-family and line-height from `html` so users can set them as\n * a class directly on the `html` element.\n */\n\nbody {\n  font-family: inherit;\n  line-height: inherit;\n}\n\n/**\n * 1. Prevent padding and border from affecting element width.\n *\n *    We used to set this in the html element and inherit from\n *    the parent element for everything else. This caused issues\n *    in shadow-dom-enhanced elements like <details> where the content\n *    is wrapped by a div with box-sizing set to `content-box`.\n *\n *    https://github.com/mozdevs/cssremedy/issues/4\n *\n *\n * 2. Allow adding a border to an element by just adding a border-width.\n *\n *    By default, the way the browser specifies that an element should have no\n *    border is by setting it's border-style to `none` in the user-agent\n *    stylesheet.\n *\n *    In order to easily add borders to elements by just setting the `border-width`\n *    property, we change the default border-style for all elements to `solid`, and\n *    use border-width to hide them instead. This way our `border` utilities only\n *    need to set the `border-width` property instead of the entire `border`\n *    shorthand, making our border utilities much more straightforward to compose.\n *\n *    https://github.com/tailwindcss/tailwindcss/pull/116\n */\n\n*,\n::before,\n::after {\n  box-sizing: border-box; /* 1 */\n  border-width: 0; /* 2 */\n  border-style: solid; /* 2 */\n  border-color: currentColor; /* 2 */\n}\n\n/*\n * Ensure horizontal rules are visible by default\n */\n\nhr {\n  border-top-width: 1px;\n}\n\n/**\n * Undo the `border-style: none` reset that Normalize applies to images so that\n * our `border-{width}` utilities have the expected effect.\n *\n * The Normalize reset is unnecessary for us since we default the border-width\n * to 0 on all elements.\n *\n * https://github.com/tailwindcss/tailwindcss/issues/362\n */\n\nimg {\n  border-style: solid;\n}\n\ntextarea {\n  resize: vertical;\n}\n\ninput::placeholder,\ntextarea::placeholder {\n  opacity: 1;\n  color: theme('colors.gray.400', #a1a1aa);\n}\n\nbutton,\n[role=\"button\"] {\n  cursor: pointer;\n}\n\n/**\n * Override legacy focus reset from Normalize with modern Firefox focus styles.\n *\n * This is actually an improvement over the new defaults in Firefox in our testing,\n * as it triggers the better focus styles even for links, which still use a dotted\n * outline in Firefox by default.\n */\n \n:-moz-focusring {\n\toutline: auto;\n}\n\ntable {\n  border-collapse: collapse;\n}\n\nh1,\nh2,\nh3,\nh4,\nh5,\nh6 {\n  font-size: inherit;\n  font-weight: inherit;\n}\n\n/**\n * Reset links to optimize for opt-in styling instead of\n * opt-out.\n */\n\na {\n  color: inherit;\n  text-decoration: inherit;\n}\n\n/**\n * Reset form element properties that are easy to forget to\n * style explicitly so you don't inadvertently introduce\n * styles that deviate from your design system. These styles\n * supplement a partial reset that is already applied by\n * normalize.css.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  padding: 0;\n  line-height: inherit;\n  color: inherit;\n}\n\n/**\n * Use the configured 'mono' font family for elements that\n * are expected to be rendered with a monospace font, falling\n * back to the system monospace stack if there is no configured\n * 'mono' font family.\n */\n\npre,\ncode,\nkbd,\nsamp {\n  font-family: theme('fontFamily.mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace);\n}\n\n/**\n * 1. Make replaced elements `display: block` by default as that's\n *    the behavior you want almost all of the time. Inspired by\n *    CSS Remedy, with `svg` added as well.\n *\n *    https://github.com/mozdevs/cssremedy/issues/14\n * \n * 2. Add `vertical-align: middle` to align replaced elements more\n *    sensibly by default when overriding `display` by adding a\n *    utility like `inline`.\n *\n *    This can trigger a poorly considered linting error in some\n *    tools but is included by design.\n * \n *    https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210\n */\n\nimg,\nsvg,\nvideo,\ncanvas,\naudio,\niframe,\nembed,\nobject {\n  display: block; /* 1 */\n  vertical-align: middle; /* 2 */\n}\n\n/**\n * Constrain images and videos to the parent width and preserve\n * their intrinsic aspect ratio.\n *\n * https://github.com/mozdevs/cssremedy/issues/14\n */\n\nimg,\nvideo {\n  max-width: 100%;\n  height: auto;\n}\n\n/**\n * Ensure the default browser behavior of the `hidden` attribute.\n */\n\n[hidden] {\n  display: none;\n}\n",null],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "/**\nUse a better box model (opinionated).\n*/\n\n.tailwind *,\n.tailwind ::before,\n.tailwind ::after {\n\tbox-sizing: border-box;\n}\n\n/**\nUse a more readable tab size (opinionated).\n*/\n\n.tailwind html {\n\t-moz-tab-size: 4;\n\t-o-tab-size: 4;\n\t   tab-size: 4;\n}\n\n/**\n1. Correct the line height in all browsers.\n2. Prevent adjustments of font size after orientation changes in iOS.\n*/\n\n.tailwind html {\n\tline-height: 1.15; /* 1 */\n\t-webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/**\nRemove the margin in all browsers.\n*/\n\n.tailwind body {\n\tmargin: 0;\n}\n\n/**\nImprove consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n*/\n\n.tailwind body {\n\tfont-family:\n\t\tsystem-ui,\n\t\t-apple-system, /* Firefox supports this but not yet `system-ui` */\n\t\t'Segoe UI',\n\t\tRoboto,\n\t\tHelvetica,\n\t\tArial,\n\t\tsans-serif,\n\t\t'Apple Color Emoji',\n\t\t'Segoe UI Emoji';\n}\n\n/**\n1. Add the correct height in Firefox.\n2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)\n*/\n\n.tailwind hr {\n\theight: 0; /* 1 */\n\tcolor: inherit; /* 2 */\n}\n\n/**\nAdd the correct text decoration in Chrome, Edge, and Safari.\n*/\n\n.tailwind abbr[title] {\n\t-webkit-text-decoration: underline dotted;\n\t        text-decoration: underline dotted;\n}\n\n/**\nAdd the correct font weight in Edge and Safari.\n*/\n\n.tailwind b,\n.tailwind strong {\n\tfont-weight: bolder;\n}\n\n/**\n1. Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n2. Correct the odd 'em' font sizing in all browsers.\n*/\n\n.tailwind code,\n.tailwind kbd,\n.tailwind samp,\n.tailwind pre {\n\tfont-family:\n\t\tui-monospace,\n\t\tSFMono-Regular,\n\t\tConsolas,\n\t\t'Liberation Mono',\n\t\tMenlo,\n\t\tmonospace; /* 1 */\n\tfont-size: 1em; /* 2 */\n}\n\n/**\nAdd the correct font size in all browsers.\n*/\n\n.tailwind small {\n\tfont-size: 80%;\n}\n\n/**\nPrevent 'sub' and 'sup' elements from affecting the line height in all browsers.\n*/\n\n.tailwind sub,\n.tailwind sup {\n\tfont-size: 75%;\n\tline-height: 0;\n\tposition: relative;\n\tvertical-align: baseline;\n}\n\n/*\nText-level semantics\n====================\n*/\n\n.tailwind sub {\n\tbottom: -0.25em;\n}\n\n/*\nGrouping content\n================\n*/\n\n.tailwind sup {\n\ttop: -0.5em;\n}\n\n/**\n1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)\n2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)\n*/\n\n.tailwind table {\n\ttext-indent: 0; /* 1 */\n\tborder-color: inherit; /* 2 */\n}\n\n/**\n1. Change the font styles in all browsers.\n2. Remove the margin in Firefox and Safari.\n*/\n\n.tailwind button,\n.tailwind input,\n.tailwind optgroup,\n.tailwind select,\n.tailwind textarea {\n\tfont-family: inherit; /* 1 */\n\tfont-size: 100%; /* 1 */\n\tline-height: 1.15; /* 1 */\n\tmargin: 0; /* 2 */\n}\n\n/**\nRemove the inheritance of text transform in Edge and Firefox.\n1. Remove the inheritance of text transform in Firefox.\n*/\n\n.tailwind button,\n.tailwind select { /* 1 */\n\ttext-transform: none;\n}\n\n/**\nCorrect the inability to style clickable types in iOS and Safari.\n*/\n\n.tailwind button,\n.tailwind [type='button'],\n.tailwind [type='reset'],\n.tailwind [type='submit'] {\n\t-webkit-appearance: button;\n}\n\n/**\nRemove the inner border and padding in Firefox.\n*/\n\n.tailwind ::-moz-focus-inner {\n\tborder-style: none;\n\tpadding: 0;\n}\n\n/**\nRestore the focus styles unset by the previous rule.\n*/\n\n.tailwind :-moz-focusring {\n\toutline: 1px dotted ButtonText;\n}\n\n/**\nRemove the additional ':invalid' styles in Firefox.\nSee: https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737\n*/\n\n.tailwind :-moz-ui-invalid {\n\tbox-shadow: none;\n}\n\n/**\nRemove the padding so developers are not caught out when they zero out 'fieldset' elements in all browsers.\n*/\n\n.tailwind legend {\n\tpadding: 0;\n}\n\n/**\nAdd the correct vertical alignment in Chrome and Firefox.\n*/\n\n.tailwind progress {\n\tvertical-align: baseline;\n}\n\n/**\nCorrect the cursor style of increment and decrement buttons in Safari.\n*/\n\n.tailwind ::-webkit-inner-spin-button,\n.tailwind ::-webkit-outer-spin-button {\n\theight: auto;\n}\n\n/**\n1. Correct the odd appearance in Chrome and Safari.\n2. Correct the outline style in Safari.\n*/\n\n.tailwind [type='search'] {\n\t-webkit-appearance: textfield; /* 1 */\n\toutline-offset: -2px; /* 2 */\n}\n\n/**\nRemove the inner padding in Chrome and Safari on macOS.\n*/\n\n.tailwind ::-webkit-search-decoration {\n\t-webkit-appearance: none;\n}\n\n/**\n1. Correct the inability to style clickable types in iOS and Safari.\n2. Change font properties to 'inherit' in Safari.\n*/\n\n.tailwind ::-webkit-file-upload-button {\n\t-webkit-appearance: button; /* 1 */\n\tfont: inherit; /* 2 */\n}\n\n/*\nAdd the correct display in Chrome and Safari.\n*/\n\n.tailwind summary {\n\tdisplay: list-item;\n}\n\n/**\n * Removes the default spacing and border for appropriate elements.\n */\n\n.tailwind blockquote,\n.tailwind dl,\n.tailwind dd,\n.tailwind h1,\n.tailwind h2,\n.tailwind h3,\n.tailwind h4,\n.tailwind h5,\n.tailwind h6,\n.tailwind hr,\n.tailwind figure,\n.tailwind p,\n.tailwind pre {\n  margin: 0;\n}\n\n/**\n * Manually forked from SUIT CSS Base: https://github.com/suitcss/base\n * A thin layer on top of normalize.css that provides a starting point more\n * suitable for web applications.\n */\n\n.tailwind button {\n  background-color: transparent;\n  background-image: none;\n}\n\n/*\nInteractive\n===========\n*/\n\n.tailwind fieldset {\n  margin: 0;\n  padding: 0;\n}\n\n/*\nForms\n=====\n*/\n\n.tailwind ol,\n.tailwind ul {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\n\n/**\n * 1. Use the user's configured `sans` font-family (with Tailwind's default\n *    sans-serif font stack as a fallback) as a sane default.\n * 2. Use Tailwind's default \"normal\" line-height so the user isn't forced\n *    to override it to ensure consistency even when using the default theme.\n */\n\n.tailwind html {\n  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"; /* 1 */\n  line-height: 1.5; /* 2 */\n}\n\n/**\n * Inherit font-family and line-height from `html` so users can set them as\n * a class directly on the `html` element.\n */\n\n.tailwind body {\n  font-family: inherit;\n  line-height: inherit;\n}\n\n/**\n * 1. Prevent padding and border from affecting element width.\n *\n *    We used to set this in the html element and inherit from\n *    the parent element for everything else. This caused issues\n *    in shadow-dom-enhanced elements like <details> where the content\n *    is wrapped by a div with box-sizing set to `content-box`.\n *\n *    https://github.com/mozdevs/cssremedy/issues/4\n *\n *\n * 2. Allow adding a border to an element by just adding a border-width.\n *\n *    By default, the way the browser specifies that an element should have no\n *    border is by setting it's border-style to `none` in the user-agent\n *    stylesheet.\n *\n *    In order to easily add borders to elements by just setting the `border-width`\n *    property, we change the default border-style for all elements to `solid`, and\n *    use border-width to hide them instead. This way our `border` utilities only\n *    need to set the `border-width` property instead of the entire `border`\n *    shorthand, making our border utilities much more straightforward to compose.\n *\n *    https://github.com/tailwindcss/tailwindcss/pull/116\n */\n\n.tailwind *,\n.tailwind ::before,\n.tailwind ::after {\n  box-sizing: border-box; /* 1 */\n  border-width: 0; /* 2 */\n  border-style: solid; /* 2 */\n  border-color: currentColor; /* 2 */\n}\n\n/*\n * Ensure horizontal rules are visible by default\n */\n\n.tailwind hr {\n  border-top-width: 1px;\n}\n\n/**\n * Undo the `border-style: none` reset that Normalize applies to images so that\n * our `border-{width}` utilities have the expected effect.\n *\n * The Normalize reset is unnecessary for us since we default the border-width\n * to 0 on all elements.\n *\n * https://github.com/tailwindcss/tailwindcss/issues/362\n */\n\n.tailwind img {\n  border-style: solid;\n}\n\n/**\n * Tailwind custom reset styles\n */\n\n.tailwind textarea {\n  resize: vertical;\n}\n\n/*\nTabular data\n============\n*/\n\n.tailwind input::-moz-placeholder, .tailwind textarea::-moz-placeholder {\n  opacity: 1;\n  color: #9ca3af;\n}\n\n.tailwind input:-ms-input-placeholder, .tailwind textarea:-ms-input-placeholder {\n  opacity: 1;\n  color: #9ca3af;\n}\n\n.tailwind input::placeholder,\n.tailwind textarea::placeholder {\n  opacity: 1;\n  color: #9ca3af;\n}\n\n/*\nSections\n========\n*/\n\n.tailwind button,\n.tailwind [role=\"button\"] {\n  cursor: pointer;\n}\n\n/**\n * Override legacy focus reset from Normalize with modern Firefox focus styles.\n *\n * This is actually an improvement over the new defaults in Firefox in our testing,\n * as it triggers the better focus styles even for links, which still use a dotted\n * outline in Firefox by default.\n */\n\n.tailwind :-moz-focusring {\n\toutline: auto;\n}\n\n/*\nDocument\n========\n*/\n\n.tailwind table {\n  border-collapse: collapse;\n}\n\n/*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */\n\n.tailwind h1,\n.tailwind h2,\n.tailwind h3,\n.tailwind h4,\n.tailwind h5,\n.tailwind h6 {\n  font-size: inherit;\n  font-weight: inherit;\n}\n\n/**\n * Reset links to optimize for opt-in styling instead of\n * opt-out.\n */\n\n.tailwind a {\n  color: inherit;\n  text-decoration: inherit;\n}\n\n/**\n * Reset form element properties that are easy to forget to\n * style explicitly so you don't inadvertently introduce\n * styles that deviate from your design system. These styles\n * supplement a partial reset that is already applied by\n * normalize.css.\n */\n\n.tailwind button,\n.tailwind input,\n.tailwind optgroup,\n.tailwind select,\n.tailwind textarea {\n  padding: 0;\n  line-height: inherit;\n  color: inherit;\n}\n\n/**\n * Use the configured 'mono' font family for elements that\n * are expected to be rendered with a monospace font, falling\n * back to the system monospace stack if there is no configured\n * 'mono' font family.\n */\n\n.tailwind pre,\n.tailwind code,\n.tailwind kbd,\n.tailwind samp {\n  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace;\n}\n\n/**\n * 1. Make replaced elements `display: block` by default as that's\n *    the behavior you want almost all of the time. Inspired by\n *    CSS Remedy, with `svg` added as well.\n *\n *    https://github.com/mozdevs/cssremedy/issues/14\n * \n * 2. Add `vertical-align: middle` to align replaced elements more\n *    sensibly by default when overriding `display` by adding a\n *    utility like `inline`.\n *\n *    This can trigger a poorly considered linting error in some\n *    tools but is included by design.\n * \n *    https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210\n */\n\n.tailwind img,\n.tailwind svg,\n.tailwind video,\n.tailwind canvas,\n.tailwind audio,\n.tailwind iframe,\n.tailwind embed,\n.tailwind object {\n  display: block; /* 1 */\n  vertical-align: middle; /* 2 */\n}\n\n/**\n * Constrain images and videos to the parent width and preserve\n * their intrinsic aspect ratio.\n *\n * https://github.com/mozdevs/cssremedy/issues/14\n */\n\n.tailwind img,\n.tailwind video {\n  max-width: 100%;\n  height: auto;\n}\n\n/**\n * Ensure the default browser behavior of the `hidden` attribute.\n */\n\n.tailwind [hidden] {\n  display: none;\n}\n\n/*! tailwindcss v2.2.17 | MIT License | https://tailwindcss.com\n*/\n\n.tailwind *, .tailwind ::before, .tailwind ::after {\n\t--tw-translate-x: 0;\n\t--tw-translate-y: 0;\n\t--tw-rotate: 0;\n\t--tw-skew-x: 0;\n\t--tw-skew-y: 0;\n\t--tw-scale-x: 1;\n\t--tw-scale-y: 1;\n\t--tw-transform: translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));\n}\n\n.tailwind *, .tailwind ::before, .tailwind ::after {\n\t--tw-border-opacity: 1;\n\tborder-color: rgba(229, 231, 235, var(--tw-border-opacity));\n}\n\n.tailwind *, .tailwind ::before, .tailwind ::after {\n\t--tw-ring-offset-shadow: 0 0 #0000;\n\t--tw-ring-shadow: 0 0 #0000;\n\t--tw-shadow: 0 0 #0000;\n}\n\n.tailwind *, .tailwind ::before, .tailwind ::after {\n\t--tw-blur: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-brightness: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-contrast: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-grayscale: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-hue-rotate: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-invert: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-saturate: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-sepia: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-drop-shadow: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);\n}\n\n.tailwind .form-input,.tailwind .form-textarea,.tailwind .form-select,.tailwind .form-multiselect {\n\t-webkit-appearance: none;\n\t   -moz-appearance: none;\n\t        appearance: none;\n\tbackground-color: #fff;\n\tborder-color: #6b7280;\n\tborder-width: 1px;\n\tborder-radius: 0px;\n\tpadding-top: 0.5rem;\n\tpadding-right: 0.75rem;\n\tpadding-bottom: 0.5rem;\n\tpadding-left: 0.75rem;\n\tfont-size: 1rem;\n\tline-height: 1.5rem;\n\t--tw-shadow: 0 0 #0000;\n}\n\n.tailwind .form-input:focus, .tailwind .form-textarea:focus, .tailwind .form-select:focus, .tailwind .form-multiselect:focus {\n\toutline: 2px solid transparent;\n\toutline-offset: 2px;\n\t--tw-ring-inset: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-ring-offset-width: 0px;\n\t--tw-ring-offset-color: #fff;\n\t--tw-ring-color: #2563eb;\n\t--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);\n\t--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);\n\tbox-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n\tborder-color: #2563eb;\n}\n\n.tailwind .form-input::-moz-placeholder, .tailwind .form-textarea::-moz-placeholder {\n\tcolor: #6b7280;\n\topacity: 1;\n}\n\n.tailwind .form-input:-ms-input-placeholder, .tailwind .form-textarea:-ms-input-placeholder {\n\tcolor: #6b7280;\n\topacity: 1;\n}\n\n.tailwind .form-input::placeholder,.tailwind .form-textarea::placeholder {\n\tcolor: #6b7280;\n\topacity: 1;\n}\n\n.tailwind .form-checkbox,.tailwind .form-radio {\n\t-webkit-appearance: none;\n\t   -moz-appearance: none;\n\t        appearance: none;\n\tpadding: 0;\n\t-webkit-print-color-adjust: exact;\n\t        color-adjust: exact;\n\tdisplay: inline-block;\n\tvertical-align: middle;\n\tbackground-origin: border-box;\n\t-webkit-user-select: none;\n\t   -moz-user-select: none;\n\t    -ms-user-select: none;\n\t        user-select: none;\n\tflex-shrink: 0;\n\theight: 1rem;\n\twidth: 1rem;\n\tcolor: #2563eb;\n\tbackground-color: #fff;\n\tborder-color: #6b7280;\n\tborder-width: 1px;\n\t--tw-shadow: 0 0 #0000;\n}\n\n.tailwind .form-checkbox {\n\tborder-radius: 0px;\n}\n\n.tailwind .form-checkbox:focus,.tailwind .form-radio:focus {\n\toutline: 2px solid transparent;\n\toutline-offset: 2px;\n\t--tw-ring-inset: var(--tw-empty,/*!*/ /*!*/);\n\t--tw-ring-offset-width: 2px;\n\t--tw-ring-offset-color: #fff;\n\t--tw-ring-color: #2563eb;\n\t--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);\n\t--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);\n\tbox-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n}\n\n.tailwind .form-checkbox:checked,.tailwind .form-radio:checked {\n\tborder-color: transparent;\n\tbackground-color: currentColor;\n\tbackground-size: 100% 100%;\n\tbackground-position: center;\n\tbackground-repeat: no-repeat;\n}\n\n.tailwind .form-checkbox:checked {\n\tbackground-image: url(\"data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e\");\n}\n\n.tailwind .form-checkbox:checked:hover,.tailwind .form-checkbox:checked:focus,.tailwind .form-radio:checked:hover,.tailwind .form-radio:checked:focus {\n\tborder-color: transparent;\n\tbackground-color: currentColor;\n}\n\n.tailwind .form-checkbox:indeterminate {\n\tbackground-image: url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 16 16'%3e%3cpath stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8h8'/%3e%3c/svg%3e\");\n\tborder-color: transparent;\n\tbackground-color: currentColor;\n\tbackground-size: 100% 100%;\n\tbackground-position: center;\n\tbackground-repeat: no-repeat;\n}\n\n.tailwind .form-checkbox:indeterminate:hover,.tailwind .form-checkbox:indeterminate:focus {\n\tborder-color: transparent;\n\tbackground-color: currentColor;\n}\n.tw-sr-only {\n\tposition: absolute !important;\n\twidth: 1px !important;\n\theight: 1px !important;\n\tpadding: 0 !important;\n\tmargin: -1px !important;\n\toverflow: hidden !important;\n\tclip: rect(0, 0, 0, 0) !important;\n\twhite-space: nowrap !important;\n\tborder-width: 0 !important;\n}\n.tw-fixed {\n\tposition: fixed !important;\n}\n.tw-absolute {\n\tposition: absolute !important;\n}\n.tw-relative {\n\tposition: relative !important;\n}\n.tw-inset-0 {\n\ttop: 0px !important;\n\tright: 0px !important;\n\tbottom: 0px !important;\n\tleft: 0px !important;\n}\n.tw-bottom-5 {\n\tbottom: 1.25rem !important;\n}\n.tw-right-5 {\n\tright: 1.25rem !important;\n}\n.tw--top-1 {\n\ttop: -0.25rem !important;\n}\n.tw--left-1 {\n\tleft: -0.25rem !important;\n}\n.tw-bottom-2 {\n\tbottom: 0.5rem !important;\n}\n.tw-right-2 {\n\tright: 0.5rem !important;\n}\n.tw-bottom-0 {\n\tbottom: 0px !important;\n}\n.tw-left-\\[50\\%\\] {\n\tleft: 50% !important;\n}\n.tw-z-10005 {\n\tz-index: 10005 !important;\n}\n.tw-z-10000 {\n\tz-index: 10000 !important;\n}\n.tw-z-5000 {\n\tz-index: 5000 !important;\n}\n.tw-z-10002 {\n\tz-index: 10002 !important;\n}\n.tw-z-10001 {\n\tz-index: 10001 !important;\n}\n.tw-m-0 {\n\tmargin: 0px !important;\n}\n.tw-mx-auto {\n\tmargin-left: auto !important;\n\tmargin-right: auto !important;\n}\n.tw-my-4 {\n\tmargin-top: 1rem !important;\n\tmargin-bottom: 1rem !important;\n}\n.tw-my-2 {\n\tmargin-top: 0.5rem !important;\n\tmargin-bottom: 0.5rem !important;\n}\n.tw-my-3 {\n\tmargin-top: 0.75rem !important;\n\tmargin-bottom: 0.75rem !important;\n}\n.tw-mt-6 {\n\tmargin-top: 1.5rem !important;\n}\n.tw-mt-8 {\n\tmargin-top: 2rem !important;\n}\n.tw-mt-1 {\n\tmargin-top: 0.25rem !important;\n}\n.tw-mt-4 {\n\tmargin-top: 1rem !important;\n}\n.tw-mt-2 {\n\tmargin-top: 0.5rem !important;\n}\n.tw-ml-2 {\n\tmargin-left: 0.5rem !important;\n}\n.tw-mt-3 {\n\tmargin-top: 0.75rem !important;\n}\n.tw-ml-1 {\n\tmargin-left: 0.25rem !important;\n}\n.tw--ml-1 {\n\tmargin-left: -0.25rem !important;\n}\n.tw-mr-3 {\n\tmargin-right: 0.75rem !important;\n}\n.tw-mr-2 {\n\tmargin-right: 0.5rem !important;\n}\n.tw-mb-2 {\n\tmargin-bottom: 0.5rem !important;\n}\n.tw-ml-4 {\n\tmargin-left: 1rem !important;\n}\n.tw-mt-0 {\n\tmargin-top: 0px !important;\n}\n.tw-mb-10 {\n\tmargin-bottom: 2.5rem !important;\n}\n.tw-mt-\\[3px\\] {\n\tmargin-top: 3px !important;\n}\n.tw-ml-3 {\n\tmargin-left: 0.75rem !important;\n}\n.tw-mt-10 {\n\tmargin-top: 2.5rem !important;\n}\n.tw-block {\n\tdisplay: block !important;\n}\n.tw-inline-block {\n\tdisplay: inline-block !important;\n}\n.tw-flex {\n\tdisplay: flex !important;\n}\n.tw-inline-flex {\n\tdisplay: inline-flex !important;\n}\n.tw-hidden {\n\tdisplay: none !important;\n}\n.tw-h-10 {\n\theight: 2.5rem !important;\n}\n.tw-h-5 {\n\theight: 1.25rem !important;\n}\n.tw-h-6 {\n\theight: 1.5rem !important;\n}\n.tw-h-4 {\n\theight: 1rem !important;\n}\n.tw-h-3 {\n\theight: 0.75rem !important;\n}\n.tw-h-\\[300px\\] {\n\theight: 300px !important;\n}\n.tw-h-\\[800px\\] {\n\theight: 800px !important;\n}\n.tw-h-full {\n\theight: 100% !important;\n}\n.tw-max-h-28 {\n\tmax-height: 7rem !important;\n}\n.tw-w-10 {\n\twidth: 2.5rem !important;\n}\n.tw-w-full {\n\twidth: 100% !important;\n}\n.tw-w-5 {\n\twidth: 1.25rem !important;\n}\n.tw-w-6 {\n\twidth: 1.5rem !important;\n}\n.tw-w-4 {\n\twidth: 1rem !important;\n}\n.tw-w-3 {\n\twidth: 0.75rem !important;\n}\n.tw-w-24 {\n\twidth: 6rem !important;\n}\n.tw-w-0 {\n\twidth: 0px !important;\n}\n.tw-w-\\[400px\\] {\n\twidth: 400px !important;\n}\n.tw-w-\\[70px\\] {\n\twidth: 70px !important;\n}\n.tw-w-2\\/3 {\n\twidth: 66.666667% !important;\n}\n.tw-w-\\[300px\\] {\n\twidth: 300px !important;\n}\n.tw-min-w-\\[300px\\] {\n\tmin-width: 300px !important;\n}\n.tw-max-w-\\[400px\\] {\n\tmax-width: 400px !important;\n}\n.tw-max-w-xl {\n\tmax-width: 36rem !important;\n}\n.tw-max-w-3xl {\n\tmax-width: 48rem !important;\n}\n.tw-flex-1 {\n\tflex: 1 1 0% !important;\n}\n.tw-flex-5 {\n\tflex: 5 1 0 !important;\n}\n.tw-flex-shrink-0 {\n\tflex-shrink: 0 !important;\n}\n.tw-translate-x-0 {\n\t--tw-translate-x: 0px !important;\n\ttransform: var(--tw-transform) !important;\n}\n.tw-translate-x-\\[430px\\] {\n\t--tw-translate-x: 430px !important;\n\ttransform: var(--tw-transform) !important;\n}\n.tw-translate-x-\\[-50\\%\\] {\n\t--tw-translate-x: -50% !important;\n\ttransform: var(--tw-transform) !important;\n}\n.tw-translate-y-0 {\n\t--tw-translate-y: 0px !important;\n\ttransform: var(--tw-transform) !important;\n}\n.tw-translate-y-\\[100\\%\\] {\n\t--tw-translate-y: 100% !important;\n\ttransform: var(--tw-transform) !important;\n}\n.tw-transform {\n\ttransform: var(--tw-transform) !important;\n}\n@-webkit-keyframes tw-spin {\n\n\tto {\n\t\ttransform: rotate(360deg);\n\t}\n}\n@keyframes tw-spin {\n\n\tto {\n\t\ttransform: rotate(360deg);\n\t}\n}\n.tw-animate-spin {\n\t-webkit-animation: tw-spin 1s linear infinite !important;\n\t        animation: tw-spin 1s linear infinite !important;\n}\n@-webkit-keyframes tw-bounce {\n\n\t0%, 100% {\n\t\ttransform: translateY(-25%);\n\t\t-webkit-animation-timing-function: cubic-bezier(0.8,0,1,1);\n\t\t        animation-timing-function: cubic-bezier(0.8,0,1,1);\n\t}\n\n\t50% {\n\t\ttransform: none;\n\t\t-webkit-animation-timing-function: cubic-bezier(0,0,0.2,1);\n\t\t        animation-timing-function: cubic-bezier(0,0,0.2,1);\n\t}\n}\n@keyframes tw-bounce {\n\n\t0%, 100% {\n\t\ttransform: translateY(-25%);\n\t\t-webkit-animation-timing-function: cubic-bezier(0.8,0,1,1);\n\t\t        animation-timing-function: cubic-bezier(0.8,0,1,1);\n\t}\n\n\t50% {\n\t\ttransform: none;\n\t\t-webkit-animation-timing-function: cubic-bezier(0,0,0.2,1);\n\t\t        animation-timing-function: cubic-bezier(0,0,0.2,1);\n\t}\n}\n.tw-animate-bounce {\n\t-webkit-animation: tw-bounce 1s infinite !important;\n\t        animation: tw-bounce 1s infinite !important;\n}\n.tw-cursor-pointer {\n\tcursor: pointer !important;\n}\n.tw-resize-none {\n\tresize: none !important;\n}\n.tw-appearance-none {\n\t-webkit-appearance: none !important;\n\t   -moz-appearance: none !important;\n\t        appearance: none !important;\n}\n.tw-flex-col {\n\tflex-direction: column !important;\n}\n.tw-items-start {\n\talign-items: flex-start !important;\n}\n.tw-items-center {\n\talign-items: center !important;\n}\n.tw-justify-end {\n\tjustify-content: flex-end !important;\n}\n.tw-justify-center {\n\tjustify-content: center !important;\n}\n.tw-justify-between {\n\tjustify-content: space-between !important;\n}\n.tw-space-y-4 > :not([hidden]) ~ :not([hidden]) {\n\t--tw-space-y-reverse: 0 !important;\n\tmargin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse))) !important;\n\tmargin-bottom: calc(1rem * var(--tw-space-y-reverse)) !important;\n}\n.tw-overflow-y-auto {\n\toverflow-y: auto !important;\n}\n.tw-break-words {\n\toverflow-wrap: break-word !important;\n}\n.tw-rounded-lg {\n\tborder-radius: 0.5rem !important;\n}\n.tw-rounded-md {\n\tborder-radius: 0.375rem !important;\n}\n.tw-rounded-full {\n\tborder-radius: 9999px !important;\n}\n.tw-rounded {\n\tborder-radius: 0.25rem !important;\n}\n.tw-rounded-xl {\n\tborder-radius: 0.75rem !important;\n}\n.tw-rounded-t-md {\n\tborder-top-left-radius: 0.375rem !important;\n\tborder-top-right-radius: 0.375rem !important;\n}\n.tw-rounded-b-lg {\n\tborder-bottom-right-radius: 0.5rem !important;\n\tborder-bottom-left-radius: 0.5rem !important;\n}\n.tw-rounded-t-lg {\n\tborder-top-left-radius: 0.5rem !important;\n\tborder-top-right-radius: 0.5rem !important;\n}\n.tw-rounded-l-md {\n\tborder-top-left-radius: 0.375rem !important;\n\tborder-bottom-left-radius: 0.375rem !important;\n}\n.tw-border {\n\tborder-width: 1px !important;\n}\n.tw-border-0 {\n\tborder-width: 0px !important;\n}\n.tw-border-gray-300 {\n\t--tw-border-opacity: 1 !important;\n\tborder-color: rgba(209, 213, 219, var(--tw-border-opacity)) !important;\n}\n.tw-border-transparent {\n\tborder-color: transparent !important;\n}\n.tw-border-cortico-blue {\n\tborder-color: rgba(75, 84, 246, 1) !important;\n}\n.tw-bg-white {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(255, 255, 255, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-yellow-500 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(245, 158, 11, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-red-400 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(248, 113, 113, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-cortico-blue {\n\tbackground-color: rgba(75, 84, 246, 1) !important;\n}\n.tw-bg-red-600 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(220, 38, 38, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-gray-100 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(243, 244, 246, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-green-600 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(5, 150, 105, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-gray-200 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(229, 231, 235, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-gray-500 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(107, 114, 128, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-red-500 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(239, 68, 68, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-gray-400 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(156, 163, 175, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-transparent {\n\tbackground-color: transparent !important;\n}\n.tw-bg-black {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(0, 0, 0, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-blue-700 {\n\t--tw-bg-opacity: 1 !important;\n\tbackground-color: rgba(29, 78, 216, var(--tw-bg-opacity)) !important;\n}\n.tw-bg-opacity-25 {\n\t--tw-bg-opacity: 0.25 !important;\n}\n.tw-bg-opacity-80 {\n\t--tw-bg-opacity: 0.8 !important;\n}\n.tw-p-4 {\n\tpadding: 1rem !important;\n}\n.tw-p-2 {\n\tpadding: 0.5rem !important;\n}\n.tw-p-12 {\n\tpadding: 3rem !important;\n}\n.tw-p-3 {\n\tpadding: 0.75rem !important;\n}\n.tw-p-1 {\n\tpadding: 0.25rem !important;\n}\n.tw-p-0 {\n\tpadding: 0px !important;\n}\n.tw-p-10 {\n\tpadding: 2.5rem !important;\n}\n.tw-px-2 {\n\tpadding-left: 0.5rem !important;\n\tpadding-right: 0.5rem !important;\n}\n.tw-px-3 {\n\tpadding-left: 0.75rem !important;\n\tpadding-right: 0.75rem !important;\n}\n.tw-py-2 {\n\tpadding-top: 0.5rem !important;\n\tpadding-bottom: 0.5rem !important;\n}\n.tw-px-4 {\n\tpadding-left: 1rem !important;\n\tpadding-right: 1rem !important;\n}\n.tw-py-4 {\n\tpadding-top: 1rem !important;\n\tpadding-bottom: 1rem !important;\n}\n.tw-py-1 {\n\tpadding-top: 0.25rem !important;\n\tpadding-bottom: 0.25rem !important;\n}\n.tw-py-3 {\n\tpadding-top: 0.75rem !important;\n\tpadding-bottom: 0.75rem !important;\n}\n.tw-pl-2 {\n\tpadding-left: 0.5rem !important;\n}\n.tw-text-center {\n\ttext-align: center !important;\n}\n.tw-font-sans {\n\tfont-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\" !important;\n}\n.tw-text-3xl {\n\tfont-size: 1.875rem !important;\n\tline-height: 2.25rem !important;\n}\n.tw-text-xs {\n\tfont-size: 0.75rem !important;\n\tline-height: 1rem !important;\n}\n.tw-text-sm {\n\tfont-size: 0.875rem !important;\n\tline-height: 1.25rem !important;\n}\n.tw-text-2xl {\n\tfont-size: 1.5rem !important;\n\tline-height: 2rem !important;\n}\n.tw-text-xl {\n\tfont-size: 1.25rem !important;\n\tline-height: 1.75rem !important;\n}\n.tw-font-extrabold {\n\tfont-weight: 800 !important;\n}\n.tw-font-medium {\n\tfont-weight: 500 !important;\n}\n.tw-font-light {\n\tfont-weight: 300 !important;\n}\n.tw-font-semibold {\n\tfont-weight: 600 !important;\n}\n.tw-font-bold {\n\tfont-weight: 700 !important;\n}\n.tw-leading-5 {\n\tline-height: 1.25rem !important;\n}\n.tw-tracking-wider {\n\tletter-spacing: 0.05em !important;\n}\n.tw-tracking-widest {\n\tletter-spacing: 0.1em !important;\n}\n.tw-text-white {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(255, 255, 255, var(--tw-text-opacity)) !important;\n}\n.tw-text-gray-700 {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(55, 65, 81, var(--tw-text-opacity)) !important;\n}\n.tw-text-green-600 {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(5, 150, 105, var(--tw-text-opacity)) !important;\n}\n.tw-text-gray-600 {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(75, 85, 99, var(--tw-text-opacity)) !important;\n}\n.tw-text-gray-800 {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(31, 41, 55, var(--tw-text-opacity)) !important;\n}\n.tw-text-cortico-blue {\n\tcolor: rgba(75, 84, 246, 1) !important;\n}\n.tw-text-indigo-600 {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(79, 70, 229, var(--tw-text-opacity)) !important;\n}\n.tw-text-black {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(0, 0, 0, var(--tw-text-opacity)) !important;\n}\n.tw-text-gray-900 {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(17, 24, 39, var(--tw-text-opacity)) !important;\n}\n.tw-text-gray-500 {\n\t--tw-text-opacity: 1 !important;\n\tcolor: rgba(107, 114, 128, var(--tw-text-opacity)) !important;\n}\n.tw-text-opacity-80 {\n\t--tw-text-opacity: 0.8 !important;\n}\n.tw-text-opacity-100 {\n\t--tw-text-opacity: 1 !important;\n}\n.tw-text-opacity-70 {\n\t--tw-text-opacity: 0.7 !important;\n}\n.tw-text-opacity-90 {\n\t--tw-text-opacity: 0.9 !important;\n}\n.tw-text-opacity-60 {\n\t--tw-text-opacity: 0.6 !important;\n}\n.tw-placeholder-gray-400::-moz-placeholder {\n\t--tw-placeholder-opacity: 1 !important;\n\tcolor: rgba(156, 163, 175, var(--tw-placeholder-opacity)) !important;\n}\n.tw-placeholder-gray-400:-ms-input-placeholder {\n\t--tw-placeholder-opacity: 1 !important;\n\tcolor: rgba(156, 163, 175, var(--tw-placeholder-opacity)) !important;\n}\n.tw-placeholder-gray-400::placeholder {\n\t--tw-placeholder-opacity: 1 !important;\n\tcolor: rgba(156, 163, 175, var(--tw-placeholder-opacity)) !important;\n}\n.tw-opacity-25 {\n\topacity: 0.25 !important;\n}\n.tw-opacity-75 {\n\topacity: 0.75 !important;\n}\n.tw-opacity-20 {\n\topacity: 0.2 !important;\n}\n.tw-opacity-10 {\n\topacity: 0.1 !important;\n}\n.tw-opacity-40 {\n\topacity: 0.4 !important;\n}\n.tw-opacity-50 {\n\topacity: 0.5 !important;\n}\n.tw-shadow-sm {\n\t--tw-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;\n\tbox-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;\n}\n.tw-shadow-xl {\n\t--tw-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;\n\tbox-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;\n}\n.tw-shadow-2xl {\n\t--tw-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;\n\tbox-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;\n}\n.tw-shadow-md {\n\t--tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;\n\tbox-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;\n}\n.tw-shadow-lg {\n\t--tw-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;\n\tbox-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;\n}\n.tw-drop-shadow-md {\n\t--tw-drop-shadow: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.07)) drop-shadow(0 2px 2px rgba(0, 0, 0, 0.06)) !important;\n\tfilter: var(--tw-filter) !important;\n}\n.tw-drop-shadow-lg {\n\t--tw-drop-shadow: drop-shadow(0 10px 8px rgba(0, 0, 0, 0.04)) drop-shadow(0 4px 3px rgba(0, 0, 0, 0.1)) !important;\n\tfilter: var(--tw-filter) !important;\n}\n.tw-transition-transform {\n\ttransition-property: transform !important;\n\ttransition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;\n\ttransition-duration: 150ms !important;\n}\n.tw-duration-200 {\n\ttransition-duration: 200ms !important;\n}\n.tw-duration-300 {\n\ttransition-duration: 300ms !important;\n}\n.tw-ease-in-out {\n\ttransition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;\n}\n.tw-line-clamp-3 {\n\toverflow: hidden !important;\n\tdisplay: -webkit-box !important;\n\t-webkit-box-orient: vertical !important;\n\t-webkit-line-clamp: 3 !important;\n}\n\n.sidebar-instructions {\n\ttext-align: center;\n\tfont-size: 1.875rem;\n\tline-height: 2.25rem;\n\tfont-weight: 700;\n}\n\n.sidebar-instructions-hidden {\n\tdisplay: none;\n}\n\n.alert-enter {\n  opacity: 0;\n  transform: scale(0.9);\n}\n.alert-enter-active {\n  opacity: 1;\n  transform: translateX(0);\n  transition: opacity 300ms, transform 300ms;\n}\n.alert-exit {\n  opacity: 1;\n}\n.alert-exit-active {\n  opacity: 0;\n  transform: scale(0.9);\n  transition: opacity 300ms, transform 300ms;\n}\n", "",{"version":3,"sources":["webpack://./index.css","webpack://./%3Cinput%20css%20PSSzHG%3E","webpack://./%3Cinput%20css%20j5g8I9%3E","<no source>"],"names":[],"mappings":"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+BAAA;CAAA,2BAAA;CAAA,4BAAA;CAAA;AHCgB;;AAAd;CGDF;AHCgB;;AAAd;CGDF,0BAAA;CAAA;AHCgB;;AAAd;CGDF,wOAAA;CAAA,0BAAA;CAAA,+BAAA;CAAA,2BAAA;CAAA,4BAAA;CAAA;AHCgB;;AAAd;CGDF,0BAAA;CAAA;AHCgB;AAIhB;CGLA,8BAAA;CAAA,sBAAA;CAAA,uBAAA;CAAA,sBAAA;CAAA,wBAAA;CAAA,4BAAA;CAAA,kCAAA;CAAA,+BAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,oBAAA;CAAA,sBAAA;CAAA,uBAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,6BAAA;CAAA;AHKmB;AAAnB;CGLA,4BAAA;CAAA;AHKmB;AAAnB;CGLA,8BAAA;CAAA;AHKmB;AAAnB;CGLA,+BAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,iCAAA;CAAA;AHKmB;AAAnB;CGLA,mCAAA;CAAA;AHKmB;AAAnB;CGLA,kCAAA;CAAA;AHKmB;AAAnB;CGLA,iCAAA;CAAA;AHKmB;AAAnB;CGLA,kCAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;;CGLA;EAAA;EAAA;AHKmB;AAAnB;;CGLA;EAAA;EAAA;AHKmB;AAAnB;CGLA,yDAAA;SAAA;AHKmB;AAAnB;;CGLA;EAAA,4BAAA;EAAA,2DAAA;UAAA;EAAA;;CAAA;EAAA,gBAAA;EAAA,2DAAA;UAAA;EAAA;AHKmB;AAAnB;;CGLA;EAAA,4BAAA;EAAA,2DAAA;UAAA;EAAA;;CAAA;EAAA,gBAAA;EAAA,2DAAA;UAAA;EAAA;AHKmB;AAAnB;CGLA,oDAAA;SAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,oCAAA;IAAA,iCAAA;SAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,mCAAA;CAAA,wEAAA;CAAA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA;AHKmB;AAAnB;CGLA,4CAA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","sourcesContent":[".tailwind {  \n  @tailwind base;\n}\n\n@tailwind components;\n@tailwind utilities;\n\n.sidebar-instructions {\n  @apply tw-text-3xl tw-text-center tw-font-bold;\n}\n\n.sidebar-instructions-hidden {\n  @apply tw-hidden;\n}\n\n.alert-enter {\n  opacity: 0;\n  transform: scale(0.9);\n}\n.alert-enter-active {\n  opacity: 1;\n  transform: translateX(0);\n  transition: opacity 300ms, transform 300ms;\n}\n.alert-exit {\n  opacity: 1;\n}\n.alert-exit-active {\n  opacity: 0;\n  transform: scale(0.9);\n  transition: opacity 300ms, transform 300ms;\n}\n","/*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */\n\n/*\nDocument\n========\n*/\n\n/**\nUse a better box model (opinionated).\n*/\n\n*,\n::before,\n::after {\n\tbox-sizing: border-box;\n}\n\n/**\nUse a more readable tab size (opinionated).\n*/\n\nhtml {\n\t-moz-tab-size: 4;\n\ttab-size: 4;\n}\n\n/**\n1. Correct the line height in all browsers.\n2. Prevent adjustments of font size after orientation changes in iOS.\n*/\n\nhtml {\n\tline-height: 1.15; /* 1 */\n\t-webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/*\nSections\n========\n*/\n\n/**\nRemove the margin in all browsers.\n*/\n\nbody {\n\tmargin: 0;\n}\n\n/**\nImprove consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n*/\n\nbody {\n\tfont-family:\n\t\tsystem-ui,\n\t\t-apple-system, /* Firefox supports this but not yet `system-ui` */\n\t\t'Segoe UI',\n\t\tRoboto,\n\t\tHelvetica,\n\t\tArial,\n\t\tsans-serif,\n\t\t'Apple Color Emoji',\n\t\t'Segoe UI Emoji';\n}\n\n/*\nGrouping content\n================\n*/\n\n/**\n1. Add the correct height in Firefox.\n2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)\n*/\n\nhr {\n\theight: 0; /* 1 */\n\tcolor: inherit; /* 2 */\n}\n\n/*\nText-level semantics\n====================\n*/\n\n/**\nAdd the correct text decoration in Chrome, Edge, and Safari.\n*/\n\nabbr[title] {\n\ttext-decoration: underline dotted;\n}\n\n/**\nAdd the correct font weight in Edge and Safari.\n*/\n\nb,\nstrong {\n\tfont-weight: bolder;\n}\n\n/**\n1. Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)\n2. Correct the odd 'em' font sizing in all browsers.\n*/\n\ncode,\nkbd,\nsamp,\npre {\n\tfont-family:\n\t\tui-monospace,\n\t\tSFMono-Regular,\n\t\tConsolas,\n\t\t'Liberation Mono',\n\t\tMenlo,\n\t\tmonospace; /* 1 */\n\tfont-size: 1em; /* 2 */\n}\n\n/**\nAdd the correct font size in all browsers.\n*/\n\nsmall {\n\tfont-size: 80%;\n}\n\n/**\nPrevent 'sub' and 'sup' elements from affecting the line height in all browsers.\n*/\n\nsub,\nsup {\n\tfont-size: 75%;\n\tline-height: 0;\n\tposition: relative;\n\tvertical-align: baseline;\n}\n\nsub {\n\tbottom: -0.25em;\n}\n\nsup {\n\ttop: -0.5em;\n}\n\n/*\nTabular data\n============\n*/\n\n/**\n1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)\n2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)\n*/\n\ntable {\n\ttext-indent: 0; /* 1 */\n\tborder-color: inherit; /* 2 */\n}\n\n/*\nForms\n=====\n*/\n\n/**\n1. Change the font styles in all browsers.\n2. Remove the margin in Firefox and Safari.\n*/\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n\tfont-family: inherit; /* 1 */\n\tfont-size: 100%; /* 1 */\n\tline-height: 1.15; /* 1 */\n\tmargin: 0; /* 2 */\n}\n\n/**\nRemove the inheritance of text transform in Edge and Firefox.\n1. Remove the inheritance of text transform in Firefox.\n*/\n\nbutton,\nselect { /* 1 */\n\ttext-transform: none;\n}\n\n/**\nCorrect the inability to style clickable types in iOS and Safari.\n*/\n\nbutton,\n[type='button'],\n[type='reset'],\n[type='submit'] {\n\t-webkit-appearance: button;\n}\n\n/**\nRemove the inner border and padding in Firefox.\n*/\n\n::-moz-focus-inner {\n\tborder-style: none;\n\tpadding: 0;\n}\n\n/**\nRestore the focus styles unset by the previous rule.\n*/\n\n:-moz-focusring {\n\toutline: 1px dotted ButtonText;\n}\n\n/**\nRemove the additional ':invalid' styles in Firefox.\nSee: https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737\n*/\n\n:-moz-ui-invalid {\n\tbox-shadow: none;\n}\n\n/**\nRemove the padding so developers are not caught out when they zero out 'fieldset' elements in all browsers.\n*/\n\nlegend {\n\tpadding: 0;\n}\n\n/**\nAdd the correct vertical alignment in Chrome and Firefox.\n*/\n\nprogress {\n\tvertical-align: baseline;\n}\n\n/**\nCorrect the cursor style of increment and decrement buttons in Safari.\n*/\n\n::-webkit-inner-spin-button,\n::-webkit-outer-spin-button {\n\theight: auto;\n}\n\n/**\n1. Correct the odd appearance in Chrome and Safari.\n2. Correct the outline style in Safari.\n*/\n\n[type='search'] {\n\t-webkit-appearance: textfield; /* 1 */\n\toutline-offset: -2px; /* 2 */\n}\n\n/**\nRemove the inner padding in Chrome and Safari on macOS.\n*/\n\n::-webkit-search-decoration {\n\t-webkit-appearance: none;\n}\n\n/**\n1. Correct the inability to style clickable types in iOS and Safari.\n2. Change font properties to 'inherit' in Safari.\n*/\n\n::-webkit-file-upload-button {\n\t-webkit-appearance: button; /* 1 */\n\tfont: inherit; /* 2 */\n}\n\n/*\nInteractive\n===========\n*/\n\n/*\nAdd the correct display in Chrome and Safari.\n*/\n\nsummary {\n\tdisplay: list-item;\n}\n","/**\n * Manually forked from SUIT CSS Base: https://github.com/suitcss/base\n * A thin layer on top of normalize.css that provides a starting point more\n * suitable for web applications.\n */\n\n/**\n * Removes the default spacing and border for appropriate elements.\n */\n\nblockquote,\ndl,\ndd,\nh1,\nh2,\nh3,\nh4,\nh5,\nh6,\nhr,\nfigure,\np,\npre {\n  margin: 0;\n}\n\nbutton {\n  background-color: transparent;\n  background-image: none;\n}\n\nfieldset {\n  margin: 0;\n  padding: 0;\n}\n\nol,\nul {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}\n\n/**\n * Tailwind custom reset styles\n */\n\n/**\n * 1. Use the user's configured `sans` font-family (with Tailwind's default\n *    sans-serif font stack as a fallback) as a sane default.\n * 2. Use Tailwind's default \"normal\" line-height so the user isn't forced\n *    to override it to ensure consistency even when using the default theme.\n */\n\nhtml {\n  font-family: theme('fontFamily.sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"); /* 1 */\n  line-height: 1.5; /* 2 */\n}\n\n\n/**\n * Inherit font-family and line-height from `html` so users can set them as\n * a class directly on the `html` element.\n */\n\nbody {\n  font-family: inherit;\n  line-height: inherit;\n}\n\n/**\n * 1. Prevent padding and border from affecting element width.\n *\n *    We used to set this in the html element and inherit from\n *    the parent element for everything else. This caused issues\n *    in shadow-dom-enhanced elements like <details> where the content\n *    is wrapped by a div with box-sizing set to `content-box`.\n *\n *    https://github.com/mozdevs/cssremedy/issues/4\n *\n *\n * 2. Allow adding a border to an element by just adding a border-width.\n *\n *    By default, the way the browser specifies that an element should have no\n *    border is by setting it's border-style to `none` in the user-agent\n *    stylesheet.\n *\n *    In order to easily add borders to elements by just setting the `border-width`\n *    property, we change the default border-style for all elements to `solid`, and\n *    use border-width to hide them instead. This way our `border` utilities only\n *    need to set the `border-width` property instead of the entire `border`\n *    shorthand, making our border utilities much more straightforward to compose.\n *\n *    https://github.com/tailwindcss/tailwindcss/pull/116\n */\n\n*,\n::before,\n::after {\n  box-sizing: border-box; /* 1 */\n  border-width: 0; /* 2 */\n  border-style: solid; /* 2 */\n  border-color: currentColor; /* 2 */\n}\n\n/*\n * Ensure horizontal rules are visible by default\n */\n\nhr {\n  border-top-width: 1px;\n}\n\n/**\n * Undo the `border-style: none` reset that Normalize applies to images so that\n * our `border-{width}` utilities have the expected effect.\n *\n * The Normalize reset is unnecessary for us since we default the border-width\n * to 0 on all elements.\n *\n * https://github.com/tailwindcss/tailwindcss/issues/362\n */\n\nimg {\n  border-style: solid;\n}\n\ntextarea {\n  resize: vertical;\n}\n\ninput::placeholder,\ntextarea::placeholder {\n  opacity: 1;\n  color: theme('colors.gray.400', #a1a1aa);\n}\n\nbutton,\n[role=\"button\"] {\n  cursor: pointer;\n}\n\n/**\n * Override legacy focus reset from Normalize with modern Firefox focus styles.\n *\n * This is actually an improvement over the new defaults in Firefox in our testing,\n * as it triggers the better focus styles even for links, which still use a dotted\n * outline in Firefox by default.\n */\n \n:-moz-focusring {\n\toutline: auto;\n}\n\ntable {\n  border-collapse: collapse;\n}\n\nh1,\nh2,\nh3,\nh4,\nh5,\nh6 {\n  font-size: inherit;\n  font-weight: inherit;\n}\n\n/**\n * Reset links to optimize for opt-in styling instead of\n * opt-out.\n */\n\na {\n  color: inherit;\n  text-decoration: inherit;\n}\n\n/**\n * Reset form element properties that are easy to forget to\n * style explicitly so you don't inadvertently introduce\n * styles that deviate from your design system. These styles\n * supplement a partial reset that is already applied by\n * normalize.css.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  padding: 0;\n  line-height: inherit;\n  color: inherit;\n}\n\n/**\n * Use the configured 'mono' font family for elements that\n * are expected to be rendered with a monospace font, falling\n * back to the system monospace stack if there is no configured\n * 'mono' font family.\n */\n\npre,\ncode,\nkbd,\nsamp {\n  font-family: theme('fontFamily.mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace);\n}\n\n/**\n * 1. Make replaced elements `display: block` by default as that's\n *    the behavior you want almost all of the time. Inspired by\n *    CSS Remedy, with `svg` added as well.\n *\n *    https://github.com/mozdevs/cssremedy/issues/14\n * \n * 2. Add `vertical-align: middle` to align replaced elements more\n *    sensibly by default when overriding `display` by adding a\n *    utility like `inline`.\n *\n *    This can trigger a poorly considered linting error in some\n *    tools but is included by design.\n * \n *    https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210\n */\n\nimg,\nsvg,\nvideo,\ncanvas,\naudio,\niframe,\nembed,\nobject {\n  display: block; /* 1 */\n  vertical-align: middle; /* 2 */\n}\n\n/**\n * Constrain images and videos to the parent width and preserve\n * their intrinsic aspect ratio.\n *\n * https://github.com/mozdevs/cssremedy/issues/14\n */\n\nimg,\nvideo {\n  max-width: 100%;\n  height: auto;\n}\n\n/**\n * Ensure the default browser behavior of the `hidden` attribute.\n */\n\n[hidden] {\n  display: none;\n}\n",null],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -4226,33 +4116,6 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, "td.appt {\n  overflow: visible;\n}\n\n.color-primary {\n  color: #5b6ce2;\n}\n\n.appointment-menu {\n  background-color: #5b6ce2;\n  color: white;\n  position: absolute;\n  top: 0px;\n  right: 0;\n  padding: 1.5rem;\n  border-radius: 0.5rem;\n  border: 1px solid #d8ddff;\n  display: none;\n  z-index: 1500;\n  font-size: 12px;\n  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3),\n    0 10px 10px -5px rgba(0, 0, 0, 0.15);\n}\n\n.appointment-menu-wrapper.rx-synced::after {\n  content: '';\n  position: absolute;\n  z-index: 10;\n  top: -10px;\n  left: 10px;\n  width: 10px;\n  height: 10px;\n  opacity: 0.7;\n  /*background: green;*/\n  background-image: url(\"data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!-- Svg Vector Icons : http://www.onlinewebfonts.com/icon --%3E%3C!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'%3E%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 1000 1000' enable-background='new 0 0 1000 1000' xml:space='preserve'%3E%3Cmetadata%3E Svg Vector Icons : http://www.onlinewebfonts.com/icon %3C/metadata%3E%3Cg%3E%3Cg transform='translate(0.000000,512.000000) scale(0.100000,-0.100000)'%3E%3Cpath d='M990.8,1085.4v-3932.6h688.9h688.9v1464v1464h694.7h696.6L4682.3-1144c507.1-673.6,926.2-1236.3,930.1-1247.8c7.7-21-321.5-463.1-1552-2076.3L3823.1-4780h801.8h801.8l493.7,660.2c352.1,472.7,497.6,656.4,512.9,641.1c11.5-11.5,237.3-306.2,499.5-656.4l478.4-635.3l799.9-5.8c438.2-1.9,798,0,798,5.8c0,5.7-403.8,535.8-899.4,1176.9c-493.7,643-899.4,1176.9-899.4,1186.5c0,11.5,398,555,886,1211.3c488,654.5,893.7,1201.8,901.4,1215.2c11.5,17.2-143.5,23-748.3,23h-761.6L6952-665.6c-294.7-388.5-539.7-708.1-545.4-706.2c-13.4,0-1226.7,1582.6-1226.7,1597.9c0,7.6,76.5,32.5,170.3,55.5c746.3,189.5,1322.4,715.7,1552,1421.9c101.4,306.2,124.4,474.6,124.4,855.4c-1.9,384.7-34.5,591.3-143.5,903.3c-283.2,799.9-924.3,1320.4-1863.9,1511.8c-134,26.8-392.3,32.5-2089.8,38.3L990.8,5020V1085.4z M4770.4,3730.2c191.4-68.9,302.4-128.2,428.7-231.6c287.1-235.4,442.1-616.2,417.2-1016.2c-40.2-599-415.3-1023.8-1012.3-1146.3c-124.4-24.9-315.8-30.6-1192.2-30.6h-1043v1243.9v1245.8l1125.2-5.7l1123.3-5.7L4770.4,3730.2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\");\n}\n\n.appointment-menu.show {\n  display: block;\n}\n\n.appointment-menu a {\n  color: white !important;\n  text-decoration: underline;\n}\n\n.appointment-menu a:hover {\n  color: #d8ddff !important;\n}\n\n.appointment-menu ul {\n  padding: 0;\n  margin: 0;\n  list-style: none;\n}\n\n.appointment-menu ul li,\n.contactInfo > div {\n  margin: 1px 0;\n  color: white !important;\n}\n\n.appointment-menu-container {\n  position: absolute;\n  display: flex;\n  background-color: #5b6ce2;\n  padding: 1px 5px;\n  border: 1px solid #d8ddff;\n  top: -8px;\n  border-radius: 50%;\n  box-shadow: 0 3px 3px 2px rgba(0, 0, 0, 0.3);\n  left: 7.5px;\n}\n\n.appointment-menu-wrapper {\n  display: inline-block;\n  position: relative;\n  top: -5px;\n  cursor: pointer;\n}\n\n.appointment-menu-header {\n  background-color: white;\n  border-radius: 0.5rem;\n  padding: 5px 10px;\n  display: flex;\n  align-items: top;\n  margin-bottom: 5px;\n}\n\n.appointment-menu-heading {\n  margin: 0;\n  padding: 0;\n  margin-left: 5px;\n  font-size: 14px;\n}\n\n.appointment-menu-hr {\n  margin: 0;\n  padding: 0;\n  margin: 5px 0;\n  border: 0;\n  border-top: 1px solid rgba(255, 255, 255, 0.3);\n}\n\n.appointment-menu-subheading {\n  color: #d8ddff;\n  font-size: 12px;\n}\n\n.appointment-menu-close {\n  position: absolute;\n  top: 0;\n  right: 0;\n  font-size: 1.2rem;\n  padding: 0 5px;\n  color: white;\n}\n\n.appointment-checkbox-wrapper {\n  display: inline-block;\n  position: relative;\n  top: 1px;\n}\n\n.appointment-checkbox {\n  top: -8px;\n  left: -1px;\n  position: absolute;\n  padding: 1px 2.5px;\n  background-color: #5b6ce2;\n  border: 1px solid #d8ddff;\n  border-radius: 50%;\n  cursor: pointer;\n  font-size: 6px;\n}", "",{"version":3,"sources":["webpack://./modules/cortico/Appointments/AppointmentMenu.css"],"names":[],"mappings":"AAAA;EACE,iBAAiB;AACnB;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,yBAAyB;EACzB,YAAY;EACZ,kBAAkB;EAClB,QAAQ;EACR,QAAQ;EACR,eAAe;EACf,qBAAqB;EACrB,yBAAyB;EACzB,aAAa;EACb,aAAa;EACb,eAAe;EACf;wCACsC;AACxC;;AAEA;EACE,WAAW;EACX,kBAAkB;EAClB,WAAW;EACX,UAAU;EACV,UAAU;EACV,WAAW;EACX,YAAY;EACZ,YAAY;EACZ,qBAAqB;EACrB,8mDAA8mD;AAChnD;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,uBAAuB;EACvB,0BAA0B;AAC5B;;AAEA;EACE,yBAAyB;AAC3B;;AAEA;EACE,UAAU;EACV,SAAS;EACT,gBAAgB;AAClB;;AAEA;;EAEE,aAAa;EACb,uBAAuB;AACzB;;AAEA;EACE,kBAAkB;EAClB,aAAa;EACb,yBAAyB;EACzB,gBAAgB;EAChB,yBAAyB;EACzB,SAAS;EACT,kBAAkB;EAClB,4CAA4C;EAC5C,WAAW;AACb;;AAEA;EACE,qBAAqB;EACrB,kBAAkB;EAClB,SAAS;EACT,eAAe;AACjB;;AAEA;EACE,uBAAuB;EACvB,qBAAqB;EACrB,iBAAiB;EACjB,aAAa;EACb,gBAAgB;EAChB,kBAAkB;AACpB;;AAEA;EACE,SAAS;EACT,UAAU;EACV,gBAAgB;EAChB,eAAe;AACjB;;AAEA;EACE,SAAS;EACT,UAAU;EACV,aAAa;EACb,SAAS;EACT,8CAA8C;AAChD;;AAEA;EACE,cAAc;EACd,eAAe;AACjB;;AAEA;EACE,kBAAkB;EAClB,MAAM;EACN,QAAQ;EACR,iBAAiB;EACjB,cAAc;EACd,YAAY;AACd;;AAEA;EACE,qBAAqB;EACrB,kBAAkB;EAClB,QAAQ;AACV;;AAEA;EACE,SAAS;EACT,UAAU;EACV,kBAAkB;EAClB,kBAAkB;EAClB,yBAAyB;EACzB,yBAAyB;EACzB,kBAAkB;EAClB,eAAe;EACf,cAAc;AAChB","sourcesContent":["td.appt {\n  overflow: visible;\n}\n\n.color-primary {\n  color: #5b6ce2;\n}\n\n.appointment-menu {\n  background-color: #5b6ce2;\n  color: white;\n  position: absolute;\n  top: 0px;\n  right: 0;\n  padding: 1.5rem;\n  border-radius: 0.5rem;\n  border: 1px solid #d8ddff;\n  display: none;\n  z-index: 1500;\n  font-size: 12px;\n  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3),\n    0 10px 10px -5px rgba(0, 0, 0, 0.15);\n}\n\n.appointment-menu-wrapper.rx-synced::after {\n  content: '';\n  position: absolute;\n  z-index: 10;\n  top: -10px;\n  left: 10px;\n  width: 10px;\n  height: 10px;\n  opacity: 0.7;\n  /*background: green;*/\n  background-image: url(\"data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!-- Svg Vector Icons : http://www.onlinewebfonts.com/icon --%3E%3C!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'%3E%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 1000 1000' enable-background='new 0 0 1000 1000' xml:space='preserve'%3E%3Cmetadata%3E Svg Vector Icons : http://www.onlinewebfonts.com/icon %3C/metadata%3E%3Cg%3E%3Cg transform='translate(0.000000,512.000000) scale(0.100000,-0.100000)'%3E%3Cpath d='M990.8,1085.4v-3932.6h688.9h688.9v1464v1464h694.7h696.6L4682.3-1144c507.1-673.6,926.2-1236.3,930.1-1247.8c7.7-21-321.5-463.1-1552-2076.3L3823.1-4780h801.8h801.8l493.7,660.2c352.1,472.7,497.6,656.4,512.9,641.1c11.5-11.5,237.3-306.2,499.5-656.4l478.4-635.3l799.9-5.8c438.2-1.9,798,0,798,5.8c0,5.7-403.8,535.8-899.4,1176.9c-493.7,643-899.4,1176.9-899.4,1186.5c0,11.5,398,555,886,1211.3c488,654.5,893.7,1201.8,901.4,1215.2c11.5,17.2-143.5,23-748.3,23h-761.6L6952-665.6c-294.7-388.5-539.7-708.1-545.4-706.2c-13.4,0-1226.7,1582.6-1226.7,1597.9c0,7.6,76.5,32.5,170.3,55.5c746.3,189.5,1322.4,715.7,1552,1421.9c101.4,306.2,124.4,474.6,124.4,855.4c-1.9,384.7-34.5,591.3-143.5,903.3c-283.2,799.9-924.3,1320.4-1863.9,1511.8c-134,26.8-392.3,32.5-2089.8,38.3L990.8,5020V1085.4z M4770.4,3730.2c191.4-68.9,302.4-128.2,428.7-231.6c287.1-235.4,442.1-616.2,417.2-1016.2c-40.2-599-415.3-1023.8-1012.3-1146.3c-124.4-24.9-315.8-30.6-1192.2-30.6h-1043v1243.9v1245.8l1125.2-5.7l1123.3-5.7L4770.4,3730.2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\");\n}\n\n.appointment-menu.show {\n  display: block;\n}\n\n.appointment-menu a {\n  color: white !important;\n  text-decoration: underline;\n}\n\n.appointment-menu a:hover {\n  color: #d8ddff !important;\n}\n\n.appointment-menu ul {\n  padding: 0;\n  margin: 0;\n  list-style: none;\n}\n\n.appointment-menu ul li,\n.contactInfo > div {\n  margin: 1px 0;\n  color: white !important;\n}\n\n.appointment-menu-container {\n  position: absolute;\n  display: flex;\n  background-color: #5b6ce2;\n  padding: 1px 5px;\n  border: 1px solid #d8ddff;\n  top: -8px;\n  border-radius: 50%;\n  box-shadow: 0 3px 3px 2px rgba(0, 0, 0, 0.3);\n  left: 7.5px;\n}\n\n.appointment-menu-wrapper {\n  display: inline-block;\n  position: relative;\n  top: -5px;\n  cursor: pointer;\n}\n\n.appointment-menu-header {\n  background-color: white;\n  border-radius: 0.5rem;\n  padding: 5px 10px;\n  display: flex;\n  align-items: top;\n  margin-bottom: 5px;\n}\n\n.appointment-menu-heading {\n  margin: 0;\n  padding: 0;\n  margin-left: 5px;\n  font-size: 14px;\n}\n\n.appointment-menu-hr {\n  margin: 0;\n  padding: 0;\n  margin: 5px 0;\n  border: 0;\n  border-top: 1px solid rgba(255, 255, 255, 0.3);\n}\n\n.appointment-menu-subheading {\n  color: #d8ddff;\n  font-size: 12px;\n}\n\n.appointment-menu-close {\n  position: absolute;\n  top: 0;\n  right: 0;\n  font-size: 1.2rem;\n  padding: 0 5px;\n  color: white;\n}\n\n.appointment-checkbox-wrapper {\n  display: inline-block;\n  position: relative;\n  top: 1px;\n}\n\n.appointment-checkbox {\n  top: -8px;\n  left: -1px;\n  position: absolute;\n  padding: 1px 2.5px;\n  background-color: #5b6ce2;\n  border: 1px solid #d8ddff;\n  border-radius: 50%;\n  cursor: pointer;\n  font-size: 6px;\n}"],"sourceRoot":""}]);
-// Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].use[2]!./modules/cortico/Login/Login.css":
-/*!*****************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].use[2]!./modules/cortico/Login/Login.css ***!
-  \*****************************************************************************************************************************************************/
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/cssWithMappingToString.js */ "./node_modules/css-loader/dist/runtime/cssWithMappingToString.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
-// Imports
-
-
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, ".login-form-button {\n  position: absolute;\n  top: 1px;\n  left: 10px;\n}\n", "",{"version":3,"sources":["webpack://./modules/cortico/Login/Login.css"],"names":[],"mappings":"AAAA;EACE,kBAAkB;EAClB,QAAQ;EACR,UAAU;AACZ","sourcesContent":[".login-form-button {\n  position: absolute;\n  top: 1px;\n  left: 10px;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -5717,61 +5580,6 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
-/***/ "./modules/cortico/Login/Login.css":
-/*!*****************************************!*\
-  !*** ./modules/cortico/Login/Login.css ***!
-  \*****************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Login_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].use[2]!./Login.css */ "./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].use[2]!./modules/cortico/Login/Login.css");
-
-      
-      
-      
-      
-      
-      
-      
-      
-      
-
-var options = {};
-
-options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
-options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
-
-      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
-    
-options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
-options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
-
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Login_css__WEBPACK_IMPORTED_MODULE_6__["default"], options);
-
-
-
-
-       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Login_css__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Login_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_0_use_2_Login_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
-
-
-/***/ }),
-
 /***/ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js":
 /*!****************************************************************************!*\
   !*** ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js ***!
@@ -6917,7 +6725,7 @@ var init_cortico = /*#__PURE__*/function () {
           case 43:
             patient_info = _context.sent;
             messengerContainer = document.createElement("div");
-            document.body.prepend(messengerContainer);
+            document.body.append(messengerContainer);
 
             if (route.indexOf("/casemgmt/forward.jsp") > -1) {
               (0,_modules_Messenger_Messenger__WEBPACK_IMPORTED_MODULE_15__["default"])(patient_info, {
@@ -6941,7 +6749,7 @@ var init_cortico = /*#__PURE__*/function () {
 
             setupDocumentPage();
             _messengerContainer = document.createElement("div");
-            document.body.prepend(_messengerContainer);
+            document.body.append(_messengerContainer);
             _context.next = 55;
             return getPatientInfo();
 
@@ -7235,14 +7043,15 @@ function _setupDocumentPage() {
                           switch (_context9.prev = _context9.next) {
                             case 0:
                               if ((0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_11__.checkCorticoUrl)(e)) {
-                                _context9.next = 2;
+                                _context9.next = 3;
                                 break;
                               }
 
+                              pubsub.publish("promptLogin");
                               return _context9.abrupt("return");
 
-                            case 2:
-                              _context9.next = 4;
+                            case 3:
+                              _context9.next = 5;
                               return (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_11__.loadExtensionStorageValue)("jwt_access_token").then( /*#__PURE__*/function () {
                                 var _ref3 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee8(access_token) {
                                   var pdf_link_ext, blob, dataUrl;
@@ -7304,9 +7113,11 @@ function _setupDocumentPage() {
                                 return function (_x14) {
                                   return _ref3.apply(this, arguments);
                                 };
-                              }());
+                              }()).catch(function (e) {
+                                console.log("No access token", e);
+                              });
 
-                            case 4:
+                            case 5:
                             case "end":
                               return _context9.stop();
                           }
@@ -7594,10 +7405,10 @@ function _addMenu() {
             menu.textContent = "Cortico";
             menu.style.color = "rgb(75, 84, 246)";
             menu.style.cursor = "pointer";
-            menu.style.backgroundColor = 'white';
-            menu.style.borderRadius = '2px';
-            menu.style.padding = '2px';
-            menu.style.marginLeft = '2px';
+            menu.style.backgroundColor = "white";
+            menu.style.borderRadius = "2px";
+            menu.style.padding = "2px";
+            menu.style.marginLeft = "2px";
             _context14.next = 11;
             return createSideBar();
 
@@ -9240,14 +9051,14 @@ function _getDiagnosticFromCortico() {
               console.log("IT GOT HEREEEE");
 
               if ((res + "").includes("Unauthorized") || res.status == 401) {
-                (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_11__.showLoginForm)();
+                pubsub.publish("signin");
                 return;
               }
 
               return res;
             }).catch(function (err) {
               if ((err + "").includes("Unauthorized")) {
-                (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_11__.showLoginForm)();
+                pubsub.publish("signin");
               } else {
                 alert("Failed to fetch data. There might be a problem with Cortico or the patient responses do not exist");
               }
@@ -9422,65 +9233,68 @@ function _init_diagnostic_viewer_button() {
                   while (1) {
                     switch (_context22.prev = _context22.next) {
                       case 0:
+                        console.log("Clicked");
+
                         if ((0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_11__.checkCorticoUrl)(e.originalEvent)) {
-                          _context22.next = 2;
+                          _context22.next = 4;
                           break;
                         }
 
+                        pubsub.publish("signin");
                         return _context22.abrupt("return");
 
-                      case 2:
+                      case 4:
                         appt_no = getQueryStringValue("appointment_no");
-                        _context22.next = 5;
+                        _context22.next = 7;
                         return (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_11__.loadExtensionStorageValue)("jwt_access_token");
 
-                      case 5:
+                      case 7:
                         _context22.t0 = _context22.sent;
 
                         if (_context22.t0) {
-                          _context22.next = 8;
+                          _context22.next = 10;
                           break;
                         }
 
                         _context22.t0 = localStorage.getItem("jwt_access_token");
 
-                      case 8:
+                      case 10:
                         access_token = _context22.t0;
 
                         if (!access_token) {
+                          _context22.next = 25;
+                          break;
+                        }
+
+                        _context22.next = 14;
+                        return getDiagnosticFromCortico(appt_no, notesValue, access_token);
+
+                      case 14:
+                        diagnostic_response = _context22.sent;
+
+                        if (!diagnostic_response) {
                           _context22.next = 23;
                           break;
                         }
 
-                        _context22.next = 12;
-                        return getDiagnosticFromCortico(appt_no, notesValue, access_token);
-
-                      case 12:
-                        diagnostic_response = _context22.sent;
-
-                        if (!diagnostic_response) {
-                          _context22.next = 21;
-                          break;
-                        }
-
                         _context22.t1 = String;
-                        _context22.next = 17;
+                        _context22.next = 19;
                         return diagnostic_response.text();
 
-                      case 17:
+                      case 19:
                         _context22.t2 = _context22.sent;
                         diagnostic_text = (0, _context22.t1)(_context22.t2);
-                        _context22.next = 21;
+                        _context22.next = 23;
                         return showDiagnosticResults(diagnostic_text);
 
-                      case 21:
-                        _context22.next = 24;
+                      case 23:
+                        _context22.next = 26;
                         break;
 
-                      case 23:
+                      case 25:
                         pubsub.publish("signin");
 
-                      case 24:
+                      case 26:
                       case "end":
                         return _context22.stop();
                     }
@@ -9650,26 +9464,24 @@ function _getPatientInfo() {
       while (1) {
         switch (_context27.prev = _context27.next) {
           case 0:
-            console.log("demo #", demographicNo);
-            console.trace();
-            _context27.next = 4;
+            _context27.next = 2;
             return getDemographicPageResponse(demographicNo);
 
-          case 4:
+          case 2:
             result = _context27.sent;
 
             if (result) {
-              _context27.next = 7;
+              _context27.next = 5;
               break;
             }
 
             return _context27.abrupt("return", {});
 
-          case 7:
-            _context27.next = 9;
+          case 5:
+            _context27.next = 7;
             return result.text();
 
-          case 9:
+          case 7:
             text = _context27.sent;
             el = document.createElement("html");
             el.innerHTML = text;
@@ -9687,7 +9499,7 @@ function _getPatientInfo() {
 
             return _context27.abrupt("return", info);
 
-          case 16:
+          case 14:
           case "end":
             return _context27.stop();
         }
