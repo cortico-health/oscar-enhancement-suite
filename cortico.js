@@ -177,8 +177,9 @@ const init_cortico = async function () {
   } else if (route.indexOf("dms/documentReport.jsp") > -1) {
     setupDocumentPage();
     const messengerContainer = document.createElement("div");
-    document.body.prepend(messengerContainer);
+    document.body.append(messengerContainer);
     const patient_info = await getPatientInfo();
+
     Messenger(
       patient_info,
       {

@@ -6729,7 +6729,7 @@ var init_cortico = /*#__PURE__*/function () {
 
             setupDocumentPage();
             _messengerContainer = document.createElement("div");
-            document.body.prepend(_messengerContainer);
+            document.body.append(_messengerContainer);
             _context.next = 55;
             return getPatientInfo();
 
