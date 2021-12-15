@@ -1962,7 +1962,7 @@ var To = (0,preact_compat__WEBPACK_IMPORTED_MODULE_2__.forwardRef)(function (_re
     ref: ref,
     type: "text",
     className: "tw-text-xs tw-text-opacity-80 text-gray-700 tw-tracking-wider tw-p-2 tw-break-words tw-bg-transparent tw-w-full",
-    defaultValue: patient.email
+    defaultValue: patient === null || patient === void 0 ? void 0 : patient.email
   })));
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (To);
