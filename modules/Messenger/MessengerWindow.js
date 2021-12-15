@@ -53,6 +53,7 @@ function MessengerWindow({
 }) {
   const [email, setEmail] = useState("test@example.com");
   const [scheme, setScheme] = useState("email");
+  const to = useRef();
   const subject = useRef();
   const message = useRef();
   const encounter = useRef();
@@ -80,7 +81,7 @@ function MessengerWindow({
     e.preventDefault();
     const data = {
       clinic_host: getCorticoUrl().replace(/http.?:\/\//, ""),
-      to: email,
+      to: to.current.value,
       subject: subject.current.value,
       body: message.current.value,
     };
@@ -134,7 +135,7 @@ function MessengerWindow({
       <div>
         <div>
           <div className="tw-px-4 tw-py-2">
-            <To patient={patient} />
+            <To ref={to} patient={patient} />
           </div>
           <hr className="tw-opacity-10" />
           <div className="tw-w-full">

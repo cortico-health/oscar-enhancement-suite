@@ -219,3 +219,8 @@ export function checkCorticoUrl(event) {
   }
   return true;
 }
+
+export async function isLoggedIn() {
+  const token = await loadExtensionStorageValue("jwt_access_token");
+  return !!token;
+}

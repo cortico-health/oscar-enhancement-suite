@@ -9,7 +9,6 @@ import Encounter from "../core/Encounter";
 import PreactModal from "../Modal/PreactModal";
 import SavedReplies from "./SavedReplies";
 import Login from "../Login/Login";
-import { pubSubInit } from "../PubSub/PubSub";
 
 function MessageException(message) {
   this.message = message;
@@ -70,20 +69,30 @@ function Messenger(patient, opts, container, replaceNode) {
     };
 
     const handleSubmit = async (data, opts) => {
-      const { subject, body } = data;
+      const { to, subject, body } = data;
+
       setLoading(true);
       await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      if (!to) {
+        setMessageInfo({
+          title: "Error",
+          content: "Please Enter A Recipient",
+        });
+        setShowNotification(true);
+        setLoading(false);
+        return;
+      }
 
       const token = await loadExtensionStorageValue("jwt_access_token");
       if (token) {
         sendMessage(data, token)
           .then(handleErrors)
           .then((response) => {
+            console.log("Data", data);
             setMessageInfo({
               title: "Success",
-              content:
-                response.message ||
-                `Message successfully sent to ${patient?.email}`,
+              content: response.message || `Message successfully sent to ${to}`,
             });
 
             if (opts.encounter === true) {
@@ -110,7 +119,6 @@ function Messenger(patient, opts, container, replaceNode) {
       (async () => {
         try {
           const result = await isLoggedIn();
-          console.log("is logged in result?", result);
           setLoggedIn(result);
         } catch (error) {
           console.error(error);
@@ -120,7 +128,6 @@ function Messenger(patient, opts, container, replaceNode) {
     }, []);
 
     const loadReply = (data) => {
-      console.log("Load reply data", data);
       setSubject(data.subject);
       setBody(data.body);
       setShowModal(false);
