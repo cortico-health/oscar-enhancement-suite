@@ -990,7 +990,7 @@ var _excluded = ["patient", "encounter"];
 
 
 function MessageException(message) {
-  this.message = message;
+  this.message = message || "Error has occured";
   this.name = "MessageException";
   this.title = "Error";
 }
@@ -1075,7 +1075,8 @@ function Messenger(patient, opts, container, replaceNode) {
 
     var _useState9 = (0,preact_hooks__WEBPACK_IMPORTED_MODULE_5__.useState)({
       title: null,
-      content: null
+      content: null,
+      preview: null
     }),
         _useState10 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState9, 2),
         messageInfo = _useState10[0],
@@ -1157,15 +1158,19 @@ function Messenger(patient, opts, container, replaceNode) {
 
                 if (token) {
                   (0,_Api_Api__WEBPACK_IMPORTED_MODULE_10__.sendMessage)(data, token).then(handleErrors).then(function (response) {
-                    console.log("Data", data);
-                    setMessageInfo({
-                      title: "Success",
-                      content: response.message || "Message successfully sent to ".concat(to)
-                    });
+                    if (response.success === "true" || response.success === true) {
+                      setMessageInfo({
+                        title: "Success",
+                        content: response.message || "Message successfully sent to ".concat(to),
+                        preview: response.preview
+                      });
 
-                    if (opts.encounter === true) {
-                      var text = "\n\n[".concat(new Date().toLocaleString(), " .: Email sent to patient] \n").concat(subject, ": ").concat(body);
-                      addEncounterText(text);
+                      if (opts.encounter === true) {
+                        var text = "\n\n[".concat(new Date().toLocaleString(), " .: Email sent to patient] \n").concat(subject, ": ").concat(body);
+                        addEncounterText(text);
+                      }
+                    } else {
+                      throw new MessageException(response === null || response === void 0 ? void 0 : response.message);
                     }
                   }).catch(function (error) {
                     console.error(error);
@@ -1289,7 +1294,8 @@ function Messenger(patient, opts, container, replaceNode) {
       },
       delay: 3000,
       content: messageInfo.content,
-      title: messageInfo.title
+      title: messageInfo.title,
+      preview: messageInfo.preview
     }));
   }
 
@@ -2130,7 +2136,7 @@ __webpack_require__.r(__webpack_exports__);
 /* provided dependency */ var h = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js")["h"];
 
 
-var _excluded = ["open", "close", "title", "content", "position", "delay", "error"];
+var _excluded = ["open", "close", "title", "content", "preview", "position", "delay", "error"];
 
 
 
@@ -2142,6 +2148,7 @@ function Notification(_ref) {
       close = _ref.close,
       title = _ref.title,
       content = _ref.content,
+      preview = _ref.preview,
       position = _ref.position,
       delay = _ref.delay,
       error = _ref.error,
@@ -2192,7 +2199,11 @@ function Notification(_ref) {
     className: "tw-text-gray-900 tw-font-medium tw-text-sm"
   }, title), h("p", {
     className: "tw-max-w-xl tw-text-sm tw-text-gray-500 tw-mt-1"
-  }, content)), h("div", {
+  }, content), preview && h("p", {
+    className: "tw-max-w-xl tw-text-sm tw-text-gray-500 tw-mt-1"
+  }, "Preview at ", h("a", {
+    href: preview
+  }, preview))), h("div", {
     className: "tw-cursor-pointer",
     onClick: close
   }, h("span", {

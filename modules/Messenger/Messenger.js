@@ -11,7 +11,7 @@ import SavedReplies from "./SavedReplies";
 import Login from "../Login/Login";
 
 function MessageException(message) {
-  this.message = message;
+  this.message = message || "Error has occured";
   this.name = "MessageException";
   this.title = "Error";
 }
@@ -43,6 +43,7 @@ function Messenger(patient, opts, container, replaceNode) {
     const [messageInfo, setMessageInfo] = useState({
       title: null,
       content: null,
+      preview: null,
     });
     const [showModal, setShowModal] = useState(false);
     const [subject, setSubject] = useState(null);
@@ -89,15 +90,20 @@ function Messenger(patient, opts, container, replaceNode) {
         sendMessage(data, token)
           .then(handleErrors)
           .then((response) => {
-            console.log("Data", data);
-            setMessageInfo({
-              title: "Success",
-              content: response.message || `Message successfully sent to ${to}`,
-            });
+            if (response.success === "true" || response.success === true) {
+              setMessageInfo({
+                title: "Success",
+                content:
+                  response.message || `Message successfully sent to ${to}`,
+                preview: response.preview,
+              });
 
-            if (opts.encounter === true) {
-              const text = `\n\n[${new Date().toLocaleString()} .: Email sent to patient] \n${subject}: ${body}`;
-              addEncounterText(text);
+              if (opts.encounter === true) {
+                const text = `\n\n[${new Date().toLocaleString()} .: Email sent to patient] \n${subject}: ${body}`;
+                addEncounterText(text);
+              }
+            } else {
+              throw new MessageException(response?.message);
             }
           })
           .catch((error) => {
@@ -207,6 +213,7 @@ function Messenger(patient, opts, container, replaceNode) {
           delay={3000}
           content={messageInfo.content}
           title={messageInfo.title}
+          preview={messageInfo.preview}
         />
       </div>
     );
