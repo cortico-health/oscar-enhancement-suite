@@ -153,7 +153,7 @@ const init_cortico = async function () {
   ) {
     const patient_info = await getPatientInfo();
     const messengerContainer = document.createElement("div");
-    document.body.prepend(messengerContainer);
+    document.body.append(messengerContainer);
     if (route.indexOf("/casemgmt/forward.jsp") > -1) {
       Messenger(
         patient_info,
