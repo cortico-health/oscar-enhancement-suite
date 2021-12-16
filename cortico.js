@@ -4,6 +4,26 @@
 // @grant    none
 // ==/UserScript==
 
+/**
+ *
+ *  Oscar Enhancement Suite
+    Copyright (C) 2021 Cortico Health Technologies
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License along
+    with this program; if not, write to the Free Software Foundation, Inc.,
+    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
 import { pubSubInit } from "./modules/PubSub/PubSub";
 import dayjs from "dayjs";
 import {
@@ -2485,7 +2505,6 @@ async function init_medium_option() {
 }
 
 async function getPatientInfo(demographicNo) {
-  console.log("demo #", demographicNo);
   const result = await getDemographicPageResponse(demographicNo);
   if (!result) {
     return {};
@@ -2497,16 +2516,20 @@ async function getPatientInfo(demographicNo) {
 
   const info = {};
   el.querySelectorAll("span.label").forEach(function (label) {
+    if (label.closest("#otherContacts2")) return; // do not match contacts.
+
     info[label.innerText.replace(/[^\w\s]+/g, "").trim()] =
       label.nextElementSibling
         ? label.nextElementSibling.innerText.trim()
         : null;
   });
 
-  var re = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi;
-  var emails = text.match(re);
-
-  if (emails && emails.length) info.email = emails[0];
+  info.email = info.email || info.Email;
+  // TODO: The following method of parsing the markup for email addresses is disabled below since it can find
+  // contacts or other bad strings.
+  // var re = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi;
+  // var emails = text.match(re);
+  // if (emails && emails.length) info.email = emails[0];
 
   return info;
 }
