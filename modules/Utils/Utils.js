@@ -224,3 +224,32 @@ export async function isLoggedIn() {
   const token = await loadExtensionStorageValue("jwt_access_token");
   return !!token;
 }
+
+export async function convertImagesToDataURLs(el) {
+  // convert bg images to data URL.
+  const bg_images = el.querySelectorAll("img");
+  for (let i = 0; i < bg_images.length; i++) {
+    let bg = bg_images[i];
+    try {
+      //let bg = document.getElementById('BGImage')
+      const blob = await fetch(bg.src).then((r) => r.blob());
+      const dataUrl = await new Promise((resolve) => {
+        let reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.readAsDataURL(blob);
+      });
+      bg.src = dataUrl;
+    } catch (e) {
+      // some images may have cross origin restrictions.
+      console.warn("failed to convert image: ", bg, e);
+    }
+  }
+}
+
+export function stripScripts(el) {
+  var scripts = el.getElementsByTagName("script");
+  var i = scripts.length;
+  while (i--) {
+    scripts[i].parentNode.removeChild(scripts[i]);
+  }
+}

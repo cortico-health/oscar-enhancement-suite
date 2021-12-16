@@ -47,7 +47,9 @@ function Notification({
             </p>
             {preview && (
               <p className="tw-max-w-xl tw-text-sm tw-text-gray-500 tw-mt-1">
-                Preview at <a href={preview}>{preview}</a>
+                <a href={preview} target="_blank">
+                  Preview by clicking here
+                </a>
               </p>
             )}
           </div>

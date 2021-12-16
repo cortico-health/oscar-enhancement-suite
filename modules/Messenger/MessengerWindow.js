@@ -8,7 +8,11 @@ import Header from "./Header";
 import To from "./ToInput";
 import Loader from "./Loader";
 import { MailIcon, TextIcon, PlusIcon } from "../Icons/HeroIcons";
-import { getCorticoUrl } from "../Utils/Utils";
+import {
+  getCorticoUrl,
+  convertImagesToDataURLs,
+  stripScripts,
+} from "../Utils/Utils";
 import Documents from "./Documents";
 
 const EncounterOption = forwardRef((props, ref) => {
@@ -77,7 +81,7 @@ function MessengerWindow({
     showSavedReplies && showSavedReplies();
   };
 
-  const submitData = (e) => {
+  const submitData = async (e) => {
     e.preventDefault();
     const data = {
       clinic_host: getCorticoUrl().replace(/http.?:\/\//, ""),
@@ -91,8 +95,11 @@ function MessengerWindow({
     }
 
     if (document === true && eForm === true) {
-      console.log("Document Data", documentData);
-      data.pdf_html = documentData.html;
+      let html = window.document.cloneNode(true);
+      await convertImagesToDataURLs(html);
+      stripScripts(html);
+      html = html.documentElement.outerHTML;
+      data.pdf_html = html;
     }
 
     const opts = {

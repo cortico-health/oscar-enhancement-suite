@@ -42,6 +42,8 @@ import {
   create,
   getDemographicNo,
   getCorticoUrl,
+  convertImagesToDataURLs,
+  stripScripts,
 } from "./modules/Utils/Utils";
 import {
   loadExtensionStorageValue,
@@ -188,6 +190,7 @@ const init_cortico = async function () {
         patient_info,
         {
           encounter: false,
+          eform: true,
         },
         document.body,
         messengerContainer
@@ -389,35 +392,6 @@ function init_appointment_page() {
     );
 
     update_video_button();
-  }
-}
-
-function stripScripts(el) {
-  var scripts = el.getElementsByTagName("script");
-  var i = scripts.length;
-  while (i--) {
-    scripts[i].parentNode.removeChild(scripts[i]);
-  }
-}
-
-async function convertImagesToDataURLs(el) {
-  // convert bg images to data URL.
-  const bg_images = el.querySelectorAll("img");
-  for (let i = 0; i < bg_images.length; i++) {
-    let bg = bg_images[i];
-    try {
-      //let bg = document.getElementById('BGImage')
-      const blob = await fetch(bg.src).then((r) => r.blob());
-      const dataUrl = await new Promise((resolve) => {
-        let reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.readAsDataURL(blob);
-      });
-      bg.src = dataUrl;
-    } catch (e) {
-      // some images may have cross origin restrictions.
-      console.warn("failed to convert image: ", bg, e);
-    }
   }
 }
 

@@ -223,6 +223,7 @@ function Messenger(patient, opts, container, replaceNode) {
     <Content
       patient={patient}
       encounter={opts.encounter}
+      eform={opts.eform}
       document={opts.document}
     />,
     _container,
