@@ -1074,9 +1074,11 @@ async function getCorticoLogin() {
   };
 
   const loggedInAsText = await loadExtensionStorageValue("jwt_username");
-  const jwt_expired =
-    (await loadExtensionStorageValue("jwt_expired")) ||
-    localStorage.getItem("jwt_expired");
+  const jwt_expired = await loadExtensionStorageValue("jwt_expired");
+  const jwt_access_token = await loadExtensionStorageValue("jwt_access_token");
+
+  console.log("JWT Expired?", jwt_expired);
+  console.log("JWT Access token", jwt_access_token);
 
   if (jwt_expired === false || jwt_expired === "false") {
     loginButton = create(`<button class='cortico-btn'>Log out</button>`);
