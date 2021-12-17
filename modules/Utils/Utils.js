@@ -131,7 +131,7 @@ export function create(_element, options, ...children) {
 }
 
 export function loadExtensionStorageValue(key) {
-  const browser = browser || chrome;
+  const browser = browser || window.chrome;
   return new Promise(function (resolve, reject) {
     if (window.is_dev) {
       resolve(window.localStorage.getItem(key));
@@ -144,7 +144,7 @@ export function loadExtensionStorageValue(key) {
 }
 
 export function saveExtensionStorageValue(key, value) {
-  const browser = browser || chrome;
+  const browser = browser || window.chrome;
   if (window.is_dev) {
     window.localStorage.setItem(key, value);
   } else {

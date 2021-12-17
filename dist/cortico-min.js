@@ -1549,6 +1549,10 @@ function MessengerWindow(_ref) {
       setEForm(true);
       setDocumentData(data);
     });
+    return function () {
+      pubsub.unsubscribe("document");
+      pubsub.unsubscribe("eform");
+    };
   }, []);
   (0,preact_hooks__WEBPACK_IMPORTED_MODULE_5__.useEffect)(function () {
     if (document === true && eForm === false) {
@@ -1564,11 +1568,25 @@ function MessengerWindow(_ref) {
     });
   };
 
+  var handleClose = function handleClose() {
+    resetDocuments();
+    close && close();
+  };
+
+  var resetDocuments = function resetDocuments() {
+    console.log("Reset Called");
+    setDocument(null);
+    setDocumentData({
+      name: null,
+      data: null
+    });
+  };
+
   return h("form", {
     onSubmit: submitData,
     className: "tw-m-0 no-print"
   }, h(_Header__WEBPACK_IMPORTED_MODULE_9__["default"], {
-    close: close
+    close: handleClose
   }), h("div", null, h("div", null, h("div", {
     className: "tw-px-4 tw-py-2"
   }, h(_ToInput__WEBPACK_IMPORTED_MODULE_10__["default"], {
@@ -2505,7 +2523,7 @@ function create(_element, options) {
   return element;
 }
 function loadExtensionStorageValue(key) {
-  var browser = browser || chrome;
+  var browser = browser || window.chrome;
   return new Promise(function (resolve, reject) {
     if (window.is_dev) {
       resolve(window.localStorage.getItem(key));
@@ -2517,7 +2535,7 @@ function loadExtensionStorageValue(key) {
   });
 }
 function saveExtensionStorageValue(key, value) {
-  var browser = browser || chrome;
+  var browser = browser || window.chrome;
 
   if (window.is_dev) {
     window.localStorage.setItem(key, value);
@@ -7092,21 +7110,25 @@ function _setupDocumentPage() {
                               _context7.next = 5;
                               return (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_11__.loadExtensionStorageValue)("jwt_access_token").then( /*#__PURE__*/function () {
                                 var _ref3 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee6(access_token) {
-                                  var pdf_link_ext, blob, dataUrl;
+                                  var pdf_link_ext, origin, namespace, documentSpace, url, blob, dataUrl;
                                   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee6$(_context6) {
                                     while (1) {
                                       switch (_context6.prev = _context6.next) {
                                         case 0:
                                           pdf_link_ext = pdf_link.outerHTML.replace(/\&amp;/g, "&").match(/\'(Manage[^\']+)\'/)[1];
                                           console.log(pdf_link_ext);
-                                          _context6.next = 4;
-                                          return fetch(pdf_link_ext).then(function (r) {
+                                          origin = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_11__.getOrigin)();
+                                          namespace = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_11__.getNamespace)();
+                                          documentSpace = window.location.pathname.split("/")[2];
+                                          url = "".concat(origin, "/").concat(namespace, "/").concat(documentSpace, "/").concat(pdf_link_ext);
+                                          _context6.next = 8;
+                                          return fetch(url).then(function (r) {
                                             return r.blob();
                                           });
 
-                                        case 4:
+                                        case 8:
                                           blob = _context6.sent;
-                                          _context6.next = 7;
+                                          _context6.next = 11;
                                           return new Promise(function (resolve) {
                                             var reader = new FileReader();
 
@@ -7117,30 +7139,14 @@ function _setupDocumentPage() {
                                             reader.readAsDataURL(blob);
                                           });
 
-                                        case 7:
+                                        case 11:
                                           dataUrl = _context6.sent;
                                           pubsub.publish("document", {
                                             name: pdf_link.textContent,
                                             data: dataUrl
                                           });
-                                          /*
-                                          const patientFormResponse = await emailPatient(
-                                            patient_info,
-                                            access_token,
-                                            { attachment: dataUrl }
-                                          );
-                                          console.log("RSP: ", patientFormResponse);
-                                          if (patientFormResponse.success) {
-                                            document
-                                              .querySelector(".documentLists")
-                                              .appendChild(
-                                                create(
-                                                  `<p>${patient_info.email} was sent a <a style='text-decoration:underline' target="_blank" href="${patientFormResponse.preview}">document</a>.</p>`
-                                                )
-                                              );
-                                          }*/
 
-                                        case 9:
+                                        case 13:
                                         case "end":
                                           return _context6.stop();
                                       }
@@ -7708,7 +7714,7 @@ function _getCorticoLogin() {
                                 localStorage.removeItem("jwt_access_token");
                                 localStorage.removeItem("jwt_expired");
                               } else {
-                                browser = browser || chrome;
+                                browser = browser || window.chrome;
                                 browser.storage.local.remove(["jwt_access_token", "jwt_expired"]);
                               }
 
@@ -7890,7 +7896,7 @@ function getResetCacheButton() {
                     break;
                   }
 
-                  browser = browser || chrome;
+                  browser = browser || window.chrome;
                   _context3.next = 6;
                   return browser.storage.local.clear();
 

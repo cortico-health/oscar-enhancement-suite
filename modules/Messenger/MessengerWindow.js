@@ -120,6 +120,11 @@ function MessengerWindow({
       setEForm(true);
       setDocumentData(data);
     });
+
+    return () => {
+      pubsub.unsubscribe("document");
+      pubsub.unsubscribe("eform");
+    };
   }, []);
 
   useEffect(() => {
@@ -136,9 +141,23 @@ function MessengerWindow({
     });
   };
 
+  const handleClose = () => {
+    resetDocuments();
+    close && close();
+  };
+
+  const resetDocuments = () => {
+    console.log("Reset Called");
+    setDocument(null);
+    setDocumentData({
+      name: null,
+      data: null,
+    });
+  };
+
   return (
     <form onSubmit={submitData} className="tw-m-0 no-print">
-      <Header close={close} />
+      <Header close={handleClose} />
       <div>
         <div>
           <div className="tw-px-4 tw-py-2">

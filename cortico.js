@@ -421,7 +421,13 @@ async function setupDocumentPage() {
                   .match(/\'(Manage[^\']+)\'/)[1];
                 console.log(pdf_link_ext);
 
-                const blob = await fetch(pdf_link_ext).then((r) => r.blob());
+                const origin = getOrigin();
+                const namespace = getNamespace();
+                const documentSpace = window.location.pathname.split("/")[2];
+
+                let url = `${origin}/${namespace}/${documentSpace}/${pdf_link_ext}`;
+
+                const blob = await fetch(url).then((r) => r.blob());
                 const dataUrl = await new Promise((resolve) => {
                   let reader = new FileReader();
                   reader.onload = () => resolve(reader.result);
@@ -431,22 +437,6 @@ async function setupDocumentPage() {
                   name: pdf_link.textContent,
                   data: dataUrl,
                 });
-                /*
-                const patientFormResponse = await emailPatient(
-                  patient_info,
-                  access_token,
-                  { attachment: dataUrl }
-                );
-                console.log("RSP: ", patientFormResponse);
-                if (patientFormResponse.success) {
-                  document
-                    .querySelector(".documentLists")
-                    .appendChild(
-                      create(
-                        `<p>${patient_info.email} was sent a <a style='text-decoration:underline' target="_blank" href="${patientFormResponse.preview}">document</a>.</p>`
-                      )
-                    );
-                }*/
               })
               .catch((e) => {
                 console.log("No access token", e);
@@ -1083,7 +1073,7 @@ async function getCorticoLogin() {
             localStorage.removeItem("jwt_access_token");
             localStorage.removeItem("jwt_expired");
           } else {
-            const browser = browser || chrome;
+            const browser = browser || window.chrome;
             browser.storage.local.remove(["jwt_access_token", "jwt_expired"]);
           }
 
@@ -1227,7 +1217,7 @@ function getResetCacheButton() {
           if (confirm("Are you sure you want to clear your cache?")) {
             localStorage.clear();
             if (!window.is_dev) {
-              const browser = browser || chrome;
+              const browser = browser || window.chrome;
               await browser.storage.local.clear();
             }
 
