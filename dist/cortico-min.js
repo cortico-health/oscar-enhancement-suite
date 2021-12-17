@@ -975,7 +975,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _excluded = ["patient", "encounter"];
+var _excluded = ["patient", "eform", "encounter"];
 
 
 
@@ -1000,6 +1000,7 @@ function Messenger(patient, opts, container, replaceNode) {
 
   function Content(_ref) {
     var patient = _ref.patient,
+        eform = _ref.eform,
         encounter = _ref.encounter,
         props = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_2__["default"])(_ref, _excluded);
 
@@ -1251,6 +1252,12 @@ function Messenger(patient, opts, container, replaceNode) {
     (0,preact_hooks__WEBPACK_IMPORTED_MODULE_5__.useEffect)(function () {
       if (localStorage.getItem("name")) {
         setSubject("".concat(localStorage.getItem("name"), " has sent you a message"));
+      }
+
+      if (eform === true) {
+        console.log("Code Ran");
+        document.body.style.transform = "initial";
+        document.body.style.marginTop = 0;
       }
     }, []);
     return h("div", {
@@ -6820,7 +6827,7 @@ var init_cortico = /*#__PURE__*/function () {
             //cortico_button.addEventListener("click", open_video_appointment_page);
 
             resources_field.addEventListener("change", update_video_button);
-            _context.next = 60;
+            _context.next = 59;
             break;
 
           case 24:
@@ -6858,12 +6865,12 @@ var init_cortico = /*#__PURE__*/function () {
             }
 
             setupPrescriptionButtons();
-            _context.next = 60;
+            _context.next = 59;
             break;
 
           case 40:
             if (!(route.indexOf("/eform/efmformadd_data.jsp") > -1 || route.indexOf("/eform/efmshowform_data.jsp") > -1 || route.indexOf("/casemgmt/forward.jsp") > -1)) {
-              _context.next = 49;
+              _context.next = 48;
               break;
             }
 
@@ -6873,13 +6880,19 @@ var init_cortico = /*#__PURE__*/function () {
           case 43:
             patient_info = _context.sent;
             messengerContainer = document.createElement("div");
-            document.body.append(messengerContainer);
 
             if (route.indexOf("/casemgmt/forward.jsp") > -1) {
+              document.body.append(messengerContainer);
               (0,_modules_Messenger_Messenger__WEBPACK_IMPORTED_MODULE_15__["default"])(patient_info, {
                 encounter: true
               }, document.body, messengerContainer);
             } else {
+              if (oscar.isKaiOscarHost()) {
+                document.body.prepend(messengerContainer);
+              } else {
+                document.body.prepend(messengerContainer);
+              }
+
               (0,_modules_Messenger_Messenger__WEBPACK_IMPORTED_MODULE_15__["default"])(patient_info, {
                 encounter: false,
                 eform: true
@@ -6887,30 +6900,30 @@ var init_cortico = /*#__PURE__*/function () {
               setupEFormPage();
             }
 
-            _context.next = 60;
+            _context.next = 59;
             break;
 
-          case 49:
+          case 48:
             if (!(route.indexOf("dms/documentReport.jsp") > -1)) {
-              _context.next = 59;
+              _context.next = 58;
               break;
             }
 
             setupDocumentPage();
             _messengerContainer = document.createElement("div");
             document.body.append(_messengerContainer);
-            _context.next = 55;
+            _context.next = 54;
             return getPatientInfo();
 
-          case 55:
+          case 54:
             _patient_info = _context.sent;
             (0,_modules_Messenger_Messenger__WEBPACK_IMPORTED_MODULE_15__["default"])(_patient_info, {
               encounter: false
             }, document.body, _messengerContainer);
-            _context.next = 60;
+            _context.next = 59;
             break;
 
-          case 59:
+          case 58:
             if (route.indexOf("/oscarRx/ViewScript2.jsp") > -1) {
               // We need to determine first if the prescription is "delivery"
               currentPharmacyCode = localStorage.getItem("currentPharmacyCode");
@@ -6927,10 +6940,10 @@ var init_cortico = /*#__PURE__*/function () {
               }
             }
 
-          case 60:
+          case 59:
             init_styles();
 
-          case 61:
+          case 60:
           case "end":
             return _context.stop();
         }

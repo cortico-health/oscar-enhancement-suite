@@ -187,7 +187,7 @@ const init_cortico = async function () {
       );
     } else {
       if (oscar.isKaiOscarHost()) {
-        document.body.append(messengerContainer);
+        document.body.prepend(messengerContainer);
       } else {
         document.body.prepend(messengerContainer);
       }
