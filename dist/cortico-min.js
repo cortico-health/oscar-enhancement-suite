@@ -7121,14 +7121,19 @@ function _setupDocumentPage() {
                                           namespace = (0,_modules_Utils_Utils__WEBPACK_IMPORTED_MODULE_11__.getNamespace)();
                                           documentSpace = window.location.pathname.split("/")[2];
                                           url = "".concat(origin, "/").concat(namespace, "/").concat(documentSpace, "/").concat(pdf_link_ext);
-                                          _context6.next = 8;
+
+                                          if (origin.includes("skymedical")) {
+                                            url = "/".concat(documentSpace, "/").concat(pdf_link_ext);
+                                          }
+
+                                          _context6.next = 9;
                                           return fetch(url).then(function (r) {
                                             return r.blob();
                                           });
 
-                                        case 8:
+                                        case 9:
                                           blob = _context6.sent;
-                                          _context6.next = 11;
+                                          _context6.next = 12;
                                           return new Promise(function (resolve) {
                                             var reader = new FileReader();
 
@@ -7139,14 +7144,14 @@ function _setupDocumentPage() {
                                             reader.readAsDataURL(blob);
                                           });
 
-                                        case 11:
+                                        case 12:
                                           dataUrl = _context6.sent;
                                           pubsub.publish("document", {
                                             name: pdf_link.textContent,
                                             data: dataUrl
                                           });
 
-                                        case 13:
+                                        case 14:
                                         case "end":
                                           return _context6.stop();
                                       }

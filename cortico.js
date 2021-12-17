@@ -175,8 +175,8 @@ const init_cortico = async function () {
   ) {
     const patient_info = await getPatientInfo();
     const messengerContainer = document.createElement("div");
-    document.body.append(messengerContainer);
     if (route.indexOf("/casemgmt/forward.jsp") > -1) {
+      document.body.append(messengerContainer);
       Messenger(
         patient_info,
         {
@@ -186,6 +186,11 @@ const init_cortico = async function () {
         messengerContainer
       );
     } else {
+      if (oscar.isKaiOscarHost()) {
+        document.body.append(messengerContainer);
+      } else {
+        document.body.prepend(messengerContainer);
+      }
       Messenger(
         patient_info,
         {
@@ -426,6 +431,9 @@ async function setupDocumentPage() {
                 const documentSpace = window.location.pathname.split("/")[2];
 
                 let url = `${origin}/${namespace}/${documentSpace}/${pdf_link_ext}`;
+                if (origin.includes("skymedical")) {
+                  url = `/${documentSpace}/${pdf_link_ext}`;
+                }
 
                 const blob = await fetch(url).then((r) => r.blob());
                 const dataUrl = await new Promise((resolve) => {
