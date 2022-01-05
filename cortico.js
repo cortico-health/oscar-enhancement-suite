@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name     Cortico
-// @version  2021.12.12
+// @version  2021.12.15
 // @grant    none
 // ==/UserScript==
 
@@ -58,7 +58,7 @@ import Disclaimer from "./modules/cortico/Disclaimer";
 // manually update this variable with the version in manifest.json
 
 import LoginOscar from "./modules/Login/LoginOscar";
-const version = "2021.12.12";
+const version = "2021.12.15";
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
 
@@ -695,8 +695,8 @@ function getQueryStringValue(key) {
     window.location.search.replace(
       new RegExp(
         "^(?:.*[&\\?]" +
-          encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") +
-          "(?:\\=([^&]*))?)?.*$",
+        encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") +
+        "(?:\\=([^&]*))?)?.*$",
         "i"
       ),
       "$1"
