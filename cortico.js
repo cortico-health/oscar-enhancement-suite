@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name     Cortico
-// @version  2021.12.15
+// @version  2022.1.5
 // @grant    none
 // ==/UserScript==
 
@@ -42,6 +42,8 @@ import {
   create,
   getDemographicNo,
   getCorticoUrl,
+  convertImagesToDataURLs,
+  stripScripts,
 } from "./modules/Utils/Utils";
 import {
   loadExtensionStorageValue,
@@ -58,7 +60,7 @@ import Disclaimer from "./modules/cortico/Disclaimer";
 // manually update this variable with the version in manifest.json
 
 import LoginOscar from "./modules/Login/LoginOscar";
-const version = "2021.12.15";
+const version = "2022.1.5";
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
 
@@ -173,8 +175,8 @@ const init_cortico = async function () {
   ) {
     const patient_info = await getPatientInfo();
     const messengerContainer = document.createElement("div");
-    document.body.append(messengerContainer);
     if (route.indexOf("/casemgmt/forward.jsp") > -1) {
+      document.body.append(messengerContainer);
       Messenger(
         patient_info,
         {
@@ -184,10 +186,16 @@ const init_cortico = async function () {
         messengerContainer
       );
     } else {
+      if (oscar.isKaiOscarHost()) {
+        document.body.prepend(messengerContainer);
+      } else {
+        document.body.prepend(messengerContainer);
+      }
       Messenger(
         patient_info,
         {
           encounter: false,
+          eform: true,
         },
         document.body,
         messengerContainer
@@ -392,35 +400,6 @@ function init_appointment_page() {
   }
 }
 
-function stripScripts(el) {
-  var scripts = el.getElementsByTagName("script");
-  var i = scripts.length;
-  while (i--) {
-    scripts[i].parentNode.removeChild(scripts[i]);
-  }
-}
-
-async function convertImagesToDataURLs(el) {
-  // convert bg images to data URL.
-  const bg_images = el.querySelectorAll("img");
-  for (let i = 0; i < bg_images.length; i++) {
-    let bg = bg_images[i];
-    try {
-      //let bg = document.getElementById('BGImage')
-      const blob = await fetch(bg.src).then((r) => r.blob());
-      const dataUrl = await new Promise((resolve) => {
-        let reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.readAsDataURL(blob);
-      });
-      bg.src = dataUrl;
-    } catch (e) {
-      // some images may have cross origin restrictions.
-      console.warn("failed to convert image: ", bg, e);
-    }
-  }
-}
-
 async function setupDocumentPage() {
   const pdf_links = document.querySelectorAll("#privateDocs td:nth-child(2) a");
 
@@ -447,7 +426,16 @@ async function setupDocumentPage() {
                   .match(/\'(Manage[^\']+)\'/)[1];
                 console.log(pdf_link_ext);
 
-                const blob = await fetch(pdf_link_ext).then((r) => r.blob());
+                const origin = getOrigin();
+                const namespace = getNamespace();
+                const documentSpace = window.location.pathname.split("/")[2];
+
+                let url = `${origin}/${namespace}/${documentSpace}/${pdf_link_ext}`;
+                if (origin.includes("skymedical")) {
+                  url = `/${documentSpace}/${pdf_link_ext}`;
+                }
+
+                const blob = await fetch(url).then((r) => r.blob());
                 const dataUrl = await new Promise((resolve) => {
                   let reader = new FileReader();
                   reader.onload = () => resolve(reader.result);
@@ -457,22 +445,6 @@ async function setupDocumentPage() {
                   name: pdf_link.textContent,
                   data: dataUrl,
                 });
-                /*
-                const patientFormResponse = await emailPatient(
-                  patient_info,
-                  access_token,
-                  { attachment: dataUrl }
-                );
-                console.log("RSP: ", patientFormResponse);
-                if (patientFormResponse.success) {
-                  document
-                    .querySelector(".documentLists")
-                    .appendChild(
-                      create(
-                        `<p>${patient_info.email} was sent a <a style='text-decoration:underline' target="_blank" href="${patientFormResponse.preview}">document</a>.</p>`
-                      )
-                    );
-                }*/
               })
               .catch((e) => {
                 console.log("No access token", e);
@@ -758,7 +730,7 @@ async function createSideBar() {
   const sidebar = create(
     `
   <div class='cortico-sidebar'>
-    <a href="https://cortico.ca"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGEAAABhCAYAAADGBs+jAAAACXBIWXMAAAsSAAALEgHS3X78AAAEqklEQVR4nO2dvXHbMBSAX3RpVNkb2BvYmcAaQIUa1nEmiDYIR1AmsFyrSe7Ux9lAniDWBlbF0jnIjzYlUyRAvAc8kO+707mxAAofQeLvAZ9eXl4gJaZZcQ4A1wAwObrsDQA8rFfj56R+EAAkI2GaFabg5wDwteVf7wFguV6NHwJdmjfiJeCdnwPAd8ev/jTfS6FmiJaAAswdfdUxiUcAuF2vxhviSyNFrAQCASVGxERyjRgJuIYPEAoATOMX8SWSIk4CsYCSm2lWzAjTI0WUBCYBJTlDmiSIkcAswHCFzVxxiJAQQEDJcQdPBNElBBQA2NMWR1QJgQUYLgPl40Q0CREEiCWKBBVwSHAJkQWIHNQLKkFADRA5hhRs7EiAgN16NT6PlHcjQWqCkHfAImLejbBLECJgO1gJglpBs0EOZQsS8E36pA6LBGEClpGvoRVyCSrAHVIJKqAbZBJUQHdIJKgAP7wlqAB/vCSoABo6S1ABdHSSoAJocZagAuhxkqACeLCWoAL4sJKgAnhplaAC+GmUoALC8PlULirAnUo83cZlEql2ol8F2DHNCrOib4afm5ov/cXYiGWTlA8SVEA7WEYmiPGH5Vd2Zo57vRrXLs8/kKAC2sHl9cuOZVQbuvUmQQW0gwJMGZ15JPNBRLV1pAIawJt06SkAsIwPlmPuJUyzYq4CWskJy8hEDb29H/aPo2lWPBMY9iGFVtA/4mTNy/rSPJZG06y4VQGtzBnSNGVuyn7/OIoZx5VKR4yrjKJLSGkogi2iFFDCBVMGTaQ0FMF6k5pmb4xwqV4PxnXgPLQEFVDDCNfuhyBJAdybV5n0R4HiuFKvAY+c6Y4CbEPTh0cQV23Yp1tK2DFl0pd3AFeo1T7dEY7mcWRiLcA007DnLpL1avyEe+pRco/pvg7g4WQD5XPPSQBWyzvJInAAj6oRs6sOhVSbqBMiEV0ElGNXYkXgE2NG8OjeHc8nUM6sbTFK0qq11TJB0teJnVLAQRmdmujPsbrYZvQbt760WmFg+UOkT/AsLDbKrWI2zZ3XldHJbRUwo1v81NWMLRbkwiVE1fFOSmGeIcdHed0YXFlGefkSrsN6bwvMsNy0yWldTSWNLlU5iWbuUfkYnpoKvkrIDUZ8nqW9HnMKtcHIxHOVgvTmqxchNhgxhfeHYAq1tyK4NxgxLYg7wiR7KYLlnYCPnwXjtGCv3hGkErDw8xOLY6npjQhvCVjwE+xPhJ6v7oWIzhKwXbyJvGYJBhvHDO/DuxPGuQhbkn9Ze7WOcLhCRXji3URVEf6Q9BNUhB9knTUV0R3SHrOK6Ab5sIWKcIdl7EhFuME6n0AUaEfBF8kb1LKOogqqEb9wulYk7PMJQkRcMIU8kZDK9CYFb4F6kfI/SbD4BAE14kzPWZMhQiVAfBF62F2JoFaTCKIddqci3ol67KOKeCX6AaiBRYjsNYs4CjigCJEnDgbrrNnA3KEb9mF3tjDXiOEeducKk4jhHnbXFWIRu8EedudLRYRPxGRtjJg0xEqAdxHXGBPnymMKAkBa66gJh8XGW4wRS2ZpZDISSnANrBFi/pYDcuZuN8syTSyd+Dv/AAD4D9nFlj4ll12bAAAAAElFTkSuQmCC"  alt="Cortico" style="margin-bottom: 25px;" /></a>
+    <a href="https://cortico.ca" target="_blank"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGEAAABhCAYAAADGBs+jAAAACXBIWXMAAAsSAAALEgHS3X78AAAEqklEQVR4nO2dvXHbMBSAX3RpVNkb2BvYmcAaQIUa1nEmiDYIR1AmsFyrSe7Ux9lAniDWBlbF0jnIjzYlUyRAvAc8kO+707mxAAofQeLvAZ9eXl4gJaZZcQ4A1wAwObrsDQA8rFfj56R+EAAkI2GaFabg5wDwteVf7wFguV6NHwJdmjfiJeCdnwPAd8ev/jTfS6FmiJaAAswdfdUxiUcAuF2vxhviSyNFrAQCASVGxERyjRgJuIYPEAoATOMX8SWSIk4CsYCSm2lWzAjTI0WUBCYBJTlDmiSIkcAswHCFzVxxiJAQQEDJcQdPBNElBBQA2NMWR1QJgQUYLgPl40Q0CREEiCWKBBVwSHAJkQWIHNQLKkFADRA5hhRs7EiAgN16NT6PlHcjQWqCkHfAImLejbBLECJgO1gJglpBs0EOZQsS8E36pA6LBGEClpGvoRVyCSrAHVIJKqAbZBJUQHdIJKgAP7wlqAB/vCSoABo6S1ABdHSSoAJocZagAuhxkqACeLCWoAL4sJKgAnhplaAC+GmUoALC8PlULirAnUo83cZlEql2ol8F2DHNCrOib4afm5ov/cXYiGWTlA8SVEA7WEYmiPGH5Vd2Zo57vRrXLs8/kKAC2sHl9cuOZVQbuvUmQQW0gwJMGZ15JPNBRLV1pAIawJt06SkAsIwPlmPuJUyzYq4CWskJy8hEDb29H/aPo2lWPBMY9iGFVtA/4mTNy/rSPJZG06y4VQGtzBnSNGVuyn7/OIoZx5VKR4yrjKJLSGkogi2iFFDCBVMGTaQ0FMF6k5pmb4xwqV4PxnXgPLQEFVDDCNfuhyBJAdybV5n0R4HiuFKvAY+c6Y4CbEPTh0cQV23Yp1tK2DFl0pd3AFeo1T7dEY7mcWRiLcA007DnLpL1avyEe+pRco/pvg7g4WQD5XPPSQBWyzvJInAAj6oRs6sOhVSbqBMiEV0ElGNXYkXgE2NG8OjeHc8nUM6sbTFK0qq11TJB0teJnVLAQRmdmujPsbrYZvQbt760WmFg+UOkT/AsLDbKrWI2zZ3XldHJbRUwo1v81NWMLRbkwiVE1fFOSmGeIcdHed0YXFlGefkSrsN6bwvMsNy0yWldTSWNLlU5iWbuUfkYnpoKvkrIDUZ8nqW9HnMKtcHIxHOVgvTmqxchNhgxhfeHYAq1tyK4NxgxLYg7wiR7KYLlnYCPnwXjtGCv3hGkErDw8xOLY6npjQhvCVjwE+xPhJ6v7oWIzhKwXbyJvGYJBhvHDO/DuxPGuQhbkn9Ze7WOcLhCRXji3URVEf6Q9BNUhB9knTUV0R3SHrOK6Ab5sIWKcIdl7EhFuME6n0AUaEfBF8kb1LKOogqqEb9wulYk7PMJQkRcMIU8kZDK9CYFb4F6kfI/SbD4BAE14kzPWZMhQiVAfBF62F2JoFaTCKIddqci3ol67KOKeCX6AaiBRYjsNYs4CjigCJEnDgbrrNnA3KEb9mF3tjDXiOEeducKk4jhHnbXFWIRu8EedudLRYRPxGRtjJg0xEqAdxHXGBPnymMKAkBa66gJh8XGW4wRS2ZpZDISSnANrBFi/pYDcuZuN8syTSyd+Dv/AAD4D9nFlj4ll12bAAAAAElFTkSuQmCC"  alt="Cortico" style="margin-bottom: 25px;" /></a>
     <div class='cortico-sidebar-close'>Close</div>
   </div>
   `,
@@ -1109,7 +1081,7 @@ async function getCorticoLogin() {
             localStorage.removeItem("jwt_access_token");
             localStorage.removeItem("jwt_expired");
           } else {
-            const browser = browser || chrome;
+            const browser = browser || window.chrome;
             browser.storage.local.remove(["jwt_access_token", "jwt_expired"]);
           }
 
@@ -1253,7 +1225,7 @@ function getResetCacheButton() {
           if (confirm("Are you sure you want to clear your cache?")) {
             localStorage.clear();
             if (!window.is_dev) {
-              const browser = browser || chrome;
+              const browser = browser || window.chrome;
               await browser.storage.local.clear();
             }
 

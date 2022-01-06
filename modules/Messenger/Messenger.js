@@ -19,7 +19,7 @@ function MessageException(message) {
 function Messenger(patient, opts, container, replaceNode) {
   const _container = container || document.body;
 
-  function Content({ patient, encounter, ...props }) {
+  function Content({ patient, eform, encounter, ...props }) {
     const handleErrors = async (response) => {
       const result = await response.json();
       if (!response.ok) {
@@ -159,6 +159,12 @@ function Messenger(patient, opts, container, replaceNode) {
       if (localStorage.getItem("name")) {
         setSubject(`${localStorage.getItem("name")} has sent you a message`);
       }
+
+      if (eform === true) {
+        console.log("Code Ran");
+        document.body.style.transform = "initial";
+        document.body.style.marginTop = 0;
+      }
     }, []);
 
     return (
@@ -223,6 +229,7 @@ function Messenger(patient, opts, container, replaceNode) {
     <Content
       patient={patient}
       encounter={opts.encounter}
+      eform={opts.eform}
       document={opts.document}
     />,
     _container,

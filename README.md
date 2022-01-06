@@ -142,7 +142,8 @@ oscar-enhancement-suite.zip
 
 ## How to package and update the Chrome extension
 
-Upload cortico-chrome.zip
+Upload cortico-chrome.zip to:
+https://chrome.google.com/webstore/devconsole/ad90a06e-cefc-4e6d-b427-e490a9510bcd/dpbaboapnbnifbekhhjggaolbnncfjfe/edit
 
 The Chrome developer account is shirley@countable.ca. Contact her to publish changes. In the Privacy tab:
 

@@ -131,9 +131,9 @@ export function create(_element, options, ...children) {
 }
 
 export function loadExtensionStorageValue(key) {
-  const browser = browser || chrome;
   return new Promise(function (resolve, reject) {
-    if (window.is_dev) {
+    const browser = browser || window.chrome;
+    if (window.is_dev || !browser) {
       resolve(window.localStorage.getItem(key));
     } else {
       browser.storage.local.get(key, function (result) {
@@ -144,8 +144,8 @@ export function loadExtensionStorageValue(key) {
 }
 
 export function saveExtensionStorageValue(key, value) {
-  const browser = browser || chrome;
-  if (window.is_dev) {
+  const browser = browser || window.chrome;
+  if (window.is_dev || !browser) {
     window.localStorage.setItem(key, value);
   } else {
     let to_set = {};
@@ -181,7 +181,6 @@ export function getDemographicNo(apptUrl) {
 }
 
 export function getAppointmentNo(apptUrl) {
-  console.log(apptUrl);
   var searchParams = new URLSearchParams(apptUrl.split("?")[1]);
   return searchParams.get("appointment_no");
 }
@@ -223,4 +222,33 @@ export function checkCorticoUrl(event) {
 export async function isLoggedIn() {
   const token = await loadExtensionStorageValue("jwt_access_token");
   return !!token;
+}
+
+export async function convertImagesToDataURLs(el) {
+  // convert bg images to data URL.
+  const bg_images = el.querySelectorAll("img");
+  for (let i = 0; i < bg_images.length; i++) {
+    let bg = bg_images[i];
+    try {
+      //let bg = document.getElementById('BGImage')
+      const blob = await fetch(bg.src).then((r) => r.blob());
+      const dataUrl = await new Promise((resolve) => {
+        let reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.readAsDataURL(blob);
+      });
+      bg.src = dataUrl;
+    } catch (e) {
+      // some images may have cross origin restrictions.
+      console.warn("failed to convert image: ", bg, e);
+    }
+  }
+}
+
+export function stripScripts(el) {
+  var scripts = el.getElementsByTagName("script");
+  var i = scripts.length;
+  while (i--) {
+    scripts[i].parentNode.removeChild(scripts[i]);
+  }
 }
