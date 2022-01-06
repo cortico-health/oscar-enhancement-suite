@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name     Cortico
-// @version  2022.1.5
+// @version  2022.1.6
 // @grant    none
 // ==/UserScript==
 
@@ -60,7 +60,7 @@ import Disclaimer from "./modules/cortico/Disclaimer";
 // manually update this variable with the version in manifest.json
 
 import LoginOscar from "./modules/Login/LoginOscar";
-const version = "2022.1.5";
+const version = "2022.1.6";
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
 
