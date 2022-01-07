@@ -1226,7 +1226,12 @@ function getResetCacheButton() {
             localStorage.clear();
             if (!window.is_dev) {
               const browser = browser || window.chrome;
-              await browser.storage.local.clear();
+              if (browser) {
+                await browser.storage.local.clear();
+              } else {
+                localStorage.clear()
+              }
+
             }
 
             if (!alert("Successfully reset cache, the page will now reload."))
