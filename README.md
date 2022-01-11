@@ -36,23 +36,27 @@ We hope this repository can provide a helpful testing ground for some new Oscar 
 
 # Developing
 
-Make changes in the appropriate and generate a build.
 
-1. `docker-compose run oes-web`
+1. `docker-compose up oes-web`
 
-In Google Chrome, go to chrome://extensions, and "Load unpacked" in this root directory. Click the refresh button after any change.
-
-The build output will be in `dist` directory
-
-# Testing
+This will start webpack on watch mode and have source maps enabled by default.
 
 The minified file located in `dist` directory named `cortico-min.js` may be loaded
 into tampermonkey, or greasemonkey for direct testing before publishing.
 
-The developers would need to ensure what they want to test went through the build process via
+# Manual Testing
 
-1. yarn
-2. yarn build
+**Chrome**
+
+In Google Chrome, go to `chrome://extensions`, and "Load unpacked" in this root directory. Click the refresh button after any change.
+
+You need to manually reload the plug-in after any changes, using the button on this page.
+
+**FireFox**
+
+Go to `about:debugging#/runtime/this-firefox` and "Load Temporary Add-on". You can load the dev env via manifest.json (if it's pointing to the firefox version) OR a zipped build (as below)
+
+You need to manually reload the plug-in after any changes, using the button on this page.
 
 **TamperMonkey**
 
@@ -87,15 +91,6 @@ Then
 1. yarn
 2. yarn build
 3. yarn cypress:open
-
-# Developing
-
-1. `cp dc.dev.yml docker-compose.override.yml`
-2. `docker-compose up`
-
-This will start webpack on watch mode and have source maps enabled by default.
-
-Then load these in to tampermonkey/greasemonkey and inspect the error. You should have sourcemaps enabled so that you know where things went wrong.
 
 # Building
 

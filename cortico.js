@@ -1082,7 +1082,12 @@ async function getCorticoLogin() {
             localStorage.removeItem("jwt_expired");
           } else {
             const browser = browser || window.chrome;
-            browser.storage.local.remove(["jwt_access_token", "jwt_expired"]);
+            if (browser) {
+              browser.storage.local.remove(["jwt_access_token", "jwt_expired"]);
+            } else {
+              localStorage.removeItem("jwt_access_token")
+              localStorage.removeItem("jwt_expired")
+            }
           }
 
           if (!alert("Logged out from cortico, reloading..."))
