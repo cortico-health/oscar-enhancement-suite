@@ -11,10 +11,6 @@ This repository is Open Source (GPL V2), with the intention that any Oscar servi
 - Prevents Oscar refreshing while you are actively working (which interrupts your work). Oscar will wait until your mouse stops moving for a minute.
 - Includes a subtle user interface theme (see picture below, which can be enabled optionally in the control panel).
 
-Drag and Drop:
-
-![Oscar Schedule Drag and Drop](dnd.gif)
-
 Patient Messaging:
 
 ![Patient Messaging](messaging.png)
@@ -26,6 +22,10 @@ Cortico Control Panel:
 Custom Oscar Theme
 
 ![Cortico Oscar Theme](cortico-oscar-ui.png)
+
+Drag and Drop (unstable, currently disabled):
+
+![Oscar Schedule Drag and Drop](dnd.gif)
 
 # Cortico Specific Features (optional)
 
