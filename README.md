@@ -11,10 +11,6 @@ This repository is Open Source (GPL V2), with the intention that any Oscar servi
 - Prevents Oscar refreshing while you are actively working (which interrupts your work). Oscar will wait until your mouse stops moving for a minute.
 - Includes a subtle user interface theme (see picture below, which can be enabled optionally in the control panel).
 
-Drag and Drop:
-
-![Oscar Schedule Drag and Drop](dnd.gif)
-
 Patient Messaging:
 
 ![Patient Messaging](messaging.png)
@@ -27,6 +23,10 @@ Custom Oscar Theme
 
 ![Cortico Oscar Theme](cortico-oscar-ui.png)
 
+Drag and Drop (unstable, currently disabled):
+
+![Oscar Schedule Drag and Drop](dnd.gif)
+
 # Cortico Specific Features (optional)
 
 - Allows joining a video call directly from the schedule page.
@@ -35,7 +35,6 @@ Custom Oscar Theme
 We hope this repository can provide a helpful testing ground for some new Oscar UI feaures and we would love to contribute them to the Oscar source code for various OSPs who may be interested! Please contact me at clark@cortico.health if you want assistance merging anything here into Oscar itself.
 
 # Developing
-
 
 1. `docker-compose up oes-web`
 
@@ -48,17 +47,21 @@ into tampermonkey, or greasemonkey for direct testing before publishing.
 
 **Chrome**
 
+`cp manifest.chrone.json manifest.json`
+
 In Google Chrome, go to `chrome://extensions`, and "Load unpacked" in this root directory. Click the refresh button after any change.
 
 You need to manually reload the plug-in after any changes, using the button on this page.
 
 **FireFox**
 
+`cp manifest.firefox.json manifest.json`
+
 Go to `about:debugging#/runtime/this-firefox` and "Load Temporary Add-on". You can load the dev env via manifest.json (if it's pointing to the firefox version) OR a zipped build (as below)
 
 You need to manually reload the plug-in after any changes, using the button on this page.
 
-**TamperMonkey**
+**TamperMonkey (or Greasemonkey)**
 
 Here's the one time tampermonkey script that auto updates to latest distribution file
 

@@ -35,6 +35,8 @@
   ],
   "permissions": [
     "*://*.cortico.ca/*",
+    "*://booknow.walkin.ca/*",
+    "*://*.medcentrehealth.com/*",
     "storage"
   ]
 }

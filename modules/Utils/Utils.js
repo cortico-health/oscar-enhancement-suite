@@ -126,7 +126,6 @@ export function create(_element, options, ...children) {
   children.map((child) => {
     element.appendChild(child);
   });
-
   return element;
 }
 
