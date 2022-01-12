@@ -129,7 +129,6 @@ export function create(_element, options, ...children) {
   return element;
 }
 
-
 export function loadExtensionStorageValue(key) {
   return new Promise(function (resolve, reject) {
     const browser = browser || window.chrome;

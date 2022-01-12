@@ -10,7 +10,9 @@ module.exports = {
   watch: true,
   watchOptions: {
     aggregateTimeout: 600,
-    poll: 1000,
+    // [cvo] - removed this because it causes the build to loop forever on Linux at least.
+    // maybe it's needed on mac?
+    //poll: 1000,
     ignored: /dist/,
   },
   cache: false,

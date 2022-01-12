@@ -186,11 +186,7 @@ const init_cortico = async function () {
         messengerContainer
       );
     } else {
-      if (oscar.isKaiOscarHost()) {
-        document.body.prepend(messengerContainer);
-      } else {
-        document.body.prepend(messengerContainer);
-      }
+      document.body.append(messengerContainer);
       Messenger(
         patient_info,
         {
@@ -491,55 +487,6 @@ async function setupEFormPage() {
       html,
     });
   });
-  /*
-  const patient_info = await getPatientInfo();
-
-  const email_btn = create(
-    `
-    <p style='margin-bottom:2em'>
-      <a id='cortico-email-patient' class='cortico-btn'>Email Patient</a>
-    </p>`,
-    {
-      events: {
-        "click #cortico-email-patient": async (e) => {
-          if (!checkCorticoUrl(e)) return;
-
-          await loadExtensionStorageValue("jwt_access_token").then(
-            async function (access_token) {
-              // copy document and prepare it for printing.
-              const html = document.cloneNode(true);
-              await convertImagesToDataURLs(html);
-              // we need to remove scripts to prevent re-rendering
-              // what the sender sees (one issue is JS may revert images from data URLs)
-              stripScripts(html);
-              // it seems we don't need to remove this as it's already
-              // hidden in the print media CSS embedded in all eForms
-              //let doNotPrintList = html.querySelectorAll(".DoNotPrint")
-
-              const patientFormResponse = await emailPatient(
-                patient_info,
-                access_token,
-                { html: html.documentElement.outerHTML }
-              );
-              console.log("RSP: ", patientFormResponse);
-              if (patientFormResponse.success) {
-                document
-                  .getElementById("cortico-email-patient")
-                  .parentNode.appendChild(
-                    create(
-                      `<p>${patient_info.email} was sent a <a style='text-decoration:underline' target="_blank" href="${patientFormResponse.preview}">document</a>.</p>`
-                    )
-                  );
-              }
-            }
-          );
-        },
-      },
-    }
-  ); // end create.
-
-  email_parent.appendChild(email_btn);
-  */
 }
 
 function delegate(element, event, descendentSelector, callback) {
