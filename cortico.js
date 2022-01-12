@@ -1056,6 +1056,7 @@ async function getCorticoLogin() {
   let btnEvent = {
     "click .cortico-btn": (e) => {
       if (!checkCorticoUrl(e.originalEvent)) return;
+      // TODO: what is this for?
       /*
       if (e.target.className == "cortico-btn") {
         const loginForm = document.querySelector(".login-form");
@@ -2233,6 +2234,7 @@ async function setClinicName() {
       .catch((error) => console.error(error));
   }
 }
+
 
 async function getDiagnosticFromCortico(appt_no, notes, token) {
   const clinicName = localStorage["clinicname"];

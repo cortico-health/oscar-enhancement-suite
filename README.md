@@ -36,7 +36,6 @@ We hope this repository can provide a helpful testing ground for some new Oscar 
 
 # Developing
 
-
 1. `docker-compose up oes-web`
 
 This will start webpack on watch mode and have source maps enabled by default.
@@ -48,17 +47,21 @@ into tampermonkey, or greasemonkey for direct testing before publishing.
 
 **Chrome**
 
+`cp manifest.chrone.json manifest.json`
+
 In Google Chrome, go to `chrome://extensions`, and "Load unpacked" in this root directory. Click the refresh button after any change.
 
 You need to manually reload the plug-in after any changes, using the button on this page.
 
 **FireFox**
 
+`cp manifest.firefox.json manifest.json`
+
 Go to `about:debugging#/runtime/this-firefox` and "Load Temporary Add-on". You can load the dev env via manifest.json (if it's pointing to the firefox version) OR a zipped build (as below)
 
 You need to manually reload the plug-in after any changes, using the button on this page.
 
-**TamperMonkey**
+**TamperMonkey (or Greasemonkey)**
 
 Here's the one time tampermonkey script that auto updates to latest distribution file
 

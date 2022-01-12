@@ -126,9 +126,9 @@ export function create(_element, options, ...children) {
   children.map((child) => {
     element.appendChild(child);
   });
-
   return element;
 }
+
 
 export function loadExtensionStorageValue(key) {
   return new Promise(function (resolve, reject) {
