@@ -614,8 +614,8 @@ function getQueryStringValue(key) {
     window.location.search.replace(
       new RegExp(
         "^(?:.*[&\\?]" +
-        encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") +
-        "(?:\\=([^&]*))?)?.*$",
+          encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") +
+          "(?:\\=([^&]*))?)?.*$",
         "i"
       ),
       "$1"
@@ -1033,8 +1033,8 @@ async function getCorticoLogin() {
             if (browser) {
               browser.storage.local.remove(["jwt_access_token", "jwt_expired"]);
             } else {
-              localStorage.removeItem("jwt_access_token")
-              localStorage.removeItem("jwt_expired")
+              localStorage.removeItem("jwt_access_token");
+              localStorage.removeItem("jwt_expired");
             }
           }
 
@@ -1182,9 +1182,8 @@ function getResetCacheButton() {
               if (browser) {
                 await browser.storage.local.clear();
               } else {
-                localStorage.clear()
+                localStorage.clear();
               }
-
             }
 
             if (!alert("Successfully reset cache, the page will now reload."))
@@ -2182,7 +2181,6 @@ async function setClinicName() {
   }
 }
 
-
 async function getDiagnosticFromCortico(appt_no, notes, token) {
   const clinicName = localStorage["clinicname"];
   const url = `${getCorticoUrl()}/api/encrypted/diagnostic-results/?appointment_id=${appt_no}&notes=${notes}`;
@@ -2455,7 +2453,23 @@ async function getPatientInfo(demographicNo) {
         : null;
   });
 
-  info.email = info.email || info.Email;
+  const emailInput = el.querySelector("input[name='email']");
+  console.log("Email input", emailInput);
+  info.email = info.email || info.Email || "";
+  console.log("Info", info);
+  if (
+    !info.email
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      )
+  ) {
+    if (emailInput && emailInput.value) {
+      info.email = emailInput.value;
+    }
+  }
+  console.log("Info", info);
+
   // TODO: The following method of parsing the markup for email addresses is disabled below since it can find
   // contacts or other bad strings.
   // var re = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi;

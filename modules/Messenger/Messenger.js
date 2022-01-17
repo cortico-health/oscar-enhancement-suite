@@ -17,6 +17,7 @@ function MessageException(message) {
 }
 
 function Messenger(patient, opts, container, replaceNode) {
+  console.log("Patient from messenger", patient);
   const _container = container || document.body;
 
   function Content({ patient, eform, encounter, ...props }) {

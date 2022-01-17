@@ -10,7 +10,7 @@ const To = forwardRef(({ patient, ...props }, ref) => {
       <div className="tw-pl-2 tw-w-full">
         <input
           ref={ref}
-          type="text"
+          type="email"
           className="tw-text-xs tw-text-opacity-80 text-gray-700 tw-tracking-wider tw-p-2 tw-break-words tw-bg-transparent tw-w-full"
           defaultValue={patient?.email}
         ></input>
