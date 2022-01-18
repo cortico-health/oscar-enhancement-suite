@@ -714,7 +714,7 @@ async function createSideBar() {
   var styleSheet = styleSheetFactory("cortico_sidebar");
   var styles = `
     .cortico-sidebar { position: fixed; top: 0; right: 0; bottom: 0; width: 300px; background-color: white; height: 100%; z-index: 10000; }
-    .cortico-sidebar { transition: transform 0.25s ease-in; transform: translateX(300px); }
+    .cortico-sidebar { transition: transform 0.25s ease-in; transform: translateX(300px); overflow-y: auto; }
     .cortico-sidebar { display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 1px 5px 5px rgb(0, 0, 0); }
     .cortico-sidebar-show { transform: translateX(0); }
     .cortico-sidebar-close { cursor:pointer; position: absolute; top: 10px; right: 10px; z-index: 500; }
@@ -1171,10 +1171,10 @@ function getBatchPharmaciesButton() {
 
 function getResetCacheButton() {
   var button = create(
-    `<button class='cortico-btn warning bottom'>Reset Cache</button>`,
+    `<button class='cortico-btn warning cache'>Reset Cache</button>`,
     {
       events: {
-        "click .cortico-btn.warning.bottom": async (e) => {
+        "click .cortico-btn.warning.cache": async (e) => {
           if (confirm("Are you sure you want to clear your cache?")) {
             localStorage.clear();
             if (!window.is_dev) {
