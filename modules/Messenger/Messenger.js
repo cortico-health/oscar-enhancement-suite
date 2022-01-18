@@ -217,7 +217,7 @@ function Messenger(patient, opts, container, replaceNode) {
           close={() => {
             setShowNotification(false);
           }}
-          delay={3000}
+          delay={7000}
           content={messageInfo.content}
           title={messageInfo.title}
           preview={messageInfo.preview}
