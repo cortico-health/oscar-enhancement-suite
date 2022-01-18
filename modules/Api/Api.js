@@ -12,3 +12,28 @@ export function sendMessage(data, token, opts) {
     },
   });
 }
+
+export function getCannedReplies(token) {
+  const url = getCorticoUrl() + "/api/plugin/messages";
+  return fetch(url, {
+    method: "GET",
+    mode: "cors",
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
+export function addCannedReply(data, token) {
+  const url = getCorticoUrl() + "/api/plugin/messages";
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data),
+    mode: "cors",
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}

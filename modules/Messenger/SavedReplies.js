@@ -4,8 +4,8 @@ import corticoIcon from "../../resources/icons/96x96.png";
 import { PlusIcon, LeftArrowIcon, TrashIcon } from "../Icons/HeroIcons";
 import Subject from "./SubjectInput";
 import Chat from "./ChatInput";
-import { v4 as uuidv4 } from "uuid";
-
+import { getCannedReplies, addCannedReply } from "../Api/Api";
+import { loadExtensionStorageValue } from "../Utils/Utils";
 function AddReply({ add, cancel, ...props }) {
   const subject = useRef();
   const chat = useRef();
@@ -108,73 +108,53 @@ function Reply({ uuid, subject, body, onClick, onDelete, onCancel, ...props }) {
 function SavedReplies({ loadReply, ...props }) {
   const [addReply, setAddReply] = useState(false);
   const [replies, setReplies] = useState([]);
-  const [insertCounter, setInsertCounter] = useState(0);
 
   const handleAdd = (data) => {
-    const reply = data;
-    reply.uuid = uuidv4();
-    let savedReplies = localStorage.getItem("savedReplies");
-    if (savedReplies) {
-      let temp = JSON.parse(JSON.parse(savedReplies));
-      temp.push(reply);
-      localStorage.setItem("savedReplies", JSON.stringify(temp));
-    } else {
-      const temp = [reply];
-      localStorage.setItem("savedReplies", JSON.stringify(temp));
-    }
-    setAddReply(false);
-    setInsertCounter(insertCounter + 1);
+    console.log("To add data", data);
+
+    const { body, subject } = data;
+    const temp = {
+      subject,
+      message: body,
+    };
+    loadExtensionStorageValue("jwt_access_token")
+      .then((token) => {
+        return addCannedReply(temp, token);
+      })
+      .then((res) => {
+        console.log("Add reply response", res);
+        loadReplies();
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        setAddReply(false);
+      });
   };
   const handleCancel = () => {
     setAddReply(false);
   };
 
-  const deleteReply = (uuid) => {
-    console.log("Delete Request UUID", uuid);
-    let savedReplies = localStorage.getItem("savedReplies");
-    if (savedReplies) {
-      let temp = JSON.parse(JSON.parse(savedReplies));
-      const reply = temp.find((r) => r.uuid === uuid);
-      console.log("Found reply", reply);
-      if (reply) {
-        temp = temp.filter((r) => r.uuid !== uuid);
-        localStorage.setItem("savedReplies", JSON.stringify(temp));
-        setInsertCounter(insertCounter + 1);
-      }
-    }
-  };
-
+  const deleteReply = (uuid) => {};
   const loadReplies = () => {
-    let savedReplies = localStorage.getItem("savedReplies");
-    if (savedReplies) {
-      let temp = JSON.parse(JSON.parse(savedReplies));
-      setReplies(temp);
-    } else {
-      setReplies([]);
-    }
+    loadExtensionStorageValue("jwt_access_token")
+      .then((token) => {
+        return getCannedReplies(token);
+      })
+      .then((data) => {
+        console.log("Canned Replies Loaded", data);
+        setReplies(data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   useEffect(() => {
-    if (insertCounter === 0) {
-      let savedReplies = localStorage.getItem("savedReplies");
-      if (!savedReplies) {
-        handleAdd({
-          uuid: uuidv4(),
-          subject: "TELEHEALTH - LAB REQ TO DO",
-          body: `Hello,
-          Attached is a copy of your lab requisition form
-          Please print and take to the lab 
-          OR e-mail it with your name in the subject line to
-          mailmyreqBC@lifelabs.com
-          Please confirm via email once received/completed.
-          Generally, patients are able to book a follow up online 2-3 days after getting their blood work done for a review unless indicated sooner via e-mail. 
-          Thank you
-          Medical clinic/doctor name`,
-        });
-      }
-    }
+    console.log("Canned Replies Mounted");
     loadReplies();
-  }, [insertCounter]);
+  }, []);
 
   return (
     <div className="tw-bg-white tw-rounded-lg tw-font-sans tw-w-full tw-shadow-lg tw-max-w-[400px]">
