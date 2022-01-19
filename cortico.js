@@ -1128,8 +1128,9 @@ function getCorticoUrlOption() {
     }
     if (input.value) {
       localStorage.setItem("clinicname", input.value);
-      if (!alert("Your clinic name has changed, the page will now reload"))
+      if (true) {
         window.location.reload();
+      }
     }
   });
   return container;

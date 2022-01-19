@@ -114,6 +114,7 @@ function SavedReplies({ loadReply, ...props }) {
 
     const { body, subject } = data;
     const temp = {
+      demographic_no: "999998",
       subject,
       message: body,
     };
@@ -122,8 +123,7 @@ function SavedReplies({ loadReply, ...props }) {
         return addCannedReply(temp, token);
       })
       .then((res) => {
-        console.log("Add reply response", res);
-        loadReplies();
+        console.log("Add Reply Response", res);
       })
       .catch((err) => {
         console.error(err);
@@ -141,6 +141,13 @@ function SavedReplies({ loadReply, ...props }) {
     loadExtensionStorageValue("jwt_access_token")
       .then((token) => {
         return getCannedReplies(token);
+      })
+      .then((res) => {
+        console.log("Canned Response", res);
+        if (res.status !== 200) {
+          throw new Error(res.statusText);
+        }
+        return res.json();
       })
       .then((data) => {
         console.log("Canned Replies Loaded", data);

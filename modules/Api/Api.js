@@ -14,7 +14,7 @@ export function sendMessage(data, token, opts) {
 }
 
 export function getCannedReplies(token) {
-  const url = getCorticoUrl() + "/api/plugin/messages";
+  const url = getCorticoUrl() + "/api/plug-in/messages/";
   return fetch(url, {
     method: "GET",
     mode: "cors",
@@ -26,7 +26,7 @@ export function getCannedReplies(token) {
 }
 
 export function addCannedReply(data, token) {
-  const url = getCorticoUrl() + "/api/plugin/messages";
+  const url = getCorticoUrl() + "/api/plug-in/messages/";
   return fetch(url, {
     method: "POST",
     body: JSON.stringify(data),
