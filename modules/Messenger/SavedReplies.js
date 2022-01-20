@@ -114,9 +114,10 @@ function SavedReplies({ loadReply, ...props }) {
 
     const { body, subject } = data;
     const temp = {
-      demographic_no: "999998",
-      subject,
-      message: body,
+      data: {
+        subject,
+        message: body,
+      },
     };
     loadExtensionStorageValue("jwt_access_token")
       .then((token) => {

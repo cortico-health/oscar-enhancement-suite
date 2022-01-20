@@ -1,4 +1,4 @@
-import { getCorticoUrl } from "../Utils/Utils";
+import { getCorticoUrl, getOrigin, getNamespace } from "../Utils/Utils";
 
 export function sendMessage(data, token, opts) {
   const url = getCorticoUrl() + "/api/plug-in/email-form/";
@@ -34,6 +34,64 @@ export function addCannedReply(data, token) {
     headers: {
       "Content-type": "application/json",
       Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
+export function getEncounterNotes(demographicNo) {
+  const payload = {
+    method: "viewNotesOpt",
+    offset: 0,
+    numToReturn: 20,
+    demographicNo,
+  };
+  const url = getOrigin() + "/" + getNamespace() + "/CaseManagementView.do";
+  return fetch(url, {
+    method: "POST",
+    body: new URLSearchParams(payload),
+    headers: {
+      "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+    },
+  });
+}
+
+export function addEncounterNote(demographicNo, note_id, note) {
+  const payload = {
+    method: "autosave",
+    demographicNo,
+    note_id,
+    note,
+  };
+  const url = getOrigin() + "/" + getNamespace() + "/CaseManagementEntry.do";
+  return fetch(url, {
+    method: "POST",
+    body: new URLSearchParams(payload),
+    headers: {
+      accept: "text/javascript, text/html, application/xml, text/xml, */*",
+      "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+      "x-prototype-version": "1.5.1.1",
+      "x-requested-with": "XMLHttpRequest",
+    },
+  });
+}
+
+export function getCaseManagementEntry() {
+  const payload = {
+    method: "edit",
+    demographicNo,
+    ajaxview: "ajaxView",
+    fullChart: false,
+    action: "view",
+  };
+  const url = getOrigin() + "/" + getNamespace() + "/CaseManagementEntry.do";
+  return fetch(url, {
+    method: "POST",
+    body: new URLSearchParams(payload),
+    headers: {
+      accept: "text/javascript, text/html, application/xml, text/xml, */*",
+      "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+      "x-prototype-version": "1.5.1.1",
+      "x-requested-with": "XMLHttpRequest",
     },
   });
 }
