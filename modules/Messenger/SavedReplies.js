@@ -114,10 +114,8 @@ function SavedReplies({ loadReply, ...props }) {
 
     const { body, subject } = data;
     const temp = {
-      data: {
-        subject,
-        message: body,
-      },
+      subject,
+      message: body,
     };
     loadExtensionStorageValue("jwt_access_token")
       .then((token) => {

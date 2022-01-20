@@ -14,7 +14,7 @@ import {
   sendMessage,
   getEncounterNotes,
   addEncounterNote,
-  getCaseManagementEntry,
+  postCaseManagementEntry,
 } from "../Api/Api";
 import Encounter from "../core/Encounter";
 import PreactModal from "../Modal/PreactModal";
@@ -28,11 +28,9 @@ function MessageException(message) {
 }
 
 function Messenger(patient, opts, container, replaceNode) {
-  console.log("Patient from messenger", patient);
   const _container = container || document.body;
 
-  const demographicNo = getDemographicNo();
-
+  /*
   getEncounterNotes(demographicNo)
     .then((res) => {
       console.log("Res", res);
@@ -43,7 +41,7 @@ function Messenger(patient, opts, container, replaceNode) {
       temp.innerHTML = html;
       const encounterNotes = Encounter.getCaseNote(temp);
       const note = encounterNotes.value;
-      let note_id = html.match(/savedNoteId=[0-9]*/)[0].split("=")[1];
+      let note_id = html.match(/savedNoteId=[0-9]/)[0].split("=")[1];
       console.log("Note", note_id);
       return addEncounterNote(
         demographicNo,
@@ -57,20 +55,19 @@ function Messenger(patient, opts, container, replaceNode) {
 
   console.log(document);
 
-  getCaseManagementEntry()
+
+  postCaseManagementEntry()
     .then((res) => {
       return res.text();
     })
     .then((html) => {
-      console.log("Case Management", html);
+      const temp = document.createElement("html");
+      temp.innerHTML = html;
+      const programNo = temp.querySelector(`input[name="caseNote.program_no"]`);
+      const programId = programNo.value;
+      console.log("Program Id", programId);
     });
-
-  document.addEventListener("DOMContentLoaded", function (event) {
-    console.log(
-      "Query Selector",
-      document.querySelector("textarea[name='caseNote_note']")
-    );
-  });
+      */
 
   function Content({ patient, eform, encounter, ...props }) {
     const handleErrors = async (response) => {
@@ -187,7 +184,7 @@ function Messenger(patient, opts, container, replaceNode) {
 
     const loadReply = (data) => {
       setSubject(data.subject);
-      setBody(data.body);
+      setBody(data.message);
       setShowModal(false);
     };
 
@@ -253,7 +250,7 @@ function Messenger(patient, opts, container, replaceNode) {
             showSavedReplies={() => {
               setShowModal(true);
             }}
-            encounter={encounter}
+            encounter={true}
           />
         </div>
         <div className="tw-fixed tw-bottom-5 tw-right-5 tw-z-5000 tw-shadow-xl">

@@ -55,34 +55,26 @@ export function getEncounterNotes(demographicNo) {
   });
 }
 
-export function addEncounterNote(demographicNo, note_id, note) {
-  const payload = {
+export function addEncounterNote(demographicNo, note_id, programId, note) {
+  return postCaseManagementEntry(demographicNo, {
     method: "autosave",
     demographicNo,
     note_id,
+    programId,
     note,
-  };
-  const url = getOrigin() + "/" + getNamespace() + "/CaseManagementEntry.do";
-  return fetch(url, {
-    method: "POST",
-    body: new URLSearchParams(payload),
-    headers: {
-      accept: "text/javascript, text/html, application/xml, text/xml, */*",
-      "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-      "x-prototype-version": "1.5.1.1",
-      "x-requested-with": "XMLHttpRequest",
-    },
   });
 }
 
-export function getCaseManagementEntry() {
-  const payload = {
+export function postCaseManagementEntry(
+  demographicNo,
+  payload = {
     method: "edit",
     demographicNo,
     ajaxview: "ajaxView",
     fullChart: false,
     action: "view",
-  };
+  }
+) {
   const url = getOrigin() + "/" + getNamespace() + "/CaseManagementEntry.do";
   return fetch(url, {
     method: "POST",

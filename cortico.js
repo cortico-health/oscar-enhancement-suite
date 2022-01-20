@@ -2448,7 +2448,7 @@ async function getPatientInfo(demographicNo) {
   el.querySelectorAll("span.label").forEach(function (label) {
     if (label.closest("#otherContacts2")) return; // do not match contacts.
 
-    info[label.innerText.replace(/[^\w\s]+/g, "").trim()] =
+    info[label.innerText.replace(/[^\w\s]+/g, "")?.trim()] =
       label.nextElementSibling
         ? label.nextElementSibling.innerText.trim()
         : null;
@@ -2492,6 +2492,7 @@ function getDemographicPageResponse(demographic) {
   if (!demographicNo) {
     // TODO: always try this when getting demo #.
     document.querySelectorAll("form").forEach(function (f) {
+      console.log(f);
       demographicNo = demographicNo || getDemographicNo(f.action).trim();
     });
   }
