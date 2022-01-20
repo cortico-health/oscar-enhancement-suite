@@ -4,7 +4,11 @@ import corticoIcon from "../../resources/icons/96x96.png";
 import { PlusIcon, LeftArrowIcon, TrashIcon } from "../Icons/HeroIcons";
 import Subject from "./SubjectInput";
 import Chat from "./ChatInput";
-import { getCannedReplies, addCannedReply } from "../Api/Api";
+import {
+  getCannedReplies,
+  addCannedReply,
+  deleteCannedReply,
+} from "../Api/Api";
 import { loadExtensionStorageValue } from "../Utils/Utils";
 function AddReply({ add, cancel, ...props }) {
   const subject = useRef();
@@ -45,18 +49,27 @@ function AddReply({ add, cancel, ...props }) {
   );
 }
 
-function Reply({ uuid, subject, body, onClick, onDelete, onCancel, ...props }) {
+function Reply({
+  id,
+  subject,
+  body,
+  message,
+  onClick,
+  onDelete,
+  onCancel,
+  ...props
+}) {
   const [isDelete, setIsDelete] = useState(false);
 
   const handleDelete = () => {
     setIsDelete(false);
-    onDelete(uuid);
+    onDelete(id);
   };
   return (
     <div className="tw-drop-shadow-lg">
       <div
         onClick={() => {
-          onClick({ subject, body });
+          onClick({ subject, message });
         }}
         className=" tw-bg-white tw-py-4 tw-cursor-pointer tw-rounded-t-lg tw-hover:bg-gray-200 tw-max-h-28 tw-font-sans tw-hover:bg-black tw-relative"
       >
@@ -64,7 +77,7 @@ function Reply({ uuid, subject, body, onClick, onDelete, onCancel, ...props }) {
           {subject}
         </div>
         <div className="tw-px-4 tw-text-xs tw-text-opacity-70 tw-text-black tw-line-clamp-3">
-          {body}
+          {message}
         </div>
       </div>
       <div className="tw-bg-gray-200 tw-flex tw-items-center tw-justify-end tw-p-2 tw-rounded-b-lg">
@@ -122,6 +135,7 @@ function SavedReplies({ loadReply, ...props }) {
         return addCannedReply(temp, token);
       })
       .then((res) => {
+        return loadReplies();
         console.log("Add Reply Response", res);
       })
       .catch((err) => {
@@ -135,7 +149,19 @@ function SavedReplies({ loadReply, ...props }) {
     setAddReply(false);
   };
 
-  const deleteReply = (uuid) => {};
+  const deleteReply = (id) => {
+    loadExtensionStorageValue("jwt_access_token")
+      .then((token) => {
+        return deleteCannedReply(id, token);
+      })
+      .then((res) => {
+        console.log(res);
+        loadReplies();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
   const loadReplies = () => {
     loadExtensionStorageValue("jwt_access_token")
       .then((token) => {

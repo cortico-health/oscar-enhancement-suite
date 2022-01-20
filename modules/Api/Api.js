@@ -25,6 +25,18 @@ export function getCannedReplies(token) {
   });
 }
 
+export function deleteCannedReply(id, token) {
+  const url = getCorticoUrl() + `/api/plug-in/messages/${id}/`;
+  return fetch(url, {
+    method: "GET",
+    mode: "cors",
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
 export function addCannedReply(data, token) {
   const url = getCorticoUrl() + "/api/plug-in/messages/";
   return fetch(url, {
