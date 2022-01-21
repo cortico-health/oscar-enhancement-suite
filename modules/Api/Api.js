@@ -26,7 +26,7 @@ export function getCannedReplies(token) {
 }
 
 export function deleteCannedReply(id, token) {
-  const url = getCorticoUrl() + `/api/plug-in/messages/${id}/`;
+  const url = getCorticoUrl() + `/api/plug-in/messages/${id}/?action=delete`;
   return fetch(url, {
     method: "GET",
     mode: "cors",
