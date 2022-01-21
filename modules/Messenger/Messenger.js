@@ -134,6 +134,16 @@ function Messenger(patient, opts, container, replaceNode) {
         return;
       }
 
+      let encounterErrorMessage = null;
+      if (opts.encounter === true) {
+        const text = `\n\n[${new Date().toLocaleString()} .: Email sent to patient] \n${subject}: ${body}`;
+        try {
+          const result = await addEncounterText(text);
+        } catch (err) {
+          encounterErrorMessage = "Failed to copy to encounter notes";
+        }
+      }
+
       const token = await loadExtensionStorageValue("jwt_access_token");
       if (token) {
         sendMessage(data, token)
@@ -143,14 +153,10 @@ function Messenger(patient, opts, container, replaceNode) {
               setMessageInfo({
                 title: "Success",
                 content:
-                  response.message || `Message successfully sent to ${to}`,
+                  (response.message || `Message successfully sent to ${to}`) +
+                  (encounterErrorMessage || ""),
                 preview: response.preview,
               });
-
-              if (opts.encounter === true) {
-                const text = `\n\n[${new Date().toLocaleString()} .: Email sent to patient] \n${subject}: ${body}`;
-                addEncounterText(text);
-              }
             } else {
               throw new MessageException(response?.message);
             }
@@ -159,7 +165,7 @@ function Messenger(patient, opts, container, replaceNode) {
             console.error(error);
             setMessageInfo({
               title: error.title,
-              content: error && error.message,
+              content: (error && error.message) + (encounterErrorMessage || ""),
             });
           })
           .finally(() => {
