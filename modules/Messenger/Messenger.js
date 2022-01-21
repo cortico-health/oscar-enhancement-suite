@@ -138,9 +138,10 @@ function Messenger(patient, opts, container, replaceNode) {
       if (opts.encounter === true) {
         const text = `\n\n[${new Date().toLocaleString()} .: Email sent to patient] \n${subject}: ${body}`;
         try {
-          const result = await addEncounterText(text);
+          const result = await Encounter.addToCaseNote(text);
         } catch (err) {
-          encounterErrorMessage = "Failed to copy to encounter notes";
+          encounterErrorMessage =
+            "Failed to copy to encounter notes. Please log manually. ";
         }
       }
 
@@ -153,8 +154,8 @@ function Messenger(patient, opts, container, replaceNode) {
               setMessageInfo({
                 title: "Success",
                 content:
-                  (response.message || `Message successfully sent to ${to}`) +
-                  (encounterErrorMessage || ""),
+                  (encounterErrorMessage || "") +
+                  (response.message || `Message successfully sent to ${to}`),
                 preview: response.preview,
               });
             } else {
@@ -165,7 +166,7 @@ function Messenger(patient, opts, container, replaceNode) {
             console.error(error);
             setMessageInfo({
               title: error.title,
-              content: (error && error.message) + (encounterErrorMessage || ""),
+              content: (encounterErrorMessage || "") + (error && error.message),
             });
           })
           .finally(() => {
@@ -192,22 +193,6 @@ function Messenger(patient, opts, container, replaceNode) {
       setSubject(data.subject);
       setBody(data.message);
       setShowModal(false);
-    };
-
-    const addEncounterText = (text) => {
-      if (document.readyState === "complete") {
-        Encounter.addToCaseNote(text);
-      } else {
-        window.addEventListener(
-          "load",
-          () => {
-            Encounter.addToCaseNote(text);
-          },
-          {
-            once: true,
-          }
-        );
-      }
     };
 
     useEffect(() => {
