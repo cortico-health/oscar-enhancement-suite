@@ -45,6 +45,7 @@ import {
   convertImagesToDataURLs,
   stripScripts,
 } from "./modules/Utils/Utils";
+import initSidebar from "./modules/Sidebar/Sidebar";
 import {
   loadExtensionStorageValue,
   addToCache,
@@ -156,6 +157,9 @@ const init_cortico = async function () {
 
     addCorticoLogo();
     addMenu();
+    //const temp = document.createElement("div");
+    //document.body.append(temp);
+    //initSidebar(document.body, temp);
     addAppointmentMenu();
     //addLoginForm(chrome);
     if (!oscar.isJuno() && !oscar.containsKaiBar()) {
