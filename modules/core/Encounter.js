@@ -14,7 +14,6 @@ class Encounter {
   }
 
   static addToCaseNote(text) {
-    return Promise.reject("Failed");
     const caseNote = Encounter.getCaseNote();
     if (caseNote) {
       caseNote.value += text;
