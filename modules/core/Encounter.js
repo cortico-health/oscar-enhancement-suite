@@ -20,6 +20,7 @@ class Encounter {
       return Promise.resolve(true);
     } else {
       const demographicNo = getDemographicNo();
+      console.log("Demographic No", demographicNo);
       if (demographicNo == null) {
         return Promise.reject("Could not find demographic Number");
       }
@@ -39,7 +40,7 @@ class Encounter {
           let note = Encounter.getCaseNote(temp);
 
           if (note == null) {
-            throw new Error("Could not find encounter notes");
+            return new Error("Could not find encounter notes");
           }
 
           if (programId == null) {
@@ -85,6 +86,10 @@ class Encounter {
       const caseNoteInput = temp.querySelector(
         `textarea[name="caseNote_note"]`
       );
+
+      if (!caseNoteInput) {
+        return null;
+      }
       const id = caseNoteInput.id;
       note_id = id.replace(/[^0-9]/g, "");
     }

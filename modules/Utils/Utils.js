@@ -162,15 +162,6 @@ export function htmlToElement(html) {
 }
 
 export function getDemographicNo(apptUrl) {
-  const temp = document.body.innerHTML;
-  let demographicNo = temp.match(/demographic_no=[0-9]*/);
-  if (demographicNo) {
-    console.log(demographicNo);
-    demographicNo = demographicNo[0].split("=")[1];
-    console.log(demographicNo);
-    console.log("Found demographic Number!", demographicNo);
-  }
-
   if (apptUrl) {
     var searchParams = new URLSearchParams(apptUrl);
     return (
@@ -184,6 +175,18 @@ export function getDemographicNo(apptUrl) {
     let demographicNo = getDemographicNo(window.location.search);
     if (!demographicNo && window.opener) {
       demographicNo = getDemographicNo(window.opener.location.search);
+    }
+
+    if (!demographicNo) {
+      console.log("Called!");
+      const temp = document.body.innerHTML;
+      demographicNo = temp.match(/demographic_no=[0-9]*/);
+      if (demographicNo) {
+        console.log(demographicNo);
+        demographicNo = demographicNo[0].split("=")[1];
+        console.log(demographicNo);
+        console.log("Found demographic Number!", demographicNo);
+      }
     }
 
     return demographicNo;

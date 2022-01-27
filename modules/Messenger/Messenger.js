@@ -1,12 +1,6 @@
 import { render } from "preact";
 import { useState, useEffect } from "preact/hooks";
-import {
-  loadExtensionStorageValue,
-  isLoggedIn,
-  getOrigin,
-  getDemographicNo,
-  getNamespace,
-} from "../Utils/Utils";
+import { loadExtensionStorageValue, isLoggedIn } from "../Utils/Utils";
 import Notification from "../Notifications/Notification";
 import MessengerWidget from "./MessengerWidget";
 import MessengerWindow from "./MessengerWindow";
@@ -140,6 +134,7 @@ function Messenger(patient, opts, container, replaceNode) {
         try {
           const result = await Encounter.addToCaseNote(text);
         } catch (err) {
+          console.log("Error occured with encounter notes");
           encounterErrorMessage =
             "Failed to copy to encounter notes. Please log manually. ";
         }

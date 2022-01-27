@@ -618,8 +618,8 @@ function getQueryStringValue(key) {
     window.location.search.replace(
       new RegExp(
         "^(?:.*[&\\?]" +
-        encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") +
-        "(?:\\=([^&]*))?)?.*$",
+          encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") +
+          "(?:\\=([^&]*))?)?.*$",
         "i"
       ),
       "$1"
@@ -2247,6 +2247,7 @@ async function setupPreferredPharmacies() {
     let demographicNo = null;
     try {
       const apptUrl = extractApptUrl(element.attributes.onclick.textContent);
+      console.log("Set up preferred pharmacies");
       demographicNo = getDemographicNo(apptUrl);
       const _pharmaciesCache = localStorage.getItem("pharmaciesCache");
       const pharmaciesCache = JSON.parse(_pharmaciesCache);
@@ -2485,6 +2486,7 @@ async function getPatientInfo(demographicNo) {
 }
 
 function getDemographicPageResponse(demographic) {
+  console.log("Get Demogpraihc Page REsponse");
   const origin = getOrigin();
   const namespace = getNamespace();
 
