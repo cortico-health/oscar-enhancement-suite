@@ -82,7 +82,6 @@ function MessengerWindow({
   };
 
   const submitData = async (e) => {
-    e.preventDefault();
     const data = {
       clinic_host: getCorticoUrl().replace(/http.?:\/\//, ""),
       to: to.current.value,
@@ -156,7 +155,7 @@ function MessengerWindow({
   };
 
   return (
-    <form onSubmit={submitData} className="tw-m-0 no-print">
+    <div className="tw-m-0 no-print">
       <Header close={handleClose} />
       <div>
         <div>
@@ -214,7 +213,7 @@ function MessengerWindow({
             disabled={loading}
             className="tw-bg-cortico-blue tw-px-3 tw-py-2 tw-rounded-md tw-text-white tw-text-sm tw-flex tw-items-center"
             onClick={() => {
-              setScheme("email");
+              setScheme("email"); submitData()
             }}
           >
             {loading === true ? (
@@ -231,7 +230,7 @@ function MessengerWindow({
           </button>
         </div>
       </div>
-    </form>
+    </div>
   );
 }
 
