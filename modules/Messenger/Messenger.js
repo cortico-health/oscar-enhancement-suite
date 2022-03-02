@@ -203,59 +203,61 @@ function Messenger(patient, opts, container, replaceNode) {
     }, []);
 
     return (
-      <div className="tailwind tw-font-sans no-print tw-fixed tw-z-10005 DoNotPrint">
-        <PreactModal
-          show={showModal}
-          close={() => {
-            setShowModal(false);
-          }}
-        >
-          <SavedReplies loadReply={loadReply}></SavedReplies>
-        </PreactModal>
-        <PreactModal
-          show={showLogin}
-          close={() => {
-            setShowLogin(false);
-          }}
-        >
-          <Login />
-        </PreactModal>
-        <div
-          className={`tw-fixed tw-bottom-5 tw-right-5 tw-bg-white tw-z-10000 tw-max-w-[400px] tw-shadow-xl tw-w-full tw-rounded-md tw-transform tw-transition-transform tw-duration-200 tw-ease-in-out ${
-            open ? "tw-translate-x-0" : "tw-translate-x-[430px]"
-          }`}
-        >
-          <MessengerWindow
-            patient={patient}
-            defaultSubject={subject}
-            defaultBody={body}
-            loading={loading}
-            onSubmit={handleSubmit}
-            close={handleClose}
-            open={handleOpen}
-            showSavedReplies={() => {
-              setShowModal(true);
+      <div className="cleanslate">
+        <div className="tailwind preflight tw-font-sans no-print tw-fixed tw-z-10005 DoNotPrint">
+          <PreactModal
+            show={showModal}
+            close={() => {
+              setShowModal(false);
             }}
-            encounter={true}
+          >
+            <SavedReplies loadReply={loadReply}></SavedReplies>
+          </PreactModal>
+          <PreactModal
+            show={showLogin}
+            close={() => {
+              setShowLogin(false);
+            }}
+          >
+            <Login />
+          </PreactModal>
+          <div
+            className={`tw-fixed tw-bottom-5 tw-right-5 tw-bg-white tw-z-10000 tw-max-w-[400px] tw-shadow-xl tw-w-full tw-rounded-md tw-transform tw-transition-transform tw-duration-200 tw-ease-in-out ${
+              open ? "tw-translate-x-0" : "tw-translate-x-[430px]"
+            }`}
+          >
+            <MessengerWindow
+              patient={patient}
+              defaultSubject={subject}
+              defaultBody={body}
+              loading={loading}
+              onSubmit={handleSubmit}
+              close={handleClose}
+              open={handleOpen}
+              showSavedReplies={() => {
+                setShowModal(true);
+              }}
+              encounter={true}
+            />
+          </div>
+          <div className="tw-fixed tw-bottom-5 tw-right-5 tw-z-5000 tw-shadow-xl">
+            <MessengerWidget
+              open={handleOpen}
+              login={promptLogin}
+              loggedIn={loggedIn}
+            />
+          </div>
+          <Notification
+            open={showNotification}
+            close={() => {
+              setShowNotification(false);
+            }}
+            delay={7000}
+            content={messageInfo.content}
+            title={messageInfo.title}
+            preview={messageInfo.preview}
           />
         </div>
-        <div className="tw-fixed tw-bottom-5 tw-right-5 tw-z-5000 tw-shadow-xl">
-          <MessengerWidget
-            open={handleOpen}
-            login={promptLogin}
-            loggedIn={loggedIn}
-          />
-        </div>
-        <Notification
-          open={showNotification}
-          close={() => {
-            setShowNotification(false);
-          }}
-          delay={7000}
-          content={messageInfo.content}
-          title={messageInfo.title}
-          preview={messageInfo.preview}
-        />
       </div>
     );
   }

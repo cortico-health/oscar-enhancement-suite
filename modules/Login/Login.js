@@ -12,7 +12,7 @@ async function signInRequest(username, password) {
   };
   const url = getCorticoUrl() + "/api/token/";
 
-  console.log(url)
+  console.log(url);
 
   return fetch(url, {
     method: "POST",

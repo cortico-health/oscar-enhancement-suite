@@ -23,7 +23,7 @@
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
+import "cleanslate";
 import { pubSubInit } from "./modules/PubSub/PubSub";
 import dayjs from "dayjs";
 import {
@@ -61,6 +61,7 @@ import Disclaimer from "./modules/cortico/Disclaimer";
 // manually update this variable with the version in manifest.json
 
 import LoginOscar from "./modules/Login/LoginOscar";
+import CorticoWidget from "./modules/cortico/Widget/CorticoWidget";
 const version = "2022.2.2";
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
@@ -157,6 +158,11 @@ const init_cortico = async function () {
 
     addCorticoLogo();
     addMenu();
+
+    const corticoWidgetContainer = document.createElement("div");
+    document.body.append(corticoWidgetContainer);
+    CorticoWidget(document.body, corticoWidgetContainer);
+    console.log("This is running sir");
     //const temp = document.createElement("div");
     //document.body.append(temp);
     //initSidebar(document.body, temp);
@@ -618,8 +624,8 @@ function getQueryStringValue(key) {
     window.location.search.replace(
       new RegExp(
         "^(?:.*[&\\?]" +
-        encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") +
-        "(?:\\=([^&]*))?)?.*$",
+          encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") +
+          "(?:\\=([^&]*))?)?.*$",
         "i"
       ),
       "$1"
