@@ -40,7 +40,7 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
             href="https://cortico.health"
             target="_blank"
           >
-            join Cortico today
+            join today to unlock premium features
           </a>
         </h3>
       </div>
@@ -70,7 +70,7 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
               placeholder="Username"
               required
               autocomplete
-              class="tw-placeholder:text-base tw-appearance-none tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md tw-shadow-sm tw-placeholder-gray-400 tw-focus:outline-none tw-focus:ring-indigo-500 tw-focus:border-indigo-500 tw-sm:text-sm tw-border-b-0"
+              class="tw-text-xl placeholder:tw-text-xl tw-appearance-none tw-block tw-w-full tw-px-3 tw-py-3 tw-border tw-border-gray-300 tw-rounded-t-md tw-shadow-sm tw-placeholder-gray-400 tw-focus:outline-none tw-focus:ring-indigo-500 tw-focus:border-indigo-500 tw-sm:text-sm tw-border-b-0"
             />
           </div>
         </div>
@@ -84,14 +84,45 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
               autocomplete
               required
               placeholder="Enter your password"
-              class="tw-appearance-none tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md tw-shadow-sm tw-placeholder-gray-400 tw-focus:outline-none tw-focus:ring-indigo-500 tw-focus:border-indigo-500 tw-sm:text-sm"
+              class="tw-text-xl placeholder:tw-text-xl tw-appearance-none tw-block tw-w-full tw-px-3 tw-py-3 tw-border tw-border-gray-300 tw-rounded-b-md tw-shadow-sm tw-placeholder-gray-400 tw-focus:outline-none tw-focus:ring-indigo-500 tw-focus:border-indigo-500 tw-sm:text-sm"
             />
+          </div>
+        </div>
+
+        <div className="tw-mt-2">
+          <div>
+            <div>
+              <h4 className="tw-font-semibold tw-p-0 tw-mt-6 tw-mb-2 tw-text-xl">
+                Cortico Clinic Name
+              </h4>
+              <div className="tw-flex tw-items-center tw-space-x-4">
+                <div className="tw-text-xl tw-text-gray-700">https://</div>
+                <input
+                  id="corticourl"
+                  name="corticourl"
+                  type="text"
+                  placeholder="Clinic"
+                  required
+                  class="tw-w-40 tw-text-xl placeholder:tw-text-xl tw-appearance-none tw-block tw-px-3 tw-py-3 tw-border tw-border-gray-300 tw-rounded-b-md tw-shadow-sm tw-placeholder-gray-400 tw-focus:outline-none tw-focus:ring-indigo-500 tw-focus:border-indigo-500 tw-sm:text-sm"
+                />
+                <div>.</div>
+                <input
+                  id="corticourl"
+                  name="corticourl"
+                  type="text"
+                  placeholder="cortico.ca"
+                  required
+                  defaultValue="cortico.ca"
+                  class="tw-w-32 tw-text-xl placeholder:tw-text-xl tw-appearance-none tw-block tw-px-3 tw-py-3 tw-border tw-border-gray-300 tw-rounded-b-md tw-shadow-sm tw-placeholder-gray-400 tw-focus:outline-none tw-focus:ring-indigo-500 tw-focus:border-indigo-500 tw-sm:text-sm"
+                />
+              </div>
+            </div>
           </div>
         </div>
         <div>
           <button
             type="submit"
-            class="tw-w-full tw-flex tw-justify-center tw-py-2 tw-px-4 tw-border tw-border-transparent tw-rounded-md tw-shadow-sm tw-text-sm tw-font-medium tw-text-white tw-bg-cortico-blue tw-hover:bg-indigo-700 tw-focus:outline-none tw-focus:ring-2 tw-focus:ring-offset-2 tw-focus:ring-indigo-500"
+            class="tw-w-full tw-mt-4 tw-flex tw-justify-center tw-py-2 tw-px-4 tw-border tw-border-transparent tw-rounded-md tw-shadow-sm tw-text-xl tw-font-medium tw-text-white tw-bg-cortico-blue tw-hover:bg-indigo-700 tw-focus:outline-none tw-focus:ring-2 tw-focus:ring-offset-2 tw-focus:ring-indigo-500"
           >
             {loading === true ? (
               <span className="tw-flex tw-justify-center">

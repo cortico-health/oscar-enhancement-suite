@@ -16,9 +16,6 @@ function Content() {
         <div
           className="tw-fixed tw-bottom-5 tw-right-5 tw-z-10005 tw-bg-white tw-text-white tw-rounded-xl cursor-pointer"
           ref={containerRef}
-          onClick={() => {
-            setOpen(!open);
-          }}
         >
           <div className="tw-absolute tw-top-[-5px] tw-right-[-5px] tw-bg-yellow-500 tw-p-1 tw-rounded-full">
             <ExclamationCircleIcon className="tw-h-6 tw-w-6 tw-text-white"></ExclamationCircleIcon>
@@ -26,7 +23,12 @@ function Content() {
           {open === true ? (
             <CorticoPlugin />
           ) : (
-            <div className="tw-p-4">
+            <div
+              className="tw-p-4 tw-cursor-pointer"
+              onClick={() => {
+                setOpen(!open);
+              }}
+            >
               <img className="tw-h-12 tw-w-12" src={CorticoImg} />
             </div>
           )}
