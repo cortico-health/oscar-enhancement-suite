@@ -27,12 +27,22 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
   return (
     <div>
       <div className="tw-flex tw-justify-center tw-items-center">
-        <img src={corticoIcon} className="tw-w-10 tw-h-10" />
+        <img src={corticoIcon} className="tw-w-12 tw-h-12" />
       </div>
       <div>
-        <h2 class="tw-mt-6 tw-text-center tw-text-3xl tw-font-extrabold text-gray-900 tw-px-2">
+        <h2 class="tw-mt-2 tw-m-0 tw-p-0 tw-text-center tw-text-4xl tw-font-extrabold text-gray-900 tw-px-2">
           Sign in to your account
         </h2>
+        <h3 className="tw-m-0 tw-p-0 tw-mt-2 tw-text-lg tw-text-center">
+          Or{" "}
+          <a
+            className="tw-text-cortico-blue"
+            href="https://cortico.health"
+            target="_blank"
+          >
+            join Cortico today
+          </a>
+        </h3>
       </div>
       {warnName === true ? (
         <div className="tw-bg-yellow-500 tw-text-white tw-my-4 tw-p-2 tw-rounded-lg tw-text-xs">
@@ -49,14 +59,8 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
       ) : (
         ""
       )}
-      <form className="tw-space-y-4 tw-mt-8" onSubmit={handleSubmit}>
+      <form className="tw-mt-8" onSubmit={handleSubmit}>
         <div>
-          <label
-            for="email"
-            className="tw-block tw-text-sm tw-font-medium tw-text-gray-700"
-          >
-            Username
-          </label>
           <div className="tw-mt-1">
             <input
               ref={username}
@@ -66,18 +70,12 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
               placeholder="Username"
               required
               autocomplete
-              class="tw-appearance-none tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md tw-shadow-sm tw-placeholder-gray-400 tw-focus:outline-none tw-focus:ring-indigo-500 tw-focus:border-indigo-500 tw-sm:text-sm"
+              class="tw-placeholder:text-base tw-appearance-none tw-block tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md tw-shadow-sm tw-placeholder-gray-400 tw-focus:outline-none tw-focus:ring-indigo-500 tw-focus:border-indigo-500 tw-sm:text-sm tw-border-b-0"
             />
           </div>
         </div>
         <div>
-          <label
-            for="password"
-            className="tw-block tw-text-sm tw-font-medium tw-text-gray-700"
-          >
-            Password
-          </label>
-          <div className="tw-mt-1">
+          <div className="">
             <input
               ref={password}
               id="password"

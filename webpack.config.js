@@ -13,9 +13,19 @@ module.exports = {
       h: ["preact", "h"],
     }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
-    })
+      "process.env.NODE_ENV": JSON.stringify("production"),
+    }),
   ],
+  resolve: {
+    alias: {
+      react: "preact/compat",
+      "react-dom": "preact/compat",
+      // Not necessary unless you consume a module using `createClass`
+      "create-react-class": "preact/compat/lib/create-react-class",
+      // Not necessary unless you consume a module requiring `react-dom-factories`
+      "react-dom-factories": "preact/compat/lib/react-dom-factories",
+    },
+  },
   module: {
     rules: [
       {
@@ -69,7 +79,7 @@ module.exports = {
         },
       },
       {
-        test: /\.(png|jpe?g|gif)$/i,
+        test: /\.(png|jpe?g|gif|svg)$/i,
         use: [
           {
             loader: "url-loader",

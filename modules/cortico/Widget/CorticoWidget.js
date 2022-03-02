@@ -1,40 +1,35 @@
 import { render } from "preact";
 import { useRef, useEffect } from "preact/hooks";
+import CorticoImg from "../../../resources/icons/cortico-128.png";
+import { ExclamationCircleIcon } from "@heroicons/react/outline";
+import CorticoPlugin from "./CorticoPlugin";
+import { useState } from "preact/hooks";
 
 function Content() {
   const containerRef = useRef();
 
-  const handleDrag = (e) => {
-    e.preventDefault();
-    //console.log("Handle drag", e);
-  };
-
-  const handleDragEnd = (e) => {
-    e.preventDefault();
-    console.log(e);
-
-    const x = e.clientX;
-    const y = e.clientY;
-
-    const container = containerRef.current;
-    container.style.top = container.offsetTop - y + "px";
-    container.style.left = container.offsetLeft - x + "px";
-    container.classList.remove("tw-bottom-5");
-    container.classList.remove("tw-right-5");
-    //container.style.right = "initial";
-  };
+  const [open, setOpen] = useState(false);
 
   return (
     <div className="cleanslate cortico-widget">
       <div className="tailwind preflight">
         <div
-          draggable={true}
-          onDrag={handleDrag}
-          onDragEnd={handleDragEnd}
-          className="tw-fixed tw-bottom-5 tw-right-5 tw-z-10005 tw-bg-black tw-p-4 tw-text-white tw-rounded-md"
+          className="tw-fixed tw-bottom-5 tw-right-5 tw-z-10005 tw-bg-white tw-text-white tw-rounded-xl cursor-pointer"
           ref={containerRef}
+          onClick={() => {
+            setOpen(!open);
+          }}
         >
-          Hello World
+          <div className="tw-absolute tw-top-[-5px] tw-right-[-5px] tw-bg-yellow-500 tw-p-1 tw-rounded-full">
+            <ExclamationCircleIcon className="tw-h-6 tw-w-6 tw-text-white"></ExclamationCircleIcon>
+          </div>
+          {open === true ? (
+            <CorticoPlugin />
+          ) : (
+            <div className="tw-p-4">
+              <img className="tw-h-12 tw-w-12" src={CorticoImg} />
+            </div>
+          )}
         </div>
       </div>
     </div>
