@@ -130,7 +130,7 @@ function Messenger(patient, opts, container, replaceNode) {
 
       let encounterErrorMessage = null;
       if (opts.encounter === true) {
-        const text = `\n\n[${new Date().toLocaleString()} .: Email sent to patient] \n${subject}: ${body}`;
+        const text = `\n\n[${new Date().toLocaleString()} .: Email sent to patient] \n${subject}:\n\n ${body}`;
         try {
           const result = await Encounter.addToCaseNote(text);
         } catch (err) {
