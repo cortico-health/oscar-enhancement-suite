@@ -3,7 +3,12 @@ import { useState, useEffect } from "preact/hooks";
 import WidgetSidebar from "./WidgetSidebar";
 import WidgetSettings from "./WidgetSettings";
 import WidgetAutomation from "./WidgetAutomation";
-import { UserIcon, DesktopComputerIcon, CogIcon } from "@heroicons/react/solid";
+import {
+  UserIcon,
+  DesktopComputerIcon,
+  ChatIcon,
+  CogIcon,
+} from "@heroicons/react/solid";
 
 export default function CorticoPlugin() {
   const [items, setItems] = useState([
@@ -20,6 +25,11 @@ export default function CorticoPlugin() {
     {
       name: "Settings",
       icon: <CogIcon className="tw-w-8 tw-h-8" />,
+      current: false,
+    },
+    {
+      name: "Messenger",
+      icon: <ChatIcon className="tw-w-8 tw-h-8" />,
       current: false,
     },
   ]);

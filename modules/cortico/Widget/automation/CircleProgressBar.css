@@ -1,0 +1,7 @@
+.widgetCircle {
+  fill: none;
+  stroke: url(#GradientColor);
+  stroke-width: 20px;
+  stroke-dashoffset: 472;
+}
+

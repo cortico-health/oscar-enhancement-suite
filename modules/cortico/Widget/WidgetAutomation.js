@@ -5,36 +5,65 @@ import {
 } from "@heroicons/react/outline";
 import { StarIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
+import { Transition } from "@headlessui/react";
+import { useState } from "preact/hooks";
+import EligbilityCheck from "./automation/EligibilityCheck";
 
 const automations = [
   {
     name: "Eligibility Check",
+    value: "elig",
     description:
       "Have the plugin to check eligibility for each patient in the schedule. ",
     icon: (
-      <ClipboardCheckIcon className="tw-w-10 tw-h-10 tw-mr-2 tw-text-gray-900 tw-inline-block" />
+      <ClipboardCheckIcon className="tw-w-10 tw-h-10 tw-mr-2 tw-text-cortico-blue tw-inline-block" />
     ),
   },
   {
     name: "Preferred Pharmacies",
+    value: "pharmacies",
     description:
       "Set preferred pharmacies for each of the patients in the schedule",
     icon: (
-      <OfficeBuildingIcon className="tw-w-10 tw-h-10 tw-mr-2 tw-text-gray-900 tw-inline-block" />
+      <OfficeBuildingIcon className="tw-w-10 tw-h-10 tw-mr-2 tw-text-cortico-blue tw-inline-block" />
     ),
     premium: true,
   },
 ];
 
 export default function WidgetAutomation() {
+  const [option, setOption] = useState("none");
+
+  const handleClick = (value) => {
+    console.log("Handle Click", value);
+    setOption(value);
+  };
+
   return (
     <div className="tw-px-10 tw-py-4">
-      <WidgetAutomationOptions />
+      {option === "none" ? (
+        <WidgetAutomationOptions onClick={handleClick} />
+      ) : option === "elig" ? (
+        <Transition
+          show={true}
+          appear={true}
+          enter="tw-transition-opacity tw-duration-1000"
+          enterFrom="tw-opacity-0"
+          enterTo="tw-opacity-100"
+          leave="tw-transition-opacity tw-duration-1000"
+          leaveFrom="tw-opacity-100"
+          leaveTo="tw-opacity-0"
+        >
+          <EligbilityCheck />
+        </Transition>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
 
-export function WidgetAutomationOptions() {
+export function WidgetAutomationOptions({ onClick, ...props }) {
   return (
     <div className="tw-font-sans">
       <div>
@@ -53,10 +82,11 @@ export function WidgetAutomationOptions() {
               key={i}
               className={classNames(
                 automation.premium === true
-                  ? "tw-bg-gray-100"
+                  ? "tw-bg-gray-100 tw-border-2 tw-border-cortico-blue"
                   : "tw-bg-gray-50 hover:tw-bg-gray-200",
                 "tw-relative tw-p-8 tw-my-8 tw-rounded-lg tw-shadow-md tw-max-w-[400px] tw-flex tw-justify-between tw-items-center  tw-cursor-pointer"
               )}
+              onClick={() => onClick(automation.value)}
             >
               <div className="tw-cursor-pointer">
                 <span
