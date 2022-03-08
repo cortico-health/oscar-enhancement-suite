@@ -1549,7 +1549,6 @@ async function checkAllEligibility() {
       }
 
       let verified = false;
-
       if (lowerCaseText.includes("this is not an insured benefit")) {
         verified = "uninsured";
         console.log("Patient not insured");
