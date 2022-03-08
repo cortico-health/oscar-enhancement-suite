@@ -1549,7 +1549,7 @@ async function checkAllEligibility() {
       }
 
       let verified = false;
-
+      plusSignAppointments(demographic_no);
       if (lowerCaseText.includes("this is not an insured benefit")) {
         verified = "uninsured";
         console.log("Patient not insured");

@@ -105,6 +105,7 @@ function Messenger(patient, opts, container, replaceNode) {
         sendMessage(data, token)
           .then(handleErrors)
           .then((response) => {
+            console.log("Response", response)
             if (response.success === "true" || response.success === true) {
               setMessageInfo({
                 title: "Success",
