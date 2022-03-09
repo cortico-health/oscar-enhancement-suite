@@ -14,7 +14,7 @@ function Content() {
     <div className="cleanslate cortico-widget">
       <div className="tailwind preflight">
         <div
-          className="tw-fixed tw-bottom-5 tw-right-5 tw-z-10005 tw-bg-white tw-text-white tw-rounded-xl tw-shadow-xl"
+          className="tw-fixed tw-bottom-5 tw-right-5 tw-z-10005 tw-bg-white tw-text-white tw-rounded-xl tw-shadow-xl tw-bg-cortico"
           ref={containerRef}
         >
           <div className="tw-absolute tw-top-[-5px] tw-right-[-5px] tw-bg-yellow-500 tw-p-1 tw-rounded-full">

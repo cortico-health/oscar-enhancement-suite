@@ -57,12 +57,12 @@ export default function CorticoPlugin() {
       <div className="">
         <WidgetSidebar items={items} onClick={handleClick} />
       </div>
-      <div className="tw-p-4  tw-text-black tw-min-h-[300px] tw-min-w-[300px]">
+      <div className="tw-p-4  tw-text-black">
         {activeItem === "Account" ? (
           <Login />
         ) : activeItem === "Automation" ? (
           <WidgetAutomation />
-        ) : activeItem === "Settings" ? (
+        ) : activeItem === "Settings" ? (  
           <WidgetSettings />
         ) : (
           ""

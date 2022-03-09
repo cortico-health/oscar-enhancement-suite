@@ -66,7 +66,7 @@ function Login() {
   };
 
   return (
-    <div className="tw-bg-white tw-rounded-lg tw-p-4 tw-min-w-[300px] tw-font-sans">
+    <div className="tw-bg-white tw-rounded-lg tw-mx-auto tw-p-4 tw-font-sans">
       {success !== true ? (
         <LoginWindow
           onSubmit={handleSubmit}

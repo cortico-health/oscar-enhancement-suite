@@ -3,7 +3,7 @@ import { useState } from "preact/hooks";
 
 export default function WidgetSettings() {
   return (
-    <div className="tw-min-w-[450px] tw-p-4 tw-font-sans tw-h-full">
+    <div className="tw-min-w-[300px] tw-p-4 tw-font-sans tw-h-full">
       <div className="tw-flex tw-flex-col tw-h-full tw-justify-between">
         <div>
           <h2 className="tw-text-3xl tw-font-semibold tw-text-gray-800 tw-m-0 tw-p-0">
