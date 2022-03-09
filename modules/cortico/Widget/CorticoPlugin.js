@@ -11,7 +11,7 @@ import {
 } from "@heroicons/react/solid";
 import { isLoggedIn } from "../../Utils/Utils";
 import AccountInformation from "./AccountInformation";
-
+import NotAvailable from "./NotAvailable";
 
 export default function CorticoPlugin() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -57,26 +57,31 @@ export default function CorticoPlugin() {
   }, [items]);
 
   useEffect(() => {
-    isLoggedIn().then(result => {
+    isLoggedIn().then((result) => {
       setLoggedIn(result);
-    }) 
-  }, [])
+    });
+  }, []);
 
   return (
     <div className="tw-flex">
       <div className="">
         <WidgetSidebar items={items} onClick={handleClick} />
       </div>
-      <div className="tw-p-4  tw-text-black">
+      <div className=" tw-text-black">
         {activeItem === "Account" ? (
-          <div className="tw-w-[320px] tw-h-[355px] tw-mx-auto tw-flex tw-items-center tw-justify-center">
-            { loggedIn === true ?  <AccountInformation /> :  <Login />}
+          <div className="tw-w-[320px] tw-h-[355px] tw-p-4 tw-mx-auto tw-flex tw-items-center tw-justify-center">
+            {loggedIn === true ? <AccountInformation /> : <Login />}
           </div>
-          
         ) : activeItem === "Automation" ? (
           <WidgetAutomation />
-        ) : activeItem === "Settings" ? (  
-          <WidgetSettings />
+        ) : activeItem === "Settings" ? (
+          <div className="tw-p-4">
+            <WidgetSettings />
+          </div>
+        ) : activeItem === "Messenger" ? (
+          <div className="tw-w-[320px] tw-h-[355px]">
+            <NotAvailable />
+          </div>
         ) : (
           ""
         )}

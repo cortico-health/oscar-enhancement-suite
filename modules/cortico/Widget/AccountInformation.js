@@ -23,11 +23,11 @@ export default function AccountInformation() {
     <div className="tw-flex tw-font-sans tw-w-full tw-items-start tw-h-full">
       <div className="tw-flex tw-flex-col tw-w-full tw-justify-between tw-h-full">
         <div>
-          <div className="tw-flex tw-justify-center tw-items-center tw-my-8">
-            <img src={corticoIcon} className="tw-w-12 tw-h-12" />
-          </div>
-          <div className="tw-bg-gray-50 tw-rounded-lg tw-p-8 tw-text-center tw-shadow-md tw-border">
-            <span className="tw-border tw-shadow-xl tw-h-20 tw-w-20 tw-mx-auto  tw-rounded-full tw-overflow-hidden tw-bg-gray-400 tw-flex tw-items-center tw-justify-center tw-text-gray-700 tw-font-semibold">
+          <div className="tw-bg-gray-100 tw-rounded-lg tw-p-8 tw-text-center tw-shadow-md tw-border">
+            <div className="tw-flex tw-justify-center tw-items-center tw-mb-10">
+              <img src={corticoIcon} className="tw-w-12 tw-h-12" />
+            </div>
+            <span className="tw-border tw-shadow-xl tw-h-24 tw-w-24 tw-mx-auto  tw-rounded-full tw-overflow-hidden tw-bg-gray-400 tw-flex tw-items-center tw-justify-center tw-text-gray-700 tw-font-semibold">
               {localStorage.getItem("name") &&
                 localStorage
                   .getItem("name")
@@ -36,7 +36,7 @@ export default function AccountInformation() {
                   .join("")}
             </span>
             <div>
-              <p className="tw-mt-4 tw-text-gray-700 tw-font-bold tw-text-2xl">
+              <p className="tw-mt-4 tw-text-gray-700 tw-font-bold tw-text-3xl">
                 {localStorage.getItem("name")}
               </p>
               <p className="tw-mt-2 tw-text-gray-700 tw-text-xl tw-font-normal tw-opacity-75">
@@ -104,6 +104,7 @@ export default function AccountInformation() {
           <hr className="tw-my-2" />
           <div className="tw-flex tw-justify-between tw-mt-4">
             <p className="tw-text-base tw-text-gray-500 tw-text-center tw-font-semibold">
+              &copy; <span className="tw-text-cortico-blue">Cortico</span> |
               Version 2022.2.2
             </p>
             <a
