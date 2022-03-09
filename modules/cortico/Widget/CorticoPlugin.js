@@ -9,8 +9,12 @@ import {
   ChatIcon,
   CogIcon,
 } from "@heroicons/react/solid";
+import { isLoggedIn } from "../../Utils/Utils";
+import AccountInformation from "./AccountInformation";
+
 
 export default function CorticoPlugin() {
+  const [loggedIn, setLoggedIn] = useState(false);
   const [items, setItems] = useState([
     {
       name: "Account",
@@ -52,6 +56,12 @@ export default function CorticoPlugin() {
     setActiveItem(activeItem.name);
   }, [items]);
 
+  useEffect(() => {
+    isLoggedIn().then(result => {
+      setLoggedIn(result);
+    }) 
+  }, [])
+
   return (
     <div className="tw-flex">
       <div className="">
@@ -60,7 +70,7 @@ export default function CorticoPlugin() {
       <div className="tw-p-4  tw-text-black">
         {activeItem === "Account" ? (
           <div className="tw-w-[320px] tw-h-[355px] tw-mx-auto tw-flex tw-items-center tw-justify-center">
-            <Login />
+            { loggedIn === true ?  <AccountInformation /> :  <Login />}
           </div>
           
         ) : activeItem === "Automation" ? (
