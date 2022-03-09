@@ -37,10 +37,14 @@ function Login() {
   const [errorMessage, setErrorMessage] = useState(null);
 
   const handleSubmit = async (data) => {
+    setError(null);
     setErrorMessage(null);
     setLoading(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    const { username, password } = data;
+    const { username, password, clinicName, suffix, remember } = data;
+
+    localStorage.setItem('clinicname', clinicName);
+    localStorage.setItem('customUrlSuffix', suffix);
 
     try {
       const response = await signInRequest(username, password);
@@ -57,6 +61,17 @@ function Login() {
 
       setLoading(false);
       setSuccess(true);
+
+      if (remember) {
+        localStorage.setItem('remUsername', username)
+        localStorage.setItem('remClinicName', clinicName);
+        localStorage.setItem('remSuffix', suffix);
+      } else {
+        localStorage.removeItem('remUsername');
+        localStorage.removeItem('remClinicName');
+        localStorage.removeItem('remSuffix');
+      }
+
     } catch (error) {
       setLoading(false);
       console.error(error);

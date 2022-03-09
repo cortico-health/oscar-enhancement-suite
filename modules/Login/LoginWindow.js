@@ -9,6 +9,11 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
   const password = useRef();
   const clinicNameRef = useRef();
   const suffixRef = useRef();
+  const rememberRef = useRef();
+
+  const [remUsername, setUsername] = useState(null);
+  const [remClinicName, setClinicName] = useState(null);
+  const [remSuffix, setSuffix] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,9 +22,16 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
       password: password && password.current.value,
       clinicName: clinicNameRef && clinicNameRef.current.value,
       suffix: suffixRef && suffixRef.current.value,
+      remember: rememberRef && rememberRef.current.checked,
     };
     onSubmit(data);
   };
+
+  useEffect(() => {
+    setUsername(localStorage.getItem('remUsername'))
+    setClinicName(localStorage.getItem('remClinicName'));
+    setSuffix(localStorage.getItem('remSuffix'));
+  }, [])
 
 
   return (
@@ -44,7 +56,7 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
       </div>
 
       {error === true ? (
-        <div className="tw-bg-red-400 tw-text-white tw-my-2 tw-p-2 tw-rounded-lg tw-text-xs">
+        <div className="tw-bg-red-500 tw-text-white tw-mt-4 tw-p-2 tw-rounded-lg tw-text-lg tw-font-medium">
           {errorMessage || "Something went wrong. Please try again."}
         </div>
       ) : (
@@ -60,6 +72,7 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
               <div className="tw-flex tw-items-center tw-space-x-4">
                 <div className="tw-text-lg tw-text-gray-500">https://</div>
                 <input
+                  defaultValue={remClinicName}
                   ref={clinicNameRef}
                   id="clinicname"
                   name="clinicname"
@@ -70,13 +83,13 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
                 />
                 <div>.</div>
                 <input
+                  defaultValue={remSuffix || "cortico.ca"}
                   ref={suffixRef}
                   id="customurlsuffix"
                   name="customurlsuffix"
                   type="text"
                   placeholder="cortico.ca"
                   required
-                  defaultValue="cortico.ca"
                   class="tw-w-32 tw-text-xl placeholder:tw-text-xl tw-appearance-none tw-block tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-b-md tw-shadow-sm tw-placeholder-gray-400 tw-focus:outline-none tw-focus:ring-indigo-500 tw-focus:border-indigo-500 tw-sm:text-sm"
                 />
               </div>
@@ -89,6 +102,7 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
         <div>
           <div className="tw-mt-4">
             <input
+              defaultValue={remUsername}
               ref={username}
               id="username"
               name="username"
@@ -118,6 +132,7 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
         <div className="tw-mt-4 tw-flex tw-justify-between">
           <label className="tw-inline-flex tw-items-center">
             <input
+              ref={rememberRef}
               type="checkbox"
               className="
                 tw-rounded
