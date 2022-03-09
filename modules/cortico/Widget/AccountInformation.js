@@ -27,14 +27,13 @@ export default function AccountInformation() {
             <img src={corticoIcon} className="tw-w-12 tw-h-12" />
           </div>
           <div className="tw-bg-gray-50 tw-rounded-lg tw-p-8 tw-text-center tw-shadow-md tw-border">
-            <span className="tw-border tw-shadow-md tw-block tw-h-20 tw-w-20 tw-mx-auto  tw-rounded-full tw-overflow-hidden tw-bg-gray-100">
-              <svg
-                className="tw-h-full tw-w-full tw-text-gray-300"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-              </svg>
+            <span className="tw-border tw-shadow-xl tw-h-20 tw-w-20 tw-mx-auto  tw-rounded-full tw-overflow-hidden tw-bg-gray-400 tw-flex tw-items-center tw-justify-center tw-text-gray-700 tw-font-semibold">
+              {localStorage.getItem("name") &&
+                localStorage
+                  .getItem("name")
+                  .split(" ")
+                  .map((n) => n[0])
+                  .join("")}
             </span>
             <div>
               <p className="tw-mt-4 tw-text-gray-700 tw-font-bold tw-text-2xl">
