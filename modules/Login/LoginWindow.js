@@ -4,26 +4,23 @@ import { LockClosedIcon } from "@heroicons/react/solid"
 
 
 function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
-  const [warnName, setWarnName] = useState(false);
 
   const username = useRef();
   const password = useRef();
+  const clinicNameRef = useRef();
+  const suffixRef = useRef();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
       username: username && username.current.value,
       password: password && password.current.value,
+      clinicName: clinicNameRef && clinicNameRef.current.value,
+      suffix: suffixRef && suffixRef.current.value,
     };
     onSubmit(data);
   };
 
-  useEffect(() => {
-    const clinicname = window.localStorage.getItem("clinicname");
-    if (!clinicname) {
-      setWarnName(true);
-    }
-  }, []);
 
   return (
     <div>
@@ -45,14 +42,7 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
           </a>
         </h3>
       </div>
-      {warnName === true ? (
-        <div className="tw-bg-yellow-500 tw-text-white tw-my-4 tw-p-2 tw-rounded-lg tw-text-xs">
-          Your clinic is not set. You won't be able to sign in until this is
-          set.
-        </div>
-      ) : (
-        ""
-      )}
+
       {error === true ? (
         <div className="tw-bg-red-400 tw-text-white tw-my-2 tw-p-2 tw-rounded-lg tw-text-xs">
           {errorMessage || "Something went wrong. Please try again."}
@@ -62,16 +52,17 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
       )}
       <form className="tw-mt-8" onSubmit={handleSubmit}>
       <div className="tw-mt-4">
-          <div>
+          <div className="tw-mt-6 tw-rounded-lg tw-bg-gray-100 tw-p-4">
             <div>
-              <h4 className="tw-font-semibold tw-p-0 tw-mt-6 tw-mb-2 tw-text-lg tw-text-gray-700">
+              <h4 className="tw-font-semibold tw-p-0 tw-mb-2 tw-text-lg tw-text-gray-700">
                 Cortico Clinic Name
               </h4>
               <div className="tw-flex tw-items-center tw-space-x-4">
-                <div className="tw-text-xl tw-text-gray-700">https://</div>
+                <div className="tw-text-lg tw-text-gray-500">https://</div>
                 <input
-                  id="corticourl"
-                  name="corticourl"
+                  ref={clinicNameRef}
+                  id="clinicname"
+                  name="clinicname"
                   type="text"
                   placeholder="Clinic"
                   required
@@ -79,8 +70,9 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
                 />
                 <div>.</div>
                 <input
-                  id="corticourl"
-                  name="corticourl"
+                  ref={suffixRef}
+                  id="customurlsuffix"
+                  name="customurlsuffix"
                   type="text"
                   placeholder="cortico.ca"
                   required
