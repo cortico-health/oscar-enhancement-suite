@@ -2,6 +2,9 @@ import { Switch } from "@headlessui/react";
 import { useState } from "preact/hooks";
 
 export default function WidgetSettings() {
+  //localStorage.setItem("recall-status", input.value);
+  //localStorage.setItem("medium-option", value);
+
   return (
     <div className="tw-min-w-[300px] tw-p-4 tw-font-sans tw-h-full">
       <div className="tw-flex tw-flex-col tw-h-full tw-justify-between">
