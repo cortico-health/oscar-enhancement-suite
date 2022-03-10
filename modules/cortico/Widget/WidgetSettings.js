@@ -1,9 +1,23 @@
 import { Switch } from "@headlessui/react";
-import { useState } from "preact/hooks";
+import { useState, useRef } from "preact/hooks";
+import Button from "../../core/Button";
 
 export default function WidgetSettings() {
-  //localStorage.setItem("recall-status", input.value);
-  //localStorage.setItem("medium-option", value);
+  const recallRef = useRef();
+  const mediumRef = useRef();
+  const [theme, setTheme] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const saveSettings = async () => {
+    setLoading(true);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    const recallStatus = recallRef.current && recallRef.current.value;
+    const mediumOption = mediumRef.current && mediumRef.current.value;
+    localStorage.setItem("recall-status", recallStatus);
+    localStorage.setItem("medium-option", mediumOption);
+    setLoading(false);
+  };
 
   return (
     <div className="tw-min-w-[300px] tw-p-4 tw-font-sans tw-h-full">
@@ -18,7 +32,7 @@ export default function WidgetSettings() {
           <hr className="tw-my-4" />
           <div className="tw-flex tw-justify-between tw-w-full tw-mt-5">
             <p className="tw-text-gray-700 tw-text-xl">Theme</p>
-            <OesSwitch />
+            <OesSwitch enabled={theme} onChange={() => setTheme(!theme)} />
           </div>
           <div className="tw-flex tw-justify-between tw-w-full tw-mt-7">
             <label className="tw-flex tw-justify-between tw-w-full tw-items-center">
@@ -26,6 +40,7 @@ export default function WidgetSettings() {
                 Appointment Type Reminder
               </span>
               <select
+                ref={mediumRef}
                 className="
                     tw-text-gray-700
                     tw-text-xl
@@ -55,6 +70,7 @@ export default function WidgetSettings() {
                 Recall Status Check
               </span>
               <input
+                ref={recallRef}
                 type="text"
                 class="
                     tw-max-w-[150px]
@@ -80,9 +96,9 @@ export default function WidgetSettings() {
             <button className="tw-bg-red-600 tw-text-xl tw-text-white tw-rounded-md tw-px-3 tw-py-2">
               Reset Cache
             </button>
-            <button className="tw-bg-cortico-blue tw-text-xl tw-text-white tw-rounded-md tw-px-3 tw-py-2">
+            <Button loading={loading} onClick={saveSettings}>
               Save
-            </button>
+            </Button>
           </div>
         </div>
       </div>
@@ -90,13 +106,11 @@ export default function WidgetSettings() {
   );
 }
 
-function OesSwitch() {
-  const [enabled, setEnabled] = useState(false);
-
+function OesSwitch({ enabled, onChange, ...props }) {
   return (
     <Switch
       checked={enabled}
-      onChange={setEnabled}
+      onChange={onChange}
       className={`${
         enabled ? "tw-bg-cortico-blue" : "tw-bg-gray-200"
       } tw-relative tw-inline-flex tw-items-center tw-h-7 tw-w-14 tw-rounded-full`}
