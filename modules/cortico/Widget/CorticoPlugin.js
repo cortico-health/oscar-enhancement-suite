@@ -69,11 +69,13 @@ export default function CorticoPlugin() {
       </div>
       <div className=" tw-text-black">
         {activeItem === "Account" ? (
-          <div className="tw-w-[320px] tw-h-[380px] tw-p-4 tw-mx-auto tw-flex tw-items-center tw-justify-center">
+          <div className="tw-w-[320px] tw-h-[420px] tw-p-4 tw-mx-auto tw-flex tw-items-center tw-justify-center tw-overflow-hidden">
             {loggedIn === true ? <AccountInformation /> : <Login />}
           </div>
         ) : activeItem === "Automation" ? (
-          <WidgetAutomation />
+          <div className="tw-p-6">
+            <WidgetAutomation />
+          </div>
         ) : activeItem === "Settings" ? (
           <div className="tw-p-4 tw-w-[450px] tw-h-[300px]">
             <WidgetSettings />
