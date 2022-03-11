@@ -39,11 +39,5 @@ function Content() {
 }
 
 export default function CorticoWidget(container, replaceNode) {
-  return render(
-    <RecoilRoot>
-      <Content />
-    </RecoilRoot>,
-    container,
-    replaceNode
-  );
+  return render(<Content />, container, replaceNode);
 }
