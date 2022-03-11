@@ -62,6 +62,7 @@ import Disclaimer from "./modules/cortico/Disclaimer";
 
 import LoginOscar from "./modules/Login/LoginOscar";
 import CorticoWidget from "./modules/cortico/Widget/CorticoWidget";
+
 const version = "2022.2.2";
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);

@@ -19,9 +19,6 @@ module.exports = {
   devtool: "source-map",
   mode: "development",
   plugins: [
-    new webpack.ProvidePlugin({
-      h: ["preact", "h"],
-    }),
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("development"),
     }),
@@ -29,11 +26,9 @@ module.exports = {
   resolve: {
     alias: {
       react: "preact/compat",
+      "react-dom/test-utils": "preact/test-utils",
       "react-dom": "preact/compat",
-      // Not necessary unless you consume a module using `createClass`
-      "create-react-class": "preact/compat/lib/create-react-class",
-      // Not necessary unless you consume a module requiring `react-dom-factories`
-      "react-dom-factories": "preact/compat/lib/react-dom-factories",
+      "react/jsx-runtime": "preact/jsx-runtime",
     },
   },
 
@@ -60,28 +55,14 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: [
-              [
-                "@babel/preset-env",
-                {
-                  targets: "> 0.25%, not dead, IE > 11",
-                },
-              ],
-            ],
-            assumptions: {
-              setPublicClassFields: true,
-            },
+            presets: ["@babel/preset-react", ["@babel/preset-env"]],
             plugins: [
-              [
-                "@babel/plugin-proposal-decorators",
-                { decoratorsBeforeExport: true },
-              ],
-              "@babel/plugin-transform-runtime",
+              ["@babel/plugin-transform-runtime"],
               [
                 "@babel/plugin-transform-react-jsx",
                 {
-                  pragma: "h",
-                  pragmaFrag: "Fragment",
+                  runtime: "automatic",
+                  importSource: "preact",
                 },
               ],
             ],

@@ -4,7 +4,7 @@ export default function Button({ block, loading = false, children, ...props }) {
     <button
       className={classNames(
         block === true ? "tw-block" : "tw-inline-block",
-        "tw-px-4 tw-py-2 tw-text-white tw-bg-cortico-blue tw-rounded-md tw-shadow-md tw-relative tw-text-lg"
+        "tw-px-4 tw-py-2 tw-text-white tw-bg-blue-1000 tw-rounded-md tw-shadow-md tw-relative tw-text-lg"
       )}
       {...props}
     >

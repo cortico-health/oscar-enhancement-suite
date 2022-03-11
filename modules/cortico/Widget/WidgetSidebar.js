@@ -34,8 +34,8 @@ export default function WidgetSidebar({ onClick, items, ...props }) {
               </p>
               <p
                 className={classNames(
-                  "tw-text-xl tw-cursor-pointer tw-font-normal",
-                  item.current === true ? "tw-opacity-100" : "tw-opacity-80"
+                  "tw-text-lg tw-cursor-pointer tw-font-normal tw-tracking-wide",
+                  item.current === true ? "tw-opacity-100" : "tw-opacity-60"
                 )}
               >
                 {item.name}
@@ -43,8 +43,8 @@ export default function WidgetSidebar({ onClick, items, ...props }) {
             </div>
           ))}
         </div>
-        <div className="tw-text-center tw-text-white tw-text-sm tw-font-sans font-semibold">
-          Version 2022.2.2
+        <div className="tw-text-center tw-text-white tw-text-sm tw-font-sans tw-font-semibold tw-mt-8">
+          2022.2.2
         </div>
       </div>
     </div>

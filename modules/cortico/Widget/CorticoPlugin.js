@@ -63,7 +63,7 @@ export default function CorticoPlugin() {
   }, []);
 
   return (
-    <div className="tw-flex">
+    <div className="tw-flex tw-h-full">
       <div className="">
         <WidgetSidebar items={items} onClick={handleClick} />
       </div>
@@ -77,11 +77,11 @@ export default function CorticoPlugin() {
             <WidgetAutomation />
           </div>
         ) : activeItem === "Settings" ? (
-          <div className="tw-p-4 tw-w-[700px]">
+          <div className="tw-p-4 tw-w-[700px] tw-h-full">
             <WidgetSettings />
           </div>
         ) : activeItem === "Messenger" ? (
-          <div className="tw-w-[320px] tw-h-[355px]">
+          <div className="tw-w-[320px] tw-h-full">
             <NotAvailable />
           </div>
         ) : (
