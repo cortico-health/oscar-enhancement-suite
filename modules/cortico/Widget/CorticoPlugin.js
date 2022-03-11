@@ -12,8 +12,12 @@ import {
 import { isLoggedIn } from "../../Utils/Utils";
 import AccountInformation from "./AccountInformation";
 import NotAvailable from "./NotAvailable";
+import { WidgetContext } from "../../Context/WidgetContext";
+import { useContext } from "preact/hooks";
 
 export default function CorticoPlugin() {
+  const widgetContext = useContext(WidgetContext);
+
   const [loggedIn, setLoggedIn] = useState(false);
   const [items, setItems] = useState([
     {
