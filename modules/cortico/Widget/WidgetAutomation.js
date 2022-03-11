@@ -1,9 +1,9 @@
+import { ArrowRightIcon } from "@heroicons/react/outline";
 import {
-  ArrowRightIcon,
+  StarIcon,
   ClipboardCheckIcon,
   OfficeBuildingIcon,
-} from "@heroicons/react/outline";
-import { StarIcon } from "@heroicons/react/solid";
+} from "@heroicons/react/solid";
 import classNames from "classnames";
 import { Transition } from "@headlessui/react";
 import { useState } from "preact/hooks";
@@ -67,7 +67,7 @@ export function WidgetAutomationOptions({ onClick, ...props }) {
   return (
     <div className="tw-font-sans">
       <div>
-        <h2 className="tw-text-3xl tw-font-semibold tw-text-gray-800 tw-m-0 tw-p-0">
+        <h2 className="tw-text-3xl tw-font-medium tw-text-gray-800 tw-m-0 tw-p-0">
           Automations
         </h2>
         <p className="tw-text-lg tw-text-gray-700">
@@ -84,25 +84,25 @@ export function WidgetAutomationOptions({ onClick, ...props }) {
                 automation.premium === true
                   ? "tw-bg-gray-100 tw-border-2 tw-border-cortico-blue"
                   : "tw-bg-gray-50 hover:tw-bg-gray-200",
-                "tw-relative tw-p-8 tw-my-8 tw-rounded-lg tw-shadow-md tw-max-w-[400px] tw-flex tw-justify-between tw-items-center  tw-cursor-pointer"
+                "tw-min-w-[600px] tw-relative tw-p-8 tw-my-8 tw-rounded-lg tw-shadow-md tw-flex tw-justify-between tw-items-center  tw-cursor-pointer"
               )}
               onClick={() => onClick(automation.value)}
             >
               <div className="tw-cursor-pointer">
                 <span
                   className={classNames(
-                    "tw-flex tw-text-xl  tw-font-semibold tw-mb-4 tw-items-center tw-w-full",
+                    "tw-flex tw-text-xl  tw-font-normal tw-mb-4 tw-items-center tw-w-full",
                     automation.premium === true
                       ? "tw-text-gray-700"
                       : "tw-text-gray-700"
                   )}
                 >
-                  {automation.icon}
+                  <span>{automation.icon}</span>
                   {automation.name}
                 </span>
                 <p
                   className={classNames(
-                    "tw-text-xl tw-text-gray-700 tw-max-w-[300px]",
+                    "tw-text-xl tw-text-gray-700 tw-max-w-[300px] tw-opacity-80",
                     automation.premium === true
                       ? "tw-text-gray-700"
                       : "tw-text-gray-700"
@@ -116,7 +116,7 @@ export function WidgetAutomationOptions({ onClick, ...props }) {
               </div>
               {automation.premium === true ? (
                 <div className="tw-absolute tw-top-[-5px] tw-right-[-5px] tw-rounded-xl tw-p-2 tw-bg-cortico-blue tw-shadow-md">
-                  <p className="tw-text-base tw-text-gray-50 tw-font-semibold">
+                  <p className="tw-text-base tw-text-gray-50 tw-font-normal">
                     <StarIcon className="tw-inline-block tw-mr-1 tw-w-6 tw-h-6 tw-text-white"></StarIcon>
                     Requires Premium
                   </p>

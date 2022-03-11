@@ -14,5 +14,8 @@ module.exports = {
     "postcss-nested": {},
     tailwindcss: {},
     autoprefixer: {},
+    "postcss-rem-to-pixel": {
+      propList: ["*"],
+    },
   },
 };

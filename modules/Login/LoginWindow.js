@@ -1,10 +1,8 @@
 import { useState, useRef, useEffect } from "preact/hooks";
-import corticoIcon from "../../resources/icons/logo-blue.svg";
-import { LockClosedIcon } from "@heroicons/react/solid"
-
+import corticoIcon from "../../resources/icons/logo-dark-blue.svg";
+import { LockClosedIcon } from "@heroicons/react/solid";
 
 function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
-
   const username = useRef();
   const password = useRef();
   const clinicNameRef = useRef();
@@ -28,11 +26,10 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
   };
 
   useEffect(() => {
-    setUsername(localStorage.getItem('remUsername'))
-    setClinicName(localStorage.getItem('remClinicName'));
-    setSuffix(localStorage.getItem('remSuffix'));
-  }, [])
-
+    setUsername(localStorage.getItem("remUsername"));
+    setClinicName(localStorage.getItem("remClinicName"));
+    setSuffix(localStorage.getItem("remSuffix"));
+  }, []);
 
   return (
     <div>
@@ -40,13 +37,13 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
         <img src={corticoIcon} className="tw-w-12 tw-h-12" />
       </div>
       <div>
-        <h2 class="tw-m-0 tw-p-0 tw-mt-4 tw-mb-2 tw-text-center tw-text-4xl tw-font-extrabold text-gray-900 tw-px-2">
+        <h2 class="tw-m-0 tw-p-0 tw-mt-4 tw-mb-2 tw-text-center tw-text-4xl tw-font-medium text-gray-900 tw-px-2">
           Sign in to your account
         </h2>
         <h3 className="tw-m-0 tw-p-0 tw-mt-2 tw-text-lg tw-text-center">
           Or{" "}
           <a
-            className="tw-text-cortico-blue"
+            className="tw-text-blue-700"
             href="https://cortico.health"
             target="_blank"
           >
@@ -63,10 +60,10 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
         ""
       )}
       <form className="tw-mt-8" onSubmit={handleSubmit}>
-      <div className="tw-mt-4">
-          <div className="tw-mt-6 tw-rounded-lg tw-bg-gray-100 tw-p-4">
+        <div className="tw-mt-4">
+          <div className="tw-mt-6 tw-rounded-lg tw-bg-gray-100 tw-p-4 tw-border">
             <div>
-              <h4 className="tw-font-semibold tw-p-0 tw-mb-2 tw-text-lg tw-text-gray-700">
+              <h4 className="tw-font-medium tw-p-0 tw-mb-2 tw-text-lg tw-text-gray-700">
                 Cortico Clinic Name
               </h4>
               <div className="tw-flex tw-items-center tw-space-x-4">
@@ -79,7 +76,7 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
                   type="text"
                   placeholder="Clinic"
                   required
-                  class="tw-w-40 tw-text-xl placeholder:tw-text-xl tw-appearance-none tw-block tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-b-md tw-shadow-sm tw-placeholder-gray-400 tw-focus:outline-none tw-focus:ring-indigo-500 tw-focus:border-indigo-500 tw-sm:text-sm"
+                  className="tw-text-gray-700 tw-w-40 tw-text-xl placeholder:tw-text-xl tw-appearance-none tw-block tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-b-md tw-shadow-sm tw-placeholder-gray-400 tw-focus:outline-none tw-focus:ring-indigo-500 tw-focus:border-indigo-500 tw-sm:text-sm"
                 />
                 <div>.</div>
                 <input
@@ -90,14 +87,14 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
                   type="text"
                   placeholder="cortico.ca"
                   required
-                  class="tw-w-32 tw-text-xl placeholder:tw-text-xl tw-appearance-none tw-block tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-b-md tw-shadow-sm tw-placeholder-gray-400 tw-focus:outline-none tw-focus:ring-indigo-500 tw-focus:border-indigo-500 tw-sm:text-sm"
+                  className="tw-text-gray-700 tw-w-32 tw-text-xl placeholder:tw-text-xl tw-appearance-none tw-block tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-b-md tw-shadow-sm tw-placeholder-gray-400 tw-focus:outline-none tw-focus:ring-indigo-500 tw-focus:border-indigo-500 tw-sm:text-sm"
                 />
               </div>
             </div>
           </div>
         </div>
 
-        <hr className="tw-my-4"/>
+        <hr className="tw-my-4" />
 
         <div>
           <div className="tw-mt-4">
@@ -147,16 +144,19 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
               "
               checked
             />
-            <span className="tw-ml-2 tw-text-gray-700 tw-text-xl">Remember Me</span>
+            <span className="tw-ml-2 tw-text-gray-700 tw-text-xl">
+              Remember Me
+            </span>
           </label>
-          <a href="" className="tw-text-cortico-blue tw-text-xl tw-font-regular">Forgot your password?</a>
+          <a href="" className="tw-text-blue-1000 tw-text-xl tw-font-medium">
+            Forgot your password?
+          </a>
         </div>
-
 
         <div>
           <button
             type="submit"
-            class="tw-w-full tw-mt-4 tw-flex tw-justify-center tw-py-2 tw-px-4 tw-border tw-border-transparent tw-rounded-md tw-shadow-sm tw-text-xl tw-font-medium tw-text-white tw-bg-cortico-blue tw-hover:bg-indigo-700 tw-focus:outline-none tw-focus:ring-2 tw-focus:ring-offset-2 tw-focus:ring-indigo-500 tw-relative"
+            class="tw-w-full tw-mt-4 tw-flex tw-justify-center tw-py-2 tw-px-4 tw-border tw-border-transparent tw-rounded-md tw-shadow-sm tw-text-xl tw-font-medium tw-text-white tw-bg-blue-1000 tw-hover:bg-indigo-700 tw-focus:outline-none tw-focus:ring-2 tw-focus:ring-offset-2 tw-focus:ring-indigo-500 tw-relative"
           >
             {loading === true ? (
               <span className="tw-flex tw-justify-center">

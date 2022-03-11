@@ -13,6 +13,7 @@ module.exports = {
           "6px 6px 10px -1px rgba(0,0,0,0.15), -6px -6px 10px -1px rgba(255,255,255,0.7)",
         innerCircle:
           "inset 4px 4px 6px -1px rgba(0,0,0,0.2), inset -4px -4px 6px -1px rgba(255,255,255,0.7), -0.5px -0.5px 0px rgba(255,255,255,1), 0.5px 0.5px 0px rgba(0,0,0,0.15), 0px 12px 10px -10px rgba(0,0,0,0.05)",
+        right: "4px 0px 5px 0px rgba(0,0,0,0.2)",
       },
       screens: {
         messenger: "600px",
@@ -39,7 +40,18 @@ module.exports = {
       red: colors.red,
       yellow: colors.amber,
       green: colors.emerald,
-      blue: colors.blue,
+      blue: {
+        100: "#E1E5FF",
+        200: "#B5BEFF",
+        300: "#97A4FF",
+        400: "#7A8AFF",
+        500: "#5C70FF",
+        600: "#4F61E0",
+        700: "#3B4AB2",
+        800: "#2E3B93",
+        900: "#202C74",
+        1000: "#131D55",
+      },
       indigo: colors.indigo,
       purple: colors.violet,
       pink: colors.pink,

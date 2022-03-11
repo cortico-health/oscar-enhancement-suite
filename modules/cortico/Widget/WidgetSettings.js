@@ -1,6 +1,7 @@
 import { Switch } from "@headlessui/react";
-import { useState, useRef } from "preact/hooks";
+import { useState, useRef, useEffect } from "preact/hooks";
 import Button from "../../core/Button";
+import { addNewUI, removeNewUI } from "../../Utils/Utils";
 
 export default function WidgetSettings() {
   const recallRef = useRef();
@@ -16,6 +17,7 @@ export default function WidgetSettings() {
     const mediumOption = mediumRef.current && mediumRef.current.value;
     localStorage.setItem("recall-status", recallStatus);
     localStorage.setItem("medium-option", mediumOption);
+
     setLoading(false);
   };
 
@@ -23,17 +25,19 @@ export default function WidgetSettings() {
     <div className="tw-min-w-[300px] tw-p-4 tw-font-sans tw-h-full">
       <div className="tw-flex tw-flex-col tw-h-full tw-justify-between">
         <div>
-          <h2 className="tw-text-3xl tw-font-semibold tw-text-gray-800 tw-m-0 tw-p-0">
+          <h2 className="tw-text-3xl tw-font-medium tw-text-gray-800 tw-m-0 tw-p-0">
             Settings
           </h2>
           <p className="tw-text-lg tw-text-gray-700">
             Configure the way the plugin works
           </p>
           <hr className="tw-my-4" />
-          <div className="tw-flex tw-justify-between tw-w-full tw-mt-5">
+          {/*
+                    <div className="tw-flex tw-justify-between tw-w-full tw-mt-5">
             <p className="tw-text-gray-700 tw-text-xl">Theme</p>
             <OesSwitch enabled={theme} onChange={() => setTheme(!theme)} />
-          </div>
+          </div> */}
+
           <div className="tw-flex tw-justify-between tw-w-full tw-mt-7">
             <label className="tw-flex tw-justify-between tw-w-full tw-items-center">
               <span className="tw-text-gray-700 tw-text-xl">
@@ -41,6 +45,7 @@ export default function WidgetSettings() {
               </span>
               <select
                 ref={mediumRef}
+                defaultValue={localStorage.getItem("medium-option")}
                 className="
                     tw-text-gray-700
                     tw-text-xl
@@ -56,11 +61,11 @@ export default function WidgetSettings() {
                     tw-focus:border-indigo-300 tw-focus:ring tw-focus:ring-indigo-200 tw-focus:ring-opacity-50
                   "
               >
-                <option>Phone</option>
-                <option>Virtual</option>
-                <option>Clinic</option>
-                <option>N/A</option>
-                <option>Quiet</option>
+                <option value="Phone">Phone</option>
+                <option value="Virtual">Virtual</option>
+                <option value="Clinic">Clinic</option>
+                <option value="N/A">N/A</option>
+                <option value="Quiet">Quiet</option>
               </select>
             </label>
           </div>
@@ -71,6 +76,7 @@ export default function WidgetSettings() {
               </span>
               <input
                 ref={recallRef}
+                defaultValue={localStorage.getItem("recall-status")}
                 type="text"
                 class="
                     tw-max-w-[150px]

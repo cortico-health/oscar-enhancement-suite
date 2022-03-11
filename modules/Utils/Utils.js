@@ -265,3 +265,41 @@ export function stripScripts(el) {
     scripts[i].parentNode.removeChild(scripts[i]);
   }
 }
+
+export function addNewUI() {
+  var styleSheet = styleSheetFactory("newUIStyleSheet");
+  var styles = "#providerSchedule td { padding: 2px; }";
+  styles +=
+    ".adhour { text-shadow: 1px 1px 1px rgba(0,0,0,1); font-size: 14px; }";
+  styles += ".appt { box-shadow: 1px 3px 3px rgba(0,0,0,0.1); }";
+  styles += "#providerSchedule { border: 0; }";
+  styles +=
+    "#providerSchedule td { border: 0; border-bottom: 1px solid rgba(0,0,0,0.2); font-size: 14px; }";
+  styles +=
+    "#providerSchedule td.noGrid { border: 0; border-bottom: 1px solid rgba(0,0,0,0.2); font-size: 14px; }";
+  styles +=
+    "#firstTable { background-color: #efeef3; } #firstMenu a { font-weight: 400; color: #171458; font-size: 14px; }";
+  styles += "#ivoryBar td { background-color: white; padding: 5px; }";
+  styles += ".infirmaryView { background-color: #efeef3; }";
+  styles +=
+    "#ivoryBar input, #ivoryBar select, .infirmaryView input, .infirmaryView .ds-btn { background-color: #171458 !important; color: white !important; font-weight: bold !important; padding: 2px;  }";
+  styles += "#ivoryBar input:placeholder { font-weight: bold; color: white; }";
+  styleSheet.innerText = styles;
+}
+
+export function removeNewUI() {
+  var styleSheet = styleSheetFactory("newUIStyleSheet");
+  var styles = "";
+  styleSheet.innerText = styles;
+}
+
+export function styleSheetFactory(namespace) {
+  if (!window[namespace]) {
+    var styleSheet = document.createElement("style");
+    styleSheet.type = "text/css";
+    document.head.appendChild(styleSheet);
+    window[namespace] = styleSheet;
+    return styleSheet;
+  }
+  return window[namespace];
+}
