@@ -5,7 +5,6 @@ module.exports = {
   entry: "./cortico.js",
   output: {
     filename: "cortico-min.js",
-    path: path.resolve(__dirname, "dist"),
   },
   watch: true,
   watchOptions: {
@@ -16,7 +15,7 @@ module.exports = {
     ignored: /dist/,
   },
   cache: false,
-  devtool: "source-map",
+  devtool: "eval-source-map",
   mode: "development",
   plugins: [
     new webpack.DefinePlugin({
