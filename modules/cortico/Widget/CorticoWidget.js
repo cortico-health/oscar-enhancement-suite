@@ -1,43 +1,40 @@
 import { render } from "preact";
-import { useRef } from "preact/hooks";
+import { useRef, useEffect } from "preact/hooks";
 import CorticoImg from "../../../resources/icons/cortico-128.png";
 import CorticoPlugin from "./CorticoPlugin";
 import { useState } from "preact/hooks";
-import { WidgetContext } from "../../Context/WidgetContext";
+import { AutoContext } from "../../Context/WidgetContext";
 
 function Content() {
   const containerRef = useRef();
 
-  const changeDark = () => {
-    console.log("This ran");
-    setThemes({
-      light: {
-        foreground: "#000000",
-        background: "#eeeeee",
-      },
-      dark: {
-        foreground: "#ffffdsadaff",
-        background: "#2222dsadsadsa22",
-      },
-    });
-  };
-
-  const [themes, setThemes] = useState({
-    light: {
-      foreground: "#000000",
-      background: "#eeeeee",
-    },
-    dark: {
-      foreground: "#ffffff",
-      background: "#222222",
-    },
-    changeDark: changeDark,
-  });
+  const [autoContext, setAutoContext] = useState({});
 
   const [open, setOpen] = useState(false);
 
+  useEffect(() => {
+    const subscriptions = {
+      "automations/eligibility": (name, data) => {
+        setAutoContext({
+          ...autoContext,
+          data,
+        });
+      },
+    };
+
+    for (let prop in subscriptions) {
+      window.pubsub.subscribe(prop, subscriptions[prop]);
+    }
+
+    return () => {
+      for (let prop in subscriptions) {
+        window.pubsub.subscribe(prop, subscriptions[prop]);
+      }
+    };
+  }, []);
+
   return (
-    <WidgetContext.Provider value={themes}>
+    <AutoContext.Provider value={autoContext}>
       <div className="cleanslate cortico-widget">
         <div className="tailwind preflight">
           <div
@@ -64,7 +61,7 @@ function Content() {
           </div>
         </div>
       </div>
-    </WidgetContext.Provider>
+    </AutoContext.Provider>
   );
 }
 

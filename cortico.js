@@ -1471,7 +1471,13 @@ function isDateExpired(past, now, days) {
   return Math.abs(diff) > days;
 }
 
-async function checkAllEligibility() {
+export async function checkAllEligibility() {
+  const state = {
+    complete: false,
+    total: null,
+    error: null,
+    running: null,
+  };
   //localStorage.removeItem("checkCache")
   console.log("Check all got here");
   if (window.checkAllEligibilityRunning === true) {
@@ -1486,19 +1492,22 @@ async function checkAllEligibility() {
 
   var length = appointmentInfo.length;
   if (appointmentInfo.length === 0) {
-    alert("No Appointments to Check");
+    state.error = "No Appointments To Check";
+    pubsub.publish("automations/eligibility", state);
+    //alert("No Appointments to Check");
   }
 
   var providerNo = getProviderNoFromTd(nodes[0]);
   var error = false;
 
   window.checkAllEligibilityRunning = true;
+  pubsub.publish("automations/eligibility", true);
   try {
     for (let i = 0; i < length; i++) {
       const temp = Object.assign({}, appointmentInfo[i]);
       temp.total = length;
       temp.current = i + 1;
-      pubsub.publish("check-eligibility", temp);
+      pubsub.publish("automations/eligibility", Object.assign(state, temp));
 
       const demographic_no = appointmentInfo[i].demographic_no;
       let result = null;
@@ -1573,7 +1582,10 @@ async function checkAllEligibility() {
       } else {
         appointmentInfo[i]["reason"] = text;
         addToFailures(appointmentInfo[i]);
-        pubsub.publish("check-eligibility-failed", getFailureCache());
+        pubsub.publish(
+          "automations/eligibility",
+          Object.assign(state, { failures: getFailureCache() })
+        );
       }
       addToCache(demographic_no, verified);
       console.log("Cached.");
@@ -1589,11 +1601,14 @@ async function checkAllEligibility() {
     alert(err);
   } finally {
     window.checkAllEligibilityRunning = false;
-    pubsub.publish("check-eligibility", {
-      complete: true,
-      total: length,
-      error,
-    });
+    pubsub.publish(
+      "automations/eligibility",
+      Object.assign(state, {
+        complete: true,
+        total: length,
+        error,
+      })
+    );
   }
 }
 

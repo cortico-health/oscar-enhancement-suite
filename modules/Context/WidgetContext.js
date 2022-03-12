@@ -1,14 +1,7 @@
 import { createContext } from "preact";
 
-export const themes = {
-  light: {
-    foreground: "#000000",
-    background: "#eeeeee",
-  },
-  dark: {
-    foreground: "#ffffff",
-    background: "#222222",
-  },
+export const autoContext = {
+  error: null,
 };
 
-export const WidgetContext = createContext(themes.light);
+export const AutoContext = createContext(autoContext);
