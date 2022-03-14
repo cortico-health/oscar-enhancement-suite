@@ -17,7 +17,7 @@ function Content() {
       "automations/eligibility": (name, data) => {
         setAutoContext({
           ...autoContext,
-          data,
+          ...data,
         });
       },
     };

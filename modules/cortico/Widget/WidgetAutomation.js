@@ -39,8 +39,12 @@ export default function WidgetAutomation() {
     setOption(value);
   };
 
+  const handleGoBack = () => {
+    setOption("none");
+  };
+
   return (
-    <div className="tw-px-10 tw-py-4">
+    <div className="tw-px-4 tw-py-4">
       {option === "none" ? (
         <WidgetAutomationOptions onClick={handleClick} />
       ) : option === "elig" ? (
@@ -54,7 +58,7 @@ export default function WidgetAutomation() {
           leaveFrom="tw-opacity-100"
           leaveTo="tw-opacity-0"
         >
-          <EligbilityCheck />
+          <EligbilityCheck goBack={handleGoBack} />
         </Transition>
       ) : (
         ""

@@ -1476,7 +1476,9 @@ export async function checkAllEligibility() {
     complete: false,
     total: null,
     error: null,
-    running: null,
+    running: false,
+    empty: false,
+    teleplan: false,
   };
   //localStorage.removeItem("checkCache")
   console.log("Check all got here");
@@ -1492,23 +1494,24 @@ export async function checkAllEligibility() {
 
   var length = appointmentInfo.length;
   if (appointmentInfo.length === 0) {
-    state.error = "No Appointments To Check";
+    state.empty = true;
     pubsub.publish("automations/eligibility", state);
-    //alert("No Appointments to Check");
+    return;
   }
 
   var providerNo = getProviderNoFromTd(nodes[0]);
   var error = false;
 
   window.checkAllEligibilityRunning = true;
-  pubsub.publish("automations/eligibility", true);
+  state.running = true;
+  pubsub.publish("automations/eligibility", state);
   try {
     for (let i = 0; i < length; i++) {
       const temp = Object.assign({}, appointmentInfo[i]);
       temp.total = length;
       temp.current = i + 1;
       pubsub.publish("automations/eligibility", Object.assign(state, temp));
-
+      console.log("Appointment Info", appointmentInfo[i]);
       const demographic_no = appointmentInfo[i].demographic_no;
       let result = null;
 
@@ -1559,8 +1562,10 @@ export async function checkAllEligibility() {
       }
 
       if (lowerCaseText.includes("error in teleplan connection")) {
-        alert("Cannot connect to Teleplan. \n" + text);
+        state.teleplan = true;
+        pubsub.publish("automations/eligibility", state);
         error = true;
+        alert("Error in teleplan");
         break;
       }
 
@@ -1588,7 +1593,6 @@ export async function checkAllEligibility() {
         );
       }
       addToCache(demographic_no, verified);
-      console.log("Cached.");
 
       await new Promise((resolve, reject) => {
         setTimeout(() => {

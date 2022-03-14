@@ -54,7 +54,15 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: ["@babel/preset-react", ["@babel/preset-env"]],
+            presets: [
+              [
+                "@babel/preset-env",
+                {
+                  targets: "> 0.25%, not dead, IE > 11",
+                },
+              ],
+              "@babel/preset-react",
+            ],
             plugins: [
               ["@babel/plugin-transform-runtime"],
               [
