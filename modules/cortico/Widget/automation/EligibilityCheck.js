@@ -6,6 +6,8 @@ import { InformationCircleIcon, EmojiSadIcon } from "@heroicons/react/solid";
 import { ExclamationIcon } from "@heroicons/react/outline";
 import Button from "../../../core/Button";
 import Table from "../Table.js";
+import ProgressBar from "../ProgressBar.js";
+import Alert from "../Alert.js";
 
 export default function EligbilityCheck({ goBack, ...props }) {
   useEffect(() => {
@@ -43,33 +45,56 @@ export default function EligbilityCheck({ goBack, ...props }) {
 function Dots() {
   return (
     <div className="tw-flex tw-items-center tw-justify-center tw-space-x-3">
-      <div className="tw-w-4 tw-h-4 tw-rounded-full tw-bg-blue-1000"></div>
-      <div className="tw-w-4 tw-h-4 tw-rounded-full tw-bg-blue-1000"></div>
-      <div className="tw-w-4 tw-h-4 tw-rounded-full tw-bg-blue-1000"></div>
+      <div className="tw-w-3 tw-h-3 tw-rounded-full tw-bg-blue-1000"></div>
+      <div className="tw-w-3 tw-h-3 tw-rounded-full tw-bg-blue-1000"></div>
+      <div className="tw-w-3 tw-h-3 tw-rounded-full tw-bg-blue-1000"></div>
     </div>
   );
 }
 
 function Running({ current, total, demographicNo, ...props }) {
   return (
-    <div className="tw-py-6">
+    <div className="">
       <div className="tw-min-w-[400px] tw-min-h-[400px] tw-flex tw-justify-center tw-items-center tw-text-gray-700">
         <div>
-          <Dots />
-          <p className="tw-mt-4 tw-text-center">In Progress</p>
-          <p className="tw-mt-6 tw-text-center tw-text-sm">
-            Patient Demographic Number: {demographicNo}
-          </p>
-          <p className="tw-text-center tw-font-medium tw-mt-2 tw-text-blue-1000 tw-text-sm">
-            {current}/{total}
-          </p>
+          <div className="tw-mt-4 tw-mb-8">
+            <Alert
+              title="Warning"
+              message="Refreshing the page will stop the eligibility check."
+            ></Alert>
+          </div>
+          <div className="tw-min-w-[300px]">
+            <ProgressBar title={`Current Patient: ${demographicNo}`} />
+          </div>
+
           <div className="tw-min-w-[350px]">
+            <hr className="tw-my-4" />
+            <div>
+              <p className=" tw-text-blue-9000 tw-text-base tw-m-0 tw-p-0 tw-mt-8">
+                Report
+              </p>
+              <p className="tw-text-gray-700 tw-text-xs tw-mb-4">
+                The ones that failed their eligibility checks
+              </p>
+            </div>
             <Table
               headers={["Demographic Number", "Status"]}
               data={[
                 [
-                  "Test",
-                  <EmojiSadIcon className="tw-w-6 tw-h-6 tw-text-red-500 tw-mx-auto" />,
+                  "8091",
+                  <EmojiSadIcon className="tw-w-5 tw-h-5 tw-text-red-500 tw-mx-auto" />,
+                ],
+                [
+                  "3331",
+                  <EmojiSadIcon className="tw-w-5 tw-h-5 tw-text-red-500 tw-mx-auto" />,
+                ],
+                [
+                  "12",
+                  <EmojiSadIcon className="tw-w-5 tw-h-5 tw-text-red-500 tw-mx-auto" />,
+                ],
+                [
+                  "1",
+                  <EmojiSadIcon className="tw-w-5 tw-h-5 tw-text-red-500 tw-mx-auto" />,
                 ],
               ]}
             />
