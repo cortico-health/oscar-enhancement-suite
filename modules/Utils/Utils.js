@@ -302,27 +302,4 @@ export function styleSheetFactory(namespace) {
     return styleSheet;
   }
   return window[namespace];
-export async function setupEFormPage() {
-
-  let email_parent =
-    document.querySelector(".DoNotPrint td") ||
-    document.querySelector("#BottomButtons") ||
-    document.querySelector("#topbar > form") ||
-    document.body;
-
-  if (!email_parent) {
-    email_parent = document.querySelector("#save div:last-child");
-  }
-  if (!email_parent) {
-    console.warn("Cannot find position for email button.");
-    return;
-  }
-
-
-  let html = document.cloneNode(true);
-  await convertImagesToDataURLs(html);
-  stripScripts(html);
-  html = html.documentElement.outerHTML;
-  return html
-
 }

@@ -1493,10 +1493,9 @@ export async function checkAllEligibility() {
   appointmentInfo = filterAppointments(appointmentInfo);
 
   var length = appointmentInfo.length;
-  if (appointmentInfo.length === 0 || true) {
+  if (appointmentInfo.length === 0 || false) {
     state.empty = true;
     pubsub.publish("automations/eligibility", state);
-    alert("Empty")
     return;
   }
 
@@ -1563,14 +1562,15 @@ export async function checkAllEligibility() {
       }
 
       if (lowerCaseText.includes("error in teleplan connection")) {
-        state.teleplan = true;
-        pubsub.publish("automations/eligibility", state);
+        //state.teleplan = true;
+        //pubsub.publish("automations/eligibility", state);
         error = true;
-        alert("Error in teleplan");
+        //alert("Error in teleplan");
         break;
       }
 
       let verified = false;
+
       if (lowerCaseText.includes("this is not an insured benefit")) {
         verified = "uninsured";
         console.log("Patient not insured");

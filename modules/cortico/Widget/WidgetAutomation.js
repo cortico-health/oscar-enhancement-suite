@@ -72,7 +72,7 @@ export function WidgetAutomationOptions({ onClick, ...props }) {
   return (
     <div className="tw-font-sans">
       <div>
-        <h2 className="tw-text-3xl tw-font-medium tw-text-gray-800 tw-m-0 tw-p-0">
+        <h2 className="tw-text-xl tw-font-medium tw-text-gray-800 tw-m-0 tw-p-0">
           Automations
         </h2>
         <p className="tw-text-lg tw-text-gray-700">
@@ -96,7 +96,7 @@ export function WidgetAutomationOptions({ onClick, ...props }) {
               <div className="tw-cursor-pointer">
                 <span
                   className={classNames(
-                    "tw-flex tw-text-xl  tw-font-normal tw-mb-4 tw-items-center tw-w-full",
+                    "tw-flex tw-text-base  tw-font-normal tw-mb-4 tw-items-center tw-w-full",
                     automation.premium === true
                       ? "tw-text-gray-700"
                       : "tw-text-gray-700"
@@ -107,7 +107,7 @@ export function WidgetAutomationOptions({ onClick, ...props }) {
                 </span>
                 <p
                   className={classNames(
-                    "tw-text-xl tw-text-gray-700 tw-max-w-[300px] tw-opacity-80",
+                    "tw-text-base tw-text-gray-700 tw-max-w-[300px] tw-opacity-80",
                     automation.premium === true
                       ? "tw-text-gray-700"
                       : "tw-text-gray-700"
