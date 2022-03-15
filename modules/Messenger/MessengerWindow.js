@@ -95,10 +95,25 @@ function MessengerWindow({
 
     if (document === true && eForm === true) {
       let html = window.document.cloneNode(true);
+      html.querySelectorAll("input").forEach((input) => {
+        input.setAttribute('value', input.value)
+
+        if (input.checked === true) {
+          input.setAttribute('checked', true)
+        }
+      })
+      html.querySelectorAll("textarea").forEach((input) => {
+        input.innerHTML = input.value
+      })
+
+      html.querySelectorAll("select").forEach((input) => {
+        input.setAttribute('value', input.value)
+      })
       await convertImagesToDataURLs(html);
       stripScripts(html);
       html = html.documentElement.outerHTML;
       data.pdf_html = html;
+      
     }
 
     const opts = {
@@ -118,6 +133,7 @@ function MessengerWindow({
       setDocument(true);
       setEForm(true);
       setDocumentData(data);
+      console.log("Document data", data)
     });
 
     return () => {
