@@ -40,6 +40,7 @@ export default function WidgetAutomation() {
   };
 
   const handleGoBack = () => {
+    console.log("Go Back Clicked");
     setOption("none");
   };
 

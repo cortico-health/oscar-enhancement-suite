@@ -1,10 +1,19 @@
 import classNames from "classnames";
-export default function Button({ block, loading = false, children, ...props }) {
+export default function Button({
+  className,
+  block,
+  loading = false,
+  children,
+  size,
+  ...props
+}) {
   return (
     <button
       className={classNames(
         block === true ? "tw-block" : "tw-inline-block",
-        "tw-px-4 tw-py-2 tw-text-white tw-bg-blue-1000 tw-rounded-md tw-shadow-md tw-relative tw-text-lg"
+        "tw-px-4 tw-py-2 tw-text-white tw-bg-blue-1000 tw-rounded-md tw-shadow-md tw-relative",
+        className,
+        size === "sm" ? "tw-text-sm" : "tw-text-lg"
       )}
       {...props}
     >
@@ -32,7 +41,7 @@ export default function Button({ block, loading = false, children, ...props }) {
           </svg>
         </span>
       ) : (
-        <span>{children}</span>
+        <span className="tw-cursor-pointer">{children}</span>
       )}
     </button>
   );

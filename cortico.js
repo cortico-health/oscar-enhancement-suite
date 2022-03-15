@@ -1493,9 +1493,10 @@ export async function checkAllEligibility() {
   appointmentInfo = filterAppointments(appointmentInfo);
 
   var length = appointmentInfo.length;
-  if (appointmentInfo.length === 0) {
+  if (appointmentInfo.length === 0 || true) {
     state.empty = true;
     pubsub.publish("automations/eligibility", state);
+    alert("Empty")
     return;
   }
 
