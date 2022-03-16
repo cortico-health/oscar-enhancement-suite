@@ -141,7 +141,9 @@ const init_cortico = async function () {
     });
     //You need to delegate
     //cortico_button.addEventListener("click", open_video_appointment_page);
-    resources_field.addEventListener("change", update_video_button);
+    if (resources_field) {
+      resources_field.addEventListener("change", update_video_button);
+    }
   } else if (route.indexOf("/provider/providercontrol.jsp") > -1) {
     init_schedule();
     const loginContainer = document.createElement("div");
@@ -185,6 +187,7 @@ const init_cortico = async function () {
     route.indexOf("/casemgmt/forward.jsp") > -1
   ) {
     const patient_info = await getPatientInfo();
+    console.log("Patient Info:", patient_info);
     const messengerContainer = document.createElement("div");
     if (route.indexOf("/casemgmt/forward.jsp") > -1) {
       document.body.append(messengerContainer);
@@ -1516,19 +1519,26 @@ export async function checkAllEligibility() {
       pubsub.publish("automations/eligibility", Object.assign({}, state, temp));
       const demographic_no = appointmentInfo[i].demographic_no;
       let result = null;
+      let patientInfo = null;
+      let healthNumber = null;
+      let province = null;
 
       // empty appointment node, do not check
       if (!demographic_no || demographic_no == 0) continue;
 
       // In cases where the first appointment in the schedule is an empty
       // appointment, get the providerNo from the node itself
-      if (!providerNo) providerNo = getProviderNoFromTd(nodes[i]);
 
-      const patientInfo = await getPatientInfo(demographic_no);
-      const healthNumber = patientInfo["Health Ins"]
-        .replace(/\s+/g, " ")
-        .trim();
-      const province = patientInfo["Province"].replace(/\s+/g, " ").trim();
+      if (!providerNo) providerNo = getProviderNoFromTd(nodes[i]);
+      try {
+        patientInfo = await getPatientInfo(demographic_no);
+      } catch (e) {
+        console.error(e);
+      }
+      if (patientInfo) {
+        healthNumber = patientInfo["Health Ins"].replace(/\s+/g, " ").trim();
+        province = patientInfo["Province"].replace(/\s+/g, " ").trim();
+      }
 
       try {
         result = await checkEligiblity(
@@ -1609,6 +1619,7 @@ export async function checkAllEligibility() {
     }
   } catch (err) {
     console.log(err);
+    error = true;
     alert(err);
   } finally {
     window.checkAllEligibilityRunning = false;
@@ -2545,8 +2556,12 @@ function getDemographicPageResponse(demographic) {
   if (origin.includes("skymedical")) {
     url = `/demographic/demographiccontrol.jsp?demographic_no=${demographicNo}&displaymode=edit&dboperation=search_detail`;
   }
-
-  return fetch(url);
+  const originalFetch = require("cross-fetch");
+  const fetch = require("fetch-retry")(originalFetch);
+  return fetch(url, {
+    retryDelay: 2000,
+    retries: 3,
+  });
 }
 
 function handleErrors(response) {
