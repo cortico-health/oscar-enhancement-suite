@@ -1564,10 +1564,10 @@ export async function checkAllEligibility() {
       }
 
       if (lowerCaseText.includes("error in teleplan connection")) {
-        //state.teleplan = true;
-        //pubsub.publish("automations/eligibility", state);
+        state.teleplan = true;
+        pubsub.publish("automations/eligibility", state);
         error = true;
-        //alert("Error in teleplan");
+        alert("Error in teleplan");
         break;
       }
 
