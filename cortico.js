@@ -187,7 +187,7 @@ const init_cortico = async function () {
     route.indexOf("/casemgmt/forward.jsp") > -1
   ) {
     const patient_info = await getPatientInfo();
-    console.log("Patient Info:", patient_info);
+
     const messengerContainer = document.createElement("div");
     if (route.indexOf("/casemgmt/forward.jsp") > -1) {
       document.body.append(messengerContainer);
@@ -1532,6 +1532,7 @@ export async function checkAllEligibility() {
       if (!providerNo) providerNo = getProviderNoFromTd(nodes[i]);
       try {
         patientInfo = await getPatientInfo(demographic_no);
+        console.log("Patient Info:", patient_info);
       } catch (e) {
         console.error(e);
       }
@@ -2045,104 +2046,164 @@ function formatNumber(number) {
 }
 
 async function setupPreferredPharmacy(code, demographic_no) {
+  let corticoPharmacy = null;
+  let corticoPharmacyText = null;
+  const state = {
+    error: false,
+    errorMessage: null,
+    infoMessage: null,
+  };
+
   var pharmacyCode = localStorage.getItem("currentPharmacyCode");
 
   if (code) {
     pharmacyCode = code;
   }
-  const corticoPharmacy = await getPharmacyDetails(pharmacyCode);
-  const respText = await corticoPharmacy.text();
-  const corticoPharmacyText = JSON.parse(respText);
 
+  try {
+    corticoPharmacy = await getPharmacyDetails(pharmacyCode);
+    corticoPharmacyText = await corticoPharmacy.text();
+  } catch (e) {
+    console.error(e);
+    state.error = true;
+    state.errorMessage = "Pharmacy not found";
+    return state;
+  }
+
+  corticoPharmacyText = JSON.parse(respText);
   if (corticoPharmacyText.length <= 0) {
-    const msg = `Cortico pharmacy not found`;
-    storePharmaciesFailureCache(demographicNo, msg);
-    displayPharmaciesFailure(demographicNo, msg);
+    //Show this message if the pharmacy code is not found
+    state.error = true;
+    state.errorMessage = "Pharmacy not found";
+    return state;
+  }
+  let corticoFaxNumber = corticoPharmacyText[0]["fax_number"] || null;
 
+  if (!corticoFaxNumber) {
+    state.error = true;
+    state.errorMessage = "Cortico Fax Number is blank";
     return;
   }
 
-  var faxNumber = corticoPharmacyText[0]["fax_number"] || null;
-  var searchTerm = corticoPharmacyText[0]["name"] || null;
-
-  var fullPharmacyName = searchTerm;
-
-  // only use the first word on the pharmacy name to search for list
-  // then remove letter or number
-  searchTerm = searchTerm ? searchTerm.split(" ")[0] : null;
-  searchTerm = searchTerm.replace(/[^\w\s]/gi, "");
-
   // cleanup fax number to format starting with 1
   // This might be an issue if the oscar pharmacies don't match this format
-  if (faxNumber) faxNumber = formatNumber(faxNumber);
+  corticoFaxNumber = formatNumber(corticoFaxNumber);
 
-  var demographicNo = demographic_no;
+  let corticoSearchTerm = corticoPharmacyText[0]["name"] || null;
+
+  if (!corticoSearchTerm) {
+    state.error = true;
+    state.errorMessage = "Cortico Pharmacy Name is blank";
+    return;
+  }
+
+  let fullPharmacyName = corticoSearchTerm;
+  // only use the first word on the pharmacy name to search for list
+  // then remove letter or number
+  corticoSearchTerm = corticoSearchTerm.split(" ")[0];
+  corticoSearchTerm = corticoSearchTerm.replace(/[^\w\s]/gi, "");
+
+  let demographicNo = demographic_no;
   if (!demographic_no) {
     demographicNo = getDemographicNo();
   }
 
-  const currPharmacyResults = await getCurrentPharmacy(demographicNo);
-  const currPharmacyText = JSON.parse(await currPharmacyResults.text());
-  var preferredPharmacy;
+  let currPharmacyResults = null;
+  let currPharmacyText = null;
+  try {
+    currPharmacyResults = await getCurrentPharmacy(demographicNo);
+    currPharmacyText = JSON.parse(await currPharmacyResults.text());
+  } catch (e) {
+    console.error(e);
+    state.error = true;
+    state.errorMessage = "Error getting patient's current pharmacy from oscar";
+    return state;
+  }
+
+  let preferredPharmacy;
   console.log("Current Pharmacy:", currPharmacyText);
+
+  //Check if the currenct pharmcy is set for this patient (in oscar)
   if (currPharmacyText) {
     preferredPharmacy = currPharmacyText[0];
-    localStorage.setItem("preferredPharmacy", preferredPharmacy);
+    //localStorage.setItem("preferredPharmacy", preferredPharmacy);
   }
 
   const currentlyUsingPharmacy =
     preferredPharmacy &&
-    preferredPharmacy.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-    (preferredPharmacy.fax === faxNumber ||
-      faxNumber.includes(preferredPharmacy.fax));
+    preferredPharmacy.name
+      .toLowerCase()
+      .includes(corticoSearchTerm.toLowerCase()) &&
+    corticoFaxNumber.includes(preferredPharmacy.fax);
+
   console.log(
-    `currently using pharmacy ${searchTerm.toLowerCase()}, ${currentlyUsingPharmacy}`
+    `currently using pharmacy ${corticoSearchTerm.toLowerCase()}, ${currentlyUsingPharmacy}`
   );
 
-  if (searchTerm && !currentlyUsingPharmacy) {
-    const results = await getPharmacyResults(searchTerm);
+  if (currentlyUsingPharmacy) {
+    state.infoMessage = "Pharmacy already set";
+    return state;
+  }
+
+  try {
+    const results = await getPharmacyResults(corticoSearchTerm);
     const text = await results.text();
-    const json = JSON.parse(text);
-    const pharmacyUpdated = json.length > 0;
+  } catch (e) {
+    console.error(e);
+    state.error = true;
+    state.errorMessage = "Failed to search oscar pharmacies";
+    return state;
+  }
 
-    const isRxPage =
-      window.location.href.indexOf("oscarRx/choosePatient.do") > -1;
+  const pharmacies = JSON.parse(text);
+  const pharmacyFound = pharmacies.length > 0;
 
-    if (pharmacyUpdated) {
-      let pharmacy = null;
+  const isRxPage =
+    window.location.href.indexOf("oscarRx/choosePatient.do") > -1;
 
-      if (json.length > 1) {
-        pharmacy = json.find((item) => {
-          let item_name = item.name.toLowerCase();
-          let cleaned_item_name = item_name.replace(/[^\w\s]/gi, "");
-          return (
-            (item_name.includes(searchTerm.toLowerCase()) ||
-              cleaned_item_name.includes(searchTerm.toLowerCase())) &&
-            item.fax.length > 8 &&
-            // either if the fax is the same or the formatted fax has the values
-            (formatNumber(item.fax) === faxNumber ||
-              faxNumber.includes(item.fax))
-          );
-        });
-      }
+  if (pharmacyFound) {
+    pharmacy = pharmacies.find((item) => {
+      let item_name = item.name.toLowerCase();
+      let cleaned_item_name = item_name.replace(/[^\w\s]/gi, "");
+      return (
+        (item_name.includes(corticoSearchTerm.toLowerCase()) ||
+          cleaned_item_name.includes(corticoSearchTerm.toLowerCase())) &&
+        item.fax.length > 8 &&
+        // either if the fax is the same or the formatted fax has the values
+        (formatNumber(item.fax) === corticoFaxNumber ||
+          corticoFaxNumber.includes(item.fax))
+      );
+    });
 
-      if (pharmacy) {
+    if (pharmacy) {
+      try {
         const setPharmacyResults = await setPreferredPharmacy(
           pharmacy,
           demographicNo
         );
         const setPharmacyText = await setPharmacyResults.text();
+      } catch (e) {
+        console.error(e);
+        state.error = true;
+        state.errorMessage = "Failed to save preferred pharmacy";
+        return state;
+      }
 
-        if (isRxPage) alert("Updating preferred pharmacy, press Ok to reload");
-        else console.log("Updating preferred pharmacy");
+      if (isRxPage) {
+        alert("Updating preferred pharmacy, press Ok to reload");
+      } else {
+        console.log("Updating preferred pharmacy");
       }
     } else {
-      const msg = `Customer pharmacy ${fullPharmacyName} does not exist in your Oscar pharmacy database!`;
-      storePharmaciesFailureCache(demographicNo, msg);
-      displayPharmaciesFailure(demographicNo, msg);
-      if (isRxPage) alert(msg);
-      else console.warn(msg);
+      state.error = true;
+      state.errorMessage = `"${fullPharmacyName}" Fax number did not match: ${corticoFaxNumber}`;
+      return state;
     }
+  } else {
+    isRxPage ? alert(msg) : console.warn(msg);
+    state.error = true;
+    state.errorMessage = `"${fullPharmacyName}" does not exist in your Oscar pharmacy database!`;
+    return state;
   }
 }
 
