@@ -1,9 +1,10 @@
 import { render } from "preact";
 import { useRef, useEffect } from "preact/hooks";
-import CorticoImg from "../../../resources/icons/cortico-128.png";
+import CorticoImg from "../../../resources/icons/logo-regular-white.svg";
 import CorticoPlugin from "./CorticoPlugin";
 import { useState } from "preact/hooks";
 import { AutoContext } from "../../Context/WidgetContext";
+import classNames from "classnames";
 
 function Content() {
   const containerRef = useRef();
@@ -38,7 +39,10 @@ function Content() {
       <div className="cleanslate cortico-widget">
         <div className="tailwind preflight">
           <div
-            className="tw-fixed tw-bottom-5 tw-right-5 tw-z-10005 tw-bg-white tw-text-white tw-rounded-xl tw-shadow-xl tw-bg-cortico "
+            className={classNames(
+              "tw-fixed tw-bottom-5 tw-right-5 tw-z-10005 tw-bg-blue-1000 tw-text-white tw-shadow-xl tw-bg-cortico tw-bg-transparent",
+              open === true ? "tw-rounded-xl" : "tw-rounded-full"
+            )}
             ref={containerRef}
           >
             {open === true ? (
@@ -47,13 +51,13 @@ function Content() {
               </>
             ) : (
               <div
-                className="tw-p-4 tw-cursor-pointer"
+                className="tw-p-4 tw-cursor-pointer tw-rounded-full"
                 onClick={() => {
                   setOpen(!open);
                 }}
               >
                 <img
-                  className="tw-h-12 tw-w-12 tw-cursor-pointer"
+                  className="tw-h-8 tw-w-8 tw-cursor-pointer"
                   src={CorticoImg}
                 />
               </div>

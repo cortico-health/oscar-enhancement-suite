@@ -86,8 +86,9 @@ function Running({
   useEffect(() => {
     if (failures) {
       const temp = [];
-      failures.map((f) => {
-        temp.pusn([f.demographic_no, <FailedIcon />]);
+      console.log("Failures", JSON.parse(JSON.parse(failures)));
+      JSON.parse(JSON.parse(failures)).map((f) => {
+        temp.push([f.demographic_no, <FailedIcon />]);
       });
       setFails(temp);
     }

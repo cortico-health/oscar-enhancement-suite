@@ -1423,7 +1423,7 @@ function dragAndDrop() {
 
 function addToFailures(metadata) {
   const _cache = getFailureCache();
-  const cache = JSON.parse(_cache) || [];
+  const cache = JSON.parse(JSON.parse(_cache)) || [];
   if (cache && cache.push) {
     cache.push(metadata);
   }
@@ -1473,6 +1473,7 @@ function isDateExpired(past, now, days) {
 
 export async function checkAllEligibility() {
   const state = {
+    current: null,
     complete: false,
     total: null,
     error: null,
@@ -1513,7 +1514,6 @@ export async function checkAllEligibility() {
       temp.current = i + 1;
       current = i + 1;
       pubsub.publish("automations/eligibility", Object.assign({}, state, temp));
-      console.log("Appointment Info", appointmentInfo[i]);
       const demographic_no = appointmentInfo[i].demographic_no;
       let result = null;
 
@@ -1565,9 +1565,12 @@ export async function checkAllEligibility() {
 
       if (lowerCaseText.includes("error in teleplan connection")) {
         state.teleplan = true;
-        pubsub.publish("automations/eligibility", state);
+        pubsub.publish(
+          "automations/eligibility",
+          Object.assign({}, state, temp)
+        );
         error = true;
-        alert("Error in teleplan");
+        //alert("Error in teleplan");
         break;
       }
 
@@ -1578,6 +1581,7 @@ export async function checkAllEligibility() {
         console.log("Patient not insured");
       } else if (
         (!lowerCaseText.includes("failure-phn") &&
+          !lowerCaseText.includes("results unavailable") &&
           lowerCaseText.includes("success")) ||
         lowerCaseText.includes("health card passed validation") ||
         lowerCaseText.includes("patient eligible") ||
@@ -1591,8 +1595,9 @@ export async function checkAllEligibility() {
         addToFailures(appointmentInfo[i]);
         pubsub.publish(
           "automations/eligibility",
-          Object.assign({}, state, { failures: getFailureCache() })
+          Object.assign({}, state, temp, { failures: getFailureCache() })
         );
+        console.log("Failed!", appointmentInfo[i]);
       }
       addToCache(demographic_no, verified);
 
@@ -2490,9 +2495,7 @@ async function getPatientInfo(demographicNo) {
   });
 
   const emailInput = el.querySelector("input[name='email']");
-  console.log("Email input", emailInput);
   info.email = info.email || info.Email || "";
-  console.log("Info", info);
   if (
     !info.email
       .toLowerCase()
@@ -2504,7 +2507,6 @@ async function getPatientInfo(demographicNo) {
       info.email = emailInput.value;
     }
   }
-  console.log("Info", info);
 
   // TODO: The following method of parsing the markup for email addresses is disabled below since it can find
   // contacts or other bad strings.
@@ -2516,7 +2518,6 @@ async function getPatientInfo(demographicNo) {
 }
 
 function getDemographicPageResponse(demographic) {
-  console.log("Get Demogpraihc Page REsponse");
   const origin = getOrigin();
   const namespace = getNamespace();
 

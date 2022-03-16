@@ -63,7 +63,7 @@ export default function CorticoPlugin() {
   }, []);
 
   return (
-    <div className="tw-flex tw-h-full">
+    <div className="tw-flex tw-h-full tw-bg-white tw-rounded-xl">
       <div className="">
         <WidgetSidebar items={items} onClick={handleClick} />
       </div>
