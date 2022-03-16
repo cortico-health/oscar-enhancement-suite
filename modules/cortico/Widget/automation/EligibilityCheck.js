@@ -1,6 +1,6 @@
 import { checkAllEligibility } from "../../../../cortico.js";
 import CircleProgressBar from "./CircleProgressBar";
-import { useEffect, useContext } from "preact/hooks";
+import { useEffect, useContext, useState } from "preact/hooks";
 import { AutoContext } from "../../../Context/WidgetContext.js";
 import { InformationCircleIcon, EmojiSadIcon } from "@heroicons/react/solid";
 import { ExclamationIcon } from "@heroicons/react/outline";
@@ -20,9 +20,12 @@ export default function EligbilityCheck({ goBack, ...props }) {
   return (
     <div className="tw-font-sans">
       <div>
-        <h2 className="tw-text-xl tw-font-medium tw-text-gray-800 tw-m-0 tw-p-0">
+        <h2 className="tw-text-xl tw-font-medium tw-text-gray-700 tw-m-0 tw-p-0">
           Eligibility Check
         </h2>
+        <p className="tw-text-sm tw-text-gray-700 tw-max-w-[300px]">
+          Verifies the validity of all MSP numbers for the current schedule
+        </p>
         <hr className="tw-my-2" />
         <div>
           {autoContext.empty === true ? (
@@ -31,9 +34,12 @@ export default function EligbilityCheck({ goBack, ...props }) {
             <Teleplan goBack={goBack} />
           ) : (
             <Running
+              goBack={goBack}
+              complete={autoContext.complete}
               current={autoContext.current}
               total={autoContext.total}
               demographicNo={autoContext.demographic_no}
+              failures={autoContext.failures}
             />
           )}
         </div>
@@ -52,53 +58,79 @@ function Dots() {
   );
 }
 
-function Running({ current, total, demographicNo, ...props }) {
+function Running({
+  complete,
+  failures,
+  current,
+  total,
+  demographicNo,
+  goBack,
+  ...props
+}) {
+  const [fails, setFails] = useState([]);
+
+  const FailedIcon = () => {
+    return (
+      <EmojiSadIcon className="tw-w-5 tw-h-5 tw-text-red-500 tw-mx-auto" />
+    );
+  };
+
+  const ProgressTitle = () => {
+    if (complete === true) {
+      return <p>Complete!</p>;
+    } else {
+      return <p>Current Patient: {demographicNo}</p>;
+    }
+  };
+
+  useEffect(() => {
+    if (failures) {
+      const temp = [];
+      failures.map((f) => {
+        temp.pusn([f.demographic_no, <FailedIcon />]);
+      });
+      setFails(temp);
+    }
+  }, [failures]);
   return (
     <div className="">
-      <div className="tw-min-w-[400px] tw-min-h-[400px] tw-flex tw-justify-center tw-items-center tw-text-gray-700">
+      <div className="tw-mt-4 tw-mb-8">
+        <Alert
+          size="sm"
+          title="Warning"
+          message="Refreshing the page will stop the eligibility check."
+        ></Alert>
+      </div>
+      <div className="tw-min-w-[400px] tw-flex tw-justify-center tw-items-center tw-text-gray-700">
         <div>
-          <div className="tw-mt-4 tw-mb-8">
-            <Alert
-              title="Warning"
-              message="Refreshing the page will stop the eligibility check."
-            ></Alert>
-          </div>
           <div className="tw-min-w-[300px]">
-            <ProgressBar title={`Current Patient: ${demographicNo}`} />
-          </div>
-
-          <div className="tw-min-w-[350px]">
-            <hr className="tw-my-4" />
-            <div>
-              <p className=" tw-text-blue-9000 tw-text-base tw-m-0 tw-p-0 tw-mt-8">
-                Report
-              </p>
-              <p className="tw-text-gray-700 tw-text-xs tw-mb-4">
-                The ones that failed their eligibility checks
-              </p>
-            </div>
-            <Table
-              headers={["Demographic Number", "Status"]}
-              data={[
-                [
-                  "8091",
-                  <EmojiSadIcon className="tw-w-5 tw-h-5 tw-text-red-500 tw-mx-auto" />,
-                ],
-                [
-                  "3331",
-                  <EmojiSadIcon className="tw-w-5 tw-h-5 tw-text-red-500 tw-mx-auto" />,
-                ],
-                [
-                  "12",
-                  <EmojiSadIcon className="tw-w-5 tw-h-5 tw-text-red-500 tw-mx-auto" />,
-                ],
-                [
-                  "1",
-                  <EmojiSadIcon className="tw-w-5 tw-h-5 tw-text-red-500 tw-mx-auto" />,
-                ],
-              ]}
+            <ProgressBar
+              current={current}
+              total={total}
+              title={<ProgressTitle />}
             />
           </div>
+          {complete === true ? (
+            <div className="tw-text-center">
+              <Button onClick={goBack} className="tw-my-4" size="sm">
+                Go Back
+              </Button>
+            </div>
+          ) : null}
+          {fails.length > 0 ? (
+            <div className="tw-min-w-[350px]">
+              <hr className="tw-my-4" />
+              <div>
+                <p className=" tw-text-blue-9000 tw-text-base tw-m-0 tw-p-0 tw-mt-8">
+                  Report
+                </p>
+                <p className="tw-text-gray-700 tw-text-xs tw-mb-4">
+                  The ones that failed their eligibility checks
+                </p>
+              </div>
+              <Table headers={["Demographic Number", "Status"]} data={fails} />
+            </div>
+          ) : null}
         </div>
       </div>
     </div>

@@ -41,6 +41,15 @@ export default function WidgetAutomation() {
 
   const handleGoBack = () => {
     console.log("Go Back Clicked");
+    const state = {
+      complete: false,
+      total: null,
+      error: null,
+      running: false,
+      empty: false,
+      teleplan: false,
+    };
+    window.pubsub.publish("automations/eligibility", Object.assign({}, state));
     setOption("none");
   };
 

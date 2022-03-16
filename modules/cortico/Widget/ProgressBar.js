@@ -2,8 +2,8 @@ import { useEffect, useState } from "preact/hooks";
 import classNames from "classnames";
 export default function ProgressBar({
   title = "Title Goes Here",
-  current = 2,
-  total = 5,
+  current = 0,
+  total = 0,
   ...props
 }) {
   const [progress, setProgress] = useState();

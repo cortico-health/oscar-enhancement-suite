@@ -1495,7 +1495,7 @@ export async function checkAllEligibility() {
   var length = appointmentInfo.length;
   if (appointmentInfo.length === 0 || false) {
     state.empty = true;
-    pubsub.publish("automations/eligibility", state);
+    pubsub.publish("automations/eligibility", Object.assign({}, state));
     return;
   }
 
@@ -1504,13 +1504,15 @@ export async function checkAllEligibility() {
 
   window.checkAllEligibilityRunning = true;
   state.running = true;
-  pubsub.publish("automations/eligibility", state);
+  pubsub.publish("automations/eligibility", Object.assign({}, state));
+  let current = 0;
   try {
     for (let i = 0; i < length; i++) {
       const temp = Object.assign({}, appointmentInfo[i]);
       temp.total = length;
       temp.current = i + 1;
-      pubsub.publish("automations/eligibility", Object.assign(state, temp));
+      current = i + 1;
+      pubsub.publish("automations/eligibility", Object.assign({}, state, temp));
       console.log("Appointment Info", appointmentInfo[i]);
       const demographic_no = appointmentInfo[i].demographic_no;
       let result = null;
@@ -1589,7 +1591,7 @@ export async function checkAllEligibility() {
         addToFailures(appointmentInfo[i]);
         pubsub.publish(
           "automations/eligibility",
-          Object.assign(state, { failures: getFailureCache() })
+          Object.assign({}, state, { failures: getFailureCache() })
         );
       }
       addToCache(demographic_no, verified);
@@ -1607,10 +1609,12 @@ export async function checkAllEligibility() {
     window.checkAllEligibilityRunning = false;
     pubsub.publish(
       "automations/eligibility",
-      Object.assign(state, {
+      Object.assign({}, state, {
         complete: true,
         total: length,
         error,
+        current,
+        running: false,
       })
     );
   }
