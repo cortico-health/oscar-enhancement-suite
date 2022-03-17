@@ -10,6 +10,7 @@ function Content() {
   const containerRef = useRef();
 
   const [autoContext, setAutoContext] = useState({});
+  const [eligFails, setEligFails] = useState([]);
 
   const [open, setOpen] = useState(false);
 
@@ -20,6 +21,9 @@ function Content() {
           ...autoContext,
           ...data,
         });
+      },
+      "automations/eligibility/failures": (name, data) => {
+        setEligFails(data);
       },
     };
 
@@ -47,7 +51,7 @@ function Content() {
           >
             {open === true ? (
               <>
-                <CorticoPlugin />
+                <CorticoPlugin eligFails={eligFails} />
               </>
             ) : (
               <div

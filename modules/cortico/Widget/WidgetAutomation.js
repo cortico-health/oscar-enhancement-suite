@@ -31,11 +31,10 @@ const automations = [
   },
 ];
 
-export default function WidgetAutomation() {
+export default function WidgetAutomation({ eligFails }) {
   const [option, setOption] = useState("none");
 
   const handleClick = (value) => {
-    console.log("Handle Click", value);
     setOption(value);
   };
 
@@ -68,7 +67,7 @@ export default function WidgetAutomation() {
           leaveFrom="tw-opacity-100"
           leaveTo="tw-opacity-0"
         >
-          <EligbilityCheck goBack={handleGoBack} />
+          <EligbilityCheck eligFails={eligFails} goBack={handleGoBack} />
         </Transition>
       ) : (
         ""

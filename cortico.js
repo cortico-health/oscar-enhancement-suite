@@ -62,6 +62,7 @@ import Disclaimer from "./modules/cortico/Disclaimer";
 
 import LoginOscar from "./modules/Login/LoginOscar";
 import CorticoWidget from "./modules/cortico/Widget/CorticoWidget";
+import produce from "immer";
 
 const version = "2022.2.2";
 const pubsub = pubSubInit();
@@ -1474,8 +1475,19 @@ function isDateExpired(past, now, days) {
   return Math.abs(diff) > days;
 }
 
+function isEligibleSuccess(text) {
+  return (
+    (!text.includes("failure-phn") &&
+      !text.includes("results unavailable") &&
+      !text.includes("failure") &&
+      text.includes("success")) ||
+    text.includes("health card passed validation") ||
+    text.includes("patient eligible")
+  );
+}
+
 export async function checkAllEligibility() {
-  const state = {
+  let state = {
     current: null,
     complete: false,
     total: null,
@@ -1484,8 +1496,9 @@ export async function checkAllEligibility() {
     empty: false,
     teleplan: false,
   };
+
+  let failures = [];
   //localStorage.removeItem("checkCache")
-  console.log("Check all got here");
   if (window.checkAllEligibilityRunning === true) {
     return alert("Check Already Running");
   }
@@ -1493,7 +1506,6 @@ export async function checkAllEligibility() {
   clearFailureCache();
   var nodes = document.querySelectorAll("td.appt");
   var appointmentInfo = getAppointmentInfo(nodes);
-  console.log(appointmentInfo);
   appointmentInfo = filterAppointments(appointmentInfo);
 
   var length = appointmentInfo.length;
@@ -1504,41 +1516,84 @@ export async function checkAllEligibility() {
   }
 
   var providerNo = getProviderNoFromTd(nodes[0]);
-  var error = false;
-
   window.checkAllEligibilityRunning = true;
   state.running = true;
   pubsub.publish("automations/eligibility", Object.assign({}, state));
-  let current = 0;
+
   try {
     for (let i = 0; i < length; i++) {
-      const temp = Object.assign({}, appointmentInfo[i]);
-      temp.total = length;
-      temp.current = i + 1;
-      current = i + 1;
-      pubsub.publish("automations/eligibility", Object.assign({}, state, temp));
+      //Delay when it starts
+      if (i > 0) {
+        await new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve();
+          }, 1500);
+        });
+      }
+
       const demographic_no = appointmentInfo[i].demographic_no;
       let result = null;
       let patientInfo = null;
       let healthNumber = null;
       let province = null;
-
       // empty appointment node, do not check
       if (!demographic_no || demographic_no == 0) continue;
 
+      state.current = i + 1;
+      state.total = length;
+      pubsub.publish("automations/eligibility", Object.assign({}, state));
+
       // In cases where the first appointment in the schedule is an empty
       // appointment, get the providerNo from the node itself
+      if (!providerNo) {
+        providerNo = getProviderNoFromTd(nodes[i]);
+      }
 
-      if (!providerNo) providerNo = getProviderNoFromTd(nodes[i]);
       try {
         patientInfo = await getPatientInfo(demographic_no);
-        console.log("Patient Info:", patient_info);
+        console.info("Patient Info:", patientInfo);
       } catch (e) {
         console.error(e);
+        failures = produce(failures, (draft) => {
+          draft.push({
+            firstName: null,
+            lastName: null,
+            demographicNo: demographic_no,
+            reason: "Could not get Patient's infomration",
+          });
+        });
+        pubsub.publish("automations/eligibility/failures", failures);
+        continue;
       }
-      if (patientInfo) {
-        healthNumber = patientInfo["Health Ins"].replace(/\s+/g, " ").trim();
-        province = patientInfo["Province"].replace(/\s+/g, " ").trim();
+
+      healthNumber = patientInfo["Health Ins"]?.replace(/\s+/g, " ").trim();
+
+      if (!healthNumber) {
+        failures = produce(failures, (draft) => {
+          draft.push({
+            firstName: patientInfo["First Name"],
+            lastName: patientInfo["Last Name"],
+            demographicNo: demographic_no,
+            reason: "Could not get Patient's Health Number",
+          });
+        });
+        pubsub.publish("automations/eligibility/failures", failures);
+        continue;
+      }
+
+      province = patientInfo["Province"].replace(/\s+/g, " ").trim();
+
+      if (!province) {
+        failures = produce(failures, (draft) => {
+          draft.push({
+            firstName: null,
+            lastName: null,
+            demographicNo: demographic_no,
+            reason: "Could not get Patient's Province",
+          });
+        });
+        pubsub.publish("automations/eligibility/failures", failures);
+        continue;
       }
 
       try {
@@ -1552,6 +1607,16 @@ export async function checkAllEligibility() {
         );
       } catch (e) {
         console.error(e);
+        failures = produce(failures, (draft) => {
+          draft.push({
+            firstName: null,
+            lastName: null,
+            demographicNo: demographic_no,
+            reason: "Network Error, please check manually",
+          });
+        });
+        pubsub.publish("automations/eligibility/failures", failures);
+        continue;
       }
 
       let text = null;
@@ -1570,74 +1635,54 @@ export async function checkAllEligibility() {
           }
         }
       } else {
-        text = "Failed to fetch";
-        lowerCaseText = "Failed to fetch";
+        failures = produce(failures, (draft) => {
+          draft.push({
+            firstName: null,
+            lastName: null,
+            demographicNo: demographic_no,
+            reason: "Failed to set eligiblity",
+          });
+        });
+        pubsub.publish("automations/eligibility/failures", failures);
+        continue;
       }
 
       if (lowerCaseText.includes("error in teleplan connection")) {
         state.teleplan = true;
-        pubsub.publish(
-          "automations/eligibility",
-          Object.assign({}, state, temp)
-        );
-        error = true;
-        //alert("Error in teleplan");
+        pubsub.publish("automations/eligibility", Object.assign({}, state));
         break;
       }
 
       let verified = false;
-
-      function isSuccess(text) {
-        return (
-          (!text.includes("failure-phn") &&
-            !text.includes("results unavailable") &&
-            !text.includes("failure") &&
-            text.includes("success")) ||
-          text.includes("health card passed validation") ||
-          text.includes("patient eligible")
-        );
-      }
-
       if (lowerCaseText.includes("this is not an insured benefit")) {
         verified = "uninsured";
-        console.log("Patient not insured");
-      } else if (isSuccess(lowerCaseText) || requestSuccess) {
+      } else if (isEligibleSuccess(lowerCaseText) || requestSuccess) {
         plusSignAppointments(demographic_no);
         verified = true;
-        console.log("Success!");
       } else {
-        appointmentInfo[i]["reason"] = text;
-        addToFailures(appointmentInfo[i]);
-        pubsub.publish(
-          "automations/eligibility",
-          Object.assign({}, state, temp, { failures: getFailureCache() })
-        );
-        console.log("Failed!", appointmentInfo[i]);
+        failures = produce(failures, (draft) => {
+          draft.push({
+            firstName: null,
+            lastName: null,
+            demographicNo: demographic_no,
+            reason: "Check manually to determine reason",
+          });
+        });
+        pubsub.publish("automations/eligibility/failures", failures);
+        continue;
       }
       addToCache(demographic_no, verified);
-
-      await new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve();
-        }, 1500);
-      });
     }
   } catch (err) {
-    console.log(err);
-    error = true;
-    alert(err);
+    console.error(err);
+    state.error = true;
+    state._error = true;
+    pubsub.publish("automations/eligibility", Object.assign({}, state));
   } finally {
     window.checkAllEligibilityRunning = false;
-    pubsub.publish(
-      "automations/eligibility",
-      Object.assign({}, state, {
-        complete: true,
-        total: length,
-        error,
-        current,
-        running: false,
-      })
-    );
+    state.complete = true;
+    state.running = false;
+    pubsub.publish("automations/eligibility", Object.assign({}, state));
   }
 }
 
@@ -2629,12 +2674,9 @@ function getDemographicPageResponse(demographic) {
   if (origin.includes("skymedical")) {
     url = `/demographic/demographiccontrol.jsp?demographic_no=${demographicNo}&displaymode=edit&dboperation=search_detail`;
   }
-  const originalFetch = require("cross-fetch");
-  const fetch = require("fetch-retry")(originalFetch);
-  return fetch(url, {
-    retryDelay: 2000,
-    retries: 3,
-  });
+  //const originalFetch = require("cross-fetch");
+  //const fetch = require("fetch-retry")(originalFetch);
+  return fetch(url);
 }
 
 function handleErrors(response) {

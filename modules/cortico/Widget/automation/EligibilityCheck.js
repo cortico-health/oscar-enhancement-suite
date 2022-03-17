@@ -9,7 +9,7 @@ import Table from "../Table.js";
 import ProgressBar from "../ProgressBar.js";
 import Alert from "../Alert.js";
 
-export default function EligbilityCheck({ goBack, ...props }) {
+export default function EligbilityCheck({ eligFails, goBack, ...props }) {
   useEffect(() => {
     checkAllEligibility();
   }, []);
@@ -39,7 +39,7 @@ export default function EligbilityCheck({ goBack, ...props }) {
               current={autoContext.current}
               total={autoContext.total}
               demographicNo={autoContext.demographic_no}
-              failures={autoContext.failures}
+              failures={eligFails}
             />
           )}
         </div>
@@ -86,9 +86,20 @@ function Running({
   useEffect(() => {
     if (failures) {
       const temp = [];
-      console.log("Failures", JSON.parse(JSON.parse(failures)));
-      JSON.parse(JSON.parse(failures)).map((f) => {
-        temp.push([f.demographic_no, <FailedIcon />]);
+      failures.map((f) => {
+        const Name = () => (
+          <p className="tw-max-w-[100px] tw-text-xs">
+            {f.firstName} {f.lastName}
+          </p>
+        );
+        const Reason = () => (
+          <p className="tw-max-w-[90px] tw-text-xs">{f.reason}</p>
+        );
+
+        const Demographic = () => (
+          <p className="tw-text-xs">{f.demographicNo}</p>
+        );
+        temp.push([<Name />, <Demographic />, <Reason />, <FailedIcon />]);
       });
       setFails(temp);
     }
@@ -129,7 +140,10 @@ function Running({
                   The ones that failed their eligibility checks
                 </p>
               </div>
-              <Table headers={["Demographic Number", "Status"]} data={fails} />
+              <Table
+                headers={["Name", "Demographic Number", "Reason", "Status"]}
+                data={fails}
+              />
             </div>
           ) : null}
         </div>
