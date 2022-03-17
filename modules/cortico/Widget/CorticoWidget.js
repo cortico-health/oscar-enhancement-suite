@@ -51,7 +51,7 @@ function Content() {
               </>
             ) : (
               <div
-                className="tw-p-4 tw-cursor-pointer tw-rounded-full"
+                className="tw-p-4 tw-cursor-pointer tw-rounded-full tw-bg-blue-1000"
                 onClick={() => {
                   setOpen(!open);
                 }}

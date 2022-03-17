@@ -1587,17 +1587,21 @@ export async function checkAllEligibility() {
 
       let verified = false;
 
+      function isSuccess(text) {
+        return (
+          (!text.includes("failure-phn") &&
+            !text.includes("results unavailable") &&
+            !text.includes("failure") &&
+            text.includes("success")) ||
+          text.includes("health card passed validation") ||
+          text.includes("patient eligible")
+        );
+      }
+
       if (lowerCaseText.includes("this is not an insured benefit")) {
         verified = "uninsured";
         console.log("Patient not insured");
-      } else if (
-        (!lowerCaseText.includes("failure-phn") &&
-          !lowerCaseText.includes("results unavailable") &&
-          lowerCaseText.includes("success")) ||
-        lowerCaseText.includes("health card passed validation") ||
-        lowerCaseText.includes("patient eligible") ||
-        requestSuccess
-      ) {
+      } else if (isSuccess(lowerCaseText) || requestSuccess) {
         plusSignAppointments(demographic_no);
         verified = true;
         console.log("Success!");
@@ -2046,6 +2050,7 @@ function formatNumber(number) {
 }
 
 async function setupPreferredPharmacy(code, demographic_no) {
+  console.log("Setup Preferred Pharmacy Running");
   let corticoPharmacy = null;
   let corticoPharmacyText = null;
   const state = {
@@ -2070,7 +2075,7 @@ async function setupPreferredPharmacy(code, demographic_no) {
     return state;
   }
 
-  corticoPharmacyText = JSON.parse(respText);
+  corticoPharmacyText = JSON.parse(corticoPharmacyText);
   if (corticoPharmacyText.length <= 0) {
     //Show this message if the pharmacy code is not found
     state.error = true;
@@ -2145,9 +2150,10 @@ async function setupPreferredPharmacy(code, demographic_no) {
     return state;
   }
 
+  let text = null;
   try {
     const results = await getPharmacyResults(corticoSearchTerm);
-    const text = await results.text();
+    text = await results.text();
   } catch (e) {
     console.error(e);
     state.error = true;
@@ -2162,7 +2168,7 @@ async function setupPreferredPharmacy(code, demographic_no) {
     window.location.href.indexOf("oscarRx/choosePatient.do") > -1;
 
   if (pharmacyFound) {
-    pharmacy = pharmacies.find((item) => {
+    const pharmacy = pharmacies.find((item) => {
       let item_name = item.name.toLowerCase();
       let cleaned_item_name = item_name.replace(/[^\w\s]/gi, "");
       return (
@@ -2182,6 +2188,8 @@ async function setupPreferredPharmacy(code, demographic_no) {
           demographicNo
         );
         const setPharmacyText = await setPharmacyResults.text();
+        state.infoMessage = "Successfully updated pharmacy";
+        return state;
       } catch (e) {
         console.error(e);
         state.error = true;
@@ -2397,7 +2405,11 @@ async function setupPreferredPharmacies() {
       storePharmaciesCache(demographicNo, true);
 
       console.log("phar", pharmacyCode);
-      await setupPreferredPharmacy(pharmacyCode, demographicNo);
+      const demographicState = await setupPreferredPharmacy(
+        pharmacyCode,
+        demographicNo
+      );
+      console.log("demographicState", demographicState);
     } catch (err) {
       storePharmaciesFailureCache(demographicNo, err.message);
       displayPharmaciesFailure(demographicNo, err.message);

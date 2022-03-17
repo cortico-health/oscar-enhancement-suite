@@ -18,22 +18,22 @@ export default function CorticoPlugin() {
   const [items, setItems] = useState([
     {
       name: "Account",
-      icon: <UserIcon className="tw-w-8 tw-h-8" />,
+      icon: <UserIcon className="tw-w-6 tw-h-6" />,
       current: true,
     },
     {
       name: "Automation",
-      icon: <DesktopComputerIcon className="tw-w-8 tw-h-8" />,
+      icon: <DesktopComputerIcon className="tw-w-6 tw-h-6" />,
       current: false,
     },
     {
       name: "Settings",
-      icon: <CogIcon className="tw-w-8 tw-h-8" />,
+      icon: <CogIcon className="tw-w-6 tw-h-6" />,
       current: false,
     },
     {
       name: "Messenger",
-      icon: <ChatIcon className="tw-w-8 tw-h-8" />,
+      icon: <ChatIcon className="tw-w-6 tw-h-6" />,
       current: false,
     },
   ]);

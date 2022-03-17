@@ -34,7 +34,7 @@ export default function WidgetSidebar({ onClick, items, ...props }) {
               </p>
               <p
                 className={classNames(
-                  "tw-text-lg tw-cursor-pointer tw-font-normal tw-tracking-wide",
+                  "tw-text-base tw-cursor-pointer tw-tracking-wide",
                   item.current === true ? "tw-opacity-100" : "tw-opacity-60"
                 )}
               >
