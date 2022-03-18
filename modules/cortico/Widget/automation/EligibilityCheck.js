@@ -1,21 +1,21 @@
 import { checkAllEligibility } from "../../../../cortico.js";
 import CircleProgressBar from "./CircleProgressBar";
 import { useEffect, useContext, useState } from "preact/hooks";
-import { AutoContext } from "../../../Context/WidgetContext.js";
+import { eligCheck } from "../../../Context/WidgetContext.js";
 import { InformationCircleIcon, EmojiSadIcon } from "@heroicons/react/solid";
 import { ExclamationIcon } from "@heroicons/react/outline";
 import Button from "../../../core/Button";
 import Table from "../Table.js";
 import ProgressBar from "../ProgressBar.js";
 import Alert from "../Alert.js";
+import { useSelector } from "react-redux";
 
-export default function EligbilityCheck({ eligFails, goBack, ...props }) {
+export default function EligbilityCheck({ goBack, ...props }) {
+  const eligCheck = useSelector((state) => state.eligCheck);
+  const eligCheckFails = useSelector((state) => state.eligCheckFails);
   useEffect(() => {
     checkAllEligibility();
   }, []);
-
-  const autoContext = useContext(AutoContext);
-  console.log("AUtoooo context", autoContext);
 
   return (
     <div className="tw-font-sans">
@@ -28,18 +28,18 @@ export default function EligbilityCheck({ eligFails, goBack, ...props }) {
         </p>
         <hr className="tw-my-2" />
         <div>
-          {autoContext.empty === true ? (
+          {eligCheck.empty === true ? (
             <NoAppointments goBack={goBack} />
-          ) : autoContext.teleplan === true ? (
+          ) : eligCheck.teleplan === true ? (
             <Teleplan goBack={goBack} />
           ) : (
             <Running
               goBack={goBack}
-              complete={autoContext.complete}
-              current={autoContext.current}
-              total={autoContext.total}
-              demographicNo={autoContext.demographic_no}
-              failures={eligFails}
+              complete={eligCheck.complete}
+              current={eligCheck.current}
+              total={eligCheck.total}
+              demographicNo={eligCheck.demographic_no}
+              failures={eligCheckFails}
             />
           )}
         </div>

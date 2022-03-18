@@ -3,27 +3,27 @@ import { useRef, useEffect } from "preact/hooks";
 import CorticoImg from "../../../resources/icons/logo-regular-white.svg";
 import CorticoPlugin from "./CorticoPlugin";
 import { useState } from "preact/hooks";
-import { AutoContext } from "../../Context/WidgetContext";
 import classNames from "classnames";
-
+import store from "./store/store.js";
+import { Provider, useDispatch } from "react-redux";
 function Content() {
   const containerRef = useRef();
-
-  const [autoContext, setAutoContext] = useState({});
-  const [eligFails, setEligFails] = useState([]);
-
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const subscriptions = {
       "automations/eligibility": (name, data) => {
-        setAutoContext({
-          ...autoContext,
-          ...data,
+        dispatch({
+          type: "eligCheck/setAll",
+          payload: data,
         });
       },
       "automations/eligibility/failures": (name, data) => {
-        setEligFails(data);
+        dispatch({
+          type: "eligCheckFails/setAll",
+          payload: data,
+        });
       },
     };
 
@@ -39,40 +39,44 @@ function Content() {
   }, []);
 
   return (
-    <AutoContext.Provider value={autoContext}>
-      <div className="cleanslate cortico-widget">
-        <div className="tailwind preflight">
-          <div
-            className={classNames(
-              "tw-fixed tw-bottom-5 tw-right-5 tw-z-10005 tw-bg-blue-1000 tw-text-white tw-shadow-xl tw-bg-cortico tw-bg-transparent",
-              open === true ? "tw-rounded-xl" : "tw-rounded-full"
-            )}
-            ref={containerRef}
-          >
-            {open === true ? (
-              <>
-                <CorticoPlugin eligFails={eligFails} />
-              </>
-            ) : (
-              <div
-                className="tw-p-4 tw-cursor-pointer tw-rounded-full tw-bg-blue-1000"
-                onClick={() => {
-                  setOpen(!open);
-                }}
-              >
-                <img
-                  className="tw-h-8 tw-w-8 tw-cursor-pointer"
-                  src={CorticoImg}
-                />
-              </div>
-            )}
-          </div>
+    <div className="cleanslate cortico-widget">
+      <div className="tailwind preflight">
+        <div
+          className={classNames(
+            "tw-fixed tw-bottom-5 tw-right-5 tw-z-10005 tw-bg-blue-1000 tw-text-white tw-shadow-xl tw-bg-cortico tw-bg-transparent",
+            open === true ? "tw-rounded-xl" : "tw-rounded-full"
+          )}
+          ref={containerRef}
+        >
+          {open === true ? (
+            <>
+              <CorticoPlugin />
+            </>
+          ) : (
+            <div
+              className="tw-p-4 tw-cursor-pointer tw-rounded-full tw-bg-blue-1000"
+              onClick={() => {
+                setOpen(!open);
+              }}
+            >
+              <img
+                className="tw-h-8 tw-w-8 tw-cursor-pointer"
+                src={CorticoImg}
+              />
+            </div>
+          )}
         </div>
       </div>
-    </AutoContext.Provider>
+    </div>
   );
 }
 
 export default function CorticoWidget(container, replaceNode) {
-  return render(<Content />, container, replaceNode);
+  return render(
+    <Provider store={store}>
+      <Content />
+    </Provider>,
+    container,
+    replaceNode
+  );
 }

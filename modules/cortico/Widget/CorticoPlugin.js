@@ -13,7 +13,7 @@ import { isLoggedIn } from "../../Utils/Utils";
 import AccountInformation from "./AccountInformation";
 import NotAvailable from "./NotAvailable";
 
-export default function CorticoPlugin({ eligFails, ...props }) {
+export default function CorticoPlugin({ ...props }) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [items, setItems] = useState([
     {
@@ -74,7 +74,7 @@ export default function CorticoPlugin({ eligFails, ...props }) {
           </div>
         ) : activeItem === "Automation" ? (
           <div className="tw-p-4 tw-overflow-y-auto tw-max-h-[600px]">
-            <WidgetAutomation eligFails={eligFails} />
+            <WidgetAutomation />
           </div>
         ) : activeItem === "Settings" ? (
           <div className="tw-p-4 tw-w-[700px] tw-h-full">
