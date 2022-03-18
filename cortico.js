@@ -63,6 +63,9 @@ import Disclaimer from "./modules/cortico/Disclaimer";
 import LoginOscar from "./modules/Login/LoginOscar";
 import CorticoWidget from "./modules/cortico/Widget/CorticoWidget";
 import produce from "immer";
+import widgetStore, {
+  initialState as setupPharmacyState,
+} from "./modules/cortico/Widget/store/store";
 
 const version = "2022.2.2";
 const pubsub = pubSubInit();
@@ -2378,37 +2381,72 @@ async function getDiagnosticFromCortico(appt_no, notes, token) {
 }
 
 async function setupPreferredPharmacies() {
-  console.log("setting up batch pharmacies");
   window.setupPreferredPharmaciesRunning = true;
+  setupPharmacyState.running = true;
+  widgetStore.dispatch({
+    type: "setupPharmacy/setAll",
+    payload: setupPharmacyState,
+  });
 
   clearFailureCache();
   const appointments = getAppointments();
+  if (appointments.length === 0) {
+    setupPharmacyState.empty = true;
+    widgetStore.dispatch({
+      type: "setupPharmacy/setAll",
+      payload: setupPharmacyState,
+    });
+    return;
+  }
 
-  console.log(appointments);
   var error = false;
   for (let i = 0; i < appointments.length; i++) {
-    var temp = {};
-    temp.total = appointments.length;
-    temp.current = i;
-    pubsub.publish("check-batch-pharmacies", temp);
-
-    const cancelled = appointments[i].querySelector(
-      "a.apptStatus[title='Cancelled ']"
-    );
-    if (cancelled) {
-      continue;
-    }
+    setupPharmacyState.total = appointments.length;
+    setupPharmacyState.current = i;
+    widgetStore.dispatch({
+      type: "setupPharmacy/setAll",
+      payload: setupPharmacyState,
+    });
 
     const element = appointments[i].querySelector("a.apptLink");
-
     if (!element || !element.attributes) {
+      widgetStore.dispatch({
+        type: "setupPharmacyFailures/add",
+        payload: {
+          reason: "Could not get appointment link",
+        },
+      });
       continue;
     }
     let demographicNo = null;
     try {
       const apptUrl = extractApptUrl(element.attributes.onclick.textContent);
-      console.log("Set up preferred pharmacies");
       demographicNo = getDemographicNo(apptUrl);
+
+      if (!demographicNo) {
+        widgetStore.dispatch({
+          type: "setupPharmacyFailures/add",
+          payload: {
+            reason: "Could not get demographic Number",
+          },
+        });
+        continue;
+      }
+
+      const cancelled = appointments[i].querySelector(
+        "a.apptStatus[title='Cancelled ']"
+      );
+      if (cancelled) {
+        widgetStore.dispatch({
+          type: "setupPharmacyFailures/add",
+          payload: {
+            demographicNo,
+            reason: "Appointment cancelled",
+          },
+        });
+        continue;
+      }
+
       const _pharmaciesCache = localStorage.getItem("pharmaciesCache");
       const pharmaciesCache = JSON.parse(_pharmaciesCache);
       var demographics = new Array();
@@ -2444,7 +2482,13 @@ async function setupPreferredPharmacies() {
       const pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle);
       if (!pharmacyCode) {
         storePharmaciesCache(demographicNo, false);
-        console.log("Pharmacy code not found from appt");
+        widgetStore.dispatch({
+          type: "setupPharmacyFailures/add",
+          payload: {
+            demographicNo,
+            reason: "Pharmacy code not found from appt",
+          },
+        });
         continue;
       }
       storePharmaciesCache(demographicNo, true);
@@ -2454,18 +2498,36 @@ async function setupPreferredPharmacies() {
         pharmacyCode,
         demographicNo
       );
+
+      if (demographicState.error === true) {
+        widgetStore.dispatch({
+          type: "setupPharmacyFailures/add",
+          payload: {
+            demographicNo,
+            reason: demographicState.errorMessage,
+          },
+        });
+      }
       console.log("demographicState", demographicState);
     } catch (err) {
+      console.error(err);
       storePharmaciesFailureCache(demographicNo, err.message);
       displayPharmaciesFailure(demographicNo, err.message);
-    } finally {
+      widgetStore.dispatch({
+        type: "setupPharmacyFailures/add",
+        payload: {
+          demographicNo,
+          reason: err.message,
+        },
+      });
     }
   }
   window.setupPreferredPharmaciesRunning = false;
-  pubsub.publish("check-batch-pharmacies", {
-    complete: true,
-    total: length,
-    error,
+  setupPharmacyState.running = false;
+  setupPharmacyState.complete = true;
+  widgetStore.dispatch({
+    type: "setupPharmacy/setAll",
+    payload: setupPharmacyState,
   });
 }
 
