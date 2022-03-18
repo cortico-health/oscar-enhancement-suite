@@ -12,12 +12,13 @@ export function eligCheckReducer(
 ) {
   switch (action.type) {
     case "eligCheck/set":
-      const temp = Object.assign({}, state);
-      temp[action.payload.key] = action.payload.value;
-      return temp;
+      return {
+        ...state,
+        [action.payload.key]: action.payload.value,
+      };
 
     case "eligCheck/setAll":
-      return Object.assign({}, action.payload);
+      return { ...state, ...action.payload };
     default:
       return state;
   }
