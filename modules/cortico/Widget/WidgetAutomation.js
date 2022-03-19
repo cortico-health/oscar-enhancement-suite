@@ -8,6 +8,7 @@ import classNames from "classnames";
 import { Transition } from "@headlessui/react";
 import { useState } from "preact/hooks";
 import EligbilityCheck from "./automation/EligibilityCheck";
+import PreferredPharmacies from "./automation/PreferredPharmacies";
 
 const automations = [
   {
@@ -21,7 +22,7 @@ const automations = [
   },
   {
     name: "Preferred Pharmacies",
-    value: "pharmacies",
+    value: "phar",
     description:
       "Set preferred pharmacies for each of the patients in the schedule",
     icon: (
@@ -54,24 +55,24 @@ export default function WidgetAutomation() {
 
   return (
     <div className="tw-px-4 tw-py-4">
-      {option === "none" ? (
-        <WidgetAutomationOptions onClick={handleClick} />
-      ) : option === "elig" ? (
-        <Transition
-          show={true}
-          appear={true}
-          enter="tw-transition-opacity tw-duration-1000"
-          enterFrom="tw-opacity-0"
-          enterTo="tw-opacity-100"
-          leave="tw-transition-opacity tw-duration-1000"
-          leaveFrom="tw-opacity-100"
-          leaveTo="tw-opacity-0"
-        >
+      <Transition
+        show={true}
+        appear={true}
+        enter="tw-transition-opacity tw-duration-1000"
+        enterFrom="tw-opacity-0"
+        enterTo="tw-opacity-100"
+        leave="tw-transition-opacity tw-duration-1000"
+        leaveFrom="tw-opacity-100"
+        leaveTo="tw-opacity-0"
+      >
+        {option === "none" ? (
+          <WidgetAutomationOptions onClick={handleClick} />
+        ) : option === "elig" ? (
           <EligbilityCheck goBack={handleGoBack} />
-        </Transition>
-      ) : (
-        ""
-      )}
+        ) : option === "phar" ? (
+          <PreferredPharmacies goBack={handleGoBack} />
+        ) : null}
+      </Transition>
     </div>
   );
 }

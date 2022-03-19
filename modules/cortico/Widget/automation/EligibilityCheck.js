@@ -1,14 +1,13 @@
 import { checkAllEligibility } from "../../../../cortico.js";
-import CircleProgressBar from "./CircleProgressBar";
-import { useEffect, useContext, useState } from "preact/hooks";
-import { eligCheck } from "../../../Context/WidgetContext.js";
-import { InformationCircleIcon, EmojiSadIcon } from "@heroicons/react/solid";
+import { useEffect, useState } from "preact/hooks";
+import { EmojiSadIcon } from "@heroicons/react/solid";
 import { ExclamationIcon } from "@heroicons/react/outline";
 import Button from "../../../core/Button";
 import Table from "../Table.js";
 import ProgressBar from "../ProgressBar.js";
 import Alert from "../Alert.js";
 import { useSelector } from "react-redux";
+import NoAppointments from "./NoAppointments";
 
 export default function EligbilityCheck({ goBack, ...props }) {
   const eligCheck = useSelector((state) => state.eligCheck);
@@ -29,7 +28,27 @@ export default function EligbilityCheck({ goBack, ...props }) {
         <hr className="tw-my-2" />
         <div>
           {eligCheck.empty === true ? (
-            <NoAppointments goBack={goBack} />
+            <NoAppointments goBack={goBack} title="No Appointments To Check">
+              <div>
+                You may be seeing this because
+                <ol className="tw-list-decimal tw-my-2">
+                  <li>
+                    all patients in the schedule have been checked by{" "}
+                    <span className="tw-font-medium tw-text-blue-1000">
+                      our plugin
+                    </span>
+                  </li>
+                  <li>the schedule contains no appointments</li>
+                </ol>
+                If this is not the case, please contact us at{" "}
+                <a
+                  href="mailto:help@cortico.health"
+                  className="tw-text-blue-1000 tw-font-medium"
+                >
+                  help@cortico.health
+                </a>
+              </div>
+            </NoAppointments>
           ) : eligCheck.teleplan === true ? (
             <Teleplan goBack={goBack} />
           ) : (
@@ -173,39 +192,6 @@ function Teleplan({ goBack, ...props }) {
               help@cortico.health
             </a>
           </p>
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function NoAppointments({ goBack, ...props }) {
-  return (
-    <div className="tw-min-w-[400px] tw-min-h-[400px] tw-flex tw-justify-center tw-items-center tw-text-gray-700">
-      <div className="tw-flex tw-flex-col tw-items-center tw-justify-center">
-        <InformationCircleIcon className="tw-w-12 tw-h-12 tw-text-blue-1000" />
-        <p className="tw-text-lg tw-mt-4">No Appointments To Check</p>
-        <Button onClick={goBack} className="tw-my-4" size="sm">
-          Go Back
-        </Button>
-        <p className="tw-text-sm tw-mt-4 tw-block tw-max-w-[350px] tw-mx-auto">
-          You may be seeing this because
-          <ol className="tw-list-decimal tw-my-2">
-            <li>
-              all patients in the schedule have been checked by{" "}
-              <span className="tw-font-medium tw-text-blue-1000">
-                our plugin
-              </span>
-            </li>
-            <li>the schedule contains no appointments</li>
-          </ol>
-          If this is not the case, please contact us at{" "}
-          <a
-            href="mailto:help@cortico.health"
-            className="tw-text-blue-1000 tw-font-medium"
-          >
-            help@cortico.health
-          </a>
         </p>
       </div>
     </div>

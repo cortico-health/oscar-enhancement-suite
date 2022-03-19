@@ -63,10 +63,8 @@ import Disclaimer from "./modules/cortico/Disclaimer";
 import LoginOscar from "./modules/Login/LoginOscar";
 import CorticoWidget from "./modules/cortico/Widget/CorticoWidget";
 import produce from "immer";
-import widgetStore, {
-  initialState as setupPharmacyState,
-} from "./modules/cortico/Widget/store/store";
-
+import { initialState as setupPharmacyState } from "./modules/cortico/Widget/features/Pharmacy/SetupPreferredPharmacies";
+import widgetStore from "./modules/cortico/Widget/store/store";
 const version = "2022.2.2";
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
@@ -2380,7 +2378,7 @@ async function getDiagnosticFromCortico(appt_no, notes, token) {
     });
 }
 
-async function setupPreferredPharmacies() {
+export async function setupPreferredPharmacies() {
   window.setupPreferredPharmaciesRunning = true;
   setupPharmacyState.running = true;
   widgetStore.dispatch({
@@ -2402,7 +2400,7 @@ async function setupPreferredPharmacies() {
   var error = false;
   for (let i = 0; i < appointments.length; i++) {
     setupPharmacyState.total = appointments.length;
-    setupPharmacyState.current = i;
+    setupPharmacyState.current = i + 1;
     widgetStore.dispatch({
       type: "setupPharmacy/setAll",
       payload: setupPharmacyState,
@@ -2422,6 +2420,11 @@ async function setupPreferredPharmacies() {
     try {
       const apptUrl = extractApptUrl(element.attributes.onclick.textContent);
       demographicNo = getDemographicNo(apptUrl);
+      setupPharmacyState.demographicNo = demographicNo;
+      widgetStore.dispatch({
+        type: "setupPharmacy/setAll",
+        payload: setupPharmacyState,
+      });
 
       if (!demographicNo) {
         widgetStore.dispatch({

@@ -5,6 +5,7 @@ export const initialState = {
   current: null,
   empty: false,
   error: false,
+  demographicNo: null,
 };
 
 export function setupPharmacyReducer(state = initialState, action) {
@@ -25,8 +26,9 @@ export function setupPharmacyReducer(state = initialState, action) {
 export function setupPharmacyFailuresReducer(state = [], action) {
   switch (action.type) {
     case "setupPharmacyFailures/add":
-      return state.slice().push(action.payload);
-
+      let temp = state.slice();
+      temp.push(action.payload);
+      return temp;
     case "setupPharmacyFailures/setAll":
       return action.payload.slice();
     default:
