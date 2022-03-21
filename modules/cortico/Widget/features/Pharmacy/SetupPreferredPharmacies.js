@@ -18,6 +18,9 @@ export function setupPharmacyReducer(state = initialState, action) {
 
     case "setupPharmacy/setAll":
       return { ...state, ...action.payload };
+
+    case "setupPharmacy/reset":
+      return { ...state, ...initialState };
     default:
       return state;
   }
@@ -31,6 +34,8 @@ export function setupPharmacyFailuresReducer(state = [], action) {
       return temp;
     case "setupPharmacyFailures/setAll":
       return action.payload.slice();
+    case "setupPharmacyFailures/reset":
+      return [];
     default:
       return state;
   }

@@ -9,6 +9,7 @@ import { Transition } from "@headlessui/react";
 import { useState } from "preact/hooks";
 import EligbilityCheck from "./automation/EligibilityCheck";
 import PreferredPharmacies from "./automation/PreferredPharmacies";
+import { useDispatch } from "react-redux";
 
 const automations = [
   {
@@ -40,16 +41,8 @@ export default function WidgetAutomation() {
   };
 
   const handleGoBack = () => {
-    console.log("Go Back Clicked");
-    const state = {
-      complete: false,
-      total: null,
-      error: null,
-      running: false,
-      empty: false,
-      teleplan: false,
-    };
-    window.pubsub.publish("automations/eligibility", Object.assign({}, state));
+    useDispatch({ type: "setupPharmacyFailures/reset" });
+    useDispatch({ type: "eligCheckFails/reset" });
     setOption("none");
   };
 

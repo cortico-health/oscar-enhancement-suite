@@ -1,15 +1,14 @@
-export function eligCheckReducer(
-  state = {
-    current: null,
-    complete: false,
-    total: null,
-    error: null,
-    running: false,
-    empty: false,
-    teleplan: false,
-  },
-  action
-) {
+const initialState = {
+  current: null,
+  complete: false,
+  total: null,
+  error: null,
+  running: false,
+  empty: false,
+  teleplan: false,
+};
+
+export function eligCheckReducer(state = initialState, action) {
   switch (action.type) {
     case "eligCheck/set":
       return {
@@ -19,6 +18,8 @@ export function eligCheckReducer(
 
     case "eligCheck/setAll":
       return { ...state, ...action.payload };
+    case "eligCheck/reset":
+      return { ...state, ...initialState };
     default:
       return state;
   }
@@ -31,6 +32,9 @@ export function eligCheckFailsReducer(state = [], action) {
 
     case "eligCheckFails/setAll":
       return action.payload.slice();
+
+    case "eligCheckFails/reset":
+      return [];
     default:
       return state;
   }
