@@ -1,4 +1,4 @@
-const initialState = {
+export const initialState = Object.freeze({
   current: null,
   complete: false,
   total: null,
@@ -6,7 +6,7 @@ const initialState = {
   running: false,
   empty: false,
   teleplan: false,
-};
+});
 
 export function eligCheckReducer(state = initialState, action) {
   switch (action.type) {

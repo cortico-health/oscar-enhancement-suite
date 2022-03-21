@@ -13,7 +13,7 @@ import { isLoggedIn } from "../../Utils/Utils";
 import AccountInformation from "./AccountInformation";
 import NotAvailable from "./NotAvailable";
 
-export default function CorticoPlugin({ ...props }) {
+export default function CorticoPlugin({ onMinimize, ...props }) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [items, setItems] = useState([
     {
@@ -62,12 +62,17 @@ export default function CorticoPlugin({ ...props }) {
     });
   }, []);
 
+  const handleMinimize = () => {};
+
   return (
     <div className="tw-flex tw-h-full tw-bg-white tw-rounded-xl">
       <div className="">
         <WidgetSidebar items={items} onClick={handleClick} />
       </div>
-      <div className=" tw-text-black">
+      <div className=" tw-text-black tw-relative">
+        <div className="tw-absolute tw-top-2 tw-right-2" onClick={onMinimize}>
+          Min
+        </div>
         {activeItem === "Account" ? (
           <div className="tw-p-4 tw-mx-auto tw-flex tw-items-center tw-justify-center tw-overflow-hidden">
             {loggedIn === true ? <AccountInformation /> : <Login />}

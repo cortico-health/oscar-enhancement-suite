@@ -12,9 +12,15 @@ import NoAppointments from "./NoAppointments";
 export default function EligbilityCheck({ goBack, ...props }) {
   const eligCheck = useSelector((state) => state.eligCheck);
   const eligCheckFails = useSelector((state) => state.eligCheckFails);
+  console.log("Elig Check State", eligCheck);
   useEffect(() => {
-    checkAllEligibility();
-  }, []);
+    if (eligCheck.running === false && eligCheck.complete === false) {
+      checkAllEligibility();
+      console.log("Ran");
+    } else {
+      console.log("Didnt run");
+    }
+  }, [eligCheck.running, eligCheck.complete]);
 
   return (
     <div className="tw-font-sans">

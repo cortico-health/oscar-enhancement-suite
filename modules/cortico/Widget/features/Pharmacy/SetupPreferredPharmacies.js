@@ -1,4 +1,4 @@
-export const initialState = {
+export const initialState = Object.freeze({
   running: false,
   complete: false,
   total: null,
@@ -6,7 +6,7 @@ export const initialState = {
   empty: false,
   error: false,
   demographicNo: null,
-};
+});
 
 export function setupPharmacyReducer(state = initialState, action) {
   switch (action.type) {

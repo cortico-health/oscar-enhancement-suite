@@ -38,6 +38,10 @@ function Content() {
     };
   }, []);
 
+  const handleMinimize = () => {
+    setOpen(false);
+  };
+
   return (
     <div className="cleanslate cortico-widget">
       <div className="tailwind preflight">
@@ -50,7 +54,7 @@ function Content() {
         >
           {open === true ? (
             <>
-              <CorticoPlugin />
+              <CorticoPlugin onMinimize={handleMinimize} />
             </>
           ) : (
             <div

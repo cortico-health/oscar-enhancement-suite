@@ -64,6 +64,7 @@ import LoginOscar from "./modules/Login/LoginOscar";
 import CorticoWidget from "./modules/cortico/Widget/CorticoWidget";
 import produce from "immer";
 import { initialState as setupPharmacyState } from "./modules/cortico/Widget/features/Pharmacy/SetupPreferredPharmacies";
+import { initialState as eligCheckState } from "./modules/cortico/Widget/features/EligCheck/EligCheck";
 import widgetStore from "./modules/cortico/Widget/store/store";
 const version = "2022.2.2";
 const pubsub = pubSubInit();
@@ -1488,16 +1489,7 @@ function isEligibleSuccess(text) {
 }
 
 export async function checkAllEligibility() {
-  let state = {
-    current: null,
-    complete: false,
-    total: null,
-    error: null,
-    running: false,
-    empty: false,
-    teleplan: false,
-  };
-
+  let state = { ...eligCheckState };
   let failures = [];
   //localStorage.removeItem("checkCache")
   if (window.checkAllEligibilityRunning === true) {
@@ -1512,6 +1504,7 @@ export async function checkAllEligibility() {
   var length = appointmentInfo.length;
   if (appointmentInfo.length === 0 || false) {
     state.empty = true;
+    state.complete = true;
     pubsub.publish("automations/eligibility", Object.assign({}, state));
     return;
   }
@@ -2379,6 +2372,7 @@ async function getDiagnosticFromCortico(appt_no, notes, token) {
 }
 
 export async function setupPreferredPharmacies() {
+  const setupPharmacyState = { ...setupPharmacyState };
   window.setupPreferredPharmaciesRunning = true;
   setupPharmacyState.running = true;
   widgetStore.dispatch({

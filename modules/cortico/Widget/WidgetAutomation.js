@@ -9,7 +9,7 @@ import { Transition } from "@headlessui/react";
 import { useState } from "preact/hooks";
 import EligbilityCheck from "./automation/EligibilityCheck";
 import PreferredPharmacies from "./automation/PreferredPharmacies";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const automations = [
   {
@@ -34,16 +34,20 @@ const automations = [
 ];
 
 export default function WidgetAutomation() {
-  const [option, setOption] = useState("none");
-
+  const option = useSelector((state) => state.automation.option);
+  console.log("Option", option);
+  const dispatch = useDispatch();
   const handleClick = (value) => {
-    setOption(value);
+    console.log("Click, Value", value);
+    dispatch({ type: "automation/setOption", payload: value });
   };
 
   const handleGoBack = () => {
-    useDispatch({ type: "setupPharmacyFailures/reset" });
-    useDispatch({ type: "eligCheckFails/reset" });
-    setOption("none");
+    dispatch({ type: "setupPharmacyFailures/reset" });
+    dispatch({ type: "setupPharmacy/reset" });
+    dispatch({ type: "eligCheckFails/reset" });
+    dispatch({ type: "eligCheck/reset" });
+    dispatch({ type: "automation/setOption", payload: "none" });
   };
 
   return (

@@ -8,11 +8,14 @@ import {
   setupPharmacyFailuresReducer,
 } from "../features/Pharmacy/SetupPreferredPharmacies";
 
+import { automationReducer } from "../features/Automation/Automation";
+
 const rootReducer = combineReducers({
   eligCheck: eligCheckReducer,
   eligCheckFails: eligCheckFailsReducer,
   setupPharmacies: setupPharmacyReducer,
   setupPharmaciesFailures: setupPharmacyFailuresReducer,
+  automation: automationReducer,
 });
 
 function logger({ getState }) {
