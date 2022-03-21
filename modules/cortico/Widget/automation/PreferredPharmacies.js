@@ -15,8 +15,13 @@ export default function PreferredPharmacies({ goBack, ...props }) {
   console.log("Setup Pharmacies Failures", failures);
 
   useEffect(() => {
-    setupPreferredPharmacies();
-  }, []);
+    if (
+      setupPharmacies.running === false &&
+      setupPharmacies.complete === false
+    ) {
+      setupPreferredPharmacies();
+    }
+  }, [setupPharmacies.running, setupPharmacies.complete]);
 
   return (
     <div className="tw-font-sans">
