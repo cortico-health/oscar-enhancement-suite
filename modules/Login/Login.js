@@ -12,21 +12,12 @@ async function signInRequest(username, password) {
   };
   const url = getCorticoUrl() + "/api/token/";
 
-  console.log(url);
-
   return fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
-  }).catch((err) => {
-    console.error(err);
-    if (("" + err).includes("Failed to fetch")) {
-      alert("Cortico instance cannot be reached. Check clinic name.");
-    } else {
-      alert("Cortico: Unknown Login Error: " + err);
-    }
   });
 }
 
@@ -43,8 +34,8 @@ function Login() {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     const { username, password, clinicName, suffix, remember } = data;
 
-    localStorage.setItem('clinicname', clinicName);
-    localStorage.setItem('customUrlSuffix', suffix);
+    localStorage.setItem("clinicname", clinicName);
+    localStorage.setItem("customUrlSuffix", suffix);
 
     try {
       const response = await signInRequest(username, password);
@@ -63,26 +54,32 @@ function Login() {
       setSuccess(true);
 
       if (remember) {
-        localStorage.setItem('remUsername', username)
-        localStorage.setItem('remClinicName', clinicName);
-        localStorage.setItem('remSuffix', suffix);
+        localStorage.setItem("remUsername", username);
+        localStorage.setItem("remClinicName", clinicName);
+        localStorage.setItem("remSuffix", suffix);
       } else {
-        localStorage.removeItem('remUsername');
-        localStorage.removeItem('remClinicName');
-        localStorage.removeItem('remSuffix');
+        localStorage.removeItem("remUsername");
+        localStorage.removeItem("remClinicName");
+        localStorage.removeItem("remSuffix");
       }
-
     } catch (error) {
-      setLoading(false);
       console.error(error);
-      setErrorMessage(error.message);
+      if (("" + error).includes("Failed to fetch")) {
+        setErrorMessage(
+          "Cortico instance cannot be reached. Check clinic name."
+        );
+      } else {
+        setErrorMessage(error.message);
+      }
       setError(true);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="tw-bg-white tw-rounded-lg tw-mx-auto tw-p-4 tw-font-sans">
-      {success !== true ? (
+    <div className="tw-bg-white tw-rounded-lg tw-mx-auto tw-p-4 tw-font-sans tw-h-full">
+      {success === false ? (
         <LoginWindow
           onSubmit={handleSubmit}
           error={error}

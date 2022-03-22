@@ -23,8 +23,8 @@ export default function AccountInformation() {
     <div className="tw-flex tw-font-sans tw-w-full tw-items-start tw-h-full tw-min-w-[450px]">
       <div className="tw-flex tw-flex-col tw-w-full tw-justify-between tw-h-full">
         <div>
-          <div className="tw-bg-gray-100 tw-rounded-lg tw-p-8 tw-text-center tw-shadow-md tw-border">
-            <span className="tw-border tw-shadow-xl tw-h-24 tw-w-24 tw-mx-auto  tw-rounded-full tw-overflow-hidden tw-bg-gray-400 tw-flex tw-items-center tw-justify-center tw-text-gray-700 tw-font-semibold">
+          <div className=" tw-p-8 tw-text-center">
+            <span className="tw-border tw-shadow-xl tw-h-16 tw-w-16 tw-mx-auto  tw-rounded-full tw-overflow-hidden tw-bg-blue-1000 tw-flex tw-items-center tw-justify-center tw-text-white tw-font-semibold">
               {localStorage.getItem("name") &&
                 localStorage
                   .getItem("name")
@@ -33,14 +33,10 @@ export default function AccountInformation() {
                   .join("")}
             </span>
             <div>
-              <p className="tw-mt-4 tw-text-gray-700 tw-font-bold tw-text-3xl">
+              <p className="tw-mt-4 tw-text-gray-700 tw-font-bold tw-text-lg">
                 {localStorage.getItem("name")}
               </p>
-              <p className="tw-mt-2 tw-text-gray-700 tw-text-xl tw-font-normal tw-opacity-75">
-                {localStorage.getItem("jwt_username")}
-              </p>
-
-              <p className=" tw-text-gray-700 tw-text-xl tw-font-normal tw-opacity-75">
+              <p className=" tw-text-gray-700 tw-text-lg tw-font-normal tw-opacity-75">
                 <a
                   href={`https://${localStorage.getItem(
                     "clinicname"
@@ -52,14 +48,15 @@ export default function AccountInformation() {
                   {localStorage.getItem("customUrlSuffix")}
                 </a>
               </p>
-              <p className="tw-mt-4 tw-bg-blue-1000 tw-inline-block tw-px-2 tw-py-1 tw-font-normal tw-rounded-lg tw-text-white tw-text-lg">
-                Pro
+              <p className=" tw-text-gray-700 tw-text-lg tw-font-normal tw-opacity-75">
+                {localStorage.getItem("jwt_username")}
               </p>
             </div>
           </div>
         </div>
 
         <div className="tw-w-full">
+          <hr className="tw-my-2" />
           <div className="tw-w-full">
             <button
               onClick={handleSignOut}
@@ -92,21 +89,20 @@ export default function AccountInformation() {
               ) : (
                 <div className="tw-flex tw-justify-center tw-items-center tw-cursor-pointer">
                   <LockOpenIcon className="tw-inline-block tw-mr-4 tw-text-white tw-h-8 tw-w-8 tw-absolute tw-left-0 tw-top-[50%] tw-pl-2 tw-opacity-50 tw-translate-y-[-50%]"></LockOpenIcon>
-                  <span className="tw-cursor-pointer tw-font-normal">
+                  <span className="tw-cursor-pointer tw-font-normal tw-text-base">
                     Sign Out
                   </span>
                 </div>
               )}
             </button>
           </div>
-          <hr className="tw-my-2" />
           <div className="tw-flex tw-justify-between tw-mt-4">
             <p className="tw-text-base tw-text-gray-500 tw-text-center tw-font-semibold">
               &copy; <span className="tw-text-blue-1000">Cortico</span>
             </p>
             <a
               href="#"
-              className="tw-text-blue-1000 tw-text-xl tw-font-semibold"
+              className="tw-text-blue-1000 tw-text-base tw-font-semibold"
             >
               Contact Us
             </a>

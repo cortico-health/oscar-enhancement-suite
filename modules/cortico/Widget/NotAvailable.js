@@ -8,7 +8,7 @@ export default function NotAvailable() {
           <InformationCircleIcon className="tw-w-16 tw-h-16 tw-text-blue-1000 tw-mb-4 tw-block tw-mx-auto" />
           <p className="tw-text-gray-700 tw-text-sm tw-max-w-[300px]">
             This function is currently only available on
-            <ol className="tw-list-decimal tw-mt-2 tw-font-normal tw-text-xs">
+            <ol className="tw-list-decimal tw-mt-2 tw-font-normal tw-text-sm">
               <li>E forms</li>
               <li>Document Page</li>
               <li>Encounter Page</li>

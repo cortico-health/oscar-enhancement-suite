@@ -1,13 +1,12 @@
 import { Switch } from "@headlessui/react";
-import { useState, useRef, useEffect } from "preact/hooks";
+import { useState, useRef } from "preact/hooks";
 import Button from "../../core/Button";
-import { addNewUI, removeNewUI } from "../../Utils/Utils";
 
 export default function WidgetSettings() {
   const recallRef = useRef();
   const mediumRef = useRef();
-  const [theme, setTheme] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [resetCacheLoading, setResetCacheLoading] = useState(false);
 
   const saveSettings = async () => {
     setLoading(true);
@@ -21,7 +20,20 @@ export default function WidgetSettings() {
     setLoading(false);
   };
 
-  const resetCache = () => {};
+  const resetCache = async () => {
+    setResetCacheLoading(true);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    localStorage.clear();
+    if (!window.is_dev) {
+      const browser = browser || window.chrome;
+      if (browser) {
+        await browser.storage.local.clear();
+      } else {
+        localStorage.clear();
+      }
+    }
+    setResetCacheLoading(false);
+  };
 
   return (
     <div className="tw-min-w-[300px] tw-max-w-[450px] tw-p-4 tw-font-sans tw-h-full">
@@ -102,6 +114,7 @@ export default function WidgetSettings() {
           <hr className="tw-my-5" />
           <div className="tw-flex tw-justify-between tw-w-full">
             <Button
+              loading={resetCacheLoading}
               onClick={resetCache}
               className="tw-bg-red-600 tw-text-base tw-text-white tw-rounded-md tw-px-3 tw-py-2"
             >

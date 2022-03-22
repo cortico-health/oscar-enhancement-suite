@@ -37,10 +37,10 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
         <img src={corticoIcon} className="tw-w-12 tw-h-12" />
       </div>
       <div>
-        <h2 class="tw-m-0 tw-p-0 tw-mt-4 tw-mb-2 tw-text-center tw-text-4xl tw-font-medium text-gray-900 tw-px-2">
+        <h2 class="tw-m-0 tw-p-0 tw-mt-4 tw-mb-2 tw-text-center tw-text-2xl tw-font-medium text-gray-900 tw-px-2">
           Sign in to your account
         </h2>
-        <h3 className="tw-m-0 tw-p-0 tw-mt-2 tw-text-lg tw-text-center">
+        <h3 className="tw-m-0 tw-p-0 tw-mt-2 tw-text-base tw-text-center">
           Or{" "}
           <a
             className="tw-text-blue-700"
@@ -53,7 +53,7 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
       </div>
 
       {error === true ? (
-        <div className="tw-bg-red-500 tw-text-white tw-mt-4 tw-p-2 tw-rounded-lg tw-text-lg tw-font-medium">
+        <div className="tw-bg-red-500 tw-text-white tw-mt-4 tw-p-2 tw-rounded-lg tw-text-base tw-font-normal">
           {errorMessage || "Something went wrong. Please try again."}
         </div>
       ) : (
@@ -63,11 +63,11 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
         <div className="tw-mt-4">
           <div className="tw-mt-6 tw-rounded-lg tw-bg-gray-100 tw-p-4 tw-border">
             <div>
-              <h4 className="tw-font-medium tw-p-0 tw-mb-2 tw-text-lg tw-text-gray-700">
+              <h4 className="tw-font-medium tw-p-0 tw-mb-2 tw-text-base tw-text-gray-700">
                 Cortico Clinic Name
               </h4>
               <div className="tw-flex tw-items-center tw-space-x-4">
-                <div className="tw-text-lg tw-text-gray-500">https://</div>
+                <div className="tw-text-base tw-text-gray-500">https://</div>
                 <input
                   defaultValue={remClinicName}
                   ref={clinicNameRef}
@@ -76,7 +76,7 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
                   type="text"
                   placeholder="Clinic"
                   required
-                  className="tw-text-gray-700 tw-w-40 tw-text-xl placeholder:tw-text-xl tw-appearance-none tw-block tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-b-md tw-shadow-sm tw-placeholder-gray-400 tw-focus:outline-none tw-focus:ring-indigo-500 tw-focus:border-indigo-500 tw-sm:text-sm"
+                  className="tw-text-gray-700 tw-w-40 tw-text-base placeholder:tw-text-base tw-appearance-none tw-block tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-b-md tw-shadow-sm tw-placeholder-gray-400 tw-focus:outline-none tw-focus:ring-indigo-500 tw-focus:border-indigo-500 tw-sm:text-sm"
                 />
                 <div>.</div>
                 <input
@@ -87,7 +87,7 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
                   type="text"
                   placeholder="cortico.ca"
                   required
-                  className="tw-text-gray-700 tw-w-32 tw-text-xl placeholder:tw-text-xl tw-appearance-none tw-block tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-b-md tw-shadow-sm tw-placeholder-gray-400 tw-focus:outline-none tw-focus:ring-indigo-500 tw-focus:border-indigo-500 tw-sm:text-sm"
+                  className="tw-text-gray-700 tw-w-32 tw-text-base placeholder:tw-text-base tw-appearance-none tw-block tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-b-md tw-shadow-sm tw-placeholder-gray-400 tw-focus:outline-none tw-focus:ring-indigo-500 tw-focus:border-indigo-500 tw-sm:text-sm"
                 />
               </div>
             </div>
@@ -107,7 +107,7 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
               placeholder="Username"
               required
               autocomplete
-              class="tw-text-xl placeholder:tw-text-xl tw-appearance-none tw-block tw-w-full tw-px-3 tw-py-3 tw-border tw-border-gray-300 tw-rounded-t-md tw-shadow-sm tw-placeholder-gray-400 tw-focus:outline-none tw-focus:ring-indigo-500 tw-focus:border-indigo-500 tw-sm:text-sm tw-border-b-0"
+              class="tw-text-base placeholder:tw-text-base tw-appearance-none tw-block tw-w-full tw-px-3 tw-py-3 tw-border tw-border-gray-300 tw-rounded-t-md tw-shadow-sm tw-placeholder-gray-400 tw-focus:outline-none tw-focus:ring-indigo-500 tw-focus:border-indigo-500 tw-sm:text-sm tw-border-b-0"
             />
           </div>
         </div>
@@ -121,7 +121,7 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
               autocomplete
               required
               placeholder="Enter your password"
-              class="tw-text-xl placeholder:tw-text-xl tw-appearance-none tw-block tw-w-full tw-px-3 tw-py-3 tw-border tw-border-gray-300 tw-rounded-b-md tw-shadow-sm tw-placeholder-gray-400 tw-focus:outline-none tw-focus:ring-indigo-500 tw-focus:border-indigo-500 tw-sm:text-sm"
+              class="tw-text-base placeholder:tw-text-base tw-appearance-none tw-block tw-w-full tw-px-3 tw-py-3 tw-border tw-border-gray-300 tw-rounded-b-md tw-shadow-sm tw-placeholder-gray-400 tw-focus:outline-none tw-focus:ring-indigo-500 tw-focus:border-indigo-500 tw-sm:text-sm"
             />
           </div>
         </div>
@@ -144,11 +144,11 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
               "
               checked
             />
-            <span className="tw-ml-2 tw-text-gray-700 tw-text-xl">
+            <span className="tw-ml-2 tw-text-gray-700 tw-text-base">
               Remember Me
             </span>
           </label>
-          <a href="" className="tw-text-blue-1000 tw-text-xl tw-font-medium">
+          <a href="" className="tw-text-blue-1000 tw-text-base tw-font-medium">
             Forgot your password?
           </a>
         </div>
@@ -156,7 +156,7 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
         <div>
           <button
             type="submit"
-            class="tw-w-full tw-mt-4 tw-flex tw-justify-center tw-py-2 tw-px-4 tw-border tw-border-transparent tw-rounded-md tw-shadow-sm tw-text-xl tw-font-medium tw-text-white tw-bg-blue-1000 tw-hover:bg-indigo-700 tw-focus:outline-none tw-focus:ring-2 tw-focus:ring-offset-2 tw-focus:ring-indigo-500 tw-relative"
+            class="tw-w-full tw-mt-4 tw-flex tw-justify-center tw-py-2 tw-px-4 tw-border tw-border-transparent tw-rounded-md tw-shadow-sm tw-text-base tw-font-medium tw-text-white tw-bg-blue-1000 tw-hover:bg-indigo-700 tw-focus:outline-none tw-focus:ring-2 tw-focus:ring-offset-2 tw-focus:ring-indigo-500 tw-relative"
           >
             {loading === true ? (
               <span className="tw-flex tw-justify-center">
