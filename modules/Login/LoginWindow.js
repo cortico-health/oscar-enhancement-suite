@@ -12,6 +12,7 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
   const [remUsername, setUsername] = useState(null);
   const [remClinicName, setClinicName] = useState(null);
   const [remSuffix, setSuffix] = useState(null);
+  const [rememberMe, setRememberMe] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,6 +23,7 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
       suffix: suffixRef && suffixRef.current.value,
       remember: rememberRef && rememberRef.current.checked,
     };
+
     onSubmit(data);
   };
 
@@ -29,6 +31,7 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
     setUsername(localStorage.getItem("remUsername"));
     setClinicName(localStorage.getItem("remClinicName"));
     setSuffix(localStorage.getItem("remSuffix"));
+    setRememberMe(localStorage.getItem("rememberMe") === "true");
   }, []);
 
   return (
@@ -44,7 +47,7 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
           Or{" "}
           <a
             className="tw-text-blue-700"
-            href="https://cortico.health"
+            href="https://cortico.health/features/oscar-enhancement-suite"
             target="_blank"
           >
             join today to unlock premium features
@@ -132,17 +135,20 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
               ref={rememberRef}
               type="checkbox"
               className="
+                tw-w-4
+                tw-h-4
                 tw-rounded
+                tw-border
                 tw-border-gray-300
                 tw-text-indigo-600
                 tw-shadow-sm
-                tw-focus:border-indigo-300
-                tw-focus:ring
-                tw-focus:ring-offset-0
-                tw-focus:ring-indigo-200
-                tw-focus:ring-opacity-50
+                focus:tw-border-indigo-300
+                focus:tw-ring
+                focus:tw-ring-offset-0
+                focus:tw-ring-indigo-200
+                focus:tw-ring-opacity-50
               "
-              checked
+              checked={rememberMe}
             />
             <span className="tw-ml-2 tw-text-gray-700 tw-text-base">
               Remember Me

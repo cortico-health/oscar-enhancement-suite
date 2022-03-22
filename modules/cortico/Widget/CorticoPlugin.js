@@ -13,9 +13,11 @@ import { isLoggedIn } from "../../Utils/Utils";
 import AccountInformation from "./AccountInformation";
 import NotAvailable from "./NotAvailable";
 import { MinusCircleIcon } from "@heroicons/react/solid";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function CorticoPlugin({ onMinimize, ...props }) {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const dispatch = useDispatch();
+  const loggedIn = useSelector((state) => state.auth.isLoggedIn);
   const [items, setItems] = useState([
     {
       name: "Account",
@@ -59,7 +61,10 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
 
   useEffect(() => {
     isLoggedIn().then((result) => {
-      setLoggedIn(result);
+      dispatch({
+        type: "auth/setLoggedIn",
+        payload: result,
+      });
     });
   }, []);
 

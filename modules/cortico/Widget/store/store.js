@@ -9,6 +9,7 @@ import {
 } from "../features/Pharmacy/SetupPreferredPharmacies";
 
 import { automationReducer } from "../features/Automation/Automation";
+import { authReducer } from "../features/Auth/auth";
 
 const rootReducer = combineReducers({
   eligCheck: eligCheckReducer,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   setupPharmacies: setupPharmacyReducer,
   setupPharmaciesFailures: setupPharmacyFailuresReducer,
   automation: automationReducer,
+  auth: authReducer,
 });
 
 function logger({ getState }) {

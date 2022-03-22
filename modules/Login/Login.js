@@ -1,6 +1,4 @@
-import { render } from "preact";
 import { useState } from "preact/hooks";
-import corticoIcon from "../../resources/icons/96x96.png";
 import LoginWindow from "./LoginWindow";
 import SuccessWindow from "./SuccessWindow";
 import { saveExtensionStorageValue, getCorticoUrl } from "../Utils/Utils";
@@ -54,10 +52,12 @@ function Login() {
       setSuccess(true);
 
       if (remember) {
+        localStorage.setItem("rememberMe", true);
         localStorage.setItem("remUsername", username);
         localStorage.setItem("remClinicName", clinicName);
         localStorage.setItem("remSuffix", suffix);
       } else {
+        localStorage.removeItem("rememberMe", false);
         localStorage.removeItem("remUsername");
         localStorage.removeItem("remClinicName");
         localStorage.removeItem("remSuffix");
