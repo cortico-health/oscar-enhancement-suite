@@ -101,7 +101,7 @@ export default function AccountInformation() {
               &copy; <span className="tw-text-blue-1000">Cortico</span>
             </p>
             <a
-              href="#"
+              href="mailto:help@cortico.health"
               className="tw-text-blue-1000 tw-text-base tw-font-semibold"
             >
               Contact Us
