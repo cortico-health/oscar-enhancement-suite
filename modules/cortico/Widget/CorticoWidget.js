@@ -77,7 +77,8 @@ function Content() {
                 onClick={handleOpen}
               >
                 <img
-                  className="tw-h-8 tw-w-8 tw-cursor-pointer"
+                  draggable={false}
+                  className="tw-h-8 tw-w-8 tw-cursor-pointer tw-select-none"
                   src={CorticoImg}
                 />
               </div>
