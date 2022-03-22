@@ -44,6 +44,7 @@
     "preact": "^10.5.14",
     "prettier": "^2.5.1",
     "raw-loader": "^4.0.2",
+    "react-draggable": "^4.4.4",
     "react-redux": "^7.2.6",
     "redux": "^4.1.2",
     "regenerator-runtime": "^0.13.7",

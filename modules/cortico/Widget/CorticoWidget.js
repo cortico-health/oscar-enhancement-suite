@@ -6,10 +6,12 @@ import { useState } from "preact/hooks";
 import classNames from "classnames";
 import store from "./store/store.js";
 import { Provider, useDispatch } from "react-redux";
+import Draggable from "react-draggable";
 function Content() {
   const containerRef = useRef();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const [dragging, setDragging] = useState(false);
 
   useEffect(() => {
     const subscriptions = {
@@ -42,12 +44,24 @@ function Content() {
     setOpen(false);
   };
 
+  const handleOpen = (event) => {
+    if (dragging === false) {
+      setOpen(true);
+    }
+  };
+
+  const handleDragStop = (event) => {
+    setTimeout(() => {
+      setDragging(false);
+    }, 100);
+  };
+
   return (
     <div className="cleanslate cortico-widget">
       <div className="tailwind preflight">
         <div
           className={classNames(
-            "tw-fixed tw-bottom-5 tw-right-5 tw-z-10005 tw-bg-blue-1000 tw-text-white tw-shadow-xl tw-bg-cortico tw-bg-transparent",
+            "tw-fixed tw-bottom-5 tw-right-5 tw-z-10005 tw-bg-blue-1000 tw-text-white tw-bg-cortico tw-bg-transparent",
             open === true ? "tw-rounded-xl" : "tw-rounded-full"
           )}
           ref={containerRef}
@@ -57,17 +71,17 @@ function Content() {
               <CorticoPlugin onMinimize={handleMinimize} />
             </>
           ) : (
-            <div
-              className="tw-p-4 tw-cursor-pointer tw-rounded-full tw-bg-blue-1000"
-              onClick={() => {
-                setOpen(!open);
-              }}
-            >
-              <img
-                className="tw-h-8 tw-w-8 tw-cursor-pointer"
-                src={CorticoImg}
-              />
-            </div>
+            <Draggable onDrag={() => setDragging(true)} onStop={handleDragStop}>
+              <div
+                className="tw-p-4 tw-cursor-pointer tw-rounded-full tw-bg-blue-1000 tw-shadow-xl"
+                onClick={handleOpen}
+              >
+                <img
+                  className="tw-h-8 tw-w-8 tw-cursor-pointer"
+                  src={CorticoImg}
+                />
+              </div>
+            </Draggable>
           )}
         </div>
       </div>
