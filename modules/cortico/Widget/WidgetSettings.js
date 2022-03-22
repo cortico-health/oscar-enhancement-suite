@@ -114,13 +114,14 @@ export default function WidgetSettings() {
           <hr className="tw-my-5" />
           <div className="tw-flex tw-justify-between tw-w-full">
             <Button
+              size="sm"
               loading={resetCacheLoading}
               onClick={resetCache}
               className="tw-bg-red-600 tw-text-base tw-text-white tw-rounded-md tw-px-3 tw-py-2"
             >
               Reset Cache
             </Button>
-            <Button loading={loading} onClick={saveSettings}>
+            <Button size="sm" loading={loading} onClick={saveSettings}>
               Save
             </Button>
           </div>
