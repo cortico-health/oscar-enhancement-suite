@@ -86,7 +86,7 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
             <WidgetAutomation />
           </div>
         ) : activeItem === "Settings" ? (
-          <div className="tw-p-4 tw-w-[700px] tw-h-full">
+          <div className="tw-p-4 tw-h-full">
             <WidgetSettings />
           </div>
         ) : activeItem === "Messenger" ? (

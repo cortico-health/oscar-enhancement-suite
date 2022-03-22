@@ -18,7 +18,7 @@ const automations = [
     description:
       "Have the plugin to check eligibility for each patient in the schedule. ",
     icon: (
-      <ClipboardCheckIcon className="tw-w-10 tw-h-10 tw-mr-2 tw-text-blue-1000 tw-inline-block" />
+      <ClipboardCheckIcon className="tw-w-6 tw-h-6 tw-mr-2 tw-text-blue-1000 tw-inline-block" />
     ),
   },
   {
@@ -27,7 +27,7 @@ const automations = [
     description:
       "Set preferred pharmacies for each of the patients in the schedule",
     icon: (
-      <OfficeBuildingIcon className="tw-w-10 tw-h-10 tw-mr-2 tw-text-blue-1000 tw-inline-block" />
+      <OfficeBuildingIcon className="tw-w-6 tw-h-6 tw-mr-2 tw-text-blue-1000 tw-inline-block" />
     ),
     premium: true,
   },
@@ -127,8 +127,8 @@ export function WidgetAutomationOptions({ onClick, ...props }) {
               </div>
               {automation.premium === true ? (
                 <div className="tw-absolute tw-top-[-5px] tw-right-[-5px] tw-rounded-xl tw-p-2 tw-bg-blue-1000 tw-shadow-md">
-                  <p className="tw-text-base tw-text-gray-50 tw-font-normal">
-                    <StarIcon className="tw-inline-block tw-mr-1 tw-w-6 tw-h-6 tw-text-white"></StarIcon>
+                  <p className="tw-text-sm tw-text-gray-50 tw-font-normal">
+                    <StarIcon className="tw-inline-block tw-mr-1 tw-w-4 tw-h-4 tw-text-white"></StarIcon>
                     Requires Pro
                   </p>
                 </div>
