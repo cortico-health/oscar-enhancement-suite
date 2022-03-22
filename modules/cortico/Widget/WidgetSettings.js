@@ -21,6 +21,8 @@ export default function WidgetSettings() {
     setLoading(false);
   };
 
+  const resetCache = () => {};
+
   return (
     <div className="tw-min-w-[300px] tw-max-w-[450px] tw-p-4 tw-font-sans tw-h-full">
       <div className="tw-flex tw-flex-col tw-h-full tw-justify-between">
@@ -99,9 +101,12 @@ export default function WidgetSettings() {
         <div>
           <hr className="tw-my-5" />
           <div className="tw-flex tw-justify-between tw-w-full">
-            <button className="tw-bg-red-600 tw-text-xl tw-text-white tw-rounded-md tw-px-3 tw-py-2">
+            <Button
+              onClick={resetCache}
+              className="tw-bg-red-600 tw-text-base tw-text-white tw-rounded-md tw-px-3 tw-py-2"
+            >
               Reset Cache
-            </button>
+            </Button>
             <Button loading={loading} onClick={saveSettings}>
               Save
             </Button>
