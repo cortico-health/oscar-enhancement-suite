@@ -36,7 +36,7 @@ export default function AccountInformation() {
               <p className="tw-mt-4 tw-text-gray-700 tw-font-bold tw-text-lg">
                 {localStorage.getItem("name")}
               </p>
-              <p className=" tw-text-gray-700 tw-text-lg tw-font-normal tw-opacity-75">
+              <p className=" tw-text-gray-700 tw-text-base tw-font-normal tw-opacity-75">
                 <a
                   href={`https://${localStorage.getItem(
                     "clinicname"
@@ -48,7 +48,7 @@ export default function AccountInformation() {
                   {localStorage.getItem("customUrlSuffix")}
                 </a>
               </p>
-              <p className=" tw-text-gray-700 tw-text-lg tw-font-normal tw-opacity-75">
+              <p className=" tw-text-gray-700 tw-text-base tw-font-normal tw-opacity-75">
                 {localStorage.getItem("jwt_username")}
               </p>
             </div>
