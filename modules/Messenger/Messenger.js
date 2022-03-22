@@ -1,12 +1,14 @@
 import { render } from "preact";
 import { useState, useEffect } from "preact/hooks";
-import { loadExtensionStorageValue, isLoggedIn, setupEFormPage } from "../Utils/Utils";
+import {
+  loadExtensionStorageValue,
+  isLoggedIn,
+  setupEFormPage,
+} from "../Utils/Utils";
 import Notification from "../Notifications/Notification";
 import MessengerWidget from "./MessengerWidget";
 import MessengerWindow from "./MessengerWindow";
-import {
-  sendMessage,
-} from "../Api/Api";
+import { sendMessage } from "../Api/Api";
 import Encounter from "../core/Encounter";
 import PreactModal from "../Modal/PreactModal";
 import SavedReplies from "./SavedReplies";
@@ -20,7 +22,6 @@ function MessageException(message) {
 
 function Messenger(patient, opts, container, replaceNode) {
   const _container = container || document.body;
-
 
   function Content({ patient, eform, encounter, ...props }) {
     const handleErrors = async (response) => {
@@ -72,7 +73,7 @@ function Messenger(patient, opts, container, replaceNode) {
     };
 
     const handleSubmit = async (data, opts) => {
-      const setup = await setupEFormPage();
+      //const setup = await setupEFormPage();
       const { to, subject, body } = data;
 
       setLoading(true);
@@ -105,7 +106,7 @@ function Messenger(patient, opts, container, replaceNode) {
         sendMessage(data, token)
           .then(handleErrors)
           .then((response) => {
-            console.log("Response", response)
+            console.log("Response", response);
             if (response.success === "true" || response.success === true) {
               setMessageInfo({
                 title: "Success",

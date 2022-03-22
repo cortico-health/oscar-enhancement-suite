@@ -303,3 +303,38 @@ export function styleSheetFactory(namespace) {
   }
   return window[namespace];
 }
+
+export async function setupEFormPage() {
+  let is_eform_page = true;
+  const clinicName = localStorage["clinicname"];
+
+  const email_parent =
+    document.querySelector(".DoNotPrint td") ||
+    document.querySelector("#BottomButtons") ||
+    document.querySelector("#topbar > form") ||
+    document.body;
+
+  if (!email_parent) {
+    is_eform_page = false;
+    const email_parent = document.querySelector("#save div:last-child");
+  }
+  if (!email_parent) {
+    // bail
+    console.warn("Cannot find position for email button.");
+    return;
+  }
+
+  await loadExtensionStorageValue("jwt_access_token").then(async function (
+    access_token
+  ) {
+    let html = document.cloneNode(true);
+    await convertImagesToDataURLs(html);
+    stripScripts(html);
+    html = html.documentElement.outerHTML;
+
+    pubsub.publish("eform", {
+      name: "eForm",
+      html,
+    });
+  });
+}
