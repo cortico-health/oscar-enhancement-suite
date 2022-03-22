@@ -12,6 +12,7 @@ import {
 import { isLoggedIn } from "../../Utils/Utils";
 import AccountInformation from "./AccountInformation";
 import NotAvailable from "./NotAvailable";
+import { MinusCircleIcon } from "@heroicons/react/solid";
 
 export default function CorticoPlugin({ onMinimize, ...props }) {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -70,8 +71,11 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
         <WidgetSidebar items={items} onClick={handleClick} />
       </div>
       <div className=" tw-text-black tw-relative">
-        <div className="tw-absolute tw-top-2 tw-right-2" onClick={onMinimize}>
-          Min
+        <div
+          className="tw-absolute tw-top-2 tw-right-2 tw-cursor-pointer"
+          onClick={onMinimize}
+        >
+          <MinusCircleIcon className="tw-w-8 tw-h-8 tw-text-yellow-400 tw-borderg" />
         </div>
         {activeItem === "Account" ? (
           <div className="tw-p-4 tw-mx-auto tw-flex tw-items-center tw-justify-center tw-overflow-hidden">
