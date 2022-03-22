@@ -2247,7 +2247,7 @@ async function setupPreferredPharmacy(code, demographic_no) {
       return state;
     }
   } else {
-    isRxPage ? alert(msg) : console.warn(msg);
+    //isRxPage ? alert(msg) : console.warn(msg);
     state.error = true;
     state.errorMessage = `"${fullPharmacyName}" does not exist in your Oscar pharmacy database!`;
     return state;

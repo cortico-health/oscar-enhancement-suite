@@ -117,7 +117,7 @@ export default function WidgetSettings() {
               size="sm"
               loading={resetCacheLoading}
               onClick={resetCache}
-              className="tw-bg-red-600 tw-text-base tw-text-white tw-rounded-md tw-px-3 tw-py-2"
+              className="tw-bg-red-600 tw-text-base tw-text-white tw-rounded-md"
             >
               Reset Cache
             </Button>
