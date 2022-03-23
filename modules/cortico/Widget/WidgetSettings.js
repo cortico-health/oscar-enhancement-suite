@@ -75,11 +75,11 @@ export default function WidgetSettings() {
                     tw-focus:border-indigo-300 tw-focus:ring tw-focus:ring-indigo-200 tw-focus:ring-opacity-50
                   "
               >
-                <option value="Phone">Phone</option>
-                <option value="Virtual">Virtual</option>
-                <option value="Clinic">Clinic</option>
-                <option value="N/A">N/A</option>
-                <option value="Quiet">Quiet</option>
+                <option value="phone">Phone</option>
+                <option value="virtual">Virtual</option>
+                <option value="clinic">Clinic</option>
+                <option value="">N/A</option>
+                <option value="quiet">Quiet</option>
               </select>
             </label>
           </div>
