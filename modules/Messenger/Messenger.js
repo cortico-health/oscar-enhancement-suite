@@ -13,6 +13,7 @@ import Encounter from "../core/Encounter";
 import PreactModal from "../Modal/PreactModal";
 import SavedReplies from "./SavedReplies";
 import Login from "../Login/Login";
+import Draggable from "react-draggable";
 
 function MessageException(message) {
   this.message = message || "Error has occured";
@@ -53,9 +54,18 @@ function Messenger(patient, opts, container, replaceNode) {
     const [subject, setSubject] = useState(null);
     const [body, setBody] = useState(null);
     const [showLogin, setShowLogin] = useState(false);
+    const [dragging, setDragging] = useState(false);
+
+    const handleDragStop = (event) => {
+      setTimeout(() => {
+        setDragging(false);
+      }, 100);
+    };
 
     const handleOpen = () => {
-      setOpen(true);
+      if (dragging === false) {
+        setOpen(true);
+      }
     };
 
     const handleClose = () => {
@@ -202,13 +212,15 @@ function Messenger(patient, opts, container, replaceNode) {
               encounter={true}
             />
           </div>
-          <div className="tw-fixed tw-bottom-5 tw-right-5 tw-z-5000 tw-shadow-xl">
-            <MessengerWidget
-              open={handleOpen}
-              login={promptLogin}
-              loggedIn={loggedIn}
-            />
-          </div>
+          <Draggable onDrag={() => setDragging(true)} onStop={handleDragStop}>
+            <div className="tw-fixed tw-bottom-5 tw-right-5 tw-z-5000 tw-shadow-xl">
+              <MessengerWidget
+                open={handleOpen}
+                login={promptLogin}
+                loggedIn={loggedIn}
+              />
+            </div>
+          </Draggable>
           <Notification
             open={showNotification}
             close={() => {

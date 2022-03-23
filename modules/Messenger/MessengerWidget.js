@@ -31,7 +31,12 @@ function MessengerWidget({ open, login, loggedIn, ...props }) {
 
       <hr className="tw-opacity-20 tw-my-2" />
       <div className="tw-flex tw-bg-white tw-p-1 tw-rounded-md tw-mt-2">
-        <img className="tw-w-4 tw-h-4" src={corticoIcon} alt="Cortico" />
+        <img
+          draggable={false}
+          className="tw-w-4 tw-h-4"
+          src={corticoIcon}
+          alt="Cortico"
+        />
         <div className="tw-text-cortico-blue tw-text-xs tw-font-semibold tw-ml-1">
           Cortico
         </div>
