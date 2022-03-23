@@ -23,7 +23,7 @@
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
+import "cleanslate";
 import { pubSubInit } from "./modules/PubSub/PubSub";
 import dayjs from "dayjs";
 import {
@@ -61,6 +61,11 @@ import Disclaimer from "./modules/cortico/Disclaimer";
 // manually update this variable with the version in manifest.json
 
 import LoginOscar from "./modules/Login/LoginOscar";
+import CorticoWidget from "./modules/cortico/Widget/CorticoWidget";
+import produce from "immer";
+import { initialState as setupPharmacyState } from "./modules/cortico/Widget/features/Pharmacy/SetupPreferredPharmacies";
+import { initialState as eligCheckState } from "./modules/cortico/Widget/features/EligCheck/EligCheck";
+import widgetStore from "./modules/cortico/Widget/store/store";
 const version = "2022.2.2";
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
@@ -139,7 +144,9 @@ const init_cortico = async function () {
     });
     //You need to delegate
     //cortico_button.addEventListener("click", open_video_appointment_page);
-    resources_field.addEventListener("change", update_video_button);
+    if (resources_field) {
+      resources_field.addEventListener("change", update_video_button);
+    }
   } else if (route.indexOf("/provider/providercontrol.jsp") > -1) {
     init_schedule();
     const loginContainer = document.createElement("div");
@@ -157,6 +164,11 @@ const init_cortico = async function () {
 
     addCorticoLogo();
     addMenu();
+
+    const corticoWidgetContainer = document.createElement("div");
+    document.body.append(corticoWidgetContainer);
+    CorticoWidget(document.body, corticoWidgetContainer);
+    console.log("This is running sir");
     //const temp = document.createElement("div");
     //document.body.append(temp);
     //initSidebar(document.body, temp);
@@ -178,6 +190,7 @@ const init_cortico = async function () {
     route.indexOf("/casemgmt/forward.jsp") > -1
   ) {
     const patient_info = await getPatientInfo();
+
     const messengerContainer = document.createElement("div");
     if (route.indexOf("/casemgmt/forward.jsp") > -1) {
       document.body.append(messengerContainer);
@@ -618,8 +631,8 @@ function getQueryStringValue(key) {
     window.location.search.replace(
       new RegExp(
         "^(?:.*[&\\?]" +
-        encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") +
-        "(?:\\=([^&]*))?)?.*$",
+          encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") +
+          "(?:\\=([^&]*))?)?.*$",
         "i"
       ),
       "$1"
@@ -1416,7 +1429,7 @@ function dragAndDrop() {
 
 function addToFailures(metadata) {
   const _cache = getFailureCache();
-  const cache = JSON.parse(_cache) || [];
+  const cache = JSON.parse(JSON.parse(_cache)) || [];
   if (cache && cache.push) {
     cache.push(metadata);
   }
@@ -1464,9 +1477,21 @@ function isDateExpired(past, now, days) {
   return Math.abs(diff) > days;
 }
 
-async function checkAllEligibility() {
+function isEligibleSuccess(text) {
+  return (
+    (!text.includes("failure-phn") &&
+      !text.includes("results unavailable") &&
+      !text.includes("failure") &&
+      text.includes("success")) ||
+    text.includes("health card passed validation") ||
+    text.includes("patient eligible")
+  );
+}
+
+export async function checkAllEligibility() {
+  let state = { ...eligCheckState };
+  let failures = [];
   //localStorage.removeItem("checkCache")
-  console.log("Check all got here");
   if (window.checkAllEligibilityRunning === true) {
     return alert("Check Already Running");
   }
@@ -1474,40 +1499,96 @@ async function checkAllEligibility() {
   clearFailureCache();
   var nodes = document.querySelectorAll("td.appt");
   var appointmentInfo = getAppointmentInfo(nodes);
-  console.log(appointmentInfo);
   appointmentInfo = filterAppointments(appointmentInfo);
 
   var length = appointmentInfo.length;
-  if (appointmentInfo.length === 0) {
-    alert("No Appointments to Check");
+  if (appointmentInfo.length === 0 || false) {
+    state.empty = true;
+    state.complete = true;
+    pubsub.publish("automations/eligibility", Object.assign({}, state));
+    return;
   }
 
   var providerNo = getProviderNoFromTd(nodes[0]);
-  var error = false;
-
   window.checkAllEligibilityRunning = true;
+  state.running = true;
+  pubsub.publish("automations/eligibility", Object.assign({}, state));
+
   try {
     for (let i = 0; i < length; i++) {
-      const temp = Object.assign({}, appointmentInfo[i]);
-      temp.total = length;
-      temp.current = i + 1;
-      pubsub.publish("check-eligibility", temp);
+      //Delay when it starts
+      if (i > 0) {
+        await new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve();
+          }, 1500);
+        });
+      }
 
       const demographic_no = appointmentInfo[i].demographic_no;
       let result = null;
-
+      let patientInfo = null;
+      let healthNumber = null;
+      let province = null;
       // empty appointment node, do not check
       if (!demographic_no || demographic_no == 0) continue;
 
+      state.current = i + 1;
+      state.total = length;
+      pubsub.publish("automations/eligibility", Object.assign({}, state));
+
       // In cases where the first appointment in the schedule is an empty
       // appointment, get the providerNo from the node itself
-      if (!providerNo) providerNo = getProviderNoFromTd(nodes[i]);
+      if (!providerNo) {
+        providerNo = getProviderNoFromTd(nodes[i]);
+      }
 
-      const patientInfo = await getPatientInfo(demographic_no);
-      const healthNumber = patientInfo["Health Ins"]
-        .replace(/\s+/g, " ")
-        .trim();
-      const province = patientInfo["Province"].replace(/\s+/g, " ").trim();
+      try {
+        patientInfo = await getPatientInfo(demographic_no);
+        console.info("Patient Info:", patientInfo);
+      } catch (e) {
+        console.error(e);
+        failures = produce(failures, (draft) => {
+          draft.push({
+            firstName: null,
+            lastName: null,
+            demographicNo: demographic_no,
+            reason: "Could not get Patient's infomration",
+          });
+        });
+        pubsub.publish("automations/eligibility/failures", failures);
+        continue;
+      }
+
+      healthNumber = patientInfo["Health Ins"]?.replace(/\s+/g, " ").trim();
+
+      if (!healthNumber) {
+        failures = produce(failures, (draft) => {
+          draft.push({
+            firstName: patientInfo["First Name"],
+            lastName: patientInfo["Last Name"],
+            demographicNo: demographic_no,
+            reason: "Could not get Patient's Health Number",
+          });
+        });
+        pubsub.publish("automations/eligibility/failures", failures);
+        continue;
+      }
+
+      province = patientInfo["Province"].replace(/\s+/g, " ").trim();
+
+      if (!province) {
+        failures = produce(failures, (draft) => {
+          draft.push({
+            firstName: null,
+            lastName: null,
+            demographicNo: demographic_no,
+            reason: "Could not get Patient's Province",
+          });
+        });
+        pubsub.publish("automations/eligibility/failures", failures);
+        continue;
+      }
 
       try {
         result = await checkEligiblity(
@@ -1520,6 +1601,16 @@ async function checkAllEligibility() {
         );
       } catch (e) {
         console.error(e);
+        failures = produce(failures, (draft) => {
+          draft.push({
+            firstName: null,
+            lastName: null,
+            demographicNo: demographic_no,
+            reason: "Network Error, please check manually",
+          });
+        });
+        pubsub.publish("automations/eligibility/failures", failures);
+        continue;
       }
 
       let text = null;
@@ -1538,54 +1629,54 @@ async function checkAllEligibility() {
           }
         }
       } else {
-        text = "Failed to fetch";
-        lowerCaseText = "Failed to fetch";
+        failures = produce(failures, (draft) => {
+          draft.push({
+            firstName: null,
+            lastName: null,
+            demographicNo: demographic_no,
+            reason: "Failed to set eligiblity",
+          });
+        });
+        pubsub.publish("automations/eligibility/failures", failures);
+        continue;
       }
 
       if (lowerCaseText.includes("error in teleplan connection")) {
-        alert("Cannot connect to Teleplan. \n" + text);
-        error = true;
+        state.teleplan = true;
+        pubsub.publish("automations/eligibility", Object.assign({}, state));
         break;
       }
 
       let verified = false;
       if (lowerCaseText.includes("this is not an insured benefit")) {
         verified = "uninsured";
-        console.log("Patient not insured");
-      } else if (
-        (!lowerCaseText.includes("failure-phn") &&
-          lowerCaseText.includes("success")) ||
-        lowerCaseText.includes("health card passed validation") ||
-        lowerCaseText.includes("patient eligible") ||
-        requestSuccess
-      ) {
+      } else if (isEligibleSuccess(lowerCaseText) || requestSuccess) {
         plusSignAppointments(demographic_no);
         verified = true;
-        console.log("Success!");
       } else {
-        appointmentInfo[i]["reason"] = text;
-        addToFailures(appointmentInfo[i]);
-        pubsub.publish("check-eligibility-failed", getFailureCache());
+        failures = produce(failures, (draft) => {
+          draft.push({
+            firstName: null,
+            lastName: null,
+            demographicNo: demographic_no,
+            reason: "Check manually to determine reason",
+          });
+        });
+        pubsub.publish("automations/eligibility/failures", failures);
+        continue;
       }
       addToCache(demographic_no, verified);
-      console.log("Cached.");
-
-      await new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve();
-        }, 1500);
-      });
     }
   } catch (err) {
-    console.log(err);
-    alert(err);
+    console.error(err);
+    state.error = true;
+    state._error = true;
+    pubsub.publish("automations/eligibility", Object.assign({}, state));
   } finally {
     window.checkAllEligibilityRunning = false;
-    pubsub.publish("check-eligibility", {
-      complete: true,
-      total: length,
-      error,
-    });
+    state.complete = true;
+    state.running = false;
+    pubsub.publish("automations/eligibility", Object.assign({}, state));
   }
 }
 
@@ -1998,104 +2089,168 @@ function formatNumber(number) {
 }
 
 async function setupPreferredPharmacy(code, demographic_no) {
+  console.log("Setup Preferred Pharmacy Running");
+  let corticoPharmacy = null;
+  let corticoPharmacyText = null;
+  const state = {
+    error: false,
+    errorMessage: null,
+    infoMessage: null,
+  };
+
   var pharmacyCode = localStorage.getItem("currentPharmacyCode");
 
   if (code) {
     pharmacyCode = code;
   }
-  const corticoPharmacy = await getPharmacyDetails(pharmacyCode);
-  const respText = await corticoPharmacy.text();
-  const corticoPharmacyText = JSON.parse(respText);
 
+  try {
+    corticoPharmacy = await getPharmacyDetails(pharmacyCode);
+    corticoPharmacyText = await corticoPharmacy.text();
+  } catch (e) {
+    console.error(e);
+    state.error = true;
+    state.errorMessage = "Pharmacy not found";
+    return state;
+  }
+
+  corticoPharmacyText = JSON.parse(corticoPharmacyText);
   if (corticoPharmacyText.length <= 0) {
-    const msg = `Cortico pharmacy not found`;
-    storePharmaciesFailureCache(demographicNo, msg);
-    displayPharmaciesFailure(demographicNo, msg);
+    //Show this message if the pharmacy code is not found
+    state.error = true;
+    state.errorMessage = "Pharmacy not found";
+    return state;
+  }
+  let corticoFaxNumber = corticoPharmacyText[0]["fax_number"] || null;
 
+  if (!corticoFaxNumber) {
+    state.error = true;
+    state.errorMessage = "Cortico Fax Number is blank";
     return;
   }
 
-  var faxNumber = corticoPharmacyText[0]["fax_number"] || null;
-  var searchTerm = corticoPharmacyText[0]["name"] || null;
-
-  var fullPharmacyName = searchTerm;
-
-  // only use the first word on the pharmacy name to search for list
-  // then remove letter or number
-  searchTerm = searchTerm ? searchTerm.split(" ")[0] : null;
-  searchTerm = searchTerm.replace(/[^\w\s]/gi, "");
-
   // cleanup fax number to format starting with 1
   // This might be an issue if the oscar pharmacies don't match this format
-  if (faxNumber) faxNumber = formatNumber(faxNumber);
+  corticoFaxNumber = formatNumber(corticoFaxNumber);
 
-  var demographicNo = demographic_no;
+  let corticoSearchTerm = corticoPharmacyText[0]["name"] || null;
+
+  if (!corticoSearchTerm) {
+    state.error = true;
+    state.errorMessage = "Cortico Pharmacy Name is blank";
+    return;
+  }
+
+  let fullPharmacyName = corticoSearchTerm;
+  // only use the first word on the pharmacy name to search for list
+  // then remove letter or number
+  corticoSearchTerm = corticoSearchTerm.split(" ")[0];
+  corticoSearchTerm = corticoSearchTerm.replace(/[^\w\s]/gi, "");
+
+  let demographicNo = demographic_no;
   if (!demographic_no) {
     demographicNo = getDemographicNo();
   }
 
-  const currPharmacyResults = await getCurrentPharmacy(demographicNo);
-  const currPharmacyText = JSON.parse(await currPharmacyResults.text());
-  var preferredPharmacy;
+  let currPharmacyResults = null;
+  let currPharmacyText = null;
+  try {
+    currPharmacyResults = await getCurrentPharmacy(demographicNo);
+    currPharmacyText = JSON.parse(await currPharmacyResults.text());
+  } catch (e) {
+    console.error(e);
+    state.error = true;
+    state.errorMessage = "Error getting patient's current pharmacy from oscar";
+    return state;
+  }
+
+  let preferredPharmacy;
   console.log("Current Pharmacy:", currPharmacyText);
+
+  //Check if the currenct pharmcy is set for this patient (in oscar)
   if (currPharmacyText) {
     preferredPharmacy = currPharmacyText[0];
-    localStorage.setItem("preferredPharmacy", preferredPharmacy);
+    //localStorage.setItem("preferredPharmacy", preferredPharmacy);
   }
 
   const currentlyUsingPharmacy =
     preferredPharmacy &&
-    preferredPharmacy.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-    (preferredPharmacy.fax === faxNumber ||
-      faxNumber.includes(preferredPharmacy.fax));
+    preferredPharmacy.name
+      .toLowerCase()
+      .includes(corticoSearchTerm.toLowerCase()) &&
+    corticoFaxNumber.includes(preferredPharmacy.fax);
+
   console.log(
-    `currently using pharmacy ${searchTerm.toLowerCase()}, ${currentlyUsingPharmacy}`
+    `currently using pharmacy ${corticoSearchTerm.toLowerCase()}, ${currentlyUsingPharmacy}`
   );
 
-  if (searchTerm && !currentlyUsingPharmacy) {
-    const results = await getPharmacyResults(searchTerm);
-    const text = await results.text();
-    const json = JSON.parse(text);
-    const pharmacyUpdated = json.length > 0;
+  if (currentlyUsingPharmacy) {
+    state.infoMessage = "Pharmacy already set";
+    return state;
+  }
 
-    const isRxPage =
-      window.location.href.indexOf("oscarRx/choosePatient.do") > -1;
+  let text = null;
+  try {
+    const results = await getPharmacyResults(corticoSearchTerm);
+    text = await results.text();
+  } catch (e) {
+    console.error(e);
+    state.error = true;
+    state.errorMessage = "Failed to search oscar pharmacies";
+    return state;
+  }
 
-    if (pharmacyUpdated) {
-      let pharmacy = null;
+  const pharmacies = JSON.parse(text);
+  const pharmacyFound = pharmacies.length > 0;
 
-      if (json.length > 1) {
-        pharmacy = json.find((item) => {
-          let item_name = item.name.toLowerCase();
-          let cleaned_item_name = item_name.replace(/[^\w\s]/gi, "");
-          return (
-            (item_name.includes(searchTerm.toLowerCase()) ||
-              cleaned_item_name.includes(searchTerm.toLowerCase())) &&
-            item.fax.length > 8 &&
-            // either if the fax is the same or the formatted fax has the values
-            (formatNumber(item.fax) === faxNumber ||
-              faxNumber.includes(item.fax))
-          );
-        });
-      }
+  const isRxPage =
+    window.location.href.indexOf("oscarRx/choosePatient.do") > -1;
 
-      if (pharmacy) {
+  if (pharmacyFound) {
+    const pharmacy = pharmacies.find((item) => {
+      let item_name = item.name.toLowerCase();
+      let cleaned_item_name = item_name.replace(/[^\w\s]/gi, "");
+      return (
+        (item_name.includes(corticoSearchTerm.toLowerCase()) ||
+          cleaned_item_name.includes(corticoSearchTerm.toLowerCase())) &&
+        item.fax.length > 8 &&
+        // either if the fax is the same or the formatted fax has the values
+        (formatNumber(item.fax) === corticoFaxNumber ||
+          corticoFaxNumber.includes(item.fax))
+      );
+    });
+
+    if (pharmacy) {
+      try {
         const setPharmacyResults = await setPreferredPharmacy(
           pharmacy,
           demographicNo
         );
         const setPharmacyText = await setPharmacyResults.text();
+        state.infoMessage = "Successfully updated pharmacy";
+        return state;
+      } catch (e) {
+        console.error(e);
+        state.error = true;
+        state.errorMessage = "Failed to save preferred pharmacy";
+        return state;
+      }
 
-        if (isRxPage) alert("Updating preferred pharmacy, press Ok to reload");
-        else console.log("Updating preferred pharmacy");
+      if (isRxPage) {
+        alert("Updating preferred pharmacy, press Ok to reload");
+      } else {
+        console.log("Updating preferred pharmacy");
       }
     } else {
-      const msg = `Customer pharmacy ${fullPharmacyName} does not exist in your Oscar pharmacy database!`;
-      storePharmaciesFailureCache(demographicNo, msg);
-      displayPharmaciesFailure(demographicNo, msg);
-      if (isRxPage) alert(msg);
-      else console.warn(msg);
+      state.error = true;
+      state.errorMessage = `"${fullPharmacyName}" Fax number did not match: ${corticoFaxNumber}`;
+      return state;
     }
+  } else {
+    //isRxPage ? alert(msg) : console.warn(msg);
+    state.error = true;
+    state.errorMessage = `"${fullPharmacyName}" does not exist in your Oscar pharmacy database!`;
+    return state;
   }
 }
 
@@ -2216,38 +2371,79 @@ async function getDiagnosticFromCortico(appt_no, notes, token) {
     });
 }
 
-async function setupPreferredPharmacies() {
-  console.log("setting up batch pharmacies");
+export async function setupPreferredPharmacies() {
+  const setupPharmacyState = { ...setupPharmacyState };
   window.setupPreferredPharmaciesRunning = true;
+  setupPharmacyState.running = true;
+  widgetStore.dispatch({
+    type: "setupPharmacy/setAll",
+    payload: setupPharmacyState,
+  });
 
   clearFailureCache();
   const appointments = getAppointments();
+  if (appointments.length === 0) {
+    setupPharmacyState.empty = true;
+    widgetStore.dispatch({
+      type: "setupPharmacy/setAll",
+      payload: setupPharmacyState,
+    });
+    return;
+  }
 
-  console.log(appointments);
   var error = false;
   for (let i = 0; i < appointments.length; i++) {
-    var temp = {};
-    temp.total = appointments.length;
-    temp.current = i;
-    pubsub.publish("check-batch-pharmacies", temp);
-
-    const cancelled = appointments[i].querySelector(
-      "a.apptStatus[title='Cancelled ']"
-    );
-    if (cancelled) {
-      continue;
-    }
+    setupPharmacyState.total = appointments.length;
+    setupPharmacyState.current = i + 1;
+    widgetStore.dispatch({
+      type: "setupPharmacy/setAll",
+      payload: setupPharmacyState,
+    });
 
     const element = appointments[i].querySelector("a.apptLink");
-
     if (!element || !element.attributes) {
+      widgetStore.dispatch({
+        type: "setupPharmacyFailures/add",
+        payload: {
+          reason: "Could not get appointment link",
+        },
+      });
       continue;
     }
     let demographicNo = null;
     try {
       const apptUrl = extractApptUrl(element.attributes.onclick.textContent);
-      console.log("Set up preferred pharmacies");
       demographicNo = getDemographicNo(apptUrl);
+      setupPharmacyState.demographicNo = demographicNo;
+      widgetStore.dispatch({
+        type: "setupPharmacy/setAll",
+        payload: setupPharmacyState,
+      });
+
+      if (!demographicNo) {
+        widgetStore.dispatch({
+          type: "setupPharmacyFailures/add",
+          payload: {
+            reason: "Could not get demographic Number",
+          },
+        });
+        continue;
+      }
+
+      const cancelled = appointments[i].querySelector(
+        "a.apptStatus[title='Cancelled ']"
+      );
+      if (cancelled) {
+        widgetStore.dispatch({
+          type: "setupPharmacyFailures/add",
+          payload: {
+            demographicNo,
+            reason: "Appointment cancelled",
+          },
+        });
+        continue;
+      }
+
       const _pharmaciesCache = localStorage.getItem("pharmaciesCache");
       const pharmaciesCache = JSON.parse(_pharmaciesCache);
       var demographics = new Array();
@@ -2283,24 +2479,52 @@ async function setupPreferredPharmacies() {
       const pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle);
       if (!pharmacyCode) {
         storePharmaciesCache(demographicNo, false);
-        console.log("Pharmacy code not found from appt");
+        widgetStore.dispatch({
+          type: "setupPharmacyFailures/add",
+          payload: {
+            demographicNo,
+            reason: "Pharmacy code not found from appt",
+          },
+        });
         continue;
       }
       storePharmaciesCache(demographicNo, true);
 
       console.log("phar", pharmacyCode);
-      await setupPreferredPharmacy(pharmacyCode, demographicNo);
+      const demographicState = await setupPreferredPharmacy(
+        pharmacyCode,
+        demographicNo
+      );
+
+      if (demographicState.error === true) {
+        widgetStore.dispatch({
+          type: "setupPharmacyFailures/add",
+          payload: {
+            demographicNo,
+            reason: demographicState.errorMessage,
+          },
+        });
+      }
+      console.log("demographicState", demographicState);
     } catch (err) {
+      console.error(err);
       storePharmaciesFailureCache(demographicNo, err.message);
       displayPharmaciesFailure(demographicNo, err.message);
-    } finally {
+      widgetStore.dispatch({
+        type: "setupPharmacyFailures/add",
+        payload: {
+          demographicNo,
+          reason: err.message,
+        },
+      });
     }
   }
   window.setupPreferredPharmaciesRunning = false;
-  pubsub.publish("check-batch-pharmacies", {
-    complete: true,
-    total: length,
-    error,
+  setupPharmacyState.running = false;
+  setupPharmacyState.complete = true;
+  widgetStore.dispatch({
+    type: "setupPharmacy/setAll",
+    payload: setupPharmacyState,
   });
 }
 
@@ -2459,9 +2683,7 @@ async function getPatientInfo(demographicNo) {
   });
 
   const emailInput = el.querySelector("input[name='email']");
-  console.log("Email input", emailInput);
   info.email = info.email || info.Email || "";
-  console.log("Info", info);
   if (
     !info.email
       .toLowerCase()
@@ -2473,7 +2695,6 @@ async function getPatientInfo(demographicNo) {
       info.email = emailInput.value;
     }
   }
-  console.log("Info", info);
 
   // TODO: The following method of parsing the markup for email addresses is disabled below since it can find
   // contacts or other bad strings.
@@ -2485,7 +2706,6 @@ async function getPatientInfo(demographicNo) {
 }
 
 function getDemographicPageResponse(demographic) {
-  console.log("Get Demogpraihc Page REsponse");
   const origin = getOrigin();
   const namespace = getNamespace();
 
@@ -2513,7 +2733,8 @@ function getDemographicPageResponse(demographic) {
   if (origin.includes("skymedical")) {
     url = `/demographic/demographiccontrol.jsp?demographic_no=${demographicNo}&displaymode=edit&dboperation=search_detail`;
   }
-
+  //const originalFetch = require("cross-fetch");
+  //const fetch = require("fetch-retry")(originalFetch);
   return fetch(url);
 }
 

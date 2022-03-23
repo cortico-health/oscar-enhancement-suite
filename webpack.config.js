@@ -9,13 +9,18 @@ module.exports = {
   },
   mode: "production",
   plugins: [
-    new webpack.ProvidePlugin({
-      h: ["preact", "h"],
-    }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
-    })
+      "process.env.NODE_ENV": JSON.stringify("production"),
+    }),
   ],
+  resolve: {
+    alias: {
+      react: "preact/compat",
+      "react-dom/test-utils": "preact/test-utils",
+      "react-dom": "preact/compat", // Must be below test-utils
+      "react/jsx-runtime": "preact/jsx-runtime",
+    },
+  },
   module: {
     rules: [
       {
@@ -60,8 +65,8 @@ module.exports = {
               [
                 "@babel/plugin-transform-react-jsx",
                 {
-                  pragma: "h",
-                  pragmaFrag: "Fragment",
+                  runtime: "automatic",
+                  importSource: "preact",
                 },
               ],
             ],
@@ -69,7 +74,7 @@ module.exports = {
         },
       },
       {
-        test: /\.(png|jpe?g|gif)$/i,
+        test: /\.(png|jpe?g|gif|svg)$/i,
         use: [
           {
             loader: "url-loader",

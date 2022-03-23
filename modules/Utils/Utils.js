@@ -266,27 +266,75 @@ export function stripScripts(el) {
   }
 }
 
-export async function setupEFormPage() {
+export function addNewUI() {
+  var styleSheet = styleSheetFactory("newUIStyleSheet");
+  var styles = "#providerSchedule td { padding: 2px; }";
+  styles +=
+    ".adhour { text-shadow: 1px 1px 1px rgba(0,0,0,1); font-size: 14px; }";
+  styles += ".appt { box-shadow: 1px 3px 3px rgba(0,0,0,0.1); }";
+  styles += "#providerSchedule { border: 0; }";
+  styles +=
+    "#providerSchedule td { border: 0; border-bottom: 1px solid rgba(0,0,0,0.2); font-size: 14px; }";
+  styles +=
+    "#providerSchedule td.noGrid { border: 0; border-bottom: 1px solid rgba(0,0,0,0.2); font-size: 14px; }";
+  styles +=
+    "#firstTable { background-color: #efeef3; } #firstMenu a { font-weight: 400; color: #171458; font-size: 14px; }";
+  styles += "#ivoryBar td { background-color: white; padding: 5px; }";
+  styles += ".infirmaryView { background-color: #efeef3; }";
+  styles +=
+    "#ivoryBar input, #ivoryBar select, .infirmaryView input, .infirmaryView .ds-btn { background-color: #171458 !important; color: white !important; font-weight: bold !important; padding: 2px;  }";
+  styles += "#ivoryBar input:placeholder { font-weight: bold; color: white; }";
+  styleSheet.innerText = styles;
+}
 
-  let email_parent =
+export function removeNewUI() {
+  var styleSheet = styleSheetFactory("newUIStyleSheet");
+  var styles = "";
+  styleSheet.innerText = styles;
+}
+
+export function styleSheetFactory(namespace) {
+  if (!window[namespace]) {
+    var styleSheet = document.createElement("style");
+    styleSheet.type = "text/css";
+    document.head.appendChild(styleSheet);
+    window[namespace] = styleSheet;
+    return styleSheet;
+  }
+  return window[namespace];
+}
+
+export async function setupEFormPage() {
+  let is_eform_page = true;
+  const clinicName = localStorage["clinicname"];
+
+  const email_parent =
     document.querySelector(".DoNotPrint td") ||
     document.querySelector("#BottomButtons") ||
     document.querySelector("#topbar > form") ||
     document.body;
 
   if (!email_parent) {
-    email_parent = document.querySelector("#save div:last-child");
+    is_eform_page = false;
+    const email_parent = document.querySelector("#save div:last-child");
   }
   if (!email_parent) {
+    // bail
     console.warn("Cannot find position for email button.");
     return;
   }
 
+  await loadExtensionStorageValue("jwt_access_token").then(async function (
+    access_token
+  ) {
+    let html = document.cloneNode(true);
+    await convertImagesToDataURLs(html);
+    stripScripts(html);
+    html = html.documentElement.outerHTML;
 
-  let html = document.cloneNode(true);
-  await convertImagesToDataURLs(html);
-  stripScripts(html);
-  html = html.documentElement.outerHTML;
-  return html
-
+    pubsub.publish("eform", {
+      name: "eForm",
+      html,
+    });
+  });
 }
