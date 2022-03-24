@@ -213,7 +213,6 @@ const init_cortico = async function () {
         document.body,
         messengerContainer
       );
-      setupEFormPage();
     }
   } else if (route.indexOf("dms/documentReport.jsp") > -1) {
     setupDocumentPage();
@@ -454,6 +453,7 @@ async function setupDocumentPage() {
                   reader.onload = () => resolve(reader.result);
                   reader.readAsDataURL(blob);
                 });
+                console.log("Data URL", dataUrl);
                 pubsub.publish("document", {
                   name: pdf_link.textContent,
                   data: dataUrl,
@@ -471,7 +471,7 @@ async function setupDocumentPage() {
   });
 }
 
-async function setupEFormPage() {
+export async function setupEFormPage() {
   let is_eform_page = true;
   const clinicName = localStorage["clinicname"];
 
@@ -498,11 +498,12 @@ async function setupEFormPage() {
     await convertImagesToDataURLs(html);
     stripScripts(html);
     html = html.documentElement.outerHTML;
-
+    console.log("Publish EForm");
     pubsub.publish("eform", {
       name: "eForm",
       html,
     });
+    console.log("Publish eform end");
   });
 }
 

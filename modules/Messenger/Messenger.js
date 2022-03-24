@@ -206,6 +206,7 @@ function Messenger(patient, opts, container, replaceNode) {
               onSubmit={handleSubmit}
               close={handleClose}
               open={handleOpen}
+              eform={eform}
               showSavedReplies={() => {
                 setShowModal(true);
               }}

@@ -14,6 +14,7 @@ import {
   stripScripts,
 } from "../Utils/Utils";
 import Documents from "./Documents";
+import { setupEFormPage } from "../Utils/Utils";
 
 const EncounterOption = forwardRef((props, ref) => {
   return (
@@ -44,6 +45,7 @@ const EncounterOption = forwardRef((props, ref) => {
 });
 
 function MessengerWindow({
+  eform,
   onSubmit,
   open,
   close,
@@ -96,24 +98,23 @@ function MessengerWindow({
     if (document === true && eForm === true) {
       let html = window.document.cloneNode(true);
       html.querySelectorAll("input").forEach((input) => {
-        input.setAttribute('value', input.value)
+        input.setAttribute("value", input.value);
 
         if (input.checked === true) {
-          input.setAttribute('checked', true)
+          input.setAttribute("checked", true);
         }
-      })
+      });
       html.querySelectorAll("textarea").forEach((input) => {
-        input.innerHTML = input.value
-      })
+        input.innerHTML = input.value;
+      });
 
       html.querySelectorAll("select").forEach((input) => {
-        input.setAttribute('value', input.value)
-      })
+        input.setAttribute("value", input.value);
+      });
       await convertImagesToDataURLs(html);
       stripScripts(html);
       html = html.documentElement.outerHTML;
       data.pdf_html = html;
-      
     }
 
     const opts = {
@@ -133,13 +134,19 @@ function MessengerWindow({
       setDocument(true);
       setEForm(true);
       setDocumentData(data);
-      console.log("Document data", data)
+      console.log("Document data", data);
     });
 
     return () => {
       pubsub.unsubscribe("document");
       pubsub.unsubscribe("eform");
     };
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      await setupEFormPage();
+    })();
   }, []);
 
   useEffect(() => {
@@ -229,7 +236,8 @@ function MessengerWindow({
             disabled={loading}
             className="tw-bg-cortico-blue tw-px-3 tw-py-2 tw-rounded-md tw-text-white tw-text-sm tw-flex tw-items-center"
             onClick={() => {
-              setScheme("email"); submitData()
+              setScheme("email");
+              submitData();
             }}
           >
             {loading === true ? (
