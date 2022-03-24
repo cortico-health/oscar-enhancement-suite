@@ -793,38 +793,11 @@ async function addMenu(container) {
   menu.style.padding = "2px";
   menu.style.marginLeft = "2px";
 
-  var sidebar = await createSideBar();
   menu.addEventListener("click", function () {
-    sidebar.classList.toggle("cortico-sidebar-show");
-    if (window.localStorage["firstRun"] === "true") {
-      closeSidebarInstructions();
-      window.localStorage["firstRun"] = false;
-    }
+    pubsub.publish("corticoWidget/toggle");
   });
 
-  menu.addEventListener("click", () => {
-    const opened = window.localStorage["disclaimer"];
-    if (!opened) {
-      const modal = new Modal();
-      modal.setContent(Disclaimer());
-      modal.show();
-      window.localStorage["disclaimer"] = true;
-    }
-  });
-
-  menu.addEventListener(
-    "click",
-    () => {
-      if (window.localStorage["firstRun"] === undefined) {
-        window.localStorage["firstRun"] = true;
-      }
-    },
-    {
-      once: true,
-    }
-  );
-
-  document.body.prepend(sidebar);
+  //document.body.prepend(sidebar);
   navigation.appendChild(menu);
 }
 

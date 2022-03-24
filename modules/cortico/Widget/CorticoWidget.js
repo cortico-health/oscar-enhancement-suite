@@ -27,6 +27,9 @@ function Content() {
           payload: data,
         });
       },
+      "corticoWidget/toggle": () => {
+        setOpen((previousOpen) => !previousOpen);
+      },
     };
 
     for (let prop in subscriptions) {
