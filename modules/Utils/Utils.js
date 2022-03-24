@@ -1,4 +1,6 @@
 import dayjs from "dayjs";
+import { Oscar } from "../../modules/core/Oscar.js";
+const oscar = new Oscar(window.location.hostname);
 
 export function debounce(func, wait, immediate) {
   var timeout;
@@ -337,4 +339,42 @@ export async function setupEFormPage() {
       html,
     });
   });
+}
+
+export function getAccountProviderNo() {
+  const firstMenu = document.getElementById("firstMenu");
+
+  if (!firstMenu) {
+    return null;
+  }
+
+  const inboxFirstChild = firstMenu.querySelector("#oscar_new_lab");
+
+  if (!inboxFirstChild) {
+    return null;
+  }
+
+  const inboxAnchorElement = inboxFirstChild.parentElement;
+
+  if (!inboxAnchorElement) {
+    return null;
+  }
+
+  let target = null;
+  if (oscar.isKaiOscarHost()) {
+    target = inboxAnchorElement.getAttribute("href");
+  } else {
+    target = inboxAnchorElement.getAttribute("onclick");
+  }
+
+  if (!target) {
+    return null;
+  }
+  const providerNoStrings = target.match(/providerNo=\d+/g);
+  if (!providerNoStrings || providerNoStrings.length === 0) {
+    return null;
+  }
+  const providerNoString = providerNoStrings[0];
+  const providerNo = providerNoString.replace(/[^0-9.]/g, "");
+  return providerNo;
 }

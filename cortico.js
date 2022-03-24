@@ -66,6 +66,7 @@ import produce from "immer";
 import { initialState as setupPharmacyState } from "./modules/cortico/Widget/features/Pharmacy/SetupPreferredPharmacies";
 import { initialState as eligCheckState } from "./modules/cortico/Widget/features/EligCheck/EligCheck";
 import widgetStore from "./modules/cortico/Widget/store/store";
+import { getAccountProviderNo } from "./modules/Utils/Utils";
 const version = "2022.2.2";
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
@@ -164,6 +165,8 @@ const init_cortico = async function () {
 
     addCorticoLogo();
     addMenu();
+
+    getAccountProviderNo();
 
     const corticoWidgetContainer = document.createElement("div");
     document.body.append(corticoWidgetContainer);
@@ -1457,6 +1460,7 @@ function isEligibleSuccess(text) {
       !text.includes("results unavailable") &&
       !text.includes("failure") &&
       text.includes("success")) ||
+    text.includes("success-phn") ||
     text.includes("health card passed validation") ||
     text.includes("patient eligible")
   );
@@ -1483,7 +1487,11 @@ export async function checkAllEligibility() {
     return;
   }
 
-  var providerNo = getProviderNoFromTd(nodes[0]);
+  let providerNo = getProviderNoFromTd(nodes[0]);
+
+  if (oscar.isKaiOscarHost()) {
+    providerNo = getAccountProviderNo();
+  }
   window.checkAllEligibilityRunning = true;
   state.running = true;
   pubsub.publish("automations/eligibility", Object.assign({}, state));
