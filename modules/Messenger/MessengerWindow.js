@@ -14,6 +14,7 @@ import {
   stripScripts,
 } from "../Utils/Utils";
 import Documents from "./Documents";
+import { setupEFormPage } from "../Utils/Utils";
 
 const EncounterOption = forwardRef((props, ref) => {
   return (
@@ -44,6 +45,7 @@ const EncounterOption = forwardRef((props, ref) => {
 });
 
 function MessengerWindow({
+  eForm,
   onSubmit,
   open,
   close,
@@ -56,6 +58,7 @@ function MessengerWindow({
   ...props
 }) {
   const [email, setEmail] = useState("test@example.com");
+  console.log("Eform", eForm);
   const [scheme, setScheme] = useState("email");
   const to = useRef();
   const subject = useRef();
@@ -67,7 +70,6 @@ function MessengerWindow({
     name: null,
     data: null,
   });
-  const [eForm, setEForm] = useState(false);
 
   useEffect(() => {
     if (patient?.email) {
@@ -95,6 +97,20 @@ function MessengerWindow({
 
     if (document === true && eForm === true) {
       let html = window.document.cloneNode(true);
+      html.querySelectorAll("input").forEach((input) => {
+        input.setAttribute("value", input.value);
+
+        if (input.checked === true) {
+          input.setAttribute("checked", true);
+        }
+      });
+      html.querySelectorAll("textarea").forEach((input) => {
+        input.innerHTML = input.value;
+      });
+
+      html.querySelectorAll("select").forEach((input) => {
+        input.setAttribute("value", input.value);
+      });
       await convertImagesToDataURLs(html);
       stripScripts(html);
       html = html.documentElement.outerHTML;
@@ -109,22 +125,33 @@ function MessengerWindow({
   };
 
   useEffect(() => {
+    console.log("is form true?");
+    if (eForm === true) {
+      setDocument(true);
+    }
+  }, [eForm]);
+
+  useEffect(() => {
     pubsub.subscribe("document", (evtName, data) => {
       setDocument(true);
       setDocumentData(data);
     });
 
-    pubsub.subscribe("eform", (evtName, data) => {
-      setDocument(true);
-      setEForm(true);
-      setDocumentData(data);
-    });
-
     return () => {
       pubsub.unsubscribe("document");
-      pubsub.unsubscribe("eform");
     };
   }, []);
+
+  useEffect(() => {
+    if (eForm === true) {
+      (async () => {
+        const docData = await setupEFormPage();
+        setDocument(true);
+        setDocumentData(docData);
+        console.log("Doc data", docData);
+      })();
+    }
+  }, [eForm]);
 
   useEffect(() => {
     if (document === true && eForm === false) {
@@ -213,7 +240,8 @@ function MessengerWindow({
             disabled={loading}
             className="tw-bg-cortico-blue tw-px-3 tw-py-2 tw-rounded-md tw-text-white tw-text-sm tw-flex tw-items-center"
             onClick={() => {
-              setScheme("email"); submitData()
+              setScheme("email");
+              submitData();
             }}
           >
             {loading === true ? (

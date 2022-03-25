@@ -1,19 +1,19 @@
 import { render } from "preact";
 import { useState, useEffect } from "preact/hooks";
-import { loadExtensionStorageValue, isLoggedIn } from "../Utils/Utils";
+import {
+  loadExtensionStorageValue,
+  isLoggedIn,
+  setupEFormPage,
+} from "../Utils/Utils";
 import Notification from "../Notifications/Notification";
 import MessengerWidget from "./MessengerWidget";
 import MessengerWindow from "./MessengerWindow";
-import {
-  sendMessage,
-  getEncounterNotes,
-  addEncounterNote,
-  postCaseManagementEntry,
-} from "../Api/Api";
+import { sendMessage } from "../Api/Api";
 import Encounter from "../core/Encounter";
 import PreactModal from "../Modal/PreactModal";
 import SavedReplies from "./SavedReplies";
 import Login from "../Login/Login";
+import Draggable from "react-draggable";
 
 function MessageException(message) {
   this.message = message || "Error has occured";
@@ -23,45 +23,6 @@ function MessageException(message) {
 
 function Messenger(patient, opts, container, replaceNode) {
   const _container = container || document.body;
-
-  /*
-  getEncounterNotes(demographicNo)
-    .then((res) => {
-      console.log("Res", res);
-      return res.text();
-    })
-    .then((html) => {
-      const temp = document.createElement("html");
-      temp.innerHTML = html;
-      const encounterNotes = Encounter.getCaseNote(temp);
-      const note = encounterNotes.value;
-      let note_id = html.match(/savedNoteId=[0-9]/)[0].split("=")[1];
-      console.log("Note", note_id);
-      return addEncounterNote(
-        demographicNo,
-        note_id,
-        note + "Another One In The Books"
-      );
-    })
-    .then((res) => {
-      console.log("Res add", res);
-    });
-
-  console.log(document);
-
-
-  postCaseManagementEntry()
-    .then((res) => {
-      return res.text();
-    })
-    .then((html) => {
-      const temp = document.createElement("html");
-      temp.innerHTML = html;
-      const programNo = temp.querySelector(`input[name="caseNote.program_no"]`);
-      const programId = programNo.value;
-      console.log("Program Id", programId);
-    });
-      */
 
   function Content({ patient, eform, encounter, ...props }) {
     const handleErrors = async (response) => {
@@ -93,9 +54,18 @@ function Messenger(patient, opts, container, replaceNode) {
     const [subject, setSubject] = useState(null);
     const [body, setBody] = useState(null);
     const [showLogin, setShowLogin] = useState(false);
+    const [dragging, setDragging] = useState(false);
+
+    const handleDragStop = (event) => {
+      setTimeout(() => {
+        setDragging(false);
+      }, 100);
+    };
 
     const handleOpen = () => {
-      setOpen(true);
+      if (dragging === false) {
+        setOpen(true);
+      }
     };
 
     const handleClose = () => {
@@ -113,6 +83,7 @@ function Messenger(patient, opts, container, replaceNode) {
     };
 
     const handleSubmit = async (data, opts) => {
+      //const setup = await setupEFormPage();
       const { to, subject, body } = data;
 
       setLoading(true);
@@ -145,6 +116,7 @@ function Messenger(patient, opts, container, replaceNode) {
         sendMessage(data, token)
           .then(handleErrors)
           .then((response) => {
+            console.log("Response", response);
             if (response.success === "true" || response.success === true) {
               setMessageInfo({
                 title: "Success",
@@ -203,59 +175,64 @@ function Messenger(patient, opts, container, replaceNode) {
     }, []);
 
     return (
-      <div className="tailwind tw-font-sans no-print tw-fixed tw-z-10005 DoNotPrint">
-        <PreactModal
-          show={showModal}
-          close={() => {
-            setShowModal(false);
-          }}
-        >
-          <SavedReplies loadReply={loadReply}></SavedReplies>
-        </PreactModal>
-        <PreactModal
-          show={showLogin}
-          close={() => {
-            setShowLogin(false);
-          }}
-        >
-          <Login />
-        </PreactModal>
-        <div
-          className={`tw-fixed tw-bottom-5 tw-right-5 tw-bg-white tw-z-10000 tw-max-w-[400px] tw-shadow-xl tw-w-full tw-rounded-md tw-transform tw-transition-transform tw-duration-200 tw-ease-in-out ${
-            open ? "tw-translate-x-0" : "tw-translate-x-[430px]"
-          }`}
-        >
-          <MessengerWindow
-            patient={patient}
-            defaultSubject={subject}
-            defaultBody={body}
-            loading={loading}
-            onSubmit={handleSubmit}
-            close={handleClose}
-            open={handleOpen}
-            showSavedReplies={() => {
-              setShowModal(true);
+      <div className="cleanslate">
+        <div className="tailwind preflight tw-font-sans no-print tw-fixed tw-z-10005 DoNotPrint">
+          <PreactModal
+            show={showModal}
+            close={() => {
+              setShowModal(false);
             }}
-            encounter={true}
+          >
+            <SavedReplies loadReply={loadReply}></SavedReplies>
+          </PreactModal>
+          <PreactModal
+            show={showLogin}
+            close={() => {
+              setShowLogin(false);
+            }}
+          >
+            <Login />
+          </PreactModal>
+          <div
+            className={`tw-fixed tw-bottom-5 tw-right-5 tw-bg-white tw-z-10000 tw-max-w-[400px] tw-shadow-xl tw-w-full tw-rounded-md tw-transform tw-transition-transform tw-duration-200 tw-ease-in-out ${
+              open ? "tw-translate-x-0" : "tw-translate-x-[430px]"
+            }`}
+          >
+            <MessengerWindow
+              patient={patient}
+              defaultSubject={subject}
+              defaultBody={body}
+              loading={loading}
+              onSubmit={handleSubmit}
+              close={handleClose}
+              open={handleOpen}
+              eForm={opts.eform}
+              showSavedReplies={() => {
+                setShowModal(true);
+              }}
+              encounter={true}
+            />
+          </div>
+          <Draggable onDrag={() => setDragging(true)} onStop={handleDragStop}>
+            <div className="tw-fixed tw-bottom-5 tw-right-5 tw-z-5000 tw-shadow-xl">
+              <MessengerWidget
+                open={handleOpen}
+                login={promptLogin}
+                loggedIn={loggedIn}
+              />
+            </div>
+          </Draggable>
+          <Notification
+            open={showNotification}
+            close={() => {
+              setShowNotification(false);
+            }}
+            delay={7000}
+            content={messageInfo.content}
+            title={messageInfo.title}
+            preview={messageInfo.preview}
           />
         </div>
-        <div className="tw-fixed tw-bottom-5 tw-right-5 tw-z-5000 tw-shadow-xl">
-          <MessengerWidget
-            open={handleOpen}
-            login={promptLogin}
-            loggedIn={loggedIn}
-          />
-        </div>
-        <Notification
-          open={showNotification}
-          close={() => {
-            setShowNotification(false);
-          }}
-          delay={7000}
-          content={messageInfo.content}
-          title={messageInfo.title}
-          preview={messageInfo.preview}
-        />
       </div>
     );
   }
@@ -264,7 +241,7 @@ function Messenger(patient, opts, container, replaceNode) {
     <Content
       patient={patient}
       encounter={opts.encounter}
-      eform={opts.eform}
+      eForm={opts.eform}
       document={opts.document}
     />,
     _container,

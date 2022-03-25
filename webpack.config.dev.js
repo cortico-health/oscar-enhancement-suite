@@ -5,7 +5,6 @@ module.exports = {
   entry: "./cortico.js",
   output: {
     filename: "cortico-min.js",
-    path: path.resolve(__dirname, "dist"),
   },
   watch: true,
   watchOptions: {
@@ -16,16 +15,21 @@ module.exports = {
     ignored: /dist/,
   },
   cache: false,
-  devtool: "source-map",
+  devtool: "eval-source-map",
   mode: "development",
   plugins: [
-    new webpack.ProvidePlugin({
-      h: ["preact", "h"],
-    }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development')
-    })
+      "process.env.NODE_ENV": JSON.stringify("development"),
+    }),
   ],
+  resolve: {
+    alias: {
+      react: "preact/compat",
+      "react-dom/test-utils": "preact/test-utils",
+      "react-dom": "preact/compat",
+      "react/jsx-runtime": "preact/jsx-runtime",
+    },
+  },
 
   module: {
     rules: [
@@ -57,21 +61,15 @@ module.exports = {
                   targets: "> 0.25%, not dead, IE > 11",
                 },
               ],
+              "@babel/preset-react",
             ],
-            assumptions: {
-              setPublicClassFields: true,
-            },
             plugins: [
-              [
-                "@babel/plugin-proposal-decorators",
-                { decoratorsBeforeExport: true },
-              ],
-              "@babel/plugin-transform-runtime",
+              ["@babel/plugin-transform-runtime"],
               [
                 "@babel/plugin-transform-react-jsx",
                 {
-                  pragma: "h",
-                  pragmaFrag: "Fragment",
+                  runtime: "automatic",
+                  importSource: "preact",
                 },
               ],
             ],
@@ -79,7 +77,7 @@ module.exports = {
         },
       },
       {
-        test: /\.(png|jpe?g|gif)$/i,
+        test: /\.(png|jpe?g|gif|svg)$/i,
         use: [
           {
             loader: "url-loader",
