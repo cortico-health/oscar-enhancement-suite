@@ -326,19 +326,15 @@ export async function setupEFormPage() {
     return;
   }
 
-  await loadExtensionStorageValue("jwt_access_token").then(async function (
-    access_token
-  ) {
-    let html = document.cloneNode(true);
-    await convertImagesToDataURLs(html);
-    stripScripts(html);
-    html = html.documentElement.outerHTML;
+  let html = document.cloneNode(true);
+  await convertImagesToDataURLs(html);
+  stripScripts(html);
+  html = html.documentElement.outerHTML;
 
-    pubsub.publish("eform", {
-      name: "eForm",
-      html,
-    });
-  });
+  return {
+    name: "eForm",
+    html,
+  };
 }
 
 export function getAccountProviderNo() {

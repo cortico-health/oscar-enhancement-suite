@@ -45,7 +45,7 @@ const EncounterOption = forwardRef((props, ref) => {
 });
 
 function MessengerWindow({
-  eform,
+  eForm,
   onSubmit,
   open,
   close,
@@ -58,6 +58,7 @@ function MessengerWindow({
   ...props
 }) {
   const [email, setEmail] = useState("test@example.com");
+  console.log("Eform", eForm);
   const [scheme, setScheme] = useState("email");
   const to = useRef();
   const subject = useRef();
@@ -69,7 +70,6 @@ function MessengerWindow({
     name: null,
     data: null,
   });
-  const [eForm, setEForm] = useState(false);
 
   useEffect(() => {
     if (patient?.email) {
@@ -125,29 +125,33 @@ function MessengerWindow({
   };
 
   useEffect(() => {
+    console.log("is form true?");
+    if (eForm === true) {
+      setDocument(true);
+    }
+  }, [eForm]);
+
+  useEffect(() => {
     pubsub.subscribe("document", (evtName, data) => {
       setDocument(true);
       setDocumentData(data);
     });
 
-    pubsub.subscribe("eform", (evtName, data) => {
-      setDocument(true);
-      setEForm(true);
-      setDocumentData(data);
-      console.log("Document data", data);
-    });
-
     return () => {
       pubsub.unsubscribe("document");
-      pubsub.unsubscribe("eform");
     };
   }, []);
 
   useEffect(() => {
-    (async () => {
-      await setupEFormPage();
-    })();
-  }, []);
+    if (eForm === true) {
+      (async () => {
+        const docData = await setupEFormPage();
+        setDocument(true);
+        setDocumentData(docData);
+        console.log("Doc data", docData);
+      })();
+    }
+  }, [eForm]);
 
   useEffect(() => {
     if (document === true && eForm === false) {
