@@ -63,7 +63,7 @@ export default function EligbilityCheck({ goBack, ...props }) {
               complete={eligCheck.complete}
               current={eligCheck.current}
               total={eligCheck.total}
-              demographicNo={eligCheck.demographic_no}
+              demographicNo={eligCheck.demographicNo}
               failures={eligCheckFails}
             />
           )}

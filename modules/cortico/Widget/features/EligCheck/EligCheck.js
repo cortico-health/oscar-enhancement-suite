@@ -6,6 +6,7 @@ export const initialState = Object.freeze({
   running: false,
   empty: false,
   teleplan: false,
+  demographicNo: null,
 });
 
 export function eligCheckReducer(state = initialState, action) {
