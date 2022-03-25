@@ -135,6 +135,7 @@ function MessengerWindow({
     pubsub.subscribe("document", (evtName, data) => {
       setDocument(true);
       setDocumentData(data);
+      open && open();
     });
 
     return () => {
@@ -152,12 +153,6 @@ function MessengerWindow({
       })();
     }
   }, [eForm]);
-
-  useEffect(() => {
-    if (document === true && eForm === false) {
-      open && open();
-    }
-  }, [document]);
 
   const removeDocument = () => {
     setDocument(false);
