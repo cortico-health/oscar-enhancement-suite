@@ -1517,6 +1517,7 @@ export async function checkAllEligibility() {
 
       state.current = i + 1;
       state.total = length;
+      state.demographicNo = demographic_no;
       pubsub.publish("automations/eligibility", Object.assign({}, state));
 
       // In cases where the first appointment in the schedule is an empty
