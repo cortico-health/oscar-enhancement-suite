@@ -206,6 +206,7 @@ function Messenger(patient, opts, container, replaceNode) {
               onSubmit={handleSubmit}
               close={handleClose}
               open={handleOpen}
+              eForm={opts.eform}
               showSavedReplies={() => {
                 setShowModal(true);
               }}
@@ -240,7 +241,7 @@ function Messenger(patient, opts, container, replaceNode) {
     <Content
       patient={patient}
       encounter={opts.encounter}
-      eform={opts.eform}
+      eForm={opts.eform}
       document={opts.document}
     />,
     _container,

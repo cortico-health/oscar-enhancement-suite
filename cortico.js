@@ -66,6 +66,7 @@ import produce from "immer";
 import { initialState as setupPharmacyState } from "./modules/cortico/Widget/features/Pharmacy/SetupPreferredPharmacies";
 import { initialState as eligCheckState } from "./modules/cortico/Widget/features/EligCheck/EligCheck";
 import widgetStore from "./modules/cortico/Widget/store/store";
+import { getAccountProviderNo } from "./modules/Utils/Utils";
 const version = "2022.2.2";
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
@@ -165,6 +166,8 @@ const init_cortico = async function () {
     addCorticoLogo();
     addMenu();
 
+    getAccountProviderNo();
+
     const corticoWidgetContainer = document.createElement("div");
     document.body.append(corticoWidgetContainer);
     CorticoWidget(document.body, corticoWidgetContainer);
@@ -213,7 +216,6 @@ const init_cortico = async function () {
         document.body,
         messengerContainer
       );
-      setupEFormPage();
     }
   } else if (route.indexOf("dms/documentReport.jsp") > -1) {
     setupDocumentPage();
@@ -454,6 +456,7 @@ async function setupDocumentPage() {
                   reader.onload = () => resolve(reader.result);
                   reader.readAsDataURL(blob);
                 });
+                console.log("Data URL", dataUrl);
                 pubsub.publish("document", {
                   name: pdf_link.textContent,
                   data: dataUrl,
@@ -471,7 +474,7 @@ async function setupDocumentPage() {
   });
 }
 
-async function setupEFormPage() {
+export async function setupEFormPage() {
   let is_eform_page = true;
   const clinicName = localStorage["clinicname"];
 
@@ -498,11 +501,12 @@ async function setupEFormPage() {
     await convertImagesToDataURLs(html);
     stripScripts(html);
     html = html.documentElement.outerHTML;
-
+    console.log("Publish EForm");
     pubsub.publish("eform", {
       name: "eForm",
       html,
     });
+    console.log("Publish eform end");
   });
 }
 
@@ -1456,6 +1460,7 @@ function isEligibleSuccess(text) {
       !text.includes("results unavailable") &&
       !text.includes("failure") &&
       text.includes("success")) ||
+    text.includes("success-phn") ||
     text.includes("health card passed validation") ||
     text.includes("patient eligible")
   );
@@ -1482,7 +1487,11 @@ export async function checkAllEligibility() {
     return;
   }
 
-  var providerNo = getProviderNoFromTd(nodes[0]);
+  let providerNo = getProviderNoFromTd(nodes[0]);
+
+  if (oscar.isKaiOscarHost()) {
+    providerNo = getAccountProviderNo();
+  }
   window.checkAllEligibilityRunning = true;
   state.running = true;
   pubsub.publish("automations/eligibility", Object.assign({}, state));
