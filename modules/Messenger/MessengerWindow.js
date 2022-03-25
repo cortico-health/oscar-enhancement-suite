@@ -1,4 +1,3 @@
-import { render } from "preact";
 import { useState, useEffect, useRef } from "preact/hooks";
 import { forwardRef } from "preact/compat";
 
@@ -83,6 +82,8 @@ function MessengerWindow({
     showSavedReplies && showSavedReplies();
   };
 
+  console.log("DOcument", document, eForm);
+
   const submitData = async (e) => {
     const data = {
       clinic_host: getCorticoUrl().replace(/http.?:\/\//, ""),
@@ -91,11 +92,9 @@ function MessengerWindow({
       body: message.current.value,
     };
 
-    if (document === true && eForm === false) {
+    if (document === true) {
       data.attachment = documentData.data;
-    }
-
-    if (document === true && eForm === true) {
+    } else if (eForm === true) {
       let html = window.document.cloneNode(true);
       html.querySelectorAll("input").forEach((input) => {
         input.setAttribute("value", input.value);
@@ -125,16 +124,11 @@ function MessengerWindow({
   };
 
   useEffect(() => {
-    console.log("is form true?");
-    if (eForm === true) {
-      setDocument(true);
-    }
-  }, [eForm]);
-
-  useEffect(() => {
     pubsub.subscribe("document", (evtName, data) => {
       setDocument(true);
       setDocumentData(data);
+      console.log("Document data", data);
+      open && open();
     });
 
     return () => {
@@ -146,18 +140,11 @@ function MessengerWindow({
     if (eForm === true) {
       (async () => {
         const docData = await setupEFormPage();
-        setDocument(true);
         setDocumentData(docData);
         console.log("Doc data", docData);
       })();
     }
   }, [eForm]);
-
-  useEffect(() => {
-    if (document === true && eForm === false) {
-      open && open();
-    }
-  }, [document]);
 
   const removeDocument = () => {
     setDocument(false);
@@ -211,7 +198,7 @@ function MessengerWindow({
           ) : (
             ""
           )}
-          {document === true ? (
+          {document === true || eForm === true ? (
             <div className="tw-p-4">
               <Documents
                 onDelete={removeDocument}
