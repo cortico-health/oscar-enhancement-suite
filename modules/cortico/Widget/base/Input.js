@@ -1,5 +1,6 @@
 import { forwardRef } from "preact/compat";
 import classNames from "classnames";
+import { useRef, useState } from "preact/hooks";
 
 const Input = forwardRef(
   (
@@ -24,6 +25,13 @@ const Input = forwardRef(
     },
     ref
   ) => {
+    const [value, setValue] = useState(null);
+
+    const handleChange = (evt) => {
+      const newValue = evt.target.value;
+      setValue(newValue);
+      onChange && onChange(newValue);
+    };
     return (
       <>
         <div className="flex items-center tw-w-full">
@@ -53,7 +61,7 @@ const Input = forwardRef(
             min={minValue}
             max={maxValue}
             maxLength={maxLength}
-            onChange={onChange}
+            onChange={handleChange}
             {...props}
           />
           {units}

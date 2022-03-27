@@ -10,8 +10,10 @@ import {
 import Documents from "./Documents";
 import { setupEFormPage } from "../Utils/Utils";
 import Input from "../../modules/cortico/Widget/base/Input";
+import Textarea from "../cortico/Widget/base/Textarea";
 import Button from "../core/Button";
 import { setFormInputValueAttributes } from "../Utils/Utils";
+import { useDispatch, useSelector } from "react-redux";
 
 const EncounterOption = forwardRef((props, ref) => {
   return (
@@ -54,10 +56,10 @@ function MessengerWindow({
   encounter: encounterOption,
   ...props
 }) {
+  const dispatch = useDispatch();
+  const { to, subject } = useSelector((state) => state.messenger);
   const [email, setEmail] = useState(null);
   const [scheme, setScheme] = useState("email");
-  const to = useRef();
-  const subject = useRef();
   const message = useRef();
   const encounter = useRef();
   const [document, setDocument] = useState(null);
@@ -87,8 +89,8 @@ function MessengerWindow({
   const submitData = async (e) => {
     const data = {
       clinic_host: getCorticoUrl().replace(/http.?:\/\//, ""),
-      to: to.current.value,
-      subject: subject.current.value,
+      to: to,
+      subject: subject,
       body: message.current.value,
     };
 
@@ -156,20 +158,42 @@ function MessengerWindow({
     }
   };
 
+  const handleChange = (key, value) => {
+    dispatch({
+      type: "messenger/set",
+      payload: {
+        key,
+        value,
+      },
+    });
+  };
+
   return (
     <div className="tw-m-0 no-print">
       <div>
         <div>
           <div className="tw-py-2">
-            <Input defaultValue={email} ref={to} placeholder="To" />
+            <Input
+              defaultValue={email}
+              placeholder="To"
+              onChange={(val) => handleChange("to", val)}
+            />
           </div>
           <hr className="tw-opacity-10" />
           <div className="tw-w-full">
-            <Input ref={subject} placeholder="Subject"></Input>
+            {to}
+            {subject}
+            <Input
+              placeholder="Subject"
+              onChange={(val) => handleChange("subject", val)}
+            ></Input>
           </div>
           <hr className="tw-opacity-10" />
           <div className="tw-relative tw-mt-4">
-            <Chat ref={message} value={defaultBody} />
+            <Textarea
+              onChange={(val) => handleChange("message", val)}
+              defaultValue="Type message here"
+            ></Textarea>
           </div>
           <hr className="tw-opacity-40" />
           {encounterOption === true ? (
