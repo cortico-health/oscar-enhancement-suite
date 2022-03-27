@@ -45,20 +45,14 @@ import {
   convertImagesToDataURLs,
   stripScripts,
 } from "./modules/Utils/Utils";
-import initSidebar from "./modules/Sidebar/Sidebar";
 import {
   loadExtensionStorageValue,
   addToCache,
   createSidebarContainer,
   checkCorticoUrl,
 } from "./modules/Utils/Utils";
-import { showLoginForm } from "./modules/Utils/Utils";
 import "./index.css";
-import { Modal } from "./modules/Modal/Modal";
-import Messenger from "./modules/Messenger/Messenger";
 const CORTICO = {}; // container for global state. Use this rather than `window`
-import Disclaimer from "./modules/cortico/Disclaimer";
-// manually update this variable with the version in manifest.json
 
 import LoginOscar from "./modules/Login/LoginOscar";
 import CorticoWidget from "./modules/cortico/Widget/CorticoWidget";
@@ -73,7 +67,8 @@ const oscar = new Oscar(window.location.hostname);
 
 window.is_dev = process.env.NODE_ENV === "development" ? true : false;
 const cortico_media = ["phone", "clinic", "virtual", "", "quiet"];
-
+const corticoWidgetContainer = document.createElement("div");
+document.body.append(corticoWidgetContainer);
 const init_cortico = async function () {
   // create an element to indicate the library is loaded in the dom, and to contain fixed menus/elements.
   const anchor = document.createElement("div");
@@ -148,7 +143,7 @@ const init_cortico = async function () {
     if (resources_field) {
       resources_field.addEventListener("change", update_video_button);
     }
-  } else if (route.indexOf("/provider/providercontrol.jsp") > -1) {
+  } else if (oscar.isSchedulePage()) {
     init_schedule();
     const loginContainer = document.createElement("div");
     document.body.prepend(loginContainer);
@@ -171,12 +166,7 @@ const init_cortico = async function () {
     const corticoWidgetContainer = document.createElement("div");
     document.body.append(corticoWidgetContainer);
     CorticoWidget(document.body, corticoWidgetContainer);
-    console.log("This is running sir");
-    //const temp = document.createElement("div");
-    //document.body.append(temp);
-    //initSidebar(document.body, temp);
     addAppointmentMenu();
-    //addLoginForm(chrome);
     if (!oscar.isJuno() && !oscar.containsKaiBar()) {
       plusSignFromCache();
     }
@@ -192,45 +182,23 @@ const init_cortico = async function () {
     route.indexOf("/eform/efmshowform_data.jsp") > -1 ||
     route.indexOf("/casemgmt/forward.jsp") > -1
   ) {
-    const patient_info = await getPatientInfo();
+    //const patient_info = await getPatientInfo();
 
-    const messengerContainer = document.createElement("div");
-    if (route.indexOf("/casemgmt/forward.jsp") > -1) {
-      document.body.append(messengerContainer);
-      Messenger(
-        patient_info,
-        {
-          encounter: true,
-        },
-        document.body,
-        messengerContainer
-      );
+    if (oscar.isEncounterPage()) {
+      CorticoWidget(document.body, corticoWidgetContainer, {
+        encounter: true,
+      });
     } else {
-      document.body.append(messengerContainer);
-      Messenger(
-        patient_info,
-        {
-          encounter: false,
-          eform: true,
-        },
-        document.body,
-        messengerContainer
-      );
+      CorticoWidget(document.body, corticoWidgetContainer, {
+        encounter: true,
+        eForm: true,
+      });
     }
-  } else if (route.indexOf("dms/documentReport.jsp") > -1) {
+  } else if (oscar.isDocumentPage()) {
     setupDocumentPage();
-    const messengerContainer = document.createElement("div");
-    document.body.append(messengerContainer);
-    const patient_info = await getPatientInfo();
-
-    Messenger(
-      patient_info,
-      {
-        encounter: false,
-      },
-      document.body,
-      messengerContainer
-    );
+    CorticoWidget(document.body, corticoWidgetContainer, {
+      encounter: true,
+    });
   } else if (route.indexOf("/oscarRx/ViewScript2.jsp") > -1) {
     // We need to determine first if the prescription is "delivery"
     const currentPharmacyCode = localStorage.getItem("currentPharmacyCode");
@@ -689,69 +657,6 @@ function styleSheetFactory(namespace) {
   return window[namespace];
 }
 
-async function createSideBar() {
-  if (window.corticoSidebar) {
-    // TODO: is idempotency really needed here? it's a global init.
-    return;
-  }
-
-  const sidebar = create(
-    `
-  <div class='cortico-sidebar'>
-    <a href="https://cortico.ca" target="_blank"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGEAAABhCAYAAADGBs+jAAAACXBIWXMAAAsSAAALEgHS3X78AAAEqklEQVR4nO2dvXHbMBSAX3RpVNkb2BvYmcAaQIUa1nEmiDYIR1AmsFyrSe7Ux9lAniDWBlbF0jnIjzYlUyRAvAc8kO+707mxAAofQeLvAZ9eXl4gJaZZcQ4A1wAwObrsDQA8rFfj56R+EAAkI2GaFabg5wDwteVf7wFguV6NHwJdmjfiJeCdnwPAd8ev/jTfS6FmiJaAAswdfdUxiUcAuF2vxhviSyNFrAQCASVGxERyjRgJuIYPEAoATOMX8SWSIk4CsYCSm2lWzAjTI0WUBCYBJTlDmiSIkcAswHCFzVxxiJAQQEDJcQdPBNElBBQA2NMWR1QJgQUYLgPl40Q0CREEiCWKBBVwSHAJkQWIHNQLKkFADRA5hhRs7EiAgN16NT6PlHcjQWqCkHfAImLejbBLECJgO1gJglpBs0EOZQsS8E36pA6LBGEClpGvoRVyCSrAHVIJKqAbZBJUQHdIJKgAP7wlqAB/vCSoABo6S1ABdHSSoAJocZagAuhxkqACeLCWoAL4sJKgAnhplaAC+GmUoALC8PlULirAnUo83cZlEql2ol8F2DHNCrOib4afm5ov/cXYiGWTlA8SVEA7WEYmiPGH5Vd2Zo57vRrXLs8/kKAC2sHl9cuOZVQbuvUmQQW0gwJMGZ15JPNBRLV1pAIawJt06SkAsIwPlmPuJUyzYq4CWskJy8hEDb29H/aPo2lWPBMY9iGFVtA/4mTNy/rSPJZG06y4VQGtzBnSNGVuyn7/OIoZx5VKR4yrjKJLSGkogi2iFFDCBVMGTaQ0FMF6k5pmb4xwqV4PxnXgPLQEFVDDCNfuhyBJAdybV5n0R4HiuFKvAY+c6Y4CbEPTh0cQV23Yp1tK2DFl0pd3AFeo1T7dEY7mcWRiLcA007DnLpL1avyEe+pRco/pvg7g4WQD5XPPSQBWyzvJInAAj6oRs6sOhVSbqBMiEV0ElGNXYkXgE2NG8OjeHc8nUM6sbTFK0qq11TJB0teJnVLAQRmdmujPsbrYZvQbt760WmFg+UOkT/AsLDbKrWI2zZ3XldHJbRUwo1v81NWMLRbkwiVE1fFOSmGeIcdHed0YXFlGefkSrsN6bwvMsNy0yWldTSWNLlU5iWbuUfkYnpoKvkrIDUZ8nqW9HnMKtcHIxHOVgvTmqxchNhgxhfeHYAq1tyK4NxgxLYg7wiR7KYLlnYCPnwXjtGCv3hGkErDw8xOLY6npjQhvCVjwE+xPhJ6v7oWIzhKwXbyJvGYJBhvHDO/DuxPGuQhbkn9Ze7WOcLhCRXji3URVEf6Q9BNUhB9knTUV0R3SHrOK6Ab5sIWKcIdl7EhFuME6n0AUaEfBF8kb1LKOogqqEb9wulYk7PMJQkRcMIU8kZDK9CYFb4F6kfI/SbD4BAE14kzPWZMhQiVAfBF62F2JoFaTCKIddqci3ol67KOKeCX6AaiBRYjsNYs4CjigCJEnDgbrrNnA3KEb9mF3tjDXiOEeducKk4jhHnbXFWIRu8EedudLRYRPxGRtjJg0xEqAdxHXGBPnymMKAkBa66gJh8XGW4wRS2ZpZDISSnANrBFi/pYDcuZuN8syTSyd+Dv/AAD4D9nFlj4ll12bAAAAAElFTkSuQmCC"  alt="Cortico" style="margin-bottom: 25px;" /></a>
-    <div class='cortico-sidebar-close'>Close</div>
-  </div>
-  `,
-    {
-      events: {
-        "click .cortico-sidebar-close": function () {
-          sidebar.classList.remove("cortico-sidebar-show");
-          if (window.localStorage["firstRun"] === "true") {
-            closeSidebarInstructions();
-            window.localStorage["firstRun"] = false;
-          }
-        },
-      },
-    }
-  );
-
-  window.corticoSidebar = sidebar;
-  //var newUiOption = getNewUIOption();
-  //sidebar.appendChild(newUiOption);
-
-  sidebar.appendChild(await getCorticoLogin());
-  sidebar.appendChild(getCorticoUrlOption());
-  sidebar.appendChild(getRecallStatusOption());
-  sidebar.appendChild(getMediumOption());
-
-  sidebar.appendChild(getEligButton());
-  sidebar.appendChild(getEligStatus());
-  sidebar.appendChild(getEligFailed());
-
-  sidebar.appendChild(getBatchPharmaciesButton());
-  sidebar.appendChild(getResetCacheButton());
-  sidebar.appendChild(getBatchPharmaciesStatus());
-
-  var styleSheet = styleSheetFactory("cortico_sidebar");
-  var styles = `
-    .cortico-sidebar { position: fixed; top: 0; right: 0; bottom: 0; width: 300px; background-color: white; height: 100%; z-index: 10000; }
-    .cortico-sidebar { transition: transform 0.25s ease-in; transform: translateX(300px); overflow-y: auto; }
-    .cortico-sidebar { display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 1px 5px 5px rgb(0, 0, 0); }
-    .cortico-sidebar-show { transform: translateX(0); }
-    .cortico-sidebar-close { cursor:pointer; position: absolute; top: 10px; right: 10px; z-index: 500; }
-  `;
-  styleSheet.innerText = styles;
-
-  return sidebar;
-}
-
-function closeSidebarInstructions() {
-  const sidebarInstructions = document.querySelector(".sidebar-instructions");
-  if (sidebarInstructions) {
-    sidebarInstructions.classList.add("sidebar-instructions-hidden");
-  }
-}
-
 function showDiagnosticResults(html_string) {
   var container = document.createElement("div");
 
@@ -771,15 +676,6 @@ function showDiagnosticResults(html_string) {
     });
     container.appendChild(containerClose);
   }
-
-  var styleSheet = styleSheetFactory("cortico_sidebar");
-  var styles = `
-    .cortico-diagnostic-viewer { position: fixed; top: 20%; left: 50% ;width: 300px; background-color: white; transform: translate(-50%, 0) }
-    .cortico-diagnostic-viewer { padding: 20px; padding-top: 30px; border: 1px solid }
-    .cortico-diagnostic-viewer { overflow-y: scroll; max-height: 500px }
-    .cortico-diagnostic-close { position: absolute; top: 10px; right: 10px; z-index: 500; }
-  `;
-  styleSheet.innerText = styles;
 
   document.body.prepend(container);
 }
@@ -803,395 +699,6 @@ async function addMenu(container) {
 
   //document.body.prepend(sidebar);
   navigation.appendChild(menu);
-}
-
-function getRecallStatusOption() {
-  var container = document.createElement("div");
-  container.style.width = "100%";
-  container.style.padding = "0px 10px";
-  container.style.boxSizing = "border-box";
-
-  var inputContainer = document.createElement("div");
-  inputContainer.style.display = "flex";
-  inputContainer.style.alignItems = "center";
-  inputContainer.style.justifyContent = "center";
-
-  var input = document.createElement("input");
-  input.setAttribute("id", "recall-status");
-  input.setAttribute("type", "text");
-  input.setAttribute("placeholder", "Recall Status");
-  input.style.fontSize = "16px";
-  input.style.padding = "5px 5px";
-  input.style.margin = "0px 10px";
-  input.style.width = "35%";
-
-  inputContainer.appendChild(input);
-
-  if (localStorage.getItem("recall-status")) {
-    input.value = localStorage.getItem("recall-status");
-  }
-
-  var label = document.createElement("label");
-  label.setAttribute("for", "recall-status");
-  label.textContent = "Status to check for recall button";
-  label.style.display = "block";
-  label.style.marginTop = "30px";
-  label.style.marginBottom = "10px";
-  label.style.textAlign = "center";
-
-  var button = create(`<button class='cortico-btn inline'>Save</button>`);
-
-  container.appendChild(label);
-  container.appendChild(inputContainer);
-  container.appendChild(button);
-
-  button.addEventListener("click", function () {
-    if (input.value) {
-      localStorage.setItem("recall-status", input.value);
-      alert("Your recall status has changed");
-    }
-  });
-  return container;
-}
-
-function getMediumOption() {
-  var container = create(
-    `<div style='100%; padding: 0px 10px; box-sizing: border-box'>
-    <label for='medium-option' 
-    style='display: block; margin-top: 30px; margin-bottom: 10px; text-align: center;'>
-      Default appointment type for reminder
-    </label>
-
-    <div id='selectContainer' style='display: flex; align-items: center; justify-content: center'>
-      ${getResourceSelect()}
-    </div>
-    
-    <button style='width: 100%; display: inline-block; margin: 10px auto' class='cortico-btn'>Save</button>
-  </div>`,
-    {
-      events: {
-        "click .cortico-btn": (e) => {
-          var resourceSelect = document.querySelector(
-            'select[name="resources"]'
-          );
-          var value =
-            resourceSelect.options[resourceSelect.selectedIndex].value;
-
-          localStorage.setItem("medium-option", value);
-          alert("Your default medium has changed");
-        },
-      },
-    }
-  );
-
-  return container;
-}
-
-function getEligStatus() {
-  var container = document.createElement("div");
-  container.style.textAlign = "center";
-  pubsub.subscribe("check-eligibility", (topic, data) => {
-    const progress = "(" + data.current + "/" + data.total + ")";
-
-    if (data.complete === true) {
-      container.innerHTML = "Check Complete!";
-    } else {
-      const header = "Currently Processing" + progress + ":";
-      const name = data.info.split("\n")[1];
-      container.innerHTML = "<p>" + header + "<br/>" + name + "</p>";
-    }
-  });
-  return container;
-}
-
-function getBatchPharmaciesStatus() {
-  var container = document.createElement("div");
-  container.style.textAlign = "center";
-  pubsub.subscribe("check-batch-pharmacies", (topic, data) => {
-    const progress = "(" + data.current + "/" + data.total + ")";
-
-    if (data.complete === true) {
-      container.innerHTML = "Setup Complete!";
-    } else {
-      const header = "Currently Processing" + progress + ":";
-      container.innerHTML = "<p>" + header + "<br/>" + "</p>";
-    }
-  });
-  return container;
-}
-
-function getEligFailed() {
-  var container = document.createElement("div");
-  container.style.textAlign = "center";
-  pubsub.subscribe("check-eligibility-failed", (topic, data) => {
-    container.innerHTML = '<p style="margin-top: 10px;">Failed to Verify:</p>';
-
-    const list = getFailedList(data);
-    container.appendChild(list);
-  });
-
-  return container;
-}
-
-function getFailedList(data) {
-  let failed = JSON.parse(data);
-  let listItems = "";
-
-  // make sure that failed is of type array so map function works
-  if (typeof failed === "string") {
-    failed = JSON.parse(failed);
-  }
-
-  if (failed) {
-    failed.map((f) => {
-      listItems += `<li>Demographic No: ${f.demographic_no}</li>`;
-    });
-  }
-  const list = document.createElement("ul");
-  list.innerHTML = listItems;
-  return list;
-}
-
-function getNewUIOption() {
-  var container = document.createElement("div");
-
-  var input = document.createElement("input");
-  input.setAttribute("id", "corticoui");
-  input.setAttribute("type", "checkbox");
-  input.style.verticalAlign = "middle";
-  container.appendChild(input);
-
-  input.addEventListener("change", function () {
-    if (this.checked) {
-      localStorage.setItem("newui", "true");
-      addNewUI();
-    } else {
-      localStorage.setItem("newui", "false");
-      removeNewUI();
-    }
-  });
-
-  if (localStorage.getItem("newui") === "true") {
-    input.checked = true;
-    addNewUI();
-  }
-
-  var label = document.createElement("label");
-  label.setAttribute("for", "corticoui");
-  label.textContent = "Activate New UI";
-  label.style.marginLeft = "5px";
-  container.appendChild(label);
-
-  return container;
-}
-
-async function getCorticoLogin() {
-  var container = create("<div></div>");
-  if (!getCorticoUrl()) return container;
-
-  let loginButton = create(
-    `<button class='cortico-btn'>Sign in at Cortico</button>`
-  );
-  let loggedInAsHtml = "";
-
-  let btnEvent = {
-    "click .cortico-btn": (e) => {
-      if (!checkCorticoUrl(e.originalEvent)) return;
-      // TODO: what is this for?
-      /*
-      if (e.target.className == "cortico-btn") {
-        const loginForm = document.querySelector(".login-form");
-        loginForm.classList.add("show");
-      }*/
-      pubsub.publish("signin");
-    },
-  };
-
-  const loggedInAsText = await loadExtensionStorageValue("jwt_username");
-  const jwt_expired = await loadExtensionStorageValue("jwt_expired");
-  const jwt_access_token = await loadExtensionStorageValue("jwt_access_token");
-
-  console.log("JWT Expired?", jwt_expired);
-  console.log("JWT Access token", jwt_access_token);
-
-  if (jwt_expired === false || jwt_expired === "false") {
-    loginButton = create(`<button class='cortico-btn'>Log out</button>`);
-    btnEvent = {
-      "click .cortico-btn": async (e) => {
-        if (e.target.className == "cortico-btn") {
-          if (window.is_dev) {
-            localStorage.removeItem("jwt_access_token");
-            localStorage.removeItem("jwt_expired");
-          } else {
-            const browser = browser || window.chrome;
-            if (browser) {
-              browser.storage.local.remove(["jwt_access_token", "jwt_expired"]);
-            } else {
-              localStorage.removeItem("jwt_access_token");
-              localStorage.removeItem("jwt_expired");
-            }
-          }
-
-          if (!alert("Logged out from cortico, reloading..."))
-            window.location.reload();
-        }
-      },
-    };
-  }
-
-  var container = create(
-    `<div class='login-form-button'>
-    ${loginButton.outerHTML}
-    ${loggedInAsHtml}
-    </div>`,
-    {
-      events: btnEvent,
-    }
-  );
-  return container;
-}
-
-function getCorticoUrlOption() {
-  var container = createSidebarContainer();
-  var inputContainer = document.createElement("div");
-  inputContainer.style.display = "flex";
-  inputContainer.style.alignItems = "center";
-  inputContainer.style.justifyContent = "center";
-
-  var prefix = document.createElement("span");
-  prefix.textContent = "https://";
-  var suffix = document.createElement("input");
-  suffix.classList.add("cortico-input");
-  suffix.classList.add("disabled");
-  suffix.textContent = ".cortico.ca";
-  suffix.setAttribute("type", "text");
-  suffix.setAttribute("value", ".cortico.ca");
-  suffix.setAttribute("placeholder", ".cortico.ca");
-  suffix.setAttribute("readonly", "true");
-
-  suffix.addEventListener("click", (e) => {
-    suffix.classList.remove("disabled");
-    suffix.removeAttribute("readonly");
-  });
-
-  if (localStorage.getItem("customUrlSuffix")) {
-    suffix.value = localStorage.getItem("customUrlSuffix");
-  }
-
-  var input = document.createElement("input");
-  input.setAttribute("id", "cortico-url");
-  input.setAttribute("type", "text");
-  input.setAttribute("placeholder", "Clinic Name");
-  input.classList.add("cortico-input");
-
-  inputContainer.appendChild(prefix);
-  inputContainer.appendChild(input);
-  inputContainer.appendChild(suffix);
-
-  if (localStorage.getItem("clinicname")) {
-    input.value = localStorage.getItem("clinicname");
-  }
-
-  var label = document.createElement("label");
-  label.setAttribute("for", "cortico-url");
-  label.textContent = "Your cortico clinic name";
-  label.style.display = "block";
-  label.style.marginTop = "30px";
-  label.style.marginBottom = "10px";
-  label.style.textAlign = "center";
-
-  var button = create(`<button class='cortico-btn inline'>Save</button>`);
-
-  if (window.localStorage["firstRun"] !== "false") {
-    const instructions = create("div", {
-      attrs: {
-        class: "sidebar-instructions",
-      },
-      text: "Welcome to the Cortico Oscar plugin! Please set your cortico clinic name",
-    });
-    container.appendChild(instructions);
-  }
-
-  container.appendChild(label);
-  container.appendChild(inputContainer);
-  container.appendChild(button);
-
-  button.addEventListener("click", function () {
-    if (suffix.value) {
-      localStorage.setItem("customUrlSuffix", suffix.value);
-    }
-    if (input.value) {
-      localStorage.setItem("clinicname", input.value);
-      if (true) {
-        window.location.reload();
-      }
-    }
-  });
-  return container;
-}
-
-function getEligButton() {
-  var button = create(`
-    <button class='cortico-btn inline'>Check Eligibility</button>`);
-  var container = createSidebarContainer(button, {
-    events: {
-      "click .cortico-btn.inline": async (e) => {
-        console.log("Check Eligibility Start");
-        await checkAllEligibility();
-      },
-    },
-  });
-
-  //button.addEventListener("click", window.checkAllEligibility);
-  return container;
-}
-
-function getBatchPharmaciesButton() {
-  var button = create(`
-  <button class='cortico-btn inline'>
-    Set preferred pharmacies
-  </button>`);
-  var container = createSidebarContainer(button, {
-    events: {
-      "click .cortico-btn.inline": (e) => {
-        if (!checkCorticoUrl(e.originalEvent)) return;
-
-        console.log("Batch Pharmacy Setup running...", e);
-        setupPreferredPharmacies();
-      },
-    },
-  });
-  return container;
-}
-
-function getResetCacheButton() {
-  var button = create(
-    `<button class='cortico-btn warning cache'>Reset Cache</button>`,
-    {
-      events: {
-        "click .cortico-btn.warning.cache": async (e) => {
-          if (confirm("Are you sure you want to clear your cache?")) {
-            localStorage.clear();
-            if (!window.is_dev) {
-              const browser = browser || window.chrome;
-              if (browser) {
-                await browser.storage.local.clear();
-              } else {
-                localStorage.clear();
-              }
-            }
-
-            if (!alert("Successfully reset cache, the page will now reload."))
-              window.location.reload();
-          } else {
-            console.log("Clear cache cancelled");
-          }
-        },
-      },
-    }
-  );
-
-  return button;
 }
 
 function addNewUI() {
@@ -1404,15 +911,6 @@ function dragAndDrop() {
 
 /* Drag and Drop Feature end */
 
-function addToFailures(metadata) {
-  const _cache = getFailureCache();
-  const cache = JSON.parse(JSON.parse(_cache)) || [];
-  if (cache && cache.push) {
-    cache.push(metadata);
-  }
-  localStorage.setItem("failureCache", JSON.stringify(cache));
-}
-
 function clearFailureCache() {
   return localStorage.removeItem("failureCache");
 }
@@ -1424,27 +922,21 @@ function getFailureCache() {
 function filterAppointments(appointments) {
   const _cache = localStorage.getItem("checkCache");
   const _today = dayjs().format("YYYY-MM-DD");
-
   if (!_cache) {
     return appointments;
   }
-
   const cache = JSON.parse(_cache);
   return appointments.filter((appt) => {
     const demographic_no = appt.demographic_no;
-
     // Check appointment if it doesn't exist in cache
-
     if (!cache.hasOwnProperty(demographic_no)) {
       return true;
     }
-
     const cachedDate = cache[demographic_no].date;
     // Check appointment if it exists in cache, but expired
     if (isDateExpired(dayjs(cachedDate), _today, 5)) {
       return true;
     }
-
     return false;
   });
 }
@@ -2719,16 +2211,4 @@ function getDemographicPageResponse(demographic) {
   //const originalFetch = require("cross-fetch");
   //const fetch = require("fetch-retry")(originalFetch);
   return fetch(url);
-}
-
-function handleErrors(response) {
-  if (!response.ok) {
-    if (response.status === 401) {
-      throw Error("Unauthorized");
-    } else {
-      throw Error(response.statusText);
-    }
-  }
-
-  return response;
 }

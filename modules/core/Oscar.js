@@ -2,13 +2,17 @@ import { debounce } from "../Utils/Utils";
 
 export class Oscar {
   hostname = null;
-  constructor(hostname = window.location.hostname) {
+  route = null;
+  constructor(
+    hostname = window.location.hostname,
+    route = "" + window.location
+  ) {
     this.hostname = hostname;
-
+    this.route = route;
     if (this.isJuno()) {
       // Juno already has a sticky primary navbar. Lift it to preven collisions with Cortico UI.
-      const top_menu = document.getElementById('firstMenu');
-      if (top_menu) top_menu.parentNode.parentNode.parentNode.zIndex = 1
+      const top_menu = document.getElementById("firstMenu");
+      if (top_menu) top_menu.parentNode.parentNode.parentNode.zIndex = 1;
     }
   }
 
@@ -38,6 +42,18 @@ export class Oscar {
   // this may be less reliable, so we still prefer the hostname check
   containsKaiBar() {
     return document.querySelectorAll("div.KaiBar").length !== 0;
+  }
+
+  isSchedulePage() {
+    return this.route.indexOf("/provider/providercontrol.jsp") > -1;
+  }
+
+  isEncounterPage() {
+    return this.route.indexOf("/casemgmt/forward.jsp") > -1;
+  }
+
+  isDocumentPage() {
+    return this.route.indexOf("dms/documentReport.jsp") > -1;
   }
 
   containsOscarGoOceanScript() {

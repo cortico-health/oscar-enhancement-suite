@@ -7,7 +7,7 @@ import classNames from "classnames";
 import store from "./store/store.js";
 import { Provider, useDispatch } from "react-redux";
 import Draggable from "react-draggable";
-function Content() {
+function App() {
   const containerRef = useRef();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
@@ -93,10 +93,10 @@ function Content() {
   );
 }
 
-export default function CorticoWidget(container, replaceNode) {
+export default function CorticoWidget(container, replaceNode, opts) {
   return render(
     <Provider store={store}>
-      <Content />
+      <App {...opts} />
     </Provider>,
     container,
     replaceNode
