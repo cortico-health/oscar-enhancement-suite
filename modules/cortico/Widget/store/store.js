@@ -10,6 +10,7 @@ import {
 
 import { automationReducer } from "../features/Automation/Automation";
 import { authReducer } from "../features/Auth/auth";
+import { messengerReducer } from "../features/Messenger";
 
 const rootReducer = combineReducers({
   eligCheck: eligCheckReducer,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   setupPharmaciesFailures: setupPharmacyFailuresReducer,
   automation: automationReducer,
   auth: authReducer,
+  messenger: messengerReducer,
 });
 
 function logger({ getState }) {

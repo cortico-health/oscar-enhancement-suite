@@ -11,9 +11,11 @@ export default function Button({
     <button
       className={classNames(
         block === true ? "tw-block" : "tw-inline-block",
-        "tw-px-4 tw-py-2 tw-text-white tw-bg-blue-1000 tw-rounded-md tw-shadow-md tw-relative",
+        " tw-text-white tw-bg-blue-1000 tw-rounded-md tw-shadow-md tw-relative tw-cursor-pointer",
         className,
-        size === "sm" ? "tw-text-sm" : "tw-text-lg"
+        size === "sm"
+          ? "tw-text-sm tw-px-3 tw-py-2"
+          : "tw-text-base tw-px-4 tw-py-2"
       )}
       {...props}
     >

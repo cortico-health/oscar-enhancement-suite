@@ -18,17 +18,17 @@ const Chat = forwardRef(({ value, ...props }, ref) => {
                     form-textarea
                     tw-block
                     tw-w-full
-                    tw-border-0
-                    tw-focus:border-indigo-300 
-                    tw-focus:ring 
-                    tw-focus:ring-indigo-200 
-                    tw-focus:ring-opacity-50 
+                    tw-border
+                    tw-border-blue-1000
+                    tw-outline-none
                     tw-resize-none
                     tw-text-sm
                     tw-text-gray-600
-                    tw-p-4
+                    tw-p-2
                     tw-font-sans
                     tw-relative
+                    tw-rounded-md
+                    tw-border-opacity-20
                   "
         rows="8"
         placeholder="Enter message here"

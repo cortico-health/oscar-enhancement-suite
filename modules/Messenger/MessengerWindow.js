@@ -1,12 +1,7 @@
 import { useState, useEffect, useRef } from "preact/hooks";
 import { forwardRef } from "preact/compat";
-
 import Chat from "./ChatInput";
-import Subject from "./SubjectInput";
-import Header from "./Header";
-import To from "./ToInput";
-import Loader from "./Loader";
-import { MailIcon, TextIcon, PlusIcon } from "../Icons/HeroIcons";
+import { MailIcon, TextIcon } from "../Icons/HeroIcons";
 import {
   getCorticoUrl,
   convertImagesToDataURLs,
@@ -14,6 +9,9 @@ import {
 } from "../Utils/Utils";
 import Documents from "./Documents";
 import { setupEFormPage } from "../Utils/Utils";
+import Input from "../../modules/cortico/Widget/base/Input";
+import Button from "../core/Button";
+import { setFormInputValueAttributes } from "../Utils/Utils";
 
 const EncounterOption = forwardRef((props, ref) => {
   return (
@@ -56,23 +54,27 @@ function MessengerWindow({
   encounter: encounterOption,
   ...props
 }) {
-  const [email, setEmail] = useState("test@example.com");
-  console.log("Eform", eForm);
+  const [email, setEmail] = useState(null);
   const [scheme, setScheme] = useState("email");
   const to = useRef();
   const subject = useRef();
   const message = useRef();
   const encounter = useRef();
-
   const [document, setDocument] = useState(null);
   const [documentData, setDocumentData] = useState({
     name: null,
     data: null,
   });
+  const [hasAttachment, setHasAttachment] = useState(false);
+
+  useEffect(() => {
+    if (document === true || eForm === true) {
+      setHasAttachment(true);
+    }
+  }, [eForm, document]);
 
   useEffect(() => {
     if (patient?.email) {
-      console.log("Patient email found", patient);
       setEmail(patient.email);
     }
   }, [patient?.email]);
@@ -81,8 +83,6 @@ function MessengerWindow({
     e.preventDefault();
     showSavedReplies && showSavedReplies();
   };
-
-  console.log("DOcument", document, eForm);
 
   const submitData = async (e) => {
     const data = {
@@ -95,25 +95,9 @@ function MessengerWindow({
     if (document === true) {
       data.attachment = documentData.data;
     } else if (eForm === true) {
-      let html = window.document.cloneNode(true);
-      html.querySelectorAll("input").forEach((input) => {
-        input.setAttribute("value", input.value);
-
-        if (input.checked === true) {
-          input.setAttribute("checked", true);
-        }
-      });
-      html.querySelectorAll("textarea").forEach((input) => {
-        input.innerHTML = input.value;
-      });
-
-      html.querySelectorAll("select").forEach((input) => {
-        input.setAttribute("value", input.value);
-      });
-      await convertImagesToDataURLs(html);
-      stripScripts(html);
-      html = html.documentElement.outerHTML;
-      data.pdf_html = html;
+      data.pdf_html = setFormInputValueAttributes(
+        window.document.cloneNode(true)
+      );
     }
 
     const opts = {
@@ -141,22 +125,13 @@ function MessengerWindow({
       (async () => {
         const docData = await setupEFormPage();
         setDocumentData(docData);
-        console.log("Doc data", docData);
       })();
     }
   }, [eForm]);
 
-  const removeDocument = () => {
-    setDocument(false);
-    setDocumentData({
-      name: null,
-      data: null,
-    });
-  };
-
-  const handleClose = () => {
+  const removeAttachment = () => {
     resetDocuments();
-    close && close();
+    setHasAttachment(false);
   };
 
   const resetDocuments = () => {
@@ -168,40 +143,46 @@ function MessengerWindow({
     });
   };
 
+  const handleSend = (scheme) => {
+    switch (scheme) {
+      case "email":
+        setScheme("email");
+        submitData();
+        break;
+      case "sms":
+        setScheme("sms");
+        break;
+      default:
+    }
+  };
+
   return (
     <div className="tw-m-0 no-print">
-      <Header close={handleClose} />
       <div>
         <div>
-          <div className="tw-px-4 tw-py-2">
-            <To ref={to} patient={patient} />
+          <div className="tw-py-2">
+            <Input defaultValue={email} ref={to} placeholder="To" />
           </div>
           <hr className="tw-opacity-10" />
           <div className="tw-w-full">
-            <Subject ref={subject} value={defaultSubject} />
+            <Input ref={subject} placeholder="Subject"></Input>
           </div>
           <hr className="tw-opacity-10" />
-          <div className="tw-relative">
+          <div className="tw-relative tw-mt-4">
             <Chat ref={message} value={defaultBody} />
-            <button
-              onClick={handleReply}
-              className="tw-bg-cortico-blue tw-rounded-full tw-p-2 tw-flex tw-items-center tw-justify-center tw-absolute tw-bottom-2 tw-right-2 tw-flex-col tw-drop-shadow-md"
-            >
-              <PlusIcon className="tw-h-5 tw-w-5 tw-text-white" />
-            </button>
           </div>
           <hr className="tw-opacity-40" />
           {encounterOption === true ? (
-            <div className="tw-p-4">
+            <div className="tw-mt-4">
               <EncounterOption ref={encounter} />
             </div>
           ) : (
             ""
           )}
-          {document === true || eForm === true ? (
-            <div className="tw-p-4">
+          {hasAttachment === true ? (
+            <div className="tw-mt-4 tw-border tw-border-opacity-20 tw-rounded-md tw-p-2">
               <Documents
-                onDelete={removeDocument}
+                onDelete={removeAttachment}
                 name={documentData.name}
               ></Documents>
             </div>
@@ -210,39 +191,31 @@ function MessengerWindow({
           )}
         </div>
 
-        <div className="tw-flex tw-justify-end tw-px-4 tw-py-3 tw-bg-gray-100">
-          <button
-            disabled={true}
-            className="tw-bg-green-600 tw-px-3 tw-py-2 tw-rounded-md tw-text-white tw-text-sm tw-flex tw-items-center tw-mr-2 tw-disabled:opacity-50 tw-opacity-50 tw-hidden"
-            onClick={() => {
-              setScheme("text");
-            }}
-          >
-            <span className="tw-flex tw-items-center">
-              <span>Send Text</span>
-              <TextIcon className="tw-h-4 tw-w-4 tw-ml-2" />
-            </span>
-          </button>
-          <button
+        <hr className="tw-my-4" />
+
+        <div className="tw-flex tw-justify-end tw-mt-4">
+          {/*
+          <Button
+            size="sm"
             disabled={loading}
-            className="tw-bg-cortico-blue tw-px-3 tw-py-2 tw-rounded-md tw-text-white tw-text-sm tw-flex tw-items-center"
-            onClick={() => {
-              setScheme("email");
-              submitData();
-            }}
+            onClick={() => handleSend("sms")}
           >
-            {loading === true ? (
-              <span class="tw-flex">
-                <Loader />
-                <span className="tw-ml-1">Sending...</span>
-              </span>
-            ) : (
-              <span className="tw-flex tw-items-center">
-                <span>Send Email</span>
-                <MailIcon className="tw-h-4 tw-w-4 tw-ml-2" />
-              </span>
-            )}
-          </button>
+            <span className="tw-flex tw-items-center tw-cursor-pointer">
+              <span className="tw-cursor-pointer">Send Text</span>
+              <TextIcon className="tw-h-4 tw-w-4 tw-ml-2 tw-cursor-pointer" />
+            </span>
+          </Button>
+          */}
+          <Button
+            size="sm"
+            disabled={loading}
+            onClick={() => handleSend("email")}
+          >
+            <span className="tw-flex tw-items-center tw-cursor-pointer">
+              <span className="tw-cursor-pointer">Send Email</span>
+              <MailIcon className="tw-h-4 tw-w-4 tw-ml-2 tw-cursor-pointer" />
+            </span>
+          </Button>
         </div>
       </div>
     </div>

@@ -374,3 +374,23 @@ export function getAccountProviderNo() {
   const providerNo = providerNoString.replace(/[^0-9.]/g, "");
   return providerNo;
 }
+
+export function setFormInputValueAttributes(document) {
+  document.querySelectorAll("input").forEach((input) => {
+    input.setAttribute("value", input.value);
+
+    if (input.checked === true) {
+      input.setAttribute("checked", true);
+    }
+  });
+  document.querySelectorAll("textarea").forEach((input) => {
+    input.innerHTML = input.value;
+  });
+
+  document.querySelectorAll("select").forEach((input) => {
+    input.setAttribute("value", input.value);
+  });
+  await convertImagesToDataURLs(document);
+  stripScripts(document);
+  return document.documentElement.outerHTML;
+}

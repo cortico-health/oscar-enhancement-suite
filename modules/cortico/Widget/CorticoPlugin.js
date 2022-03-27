@@ -14,6 +14,7 @@ import AccountInformation from "./AccountInformation";
 import NotAvailable from "./NotAvailable";
 import { MinusCircleIcon } from "@heroicons/react/solid";
 import { useDispatch, useSelector } from "react-redux";
+import WidgetMessenger from "./messenger/WidgetMessenger";
 
 export default function CorticoPlugin({ onMinimize, ...props }) {
   const dispatch = useDispatch();
@@ -68,7 +69,7 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
     });
   }, []);
 
-  const handleMinimize = () => {};
+  const handleClose = () => {};
 
   return (
     <div className="tw-flex tw-h-full tw-bg-white tw-rounded-xl">
@@ -95,8 +96,8 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
             <WidgetSettings />
           </div>
         ) : activeItem === "Messenger" ? (
-          <div className="tw-w-[320px] tw-h-full">
-            <NotAvailable />
+          <div className="tw-p-4 tw-h-full">
+            <WidgetMessenger />
           </div>
         ) : (
           ""
