@@ -196,7 +196,6 @@ const init_cortico = async function () {
       });
     }
   } else if (oscar.isDocumentPage()) {
-    setupDocumentPage();
     CorticoWidget(document.body, corticoWidgetContainer, {
       encounter: true,
     });
@@ -382,64 +381,6 @@ function init_appointment_page() {
 
     update_video_button();
   }
-}
-
-async function setupDocumentPage() {
-  const pdf_links = document.querySelectorAll("#privateDocs td:nth-child(2) a");
-  const patient_info = await getPatientInfo();
-
-  pdf_links.forEach(function (pdf_link) {
-    console.log("PDF Link", pdf_link);
-    if (pdf_link.href.indexOf("?sort") > -1) return;
-
-    const email_btn = create(
-      `<a class='cortico-btn cortico-btn-small' style='display:inline'> -&gt; PT</a>`,
-      {
-        events: {
-          click: async (e) => {
-            if (!checkCorticoUrl(e)) {
-              pubsub.publish("promptLogin");
-              return;
-            }
-
-            await loadExtensionStorageValue("jwt_access_token")
-              .then(async function (access_token) {
-                const pdf_link_ext = pdf_link.outerHTML
-                  .replace(/\&amp;/g, "&")
-                  .match(/\'(Manage[^\']+)\'/)[1];
-                console.log(pdf_link_ext);
-
-                const origin = getOrigin();
-                const namespace = getNamespace();
-                const documentSpace = window.location.pathname.split("/")[2];
-
-                let url = `${origin}/${namespace}/${documentSpace}/${pdf_link_ext}`;
-                if (origin.includes("skymedical")) {
-                  url = `/${documentSpace}/${pdf_link_ext}`;
-                }
-
-                const blob = await fetch(url).then((r) => r.blob());
-                const dataUrl = await new Promise((resolve) => {
-                  let reader = new FileReader();
-                  reader.onload = () => resolve(reader.result);
-                  reader.readAsDataURL(blob);
-                });
-                console.log("Data URL", dataUrl);
-                pubsub.publish("document", {
-                  name: pdf_link.textContent,
-                  data: dataUrl,
-                });
-              })
-              .catch((e) => {
-                console.log("No access token", e);
-              });
-          },
-        },
-      }
-    ); // end create.
-
-    pdf_link.parentNode.appendChild(email_btn);
-  });
 }
 
 export async function setupEFormPage() {
