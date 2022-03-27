@@ -61,14 +61,15 @@ import { initialState as setupPharmacyState } from "./modules/cortico/Widget/fea
 import { initialState as eligCheckState } from "./modules/cortico/Widget/features/EligCheck/EligCheck";
 import widgetStore from "./modules/cortico/Widget/store/store";
 import { getAccountProviderNo } from "./modules/Utils/Utils";
+
 const version = "2022.2.2";
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
-
 window.is_dev = process.env.NODE_ENV === "development" ? true : false;
 const cortico_media = ["phone", "clinic", "virtual", "", "quiet"];
 const corticoWidgetContainer = document.createElement("div");
 document.body.append(corticoWidgetContainer);
+
 const init_cortico = async function () {
   // create an element to indicate the library is loaded in the dom, and to contain fixed menus/elements.
   const anchor = document.createElement("div");
