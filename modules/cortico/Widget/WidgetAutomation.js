@@ -10,11 +10,13 @@ import { useState } from "preact/hooks";
 import EligbilityCheck from "./automation/EligibilityCheck";
 import PreferredPharmacies from "./automation/PreferredPharmacies";
 import { useDispatch, useSelector } from "react-redux";
+import { nanoid } from "nanoid";
 
 const automations = [
   {
     name: "Eligibility Check",
     value: "elig",
+    id: nanoid(),
     description:
       "Have the plugin to check eligibility for each patient in the schedule. ",
     icon: (
@@ -24,6 +26,7 @@ const automations = [
   {
     name: "Preferred Pharmacies",
     value: "phar",
+    id: nanoid(),
     description:
       "Set preferred pharmacies for each of the patients in the schedule",
     icon: (
@@ -36,12 +39,11 @@ const automations = [
 export default function WidgetAutomation() {
   const option = useSelector((state) => state.automation.option);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  console.log("Option", option);
   const dispatch = useDispatch();
+
   const handleClick = (value) => {
     const automation = automations.find((item) => item.value === value);
     const premium = automation.premium;
-
     if (premium && !isLoggedIn) {
       return;
     }
@@ -87,24 +89,24 @@ export function WidgetAutomationOptions({ isLoggedIn, onClick, ...props }) {
   return (
     <div className="tw-font-sans">
       <div>
-        <h2 className="tw-text-xl tw-font-medium tw-text-gray-800 tw-m-0 tw-p-0">
+        <h2 className="tw-text-base tw-font-medium tw-text-gray-800 tw-m-0 tw-p-0">
           Automations
         </h2>
-        <p className="tw-text-lg tw-text-gray-700">
+        <p className="tw-text-sm tw-text-gray-700">
           Replace tedious repetitive tasks with a single click
         </p>
       </div>
       <hr className="tw-my-6" />
       <div>
-        {automations.map((automation, i) => {
+        {automations.map((automation) => {
           return (
             <div
-              key={i}
+              key={automation.id}
               className={classNames(
                 isLoggedIn === false && automation.premium === true
                   ? "tw-bg-gray-100 tw-border-2 tw-border-blue-1000"
                   : "tw-bg-gray-50 hover:tw-bg-gray-200",
-                "tw-min-w-[600px] tw-relative tw-p-8 tw-my-8 tw-rounded-lg tw-shadow-md tw-flex tw-justify-between tw-items-center  tw-cursor-pointer"
+                "tw-min-w-[600px] tw-relative tw-p-6 tw-my-8 tw-rounded-lg tw-shadow-md tw-flex tw-justify-between tw-items-center  tw-cursor-pointer"
               )}
               onClick={() => onClick(automation.value)}
             >
@@ -122,7 +124,7 @@ export function WidgetAutomationOptions({ isLoggedIn, onClick, ...props }) {
                 </span>
                 <p
                   className={classNames(
-                    "tw-text-base tw-text-gray-700 tw-max-w-[300px] tw-opacity-80",
+                    "tw-text-sm tw-text-gray-700 tw-max-w-[300px] tw-opacity-80",
                     automation.premium === true
                       ? "tw-text-gray-700"
                       : "tw-text-gray-700"
@@ -132,7 +134,7 @@ export function WidgetAutomationOptions({ isLoggedIn, onClick, ...props }) {
                 </p>
               </div>
               <div className="tw-px-4 tw-cursor-pointer">
-                <ArrowRightIcon className="tw-w-8 tw-h-8 tw-text-gray-600" />
+                <ArrowRightIcon className="tw-w-4 tw-h-4 tw-text-gray-600" />
               </div>
               {isLoggedIn === false && automation.premium === true ? (
                 <div className="tw-absolute tw-top-[-5px] tw-right-[-5px] tw-rounded-xl tw-p-2 tw-bg-blue-1000 tw-shadow-md">

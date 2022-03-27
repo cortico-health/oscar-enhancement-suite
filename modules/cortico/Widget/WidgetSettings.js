@@ -39,10 +39,10 @@ export default function WidgetSettings() {
     <div className="tw-min-w-[300px] tw-max-w-[450px] tw-p-4 tw-font-sans tw-h-full">
       <div className="tw-flex tw-flex-col tw-h-full tw-justify-between">
         <div>
-          <h2 className="tw-text-xl tw-font-medium tw-text-gray-800 tw-m-0 tw-p-0">
+          <h2 className="tw-text-base tw-font-medium tw-text-gray-800 tw-m-0 tw-p-0">
             Settings
           </h2>
-          <p className="tw-text-lg tw-text-gray-700">
+          <p className="tw-text-sm tw-text-gray-700">
             Configure the way the plugin works
           </p>
           <hr className="tw-my-4" />
@@ -54,7 +54,7 @@ export default function WidgetSettings() {
 
           <div className="tw-flex tw-justify-between tw-w-full tw-mt-7">
             <label className="tw-flex tw-justify-between tw-w-full tw-items-center tw-space-x-20">
-              <span className="tw-text-gray-700 tw-text-base">
+              <span className="tw-text-gray-700 tw-text-sm">
                 Appointment Type Reminder
               </span>
               <select
@@ -85,7 +85,7 @@ export default function WidgetSettings() {
           </div>
           <div className="tw-flex tw-justify-between tw-w-full tw-mt-7">
             <label class="tw-flex tw-w-full tw-justify-between tw-items-center">
-              <span class="tw-text-gray-700 tw-text-base">
+              <span class="tw-text-gray-700 tw-text-sm">
                 Recall Status Check
               </span>
               <input

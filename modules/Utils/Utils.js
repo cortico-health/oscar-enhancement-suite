@@ -375,7 +375,7 @@ export function getAccountProviderNo() {
   return providerNo;
 }
 
-export function setFormInputValueAttributes(document) {
+export async function setFormInputValueAttributes(document) {
   document.querySelectorAll("input").forEach((input) => {
     input.setAttribute("value", input.value);
 

@@ -95,7 +95,7 @@ function MessengerWindow({
     if (document === true) {
       data.attachment = documentData.data;
     } else if (eForm === true) {
-      data.pdf_html = setFormInputValueAttributes(
+      data.pdf_html = await setFormInputValueAttributes(
         window.document.cloneNode(true)
       );
     }
