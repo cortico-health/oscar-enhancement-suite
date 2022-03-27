@@ -46,6 +46,15 @@ export function getNamespace() {
   return window.location.pathname.split("/")[1];
 }
 
+export function getBaseUrl() {
+  const origin = getOrigin();
+  if (origin.includes("skymedical")) {
+    return "/";
+  }
+  const namespace = getNamespace();
+  return `${origin}/${namespace}/`;
+}
+
 export function getCorticoUrl() {
   // FOR TESTING:
 

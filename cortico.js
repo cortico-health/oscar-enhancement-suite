@@ -386,7 +386,6 @@ function init_appointment_page() {
 
 async function setupDocumentPage() {
   const pdf_links = document.querySelectorAll("#privateDocs td:nth-child(2) a");
-
   const patient_info = await getPatientInfo();
 
   pdf_links.forEach(function (pdf_link) {

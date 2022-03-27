@@ -1,6 +1,5 @@
 import { render } from "preact";
 import { useRef, useEffect } from "preact/hooks";
-import { createPortal } from "preact/compat";
 
 import CorticoImg from "../../../resources/icons/logo-regular-white.svg";
 import CorticoPlugin from "./CorticoPlugin";
@@ -15,8 +14,6 @@ function App() {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [dragging, setDragging] = useState(false);
-
-  const [docNodes, setDocNodes] = useState([]);
 
   useEffect(() => {
     const subscriptions = {
@@ -46,21 +43,6 @@ function App() {
         window.pubsub.subscribe(prop, subscriptions[prop]);
       }
     };
-  }, []);
-
-  useEffect(() => {
-    const pdf_links = document.querySelectorAll(
-      "#privateDocs td:nth-child(2) a"
-    );
-    console.log(
-      "🚀 ~ file: CorticoWidget.js ~ line 53 ~ useEffect ~ pdf_links",
-      pdf_links
-    );
-    const temp = [];
-    pdf_links.forEach((node) => {
-      temp.push(node);
-    });
-    setDocNodes(temp);
   }, []);
 
   const handleMinimize = () => {
@@ -107,13 +89,10 @@ function App() {
               </div>
             </Draggable>
           )}
-
-          <>
-            {docNodes.map((node, i) => {
-              return createPortal(<SetupDocuments />, node.parentNode);
-            })}
-          </>
         </div>
+        <>
+          <SetupDocuments />
+        </>
       </div>
     </div>
   );

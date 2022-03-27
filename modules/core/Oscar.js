@@ -1,5 +1,5 @@
 import { debounce } from "../Utils/Utils";
-
+import { getOrigin, getNamespace } from "../Utils/Utils";
 export class Oscar {
   hostname = null;
   route = null;

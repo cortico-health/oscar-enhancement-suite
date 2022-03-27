@@ -15,7 +15,9 @@ export default function Button({
         className,
         size === "sm"
           ? "tw-text-sm tw-px-3 tw-py-2"
-          : "tw-text-base tw-px-4 tw-py-2"
+          : size === "xs"
+          ? "tw-text-xs tw-px-1 tw-py-1"
+          : ""
       )}
       {...props}
     >
@@ -43,7 +45,9 @@ export default function Button({
           </svg>
         </span>
       ) : (
-        <span className="tw-cursor-pointer">{children}</span>
+        <span className="tw-cursor-pointer tw-flex tw-items-center">
+          {children}
+        </span>
       )}
     </button>
   );
