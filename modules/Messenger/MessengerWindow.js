@@ -29,10 +29,6 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
       });
 
       const clinicHost = getCorticoUrl();
-      console.log(
-        "🚀 ~ file: MessengerWindow.js ~ line 27 ~ submitData ~ clinicHost",
-        clinicHost
-      );
       if (!clinicHost) {
         return;
       }
@@ -45,10 +41,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
       };
 
       const token = await loadExtensionStorageValue("jwt_access_token");
-      console.log(
-        "🚀 ~ file: MessengerWindow.js ~ line 43 ~ submitData ~ token",
-        token
-      );
+
       if (!token) {
         return;
       }
@@ -63,10 +56,6 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
       }
 
       const result = await sendMessage(data, token);
-      console.log(
-        "🚀 ~ file: MessengerWindow.js ~ line 52 ~ submitData ~ result",
-        result
-      );
     } catch (err) {
       console.error(err);
     } finally {
