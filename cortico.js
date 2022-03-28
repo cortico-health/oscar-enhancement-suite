@@ -146,9 +146,6 @@ const init_cortico = async function () {
     }
   } else if (oscar.isSchedulePage()) {
     init_schedule();
-    const loginContainer = document.createElement("div");
-    document.body.prepend(loginContainer);
-    LoginOscar(document.body, loginContainer);
 
     /**
      * Drag and drop - disabled for stability reasons.
@@ -157,23 +154,19 @@ const init_cortico = async function () {
     if (!oscar.isJuno() && !oscar.isKaiOscarHost()) {
       dragAndDrop();
     }
-    setClinicName();
 
+    setClinicName();
     addCorticoLogo();
     addMenu();
-
     getAccountProviderNo();
 
     const corticoWidgetContainer = document.createElement("div");
     document.body.append(corticoWidgetContainer);
     CorticoWidget(document.body, corticoWidgetContainer);
     addAppointmentMenu();
-    if (!oscar.isJuno() && !oscar.containsKaiBar()) {
-      plusSignFromCache();
-    }
 
     const isMarkham = window.location.href.includes("mmfcc");
-    if (isMarkham) {
+    if ((!oscar.isJuno() && !oscar.containsKaiBar()) || isMarkham) {
       plusSignFromCache();
     }
 
@@ -198,6 +191,7 @@ const init_cortico = async function () {
   } else if (oscar.isDocumentPage()) {
     CorticoWidget(document.body, corticoWidgetContainer, {
       encounter: true,
+      document: true,
     });
   } else if (route.indexOf("/oscarRx/ViewScript2.jsp") > -1) {
     // We need to determine first if the prescription is "delivery"

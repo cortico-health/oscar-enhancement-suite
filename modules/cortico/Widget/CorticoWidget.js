@@ -9,7 +9,7 @@ import store from "./store/store.js";
 import { Provider, useDispatch } from "react-redux";
 import Draggable from "react-draggable";
 import SetupDocuments from "./features/Documents/SetupDocuments";
-function App() {
+function App({ ...props }) {
   const containerRef = useRef();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
@@ -90,9 +90,7 @@ function App() {
             </Draggable>
           )}
         </div>
-        <>
-          <SetupDocuments />
-        </>
+        <>{props.document === true ? <SetupDocuments /> : null}</>
       </div>
     </div>
   );
