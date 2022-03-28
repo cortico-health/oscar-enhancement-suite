@@ -107,10 +107,12 @@ Remember to test your changes on all version of Osccar (OpenOSP, WELL, community
 
 ## Release Process
 
-Merge all your work into `develop`.
+Bump the versions numbers in `cortico.js`, `manifest.chrome.json` and `manifest.firefox.json` based on the current date, ie `2022.11.1`
+
+Merge all your work into `master`.
 
 To release the plug-in:
-1. merge your `develop` into `main`.
+1. merge your `master` into `release`.
 2. announce your version release on slack.
 3. allow at least 24 hours (1 day) for the team to test. No changes to `main` during this time except bugfixes. (No new code, that goes on `develop` only)
 4. after 24 hours is elapsed, we can publish the `main` branch.
@@ -122,8 +124,6 @@ The official Mozilla account for this plug-in is clark@countable.ca . Please con
 Notes on publishing:
 
 Sign into addons.mozilla.org, and submit an updated version.
-
-- you must increment the version in manifest.json
 
 To package the add-on, do
 
