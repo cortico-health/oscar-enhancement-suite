@@ -18,41 +18,15 @@ import WidgetMessenger from "./messenger/WidgetMessenger";
 
 export default function CorticoPlugin({ onMinimize, ...props }) {
   const dispatch = useDispatch();
+  const { items } = useSelector((state) => state.sidebar);
   const loggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const [items, setItems] = useState([
-    {
-      name: "Account",
-      icon: <UserIcon className="tw-w-4 tw-h-4" />,
-      current: true,
-    },
-    {
-      name: "Automation",
-      icon: <DesktopComputerIcon className="tw-w-4 tw-h-4" />,
-      current: false,
-    },
-    {
-      name: "Settings",
-      icon: <CogIcon className="tw-w-4 tw-h-4" />,
-      current: false,
-    },
-    {
-      name: "Messenger",
-      icon: <ChatIcon className="tw-w-4 tw-h-4" />,
-      current: false,
-    },
-  ]);
   const [activeItem, setActiveItem] = useState("Account");
 
   const handleClick = (name) => {
-    const newItems = items.map((item) => {
-      if (item.name === name) {
-        item.current = true;
-      } else {
-        item.current = false;
-      }
-      return item;
+    dispatch({
+      type: "sidebar/setCurrent",
+      payload: name,
     });
-    setItems(newItems);
   };
 
   useEffect(() => {
@@ -69,10 +43,8 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
     });
   }, []);
 
-  const handleClose = () => {};
-
   return (
-    <div className="tw-flex tw-h-full tw-bg-white tw-rounded-xl">
+    <div className="tw-flex tw-h-full">
       <div className="">
         <WidgetSidebar items={items} onClick={handleClick} />
       </div>
@@ -81,7 +53,7 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
           className="tw-absolute tw-top-2 tw-right-2 tw-cursor-pointer"
           onClick={onMinimize}
         >
-          <MinusCircleIcon className="tw-w-6 tw-h-6 tw-text-yellow-400 tw-borderg" />
+          <MinusCircleIcon className="tw-w-6 tw-h-6 tw-text-yellow-400" />
         </div>
         {activeItem === "Account" ? (
           <div className="tw-p-4 tw-mx-auto tw-flex tw-items-center tw-justify-center tw-overflow-hidden tw-h-full">

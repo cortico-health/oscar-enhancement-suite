@@ -54,7 +54,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
       }
 
       if (document === true) {
-        data.attachment = documentData.data;
+        data.attachment = attachment.data;
       } else if (eform === true && attachment) {
         const clone = window.document.cloneNode(true);
         const widget = clone.querySelector(".cortico-widget");
@@ -104,7 +104,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
   }, [eform]);
 
   useEffect(() => {
-    if (eform === true && !to) {
+    if ((eform === true || document === true) && !to) {
       (async () => {
         try {
           const patientInfo = await getPatientInfo();
@@ -116,7 +116,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         }
       })();
     }
-  }, [eform]);
+  }, [eform, document]);
 
   return (
     <div className="tw-m-0 no-print">

@@ -1,7 +1,9 @@
 import Button from "../../../../core/Button";
 import { ArrowRightIcon } from "@heroicons/react/solid";
 import { getBaseUrl } from "../../../../Utils/Utils";
+import { useDispatch } from "react-redux";
 export default function SendDocument({ node, ...props }) {
+  const dispatch = useDispatch();
   const handleClick = async (evt) => {
     evt.preventDefault();
 
@@ -32,6 +34,27 @@ export default function SendDocument({ node, ...props }) {
           reject(evt);
         });
         reader.readAsDataURL(blob);
+      });
+
+      dispatch({
+        type: "app/setOpen",
+        payload: true,
+      });
+
+      dispatch({
+        type: "sidebar/setCurrent",
+        payload: "Messenger",
+      });
+
+      dispatch({
+        type: "messenger/setAll",
+        payload: {
+          attachment: {
+            name: node.textContent,
+            data: dataUrl,
+          },
+          document: true,
+        },
       });
 
       console.log("Data URL", dataUrl);

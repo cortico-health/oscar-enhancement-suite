@@ -6,13 +6,13 @@ import CorticoPlugin from "./CorticoPlugin";
 import { useState } from "preact/hooks";
 import classNames from "classnames";
 import store from "./store/store.js";
-import { Provider, useDispatch } from "react-redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import Draggable from "react-draggable";
 import SetupDocuments from "./features/Documents/SetupDocuments";
 function App({ ...props }) {
+  const { open } = useSelector((state) => state.app);
   const containerRef = useRef();
   const dispatch = useDispatch();
-  const [open, setOpen] = useState(false);
   const [dragging, setDragging] = useState(false);
 
   useEffect(() => {
@@ -30,7 +30,10 @@ function App({ ...props }) {
         });
       },
       "corticoWidget/toggle": () => {
-        setOpen((previousOpen) => !previousOpen);
+        dispatch({
+          type: "app/setOpen",
+          payload: !open,
+        });
       },
     };
 
@@ -58,12 +61,18 @@ function App({ ...props }) {
   }, []);
 
   const handleMinimize = () => {
-    setOpen(false);
+    dispatch({
+      type: "app/setOpen",
+      payload: false,
+    });
   };
 
   const handleOpen = (event) => {
     if (dragging === false) {
-      setOpen(true);
+      dispatch({
+        type: "app/setOpen",
+        payload: true,
+      });
     }
   };
 
@@ -78,8 +87,10 @@ function App({ ...props }) {
       <div className="tailwind preflight">
         <div
           className={classNames(
-            "tw-fixed tw-bottom-5 tw-right-5 tw-z-10005 tw-bg-blue-1000 tw-text-white tw-bg-cortico tw-bg-transparent",
-            open === true ? "tw-rounded-xl" : "tw-rounded-full"
+            "tw-fixed tw-bottom-5 tw-right-5 tw-z-10005  tw-text-white tw-bg-cortico tw-bg-transparent",
+            open === true
+              ? "tw-rounded-xl tw-border tw-bg-white"
+              : "tw-rounded-full tw-bg-blue-1000"
           )}
           ref={containerRef}
         >
