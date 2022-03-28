@@ -48,7 +48,6 @@ import {
 import {
   loadExtensionStorageValue,
   addToCache,
-  createSidebarContainer,
   checkCorticoUrl,
 } from "./modules/Utils/Utils";
 import "./index.css";
