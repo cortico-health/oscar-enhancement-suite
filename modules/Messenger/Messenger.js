@@ -200,20 +200,7 @@ function Messenger(patient, opts, container, replaceNode) {
               open ? "tw-translate-x-0" : "tw-translate-x-[430px]"
             }`}
           >
-            <MessengerWindow
-              patient={patient}
-              defaultSubject={subject}
-              defaultBody={body}
-              loading={loading}
-              onSubmit={handleSubmit}
-              close={handleClose}
-              open={handleOpen}
-              eForm={opts.eform}
-              showSavedReplies={() => {
-                setShowModal(true);
-              }}
-              encounter={true}
-            />
+            <MessengerWindow />
           </div>
           <Draggable onDrag={() => setDragging(true)} onStop={handleDragStop}>
             <div className="tw-fixed tw-bottom-5 tw-right-5 tw-z-5000 tw-shadow-xl">

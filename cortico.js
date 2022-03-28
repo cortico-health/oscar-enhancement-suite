@@ -376,25 +376,6 @@ function init_appointment_page() {
 }
 
 export async function setupEFormPage() {
-  let is_eform_page = true;
-  const clinicName = localStorage["clinicname"];
-
-  const email_parent =
-    document.querySelector(".DoNotPrint td") ||
-    document.querySelector("#BottomButtons") ||
-    document.querySelector("#topbar > form") ||
-    document.body;
-
-  if (!email_parent) {
-    is_eform_page = false;
-    const email_parent = document.querySelector("#save div:last-child");
-  }
-  if (!email_parent) {
-    // bail
-    console.warn("Cannot find position for email button.");
-    return;
-  }
-
   await loadExtensionStorageValue("jwt_access_token").then(async function (
     access_token
   ) {
@@ -402,12 +383,6 @@ export async function setupEFormPage() {
     await convertImagesToDataURLs(html);
     stripScripts(html);
     html = html.documentElement.outerHTML;
-    console.log("Publish EForm");
-    pubsub.publish("eform", {
-      name: "eForm",
-      html,
-    });
-    console.log("Publish eform end");
   });
 }
 
@@ -2070,7 +2045,7 @@ async function init_medium_option() {
   }
 }
 
-async function getPatientInfo(demographicNo) {
+export async function getPatientInfo(demographicNo) {
   const result = await getDemographicPageResponse(demographicNo);
   if (!result) {
     return {};

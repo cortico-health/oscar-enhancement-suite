@@ -24,10 +24,6 @@ const rootReducer = combineReducers({
 
 function logger({ getState }) {
   return (next) => (action) => {
-    if (action.type === "messenger/set") {
-      return;
-    }
-
     console.info("will dispatch", action);
     const returnValue = next(action);
     console.info("state after dispatch", getState());

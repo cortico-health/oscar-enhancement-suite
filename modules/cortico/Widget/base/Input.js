@@ -1,6 +1,6 @@
 import { forwardRef } from "preact/compat";
 import classNames from "classnames";
-import { useRef, useState } from "preact/hooks";
+import { useState } from "preact/hooks";
 
 const Input = forwardRef(
   (
@@ -20,14 +20,15 @@ const Input = forwardRef(
       exempt = false,
       registerOpts = {},
       units = "",
-      value = null,
       onChange,
       ...props
     },
     ref
   ) => {
+    const [value, setValue] = useState();
     const handleChange = (evt) => {
       const newValue = evt.target.value;
+      setValue(newValue);
       onChange && onChange(newValue);
     };
     return (

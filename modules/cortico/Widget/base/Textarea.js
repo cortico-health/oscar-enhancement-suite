@@ -11,7 +11,9 @@ export default function Textarea({
   rows = 6,
   ...props
 }) {
+  const [value, setValue] = useState();
   const handleChange = (evt) => {
+    setValue(evt.target.value);
     onChange && onChange(evt.target.value);
   };
 

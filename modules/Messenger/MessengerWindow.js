@@ -1,10 +1,6 @@
 import { useState, useEffect } from "preact/hooks";
 import { MailIcon } from "../Icons/HeroIcons";
-import {
-  getCorticoUrl,
-  convertImagesToDataURLs,
-  stripScripts,
-} from "../Utils/Utils";
+import { getCorticoUrl } from "../Utils/Utils";
 import Documents from "./Documents";
 import { setupEFormPage } from "../Utils/Utils";
 import Input from "../../modules/cortico/Widget/base/Input";
@@ -13,70 +9,77 @@ import Checkbox from "../cortico/Widget/base/Checkbox";
 import Button from "../core/Button";
 import { setFormInputValueAttributes } from "../Utils/Utils";
 import { useDispatch, useSelector } from "react-redux";
+import { sendMessage } from "../Api/Api";
+import { loadExtensionStorageValue } from "../Utils/Utils";
+import { getPatientInfo } from "../../cortico";
 
-function MessengerWindow({
-  eForm,
-  onSubmit,
-  open,
-  close,
-  patient,
-  loading,
-  showSavedReplies,
-  defaultSubject,
-  defaultBody,
-  encounter: encounterOption,
-  ...props
-}) {
+function MessengerWindow({ encounter: encounterOption, ...props }) {
   const dispatch = useDispatch();
-  const { to, subject, body, encounter, attachment, eform, document } =
+  const [loading, setLoading] = useState();
+  const { to, subject, body, encounter, attachment, eform, document, scheme } =
     useSelector((state) => state.messenger);
 
-  useEffect(() => {
-    if (document === true || eform === true) {
-      setHasAttachment(true);
-    }
-  }, [eForm, document]);
-
   const submitData = async (e) => {
-    const data = {
-      clinic_host: getCorticoUrl().replace(/http.?:\/\//, ""),
-      to: to,
-      subject: subject,
-      body: body,
-    };
+    console.log("It got here");
+    try {
+      setLoading(true);
 
-    if (document === true) {
-      data.attachment = documentData.data;
-    } else if (eForm === true) {
-      data.pdf_html = await setFormInputValueAttributes(
-        window.document.cloneNode(true)
+      await new Promise((resolve) => {
+        setTimeout(resolve(true), 1000);
+      });
+
+      const clinicHost = getCorticoUrl();
+      console.log(
+        "🚀 ~ file: MessengerWindow.js ~ line 27 ~ submitData ~ clinicHost",
+        clinicHost
       );
-    }
+      if (!clinicHost) {
+        return;
+      }
 
-    const opts = {
-      encounter,
-      scheme,
-    };
-    onSubmit(data, opts);
+      const data = {
+        clinic_host: clinicHost.replace(/http.?:\/\//, ""),
+        to,
+        subject,
+        body,
+      };
+
+      const token = await loadExtensionStorageValue("jwt_access_token");
+      console.log(
+        "🚀 ~ file: MessengerWindow.js ~ line 43 ~ submitData ~ token",
+        token
+      );
+      if (!token) {
+        return;
+      }
+
+      if (document === true) {
+        data.attachment = documentData.data;
+      } else if (eform === true && attachment) {
+        const clone = window.document.cloneNode(true);
+        const widget = clone.querySelector(".cortico-widget");
+        widget.parentNode.removeChild(widget);
+        data.pdf_html = await setFormInputValueAttributes(clone);
+      }
+
+      const result = await sendMessage(data, token);
+      console.log(
+        "🚀 ~ file: MessengerWindow.js ~ line 52 ~ submitData ~ result",
+        result
+      );
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
-
-  useEffect(() => {
-    if (eForm === true) {
-      (async () => {
-        const docData = await setupEFormPage();
-        setDocumentData(docData);
-      })();
-    }
-  }, [eForm]);
 
   const handleSend = (scheme) => {
     switch (scheme) {
       case "email":
-        setScheme("email");
         submitData();
         break;
       case "sms":
-        setScheme("sms");
         break;
       default:
     }
@@ -91,6 +94,29 @@ function MessengerWindow({
       },
     });
   };
+
+  useEffect(() => {
+    if (eform === true) {
+      handleChange("attachment", {
+        name: "eForm",
+      });
+    }
+  }, [eform]);
+
+  useEffect(() => {
+    if (eform === true && !to) {
+      (async () => {
+        try {
+          const patientInfo = await getPatientInfo();
+          if (patientInfo?.email) {
+            handleChange("to", patientInfo.email);
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      })();
+    }
+  }, [eform]);
 
   return (
     <div className="tw-m-0 no-print">
@@ -130,11 +156,11 @@ function MessengerWindow({
           ) : (
             ""
           )}
-          {attachment === true ? (
-            <div className="tw-mt-4 tw-border tw-border-opacity-20 tw-rounded-md tw-p-2">
+          {attachment ? (
+            <div className="tw-mt-6 tw-border tw-border-opacity-20 tw-rounded-md tw-p-2">
               <Documents
-                onDelete={removeAttachment}
-                name={documentData.name}
+                onDelete={() => handleChange("attachment", null)}
+                name={attachment.name}
               ></Documents>
             </div>
           ) : (
@@ -159,7 +185,7 @@ function MessengerWindow({
           */}
           <Button
             size="sm"
-            disabled={loading}
+            loading={loading}
             onClick={() => handleSend("email")}
           >
             <span className="tw-flex tw-items-center tw-cursor-pointer">

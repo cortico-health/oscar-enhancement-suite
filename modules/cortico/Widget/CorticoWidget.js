@@ -45,6 +45,18 @@ function App({ ...props }) {
     };
   }, []);
 
+  useEffect(() => {
+    if (props.eForm === true) {
+      dispatch({
+        type: "messenger/set",
+        payload: {
+          key: "eform",
+          value: true,
+        },
+      });
+    }
+  }, []);
+
   const handleMinimize = () => {
     setOpen(false);
   };
@@ -62,7 +74,7 @@ function App({ ...props }) {
   };
 
   return (
-    <div className="cleanslate cortico-widget">
+    <div className="cleanslate cortico-widget no-print DoNotPrint">
       <div className="tailwind preflight">
         <div
           className={classNames(

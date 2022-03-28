@@ -5,8 +5,15 @@ export default function Button({
   loading = false,
   children,
   size,
+  onClick,
   ...props
 }) {
+  const handleClick = (evt) => {
+    evt.preventDefault();
+    if (loading === false) {
+      onClick && onClick(evt);
+    }
+  };
   return (
     <button
       className={classNames(
@@ -19,6 +26,7 @@ export default function Button({
           ? "tw-text-xs tw-px-1 tw-py-1"
           : ""
       )}
+      onClick={handleClick}
       {...props}
     >
       {loading === true ? (

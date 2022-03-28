@@ -1,5 +1,3 @@
-import { getCorticoUrl } from "../../../../Utils/Utils";
-
 export const initialState = {
   to: null,
   subject: null,
@@ -9,7 +7,6 @@ export const initialState = {
   attachment: null,
   document: null,
   eform: null,
-  clinic_host: getCorticoUrl().replace(/http.?:\/\//, ""),
 };
 
 export function messengerReducer(state = initialState, action) {
