@@ -11,37 +11,10 @@ import Documents from "./Documents";
 import { setupEFormPage } from "../Utils/Utils";
 import Input from "../../modules/cortico/Widget/base/Input";
 import Textarea from "../cortico/Widget/base/Textarea";
+import Checkbox from "../cortico/Widget/base/Checkbox";
 import Button from "../core/Button";
 import { setFormInputValueAttributes } from "../Utils/Utils";
 import { useDispatch, useSelector } from "react-redux";
-
-const EncounterOption = forwardRef((props, ref) => {
-  return (
-    <label class="tw-inline-flex tw-items-center">
-      <input
-        ref={ref}
-        type="checkbox"
-        class="
-                tw-h-5
-                tw-w-5
-                tw-form-checkbox
-                form-checkbox
-                tw-rounded
-                tw-text-indigo-600
-                tw-shadow-sm
-                tw-focus:border-cortico-blue
-                tw-focus:ring
-                tw-focus:ring-offset-0
-                tw-focus:ring-indigo-200
-                tw-focus:ring-opacity-50
-              "
-      />
-      <span class="tw-ml-2 tw-text-sm tw-text-gray-600">
-        Copy Message To Encounter
-      </span>
-    </label>
-  );
-});
 
 function MessengerWindow({
   eForm,
@@ -57,11 +30,11 @@ function MessengerWindow({
   ...props
 }) {
   const dispatch = useDispatch();
-  const { to, subject } = useSelector((state) => state.messenger);
+  const { to, subject, message, encounter } = useSelector(
+    (state) => state.messenger
+  );
   const [email, setEmail] = useState(null);
   const [scheme, setScheme] = useState("email");
-  const message = useRef();
-  const encounter = useRef();
   const [document, setDocument] = useState(null);
   const [documentData, setDocumentData] = useState({
     name: null,
@@ -91,7 +64,7 @@ function MessengerWindow({
       clinic_host: getCorticoUrl().replace(/http.?:\/\//, ""),
       to: to,
       subject: subject,
-      body: message.current.value,
+      body: message,
     };
 
     if (document === true) {
@@ -103,7 +76,7 @@ function MessengerWindow({
     }
 
     const opts = {
-      encounter: encounter && encounter.current && encounter.current.checked,
+      encounter,
       scheme,
     };
     onSubmit(data, opts);
@@ -174,31 +147,34 @@ function MessengerWindow({
         <div>
           <div className="tw-py-2">
             <Input
-              defaultValue={email}
               placeholder="To"
               onChange={(val) => handleChange("to", val)}
+              defaultValue={to}
             />
           </div>
           <hr className="tw-opacity-10" />
           <div className="tw-w-full">
-            {to}
-            {subject}
             <Input
               placeholder="Subject"
               onChange={(val) => handleChange("subject", val)}
+              defaultValue={subject}
             ></Input>
           </div>
           <hr className="tw-opacity-10" />
           <div className="tw-relative tw-mt-4">
             <Textarea
               onChange={(val) => handleChange("message", val)}
-              defaultValue="Type message here"
+              defaultValue={message}
+              placeholder="Enter message here"
             ></Textarea>
           </div>
           <hr className="tw-opacity-40" />
-          {encounterOption === true ? (
+          {true ? (
             <div className="tw-mt-4">
-              <EncounterOption ref={encounter} />
+              <Checkbox
+                label="Copy Message To Encounter"
+                defaultChecked={encounter}
+              />
             </div>
           ) : (
             ""

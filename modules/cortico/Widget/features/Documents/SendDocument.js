@@ -1,7 +1,6 @@
 import Button from "../../../../core/Button";
 import { ArrowRightIcon } from "@heroicons/react/solid";
 import { getBaseUrl } from "../../../../Utils/Utils";
-import { reject, resolve } from "core-js/fn/promise";
 export default function SendDocument({ node, ...props }) {
   const handleClick = async (evt) => {
     evt.preventDefault();
@@ -24,7 +23,7 @@ export default function SendDocument({ node, ...props }) {
 
     try {
       const blob = await fetch(url).then((r) => r.blob());
-      const dataUrl = await new Promise((resolve) => {
+      const dataUrl = await new Promise((resolve, reject) => {
         let reader = new FileReader();
         reader.addEventListener("load", (evt) => {
           resolve(reader.result);

@@ -20,16 +20,14 @@ const Input = forwardRef(
       exempt = false,
       registerOpts = {},
       units = "",
+      value = null,
       onChange,
       ...props
     },
     ref
   ) => {
-    const [value, setValue] = useState(null);
-
     const handleChange = (evt) => {
       const newValue = evt.target.value;
-      setValue(newValue);
       onChange && onChange(newValue);
     };
     return (
@@ -62,6 +60,7 @@ const Input = forwardRef(
             max={maxValue}
             maxLength={maxLength}
             onChange={handleChange}
+            value={value}
             {...props}
           />
           {units}
