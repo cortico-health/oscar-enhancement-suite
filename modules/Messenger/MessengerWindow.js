@@ -1,7 +1,5 @@
-import { useState, useEffect, useRef } from "preact/hooks";
-import { forwardRef } from "preact/compat";
-import Chat from "./ChatInput";
-import { MailIcon, TextIcon } from "../Icons/HeroIcons";
+import { useState, useEffect } from "preact/hooks";
+import { MailIcon } from "../Icons/HeroIcons";
 import {
   getCorticoUrl,
   convertImagesToDataURLs,
@@ -30,41 +28,21 @@ function MessengerWindow({
   ...props
 }) {
   const dispatch = useDispatch();
-  const { to, subject, message, encounter } = useSelector(
-    (state) => state.messenger
-  );
-  const [email, setEmail] = useState(null);
-  const [scheme, setScheme] = useState("email");
-  const [document, setDocument] = useState(null);
-  const [documentData, setDocumentData] = useState({
-    name: null,
-    data: null,
-  });
-  const [hasAttachment, setHasAttachment] = useState(false);
+  const { to, subject, body, encounter, attachment, eform, document } =
+    useSelector((state) => state.messenger);
 
   useEffect(() => {
-    if (document === true || eForm === true) {
+    if (document === true || eform === true) {
       setHasAttachment(true);
     }
   }, [eForm, document]);
-
-  useEffect(() => {
-    if (patient?.email) {
-      setEmail(patient.email);
-    }
-  }, [patient?.email]);
-
-  const handleReply = (e) => {
-    e.preventDefault();
-    showSavedReplies && showSavedReplies();
-  };
 
   const submitData = async (e) => {
     const data = {
       clinic_host: getCorticoUrl().replace(/http.?:\/\//, ""),
       to: to,
       subject: subject,
-      body: message,
+      body: body,
     };
 
     if (document === true) {
@@ -83,19 +61,6 @@ function MessengerWindow({
   };
 
   useEffect(() => {
-    pubsub.subscribe("document", (evtName, data) => {
-      setDocument(true);
-      setDocumentData(data);
-      console.log("Document data", data);
-      open && open();
-    });
-
-    return () => {
-      pubsub.unsubscribe("document");
-    };
-  }, []);
-
-  useEffect(() => {
     if (eForm === true) {
       (async () => {
         const docData = await setupEFormPage();
@@ -103,20 +68,6 @@ function MessengerWindow({
       })();
     }
   }, [eForm]);
-
-  const removeAttachment = () => {
-    resetDocuments();
-    setHasAttachment(false);
-  };
-
-  const resetDocuments = () => {
-    console.log("Reset Called");
-    setDocument(null);
-    setDocumentData({
-      name: null,
-      data: null,
-    });
-  };
 
   const handleSend = (scheme) => {
     switch (scheme) {
@@ -163,8 +114,8 @@ function MessengerWindow({
           <hr className="tw-opacity-10" />
           <div className="tw-relative tw-mt-4">
             <Textarea
-              onChange={(val) => handleChange("message", val)}
-              defaultValue={message}
+              onChange={(val) => handleChange("body", val)}
+              defaultValue={body}
               placeholder="Enter message here"
             ></Textarea>
           </div>
@@ -179,7 +130,7 @@ function MessengerWindow({
           ) : (
             ""
           )}
-          {hasAttachment === true ? (
+          {attachment === true ? (
             <div className="tw-mt-4 tw-border tw-border-opacity-20 tw-rounded-md tw-p-2">
               <Documents
                 onDelete={removeAttachment}

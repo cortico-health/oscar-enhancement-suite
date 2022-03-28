@@ -22,7 +22,7 @@ export default function Textarea({
       </label>
       <textarea
         className={classNames(
-          "tw-p-2 tw-rounded-md tw-block tw-w-full tw-border tw-border-opacity-20 tw-resize-none bg-gray-50 border border-gray-200 rounded-md p-3 tw-text-sm text-gray-500 placeholder-gray-500",
+          "tw-p-2 tw-rounded-md tw-block tw-w-full tw-border tw-border-opacity-20 tw-resize-none bg-gray-50 border border-gray-200 rounded-md p-3 tw-text-sm tw-text-gray-700 placeholder-gray-500",
           className
         )}
         placeholder={placeholder}

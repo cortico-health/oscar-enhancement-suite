@@ -26,6 +26,7 @@ function Messenger(patient, opts, container, replaceNode) {
 
   function Content({ patient, eform, encounter, ...props }) {
     const handleErrors = async (response) => {
+      console.error("Response", response);
       const result = await response.json();
       if (!response.ok) {
         if (response.status === 401) {
@@ -126,6 +127,7 @@ function Messenger(patient, opts, container, replaceNode) {
                 preview: response.preview,
               });
             } else {
+              console.error(response);
               throw new MessageException(response?.message);
             }
           })

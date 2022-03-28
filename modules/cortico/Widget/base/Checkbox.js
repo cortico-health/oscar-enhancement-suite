@@ -1,6 +1,5 @@
 import { forwardRef } from "preact/compat";
 import classNames from "classnames";
-import { useRef, useState } from "preact/hooks";
 
 const Checkbox = forwardRef(
   (
@@ -21,28 +20,21 @@ const Checkbox = forwardRef(
       onChange && onChange(isChecked);
     };
     return (
-      <label class="tw-inline-flex tw-items-center">
+      <label class="tw-inline-flex tw-items-center tw-cursor-pointer">
         <input
           {...props}
           ref={ref}
           type="checkbox"
           defaultChecked={defaultChecked}
-          className="
-                tw-h-5
-                tw-w-5
-                tw-form-checkbox
-                tw-rounded
-                tw-text-indigo-600
-                tw-shadow-sm
-                tw-focus:border-cortico-blue
-                tw-focus:ring
-                tw-focus:ring-offset-0
-                tw-focus:ring-indigo-200
-                tw-focus:ring-opacity-50
-              "
+          className={classNames(
+            "tw-h-5 tw-w-5 tw-form-checkbox tw-rounded tw-text-blue-1000 tw-shadow-sm tw-focus:border-cortico-blue tw-focus:ring tw-focus:ring-offset-0 tw-focus:ring-blue-200 tw-focus:ring-opacity-50",
+            classNames
+          )}
           onChange={handleChange}
         />
-        <span class="tw-ml-2 tw-text-sm tw-text-gray-600">{label}</span>
+        <span class="tw-ml-2 tw-text-sm tw-text-gray-600 tw-cursor-pointer">
+          {label}
+        </span>
       </label>
     );
   }
