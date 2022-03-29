@@ -9,7 +9,7 @@ import store from "./store/store.js";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import Draggable from "react-draggable";
 import SetupDocuments from "./features/Documents/SetupDocuments";
-function App({ ...props }) {
+function App({ disabledFeatures = [], ...props }) {
   const { open } = useSelector((state) => state.app);
   const containerRef = useRef();
   const dispatch = useDispatch();
@@ -58,6 +58,11 @@ function App({ ...props }) {
         },
       });
     }
+
+    dispatch({
+      type: "app/setDisabledFeatures",
+      payload: disabledFeatures,
+    });
   }, []);
 
   const handleMinimize = () => {

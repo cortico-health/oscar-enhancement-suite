@@ -160,7 +160,9 @@ const init_cortico = async function () {
 
     const corticoWidgetContainer = document.createElement("div");
     document.body.append(corticoWidgetContainer);
-    CorticoWidget(document.body, corticoWidgetContainer);
+    CorticoWidget(document.body, corticoWidgetContainer, {
+      disabledFeatures: ['messenger']
+    });
     addAppointmentMenu();
 
     const isMarkham = window.location.href.includes("mmfcc");

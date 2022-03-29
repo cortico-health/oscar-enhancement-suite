@@ -24,7 +24,7 @@ export default function Button({
           ? "tw-text-sm tw-px-3 tw-py-2"
           : size === "xs"
           ? "tw-text-xs tw-px-1 tw-py-1"
-          : ""
+          : "tw-text-base tw-px-3 tw-py-2"
       )}
       onClick={handleClick}
       {...props}
