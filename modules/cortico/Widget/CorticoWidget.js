@@ -92,7 +92,7 @@ function App({ disabledFeatures = [], ...props }) {
       <div className="tailwind preflight">
         <div
           className={classNames(
-            "tw-fixed tw-bottom-5 tw-right-5 tw-z-10005  tw-text-white tw-bg-cortico tw-bg-transparent",
+            "tw-fixed tw-bottom-5 tw-right-5 tw-z-10005  tw-text-white",
             open === true
               ? "tw-rounded-xl tw-border tw-bg-white"
               : "tw-rounded-full tw-bg-blue-1000"
