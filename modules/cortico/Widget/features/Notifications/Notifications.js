@@ -20,7 +20,7 @@ export default function Notifications() {
     <>
       {notifications.length > 0 && node
         ? createPortal(
-            <div className="tw-absolute tw-bottom-3 tw-max-w-[350px] tw-block tw-mx-auto tw-left-[50%] tw-translate-x-[-50%] tw-space-y-2">
+            <div className="tw-absolute tw-bottom-3 tw-w-[325px] tw-block tw-mx-auto tw-left-[50%] tw-translate-x-[-50%] tw-space-y-2">
               {notifications.map((notification) => (
                 <Notification {...notification} />
               ))}
@@ -64,7 +64,7 @@ export function Notification({
   return (
     <div
       className={classNames(
-        "tw-font-sans tw-p-4 tw-rounded-lg tw-bg-gray-50 tw-shadow-md"
+        "tw-font-sans tw-p-4 tw-rounded-lg tw-bg-white tw-border tw-border-opacity-10 tw-shadow-md"
       )}
     >
       <div className="tw-flex tw-items-start">

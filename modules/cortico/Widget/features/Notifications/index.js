@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid";
 
-const initialState = {
+/*
   notifications: [
     {
       type: "success",
@@ -9,6 +9,10 @@ const initialState = {
       key: nanoid(),
     },
   ],
+*/
+
+const initialState = {
+  notifications: [],
 };
 
 export function notificationsReducer(state = initialState, action) {

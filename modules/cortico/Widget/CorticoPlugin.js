@@ -15,6 +15,7 @@ import NotAvailable from "./NotAvailable";
 import { MinusCircleIcon } from "@heroicons/react/solid";
 import { useDispatch, useSelector } from "react-redux";
 import WidgetMessenger from "./messenger/WidgetMessenger";
+import Notifications from "./features/Notifications/Notifications";
 
 export default function CorticoPlugin({ onMinimize, ...props }) {
   const dispatch = useDispatch();
@@ -45,6 +46,7 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
 
   return (
     <div className="tw-flex tw-h-full">
+      <Notifications />
       <div className="">
         <WidgetSidebar items={items} onClick={handleClick} />
       </div>
