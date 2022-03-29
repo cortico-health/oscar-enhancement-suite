@@ -4,7 +4,8 @@ import Cancel from "../../../../resources/illustrations/undraw_cancel.svg";
 import SignIn from "../../../../resources/illustrations/undraw_signin.svg";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "../../../core/Button";
-import Dialog from "../features/Dialog/Dialog";
+import Notifications from "../features/Notifications/Notifications";
+
 export default function WidgetMessenger() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
@@ -30,6 +31,7 @@ export default function WidgetMessenger() {
               ) : (
                 <div>
                   <MessengerWindow />
+                  <Notifications />
                 </div>
               )}
             </div>

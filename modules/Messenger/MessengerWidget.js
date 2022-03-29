@@ -1,6 +1,6 @@
-import { render } from "preact";
 import corticoIcon from "../../resources/icons/96x96.png";
 import { InfoIcon, MessageIcon } from "../Icons/HeroIcons";
+
 function MessengerWidget({ open, login, loggedIn, ...props }) {
   const handleClick = () => {
     loggedIn === true ? open() : login();
