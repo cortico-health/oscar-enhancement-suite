@@ -13,6 +13,7 @@ import { authReducer } from "../features/Auth/auth";
 import { messengerReducer } from "../features/Messenger";
 import { appReducer } from "../features/App";
 import { sidebarReducer } from "../features/Sidebar";
+import { dialogReducer } from "../features/Dialog/index";
 
 const rootReducer = combineReducers({
   eligCheck: eligCheckReducer,
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   messenger: messengerReducer,
   app: appReducer,
   sidebar: sidebarReducer,
+  dialog: dialogReducer,
 });
 
 function logger({ getState }) {

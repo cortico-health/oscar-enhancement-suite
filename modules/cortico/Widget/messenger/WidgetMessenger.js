@@ -4,7 +4,7 @@ import Cancel from "../../../../resources/illustrations/undraw_cancel.svg";
 import SignIn from "../../../../resources/illustrations/undraw_signin.svg";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "../../../core/Button";
-
+import Dialog from "../features/Dialog/Dialog";
 export default function WidgetMessenger() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
@@ -12,26 +12,28 @@ export default function WidgetMessenger() {
     <FeatureDetector featureName="messenger">
       {({ disabled }) => {
         return (
-          <div className="tw-font-sans tw-min-w-[400px] tw-p-4">
-            <div>
-              <h2 className="tw-text-base tw-font-medium tw-text-gray-800 tw-m-0 tw-p-0">
-                Messenger
-              </h2>
-              <p className="tw-text-sm tw-text-gray-700">
-                Reach out to patients via the messenger.
-              </p>
-            </div>
-            <hr className="tw-my-6" />
-            {disabled === true ? (
-              <NotAvailable />
-            ) : isLoggedIn === false ? (
-              <RequiresLogin />
-            ) : (
+          <>
+            <div className="tw-font-sans tw-min-w-[400px] tw-p-4">
               <div>
-                <MessengerWindow />
+                <h2 className="tw-text-base tw-font-medium tw-text-gray-800 tw-m-0 tw-p-0">
+                  Messenger
+                </h2>
+                <p className="tw-text-sm tw-text-gray-700">
+                  Reach out to patients via the messenger.
+                </p>
               </div>
-            )}
-          </div>
+              <hr className="tw-my-6" />
+              {disabled === true ? (
+                <NotAvailable />
+              ) : isLoggedIn === false ? (
+                <RequiresLogin />
+              ) : (
+                <div>
+                  <MessengerWindow />
+                </div>
+              )}
+            </div>
+          </>
         );
       }}
     </FeatureDetector>
