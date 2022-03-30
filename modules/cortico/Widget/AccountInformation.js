@@ -1,9 +1,13 @@
-import { useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import { LockOpenIcon, StarIcon } from "@heroicons/react/solid";
-import { removeExtensionStorageValue } from "../../Utils/Utils";
+import {
+  removeExtensionStorageValue,
+  loadExtensionStorageValue,
+} from "../../Utils/Utils";
 
 export default function AccountInformation() {
   const [loading, setLoading] = useState(false);
+  const [username, setUsername] = useState(null);
 
   const handleSignOut = async () => {
     setLoading(true);
@@ -21,6 +25,15 @@ export default function AccountInformation() {
     }
     window.location.reload();
   };
+
+  useEffect(() => {
+    (async () => {
+      const result = await loadExtensionStorageValue("jwt_username");
+      if (result) {
+        setUsername(result);
+      }
+    })();
+  }, []);
 
   return (
     <div className="tw-flex tw-font-sans tw-w-full tw-items-start tw-h-full tw-min-w-[450px]">
@@ -52,7 +65,7 @@ export default function AccountInformation() {
                 </a>
               </p>
               <p className=" tw-text-gray-700 tw-text-base tw-font-normal tw-opacity-75">
-                {localStorage.getItem("jwt_username")}
+                {username}
               </p>
             </div>
           </div>
