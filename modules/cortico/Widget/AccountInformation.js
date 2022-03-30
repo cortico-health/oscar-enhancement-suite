@@ -1,11 +1,11 @@
 import { useState } from "preact/hooks";
 import { LockOpenIcon, StarIcon } from "@heroicons/react/solid";
-import corticoIcon from "../../../resources/icons/logo-dark-blue.svg";
+import { removeExtensionStorageValue } from "../../Utils/Utils";
 
 export default function AccountInformation() {
   const [loading, setLoading] = useState(false);
 
-  const handleSignOut = () => {
+  const handleSignOut = async () => {
     setLoading(true);
     const remove = [
       "jwt_username",
@@ -15,7 +15,10 @@ export default function AccountInformation() {
       "clinicname",
       "customUrlSuffix",
     ];
-    remove.map((r) => localStorage.removeItem(r));
+
+    for (let i = 0; i < remove.length; i++) {
+      await removeExtensionStorageValue(remove[i]);
+    }
     window.location.reload();
   };
 
