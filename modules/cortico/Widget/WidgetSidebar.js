@@ -43,8 +43,8 @@ export default function WidgetSidebar({ onClick, items, ...props }) {
             </div>
           ))}
         </div>
-        <div className="tw-text-center tw-text-white tw-text-xs tw-font-sans tw-text-opacity-50 tw-mt-8">
-          2022.03.23
+        <div className="tw-text-center tw-text-white tw-text-sm tw-font-sans tw-font-semibold tw-mt-8">
+          2022.3.29
         </div>
       </div>
     </div>
