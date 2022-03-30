@@ -144,6 +144,20 @@ export function loadExtensionStorageValue(key) {
   });
 }
 
+export async function removeExtensionStorageValue(key) {
+  const browser = browser || window.chrome;
+  if (window.is_dev || !browser) {
+    window.localStorage.removeItem(key);
+    return true;
+  } else {
+    return new Promise((resolve, reject) => {
+      browser.storage.local.remove(key, function (result) {
+        resolve(result);
+      });
+    });
+  }
+}
+
 export function saveExtensionStorageValue(key, value) {
   const browser = browser || window.chrome;
   if (window.is_dev || !browser) {
