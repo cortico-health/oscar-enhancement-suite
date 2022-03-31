@@ -51,7 +51,12 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
         })
         .then((token) => getClinicSettings(token))
         .then((response) => response.json())
-        .then((settings) => storage.setItem("oes", settings))
+        .then((settings) =>
+          dispatch({
+            type: "app/set",
+            payload: settings,
+          })
+        )
         .catch((error) => console.error(error));
     }
   }, [loggedIn]);

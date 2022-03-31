@@ -5,11 +5,12 @@ import {
   loadExtensionStorageValue,
 } from "../../Utils/Utils";
 import storage from "./storage/";
+import { useSelector } from "react-redux";
 
 export default function AccountInformation() {
   const [loading, setLoading] = useState(false);
+  const { clinic_name: clinicName } = useSelector((state) => state.app);
   const [username, setUsername] = useState(null);
-  const [settings, setSettings] = useState({});
 
   const handleSignOut = async () => {
     setLoading(true);
@@ -25,14 +26,17 @@ export default function AccountInformation() {
     for (let i = 0; i < remove.length; i++) {
       await removeExtensionStorageValue(remove[i]);
     }
-    window.location.reload();
+    storage.removeItem("oes").then(() => {
+      window.location.reload();
+    });
   };
 
   useEffect(() => {
-    storage.getItem("oes").then((settings) => {
-      setSettings(settings);
-      console.log("Settings", settings);
-    });
+    if (!username) {
+      loadExtensionStorageValue("jwt_username").then((username) => {
+        setUsername(username);
+      });
+    }
   }, []);
 
   return (
@@ -41,16 +45,14 @@ export default function AccountInformation() {
         <div>
           <div className=" tw-p-8 tw-text-center">
             <span className="tw-border tw-shadow-xl tw-h-16 tw-w-16 tw-mx-auto  tw-rounded-full tw-overflow-hidden tw-bg-blue-1000 tw-flex tw-items-center tw-justify-center tw-text-white tw-font-semibold">
-              {settings &&
-                settings["clinic_name"] &&
-                settings["clinic_name"]
-                  .split(" ")
-                  .map((n) => n[0])
-                  .join("")}
+              {clinicName
+                .split(" ")
+                .map((n) => n[0])
+                .join("")}
             </span>
             <div>
               <p className="tw-mt-4 tw-text-gray-700 tw-font-bold tw-text-lg">
-                {settings["clinic_name"]}
+                {clinicName}
               </p>
               <p className=" tw-text-gray-700 tw-text-base tw-font-normal tw-opacity-75">
                 <a
