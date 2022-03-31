@@ -8,7 +8,7 @@ import Checkbox from "../cortico/Widget/base/Checkbox";
 import Button from "../core/Button";
 import { setFormInputValueAttributes } from "../Utils/Utils";
 import { useDispatch, useSelector } from "react-redux";
-import { sendMessage } from "../Api/Api";
+import { sendEmail, sendMessage } from "../Api/Api";
 import { loadExtensionStorageValue } from "../Utils/Utils";
 import { getPatientInfo } from "../../cortico";
 import { nanoid } from "nanoid";
@@ -16,10 +16,10 @@ import { nanoid } from "nanoid";
 function MessengerWindow({ encounter: encounterOption, ...props }) {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState();
-  const { to, subject, body, encounter, attachment, eform, document, scheme } =
+  const { to, subject, body, encounter, attachment, eform, document } =
     useSelector((state) => state.messenger);
 
-  const submitData = async (e) => {
+  const submitData = async (scheme) => {
     if (!to) {
       dispatch({
         type: "notifications/add",
@@ -32,12 +32,11 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
       });
       return;
     }
-
     if (scheme === "email") {
       const RFC_5322 = new RegExp(
         '^(([^<>()\\[\\]\\\\.,;:\\s@"]+(\\.[^<>()[]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$'
       );
-      if (!RFC_5322.test(to)) {
+      if (RFC_5322.test(to) !== true) {
         dispatch({
           type: "notifications/add",
           payload: {
@@ -47,8 +46,8 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
             id: nanoid(),
           },
         });
+        return;
       }
-      return;
     }
 
     try {
@@ -60,6 +59,15 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
 
       const clinicHost = getCorticoUrl();
       if (!clinicHost) {
+        dispatch({
+          type: "notifications/add",
+          payload: {
+            type: "error",
+            message: "Could not get clinic host",
+            title: "Please try signing in again. Otherwise, please contact us",
+            id: nanoid(),
+          },
+        });
         return;
       }
 
@@ -70,9 +78,23 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         body,
       };
 
+      if (scheme === "sms") {
+        data.phone = to;
+        data.contact_type = scheme;
+      }
+
       const token = await loadExtensionStorageValue("jwt_access_token");
 
       if (!token) {
+        dispatch({
+          type: "notifications/add",
+          payload: {
+            type: "error",
+            message: "Could not get access token",
+            title: "Please try signing in again. Otherwise, please contact us",
+            id: nanoid(),
+          },
+        });
         return;
       }
 
@@ -82,12 +104,91 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         const clone = window.document.cloneNode(true);
         const widget = clone.querySelector(".cortico-widget");
         widget.parentNode.removeChild(widget);
-        data.pdf_html = await setFormInputValueAttributes(clone);
+        try {
+          data.pdf_html = await setFormInputValueAttributes(clone);
+        } catch (error) {
+          dispatch({
+            type: "notifications/add",
+            payload: {
+              type: "error",
+              message: "Error Parsing",
+              title: "There was an error parsing this eform",
+              id: nanoid(),
+            },
+          });
+          return;
+        }
       }
 
-      const result = await sendMessage(data, token);
-    } catch (err) {
-      console.error(err);
+      try {
+        let result = null;
+
+        if (scheme === "email") {
+          result = await sendEmail(data, token);
+        } else if (scheme === "sms") {
+          console.log("SMS Result", result);
+          result = await sendMessage(data, token);
+        }
+
+        if (result.status === 200) {
+          let message = null;
+          if (scheme === "email") {
+            message = "Email has been sent";
+          } else if (scheme === "sms") {
+            message = "SMS has been sent";
+          }
+          dispatch({
+            type: "notifications/add",
+            payload: {
+              type: "success",
+              message,
+              title: "Success!",
+              id: nanoid(),
+            },
+          });
+          return;
+        } else {
+          const errorResponse = await result.json();
+
+          let title = "Email not sent";
+          if (scheme === "sms") {
+            title = "SMS not sent";
+          }
+          dispatch({
+            type: "notifications/add",
+            payload: {
+              type: "error",
+              message: errorResponse.message,
+              title,
+              id: nanoid(),
+            },
+          });
+          return;
+        }
+      } catch (error) {
+        console.error(error);
+        dispatch({
+          type: "notifications/add",
+          payload: {
+            type: "error",
+            message: error.toString(),
+            title: "Email not sent",
+            id: nanoid(),
+          },
+        });
+        return;
+      }
+    } catch (error) {
+      console.error(error);
+      dispatch({
+        type: "notifications/add",
+        payload: {
+          type: "error",
+          message: error.toString(),
+          title: "Error Occurred",
+          id: nanoid(),
+        },
+      });
     } finally {
       setLoading(false);
     }
@@ -98,10 +199,10 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
       type: "messenger/set",
       payload: {
         key: "scheme",
-        value: "scheme",
+        value: scheme,
       },
     });
-    submitData();
+    submitData(scheme);
   };
 
   const handleChange = (key, value) => {
