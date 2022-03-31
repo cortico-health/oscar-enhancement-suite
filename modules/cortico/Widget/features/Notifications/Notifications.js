@@ -22,7 +22,13 @@ export default function Notifications() {
         ? createPortal(
             <div className="tw-absolute tw-bottom-3 tw-w-[325px] tw-block tw-mx-auto tw-left-[50%] tw-translate-x-[-50%] tw-space-y-2">
               {notifications.map((notification) => (
-                <Notification {...notification} />
+                <Notification
+                  id={notification.id}
+                  key={notification.id}
+                  message={notification.message}
+                  type={notification.type}
+                  title={notification.title}
+                />
               ))}
             </div>,
             node
@@ -37,27 +43,29 @@ export function Notification({
   type,
   message,
   title,
-  key,
+  id,
   dismissAfter = 5000,
   ...props
 }) {
   const dispatch = useDispatch();
 
   const dismiss = () => {
+    console.log("Dismiss called");
     dispatch({
       type: "notifications/remove",
-      payload: key,
+      payload: id,
     });
   };
 
   useEffect(() => {
-    let id = setTimeout(() => {
+    console.log("Notification Mounted", id);
+    let timeoutId = setTimeout(() => {
       dismiss();
     }, dismissAfter);
 
     return () => {
-      console.log("Notification Clean Up Ran");
-      clearTimeout(id);
+      console.log("Notification Clean Up Ran", id);
+      clearTimeout(timeoutId);
     };
   }, []);
 

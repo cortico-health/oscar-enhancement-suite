@@ -6,7 +6,7 @@ import { nanoid } from "nanoid";
       type: "success",
       message: "Email has been successfully sent",
       title: "Successfull operation",
-      key: nanoid(),
+      id: nanoid(),
     },
   ],
 */
@@ -23,9 +23,9 @@ export function notificationsReducer(state = initialState, action) {
         notifications: [...state.notifications, action.payload],
       };
     case "notifications/remove":
-      const key = action.payload;
+      const id = action.payload;
       const temp = state.notifications.filter(
-        (notification) => notification.key !== key
+        (notification) => notification.id !== id
       );
       return {
         ...state,

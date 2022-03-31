@@ -27,16 +27,29 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
           type: "error",
           message: "Please enter a recipient",
           title: "Recipient required",
-          key: nanoid(),
+          id: nanoid(),
         },
       });
-
       return;
     }
 
-    const RFC_5322 = new RegExp(
-      '^(([^<>()\\[\\]\\\\.,;:\\s@"]+(\\.[^<>()[]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$'
-    );
+    if (scheme === "email") {
+      const RFC_5322 = new RegExp(
+        '^(([^<>()\\[\\]\\\\.,;:\\s@"]+(\\.[^<>()[]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$'
+      );
+      if (!RFC_5322.test(to)) {
+        dispatch({
+          type: "notifications/add",
+          payload: {
+            type: "error",
+            message: "Please enter a valid email address",
+            title: "Not a valid email address",
+            id: nanoid(),
+          },
+        });
+      }
+      return;
+    }
 
     try {
       setLoading(true);
@@ -81,15 +94,14 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
   };
 
   const handleSend = (scheme) => {
-    switch (scheme) {
-      case "email":
-        submitData("email");
-        break;
-      case "sms":
-        submitData("sms");
-        break;
-      default:
-    }
+    dispatch({
+      type: "messenger/set",
+      payload: {
+        key: "scheme",
+        value: "scheme",
+      },
+    });
+    submitData();
   };
 
   const handleChange = (key, value) => {
