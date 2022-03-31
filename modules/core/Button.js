@@ -6,6 +6,7 @@ export default function Button({
   children,
   size,
   onClick,
+  variant = "blue",
   ...props
 }) {
   const handleClick = (evt) => {
@@ -18,7 +19,8 @@ export default function Button({
     <button
       className={classNames(
         block === true ? "tw-block" : "tw-inline-block",
-        " tw-text-white tw-bg-blue-1000 tw-rounded-md tw-shadow-md tw-relative tw-cursor-pointer",
+        " tw-rounded-md tw-shadow-md tw-relative tw-cursor-pointer",
+        variant === "blue" ? "tw-bg-blue-1000 tw-text-white" : "",
         className,
         size === "sm"
           ? "tw-text-sm tw-px-3 tw-py-2"

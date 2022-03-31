@@ -1,8 +1,7 @@
 import { useState, useEffect } from "preact/hooks";
-import { MailIcon } from "../Icons/HeroIcons";
+import { MailIcon, TextIcon } from "../Icons/HeroIcons";
 import { getCorticoUrl } from "../Utils/Utils";
 import Documents from "./Documents";
-import { setupEFormPage } from "../Utils/Utils";
 import Input from "../../modules/cortico/Widget/base/Input";
 import Textarea from "../cortico/Widget/base/Textarea";
 import Checkbox from "../cortico/Widget/base/Checkbox";
@@ -12,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { sendMessage } from "../Api/Api";
 import { loadExtensionStorageValue } from "../Utils/Utils";
 import { getPatientInfo } from "../../cortico";
+import { nanoid } from "nanoid";
 
 function MessengerWindow({ encounter: encounterOption, ...props }) {
   const dispatch = useDispatch();
@@ -20,7 +20,24 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
     useSelector((state) => state.messenger);
 
   const submitData = async (e) => {
-    console.log("It got here");
+    if (!to) {
+      dispatch({
+        type: "notifications/add",
+        payload: {
+          type: "error",
+          message: "Please enter a recipient",
+          title: "Recipient required",
+          key: nanoid(),
+        },
+      });
+
+      return;
+    }
+
+    const RFC_5322 = new RegExp(
+      '^(([^<>()\\[\\]\\\\.,;:\\s@"]+(\\.[^<>()[]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$'
+    );
+
     try {
       setLoading(true);
 
@@ -66,9 +83,10 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
   const handleSend = (scheme) => {
     switch (scheme) {
       case "email":
-        submitData();
+        submitData("email");
         break;
       case "sms":
+        submitData("sms");
         break;
       default:
     }
@@ -113,6 +131,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         <div>
           <div className="tw-py-2">
             <Input
+              type="email"
               placeholder="To"
               onChange={(val) => handleChange("to", val)}
               defaultValue={to}
@@ -160,22 +179,23 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         <hr className="tw-my-4" />
 
         <div className="tw-flex tw-justify-end tw-mt-4">
-          {/*
           <Button
             size="sm"
             disabled={loading}
             onClick={() => handleSend("sms")}
+            className="tw-mr-2 tw-bg-green-800 tw-text-white"
           >
             <span className="tw-flex tw-items-center tw-cursor-pointer">
               <span className="tw-cursor-pointer">Send Text</span>
               <TextIcon className="tw-h-4 tw-w-4 tw-ml-2 tw-cursor-pointer" />
             </span>
           </Button>
-          */}
+
           <Button
             size="sm"
             loading={loading}
             onClick={() => handleSend("email")}
+            className=" "
           >
             <span className="tw-flex tw-items-center tw-cursor-pointer">
               <span className="tw-cursor-pointer">Send Email</span>

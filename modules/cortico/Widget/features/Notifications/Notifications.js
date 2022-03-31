@@ -2,7 +2,7 @@ import { createPortal } from "preact/compat";
 import { useEffect, useState } from "preact/hooks";
 import { useSelector, useDispatch } from "react-redux";
 import classNames from "classnames";
-import { CheckIcon, XIcon } from "@heroicons/react/outline";
+import { CheckIcon, XIcon, XCircleIcon } from "@heroicons/react/outline";
 
 export default function Notifications() {
   const [node, setNode] = useState(null);
@@ -69,7 +69,11 @@ export function Notification({
     >
       <div className="tw-flex tw-items-start">
         <div className="flex-shrink-0">
-          <CheckIcon className="tw-h-6 tw-w-6 tw-text-green-500"></CheckIcon>
+          {type === "success" ? (
+            <CheckIcon className="tw-h-6 tw-w-6 tw-text-green-500"></CheckIcon>
+          ) : type === "error" ? (
+            <XCircleIcon className="tw-h-6 tw-w-6 tw-text-red-500"></XCircleIcon>
+          ) : null}
         </div>
         <div className="tw-flex-1 tw-text-sm tw-mx-4">
           <p className="tw-text-gray-900 tw-font-medium">{title}</p>

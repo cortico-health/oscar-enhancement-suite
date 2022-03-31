@@ -20,7 +20,7 @@ export function notificationsReducer(state = initialState, action) {
     case "notifications/add":
       return {
         ...state,
-        notification: [...state.notifications, ...action.payload],
+        notifications: [...state.notifications, action.payload],
       };
     case "notifications/remove":
       const key = action.payload;
