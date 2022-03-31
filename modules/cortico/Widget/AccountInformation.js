@@ -31,6 +31,7 @@ export default function AccountInformation() {
   useEffect(() => {
     storage.getItem("oes").then((settings) => {
       setSettings(settings);
+      console.log("Settings", settings);
     });
   }, []);
 
@@ -40,7 +41,8 @@ export default function AccountInformation() {
         <div>
           <div className=" tw-p-8 tw-text-center">
             <span className="tw-border tw-shadow-xl tw-h-16 tw-w-16 tw-mx-auto  tw-rounded-full tw-overflow-hidden tw-bg-blue-1000 tw-flex tw-items-center tw-justify-center tw-text-white tw-font-semibold">
-              {settings["clinic_name"] &&
+              {settings &&
+                settings["clinic_name"] &&
                 settings["clinic_name"]
                   .split(" ")
                   .map((n) => n[0])

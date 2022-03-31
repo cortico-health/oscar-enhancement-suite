@@ -7,6 +7,7 @@ export const initialState = {
   attachment: null,
   document: null,
   eform: null,
+  phone: null,
 };
 
 export function messengerReducer(state = initialState, action) {

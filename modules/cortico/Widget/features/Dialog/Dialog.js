@@ -6,7 +6,7 @@ import classNames from "classnames";
 export default function Dialog({
   open,
   children,
-  onClick,
+  onClose,
   className,
   ...props
 }) {
@@ -22,7 +22,7 @@ export default function Dialog({
 
   const handleClick = (evt) => {
     if (evt.target.isSameNode(dialogRef.current)) {
-      onClick && onClick();
+      onClose && onClose();
     }
   };
 
@@ -34,7 +34,7 @@ export default function Dialog({
               ref={dialogRef}
               onClick={handleClick}
               className={classNames(
-                "tw-font-sans tw-absolute tw-inset-0 tw-z-10000 tw-rounded-xl",
+                "tw-font-sans tw-absolute tw-inset-0 tw-z-10000 tw-rounded-xl tw-w-full tw-h-full tw-bg-black tw-bg-opacity-50 tw-overflow-hidden",
                 className
               )}
             >

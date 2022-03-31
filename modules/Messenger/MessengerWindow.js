@@ -1,5 +1,5 @@
 import { useState, useEffect } from "preact/hooks";
-import { MailIcon, TextIcon } from "../Icons/HeroIcons";
+import { MailIcon, TextIcon, PlusIcon } from "../Icons/HeroIcons";
 import { getCorticoUrl } from "../Utils/Utils";
 import Documents from "./Documents";
 import Input from "../../modules/cortico/Widget/base/Input";
@@ -12,26 +12,46 @@ import { sendEmail, sendMessage } from "../Api/Api";
 import { loadExtensionStorageValue } from "../Utils/Utils";
 import { getPatientInfo } from "../../cortico";
 import { nanoid } from "nanoid";
+import Dialog from "../cortico/Widget/features/Dialog/Dialog";
+import SavedReplies from "./SavedReplies";
+import { getDemographicNo } from "../Utils/Utils";
+import storage from "../cortico/Widget/storage/index";
 
 function MessengerWindow({ encounter: encounterOption, ...props }) {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState();
-  const { to, subject, body, encounter, attachment, eform, document } =
+  const { to, phone, subject, body, encounter, attachment, eform, document } =
     useSelector((state) => state.messenger);
+  const [openSavedReplies, setOpenSavedReplies] = useState(false);
+  const [patientInfo, setPatientInfo] = useState(null);
 
   const submitData = async (scheme) => {
-    if (!to) {
+    if (!to && scheme === "email") {
       dispatch({
         type: "notifications/add",
         payload: {
           type: "error",
-          message: "Please enter a recipient",
+          message: "Please enter a email address",
           title: "Recipient required",
           id: nanoid(),
         },
       });
       return;
     }
+
+    if (!phone && scheme === "sms") {
+      dispatch({
+        type: "notifications/add",
+        payload: {
+          type: "error",
+          message: "Please enter a phone number",
+          title: "Phone required",
+          id: nanoid(),
+        },
+      });
+      return;
+    }
+
     if (scheme === "email") {
       const RFC_5322 = new RegExp(
         '^(([^<>()\\[\\]\\\\.,;:\\s@"]+(\\.[^<>()[]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$'
@@ -79,7 +99,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
       };
 
       if (scheme === "sms") {
-        data.phone = to;
+        data.phone = phone;
         data.contact_type = scheme;
       }
 
@@ -224,30 +244,49 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
   }, [eform]);
 
   useEffect(() => {
-    if ((eform === true || document === true) && !to) {
-      (async () => {
-        try {
-          const patientInfo = await getPatientInfo();
-          if (patientInfo?.email) {
-            handleChange("to", patientInfo.email);
-          }
-        } catch (err) {
-          console.error(err);
+    const demographicNo = getDemographicNo();
+    if (demographicNo && !patientInfo) {
+      getPatientInfo().then((patientInfo) => {
+        if (patientInfo) {
+          setPatientInfo(patientInfo);
         }
-      })();
+      });
     }
-  }, [eform, document]);
+  }, []);
+
+  useEffect(() => {
+    if (patientInfo) {
+      console.log("patuent", patientInfo);
+      handleChange("to", patientInfo.email);
+    }
+  }, [patientInfo]);
+
+  useEffect(() => {
+    storage.getItem("oes").then((oes) => {
+      if (oes && !subject) {
+        handleChange("subject", `${oes.clinic_name} has sent you a message`);
+      }
+    });
+  }, []);
 
   return (
     <div className="tw-m-0 no-print">
       <div>
         <div>
-          <div className="tw-py-2">
+          <div>
             <Input
               type="email"
               placeholder="To"
               onChange={(val) => handleChange("to", val)}
               defaultValue={to}
+            />
+          </div>
+          <div>
+            <Input
+              type="text"
+              placeholder="Phone"
+              onChange={(val) => handleChange("phone", val)}
+              defaultValue={phone}
             />
           </div>
           <hr className="tw-opacity-10" />
@@ -291,30 +330,46 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
 
         <hr className="tw-my-4" />
 
-        <div className="tw-flex tw-justify-end tw-mt-4">
-          <Button
-            size="sm"
-            loading={loading}
-            onClick={() => handleSend("sms")}
-            className="tw-mr-2 tw-bg-green-800 tw-text-white"
-          >
-            <span className="tw-flex tw-items-center tw-cursor-pointer">
-              <span className="tw-cursor-pointer">Send Text</span>
-              <TextIcon className="tw-h-4 tw-w-4 tw-ml-2 tw-cursor-pointer" />
-            </span>
-          </Button>
+        <div className="tw-flex tw-justify-between tw-mt-4 tw-w-full">
+          <div>
+            <Dialog
+              open={openSavedReplies}
+              onClose={() => setOpenSavedReplies(false)}
+              s
+            >
+              <div className="tw-flex tw-justify-center tw-items-center tw-bg-black tw-text-white tw-relative tw-translate-y-[-50%] tw-top-[50%] tw-p-6">
+                <SavedReplies />
+              </div>
+            </Dialog>
+            <Button onClick={() => setOpenSavedReplies(true)} rounded={true}>
+              <PlusIcon className="tw-h-5 tw-w-5 tw-text-white tw-m-1"></PlusIcon>
+            </Button>
+          </div>
+          <div>
+            <Button
+              size="sm"
+              loading={loading}
+              onClick={() => handleSend("sms")}
+              className="tw-mr-2 tw-bg-green-400 tw-text-green-900"
+            >
+              <span className="tw-flex tw-items-center tw-cursor-pointer">
+                <span className="tw-cursor-pointer">Send Text</span>
+                <TextIcon className="tw-h-4 tw-w-4 tw-ml-2 tw-cursor-pointer" />
+              </span>
+            </Button>
 
-          <Button
-            size="sm"
-            loading={loading}
-            onClick={() => handleSend("email")}
-            className=" "
-          >
-            <span className="tw-flex tw-items-center tw-cursor-pointer">
-              <span className="tw-cursor-pointer">Send Email</span>
-              <MailIcon className="tw-h-4 tw-w-4 tw-ml-2 tw-cursor-pointer" />
-            </span>
-          </Button>
+            <Button
+              size="sm"
+              loading={loading}
+              onClick={() => handleSend("email")}
+              className=" "
+            >
+              <span className="tw-flex tw-items-center tw-cursor-pointer">
+                <span className="tw-cursor-pointer">Send Email</span>
+                <MailIcon className="tw-h-4 tw-w-4 tw-ml-2 tw-cursor-pointer" />
+              </span>
+            </Button>
+          </div>
         </div>
       </div>
     </div>

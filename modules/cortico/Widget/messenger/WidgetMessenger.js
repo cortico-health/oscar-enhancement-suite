@@ -4,6 +4,7 @@ import Cancel from "../../../../resources/illustrations/undraw_cancel.svg";
 import SignIn from "../../../../resources/illustrations/undraw_signin.svg";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "../../../core/Button";
+import { useEffect } from "preact/hooks";
 
 export default function WidgetMessenger() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -27,11 +28,9 @@ export default function WidgetMessenger() {
                 <NotAvailable />
               ) : isLoggedIn === false ? (
                 <RequiresLogin />
-              ) : (
-                <div>
-                  <MessengerWindow />
-                </div>
-              )}
+              ) : disabled === false && isLoggedIn === true ? (
+                <MessengerWindow />
+              ) : null}
             </div>
           </>
         );

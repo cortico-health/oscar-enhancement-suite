@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 export default function FeatureDetector({ children, featureName, ...props }) {
   const disabledFeatures = useSelector((state) => state.app.disabledFeatures);
 
-  const [disabled, setDisabled] = useState(false);
+  const [disabled, setDisabled] = useState(null);
 
   useEffect(() => {
     const feature = disabledFeatures.find((feature) => feature === featureName);
