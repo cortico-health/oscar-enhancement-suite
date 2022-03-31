@@ -24,6 +24,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
     useSelector((state) => state.messenger);
   const [openSavedReplies, setOpenSavedReplies] = useState(false);
   const [patientInfo, setPatientInfo] = useState(null);
+  const { clinic_name: clinicName } = useSelector((state) => state.app);
 
   const submitData = async (scheme) => {
     if (!to && scheme === "email") {
@@ -258,16 +259,23 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
     if (patientInfo) {
       console.log("patuent", patientInfo);
       handleChange("to", patientInfo.email);
+
+      const phone =
+        patientInfo["Cell PhoneHistory"] ||
+        patientInfo["PhoneWHistory"] ||
+        patientInfo["PhoneHHistory"];
+
+      if (phone) {
+        handleChange("phone", phone);
+      }
     }
   }, [patientInfo]);
 
   useEffect(() => {
-    storage.getItem("oes").then((oes) => {
-      if (oes && !subject) {
-        handleChange("subject", `${oes.clinic_name} has sent you a message`);
-      }
-    });
-  }, []);
+    if (!subject) {
+      handleChange("subject", `${clinicName} has sent you a message`);
+    }
+  }, [clinicName]);
 
   return (
     <div className="tw-m-0 no-print">
