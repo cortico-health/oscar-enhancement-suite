@@ -294,7 +294,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         <div className="tw-flex tw-justify-end tw-mt-4">
           <Button
             size="sm"
-            disabled={loading}
+            loading={loading}
             onClick={() => handleSend("sms")}
             className="tw-mr-2 tw-bg-green-800 tw-text-white"
           >

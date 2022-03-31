@@ -3,19 +3,15 @@ import { useState, useEffect } from "preact/hooks";
 import WidgetSidebar from "./WidgetSidebar";
 import WidgetSettings from "./WidgetSettings";
 import WidgetAutomation from "./WidgetAutomation";
-import {
-  UserIcon,
-  DesktopComputerIcon,
-  ChatIcon,
-  CogIcon,
-} from "@heroicons/react/solid";
 import { isLoggedIn } from "../../Utils/Utils";
 import AccountInformation from "./AccountInformation";
-import NotAvailable from "./NotAvailable";
 import { MinusCircleIcon } from "@heroicons/react/solid";
 import { useDispatch, useSelector } from "react-redux";
 import WidgetMessenger from "./messenger/WidgetMessenger";
 import Notifications from "./features/Notifications/Notifications";
+import { loadExtensionStorageValue } from "../../Utils/Utils";
+import { getClinicSettings } from "../../Api/Api";
+import storage from "./storage/index";
 
 export default function CorticoPlugin({ onMinimize, ...props }) {
   const dispatch = useDispatch();
@@ -43,6 +39,22 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
       });
     });
   }, []);
+
+  useEffect(() => {
+    if (loggedIn === true) {
+      storage
+        .getItem("oes")
+        .then((settings) => {
+          return !settings
+            ? loadExtensionStorageValue("jwt_access_token")
+            : Promise.reject("Settings loaded");
+        })
+        .then((token) => getClinicSettings(token))
+        .then((response) => response.json())
+        .then((settings) => storage.setItem("oes", settings))
+        .catch((error) => console.error(error));
+    }
+  }, [loggedIn]);
 
   return (
     <div className="tw-flex tw-h-full">

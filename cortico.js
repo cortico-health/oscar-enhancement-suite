@@ -153,7 +153,6 @@ const init_cortico = async function () {
       dragAndDrop();
     }
 
-    setClinicName();
     addCorticoLogo();
     addMenu();
     getAccountProviderNo();
@@ -161,7 +160,7 @@ const init_cortico = async function () {
     const corticoWidgetContainer = document.createElement("div");
     document.body.append(corticoWidgetContainer);
     CorticoWidget(document.body, corticoWidgetContainer, {
-      disabledFeatures: ['messenger']
+      disabledFeatures: ["messenger"],
     });
     addAppointmentMenu();
 
@@ -1703,26 +1702,6 @@ function storePharmaciesFailureCache(demographicNo, message) {
     failures: failures,
   };
   localStorage.setItem("pharmaciesCacheFailure", JSON.stringify(cache));
-}
-
-async function setClinicName() {
-  if (localStorage.getItem("name")) {
-    return;
-  }
-  const token = await loadExtensionStorageValue("jwt_access_token");
-  if (token) {
-    const url = `${getCorticoUrl()}/api/public/clinic-settings/`;
-    fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then((response) => response.json())
-      .then((response) => localStorage.setItem("name", response.clinic_name))
-      .catch((error) => console.error(error));
-  }
 }
 
 async function getDiagnosticFromCortico(appt_no, notes, token) {

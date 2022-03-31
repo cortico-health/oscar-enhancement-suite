@@ -112,3 +112,14 @@ export function postCaseManagementEntry(
     },
   });
 }
+
+export function getClinicSettings(token) {
+  const url = `${getCorticoUrl()}/api/public/clinic-settings/`;
+  return fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+  });
+}

@@ -4,10 +4,12 @@ import {
   removeExtensionStorageValue,
   loadExtensionStorageValue,
 } from "../../Utils/Utils";
+import storage from "./storage/";
 
 export default function AccountInformation() {
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState(null);
+  const [settings, setSettings] = useState({});
 
   const handleSignOut = async () => {
     setLoading(true);
@@ -27,12 +29,9 @@ export default function AccountInformation() {
   };
 
   useEffect(() => {
-    (async () => {
-      const result = await loadExtensionStorageValue("jwt_username");
-      if (result) {
-        setUsername(result);
-      }
-    })();
+    storage.getItem("oes").then((settings) => {
+      setSettings(settings);
+    });
   }, []);
 
   return (
@@ -41,16 +40,15 @@ export default function AccountInformation() {
         <div>
           <div className=" tw-p-8 tw-text-center">
             <span className="tw-border tw-shadow-xl tw-h-16 tw-w-16 tw-mx-auto  tw-rounded-full tw-overflow-hidden tw-bg-blue-1000 tw-flex tw-items-center tw-justify-center tw-text-white tw-font-semibold">
-              {localStorage.getItem("name") &&
-                localStorage
-                  .getItem("name")
+              {settings["clinic_name"] &&
+                settings["clinic_name"]
                   .split(" ")
                   .map((n) => n[0])
                   .join("")}
             </span>
             <div>
               <p className="tw-mt-4 tw-text-gray-700 tw-font-bold tw-text-lg">
-                {localStorage.getItem("name")}
+                {settings["clinic_name"]}
               </p>
               <p className=" tw-text-gray-700 tw-text-base tw-font-normal tw-opacity-75">
                 <a
