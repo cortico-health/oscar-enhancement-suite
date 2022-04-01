@@ -1,10 +1,4 @@
-import { ArrowRightIcon } from "@heroicons/react/outline";
-import {
-  StarIcon,
-  ClipboardCheckIcon,
-  OfficeBuildingIcon,
-} from "@heroicons/react/solid";
-import classNames from "classnames";
+import { ClipboardCheckIcon, SupportIcon } from "@heroicons/react/solid";
 import { Transition } from "@headlessui/react";
 import EligbilityCheck from "./automation/EligibilityCheck";
 import PreferredPharmacies from "./automation/PreferredPharmacies";
@@ -12,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { nanoid } from "nanoid";
 import FeatureDetector from "./adapters/FeatureDetecter";
 import NotAvailable from "./base/NotAvailable";
+import GridList from "./base/GridList";
 
 const automations = [
   {
@@ -21,7 +16,9 @@ const automations = [
     description:
       "Have the plugin to check eligibility for each patient in the schedule. ",
     icon: (
-      <ClipboardCheckIcon className="tw-w-6 tw-h-6 tw-mr-2 tw-text-blue-1000 tw-inline-block" />
+      <div className="tw-rounded-lg tw-inline-flex tw-p-3 tw-ring-4 tw-ring-white tw-bg-green-50 ">
+        <ClipboardCheckIcon className="tw-w-6 tw-h-6 tw-inline-block tw-text-green-700" />
+      </div>
     ),
   },
   {
@@ -31,7 +28,9 @@ const automations = [
     description:
       "Set preferred pharmacies for each of the patients in the schedule",
     icon: (
-      <OfficeBuildingIcon className="tw-w-6 tw-h-6 tw-mr-2 tw-text-blue-1000 tw-inline-block" />
+      <div className="tw-rounded-lg tw-inline-flex tw-p-3 tw-ring-4 tw-ring-white tw-bg-red-50 ">
+        <SupportIcon className="tw-w-6 tw-h-6  tw-inline-block tw-text-red-700" />
+      </div>
     ),
     premium: true,
   },
@@ -61,15 +60,19 @@ export default function WidgetAutomation() {
 
   return (
     <div className="tw-p-4 tw-font-sans">
-      <div>
-        <h2 className="tw-text-base tw-font-medium tw-text-gray-800 tw-m-0 tw-p-0">
-          Automations
-        </h2>
-        <p className="tw-text-sm tw-text-gray-700">
-          Replace tedious repetitive tasks with a single click
-        </p>
-      </div>
-      <hr className="tw-my-6" />
+      {option === "none" ? (
+        <>
+          <div>
+            <h2 className="tw-text-base tw-font-medium tw-text-gray-800 tw-m-0 tw-p-0">
+              Automations
+            </h2>
+            <p className="tw-text-sm tw-text-gray-700">
+              Replace tedious repetitive tasks with a single click
+            </p>
+          </div>
+          <hr className="tw-my-6" />
+        </>
+      ) : null}
       <FeatureDetector featureName="automation">
         {({ disabled }) =>
           disabled === false ? (
@@ -117,8 +120,11 @@ export default function WidgetAutomation() {
 export function WidgetAutomationOptions({ isLoggedIn, onClick, ...props }) {
   return (
     <div className="tw-font-sans">
+      <div className="tw-max-w-[550px]">
+        <GridList actions={automations} onClick={onClick} />
+      </div>
       <div>
-        {automations.map((automation) => {
+        {/*automations.map((automation) => {
           return (
             <div
               key={automation.id}
@@ -168,7 +174,7 @@ export function WidgetAutomationOptions({ isLoggedIn, onClick, ...props }) {
               )}
             </div>
           );
-        })}
+        })*/}
       </div>
     </div>
   );
