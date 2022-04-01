@@ -42,22 +42,29 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
 
   useEffect(() => {
     if (loggedIn === true) {
+      let settingsToLoad = null;
       storage
         .getItem("oes")
         .then((settings) => {
-          return !settings
-            ? loadExtensionStorageValue("jwt_access_token")
-            : Promise.reject("Settings loaded");
+          if (!settings) {
+            return loadExtensionStorageValue("jwt_access_token");
+          } else {
+            settingsToLoad = settings;
+            return Promise.reject("Settings loaded");
+          }
         })
         .then((token) => getClinicSettings(token))
         .then((response) => response.json())
-        .then((settings) =>
-          dispatch({
-            type: "app/set",
-            payload: settings,
-          })
-        )
-        .catch((error) => console.error(error));
+        .then((settings) => (settingsToLoad = settings))
+        .catch((error) => console.error(error))
+        .finally(() => {
+          if (settingsToLoad) {
+            dispatch({
+              type: "app/set",
+              payload: settingsToLoad,
+            });
+          }
+        });
     }
   }, [loggedIn]);
 
