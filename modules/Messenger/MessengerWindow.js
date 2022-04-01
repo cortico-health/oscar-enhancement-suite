@@ -168,7 +168,14 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
           });
           return;
         } else {
-          const errorResponse = await result.json();
+          let errorResponse = null;
+          try {
+            errorResponse = await result.json();
+          } catch (error) {
+            throw Error(
+              `Server responded with ${result.status} without a valid response`
+            );
+          }
 
           let title = "Email not sent";
           if (scheme === "sms") {
@@ -186,7 +193,6 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
           return;
         }
       } catch (error) {
-        console.error(error);
         dispatch({
           type: "notifications/add",
           payload: {
