@@ -7,17 +7,19 @@ import { nanoid } from "nanoid";
 import FeatureDetector from "./adapters/FeatureDetecter";
 import NotAvailable from "./base/NotAvailable";
 import GridList from "./base/GridList";
+import EligCheckImage from "../../../resources/illustrations/undraw_check_boxes.svg";
+import PharImage from "../../../resources/illustrations/undraw_medical_care.svg";
 
 const automations = [
   {
-    name: "Eligibility Check",
+    name: "Eligibility Checker",
     value: "elig",
     id: nanoid(),
     description:
       "Have the plugin to check eligibility for each patient in the schedule. ",
     icon: (
       <div className="tw-rounded-lg tw-inline-flex tw-p-3 tw-ring-4 tw-ring-white tw-bg-green-50 ">
-        <ClipboardCheckIcon className="tw-w-6 tw-h-6 tw-inline-block tw-text-green-700" />
+        <img src={EligCheckImage} className="tw-w-20 tw-h-16" />
       </div>
     ),
   },
@@ -29,7 +31,7 @@ const automations = [
       "Set preferred pharmacies for each of the patients in the schedule",
     icon: (
       <div className="tw-rounded-lg tw-inline-flex tw-p-3 tw-ring-4 tw-ring-white tw-bg-red-50 ">
-        <SupportIcon className="tw-w-6 tw-h-6  tw-inline-block tw-text-red-700" />
+        <img src={PharImage} className="tw-w-20 tw-h-16" />
       </div>
     ),
     premium: true,
@@ -129,7 +131,7 @@ export default function WidgetAutomation() {
 export function WidgetAutomationOptions({ isLoggedIn, onClick, ...props }) {
   return (
     <div className="tw-font-sans">
-      <div className="tw-max-w-[550px]">
+      <div className="tw-max-w-[600px]">
         <GridList actions={automations} onClick={onClick} />
       </div>
       <div>

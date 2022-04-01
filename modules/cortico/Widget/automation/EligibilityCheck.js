@@ -26,7 +26,7 @@ export default function EligbilityCheck({ goBack, ...props }) {
     <div className="tw-font-sans">
       <div>
         <h2 className="tw-text-base tw-font-medium tw-text-gray-700 tw-m-0 tw-p-0">
-          Eligibility Check
+          Eligibility Checker
         </h2>
         <p className="tw-text-sm tw-text-gray-700 tw-max-w-[300px]">
           Verifies the validity of all MSP numbers for the current schedule

@@ -1,4 +1,8 @@
 import classNames from "classnames";
+import {
+  ChevronDoubleRightIcon,
+  ExclamationCircleIcon,
+} from "@heroicons/react/outline";
 
 export default function GridList({ actions, onClick, ...props }) {
   return (
@@ -22,38 +26,31 @@ export default function GridList({ actions, onClick, ...props }) {
         >
           <div className="tw-flex tw-items-start">
             <span>{action.icon}</span>
+          </div>
+
+          <div className="tw-h-[35px] tw-overflow-hidden tw-mt-2">
             {action.premium === true ? (
-              <div className="tw-bg-gray-50 tw-ml-4 tw-text-gray-700 tw-inline-block tw-text-xs tw-font-medium tw-mt-2 tw-p-2 tw-rounded-md tw-border">
+              <div className="tw-bg-gray-50  tw-text-gray-700 tw-inline-block tw-text-2xs tw-font-medium tw-px-2 tw-py-1 tw-rounded-md tw-border">
+                <ExclamationCircleIcon className="tw-inline-block tw-text-red-300 tw-w-4 tw-h-4 tw-mr-1" />{" "}
                 Sign In Required
               </div>
             ) : null}
           </div>
 
-          <div className="tw-mt-8">
-            <h3 className="tw-text-lg tw-font-medium">
+          <div className="tw-mt-2">
+            <p className="tw-text-lg tw-font-medium">
               <a href={action.href} className="focus:tw-outline-none">
                 {/* Extend touch target to entire panel */}
                 <span className="tw-absolute tw-inset-0" aria-hidden="true" />
                 {action.name}
               </a>
-            </h3>
+            </p>
             <p className="tw-mt-2 tw-text-sm tw-text-gray-500">
               {action.description}
             </p>
           </div>
-          <span
-            className="tw-pointer-events-none tw-absolute tw-top-6 tw-right-6 tw-text-gray-300 group-hover:tw-text-gray-400"
-            aria-hidden="true"
-          >
-            <svg
-              className="tw-h-6 tw-w-6"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path d="M20 4h1a1 1 0 00-1-1v1zm-1 12a1 1 0 102 0h-2zM8 3a1 1 0 000 2V3zM3.293 19.293a1 1 0 101.414 1.414l-1.414-1.414zM19 4v12h2V4h-2zm1-1H8v2h12V3zm-.707.293l-16 16 1.414 1.414 16-16-1.414-1.414z" />
-            </svg>
-          </span>
+
+          <ChevronDoubleRightIcon className="tw-pointer-events-none tw-absolute tw-top-6 tw-right-6 tw-text-gray-300 group-hover:tw-text-gray-400 tw-w-6 tw-h-6 tw-transform tw-rotate-[-45deg]" />
         </div>
       ))}
     </div>
