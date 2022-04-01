@@ -178,18 +178,16 @@ const init_cortico = async function () {
     //const patient_info = await getPatientInfo();
 
     if (oscar.isEncounterPage()) {
-      CorticoWidget(document.body, corticoWidgetContainer, {
-        encounter: true,
-      });
+      CorticoWidget(document.body, corticoWidgetContainer, {});
     } else {
       CorticoWidget(document.body, corticoWidgetContainer, {
-        encounter: true,
+        disabledFeatures: ["encounter"],
         eForm: true,
       });
     }
   } else if (oscar.isDocumentPage()) {
     CorticoWidget(document.body, corticoWidgetContainer, {
-      encounter: true,
+      disabledFeatures: ["encounter"],
       document: true,
     });
   } else if (route.indexOf("/oscarRx/ViewScript2.jsp") > -1) {

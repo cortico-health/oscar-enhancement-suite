@@ -15,7 +15,7 @@ import { nanoid } from "nanoid";
 import Dialog from "../cortico/Widget/features/Dialog/Dialog";
 import SavedReplies from "./SavedReplies";
 import { getDemographicNo } from "../Utils/Utils";
-import storage from "../cortico/Widget/storage/index";
+import FeatureDetector from "../cortico/Widget/adapters/FeatureDetecter";
 
 function MessengerWindow({ encounter: encounterOption, ...props }) {
   const dispatch = useDispatch();
@@ -329,16 +329,21 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
             ></Textarea>
           </div>
           <hr className="tw-opacity-40" />
-          {true ? (
-            <div className="tw-mt-4">
-              <Checkbox
-                label="Copy Message To Encounter"
-                defaultChecked={encounter}
-              />
-            </div>
-          ) : (
-            ""
-          )}
+          <FeatureDetector featureName="encounter">
+            {({ disabled }) => {
+              return disabled === false ? (
+                <div className="tw-mt-4">
+                  <Checkbox
+                    label="Copy Message To Encounter"
+                    defaultChecked={encounter}
+                  />
+                </div>
+              ) : (
+                ""
+              );
+            }}
+          </FeatureDetector>
+
           {attachment ? (
             <div className="tw-mt-6 tw-border tw-border-opacity-20 tw-rounded-md tw-p-2">
               <Documents
