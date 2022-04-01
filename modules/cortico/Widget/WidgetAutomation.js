@@ -45,6 +45,15 @@ export default function WidgetAutomation() {
     const automation = automations.find((item) => item.value === value);
     const premium = automation.premium;
     if (premium && !isLoggedIn) {
+      dispatch({
+        type: "notifications/add",
+        payload: {
+          type: "error",
+          message: "Sign In Required",
+          title: "Please sign in and try again",
+          id: nanoid(),
+        },
+      });
       return;
     }
     dispatch({ type: "automation/setOption", payload: value });
