@@ -365,7 +365,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
               onClose={() => setOpenSavedReplies(false)}
               s
             >
-              <div className="tw-flex tw-justify-center tw-items-center  tw-text-white tw-relative tw-translate-y-[-50%] tw-top-[50%] tw-p-6">
+              <div className="tw-inline-block tw-translate-x-[-50%] tw-left-[50%]  tw-text-white tw-relative tw-translate-y-[-50%] tw-top-[50%]">
                 <SavedReplies loadReply={handleLoadReply} />
               </div>
             </Dialog>

@@ -4,7 +4,7 @@ import Cancel from "../../../../resources/illustrations/undraw_cancel.svg";
 import SignIn from "../../../../resources/illustrations/undraw_signin.svg";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "../../../core/Button";
-import { useEffect } from "preact/hooks";
+import NotAvailable from "../base/NotAvailable";
 
 export default function WidgetMessenger() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -25,7 +25,18 @@ export default function WidgetMessenger() {
               </div>
               <hr className="tw-my-6" />
               {disabled === true ? (
-                <NotAvailable />
+                <NotAvailable>
+                  <p className="tw-max-w-[325px] tw-mx-auto tw-mt-6 tw-text-gray-700 tw-text-sm">
+                    This feature is{" "}
+                    <span className="tw-font-semibold">not available</span> on
+                    this page. It is only available on
+                    <ol className="tw-list-decimal tw-mt-2 tw-text-sm tw-space-y-1">
+                      <li>Encounter Page</li>
+                      <li>e-Forms</li>
+                      <li>Documents</li>
+                    </ol>
+                  </p>
+                </NotAvailable>
               ) : isLoggedIn === false ? (
                 <RequiresLogin />
               ) : disabled === false && isLoggedIn === true ? (
@@ -36,27 +47,6 @@ export default function WidgetMessenger() {
         );
       }}
     </FeatureDetector>
-  );
-}
-
-function NotAvailable() {
-  return (
-    <div className="tw-font-sans">
-      <img
-        src={Cancel}
-        alt="Not Available"
-        className="tw-block tw-w-[125px] tw-mx-auto"
-      />
-      <p className="tw-max-w-[325px] tw-mx-auto tw-mt-6 tw-text-gray-700 tw-text-sm">
-        This feature is <span className="tw-font-semibold">not available</span>{" "}
-        on this page. It is only available on
-        <ol className="tw-list-decimal tw-mt-2 tw-text-sm tw-space-y-1">
-          <li>Encounter Page</li>
-          <li>e-Forms</li>
-          <li>Documents</li>
-        </ol>
-      </p>
-    </div>
   );
 }
 

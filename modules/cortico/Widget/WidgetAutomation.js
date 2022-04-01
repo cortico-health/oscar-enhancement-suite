@@ -6,11 +6,12 @@ import {
 } from "@heroicons/react/solid";
 import classNames from "classnames";
 import { Transition } from "@headlessui/react";
-import { useState } from "preact/hooks";
 import EligbilityCheck from "./automation/EligibilityCheck";
 import PreferredPharmacies from "./automation/PreferredPharmacies";
 import { useDispatch, useSelector } from "react-redux";
 import { nanoid } from "nanoid";
+import FeatureDetector from "./adapters/FeatureDetecter";
+import NotAvailable from "./base/NotAvailable";
 
 const automations = [
   {
@@ -59,35 +60,7 @@ export default function WidgetAutomation() {
   };
 
   return (
-    <div className="tw-px-4 tw-py-4">
-      <Transition
-        show={true}
-        appear={true}
-        enter="tw-transition-opacity tw-duration-1000"
-        enterFrom="tw-opacity-0"
-        enterTo="tw-opacity-100"
-        leave="tw-transition-opacity tw-duration-1000"
-        leaveFrom="tw-opacity-100"
-        leaveTo="tw-opacity-0"
-      >
-        {option === "none" ? (
-          <WidgetAutomationOptions
-            onClick={handleClick}
-            isLoggedIn={isLoggedIn}
-          />
-        ) : option === "elig" ? (
-          <EligbilityCheck goBack={handleGoBack} />
-        ) : option === "phar" ? (
-          <PreferredPharmacies goBack={handleGoBack} />
-        ) : null}
-      </Transition>
-    </div>
-  );
-}
-
-export function WidgetAutomationOptions({ isLoggedIn, onClick, ...props }) {
-  return (
-    <div className="tw-font-sans">
+    <div className="tw-p-4 tw-font-sans">
       <div>
         <h2 className="tw-text-base tw-font-medium tw-text-gray-800 tw-m-0 tw-p-0">
           Automations
@@ -97,6 +70,53 @@ export function WidgetAutomationOptions({ isLoggedIn, onClick, ...props }) {
         </p>
       </div>
       <hr className="tw-my-6" />
+      <FeatureDetector featureName="automation">
+        {({ disabled }) =>
+          disabled === false ? (
+            <div>
+              <Transition
+                show={true}
+                appear={true}
+                enter="tw-transition-opacity tw-duration-1000"
+                enterFrom="tw-opacity-0"
+                enterTo="tw-opacity-100"
+                leave="tw-transition-opacity tw-duration-1000"
+                leaveFrom="tw-opacity-100"
+                leaveTo="tw-opacity-0"
+              >
+                {option === "none" ? (
+                  <WidgetAutomationOptions
+                    onClick={handleClick}
+                    isLoggedIn={isLoggedIn}
+                  />
+                ) : option === "elig" ? (
+                  <EligbilityCheck goBack={handleGoBack} />
+                ) : option === "phar" ? (
+                  <PreferredPharmacies goBack={handleGoBack} />
+                ) : null}
+              </Transition>
+            </div>
+          ) : (
+            <NotAvailable>
+              <p className="tw-max-w-[325px] tw-mx-auto tw-mt-6 tw-text-gray-700 tw-text-sm">
+                This feature is{" "}
+                <span className="tw-font-semibold">not available</span> on this
+                page. It is only available on
+                <ol className="tw-list-decimal tw-mt-2 tw-text-sm tw-space-y-1">
+                  <li>Schedule Page</li>
+                </ol>
+              </p>
+            </NotAvailable>
+          )
+        }
+      </FeatureDetector>
+    </div>
+  );
+}
+
+export function WidgetAutomationOptions({ isLoggedIn, onClick, ...props }) {
+  return (
+    <div className="tw-font-sans">
       <div>
         {automations.map((automation) => {
           return (
