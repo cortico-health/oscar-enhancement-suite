@@ -11,31 +11,35 @@ import {
 } from "../Api/Api";
 import { loadExtensionStorageValue } from "../Utils/Utils";
 function AddReply({ add, cancel, ...props }) {
+  const [subject, setSubject] = useState(null);
+  const [body, setBody] = useState(null);
+
   const handleAddReply = (e) => {
-    const _subject = subject.current.value;
-    const _chat = chat.current.value;
-    add({ subject: _subject, body: _chat });
+    add({ subject, body });
   };
 
   return (
     <div>
       <div className="tw-p-4">
-        <Input placeholder="Subject" />
+        <Input placeholder="Subject" onChange={(val) => setSubject(val)} />
         <hr className="tw-bg-opacity-25" />
-        <Textarea placeholder="Place message here" />
+        <Textarea
+          placeholder="Place message here"
+          onChange={(val) => setBody(val)}
+        />
       </div>
       <div className="tw-p-4 tw-bg-gray-200 tw-flex tw-justify-end tw-rounded-b-lg">
         <div className="tw-flex tw-justify-end">
           <button
             onClick={cancel}
-            className="tw-px-4 tw-py-2 tw-rounded-lg tw-bg-gray-500 tw-text-white tw-text-sm tw-flex tw-items-center tw-mr-2"
+            className="tw-px-3 tw-py-2 tw-rounded-lg tw-bg-gray-500 tw-text-white tw-text-sm tw-flex tw-items-center tw-mr-2"
           >
             <span className="tw-mr-2">Cancel</span>
             <LeftArrowIcon className="tw-h-4 tw-w-4 tw-text-white" />
           </button>
           <button
             onClick={handleAddReply}
-            className="tw-px-4 tw-py-2 tw-rounded-lg tw-bg-cortico-blue tw-text-white tw-text-sm tw-flex tw-items-center"
+            className="tw-px-3 tw-py-2 tw-rounded-lg tw-bg-blue-1000 tw-text-white tw-text-sm tw-flex tw-items-center"
           >
             <span className="tw-mr-2">Save Response</span>
             <PlusIcon className="tw-h-4 tw-w-4 tw-text-white" />
@@ -120,8 +124,6 @@ function SavedReplies({ loadReply, ...props }) {
   const [replies, setReplies] = useState([]);
 
   const handleAdd = (data) => {
-    console.log("To add data", data);
-
     const { body, subject } = data;
     const temp = {
       subject,
@@ -133,7 +135,6 @@ function SavedReplies({ loadReply, ...props }) {
       })
       .then((res) => {
         return loadReplies();
-        console.log("Add Reply Response", res);
       })
       .catch((err) => {
         console.error(err);
@@ -232,17 +233,17 @@ function SavedReplies({ loadReply, ...props }) {
         )}
       </div>
       {addReply === false ? (
-        <div className="tw-p-4 tw-bg-gray-200 tw-flex tw-justify-end tw-rounded-b-lg">
+        <div className="tw-p-2 tw-bg-gray-200 tw-flex tw-justify-end tw-rounded-b-lg">
           <div>
             <div>
               <button
                 onClick={() => {
                   setAddReply(true);
                 }}
-                className="tw-px-4 tw-py-2 tw-rounded-lg tw-bg-cortico-blue tw-text-white tw-text-sm tw-flex tw-items-center"
+                className="tw-px-3 tw-py-2 tw-rounded-lg tw-bg-blue-1000 tw-text-white tw-text-sm tw-flex tw-items-center"
               >
-                <span className="tw-mr-2">New Response</span>
-                <PlusIcon className="tw-h-4 tw-w-4 tw-text-white" />
+                <span className="tw-mr-2 tw-cursor-pointer">New</span>
+                <PlusIcon className="tw-h-4 tw-w-4 tw-text-white tw-cursor-pointer" />
               </button>
             </div>
           </div>

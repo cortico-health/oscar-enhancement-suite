@@ -257,7 +257,6 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
 
   useEffect(() => {
     if (patientInfo) {
-      console.log("patuent", patientInfo);
       handleChange("to", patientInfo.email);
 
       const phone =
@@ -277,6 +276,16 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
     }
   }, [clinicName]);
 
+  const handleLoadReply = (reply) => {
+    dispatch({
+      type: "messenger/setAll",
+      payload: {
+        subject: reply.subject,
+        body: reply.message,
+      },
+    });
+    setOpenSavedReplies(false);
+  };
   return (
     <div className="tw-m-0 no-print">
       <div>
@@ -345,8 +354,8 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
               onClose={() => setOpenSavedReplies(false)}
               s
             >
-              <div className="tw-flex tw-justify-center tw-items-center tw-bg-black tw-text-white tw-relative tw-translate-y-[-50%] tw-top-[50%] tw-p-6">
-                <SavedReplies />
+              <div className="tw-flex tw-justify-center tw-items-center  tw-text-white tw-relative tw-translate-y-[-50%] tw-top-[50%] tw-p-6">
+                <SavedReplies loadReply={handleLoadReply} />
               </div>
             </Dialog>
             <Button onClick={() => setOpenSavedReplies(true)} rounded={true}>
@@ -358,7 +367,8 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
               size="sm"
               loading={loading}
               onClick={() => handleSend("sms")}
-              className="tw-mr-2 tw-bg-green-400 tw-text-green-900"
+              className="tw-mr-2 tw-bg-green-800 tw-text-white tw-border"
+              variant="custom"
             >
               <span className="tw-flex tw-items-center tw-cursor-pointer">
                 <span className="tw-cursor-pointer">Send Text</span>
@@ -370,7 +380,8 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
               size="sm"
               loading={loading}
               onClick={() => handleSend("email")}
-              className=" "
+              className="tw-bg-blue-1000 tw-border tw-text-white"
+              variant="custom"
             >
               <span className="tw-flex tw-items-center tw-cursor-pointer">
                 <span className="tw-cursor-pointer">Send Email</span>
