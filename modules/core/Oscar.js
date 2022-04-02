@@ -56,6 +56,10 @@ export class Oscar {
     return this.route.indexOf("dms/documentReport.jsp") > -1;
   }
 
+  isInboxDocument() {
+    return this.route.indexOf("dms/showDocument.jsp") > -1;
+  }
+
   containsOscarGoOceanScript() {
     return (
       document.querySelectorAll(

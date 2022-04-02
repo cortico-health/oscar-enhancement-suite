@@ -10,7 +10,6 @@ import { Provider, useDispatch, useSelector } from "react-redux";
 import Draggable from "react-draggable";
 import SetupDocuments from "./features/Documents/SetupDocuments";
 function App({ disabledFeatures = [], ...props }) {
-  console.log("Disabled Features App", disabledFeatures, props);
   const { open } = useSelector((state) => state.app);
   const containerRef = useRef();
   const dispatch = useDispatch();
@@ -55,6 +54,16 @@ function App({ disabledFeatures = [], ...props }) {
         type: "messenger/set",
         payload: {
           key: "eform",
+          value: true,
+        },
+      });
+    }
+
+    if (props.inboxDocument === true) {
+      dispatch({
+        type: "messenger/set",
+        payload: {
+          key: "inboxDocument",
           value: true,
         },
       });

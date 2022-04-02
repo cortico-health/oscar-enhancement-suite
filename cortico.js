@@ -192,6 +192,11 @@ const init_cortico = async function () {
       disabledFeatures: ["encounter", "automation"],
       document: true,
     });
+  } else if (oscar.isInboxDocument()) {
+    CorticoWidget(document.body, corticoWidgetContainer, {
+      disabledFeatures: ["encounter", "automation"],
+      inboxDocument: true,
+    });
   } else if (route.indexOf("/oscarRx/ViewScript2.jsp") > -1) {
     // We need to determine first if the prescription is "delivery"
     const currentPharmacyCode = localStorage.getItem("currentPharmacyCode");

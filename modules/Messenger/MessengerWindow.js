@@ -16,12 +16,22 @@ import Dialog from "../cortico/Widget/features/Dialog/Dialog";
 import SavedReplies from "./SavedReplies";
 import { getDemographicNo } from "../Utils/Utils";
 import FeatureDetector from "../cortico/Widget/adapters/FeatureDetecter";
+import InboxDocument from "../cortico/Widget/adapters/InboxDocument";
 
 function MessengerWindow({ encounter: encounterOption, ...props }) {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState();
-  const { to, phone, subject, body, encounter, attachment, eform, document } =
-    useSelector((state) => state.messenger);
+  const {
+    to,
+    phone,
+    subject,
+    body,
+    encounter,
+    attachment,
+    eform,
+    document,
+    inboxDocument,
+  } = useSelector((state) => state.messenger);
   const [openSavedReplies, setOpenSavedReplies] = useState(false);
   const [patientInfo, setPatientInfo] = useState(null);
   const { clinic_name: clinicName } = useSelector((state) => state.app);
@@ -295,6 +305,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
   };
   return (
     <div className="tw-m-0 no-print">
+      {inboxDocument === true ? <InboxDocument></InboxDocument> : null}
       <div>
         <div>
           <div>

@@ -8,6 +8,7 @@ export const initialState = {
   document: null,
   eform: null,
   phone: null,
+  inboxDocument: null,
 };
 
 export function messengerReducer(state = initialState, action) {
