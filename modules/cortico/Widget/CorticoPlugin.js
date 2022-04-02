@@ -82,7 +82,7 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
           <MinusCircleIcon className="tw-w-6 tw-h-6 tw-text-yellow-400" />
         </div>
         {activeItem === "Account" ? (
-          <div className="tw-p-4 tw-mx-auto tw-flex tw-items-center tw-justify-center tw-overflow-hidden tw-h-full">
+          <div className="tw-p-4 tw-h-full">
             {loggedIn === true ? <AccountInformation /> : <Login />}
           </div>
         ) : activeItem === "Automation" ? (
