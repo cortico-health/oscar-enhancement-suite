@@ -2,8 +2,11 @@ import { Switch } from "@headlessui/react";
 import { useState, useRef } from "preact/hooks";
 import Button from "../../core/Button";
 import Header from "./base/Header";
+import { useDispatch } from "react-redux";
+import { nanoid } from "nanoid";
 
 export default function WidgetSettings() {
+  const dispatch = useDispatch();
   const recallRef = useRef();
   const mediumRef = useRef();
   const [loading, setLoading] = useState(false);
@@ -19,6 +22,17 @@ export default function WidgetSettings() {
     localStorage.setItem("medium-option", mediumOption);
 
     setLoading(false);
+
+    dispatch({
+      type: "notifications/add",
+      payload: {
+        type: "success",
+        message:
+          "Settings saved successfully. It is recommended to refresh the page.",
+        title: "Success",
+        id: nanoid(),
+      },
+    });
   };
 
   const resetCache = async () => {
@@ -34,6 +48,16 @@ export default function WidgetSettings() {
       }
     }
     setResetCacheLoading(false);
+    dispatch({
+      type: "notifications/add",
+      payload: {
+        type: "success",
+        message:
+          "Cache has been cleared. It is recommended to refresh the page.",
+        title: "Success",
+        id: nanoid(),
+      },
+    });
   };
 
   return (
@@ -111,13 +135,20 @@ export default function WidgetSettings() {
           <div className="tw-flex tw-justify-between tw-w-full">
             <Button
               size="sm"
+              variant="custom"
               loading={resetCacheLoading}
               onClick={resetCache}
-              className="tw-bg-red-600 tw-text-base tw-text-white tw-rounded-md"
+              className="tw-bg-red-100 tw-text-red-700 tw-text-sm  tw-rounded-md tw-font-medium"
             >
               Reset Cache
             </Button>
-            <Button size="sm" loading={loading} onClick={saveSettings}>
+            <Button
+              variant="custom"
+              size="sm"
+              loading={loading}
+              onClick={saveSettings}
+              className="tw-bg-blue-100 tw-text-blue-700 tw-text-sm tw-rounded-md tw-font-medium"
+            >
               Save
             </Button>
           </div>

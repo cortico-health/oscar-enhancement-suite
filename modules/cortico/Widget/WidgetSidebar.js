@@ -3,7 +3,7 @@ import Logo from "../../../resources/icons/logo.svg";
 
 export default function WidgetSidebar({ onClick, items, ...props }) {
   return (
-    <div className="tw-w-full tw-h-full tw-rounded-l-xl tw-px-6 tw-shadow-right tw-bg-blue-1000">
+    <div className="tw-w-full tw-h-full tw-rounded-l-xl tw-px-6 tw-shadow-right tw-bg-gradient-to-bl tw-from-indigo-700 tw-to-blue-1000 tw-bg-blue-1000 ">
       <div className="tw-py-8 tw-flex tw-flex-col tw-justify-between tw-h-full tw-w-full">
         <div>
           <div className="tw-mb-8">

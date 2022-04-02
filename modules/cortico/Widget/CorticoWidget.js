@@ -105,7 +105,7 @@ function App({ disabledFeatures = [], ...props }) {
             "tw-fixed tw-bottom-5 tw-right-5 tw-z-10005  tw-text-white cortico-widget-body",
             open === true
               ? "tw-rounded-xl tw-border tw-bg-white"
-              : "tw-rounded-full tw-bg-blue-1000"
+              : "tw-rounded-full "
           )}
           ref={containerRef}
         >
@@ -116,7 +116,7 @@ function App({ disabledFeatures = [], ...props }) {
           ) : (
             <Draggable onDrag={() => setDragging(true)} onStop={handleDragStop}>
               <div
-                className="tw-p-4 tw-cursor-pointer tw-rounded-full tw-bg-blue-1000 tw-shadow-xl"
+                className="tw-p-4 tw-cursor-pointer tw-rounded-full tw-bg-gradient-to-bl tw-from-indigo-600 tw-to-blue-1000 tw-bg-blue-1000 tw-shadow-xl"
                 onClick={handleOpen}
               >
                 <img

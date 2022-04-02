@@ -6,6 +6,7 @@ import WidgetAutomation from "./WidgetAutomation";
 import { isLoggedIn } from "../../Utils/Utils";
 import AccountInformation from "./AccountInformation";
 import { MinusCircleIcon } from "@heroicons/react/solid";
+import { MinusIcon } from "@heroicons/react/solid";
 import { useDispatch, useSelector } from "react-redux";
 import WidgetMessenger from "./messenger/WidgetMessenger";
 import Notifications from "./features/Notifications/Notifications";
@@ -76,10 +77,10 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
       </div>
       <div className=" tw-text-black tw-relative">
         <div
-          className="tw-absolute tw-top-2 tw-right-2 tw-cursor-pointer"
+          className="tw-absolute tw-top-2 tw-right-2 tw-cursor-pointer tw-bg-amber-400 tw-rounded-full"
           onClick={onMinimize}
         >
-          <MinusCircleIcon className="tw-w-6 tw-h-6 tw-text-yellow-400" />
+          <MinusIcon className="tw-w-5 tw-h-5 tw-text-white" />
         </div>
         {activeItem === "Account" ? (
           <div className="tw-p-4 tw-h-full">

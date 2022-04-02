@@ -82,12 +82,19 @@ export default function AccountInformation() {
           </div>
         </div>
         <div className="tw-w-full tw-flex tw-justify-end tw-mt-4 tw-font-sans">
-          <Button onClick={handleSignOut} size="sm" loading={loading}>
-            <LockOpenIcon className="tw-inline-block tw-mr-2 tw-text-white tw-h-4 tw-w-4 tw-opacity-50"></LockOpenIcon>
+          <Button
+            variant="custom"
+            onClick={handleSignOut}
+            size="sm"
+            loading={loading}
+            className="tw-bg-blue-100 tw-text-blue-700 tw-text-sm tw-rounded-md tw-font-medium"
+          >
+            <LockOpenIcon className="tw-inline-block tw-mr-2 tw-text-blue-1000 tw-h-4 tw-w-4 tw-opacity-50"></LockOpenIcon>
             Sign Out
           </Button>
         </div>
-        <div className="tw-flex tw-justify-between tw-mt-8 tw-font-sans">
+
+        <div className="tw-flex tw-justify-between tw-mt-10 tw-font-sans">
           <p className="tw-text-sm tw-text-center tw-font-semibold">
             &copy; <span className="tw-text-blue-1000">Cortico</span>
           </p>

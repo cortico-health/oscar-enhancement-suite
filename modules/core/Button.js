@@ -18,63 +18,33 @@ export default function Button({
     }
   };
   return (
-    <>
-      {flat === false ? (
-        <button
-          className={classNames(
-            block === true ? "tw-block" : "tw-inline-block",
-            "tw-shadow-md tw-relative tw-cursor-pointer",
-            variant === "blue" ? "tw-bg-blue-1000 tw-text-white" : "",
-            size === "sm"
-              ? "tw-text-sm tw-px-3 tw-py-2"
-              : size === "xs"
-              ? "tw-text-xs tw-px-1 tw-py-1"
-              : rounded === true
-              ? "tw-px-1 tw-py-1"
-              : "tw-text-base tw-px-3 tw-py-2",
-            rounded === true ? "tw-rounded-full" : "tw-rounded-md",
-            className
-          )}
-          onClick={handleClick}
-          {...props}
-        >
-          {loading === true ? (
-            <Loading />
-          ) : (
-            <span className="tw-cursor-pointer tw-flex tw-items-center">
-              {children}
-            </span>
-          )}
-        </button>
-      ) : (
-        <button
-          className={classNames(
-            block === true ? "tw-block" : "tw-inline-block",
-            "tw-shadow-md tw-relative tw-cursor-pointer",
-            variant === "blue" ? "tw-bg-blue-1000 tw-text-white" : "",
-            size === "sm"
-              ? "tw-text-sm tw-px-3 tw-py-2"
-              : size === "xs"
-              ? "tw-text-xs tw-px-1 tw-py-1"
-              : rounded === true
-              ? "tw-px-1 tw-py-1"
-              : "tw-text-base tw-px-3 tw-py-2",
-            rounded === true ? "tw-rounded-full" : "tw-rounded-md",
-            className
-          )}
-          onClick={handleClick}
-          {...props}
-        >
-          {loading === true ? (
-            <Loading />
-          ) : (
-            <span className="tw-cursor-pointer tw-flex tw-items-center">
-              {children}
-            </span>
-          )}
-        </button>
+    <button
+      className={classNames(
+        block === true ? "tw-block" : "tw-inline-block",
+        "tw-relative tw-cursor-pointer",
+        variant !== "custom" ? "tw-shadow-md" : "",
+        variant === "blue" ? "tw-bg-blue-1000 tw-text-white" : "",
+        size === "sm"
+          ? "tw-text-sm tw-px-3 tw-py-2"
+          : size === "xs"
+          ? "tw-text-xs tw-px-1 tw-py-1"
+          : rounded === true
+          ? "tw-px-1 tw-py-1"
+          : "tw-text-base tw-px-3 tw-py-2",
+        rounded === true ? "tw-rounded-full" : "tw-rounded-md",
+        className
       )}
-    </>
+      onClick={handleClick}
+      {...props}
+    >
+      {loading === true ? (
+        <Loading />
+      ) : (
+        <span className="tw-cursor-pointer tw-flex tw-items-center">
+          {children}
+        </span>
+      )}
+    </button>
   );
 }
 

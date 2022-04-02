@@ -1,3 +1,4 @@
+const { fuchsia } = require("tailwindcss/colors");
 const colors = require("tailwindcss/colors");
 
 module.exports = {
@@ -33,7 +34,19 @@ module.exports = {
     colors: {
       transparent: "transparent",
       current: "currentColor",
-
+      slate: colors.slate,
+      zinc: colors.zinc,
+      neutral: colors.neutral,
+      stone: colors.stone,
+      amber: colors.amber,
+      lime: colors.lime,
+      emerald: colors.emerald,
+      teal: colors.teal,
+      sky: colors.sky,
+      cyan: colors.cyan,
+      violet: colors.violet,
+      fuchsia: colors.fuchsia,
+      rose: colors.rose,
       black: colors.black,
       white: colors.white,
       gray: colors.coolGray,

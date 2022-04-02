@@ -345,8 +345,13 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
                 <SavedReplies loadReply={handleLoadReply} />
               </div>
             </Dialog>
-            <Button onClick={() => setOpenSavedReplies(true)} rounded={true}>
-              <PlusIcon className="tw-h-5 tw-w-5 tw-text-white tw-m-1"></PlusIcon>
+            <Button
+              onClick={() => setOpenSavedReplies(true)}
+              rounded={true}
+              variant="custom"
+              className="tw-bg-indigo-100 "
+            >
+              <PlusIcon className="tw-h-5 tw-w-5 tw-text-indigo-1000 tw-m-1"></PlusIcon>
             </Button>
           </div>
           <div>
@@ -354,8 +359,8 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
               size="sm"
               loading={loading}
               onClick={() => handleSend("sms")}
-              className="tw-mr-2 tw-bg-green-800 tw-text-white tw-border"
               variant="custom"
+              className="tw-bg-emerald-100 tw-text-emerald-900 tw-text-sm  tw-mr-2 tw-rounded-md tw-font-medium "
             >
               <span className="tw-flex tw-items-center tw-cursor-pointer">
                 <span className="tw-cursor-pointer">Send Text</span>
@@ -367,7 +372,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
               size="sm"
               loading={loading}
               onClick={() => handleSend("email")}
-              className="tw-bg-blue-1000 tw-border tw-text-white"
+              className="tw-bg-indigo-100 tw-text-blue-1000 tw-text-sm  tw-rounded-md tw-font-medium "
               variant="custom"
             >
               <span className="tw-flex tw-items-center tw-cursor-pointer">
