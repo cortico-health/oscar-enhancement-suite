@@ -1,6 +1,7 @@
 import { Switch } from "@headlessui/react";
 import { useState, useRef } from "preact/hooks";
 import Button from "../../core/Button";
+import Header from "./base/Header";
 
 export default function WidgetSettings() {
   const recallRef = useRef();
@@ -39,12 +40,7 @@ export default function WidgetSettings() {
     <div className="tw-min-w-[300px] tw-max-w-[450px] tw-p-4 tw-font-sans tw-h-full">
       <div className="tw-flex tw-flex-col tw-h-full tw-justify-between">
         <div>
-          <h2 className="tw-text-base tw-font-medium tw-text-gray-800 tw-m-0 tw-p-0">
-            Settings
-          </h2>
-          <p className="tw-text-sm tw-text-gray-700">
-            Configure the way the plugin works
-          </p>
+          <Header title="Settings" desc="Configure the way the plugin works" />
           <hr className="tw-my-4" />
           {/*
                     <div className="tw-flex tw-justify-between tw-w-full tw-mt-5">

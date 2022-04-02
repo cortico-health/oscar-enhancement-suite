@@ -38,7 +38,7 @@ export default function GridList({ actions, onClick, ...props }) {
           </div>
 
           <div className="tw-mt-2">
-            <p className="tw-text-lg tw-font-medium">
+            <p className="tw-text-lg tw-font-normal">
               <a href={action.href} className="focus:tw-outline-none">
                 {/* Extend touch target to entire panel */}
                 <span className="tw-absolute tw-inset-0" aria-hidden="true" />

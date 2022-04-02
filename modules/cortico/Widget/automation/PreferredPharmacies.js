@@ -6,6 +6,7 @@ import Table from "../Table.js";
 import ProgressBar from "../ProgressBar.js";
 import Alert from "../Alert.js";
 import Button from "../../../core/Button";
+import Header from "../base/Header";
 
 export default function PreferredPharmacies({ goBack, ...props }) {
   const setupPharmacies = useSelector((state) => state.setupPharmacies);
@@ -25,12 +26,10 @@ export default function PreferredPharmacies({ goBack, ...props }) {
 
   return (
     <div className="tw-font-sans">
-      <h1 className="tw-m-0 tw-p-0 tw-text-base tw-font-medium tw-text-gray-700">
-        Set Preferred Pharmacies
-      </h1>
-      <p className="tw-text-sm tw-text-gray-700 tw-text-opacity-90">
-        Apply preferred pharmacies for each given patient in the schedule
-      </p>
+      <Header
+        title="Set Preferred Pharmacies"
+        desc="Apply preferred pharmacies for each given patient in the schedule"
+      ></Header>
       <hr className="tw-my-2" />
 
       <div>

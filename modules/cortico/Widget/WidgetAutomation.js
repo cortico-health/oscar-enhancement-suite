@@ -9,6 +9,7 @@ import NotAvailable from "./base/NotAvailable";
 import GridList from "./base/GridList";
 import EligCheckImage from "../../../resources/illustrations/undraw_check_boxes.svg";
 import PharImage from "../../../resources/illustrations/undraw_medical_care.svg";
+import Header from "./base/Header";
 
 const automations = [
   {
@@ -73,14 +74,10 @@ export default function WidgetAutomation() {
     <div className="tw-p-4 tw-font-sans">
       {option === "none" ? (
         <>
-          <div>
-            <h2 className="tw-text-base tw-font-medium tw-text-gray-800 tw-m-0 tw-p-0">
-              Automations
-            </h2>
-            <p className="tw-text-sm tw-text-gray-700">
-              Replace tedious repetitive tasks with a single click
-            </p>
-          </div>
+          <Header
+            title="Automations"
+            desc="Replace tedious repetitive tasks with a single click"
+          ></Header>
           <hr className="tw-my-6" />
         </>
       ) : null}

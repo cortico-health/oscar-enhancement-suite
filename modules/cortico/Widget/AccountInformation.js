@@ -7,6 +7,7 @@ import {
 import storage from "./storage/";
 import { useSelector } from "react-redux";
 import Button from "../../core/Button";
+import Header from "./base/Header";
 
 export default function AccountInformation() {
   const [loading, setLoading] = useState(false);
@@ -44,12 +45,7 @@ export default function AccountInformation() {
     <>
       <div className="tw-p-4 tw-min-w-[450px]">
         <div className="tw-font-sans">
-          <h2 className="tw-text-base tw-font-medium tw-text-gray-800 tw-m-0 tw-p-0">
-            Account
-          </h2>
-          <p className="tw-text-sm tw-text-gray-700">
-            Your account information
-          </p>
+          <Header title="Account" desc="Account related information" />
           <hr className="tw-my-4" />
           <div className="tw-flex tw-w-full tw-items-start">
             <span className="tw-text-xl tw-flex-shrink-0 tw-h-24 tw-w-24 tw-mx-auto  tw-rounded-full tw-overflow-hidden tw-bg-gray-100 tw-flex tw-items-center tw-justify-center tw-text-gray-900 tw-font-medium">
@@ -85,14 +81,12 @@ export default function AccountInformation() {
             <p className="tw-font-normal">{username}</p>
           </div>
         </div>
-
         <div className="tw-w-full tw-flex tw-justify-end tw-mt-4 tw-font-sans">
           <Button onClick={handleSignOut} size="sm" loading={loading}>
             <LockOpenIcon className="tw-inline-block tw-mr-2 tw-text-white tw-h-4 tw-w-4 tw-opacity-50"></LockOpenIcon>
             Sign Out
           </Button>
         </div>
-
         <div className="tw-flex tw-justify-between tw-mt-8 tw-font-sans">
           <p className="tw-text-sm tw-text-center tw-font-semibold">
             &copy; <span className="tw-text-blue-1000">Cortico</span>
