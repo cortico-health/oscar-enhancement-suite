@@ -4,7 +4,9 @@ import { CheckIcon } from "../Icons/HeroIcons.js";
 
 function SuccessWindow() {
   const refresh = () => {
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    });
   };
 
   useEffect(() => {

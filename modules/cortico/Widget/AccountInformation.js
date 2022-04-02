@@ -42,7 +42,7 @@ export default function AccountInformation() {
 
   return (
     <>
-      <div className="tw-p-4">
+      <div className="tw-p-4 tw-min-w-[450px]">
         <div className="tw-font-sans">
           <h2 className="tw-text-base tw-font-medium tw-text-gray-800 tw-m-0 tw-p-0">
             Account
@@ -85,26 +85,24 @@ export default function AccountInformation() {
             <p className="tw-font-normal">{username}</p>
           </div>
         </div>
-        <div className="tw-flex tw-font-sans tw-w-full tw-items-start tw-h-full tw-min-w-[450px]">
-          <div className="tw-flex tw-flex-col tw-w-full tw-justify-between tw-h-full">
-            <div className="tw-w-full tw-flex tw-justify-end tw-mt-4">
-              <Button onClick={handleSignOut} size="sm" loading={loading}>
-                <LockOpenIcon className="tw-inline-block tw-mr-2 tw-text-white tw-h-4 tw-w-4 tw-opacity-50"></LockOpenIcon>
-                Sign Out
-              </Button>
-            </div>
-            <div className="tw-flex tw-justify-between tw-mt-8">
-              <p className="tw-text-sm tw-text-gray-500 tw-text-center tw-font-semibold">
-                &copy; <span className="tw-text-blue-1000">Cortico</span>
-              </p>
-              <a
-                href="mailto:help@cortico.health"
-                className="tw-text-blue-1000 tw-text-sm tw-font-normal"
-              >
-                help@cortico.health
-              </a>
-            </div>
-          </div>
+
+        <div className="tw-w-full tw-flex tw-justify-end tw-mt-4 tw-font-sans">
+          <Button onClick={handleSignOut} size="sm" loading={loading}>
+            <LockOpenIcon className="tw-inline-block tw-mr-2 tw-text-white tw-h-4 tw-w-4 tw-opacity-50"></LockOpenIcon>
+            Sign Out
+          </Button>
+        </div>
+
+        <div className="tw-flex tw-justify-between tw-mt-8 tw-font-sans">
+          <p className="tw-text-sm tw-text-center tw-font-semibold">
+            &copy; <span className="tw-text-blue-1000">Cortico</span>
+          </p>
+          <a
+            href="mailto:help@cortico.health"
+            className="tw-text-blue-1000 tw-text-sm tw-font-normal"
+          >
+            help@cortico.health
+          </a>
         </div>
       </div>
     </>

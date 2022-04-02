@@ -1,6 +1,6 @@
 import { useEffect, useState } from "preact/hooks";
 
-export default function InboxDocument() {
+export default function InboxDocument({ onSuccess, onError, ...props }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -35,12 +35,14 @@ export default function InboxDocument() {
             reader.readAsDataURL(blob);
           });
         })
-        .then((data) => console.log("Doc Data", data))
+        .then((data) => onSuccess && onSuccess(data))
         .catch((error) => {
           console.error(error);
+          onError && onError(error);
         });
     } catch (error) {
       console.error(error);
+      onError && onError(error);
     } finally {
       setLoading(false);
     }

@@ -18,6 +18,14 @@ import { getDemographicNo } from "../Utils/Utils";
 import FeatureDetector from "../cortico/Widget/adapters/FeatureDetecter";
 import InboxDocument from "../cortico/Widget/adapters/InboxDocument";
 
+class MessengerError extends Error {
+  constructor(title, message) {
+    super(message);
+    this.name = "MessengerError";
+    this.title = title;
+  }
+}
+
 function MessengerWindow({ encounter: encounterOption, ...props }) {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState();
@@ -37,52 +45,34 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
   const { clinic_name: clinicName } = useSelector((state) => state.app);
 
   const submitData = async (scheme) => {
-    if (!to && scheme === "email") {
-      dispatch({
-        type: "notifications/add",
-        payload: {
-          type: "error",
-          message: "Please enter a email address",
-          title: "Recipient required",
-          id: nanoid(),
-        },
-      });
-      return;
-    }
-
-    if (!phone && scheme === "sms") {
-      dispatch({
-        type: "notifications/add",
-        payload: {
-          type: "error",
-          message: "Please enter a phone number",
-          title: "Phone required",
-          id: nanoid(),
-        },
-      });
-      return;
-    }
-
-    if (scheme === "email") {
-      const RFC_5322 = new RegExp(
-        '^(([^<>()\\[\\]\\\\.,;:\\s@"]+(\\.[^<>()[]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$'
-      );
-      if (RFC_5322.test(to) !== true) {
-        dispatch({
-          type: "notifications/add",
-          payload: {
-            type: "error",
-            message: "Please enter a valid email address",
-            title: "Not a valid email address",
-            id: nanoid(),
-          },
-        });
-        return;
-      }
-    }
-
     try {
       setLoading(true);
+
+      if (!to && scheme === "email") {
+        throw new MessengerError(
+          "Recipient required",
+          "Please enter a email address"
+        );
+      }
+
+      if (!phone && scheme === "sms") {
+        throw new MessengerError(
+          "Phone required",
+          "Please enter a phone number"
+        );
+      }
+
+      if (scheme === "email") {
+        const RFC_5322 = new RegExp(
+          '^(([^<>()\\[\\]\\\\.,;:\\s@"]+(\\.[^<>()[]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$'
+        );
+        if (RFC_5322.test(to) !== true) {
+          throw new MessengerError(
+            "Not a valid email address",
+            "Please enter a valid email address"
+          );
+        }
+      }
 
       await new Promise((resolve) => {
         setTimeout(resolve(true), 1000);
@@ -90,16 +80,10 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
 
       const clinicHost = getCorticoUrl();
       if (!clinicHost) {
-        dispatch({
-          type: "notifications/add",
-          payload: {
-            type: "error",
-            message: "Could not get clinic host",
-            title: "Please try signing in again. Otherwise, please contact us",
-            id: nanoid(),
-          },
-        });
-        return;
+        throw new MessengerError(
+          "Could not get clinic host",
+          "Please try signing in again. Otherwise, please contact us"
+        );
       }
 
       const data = {
@@ -117,16 +101,10 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
       const token = await loadExtensionStorageValue("jwt_access_token");
 
       if (!token) {
-        dispatch({
-          type: "notifications/add",
-          payload: {
-            type: "error",
-            message: "Could not get access token",
-            title: "Please try signing in again. Otherwise, please contact us",
-            id: nanoid(),
-          },
-        });
-        return;
+        throw new MessengerError(
+          "Could not get access token",
+          "Please try signing in again. Otherwise, please contact us"
+        );
       }
 
       if (document === true) {
@@ -138,83 +116,55 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         try {
           data.pdf_html = await setFormInputValueAttributes(clone);
         } catch (error) {
-          dispatch({
-            type: "notifications/add",
-            payload: {
-              type: "error",
-              message: "Error Parsing",
-              title: "There was an error parsing this eform",
-              id: nanoid(),
-            },
-          });
-          return;
+          throw new MessengerError(
+            "Error Parsing",
+            "There was an error parsing this eform"
+          );
         }
       }
 
-      try {
-        let result = null;
+      let result = null;
+      if (scheme === "email") {
+        result = await sendEmail(data, token);
+      } else if (scheme === "sms") {
+        result = await sendMessage(data, token);
+      }
 
+      if (result.status === 200) {
+        let message = null;
         if (scheme === "email") {
-          result = await sendEmail(data, token);
+          message = "Email has been sent";
         } else if (scheme === "sms") {
-          console.log("SMS Result", result);
-          result = await sendMessage(data, token);
+          message = "SMS has been sent";
         }
-
-        if (result.status === 200) {
-          let message = null;
-          if (scheme === "email") {
-            message = "Email has been sent";
-          } else if (scheme === "sms") {
-            message = "SMS has been sent";
-          }
-          dispatch({
-            type: "notifications/add",
-            payload: {
-              type: "success",
-              message,
-              title: "Success!",
-              id: nanoid(),
-            },
-          });
-          return;
-        } else {
-          let errorResponse = null;
-          try {
-            errorResponse = await result.json();
-          } catch (error) {
-            throw Error(
-              `Server responded with ${result.status} without a valid response`
-            );
-          }
-
-          let title = "Email not sent";
-          if (scheme === "sms") {
-            title = "SMS not sent";
-          }
-          dispatch({
-            type: "notifications/add",
-            payload: {
-              type: "error",
-              message:
-                errorResponse.message || errorResponse?.messages[0]?.message,
-              title,
-              id: nanoid(),
-            },
-          });
-          return;
-        }
-      } catch (error) {
         dispatch({
           type: "notifications/add",
           payload: {
-            type: "error",
-            message: error.toString(),
-            title: "Email not sent",
+            type: "success",
+            message,
+            title: "Success!",
             id: nanoid(),
           },
         });
-        return;
+      } else {
+        let errorResponse = null;
+        try {
+          errorResponse = await result.json();
+        } catch (error) {
+          throw new MessengerErrorError(
+            `Error Occured`,
+            `Server responded with ${result.status} without a valid response`
+          );
+        }
+
+        let title = "Email not sent";
+        if (scheme === "sms") {
+          title = "SMS not sent";
+        }
+        throw new MessengerError(
+          title,
+          errorResponse.message || errorResponse?.messages[0]?.message
+        );
       }
     } catch (error) {
       console.error(error);
@@ -222,8 +172,8 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         type: "notifications/add",
         payload: {
           type: "error",
-          message: error.toString(),
-          title: "Error Occurred",
+          message: error.message || error.toString(),
+          title: error.title || "Error Occured",
           id: nanoid(),
         },
       });
