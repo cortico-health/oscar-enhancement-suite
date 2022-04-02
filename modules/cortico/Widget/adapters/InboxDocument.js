@@ -21,8 +21,22 @@ export default function InboxDocument({ onSuccess, onError, ...props }) {
         throw Error("Could not get Document URL");
       }
 
+      let fileName = null;
+
       fetch(href)
-        .then((r) => r.blob())
+        .then((r) => {
+          try {
+            const contentDisposition = r.headers.get("Content-Disposition");
+            if (contentDisposition.includes("filename")) {
+              fileName = contentDisposition
+                .match(/(?:"[^"]*"|^[^"]*$)/)[0]
+                .replace(/"/g, "");
+            }
+          } catch (error) {
+            console.error(error);
+          }
+          return r.blob();
+        })
         .then((blob) => {
           return new Promise((resolve, reject) => {
             let reader = new FileReader();
@@ -35,7 +49,7 @@ export default function InboxDocument({ onSuccess, onError, ...props }) {
             reader.readAsDataURL(blob);
           });
         })
-        .then((data) => onSuccess && onSuccess(data))
+        .then((data) => onSuccess && onSuccess({ name: fileName, data }))
         .catch((error) => {
           console.error(error);
           onError && onError(error);

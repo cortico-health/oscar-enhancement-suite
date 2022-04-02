@@ -107,7 +107,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         );
       }
 
-      if (document === true) {
+      if (document === true || inboxDocument === true) {
         data.attachment = attachment.data;
       } else if (eform === true && attachment) {
         const clone = window.document.cloneNode(true);
@@ -253,9 +253,23 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
     });
     setOpenSavedReplies(false);
   };
+
+  const handleInboxDoc = (doc) => {
+    console.log("Succes Doc", doc);
+    if (doc && !attachment) {
+      handleChange("attachment", {
+        name: doc.name,
+        data: doc.data,
+      });
+    }
+    console.log("Inbox Document?", inboxDocument);
+  };
+
   return (
     <div className="tw-m-0 no-print">
-      {inboxDocument === true ? <InboxDocument></InboxDocument> : null}
+      {inboxDocument === true ? (
+        <InboxDocument onSuccess={handleInboxDoc}></InboxDocument>
+      ) : null}
       <div>
         <div>
           <div>
