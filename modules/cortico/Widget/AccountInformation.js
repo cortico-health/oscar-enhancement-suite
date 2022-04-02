@@ -52,7 +52,7 @@ export default function AccountInformation() {
           </p>
           <hr className="tw-my-4" />
           <div className="tw-flex tw-w-full tw-items-start">
-            <span className="tw-flex-shrink-0 tw-border tw-shadow-xl tw-h-24 tw-w-24 tw-mx-auto  tw-rounded-full tw-overflow-hidden tw-bg-gray-50 tw-flex tw-items-center tw-justify-center tw-text-gray-900 tw-font-medium">
+            <span className="tw-text-xl tw-flex-shrink-0 tw-h-24 tw-w-24 tw-mx-auto  tw-rounded-full tw-overflow-hidden tw-bg-gray-100 tw-flex tw-items-center tw-justify-center tw-text-gray-900 tw-font-medium">
               {clinicName
                 .split(" ")
                 .map((n) => n[0])
