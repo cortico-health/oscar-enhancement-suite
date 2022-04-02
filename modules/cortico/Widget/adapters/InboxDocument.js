@@ -22,6 +22,7 @@ export default function InboxDocument({ onSuccess, onError, ...props }) {
       }
 
       let fileName = null;
+      let extension = null;
 
       fetch(href)
         .then((r) => {
@@ -31,6 +32,10 @@ export default function InboxDocument({ onSuccess, onError, ...props }) {
               fileName = contentDisposition
                 .match(/(?:"[^"]*"|^[^"]*$)/)[0]
                 .replace(/"/g, "");
+
+              if (fileName) {
+                extension = fileName.split(".").pop();
+              }
             }
           } catch (error) {
             console.error(error);
@@ -49,7 +54,9 @@ export default function InboxDocument({ onSuccess, onError, ...props }) {
             reader.readAsDataURL(blob);
           });
         })
-        .then((data) => onSuccess && onSuccess({ name: fileName, data }))
+        .then(
+          (data) => onSuccess && onSuccess({ name: fileName, data, extension })
+        )
         .catch((error) => {
           console.error(error);
           onError && onError(error);
