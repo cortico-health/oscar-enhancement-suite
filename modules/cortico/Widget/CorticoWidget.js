@@ -116,7 +116,7 @@ function App({ disabledFeatures = [], ...props }) {
           ) : (
             <Draggable onDrag={() => setDragging(true)} onStop={handleDragStop}>
               <div
-                className="tw-p-4 tw-cursor-pointer tw-rounded-full tw-bg-gradient-to-bl tw-from-indigo-600 tw-to-blue-1000 tw-bg-blue-1000 tw-shadow-xl"
+                className="tw-p-4 tw-cursor-pointer tw-rounded-full tw-bg-gradient-to-bl tw-from-indigo-500 tw-to-blue-1000 tw-bg-blue-1000 tw-shadow-xl"
                 onClick={handleOpen}
               >
                 <img
