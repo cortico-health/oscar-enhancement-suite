@@ -186,7 +186,8 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
             type: "notifications/add",
             payload: {
               type: "error",
-              message: errorResponse.message,
+              message:
+                errorResponse.message || errorResponse?.messages[0]?.message,
               title,
               id: nanoid(),
             },
