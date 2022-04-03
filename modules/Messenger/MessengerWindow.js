@@ -113,6 +113,22 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         const clone = window.document.cloneNode(true);
         const widget = clone.querySelector(".cortico-widget");
         widget.parentNode.removeChild(widget);
+
+        /* Eform Letter Head Begin */
+        const richTextLetterForm = clone.querySelector(
+          `form[name="RichTextLetter"]`
+        );
+        const iframe = window.document.querySelector("iframe#edit");
+        if (richTextLetterForm && iframe) {
+          clone.querySelector("iframe")?.remove();
+          clone.querySelector("table")?.remove();
+          const iframeClone = iframe.contentDocument.cloneNode(true);
+          clone
+            .querySelector("body")
+            .appendChild(iframeClone.querySelector("body"));
+        }
+        /* Eform Letter Head End */
+
         try {
           data.pdf_html = await setFormInputValueAttributes(clone);
         } catch (error) {
