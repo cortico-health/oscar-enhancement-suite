@@ -121,7 +121,8 @@ function App({ disabledFeatures = [], ...props }) {
               >
                 <img
                   draggable={false}
-                  className="tw-h-8 tw-w-8 tw-cursor-pointer tw-select-none"
+                  dragstart={false}
+                  className="tw-h-8 tw-w-8 tw-cursor-pointer tw-select-none tw-pointer-events-none"
                   src={CorticoImg}
                 />
               </div>
