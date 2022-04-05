@@ -22,9 +22,27 @@ export default function SendDocument({ node, ...props }) {
     const documentSpace = window.location.pathname.split("/")[2];
     const baseUrl = getBaseUrl();
     const url = `${baseUrl}/${documentSpace}/${nodeHtml}`;
+    let fileName = null;
+    let extension = null;
 
     try {
-      const blob = await fetch(url).then((r) => r.blob());
+      const blob = await fetch(url).then((r) => {
+        try {
+          const contentDisposition = r.headers.get("Content-Disposition");
+          if (contentDisposition.includes("filename")) {
+            fileName = contentDisposition
+              .match(/(?:"[^"]*"|^[^"]*$)/)[0]
+              .replace(/"/g, "");
+
+            if (fileName) {
+              extension = fileName.split(".").pop();
+            }
+          }
+        } catch (error) {
+          console.error(error);
+        }
+        return r.blob();
+      });
       const dataUrl = await new Promise((resolve, reject) => {
         let reader = new FileReader();
         reader.addEventListener("load", (evt) => {
@@ -50,8 +68,9 @@ export default function SendDocument({ node, ...props }) {
         type: "messenger/setAll",
         payload: {
           attachment: {
-            name: node.textContent,
+            name: fileName || node.textContent,
             data: dataUrl,
+            extension,
           },
           document: true,
         },

@@ -109,6 +109,13 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
 
       if (document === true || inboxDocument === true) {
         data.attachment = attachment.data;
+        if (attachment.extension) {
+          data.extension = attachment.extension;
+        }
+
+        if (data.attachment && !data.body) {
+          data.body += "\nThe file link will only be valid for 7 days.\n";
+        }
       } else if (eform === true && attachment) {
         const clone = window.document.cloneNode(true);
         const widget = clone.querySelector(".cortico-widget");
@@ -276,6 +283,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
       handleChange("attachment", {
         name: doc.name,
         data: doc.data,
+        extension: doc.extension,
       });
     }
     console.log("Inbox Document?", inboxDocument);
