@@ -9,11 +9,10 @@ export default function Textarea({
   placeholder = "Type here",
   label,
   rows = 6,
+  value,
   ...props
 }) {
-  const [value, setValue] = useState();
   const handleChange = (evt) => {
-    setValue(evt.target.value);
     onChange && onChange(evt.target.value);
   };
 
@@ -33,6 +32,7 @@ export default function Textarea({
         onChange={handleChange}
         rows={rows}
         defaultValue={defaultValue}
+        value={value}
         {...props}
       ></textarea>
     </>

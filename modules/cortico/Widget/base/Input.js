@@ -21,15 +21,13 @@ const Input = forwardRef(
       registerOpts = {},
       units = "",
       onChange,
+      value,
       ...props
     },
     ref
   ) => {
-    const [value, setValue] = useState();
     const handleChange = (evt) => {
-      const newValue = evt.target.value;
-      setValue(newValue);
-      onChange && onChange(newValue);
+      onChange && onChange(evt.target.value);
     };
     return (
       <>

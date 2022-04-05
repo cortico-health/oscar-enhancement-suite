@@ -267,6 +267,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
   }, [clinicName]);
 
   const handleLoadReply = (reply) => {
+    console.log("Load Reply", reply);
     dispatch({
       type: "messenger/setAll",
       payload: {
@@ -300,6 +301,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
             <Input
               type="email"
               placeholder="To"
+              value={to}
               onChange={(val) => handleChange("to", val)}
               defaultValue={to}
             />
@@ -309,6 +311,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
               type="text"
               placeholder="Phone"
               onChange={(val) => handleChange("phone", val)}
+              value={phone}
               defaultValue={phone}
             />
           </div>
@@ -317,12 +320,14 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
             <Input
               placeholder="Subject"
               onChange={(val) => handleChange("subject", val)}
+              value={subject}
               defaultValue={subject}
             ></Input>
           </div>
           <hr className="tw-opacity-10" />
           <div className="tw-relative tw-mt-4">
             <Textarea
+              value={body}
               onChange={(val) => handleChange("body", val)}
               defaultValue={body}
               placeholder="Enter message here"
