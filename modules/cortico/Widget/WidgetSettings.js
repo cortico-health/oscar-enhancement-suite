@@ -75,7 +75,7 @@ export default function WidgetSettings() {
           <div className="tw-flex tw-justify-between tw-w-full tw-mt-7">
             <label className="tw-flex tw-justify-between tw-w-full tw-items-center tw-space-x-20">
               <span className="tw-text-gray-700 tw-text-sm">
-                Appointment Type Reminder
+                Default Appointment Medium
               </span>
               <select
                 ref={mediumRef}
