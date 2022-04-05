@@ -8,7 +8,9 @@ function Documents({ name, onDelete }) {
         <div className="tw-flex">
           <PaperClipIcon className="tw-text-gray-800 tw-w-6 tw-h-6"></PaperClipIcon>
           <div className="tw-flex tw-items-center">
-            <p className="tw-ml-2 tw-text-sm tw-text-gray-600">{name}</p>
+            <p className="tw-ml-2 tw-text-sm tw-text-gray-600 tw-max-w-[200px]">
+              {name}
+            </p>
           </div>
         </div>
         <button
