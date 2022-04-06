@@ -17,7 +17,7 @@ import SavedReplies from "./SavedReplies";
 import { getDemographicNo } from "../Utils/Utils";
 import FeatureDetector from "../cortico/Widget/adapters/FeatureDetecter";
 import InboxDocument from "../cortico/Widget/adapters/InboxDocument";
-
+import Encounter from "../core/Encounter";
 class MessengerError extends Error {
   constructor(title, message) {
     super(message);
@@ -169,6 +169,15 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
             id: nanoid(),
           },
         });
+
+        if (encounter === true) {
+          Encounter.addToCaseNote(body).catch((error) => {
+            throw new MessengerErrorError(
+              `Failed to add encounter notes`,
+              error
+            );
+          });
+        }
       } else {
         let errorResponse = null;
         try {
@@ -341,6 +350,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
                   <Checkbox
                     label="Copy Message To Encounter"
                     defaultChecked={encounter}
+                    onChange={(val) => handleChange("encounter", val)}
                   />
                 </div>
               ) : (
