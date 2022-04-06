@@ -156,6 +156,8 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         }
         /* Eform Letter Head End */
 
+        data.body += "\nThe file link will only be valid for 7 days.\n";
+
         try {
           data.pdf_html = await setFormInputValueAttributes(clone);
         } catch (error) {
