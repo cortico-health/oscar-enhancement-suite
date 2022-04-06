@@ -45,6 +45,25 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
   const [patientInfo, setPatientInfo] = useState(null);
   const { clinic_name: clinicName } = useSelector((state) => state.app);
 
+  const handleEncounter = () => {
+    const prefix = `\n\n[${dayjs().format(
+      "DD-MM-YYYY, HH:mm:ss"
+    )} .: ${scheme} sent to patient]\n${subject}:\n\n`;
+
+    const suffix = `-------------------------------------------\n`;
+
+    Encounter.addToCaseNote(prefix + body + suffix)
+      .then(() => {
+        const caseNote = Encounter.getCaseNote();
+        if (caseNote) {
+          caseNote.focus();
+        }
+      })
+      .catch((error) => {
+        throw new MessengerErrorError(`Failed to add encounter notes`, error);
+      });
+  };
+
   const submitData = async (scheme) => {
     try {
       setLoading(true);
@@ -172,16 +191,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         });
 
         if (encounter === true) {
-          const prefix = `\n\n[${dayjs().format(
-            "DD-MM-YYYY, HH:mm:ss"
-          )} .: ${scheme} sent to patient]\n${subject}:\n\n`;
-
-          Encounter.addToCaseNote(prefix + body).catch((error) => {
-            throw new MessengerErrorError(
-              `Failed to add encounter notes`,
-              error
-            );
-          });
+          handleEncounter();
         }
       } else {
         let errorResponse = null;

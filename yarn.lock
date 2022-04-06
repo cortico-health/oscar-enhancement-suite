@@ -3233,6 +3233,11 @@ terser@^5.7.2:
     source-map "~0.7.2"
     source-map-support "~0.5.20"
 
+textarea-autogrow@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/textarea-autogrow/-/textarea-autogrow-1.0.0.tgz#cda08e884809f7481750f347ff9c71e4db2c6918"
+  integrity sha1-zaCOiEgJ90gXUPNH/5xx5NssaRg=
+
 to-fast-properties@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/to-fast-properties/-/to-fast-properties-2.0.0.tgz#dc5e698cbd079265bc73e0377681a4e4e83f616e"
