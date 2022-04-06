@@ -9,6 +9,11 @@ import store from "./store/store.js";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import Draggable from "react-draggable";
 import SetupDocuments from "./features/Documents/SetupDocuments";
+import { BroadcastChannel } from "broadcast-channel";
+import { nanoid } from "nanoid";
+
+const uid = nanoid();
+
 function App({ disabledFeatures = [], ...props }) {
   const { open } = useSelector((state) => state.app);
   const containerRef = useRef();
@@ -96,6 +101,33 @@ function App({ disabledFeatures = [], ...props }) {
       setDragging(false);
     }, 100);
   };
+
+  useEffect(() => {
+    dispatch({
+      type: "app/set",
+      payload: {
+        uid,
+      },
+    });
+  }, []);
+
+  useEffect(() => {
+    const authChannel = new BroadcastChannel("cortico/oes/auth");
+    authChannel.addEventListener("message", (data) => {
+      if (uid !== data.uid) {
+        dispatch({
+          type: "app/set",
+          payload: {
+            refresh: data,
+          },
+        });
+      }
+    });
+
+    return () => {
+      authChannel.close();
+    };
+  }, []);
 
   return (
     <div className="cleanslate cortico-widget no-print DoNotPrint">

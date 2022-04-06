@@ -1,7 +1,9 @@
 import { useState } from "preact/hooks";
 import LoginWindow from "./LoginWindow";
 import SuccessWindow from "./SuccessWindow";
+import { useSelector } from "react-redux";
 import { saveExtensionStorageValue, getCorticoUrl } from "../Utils/Utils";
+import { BroadcastChannel } from "broadcast-channel";
 
 async function signInRequest(username, password) {
   const data = {
@@ -24,6 +26,7 @@ function Login() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
+  const { uid } = useSelector((state) => state.app);
 
   const handleSubmit = async (data) => {
     setError(null);
@@ -50,6 +53,13 @@ function Login() {
 
       setLoading(false);
       setSuccess(true);
+      const authChannel = new BroadcastChannel("cortico/oes/auth");
+      authChannel.postMessage({
+        title: "Sign In Detected",
+        description: "Refresh is required to have the plugin working smoothly",
+        uid,
+      });
+      authChannel.close();
 
       if (remember) {
         localStorage.setItem("rememberMe", true);

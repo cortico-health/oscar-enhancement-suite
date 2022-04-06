@@ -26,6 +26,7 @@
     "@tailwindcss/line-clamp": "^0.3.1",
     "autoprefixer": "^10.4.2",
     "babel-loader": "^8.2.2",
+    "broadcast-channel": "^4.10.0",
     "classnames": "^2.3.1",
     "cleanslate": "^0.10.1",
     "core-js": "^3.21.1",
