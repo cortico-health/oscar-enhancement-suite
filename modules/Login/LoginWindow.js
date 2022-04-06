@@ -72,6 +72,7 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
               <div className="tw-flex tw-items-center tw-space-x-4">
                 <div className="tw-text-base tw-text-gray-500">https://</div>
                 <input
+                  autoComplete={false}
                   defaultValue={remClinicName}
                   ref={clinicNameRef}
                   id="clinicname"
@@ -83,6 +84,7 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
                 />
                 <div>.</div>
                 <input
+                  autoComplete={false}
                   defaultValue={remSuffix || "cortico.ca"}
                   ref={suffixRef}
                   id="customurlsuffix"
@@ -102,6 +104,7 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
         <div>
           <div className="tw-mt-4">
             <input
+              autoComplete={false}
               defaultValue={remUsername}
               ref={username}
               id="username"
@@ -110,13 +113,14 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
               placeholder="Username"
               required
               autocomplete
-              class="tw-text-base placeholder:tw-text-base tw-appearance-none tw-block tw-w-full tw-px-3 tw-py-3 tw-border tw-border-gray-300 tw-rounded-t-md tw-shadow-sm tw-placeholder-gray-400 tw-focus:outline-none tw-focus:ring-indigo-500 tw-focus:border-indigo-500 tw-sm:text-sm tw-border-b-0"
+              className="tw-text-gray-700 tw-text-base placeholder:tw-text-base tw-appearance-none tw-block tw-w-full tw-px-3 tw-py-3 tw-border tw-border-gray-300 tw-rounded-t-md tw-shadow-sm tw-placeholder-gray-400 tw-focus:outline-none tw-focus:ring-indigo-500 tw-focus:border-indigo-500 tw-sm:text-sm tw-border-b-0"
             />
           </div>
         </div>
         <div>
           <div className="">
             <input
+              autoComplete={false}
               ref={password}
               id="password"
               name="password"
@@ -124,7 +128,7 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
               autocomplete
               required
               placeholder="Enter your password"
-              class="tw-text-base placeholder:tw-text-base tw-appearance-none tw-block tw-w-full tw-px-3 tw-py-3 tw-border tw-border-gray-300 tw-rounded-b-md tw-shadow-sm tw-placeholder-gray-400 tw-focus:outline-none tw-focus:ring-indigo-500 tw-focus:border-indigo-500 tw-sm:text-sm"
+              className="tw-text-gray-700 tw-text-base placeholder:tw-text-base tw-appearance-none tw-block tw-w-full tw-px-3 tw-py-3 tw-border tw-border-gray-300 tw-rounded-b-md tw-shadow-sm tw-placeholder-gray-400 tw-focus:outline-none tw-focus:ring-indigo-500 tw-focus:border-indigo-500 tw-sm:text-sm"
             />
           </div>
         </div>
@@ -162,7 +166,7 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
         <div>
           <button
             type="submit"
-            class="tw-w-full tw-mt-4 tw-flex tw-justify-center tw-py-2 tw-px-4 tw-border tw-border-transparent tw-rounded-md tw-shadow-sm tw-text-base tw-font-medium tw-text-white tw-bg-blue-1000 tw-hover:bg-indigo-700 tw-focus:outline-none tw-focus:ring-2 tw-focus:ring-offset-2 tw-focus:ring-indigo-500 tw-relative"
+            class="tw-w-full tw-mt-4 tw-flex tw-justify-center tw-py-2 tw-px-4 tw-border tw-border-transparent tw-rounded-md tw-shadow-sm tw-text-base tw-font-medium tw-text-blue-1000 tw-bg-indigo-200 tw-hover:bg-indigo-700 tw-focus:outline-none tw-focus:ring-2 tw-focus:ring-offset-2 tw-focus:ring-indigo-500 tw-relative tw-border"
           >
             {loading === true ? (
               <span className="tw-flex tw-justify-center">
@@ -189,7 +193,7 @@ function LoginWindow({ onSubmit, error, loading, errorMessage, ...props }) {
               </span>
             ) : (
               <div className="tw-flex tw-justify-center tw-items-center tw-cursor-pointer">
-                <LockClosedIcon className="tw-inline-block tw-mr-4 tw-text-white tw-h-8 tw-w-8 tw-absolute tw-left-0 tw-top-[50%] tw-pl-2 tw-opacity-50 tw-translate-y-[-50%]"></LockClosedIcon>
+                <LockClosedIcon className="tw-inline-block tw-mr-4 tw-text-blue-1000 tw-h-8 tw-w-8 tw-absolute tw-left-0 tw-top-[50%] tw-pl-2 tw-opacity-50 tw-translate-y-[-50%]"></LockClosedIcon>
                 <span className="tw-cursor-pointer">Sign in</span>
               </div>
             )}

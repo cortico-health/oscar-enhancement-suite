@@ -8,6 +8,7 @@ import ProgressBar from "../ProgressBar.js";
 import Alert from "../Alert.js";
 import { useSelector } from "react-redux";
 import NoAppointments from "./NoAppointments";
+import Header from "../base/Header.js";
 
 export default function EligbilityCheck({ goBack, ...props }) {
   const eligCheck = useSelector((state) => state.eligCheck);
@@ -25,13 +26,11 @@ export default function EligbilityCheck({ goBack, ...props }) {
   return (
     <div className="tw-font-sans">
       <div>
-        <h2 className="tw-text-xl tw-font-medium tw-text-gray-700 tw-m-0 tw-p-0">
-          Eligibility Check
-        </h2>
-        <p className="tw-text-sm tw-text-gray-700 tw-max-w-[300px]">
-          Verifies the validity of all MSP numbers for the current schedule
-        </p>
-        <hr className="tw-my-2" />
+        <Header
+          title="Eligibility Checker"
+          desc="Verifies the validity of all MSP numbers for the current schedule"
+        />
+        <hr className="tw-my-6" />
         <div>
           {eligCheck.empty === true ? (
             <NoAppointments goBack={goBack} title="No Appointments To Check">

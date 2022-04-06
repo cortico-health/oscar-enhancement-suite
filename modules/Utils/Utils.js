@@ -46,6 +46,15 @@ export function getNamespace() {
   return window.location.pathname.split("/")[1];
 }
 
+export function getBaseUrl() {
+  const origin = getOrigin();
+  if (origin.includes("skymedical")) {
+    return "/";
+  }
+  const namespace = getNamespace();
+  return `${origin}/${namespace}/`;
+}
+
 export function getCorticoUrl() {
   // FOR TESTING:
 
@@ -227,20 +236,6 @@ export function addToCache(demographic_no, _verified) {
   window.localStorage.setItem("checkCache", JSON.stringify(cache));
 }
 
-export function createSidebarContainer(child, events) {
-  var html = child ? (typeof child === "string" ? child : child.outerHTML) : "";
-  var events = events ? events : {};
-
-  var container = create(
-    `<div style='width: 100%; padding: 0px 10px; box-sizing: border-box'>
-    ${html}
-  </div>`,
-    events
-  );
-
-  return container;
-}
-
 export function checkCorticoUrl(event) {
   if (!getCorticoUrl()) {
     return false;
@@ -387,4 +382,24 @@ export function getAccountProviderNo() {
   const providerNoString = providerNoStrings[0];
   const providerNo = providerNoString.replace(/[^0-9.]/g, "");
   return providerNo;
+}
+
+export async function setFormInputValueAttributes(document) {
+  document.querySelectorAll("input").forEach((input) => {
+    input.setAttribute("value", input.value);
+
+    if (input.checked === true) {
+      input.setAttribute("checked", true);
+    }
+  });
+  document.querySelectorAll("textarea").forEach((input) => {
+    input.innerHTML = input.value;
+  });
+
+  document.querySelectorAll("select").forEach((input) => {
+    input.setAttribute("value", input.value);
+  });
+  await convertImagesToDataURLs(document);
+  stripScripts(document);
+  return document.documentElement.outerHTML;
 }

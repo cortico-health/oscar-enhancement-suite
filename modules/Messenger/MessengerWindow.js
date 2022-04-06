@@ -1,208 +1,386 @@
-import { useState, useEffect, useRef } from "preact/hooks";
-import { forwardRef } from "preact/compat";
-
-import Chat from "./ChatInput";
-import Subject from "./SubjectInput";
-import Header from "./Header";
-import To from "./ToInput";
-import Loader from "./Loader";
+import { useState, useEffect } from "preact/hooks";
 import { MailIcon, TextIcon, PlusIcon } from "../Icons/HeroIcons";
-import {
-  getCorticoUrl,
-  convertImagesToDataURLs,
-  stripScripts,
-} from "../Utils/Utils";
+import { getCorticoUrl } from "../Utils/Utils";
 import Documents from "./Documents";
-import { setupEFormPage } from "../Utils/Utils";
+import Input from "../../modules/cortico/Widget/base/Input";
+import Textarea from "../cortico/Widget/base/Textarea";
+import Checkbox from "../cortico/Widget/base/Checkbox";
+import Button from "../core/Button";
+import { setFormInputValueAttributes } from "../Utils/Utils";
+import { useDispatch, useSelector } from "react-redux";
+import { sendEmail, sendMessage } from "../Api/Api";
+import { loadExtensionStorageValue } from "../Utils/Utils";
+import { getPatientInfo } from "../../cortico";
+import { nanoid } from "nanoid";
+import Dialog from "../cortico/Widget/features/Dialog/Dialog";
+import SavedReplies from "./SavedReplies";
+import { getDemographicNo } from "../Utils/Utils";
+import FeatureDetector from "../cortico/Widget/adapters/FeatureDetecter";
+import InboxDocument from "../cortico/Widget/adapters/InboxDocument";
+import Encounter from "../core/Encounter";
+import dayjs from "dayjs";
+class MessengerError extends Error {
+  constructor(title, message) {
+    super(message);
+    this.name = "MessengerError";
+    this.title = title;
+  }
+}
 
-const EncounterOption = forwardRef((props, ref) => {
-  return (
-    <label class="tw-inline-flex tw-items-center">
-      <input
-        ref={ref}
-        type="checkbox"
-        class="
-                tw-h-5
-                tw-w-5
-                tw-form-checkbox
-                form-checkbox
-                tw-rounded
-                tw-text-indigo-600
-                tw-shadow-sm
-                tw-focus:border-cortico-blue
-                tw-focus:ring
-                tw-focus:ring-offset-0
-                tw-focus:ring-indigo-200
-                tw-focus:ring-opacity-50
-              "
-      />
-      <span class="tw-ml-2 tw-text-sm tw-text-gray-600">
-        Copy Message To Encounter
-      </span>
-    </label>
-  );
-});
+function MessengerWindow({ encounter: encounterOption, ...props }) {
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState();
+  const {
+    to,
+    phone,
+    subject,
+    body,
+    encounter,
+    attachment,
+    eform,
+    document,
+    inboxDocument,
+  } = useSelector((state) => state.messenger);
+  const [openSavedReplies, setOpenSavedReplies] = useState(false);
+  const [patientInfo, setPatientInfo] = useState(null);
+  const { clinic_name: clinicName } = useSelector((state) => state.app);
 
-function MessengerWindow({
-  eForm,
-  onSubmit,
-  open,
-  close,
-  patient,
-  loading,
-  showSavedReplies,
-  defaultSubject,
-  defaultBody,
-  encounter: encounterOption,
-  ...props
-}) {
-  const [email, setEmail] = useState("test@example.com");
-  console.log("Eform", eForm);
-  const [scheme, setScheme] = useState("email");
-  const to = useRef();
-  const subject = useRef();
-  const message = useRef();
-  const encounter = useRef();
+  const handleEncounter = (scheme) => {
+    const prefix = `\n\n[${dayjs().format(
+      "DD-MM-YYYY, HH:mm:ss"
+    )} .: ${scheme} sent to patient]\n${subject}:\n\n`;
 
-  const [document, setDocument] = useState(null);
-  const [documentData, setDocumentData] = useState({
-    name: null,
-    data: null,
-  });
+    const suffix = `\n-------------------------------------------\n`;
 
-  useEffect(() => {
-    if (patient?.email) {
-      console.log("Patient email found", patient);
-      setEmail(patient.email);
-    }
-  }, [patient?.email]);
-
-  const handleReply = (e) => {
-    e.preventDefault();
-    showSavedReplies && showSavedReplies();
+    Encounter.addToCaseNote(prefix + body + suffix)
+      .then(() => {
+        const caseNote = Encounter.getCaseNote();
+        if (caseNote) {
+          caseNote.focus();
+        }
+      })
+      .catch((error) => {
+        throw new MessengerError(`Failed to add encounter notes`, error);
+      });
   };
 
-  console.log("DOcument", document, eForm);
+  const submitData = async (scheme) => {
+    try {
+      setLoading(true);
 
-  const submitData = async (e) => {
-    const data = {
-      clinic_host: getCorticoUrl().replace(/http.?:\/\//, ""),
-      to: to.current.value,
-      subject: subject.current.value,
-      body: message.current.value,
-    };
+      if (!to && scheme === "email") {
+        throw new MessengerError(
+          "Recipient required",
+          "Please enter a email address"
+        );
+      }
 
-    if (document === true) {
-      data.attachment = documentData.data;
-    } else if (eForm === true) {
-      let html = window.document.cloneNode(true);
-      html.querySelectorAll("input").forEach((input) => {
-        input.setAttribute("value", input.value);
+      if (!phone && scheme === "sms") {
+        throw new MessengerError(
+          "Phone required",
+          "Please enter a phone number"
+        );
+      }
 
-        if (input.checked === true) {
-          input.setAttribute("checked", true);
+      if (scheme === "email") {
+        const RFC_5322 = new RegExp(
+          '^(([^<>()\\[\\]\\\\.,;:\\s@"]+(\\.[^<>()[]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$'
+        );
+        if (RFC_5322.test(to) !== true) {
+          throw new MessengerError(
+            "Not a valid email address",
+            "Please enter a valid email address"
+          );
+        }
+      }
+
+      await new Promise((resolve) => {
+        setTimeout(resolve(true), 1000);
+      });
+
+      const clinicHost = getCorticoUrl();
+      if (!clinicHost) {
+        throw new MessengerError(
+          "Could not get clinic host",
+          "Please try signing in again. Otherwise, please contact us"
+        );
+      }
+
+      const data = {
+        clinic_host: clinicHost.replace(/http.?:\/\//, ""),
+        to,
+        subject,
+        body,
+      };
+
+      if (scheme === "sms") {
+        data.phone = phone;
+        data.contact_type = scheme;
+      }
+
+      const token = await loadExtensionStorageValue("jwt_access_token");
+
+      if (!token) {
+        throw new MessengerError(
+          "Could not get access token",
+          "Please try signing in again. Otherwise, please contact us"
+        );
+      }
+
+      if (document === true || inboxDocument === true) {
+        data.attachment = attachment.data;
+        if (attachment.extension) {
+          data.extension = attachment.extension;
+        }
+
+        if (data.attachment && !data.body) {
+          data.body += "\nThe file link will only be valid for 7 days.\n";
+        }
+      } else if (eform === true && attachment) {
+        const clone = window.document.cloneNode(true);
+        const widget = clone.querySelector(".cortico-widget");
+        widget.parentNode.removeChild(widget);
+
+        /* Eform Letter Head Begin */
+        const richTextLetterForm = clone.querySelector(
+          `form[name="RichTextLetter"]`
+        );
+        const iframe = window.document.querySelector("iframe#edit");
+        if (richTextLetterForm && iframe) {
+          clone.querySelector("iframe")?.remove();
+          clone.querySelector("table")?.remove();
+          const iframeClone = iframe.contentDocument.cloneNode(true);
+          clone
+            .querySelector("body")
+            .appendChild(iframeClone.querySelector("body"));
+        }
+        /* Eform Letter Head End */
+
+        data.body += "\nThe file link will only be valid for 7 days.\n";
+
+        try {
+          data.pdf_html = await setFormInputValueAttributes(clone);
+        } catch (error) {
+          throw new MessengerError(
+            "Error Parsing",
+            "There was an error parsing this eform"
+          );
+        }
+      }
+
+      let result = null;
+      if (scheme === "email") {
+        result = await sendEmail(data, token);
+      } else if (scheme === "sms") {
+        result = await sendMessage(data, token);
+      }
+
+      if (result.status === 200) {
+        let message = null;
+        if (scheme === "email") {
+          message = "Email has been sent";
+        } else if (scheme === "sms") {
+          message = "SMS has been sent";
+        }
+        dispatch({
+          type: "notifications/add",
+          payload: {
+            type: "success",
+            message,
+            title: "Success!",
+            id: nanoid(),
+          },
+        });
+
+        if (encounter === true) {
+          handleEncounter(scheme);
+        }
+      } else {
+        let errorResponse = null;
+        try {
+          errorResponse = await result.json();
+        } catch (error) {
+          throw new MessengerErrorError(
+            `Error Occured`,
+            `Server responded with ${result.status} without a valid response`
+          );
+        }
+
+        let title = "Email not sent";
+        if (scheme === "sms") {
+          title = "SMS not sent";
+        }
+        throw new MessengerError(
+          title,
+          errorResponse.message || errorResponse?.messages[0]?.message
+        );
+      }
+    } catch (error) {
+      console.error(error);
+      dispatch({
+        type: "notifications/add",
+        payload: {
+          type: "error",
+          message: error.message || error.toString(),
+          title: error.title || "Error Occured",
+          id: nanoid(),
+        },
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSend = (scheme) => {
+    dispatch({
+      type: "messenger/set",
+      payload: {
+        key: "scheme",
+        value: scheme,
+      },
+    });
+    submitData(scheme);
+  };
+
+  const handleChange = (key, value) => {
+    dispatch({
+      type: "messenger/set",
+      payload: {
+        key,
+        value,
+      },
+    });
+  };
+
+  useEffect(() => {
+    if (eform === true) {
+      handleChange("attachment", {
+        name: "eForm",
+      });
+    }
+  }, [eform]);
+
+  useEffect(() => {
+    const demographicNo = getDemographicNo();
+    if (demographicNo && !patientInfo) {
+      getPatientInfo().then((patientInfo) => {
+        if (patientInfo) {
+          setPatientInfo(patientInfo);
         }
       });
-      html.querySelectorAll("textarea").forEach((input) => {
-        input.innerHTML = input.value;
-      });
-
-      html.querySelectorAll("select").forEach((input) => {
-        input.setAttribute("value", input.value);
-      });
-      await convertImagesToDataURLs(html);
-      stripScripts(html);
-      html = html.documentElement.outerHTML;
-      data.pdf_html = html;
     }
-
-    const opts = {
-      encounter: encounter && encounter.current && encounter.current.checked,
-      scheme,
-    };
-    onSubmit(data, opts);
-  };
-
-  useEffect(() => {
-    pubsub.subscribe("document", (evtName, data) => {
-      setDocument(true);
-      setDocumentData(data);
-      console.log("Document data", data);
-      open && open();
-    });
-
-    return () => {
-      pubsub.unsubscribe("document");
-    };
   }, []);
 
   useEffect(() => {
-    if (eForm === true) {
-      (async () => {
-        const docData = await setupEFormPage();
-        setDocumentData(docData);
-        console.log("Doc data", docData);
-      })();
+    if (patientInfo) {
+      handleChange("to", patientInfo.email);
+
+      const phone =
+        patientInfo["Cell PhoneHistory"] ||
+        patientInfo["PhoneWHistory"] ||
+        patientInfo["PhoneHHistory"];
+
+      if (phone) {
+        handleChange("phone", phone);
+      }
     }
-  }, [eForm]);
+  }, [patientInfo]);
 
-  const removeDocument = () => {
-    setDocument(false);
-    setDocumentData({
-      name: null,
-      data: null,
+  useEffect(() => {
+    if (!subject && clinicName) {
+      handleChange("subject", `${clinicName} has sent you a message`);
+    }
+  }, [clinicName]);
+
+  const handleLoadReply = (reply) => {
+    console.log("Load Reply", reply);
+    dispatch({
+      type: "messenger/setAll",
+      payload: {
+        subject: reply.subject,
+        body: reply.message,
+      },
     });
+    setOpenSavedReplies(false);
   };
 
-  const handleClose = () => {
-    resetDocuments();
-    close && close();
-  };
-
-  const resetDocuments = () => {
-    console.log("Reset Called");
-    setDocument(null);
-    setDocumentData({
-      name: null,
-      data: null,
-    });
+  const handleInboxDoc = (doc) => {
+    console.log("Succes Doc", doc);
+    if (doc && !attachment) {
+      handleChange("attachment", {
+        name: doc.name,
+        data: doc.data,
+        extension: doc.extension,
+      });
+    }
+    console.log("Inbox Document?", inboxDocument);
   };
 
   return (
     <div className="tw-m-0 no-print">
-      <Header close={handleClose} />
+      {inboxDocument === true ? (
+        <InboxDocument onSuccess={handleInboxDoc}></InboxDocument>
+      ) : null}
       <div>
         <div>
-          <div className="tw-px-4 tw-py-2">
-            <To ref={to} patient={patient} />
+          <div>
+            <Input
+              type="email"
+              placeholder="To"
+              value={to}
+              onChange={(val) => handleChange("to", val)}
+              defaultValue={to}
+            />
+          </div>
+          <div>
+            <Input
+              type="text"
+              placeholder="Phone"
+              onChange={(val) => handleChange("phone", val)}
+              value={phone}
+              defaultValue={phone}
+            />
           </div>
           <hr className="tw-opacity-10" />
           <div className="tw-w-full">
-            <Subject ref={subject} value={defaultSubject} />
+            <Input
+              placeholder="Subject"
+              onChange={(val) => handleChange("subject", val)}
+              value={subject}
+              defaultValue={subject}
+            ></Input>
           </div>
           <hr className="tw-opacity-10" />
-          <div className="tw-relative">
-            <Chat ref={message} value={defaultBody} />
-            <button
-              onClick={handleReply}
-              className="tw-bg-cortico-blue tw-rounded-full tw-p-2 tw-flex tw-items-center tw-justify-center tw-absolute tw-bottom-2 tw-right-2 tw-flex-col tw-drop-shadow-md"
-            >
-              <PlusIcon className="tw-h-5 tw-w-5 tw-text-white" />
-            </button>
+          <div className="tw-relative tw-mt-4">
+            <Textarea
+              value={body}
+              onChange={(val) => handleChange("body", val)}
+              defaultValue={body}
+              placeholder="Enter message here"
+            ></Textarea>
           </div>
           <hr className="tw-opacity-40" />
-          {encounterOption === true ? (
-            <div className="tw-p-4">
-              <EncounterOption ref={encounter} />
-            </div>
-          ) : (
-            ""
-          )}
-          {document === true || eForm === true ? (
-            <div className="tw-p-4">
+          <FeatureDetector featureName="encounter">
+            {({ disabled }) => {
+              return disabled === false ? (
+                <div className="tw-mt-4">
+                  <Checkbox
+                    label="Copy Message To Encounter"
+                    defaultChecked={encounter}
+                    onChange={(val) => handleChange("encounter", val)}
+                  />
+                </div>
+              ) : (
+                ""
+              );
+            }}
+          </FeatureDetector>
+
+          {attachment ? (
+            <div className="tw-mt-6 tw-border tw-border-opacity-20 tw-rounded-md tw-p-2">
               <Documents
-                onDelete={removeDocument}
-                name={documentData.name}
+                onDelete={() => handleChange("attachment", null)}
+                name={attachment.name}
               ></Documents>
             </div>
           ) : (
@@ -210,39 +388,55 @@ function MessengerWindow({
           )}
         </div>
 
-        <div className="tw-flex tw-justify-end tw-px-4 tw-py-3 tw-bg-gray-100">
-          <button
-            disabled={true}
-            className="tw-bg-green-600 tw-px-3 tw-py-2 tw-rounded-md tw-text-white tw-text-sm tw-flex tw-items-center tw-mr-2 tw-disabled:opacity-50 tw-opacity-50 tw-hidden"
-            onClick={() => {
-              setScheme("text");
-            }}
-          >
-            <span className="tw-flex tw-items-center">
-              <span>Send Text</span>
-              <TextIcon className="tw-h-4 tw-w-4 tw-ml-2" />
-            </span>
-          </button>
-          <button
-            disabled={loading}
-            className="tw-bg-cortico-blue tw-px-3 tw-py-2 tw-rounded-md tw-text-white tw-text-sm tw-flex tw-items-center"
-            onClick={() => {
-              setScheme("email");
-              submitData();
-            }}
-          >
-            {loading === true ? (
-              <span class="tw-flex">
-                <Loader />
-                <span className="tw-ml-1">Sending...</span>
+        <hr className="tw-my-4" />
+
+        <div className="tw-flex tw-justify-between tw-mt-4 tw-w-full">
+          <div>
+            <Dialog
+              open={openSavedReplies}
+              onClose={() => setOpenSavedReplies(false)}
+              s
+            >
+              <div className="tw-inline-block tw-translate-x-[-50%] tw-left-[50%]  tw-text-white tw-relative tw-translate-y-[-50%] tw-top-[50%]">
+                <SavedReplies loadReply={handleLoadReply} />
+              </div>
+            </Dialog>
+            <Button
+              onClick={() => setOpenSavedReplies(true)}
+              rounded={true}
+              variant="custom"
+              className="tw-bg-indigo-100 "
+            >
+              <PlusIcon className="tw-h-5 tw-w-5 tw-text-indigo-1000 tw-m-1"></PlusIcon>
+            </Button>
+          </div>
+          <div>
+            <Button
+              size="sm"
+              loading={loading}
+              onClick={() => handleSend("sms")}
+              variant="custom"
+              className="tw-bg-emerald-100 tw-text-emerald-900 tw-text-sm  tw-mr-2 tw-rounded-md tw-font-medium "
+            >
+              <span className="tw-flex tw-items-center tw-cursor-pointer">
+                <span className="tw-cursor-pointer">Send Text</span>
+                <TextIcon className="tw-h-4 tw-w-4 tw-ml-2 tw-cursor-pointer" />
               </span>
-            ) : (
-              <span className="tw-flex tw-items-center">
-                <span>Send Email</span>
-                <MailIcon className="tw-h-4 tw-w-4 tw-ml-2" />
+            </Button>
+
+            <Button
+              size="sm"
+              loading={loading}
+              onClick={() => handleSend("email")}
+              className="tw-bg-indigo-100 tw-text-blue-1000 tw-text-sm  tw-rounded-md tw-font-medium "
+              variant="custom"
+            >
+              <span className="tw-flex tw-items-center tw-cursor-pointer">
+                <span className="tw-cursor-pointer">Send Email</span>
+                <MailIcon className="tw-h-4 tw-w-4 tw-ml-2 tw-cursor-pointer" />
               </span>
-            )}
-          </button>
+            </Button>
+          </div>
         </div>
       </div>
     </div>

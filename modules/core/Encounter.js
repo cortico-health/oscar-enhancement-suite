@@ -19,6 +19,10 @@ class Encounter {
       caseNote.value += text;
       return Promise.resolve(true);
     } else {
+      return Promise.reject("Could not find case note");
+    }
+    /*
+    else {
       const demographicNo = getDemographicNo();
       console.log("Demographic No", demographicNo);
       if (demographicNo == null) {
@@ -62,7 +66,7 @@ class Encounter {
         .then((res) => {
           console.log("Added Response", res);
         });
-    }
+    }*/
   }
 
   static getProgramId(caseManagementEntryHtml) {

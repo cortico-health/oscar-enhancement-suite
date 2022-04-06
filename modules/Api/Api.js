@@ -1,7 +1,20 @@
 import { getCorticoUrl, getOrigin, getNamespace } from "../Utils/Utils";
 
-export function sendMessage(data, token, opts) {
+export function sendEmail(data, token, opts) {
   const url = getCorticoUrl() + "/api/plug-in/email-form/";
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data),
+    mode: "cors",
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
+export function sendMessage(data, token, opts) {
+  const url = getCorticoUrl() + "/api/plug-in/custom-message/";
   return fetch(url, {
     method: "POST",
     body: JSON.stringify(data),
@@ -96,6 +109,17 @@ export function postCaseManagementEntry(
       "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
       "x-prototype-version": "1.5.1.1",
       "x-requested-with": "XMLHttpRequest",
+    },
+  });
+}
+
+export function getClinicSettings(token) {
+  const url = `${getCorticoUrl()}/api/public/clinic-settings/`;
+  return fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
     },
   });
 }

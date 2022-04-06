@@ -1,16 +1,23 @@
 import { render } from "preact";
 import { useRef, useEffect } from "preact/hooks";
+
 import CorticoImg from "../../../resources/icons/logo-regular-white.svg";
 import CorticoPlugin from "./CorticoPlugin";
 import { useState } from "preact/hooks";
 import classNames from "classnames";
 import store from "./store/store.js";
-import { Provider, useDispatch } from "react-redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import Draggable from "react-draggable";
-function Content() {
+import SetupDocuments from "./features/Documents/SetupDocuments";
+import { BroadcastChannel } from "broadcast-channel";
+import { nanoid } from "nanoid";
+
+const uid = nanoid();
+
+function App({ disabledFeatures = [], ...props }) {
+  const { open } = useSelector((state) => state.app);
   const containerRef = useRef();
   const dispatch = useDispatch();
-  const [open, setOpen] = useState(false);
   const [dragging, setDragging] = useState(false);
 
   useEffect(() => {
@@ -28,7 +35,10 @@ function Content() {
         });
       },
       "corticoWidget/toggle": () => {
-        setOpen((previousOpen) => !previousOpen);
+        dispatch({
+          type: "app/setOpen",
+          payload: !open,
+        });
       },
     };
 
@@ -43,13 +53,46 @@ function Content() {
     };
   }, []);
 
+  useEffect(() => {
+    if (props.eForm === true) {
+      dispatch({
+        type: "messenger/set",
+        payload: {
+          key: "eform",
+          value: true,
+        },
+      });
+    }
+
+    if (props.inboxDocument === true) {
+      dispatch({
+        type: "messenger/set",
+        payload: {
+          key: "inboxDocument",
+          value: true,
+        },
+      });
+    }
+
+    dispatch({
+      type: "app/setDisabledFeatures",
+      payload: disabledFeatures,
+    });
+  }, []);
+
   const handleMinimize = () => {
-    setOpen(false);
+    dispatch({
+      type: "app/setOpen",
+      payload: false,
+    });
   };
 
   const handleOpen = (event) => {
     if (dragging === false) {
-      setOpen(true);
+      dispatch({
+        type: "app/setOpen",
+        payload: true,
+      });
     }
   };
 
@@ -59,13 +102,42 @@ function Content() {
     }, 100);
   };
 
+  useEffect(() => {
+    dispatch({
+      type: "app/set",
+      payload: {
+        uid,
+      },
+    });
+  }, []);
+
+  useEffect(() => {
+    const authChannel = new BroadcastChannel("cortico/oes/auth");
+    authChannel.addEventListener("message", (data) => {
+      if (uid !== data.uid) {
+        dispatch({
+          type: "app/set",
+          payload: {
+            refresh: data,
+          },
+        });
+      }
+    });
+
+    return () => {
+      authChannel.close();
+    };
+  }, []);
+
   return (
-    <div className="cleanslate cortico-widget">
+    <div className="cleanslate cortico-widget no-print DoNotPrint">
       <div className="tailwind preflight">
         <div
           className={classNames(
-            "tw-fixed tw-bottom-5 tw-right-5 tw-z-10005 tw-bg-blue-1000 tw-text-white tw-bg-cortico tw-bg-transparent",
-            open === true ? "tw-rounded-xl" : "tw-rounded-full"
+            "tw-fixed tw-bottom-5 tw-right-5 tw-z-10005  tw-text-white cortico-widget-body",
+            open === true
+              ? "tw-rounded-xl tw-border tw-bg-white"
+              : "tw-rounded-full "
           )}
           ref={containerRef}
         >
@@ -76,27 +148,30 @@ function Content() {
           ) : (
             <Draggable onDrag={() => setDragging(true)} onStop={handleDragStop}>
               <div
-                className="tw-p-4 tw-cursor-pointer tw-rounded-full tw-bg-blue-1000 tw-shadow-xl"
+                className="tw-transition-colors tw-duration-200 tw-ease-in-out tw-p-4 tw-cursor-pointer tw-rounded-full tw-bg-gradient-to-bl  tw-bg-indigo-600 tw-shadow-outer 
+                hover:tw-bg-none hover:tw-bg-blue-1000"
                 onClick={handleOpen}
               >
                 <img
                   draggable={false}
-                  className="tw-h-8 tw-w-8 tw-cursor-pointer tw-select-none"
+                  dragstart={false}
+                  className="tw-h-8 tw-w-8 tw-cursor-pointer tw-select-none tw-pointer-events-none"
                   src={CorticoImg}
                 />
               </div>
             </Draggable>
           )}
         </div>
+        <>{props.document === true ? <SetupDocuments /> : null}</>
       </div>
     </div>
   );
 }
 
-export default function CorticoWidget(container, replaceNode) {
+export default function CorticoWidget(container, replaceNode, opts) {
   return render(
     <Provider store={store}>
-      <Content />
+      <App {...opts} />
     </Provider>,
     container,
     replaceNode

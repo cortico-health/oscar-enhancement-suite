@@ -1,5 +1,6 @@
 import { render } from "preact";
 import corticoIcon from "../../resources/icons/96x96.png";
+import Header from "../cortico/Widget/base/Header";
 
 function Header({ close, ...props }) {
   return (

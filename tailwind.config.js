@@ -1,3 +1,4 @@
+const { fuchsia } = require("tailwindcss/colors");
 const colors = require("tailwindcss/colors");
 
 module.exports = {
@@ -33,7 +34,19 @@ module.exports = {
     colors: {
       transparent: "transparent",
       current: "currentColor",
-
+      slate: colors.slate,
+      zinc: colors.zinc,
+      neutral: colors.neutral,
+      stone: colors.stone,
+      amber: colors.amber,
+      lime: colors.lime,
+      emerald: colors.emerald,
+      teal: colors.teal,
+      sky: colors.sky,
+      cyan: colors.cyan,
+      violet: colors.violet,
+      fuchsia: colors.fuchsia,
+      rose: colors.rose,
       black: colors.black,
       white: colors.white,
       gray: colors.coolGray,
@@ -200,6 +213,7 @@ module.exports = {
       "2xl": "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
       inner: "inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)",
       none: "none",
+      outer: "0px 0px 15px 5px rgba(0,0,0,0.10)",
     },
     caretColor: (theme) => theme("colors"),
     contrast: {
@@ -313,6 +327,7 @@ module.exports = {
       ],
     },
     fontSize: {
+      "2xs": ["0.65rem", { lineHeight: "1rem" }],
       xs: ["0.75rem", { lineHeight: "1rem" }],
       sm: ["0.875rem", { lineHeight: "1.25rem" }],
       base: ["1rem", { lineHeight: "1.5rem" }],
@@ -880,5 +895,6 @@ module.exports = {
       strategy: "class",
     }),
     require("@tailwindcss/line-clamp"),
+    require("tailwind-scrollbar"),
   ],
 };
