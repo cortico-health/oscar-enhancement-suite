@@ -8,10 +8,11 @@ import storage from "./storage/";
 import { useSelector } from "react-redux";
 import Button from "../../core/Button";
 import Header from "./base/Header";
+import { BroadcastChannel } from "broadcast-channel";
 
 export default function AccountInformation() {
   const [loading, setLoading] = useState(false);
-  const { clinic_name: clinicName } = useSelector((state) => state.app);
+  const { clinic_name: clinicName, uid } = useSelector((state) => state.app);
   const [username, setUsername] = useState(null);
 
   const handleSignOut = async () => {
@@ -28,6 +29,15 @@ export default function AccountInformation() {
     for (let i = 0; i < remove.length; i++) {
       await removeExtensionStorageValue(remove[i]);
     }
+
+    const authChannel = new BroadcastChannel("cortico/oes/auth");
+    authChannel.postMessage({
+      title: "Sign Out Detected",
+      description: "Refresh is required to have the plugin working smoothly",
+      uid,
+    });
+    authChannel.close();
+
     storage.removeItem("oes").then(() => {
       setTimeout(() => window.location.reload());
     });
