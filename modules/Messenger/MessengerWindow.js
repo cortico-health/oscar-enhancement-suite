@@ -224,7 +224,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
           data.extension = attachment.extension;
         }
 
-        if (data.attachment && !data.body) {
+        if (data.attachment && !data.body && scheme === "email") {
           data.body += "\nThe file link will only be valid for 7 days.\n";
         }
       } else if (eform === true && attachment) {
@@ -246,8 +246,9 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
             .appendChild(iframeClone.querySelector("body"));
         }
         /* Eform Letter Head End */
-
-        data.body += "\nThe file link will only be valid for 7 days.\n";
+        if (scheme === "email") {
+          data.body += "\nThe file link will only be valid for 7 days.\n";
+        }
 
         try {
           data.pdf_html = await setFormInputValueAttributes(clone);
