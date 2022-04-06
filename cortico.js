@@ -64,6 +64,7 @@ const version = "2022.4.06";
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
 window.is_dev = process.env.NODE_ENV === "development" ? true : false;
+window.corticoOscar = oscar;
 const cortico_media = ["phone", "clinic", "virtual", "", "quiet"];
 const corticoWidgetContainer = document.createElement("div");
 document.body.append(corticoWidgetContainer);
@@ -183,7 +184,7 @@ const init_cortico = async function () {
       });
     } else {
       CorticoWidget(document.body, corticoWidgetContainer, {
-        disabledFeatures: ["encounter", "automation"],
+        disabledFeatures: ["automation"],
         eForm: true,
       });
 

@@ -9,7 +9,10 @@ import Button from "../core/Button";
 import { setFormInputValueAttributes } from "../Utils/Utils";
 import { useDispatch, useSelector } from "react-redux";
 import { sendEmail, sendMessage } from "../Api/Api";
-import { loadExtensionStorageValue } from "../Utils/Utils";
+import {
+  loadExtensionStorageValue,
+  formEncounterMessage,
+} from "../Utils/Utils";
 import { getPatientInfo } from "../../cortico";
 import { nanoid } from "nanoid";
 import Dialog from "../cortico/Widget/features/Dialog/Dialog";
@@ -18,6 +21,8 @@ import { getDemographicNo } from "../Utils/Utils";
 import FeatureDetector from "../cortico/Widget/adapters/FeatureDetecter";
 import InboxDocument from "../cortico/Widget/adapters/InboxDocument";
 import Encounter from "../core/Encounter";
+import { BroadcastChannel } from "broadcast-channel";
+
 import dayjs from "dayjs";
 class MessengerError extends Error {
   constructor(title, message) {
@@ -43,25 +48,43 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
   } = useSelector((state) => state.messenger);
   const [openSavedReplies, setOpenSavedReplies] = useState(false);
   const [patientInfo, setPatientInfo] = useState(null);
-  const { clinic_name: clinicName } = useSelector((state) => state.app);
+  const { clinic_name: clinicName, uid } = useSelector((state) => state.app);
 
-  const handleEncounter = (scheme) => {
-    const prefix = `\n\n[${dayjs().format(
-      "DD-MM-YYYY, HH:mm:ss"
-    )} .: ${scheme} sent to patient]\n${subject}:\n\n`;
+  const handleEncounter = async (scheme, subject, body) => {
+    const encounterMessage = formEncounterMessage(scheme, subject, body);
+    const caseNote = Encounter.getCaseNote();
 
-    const suffix = `\n-------------------------------------------\n`;
-
-    Encounter.addToCaseNote(prefix + body + suffix)
-      .then(() => {
-        const caseNote = Encounter.getCaseNote();
-        if (caseNote) {
-          caseNote.focus();
-        }
-      })
-      .catch((error) => {
-        throw new MessengerError(`Failed to add encounter notes`, error);
+    if (caseNote) {
+      const result = Encounter.addToCaseNote(encounterMessage);
+      if (result === true) {
+        caseNote.focus();
+      }
+    } else {
+      let encounterTabFound = false;
+      // Check if e-chart tab is open
+      const encounterChannel = new BroadcastChannel("cortico/oes/encounter");
+      const demographicNo = getDemographicNo();
+      encounterChannel.postMessage({
+        uid,
+        demographicNo,
+        subject,
+        scheme,
+        body,
       });
+      encounterChannel.addEventListener("message", (data) => {
+        if (data.uid !== uid && data.encounter === true) {
+          console.log("Encounter Data", data);
+          encounterTabFound = true;
+        }
+      });
+
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      if (encounterTabFound === true) {
+        console.log("Encounter Tab Found");
+      } else {
+        console.log("Encounter Tab Not Found");
+      }
+    }
   };
 
   const submitData = async (scheme) => {
@@ -193,7 +216,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         });
 
         if (encounter === true) {
-          handleEncounter(scheme);
+          handleEncounter(scheme, subject, body);
         }
       } else {
         let errorResponse = null;
@@ -360,6 +383,18 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
             ></Textarea>
           </div>
           <hr className="tw-opacity-40" />
+
+          {attachment ? (
+            <div className="tw-mt-4 tw-border tw-border-opacity-20 tw-rounded-md tw-p-2">
+              <Documents
+                onDelete={() => handleChange("attachment", null)}
+                name={attachment.name}
+              ></Documents>
+            </div>
+          ) : (
+            ""
+          )}
+
           <FeatureDetector featureName="encounter">
             {({ disabled }) => {
               return disabled === false ? (
@@ -375,17 +410,6 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
               );
             }}
           </FeatureDetector>
-
-          {attachment ? (
-            <div className="tw-mt-6 tw-border tw-border-opacity-20 tw-rounded-md tw-p-2">
-              <Documents
-                onDelete={() => handleChange("attachment", null)}
-                name={attachment.name}
-              ></Documents>
-            </div>
-          ) : (
-            ""
-          )}
         </div>
 
         <hr className="tw-my-4" />

@@ -17,9 +17,9 @@ class Encounter {
     const caseNote = Encounter.getCaseNote();
     if (caseNote) {
       caseNote.value += text;
-      return Promise.resolve(true);
+      return true;
     } else {
-      return Promise.reject("Could not find case note");
+      return false;
     }
     /*
     else {
