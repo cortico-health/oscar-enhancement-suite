@@ -45,12 +45,12 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
   const [patientInfo, setPatientInfo] = useState(null);
   const { clinic_name: clinicName } = useSelector((state) => state.app);
 
-  const handleEncounter = () => {
+  const handleEncounter = (scheme) => {
     const prefix = `\n\n[${dayjs().format(
       "DD-MM-YYYY, HH:mm:ss"
     )} .: ${scheme} sent to patient]\n${subject}:\n\n`;
 
-    const suffix = `-------------------------------------------\n`;
+    const suffix = `\n-------------------------------------------\n`;
 
     Encounter.addToCaseNote(prefix + body + suffix)
       .then(() => {
@@ -60,7 +60,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         }
       })
       .catch((error) => {
-        throw new MessengerErrorError(`Failed to add encounter notes`, error);
+        throw new MessengerError(`Failed to add encounter notes`, error);
       });
   };
 
@@ -191,7 +191,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         });
 
         if (encounter === true) {
-          handleEncounter();
+          handleEncounter(scheme);
         }
       } else {
         let errorResponse = null;
@@ -285,7 +285,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
   }, [patientInfo]);
 
   useEffect(() => {
-    if (!subject) {
+    if (!subject && clinicName) {
       handleChange("subject", `${clinicName} has sent you a message`);
     }
   }, [clinicName]);
