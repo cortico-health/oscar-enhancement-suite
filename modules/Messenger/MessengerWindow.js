@@ -18,6 +18,7 @@ import { getDemographicNo } from "../Utils/Utils";
 import FeatureDetector from "../cortico/Widget/adapters/FeatureDetecter";
 import InboxDocument from "../cortico/Widget/adapters/InboxDocument";
 import Encounter from "../core/Encounter";
+import dayjs from "dayjs";
 class MessengerError extends Error {
   constructor(title, message) {
     super(message);
@@ -171,7 +172,11 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         });
 
         if (encounter === true) {
-          Encounter.addToCaseNote(body).catch((error) => {
+          const prefix = `\n\n[${dayjs().format(
+            "DD-MM-YYYY, HH:mm:ss"
+          )} .: ${scheme} sent to patient]\n${subject}:\n\n`;
+
+          Encounter.addToCaseNote(prefix + body).catch((error) => {
             throw new MessengerErrorError(
               `Failed to add encounter notes`,
               error
