@@ -8,7 +8,13 @@ import Checkbox from "../cortico/Widget/base/Checkbox";
 import Button from "../core/Button";
 import { setFormInputValueAttributes } from "../Utils/Utils";
 import { useDispatch, useSelector } from "react-redux";
-import { sendEmail, sendMessage } from "../Api/Api";
+import {
+  sendEmail,
+  sendMessage,
+  getEncounterNotes,
+  addEncounterNote,
+  postCaseManagementEntry,
+} from "../Api/Api";
 import {
   loadExtensionStorageValue,
   formEncounterMessage,
@@ -51,39 +57,101 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
   const { clinic_name: clinicName, uid } = useSelector((state) => state.app);
 
   const handleEncounter = async (scheme, subject, body) => {
-    const encounterMessage = formEncounterMessage(scheme, subject, body);
-    const caseNote = Encounter.getCaseNote();
+    try {
+      const encounterMessage = formEncounterMessage(scheme, subject, body);
+      const caseNote = Encounter.getCaseNote();
 
-    if (caseNote) {
-      const result = Encounter.addToCaseNote(encounterMessage);
-      if (result === true) {
-        caseNote.focus();
-      }
-    } else {
-      let encounterTabFound = false;
-      // Check if e-chart tab is open
-      const encounterChannel = new BroadcastChannel("cortico/oes/encounter");
-      const demographicNo = getDemographicNo();
-      encounterChannel.postMessage({
-        uid,
-        demographicNo,
-        subject,
-        scheme,
-        body,
-      });
-      encounterChannel.addEventListener("message", (data) => {
-        if (data.uid !== uid && data.encounter === true) {
-          console.log("Encounter Data", data);
-          encounterTabFound = true;
+      if (caseNote) {
+        const result = Encounter.addToCaseNote(encounterMessage);
+        if (result === true) {
+          caseNote.focus();
         }
-      });
-
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      if (encounterTabFound === true) {
-        console.log("Encounter Tab Found");
       } else {
-        console.log("Encounter Tab Not Found");
+        let encounterTabFound = false;
+        // Check if e-chart tab is open
+        const encounterChannel = new BroadcastChannel("cortico/oes/encounter");
+        encounterChannel.addEventListener("message", (data) => {
+          if (data.uid !== uid && data.encounter === true) {
+            encounterTabFound = true;
+          }
+        });
+
+        const demographicNo = getDemographicNo();
+        if (!demographicNo) {
+          throw Error("Could not find demographic number");
+        }
+        encounterChannel.postMessage({
+          uid,
+          demographicNo,
+          subject,
+          scheme,
+          body,
+        });
+
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        encounterChannel.close();
+        if (encounterTabFound === true) {
+          console.log("Encounter Tab Found");
+        } else {
+          console.log("Encounter Tab Not Found");
+          Promise.all([
+            postCaseManagementEntry(demographicNo),
+            getEncounterNotes(demographicNo),
+          ])
+            .then((res) => {
+              return Promise.all([res[0].text(), res[1].text()]);
+            })
+            .then((result) => {
+              const programId = Encounter.getProgramId(result[0]);
+              const note_id = Encounter.getNoteId(result[1]);
+
+              const temp = window.document.createElement("html");
+              temp.innerHTML = result[1];
+              let note = Encounter.getCaseNote(temp);
+
+              if (note == null) {
+                throw Error("Could not find encounter notes");
+              }
+
+              if (programId == null) {
+                throw Error("Could not find program id");
+              }
+
+              if (note_id == null) {
+                throw Error("Could not find note id");
+              }
+
+              note = note.value;
+              return addEncounterNote(
+                demographicNo,
+                note_id,
+                programId,
+                note + encounterMessage
+              );
+            })
+            .then((res) => {
+              dispatch({
+                type: "notifications/add",
+                payload: {
+                  type: "success",
+                  message: "Encounter message has been copied.",
+                  title: "Encounter Copied",
+                  id: nanoid(),
+                },
+              });
+            });
+        }
       }
+    } catch (error) {
+      dispatch({
+        type: "notifications/add",
+        payload: {
+          type: "error",
+          message: error.message || error.toString(),
+          title: "Failed To Copy To Encounter",
+          id: nanoid(),
+        },
+      });
     }
   };
 
@@ -205,6 +273,11 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         } else if (scheme === "sms") {
           message = "SMS has been sent";
         }
+
+        if (encounter === true) {
+          await handleEncounter(scheme, subject, body);
+        }
+
         dispatch({
           type: "notifications/add",
           payload: {
@@ -214,10 +287,6 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
             id: nanoid(),
           },
         });
-
-        if (encounter === true) {
-          handleEncounter(scheme, subject, body);
-        }
       } else {
         let errorResponse = null;
         try {

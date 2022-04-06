@@ -197,7 +197,7 @@ const init_cortico = async function () {
     }
   } else if (oscar.isDocumentPage()) {
     CorticoWidget(document.body, corticoWidgetContainer, {
-      disabledFeatures: ["encounter", "automation"],
+      disabledFeatures: ["automation"],
       document: true,
     });
   } else if (oscar.isInboxDocument()) {

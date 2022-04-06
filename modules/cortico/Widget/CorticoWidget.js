@@ -128,9 +128,11 @@ function App({ disabledFeatures = [], ...props }) {
     const encounterChannel = new BroadcastChannel("cortico/oes/encounter");
     encounterChannel.addEventListener("message", (data) => {
       const demographicNo = getDemographicNo();
-      console.log("Demographic Number", demographicNo, data.demographicNo);
       if (uid !== data.uid) {
-        if (window.corticoOscar.isEncounterPage()) {
+        if (
+          window.corticoOscar.isEncounterPage() &&
+          demographicNo === data.demographicNo
+        ) {
           const encounterMessage = formEncounterMessage(
             data.scheme,
             data.subject,
