@@ -184,7 +184,7 @@ const init_cortico = async function () {
       });
     } else {
       CorticoWidget(document.body, corticoWidgetContainer, {
-        disabledFeatures: ["automation"],
+        disabledFeatures: ["text", "automation"],
         eForm: true,
       });
 
@@ -197,12 +197,12 @@ const init_cortico = async function () {
     }
   } else if (oscar.isDocumentPage()) {
     CorticoWidget(document.body, corticoWidgetContainer, {
-      disabledFeatures: ["automation"],
+      disabledFeatures: ["text", "automation"],
       document: true,
     });
   } else if (oscar.isInboxDocument()) {
     CorticoWidget(document.body, corticoWidgetContainer, {
-      disabledFeatures: ["encounter", "automation"],
+      disabledFeatures: ["text", "encounter", "automation"],
       inboxDocument: true,
     });
   } else if (route.indexOf("/oscarRx/ViewScript2.jsp") > -1) {

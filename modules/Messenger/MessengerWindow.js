@@ -505,18 +505,26 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
             </Button>
           </div>
           <div>
-            <Button
-              size="sm"
-              loading={loading}
-              onClick={() => handleSend("sms")}
-              variant="custom"
-              className="tw-bg-emerald-100 tw-text-emerald-900 tw-text-sm  tw-mr-2 tw-rounded-md tw-font-medium "
-            >
-              <span className="tw-flex tw-items-center tw-cursor-pointer">
-                <span className="tw-cursor-pointer">Send Text</span>
-                <TextIcon className="tw-h-4 tw-w-4 tw-ml-2 tw-cursor-pointer" />
-              </span>
-            </Button>
+            <FeatureDetector featureName="text">
+              {({ disabled }) => {
+                return disabled === false ? (
+                  <Button
+                    size="sm"
+                    loading={loading}
+                    onClick={() => handleSend("sms")}
+                    variant="custom"
+                    className="tw-bg-emerald-100 tw-text-emerald-900 tw-text-sm  tw-mr-2 tw-rounded-md tw-font-medium "
+                  >
+                    <span className="tw-flex tw-items-center tw-cursor-pointer">
+                      <span className="tw-cursor-pointer">Send Text</span>
+                      <TextIcon className="tw-h-4 tw-w-4 tw-ml-2 tw-cursor-pointer" />
+                    </span>
+                  </Button>
+                ) : (
+                  ""
+                );
+              }}
+            </FeatureDetector>
 
             <Button
               size="sm"
