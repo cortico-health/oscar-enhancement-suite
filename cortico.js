@@ -64,6 +64,7 @@ const version = "2022.4.06";
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
 window.is_dev = process.env.NODE_ENV === "development" ? true : false;
+window.corticoOscar = oscar;
 const cortico_media = ["phone", "clinic", "virtual", "", "quiet"];
 const corticoWidgetContainer = document.createElement("div");
 document.body.append(corticoWidgetContainer);
@@ -183,7 +184,7 @@ const init_cortico = async function () {
       });
     } else {
       CorticoWidget(document.body, corticoWidgetContainer, {
-        disabledFeatures: ["encounter", "automation"],
+        disabledFeatures: ["text", "automation"],
         eForm: true,
       });
 
@@ -196,12 +197,12 @@ const init_cortico = async function () {
     }
   } else if (oscar.isDocumentPage()) {
     CorticoWidget(document.body, corticoWidgetContainer, {
-      disabledFeatures: ["encounter", "automation"],
+      disabledFeatures: ["text", "automation"],
       document: true,
     });
   } else if (oscar.isInboxDocument()) {
     CorticoWidget(document.body, corticoWidgetContainer, {
-      disabledFeatures: ["encounter", "automation"],
+      disabledFeatures: ["text", "encounter", "automation"],
       inboxDocument: true,
     });
   } else if (route.indexOf("/oscarRx/ViewScript2.jsp") > -1) {

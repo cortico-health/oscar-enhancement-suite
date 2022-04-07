@@ -8,8 +8,17 @@ import Checkbox from "../cortico/Widget/base/Checkbox";
 import Button from "../core/Button";
 import { setFormInputValueAttributes } from "../Utils/Utils";
 import { useDispatch, useSelector } from "react-redux";
-import { sendEmail, sendMessage } from "../Api/Api";
-import { loadExtensionStorageValue } from "../Utils/Utils";
+import {
+  sendEmail,
+  sendMessage,
+  getEncounterNotes,
+  addEncounterNote,
+  postCaseManagementEntry,
+} from "../Api/Api";
+import {
+  loadExtensionStorageValue,
+  formEncounterMessage,
+} from "../Utils/Utils";
 import { getPatientInfo } from "../../cortico";
 import { nanoid } from "nanoid";
 import Dialog from "../cortico/Widget/features/Dialog/Dialog";
@@ -18,6 +27,8 @@ import { getDemographicNo } from "../Utils/Utils";
 import FeatureDetector from "../cortico/Widget/adapters/FeatureDetecter";
 import InboxDocument from "../cortico/Widget/adapters/InboxDocument";
 import Encounter from "../core/Encounter";
+import { BroadcastChannel } from "broadcast-channel";
+
 import dayjs from "dayjs";
 class MessengerError extends Error {
   constructor(title, message) {
@@ -43,25 +54,105 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
   } = useSelector((state) => state.messenger);
   const [openSavedReplies, setOpenSavedReplies] = useState(false);
   const [patientInfo, setPatientInfo] = useState(null);
-  const { clinic_name: clinicName } = useSelector((state) => state.app);
+  const { clinic_name: clinicName, uid } = useSelector((state) => state.app);
 
-  const handleEncounter = (scheme) => {
-    const prefix = `\n\n[${dayjs().format(
-      "DD-MM-YYYY, HH:mm:ss"
-    )} .: ${scheme} sent to patient]\n${subject}:\n\n`;
+  const handleEncounter = async (scheme, subject, body) => {
+    try {
+      const encounterMessage = formEncounterMessage(scheme, subject, body);
+      const caseNote = Encounter.getCaseNote();
 
-    const suffix = `\n-------------------------------------------\n`;
-
-    Encounter.addToCaseNote(prefix + body + suffix)
-      .then(() => {
-        const caseNote = Encounter.getCaseNote();
-        if (caseNote) {
+      if (caseNote) {
+        const result = Encounter.addToCaseNote(encounterMessage);
+        if (result === true) {
           caseNote.focus();
         }
-      })
-      .catch((error) => {
-        throw new MessengerError(`Failed to add encounter notes`, error);
+      } else {
+        let encounterTabFound = false;
+        // Check if e-chart tab is open
+        const encounterChannel = new BroadcastChannel("cortico/oes/encounter");
+        encounterChannel.addEventListener("message", (data) => {
+          if (data.uid !== uid && data.encounter === true) {
+            encounterTabFound = true;
+          }
+        });
+
+        const demographicNo = getDemographicNo();
+        if (!demographicNo) {
+          throw Error("Could not find demographic number");
+        }
+        encounterChannel.postMessage({
+          uid,
+          demographicNo,
+          subject,
+          scheme,
+          body,
+        });
+
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        encounterChannel.close();
+        if (encounterTabFound === true) {
+          console.log("Encounter Tab Found");
+        } else {
+          console.log("Encounter Tab Not Found");
+          Promise.all([
+            postCaseManagementEntry(demographicNo),
+            getEncounterNotes(demographicNo),
+          ])
+            .then((res) => {
+              return Promise.all([res[0].text(), res[1].text()]);
+            })
+            .then((result) => {
+              const programId = Encounter.getProgramId(result[0]);
+              const note_id = Encounter.getNoteId(result[1]);
+
+              const temp = window.document.createElement("html");
+              temp.innerHTML = result[1];
+              let note = Encounter.getCaseNote(temp);
+
+              if (note == null) {
+                throw Error("Could not find encounter notes");
+              }
+
+              if (programId == null) {
+                throw Error("Could not find program id");
+              }
+
+              if (note_id == null) {
+                throw Error("Could not find note id");
+              }
+
+              note = note.value;
+              return addEncounterNote(
+                demographicNo,
+                note_id,
+                programId,
+                note + encounterMessage
+              );
+            })
+            .then((res) => {
+              dispatch({
+                type: "notifications/add",
+                payload: {
+                  type: "success",
+                  message: "Encounter message has been copied.",
+                  title: "Encounter Copied",
+                  id: nanoid(),
+                },
+              });
+            });
+        }
+      }
+    } catch (error) {
+      dispatch({
+        type: "notifications/add",
+        payload: {
+          type: "error",
+          message: error.message || error.toString(),
+          title: "Failed To Copy To Encounter",
+          id: nanoid(),
+        },
       });
+    }
   };
 
   const submitData = async (scheme) => {
@@ -133,7 +224,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
           data.extension = attachment.extension;
         }
 
-        if (data.attachment && !data.body) {
+        if (data.attachment && !data.body && scheme === "email") {
           data.body += "\nThe file link will only be valid for 7 days.\n";
         }
       } else if (eform === true && attachment) {
@@ -155,8 +246,9 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
             .appendChild(iframeClone.querySelector("body"));
         }
         /* Eform Letter Head End */
-
-        data.body += "\nThe file link will only be valid for 7 days.\n";
+        if (scheme === "email") {
+          data.body += "\nThe file link will only be valid for 7 days.\n";
+        }
 
         try {
           data.pdf_html = await setFormInputValueAttributes(clone);
@@ -182,6 +274,11 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         } else if (scheme === "sms") {
           message = "SMS has been sent";
         }
+
+        if (encounter === true) {
+          await handleEncounter(scheme, subject, body);
+        }
+
         dispatch({
           type: "notifications/add",
           payload: {
@@ -191,10 +288,6 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
             id: nanoid(),
           },
         });
-
-        if (encounter === true) {
-          handleEncounter(scheme);
-        }
       } else {
         let errorResponse = null;
         try {
@@ -360,6 +453,18 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
             ></Textarea>
           </div>
           <hr className="tw-opacity-40" />
+
+          {attachment ? (
+            <div className="tw-mt-4 tw-border tw-border-opacity-20 tw-rounded-md tw-p-2">
+              <Documents
+                onDelete={() => handleChange("attachment", null)}
+                name={attachment.name}
+              ></Documents>
+            </div>
+          ) : (
+            ""
+          )}
+
           <FeatureDetector featureName="encounter">
             {({ disabled }) => {
               return disabled === false ? (
@@ -375,17 +480,6 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
               );
             }}
           </FeatureDetector>
-
-          {attachment ? (
-            <div className="tw-mt-6 tw-border tw-border-opacity-20 tw-rounded-md tw-p-2">
-              <Documents
-                onDelete={() => handleChange("attachment", null)}
-                name={attachment.name}
-              ></Documents>
-            </div>
-          ) : (
-            ""
-          )}
         </div>
 
         <hr className="tw-my-4" />
@@ -411,18 +505,26 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
             </Button>
           </div>
           <div>
-            <Button
-              size="sm"
-              loading={loading}
-              onClick={() => handleSend("sms")}
-              variant="custom"
-              className="tw-bg-emerald-100 tw-text-emerald-900 tw-text-sm  tw-mr-2 tw-rounded-md tw-font-medium "
-            >
-              <span className="tw-flex tw-items-center tw-cursor-pointer">
-                <span className="tw-cursor-pointer">Send Text</span>
-                <TextIcon className="tw-h-4 tw-w-4 tw-ml-2 tw-cursor-pointer" />
-              </span>
-            </Button>
+            <FeatureDetector featureName="text">
+              {({ disabled }) => {
+                return disabled === false ? (
+                  <Button
+                    size="sm"
+                    loading={loading}
+                    onClick={() => handleSend("sms")}
+                    variant="custom"
+                    className="tw-bg-emerald-100 tw-text-emerald-900 tw-text-sm  tw-mr-2 tw-rounded-md tw-font-medium "
+                  >
+                    <span className="tw-flex tw-items-center tw-cursor-pointer">
+                      <span className="tw-cursor-pointer">Send Text</span>
+                      <TextIcon className="tw-h-4 tw-w-4 tw-ml-2 tw-cursor-pointer" />
+                    </span>
+                  </Button>
+                ) : (
+                  ""
+                );
+              }}
+            </FeatureDetector>
 
             <Button
               size="sm"

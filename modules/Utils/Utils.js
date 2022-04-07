@@ -403,3 +403,11 @@ export async function setFormInputValueAttributes(document) {
   stripScripts(document);
   return document.documentElement.outerHTML;
 }
+
+export function formEncounterMessage(scheme, subject, body) {
+  const prefix = `\n\n[${dayjs().format(
+    "DD-MM-YYYY, HH:mm:ss"
+  )} .: ${scheme} sent to patient]\n${subject}:\n\n`;
+  const suffix = `\n-------------------------------------------\n`;
+  return prefix + body + suffix;
+}

@@ -11,7 +11,8 @@ import Draggable from "react-draggable";
 import SetupDocuments from "./features/Documents/SetupDocuments";
 import { BroadcastChannel } from "broadcast-channel";
 import { nanoid } from "nanoid";
-
+import { getDemographicNo, formEncounterMessage } from "../../Utils/Utils";
+import Encounter from "../../core/Encounter";
 const uid = nanoid();
 
 function App({ disabledFeatures = [], ...props }) {
@@ -124,8 +125,37 @@ function App({ disabledFeatures = [], ...props }) {
       }
     });
 
+    const encounterChannel = new BroadcastChannel("cortico/oes/encounter");
+    encounterChannel.addEventListener("message", (data) => {
+      const demographicNo = getDemographicNo();
+      if (uid !== data.uid) {
+        if (
+          window.corticoOscar.isEncounterPage() &&
+          demographicNo === data.demographicNo
+        ) {
+          const encounterMessage = formEncounterMessage(
+            data.scheme,
+            data.subject,
+            data.body
+          );
+          const result = Encounter.addToCaseNote(encounterMessage);
+          if (result) {
+            const caseNote = Encounter.getCaseNote();
+            caseNote.blur();
+            caseNote.focus();
+          }
+          encounterChannel.postMessage({
+            uid,
+            encounter: true,
+            demographicNo,
+          });
+        }
+      }
+    });
+
     return () => {
       authChannel.close();
+      encounterChannel.close();
     };
   }, []);
 
