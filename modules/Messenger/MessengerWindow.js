@@ -472,6 +472,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
                   <Checkbox
                     label="Copy Message To Encounter"
                     defaultChecked={encounter}
+                    value={encounter}
                     onChange={(val) => handleChange("encounter", val)}
                   />
                 </div>

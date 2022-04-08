@@ -114,7 +114,7 @@ const init_cortico = async function () {
     route.indexOf("/appointment/addappointment.jsp") > -1 ||
     route.indexOf("/appointment/appointmentcontrol.jsp") > -1
   ) {
-    init_appointment_page();
+    //init_appointment_page();
     CorticoWidget(document.body, corticoWidgetContainer, {
       mode: "appointment",
     });
