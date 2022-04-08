@@ -102,6 +102,9 @@ const init_cortico = async function () {
   console.log("cortico plug-in initializing, version:", version);
   window.pubsub = pubsub;
 
+  const corticoWidgetContainer = document.createElement("div");
+  document.body.append(corticoWidgetContainer);
+
   /*
   const modal = new Modal();
   modal.setContent(Dashboard());
@@ -112,9 +115,9 @@ const init_cortico = async function () {
     route.indexOf("/appointment/appointmentcontrol.jsp") > -1
   ) {
     init_appointment_page();
-    const loginContainer = document.createElement("div");
-    document.body.prepend(loginContainer);
-    LoginOscar(document.body, loginContainer);
+    CorticoWidget(document.body, corticoWidgetContainer, {
+      mode: "appointment",
+    });
 
     if ((window.location.href + "").includes("appointment_no")) {
       init_recall_button();
@@ -158,8 +161,6 @@ const init_cortico = async function () {
     addMenu();
     getAccountProviderNo();
 
-    const corticoWidgetContainer = document.createElement("div");
-    document.body.append(corticoWidgetContainer);
     CorticoWidget(document.body, corticoWidgetContainer, {
       disabledFeatures: ["messenger"],
     });
@@ -207,12 +208,11 @@ const init_cortico = async function () {
     });
   } else if (route.indexOf("/oscarRx/ViewScript2.jsp") > -1) {
     // We need to determine first if the prescription is "delivery"
+    console.log("Fax Page");
     const currentPharmacyCode = localStorage.getItem("currentPharmacyCode");
-
     if (currentPharmacyCode.toLowerCase().indexOf("dlvr") > -1) {
       const additionalNotes = document.getElementById("additionalNotes");
       additionalNotes.value = "FOR DELIVERY";
-
       // make sure the preview frame is loaded before adding the notes
       const previewFrame = document.getElementById("preview");
 
@@ -370,6 +370,14 @@ function init_appointment_page() {
     });
 
     resources_field = document.querySelector('[name="resources"]');
+
+    const workflowSlug = create(
+      `<select><option>Hello World</option></select>`
+    );
+
+    if (parent) {
+      parent.appendChild(workflowSlug);
+    }
   }
 
   // telehealth button
