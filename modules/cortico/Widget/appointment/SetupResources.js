@@ -1,7 +1,18 @@
-import { useEffect, useState } from "preact/hooks";
+import { useEffect, useState, useRef } from "preact/hooks";
 import { nanoid } from "nanoid";
 import Select from "../base/Select";
 import Checkbox from "../base/Checkbox";
+import { createPortal } from "preact/compat";
+import Button from "../../../core/Button";
+import { VideoCameraIcon } from "@heroicons/react/outline";
+
+function useIsMount() {
+  const isMountRef = useRef(true);
+  useEffect(() => {
+    isMountRef.current = false;
+  }, []);
+  return isMountRef.current;
+}
 
 const mediums = [
   {
@@ -41,40 +52,38 @@ export default function SetupResources({
   resourcesField,
   resourcesContainer,
   workflowSlugs,
+  onChange,
   ...props
 }) {
+  const isMount = useIsMount();
   const [medium, setMedium] = useState(() => {
     if (!resourcesField?.value) {
       return localStorage.getItem("medium-option") || "placeholder";
+    } else if (resourcesField.value.includes("|")) {
+      const [medium] = resourcesField.value.split("|");
+      const existingMedium = mediums.find((m) => m.value === medium);
+      return existingMedium?.value || "placeholder";
+    } else {
+      return "placeholder";
     }
-    return "placeholder";
   });
-  const [workflow, setWorkflow] = useState("placeholder");
+  const [workflow, setWorkflow] = useState(() => {
+    if (!resourcesField?.value) {
+      return localStorage.getItem("medium-option") || "placeholder";
+    } else if (resourcesField.value.includes("|")) {
+      const [medium, workflow] = resourcesField.value.split("|");
+      const existingWorkflow = mediums.find((m) => m.value === workflow);
+      return existingWorkflow?.value || "placeholder";
+    } else {
+      return "placeholder";
+    }
+  });
   const [textField, setTextField] = useState(false);
   const [slugs, setSlugs] = useState([]);
+  const [buttonContainer, setButtonContainer] = useState(null);
 
   useEffect(() => {
-    if (resourcesField) {
-      if (resourcesField.value.includes("|")) {
-        const [medium, workflow] = resourcesField.value.split("|");
-        const existingMedium = mediums.find((m) => m.value === medium);
-        const existingWorkflow = workflowSlugs.find(
-          (w) => w.value === workflow
-        );
-
-        console.log(
-          "Existing Medium, existig workingflow",
-          existingMedium,
-          existingWorkflow
-        );
-        setMedium(existingMedium?.value);
-        setWorkflow(existingWorkflow?.value);
-      }
-    }
-  }, [resourcesField]);
-
-  useEffect(() => {
-    if (resourcesField) {
+    if (resourcesField && !isMount) {
       resourcesField.value = getResourceFieldString(medium, workflow);
       resourcesField.setAttribute(
         "value",
@@ -92,19 +101,32 @@ export default function SetupResources({
   }, [textField]);
 
   useEffect(() => {
-    console.log("Workflow slugs", workflowSlugs);
     if (workflowSlugs) {
-      setSlugs(
-        workflowSlugs.map((wf) => {
-          return {
-            value: wf.slug,
-            label: wf.name,
-            id: wf.slug,
-          };
-        })
-      );
+      const slugs = workflowSlugs.map((wf) => {
+        return {
+          value: wf.slug,
+          label: wf.name,
+          id: wf.slug,
+        };
+      });
+      setSlugs(slugs);
+
+      if (resourcesField?.value && resourcesField.value.includes("|")) {
+        const [medium, workflow] = resourcesField.value.split("|");
+        const existingWorkflow = slugs.find((w) => w.value === workflow);
+        setWorkflow(existingWorkflow?.value || "placeholder");
+      }
     }
   }, [workflowSlugs]);
+
+  useEffect(() => {
+    const printReceipt = window.document.querySelector("#printReceiptButton");
+    const container = printReceipt?.parentNode;
+    if (container) {
+      setButtonContainer(container);
+    }
+  }, []);
+
   return (
     <div className="tw-p-4 tw-font-sans">
       <div className="tw-bg-gray-100 tw-p-2 tw-rounded-md tw-shadow-lg tw-flex tw-flex-col tw-space-y-3">
@@ -142,6 +164,40 @@ export default function SetupResources({
           />
         </div>
       </div>
+      {buttonContainer &&
+        medium === "virtual" &&
+        createPortal(
+          <div className="tw-p-2">
+            <VideoCallButton></VideoCallButton>
+          </div>,
+          buttonContainer
+        )}
     </div>
+  );
+}
+
+function VideoCallButton() {
+  const openAppointmentLink = () => {
+    const searchParams = new URLSearchParams();
+    const apptNo = searchParams.get("appointment_no");
+    if (!apptNo) {
+      return alert(
+        "Please save your appointment first, before starting a video call."
+      );
+    }
+    window.open(getCorticoUrl() + "/appointment/" + apptNo);
+  };
+  return (
+    <Button
+      onClick={openAppointmentLink}
+      size="sm"
+      className="tw-bg-indigo-100 tw-text-blue-1000 tw-text-sm  tw-rounded-md tw-font-medium"
+      variant="custom"
+    >
+      <span className="tw-flex tw-items-center tw-cursor-pointer">
+        <span className="tw-cursor-pointer">Video Call</span>
+        <VideoCameraIcon className="tw-h-4 tw-w-4 tw-ml-2 tw-cursor-pointer" />
+      </span>
+    </Button>
   );
 }

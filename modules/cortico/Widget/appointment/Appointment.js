@@ -35,7 +35,6 @@ export default function Appointment() {
   }, []);
 
   useEffect(() => {
-    console.log("Logged In?", isLoggedIn);
     if (loggedIn === true) {
       let settingsToLoad = null;
       storage
@@ -59,7 +58,6 @@ export default function Appointment() {
               payload: settingsToLoad,
             });
           }
-          console.log("App Settings", settingsToLoad);
         });
     }
   }, [loggedIn]);
