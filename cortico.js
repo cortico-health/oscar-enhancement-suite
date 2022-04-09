@@ -114,7 +114,6 @@ const init_cortico = async function () {
     route.indexOf("/appointment/addappointment.jsp") > -1 ||
     route.indexOf("/appointment/appointmentcontrol.jsp") > -1
   ) {
-    init_appointment_page();
     CorticoWidget(document.body, corticoWidgetContainer, {
       mode: "appointment",
     });
@@ -126,27 +125,8 @@ const init_cortico = async function () {
 
     // only show on add appointment
     if (route.indexOf("/appointment/addappointment.jsp") > -1) {
-      init_medium_option();
     }
 
-    // Temporary fix, adding event listener does not work inside init_appointment_page
-    // Note: event listeners inside init_recall_button seems to be working fine
-    var resources_field = document.querySelector('[name="resources"]');
-    var cortico_button = document.getElementById("cortico-video-appt-btn");
-    // open a windows to the cortico video page for this appointment.
-    window.addEventListener("click", (e) => {
-      if (e.target.id === "cortico-video-appt-btn") {
-        if (!checkCorticoUrl(e.originalEvent)) return;
-
-        open_video_appointment_page(e);
-      }
-    });
-    //You need to delegate
-    //cortico_button.addEventListener("click", open_video_appointment_page);
-    console.log("Resources", resources_field);
-    if (resources_field) {
-      resources_field.addEventListener("change", update_video_button);
-    }
   } else if (oscar.isSchedulePage()) {
     init_schedule();
 
@@ -288,6 +268,7 @@ function update_video_button() {
   */
 }
 
+/*
 function open_video_appointment_page(e) {
   e.preventDefault(); // don't submit the form.
 
@@ -307,70 +288,9 @@ function open_video_appointment_page(e) {
   }
   window.open(getCorticoUrl() + "/appointment/" + appt_no);
 }
+*/
 
-function getResourceSelect(resources_field) {
-  let selectHtml = '<select name="resources">';
-  let selected = resources_field
-    ? resources_field.value
-    : localStorage.getItem("medium-option");
-  cortico_media.forEach(function (value) {
-    selectHtml +=
-      "<option " +
-      (value == selected ? "selected " : "") +
-      'value="' +
-      value +
-      '">' +
-      (value || "n/a") +
-      "</option>";
-  });
-  selectHtml += "</select>";
 
-  return selectHtml;
-}
-
-function init_appointment_page() {
-  // resources dropdown
-  var resources_field = document.querySelector(
-    'input[type="text"][name="resources"]'
-  );
-
-  const parent = resources_field ? resources_field.parentNode : null;
-  const resourceValue = resources_field ? resources_field.value : null;
-
-  console.log("If test", cortico_media.indexOf(), resourceValue);
-  if (resources_field && cortico_media.indexOf(resourceValue) > -1) {
-    parent.innerHTML = getResourceSelect(resources_field);
-
-    const resourceCheckbox = document.createElement("input");
-    resourceCheckbox.setAttribute("type", "checkbox");
-    resourceCheckbox.setAttribute("id", "resourceCheck");
-
-    const resourceLabel = document.createElement("label");
-    resourceLabel.setAttribute("for", "resourceCheck");
-    resourceLabel.textContent = "Text field";
-    parent.appendChild(resourceCheckbox);
-    parent.appendChild(resourceLabel);
-
-    const resourceTextInput = document.createElement("input");
-    resourceTextInput.setAttribute("type", "TEXT");
-    resourceTextInput.setAttribute("name", "resources");
-    resourceTextInput.setAttribute("tabindex", "5");
-    resourceTextInput.setAttribute("width", "25");
-
-    resourceCheckbox.addEventListener("input", (e) => {
-      parent.innerHTML = "";
-      if (e.target.checked === true) {
-        parent.appendChild(resourceTextInput);
-      } else {
-        parent.innerHTML = selectHtml;
-      }
-
-      parent.appendChild(resourceCheckbox);
-      parent.appendChild(resourceLabel);
-    });
-
-    resources_field = document.querySelector('[name="resources"]');
-  }
 
   // telehealth button
   var last_button = document.querySelector("#printReceiptButton");
@@ -2035,16 +1955,6 @@ async function init_recall_button() {
 
   statusOption.addEventListener("change", update_recall_button_visibility);
   corticoRecallButton.addEventListener("click", send_patient_recall_email);
-}
-
-async function init_medium_option() {
-  let statusOption = document.querySelector("select[name='resources']");
-
-  let storedMedium = localStorage.getItem("medium-option");
-
-  if (statusOption && storedMedium) {
-    statusOption.value = storedMedium;
-  }
 }
 
 export async function getPatientInfo(demographicNo) {
