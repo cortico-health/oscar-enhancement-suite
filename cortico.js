@@ -119,7 +119,6 @@ const init_cortico = async function () {
     });
 
     if ((window.location.href + "").includes("appointment_no")) {
-      init_recall_button();
       init_diagnostic_viewer_button();
     }
 
@@ -1883,77 +1882,6 @@ async function init_diagnostic_viewer_button() {
   update_diagnostic_button_visibility();
 
   corticoDiagnosticViewBtn.addEventListener("click", open_diagnostic_viewer);
-}
-
-async function init_recall_button() {
-  const statusOption = document.querySelector("select[name='status']");
-  var statusValue = statusOption.options[statusOption.selectedIndex].text;
-
-  var last_button = document.querySelector("#cortico-video-appt-btn");
-
-  if (last_button) {
-    last_button = last_button.parentNode;
-  } else {
-    return;
-  }
-
-  last_button.parentNode.appendChild(
-    htmlToElement(
-      "<button class='cortico-btn' type='button' id='recall-btn'>Recall email</button>"
-    )
-  );
-  const corticoRecallButton = document.getElementById("recall-btn");
-
-  function update_recall_button_visibility() {
-    statusValue = statusOption.options[statusOption.selectedIndex].text;
-
-    var recallStatus = localStorage["recall-status"]
-      ? localStorage["recall-status"]
-      : "todo";
-    corticoRecallButton.style.display =
-      statusValue.toLowerCase() === recallStatus.toLowerCase()
-        ? "inline-block"
-        : "none";
-  }
-
-  async function send_patient_recall_email(e) {
-    e.preventDefault();
-
-    const patientInfo = await getPatientInfo();
-    const patientEmail = patientInfo.email;
-    const formData = new FormData(
-      document.querySelector("form[name=EDITAPPT]")
-    );
-    const apptTime = formData.get("start_time");
-    const apptDate = formData.get("appointment_date");
-    const apptPatient = formData.get("keyword");
-
-    if (!patientEmail) {
-      alert("Patient has no email");
-      return;
-    }
-    if (!apptTime || !apptDate) {
-      alert("Please provide date/time");
-      return;
-    }
-
-    var apptSchedule = apptDate + "T" + apptTime;
-    var cleanedSchedule = dayjs(apptSchedule).format("h:mmA on MMMM D");
-    var cleanedPatient = apptPatient ? apptPatient : "Patient";
-    var clinicName = localStorage["clinicname"] || "Your Medical Clinic";
-
-    window.location.href =
-      `mailto:${patientEmail}?subject=Your doctor wants to speak with you&` +
-      `body=Dear ${cleanedPatient},%0d%0aYour doctor needs to follow up with you regarding some documents or results.%0d%0a` +
-      `We have tentatively booked you an appointment at ${cleanedSchedule}.%0d%0a%0d%0aPlease confirm with the following link:` +
-      `${getCorticoUrl()}/get-patient-appointment-lookup-url/%0d%0a%0d%0a` +
-      `Sincerely,%0d%0a${clinicName.toUpperCase()} STAFF`;
-  }
-
-  update_recall_button_visibility();
-
-  statusOption.addEventListener("change", update_recall_button_visibility);
-  corticoRecallButton.addEventListener("click", send_patient_recall_email);
 }
 
 export async function getPatientInfo(demographicNo) {
