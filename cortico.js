@@ -114,7 +114,7 @@ const init_cortico = async function () {
     route.indexOf("/appointment/addappointment.jsp") > -1 ||
     route.indexOf("/appointment/appointmentcontrol.jsp") > -1
   ) {
-    //init_appointment_page();
+    init_appointment_page();
     CorticoWidget(document.body, corticoWidgetContainer, {
       mode: "appointment",
     });
@@ -143,6 +143,7 @@ const init_cortico = async function () {
     });
     //You need to delegate
     //cortico_button.addEventListener("click", open_video_appointment_page);
+    console.log("Resources", resources_field);
     if (resources_field) {
       resources_field.addEventListener("change", update_video_button);
     }
@@ -278,14 +279,13 @@ const init_schedule = function () {
 };
 
 function update_video_button() {
+  console.log("It got here");
   var cortico_button = document.getElementById("cortico-video-appt-btn");
   var resources_field = document.querySelector('[name="resources"]');
   /* TODO: when other appoitment types supported. 
   cortico_button.innerText =
     resources_field.value === "virtual" ? "Join Video Call" : "Join Appointment";
   */
-  cortico_button.style.display =
-    resources_field.value === "virtual" ? "inline-block" : "none";
 }
 
 function open_video_appointment_page(e) {
@@ -370,14 +370,6 @@ function init_appointment_page() {
     });
 
     resources_field = document.querySelector('[name="resources"]');
-
-    const workflowSlug = create(
-      `<select><option>Hello World</option></select>`
-    );
-
-    if (parent) {
-      parent.appendChild(workflowSlug);
-    }
   }
 
   // telehealth button
