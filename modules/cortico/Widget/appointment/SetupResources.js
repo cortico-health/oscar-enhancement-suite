@@ -6,7 +6,6 @@ import { createPortal } from "preact/compat";
 import Button from "../../../core/Button";
 import { VideoCameraIcon } from "@heroicons/react/outline";
 import { getCorticoUrl } from "../../../Utils/Utils";
-
 function useIsMount() {
   const isMountRef = useRef(true);
   useEffect(() => {
@@ -168,7 +167,7 @@ export default function SetupResources({
       {buttonContainer &&
         medium === "virtual" &&
         createPortal(
-          <div className="tw-p-2">
+          <div className="tw-p-2 tw-inline-block">
             <VideoCallButton></VideoCallButton>
           </div>,
           buttonContainer

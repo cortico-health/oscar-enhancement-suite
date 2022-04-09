@@ -5,12 +5,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { loadExtensionStorageValue, isLoggedIn } from "../../../Utils/Utils";
 import storage from "../storage";
 import { getClinicSettings } from "../../../Api/Api";
+import SetupRecall from "./SetupRecall";
 
 export default function Appointment() {
   const { isLoggedIn: loggedIn } = useSelector((state) => state.auth);
   const { wf_slugs: workflowSlugs } = useSelector((state) => state.app);
   const dispatch = useDispatch();
   const [resourcesContainer, setResourcesContainer] = useState(null);
+  const [buttonContainer, setButtonContainer] = useState(null);
   const [resourcesField, setResourcesField] = useState(null);
 
   useEffect(() => {
@@ -22,6 +24,12 @@ export default function Appointment() {
     }
     if (resourcesContainer) {
       setResourcesContainer(resourcesContainer);
+    }
+
+    const printReceipt = window.document.querySelector("#printReceiptButton");
+    const container = printReceipt?.parentNode;
+    if (container) {
+      setButtonContainer(container);
     }
   }, []);
 
@@ -67,13 +75,16 @@ export default function Appointment() {
       {resourcesContainer &&
         resourcesField &&
         createPortal(
-          <SetupResources
-            resourcesContainer={resourcesContainer}
-            resourcesField={resourcesField}
-            workflowSlugs={workflowSlugs}
-          />,
+          <>
+            <SetupResources
+              resourcesContainer={resourcesContainer}
+              resourcesField={resourcesField}
+              workflowSlugs={workflowSlugs}
+            />
+          </>,
           resourcesContainer
         )}
+      {buttonContainer && createPortal(<SetupRecall />, buttonContainer)}
     </>
   );
 }
