@@ -1917,9 +1917,13 @@ async function init_diagnostic_viewer_button() {
   const notesField = document.querySelector("textarea[name='notes']");
   var notesValue = notesField.textContent;
 
-  var last_button = document.querySelector(
-    "#cortico-video-appt-btn"
-  ).parentNode;
+  var last_button = document.querySelector("#cortico-video-appt-btn");
+
+  if (last_button) {
+    last_button = last_button.parentNode;
+  } else {
+    return;
+  }
   last_button.parentNode.appendChild(
     htmlToElement(
       "<a class='cortico-btn' id='diagnostic-viewer-btn'>Patient Responses</a>"
@@ -1974,9 +1978,13 @@ async function init_recall_button() {
   const statusOption = document.querySelector("select[name='status']");
   var statusValue = statusOption.options[statusOption.selectedIndex].text;
 
-  var last_button = document.querySelector(
-    "#cortico-video-appt-btn"
-  ).parentNode;
+  var last_button = document.querySelector("#cortico-video-appt-btn");
+
+  if (last_button) {
+    last_button = last_button.parentNode;
+  } else {
+    return;
+  }
 
   last_button.parentNode.appendChild(
     htmlToElement(
