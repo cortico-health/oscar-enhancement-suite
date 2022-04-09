@@ -5,6 +5,7 @@ import Checkbox from "../base/Checkbox";
 import { createPortal } from "preact/compat";
 import Button from "../../../core/Button";
 import { VideoCameraIcon } from "@heroicons/react/outline";
+import { getCorticoUrl } from "../../../Utils/Utils";
 
 function useIsMount() {
   const isMountRef = useRef(true);
@@ -178,8 +179,10 @@ export default function SetupResources({
 
 function VideoCallButton() {
   const openAppointmentLink = () => {
-    const searchParams = new URLSearchParams();
+    const searchParams = new URLSearchParams(window.location.search);
+
     const apptNo = searchParams.get("appointment_no");
+    console.log("Appot no", apptNo);
     if (!apptNo) {
       return alert(
         "Please save your appointment first, before starting a video call."
