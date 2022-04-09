@@ -40,21 +40,9 @@ const getResourceFieldString = (medium, workflow) => {
 export default function SetupResources({
   resourcesField,
   resourcesContainer,
+  workflowSlugs,
   ...props
 }) {
-  const [workflowSlugs, setWorkflowSlugs] = useState([
-    {
-      value: "quiet",
-      label: "quiet",
-      id: nanoid(),
-    },
-    {
-      value: "",
-      label: "None",
-      id: nanoid(),
-    },
-  ]);
-
   const [medium, setMedium] = useState(() => {
     if (!resourcesField?.value) {
       return localStorage.getItem("medium-option") || "placeholder";
@@ -63,6 +51,7 @@ export default function SetupResources({
   });
   const [workflow, setWorkflow] = useState("placeholder");
   const [textField, setTextField] = useState(false);
+  const [slugs, setSlugs] = useState([]);
 
   useEffect(() => {
     if (resourcesField) {
@@ -101,6 +90,21 @@ export default function SetupResources({
       resourcesField.style.display = "block";
     }
   }, [textField]);
+
+  useEffect(() => {
+    console.log("Workflow slugs", workflowSlugs);
+    if (workflowSlugs) {
+      setSlugs(
+        workflowSlugs.map((wf) => {
+          return {
+            value: wf.slug,
+            label: wf.name,
+            id: wf.slug,
+          };
+        })
+      );
+    }
+  }, [workflowSlugs]);
   return (
     <div className="tw-p-4 tw-font-sans">
       <div className="tw-bg-gray-100 tw-p-2 tw-rounded-md tw-shadow-lg tw-flex tw-flex-col tw-space-y-3">
@@ -120,7 +124,7 @@ export default function SetupResources({
           <Select
             label="Workflow"
             className="tw-bg-white tw-text-gray-700 "
-            options={workflowSlugs}
+            options={slugs}
             onChange={(val) => setWorkflow(val)}
             defaultValue={workflow}
             placeholderText="Select a Workflow"

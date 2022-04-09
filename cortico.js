@@ -126,7 +126,6 @@ const init_cortico = async function () {
     // only show on add appointment
     if (route.indexOf("/appointment/addappointment.jsp") > -1) {
     }
-
   } else if (oscar.isSchedulePage()) {
     init_schedule();
 
@@ -290,8 +289,7 @@ function open_video_appointment_page(e) {
 }
 */
 
-
-
+/*
   // telehealth button
   var last_button = document.querySelector("#printReceiptButton");
   var last_button_parent = last_button ? last_button.parentNode : null;
@@ -308,6 +306,7 @@ function open_video_appointment_page(e) {
     update_video_button();
   }
 }
+*/
 
 export async function setupEFormPage() {
   await loadExtensionStorageValue("jwt_access_token").then(async function (
