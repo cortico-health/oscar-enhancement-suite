@@ -1827,8 +1827,7 @@ async function init_diagnostic_viewer_button() {
   const notesField = document.querySelector("textarea[name='notes']");
   var notesValue = notesField.textContent;
 
-  var last_button = document.querySelector("#cortico-video-appt-btn");
-
+  var last_button = document.querySelector("#printReceiptButton");
   if (last_button) {
     last_button = last_button.parentNode;
   } else {
