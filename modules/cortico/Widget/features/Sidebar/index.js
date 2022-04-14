@@ -5,12 +5,13 @@ import {
   CogIcon,
 } from "@heroicons/react/solid";
 
+const onEChartPage = window.location.pathname.includes("casemgmt/forward.jsp");
 const initialState = {
   items: [
     {
       name: "Account",
       icon: <UserIcon className="tw-w-4 tw-h-4" />,
-      current: true,
+      current: !onEChartPage,
     },
     {
       name: "Automation",
@@ -25,7 +26,7 @@ const initialState = {
     {
       name: "Messenger",
       icon: <ChatIcon className="tw-w-4 tw-h-4" />,
-      current: false,
+      current: onEChartPage, // default to messenger if on eChart page
     },
   ],
 };

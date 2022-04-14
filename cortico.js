@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name     Cortico
-// @version  2022.4.6
+// @version  2022.4.13
 // @grant    none
 // ==/UserScript==
 
@@ -60,7 +60,7 @@ import { initialState as setupPharmacyState } from "./modules/cortico/Widget/fea
 import { initialState as eligCheckState } from "./modules/cortico/Widget/features/EligCheck/EligCheck";
 import widgetStore from "./modules/cortico/Widget/store/store";
 import { getAccountProviderNo } from "./modules/Utils/Utils";
-const version = "2022.4.6";
+const version = "2022.4.13";
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
 window.is_dev = process.env.NODE_ENV === "development" ? true : false;
@@ -2073,7 +2073,7 @@ export async function getPatientInfo(demographicNo) {
     }
   }
 
-  // TODO: The following method of parsing the markup for email addresses is disabled below since it can find
+  // The following method of parsing the markup for email addresses is no longer used since it can find
   // contacts or other bad strings.
   // var re = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi;
   // var emails = text.match(re);
