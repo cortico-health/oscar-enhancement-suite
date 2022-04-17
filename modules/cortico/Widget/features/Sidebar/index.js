@@ -5,12 +5,15 @@ import {
   CogIcon,
 } from "@heroicons/react/solid";
 
+const defaultToMessenger =
+  window.location.pathname.includes("casemgmt/forward.jsp") ||
+  window.location.pathname.includes("eform/efmshowform_data.jsp");
 const initialState = {
   items: [
     {
       name: "Account",
       icon: <UserIcon className="tw-w-4 tw-h-4" />,
-      current: true,
+      current: !defaultToMessenger,
     },
     {
       name: "Automation",
@@ -25,7 +28,7 @@ const initialState = {
     {
       name: "Messenger",
       icon: <ChatIcon className="tw-w-4 tw-h-4" />,
-      current: false,
+      current: defaultToMessenger, // default to messenger if on eChart page
     },
   ],
 };

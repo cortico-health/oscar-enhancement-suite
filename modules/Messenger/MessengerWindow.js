@@ -174,10 +174,14 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
       }
 
       if (scheme === "email") {
-        const RFC_5322 = new RegExp(
-          '^(([^<>()\\[\\]\\\\.,;:\\s@"]+(\\.[^<>()[]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$'
+        // const RFC_5322 = new RegExp(
+        //   '^(([^<>()\\[\\]\\\\.,;:\\s@"]+(\\.[^<>()[]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$'
+        // );
+        // Gmail allows dots, which is not RFC 5322 compliant, so we use this simpler Regex instead
+        const VALID_EMAIL = new RegExp(
+          "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Z|a-z]{2,}$"
         );
-        if (RFC_5322.test(to) !== true) {
+        if (VALID_EMAIL.test(to) !== true) {
           throw new MessengerError(
             "Not a valid email address",
             "Please enter a valid email address"
