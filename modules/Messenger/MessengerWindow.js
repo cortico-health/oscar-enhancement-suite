@@ -297,7 +297,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         try {
           errorResponse = await result.json();
         } catch (error) {
-          throw new MessengerErrorError(
+          throw new MessengerError(
             `Error Occured`,
             `Server responded with ${result.status} without a valid response`
           );

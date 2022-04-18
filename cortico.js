@@ -189,10 +189,7 @@ const init_cortico = async function () {
       });
 
       if (oscar.isKaiOscarHost()) {
-        document.body.setAttribute(
-          "style",
-          "margin-top: 0px; transform: scale(1)"
-        );
+        document.body.setAttribute("style", "margin-top: 0px; transform: none");
       }
     }
   } else if (oscar.isDocumentPage()) {
