@@ -15,7 +15,6 @@ module.exports = {
     ignored: /dist/,
   },
   cache: false,
-  devtool: "eval-source-map",
   mode: "development",
   plugins: [
     new webpack.DefinePlugin({
