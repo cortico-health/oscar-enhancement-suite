@@ -123,3 +123,14 @@ export function getClinicSettings(token) {
     },
   });
 }
+
+export function getBootstrap(token) {
+  const url = `${getCorticoUrl()}/api/plug-in/bootstrap/`;
+  return fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+  });
+}

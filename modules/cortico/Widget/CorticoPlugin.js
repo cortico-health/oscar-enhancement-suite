@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import WidgetMessenger from "./messenger/WidgetMessenger";
 import Notifications from "./features/Notifications/Notifications";
 import { loadExtensionStorageValue } from "../../Utils/Utils";
-import { getClinicSettings } from "../../Api/Api";
+import { getClinicSettings, getBootstrap } from "../../Api/Api";
 import storage from "./storage/index";
 import Dialog from "./features/Dialog/Dialog";
 import { RefreshIcon } from "@heroicons/react/outline";
@@ -68,6 +68,15 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
               payload: settingsToLoad,
             });
           }
+        });
+
+      loadExtensionStorageValue("jwt_access_token")
+        .then((token) => {
+          return getBootstrap(token);
+        })
+        .then((response) => response.json())
+        .then((bootstrap) => {
+          console.log("Bootstrap", bootstrap);
         });
     }
   }, [loggedIn]);

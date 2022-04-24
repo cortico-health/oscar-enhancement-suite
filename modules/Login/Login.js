@@ -46,7 +46,7 @@ function Login() {
         setErrorMessage(json.detail || response.statusText);
         throw new Error(json.detail || response.statusText);
       }
-
+      saveExtensionStorageValue("jwt_refresh_token", json.refresh);
       saveExtensionStorageValue("jwt_access_token", json.access);
       saveExtensionStorageValue("jwt_expired", false);
       saveExtensionStorageValue("jwt_username", username);
