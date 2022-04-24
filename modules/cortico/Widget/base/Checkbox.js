@@ -6,6 +6,7 @@ const Checkbox = forwardRef(
     {
       name = "",
       className,
+      checked,
       size,
       label = "",
       defaultChecked = false,
@@ -25,6 +26,7 @@ const Checkbox = forwardRef(
           {...props}
           ref={ref}
           type="checkbox"
+          checked={checked}
           defaultChecked={defaultChecked}
           className={classNames(
             "tw-h-5 tw-w-5 tw-form-checkbox tw-rounded tw-text-blue-1000 tw-shadow-sm tw-focus:border-cortico-blue tw-focus:ring tw-focus:ring-offset-0 tw-focus:ring-blue-200 tw-focus:ring-opacity-50",

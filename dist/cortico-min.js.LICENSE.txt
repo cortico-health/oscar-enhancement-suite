@@ -1,3 +1,9 @@
+/*
+object-assign
+(c) Sindre Sorhus
+@license MIT
+*/
+
 /*!
     localForage -- Offline Storage, Improved
     Version 1.10.0
@@ -12,7 +18,7 @@
 */
 
 /** @license React v16.13.1
- * react-is.production.min.js
+ * react-is.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
