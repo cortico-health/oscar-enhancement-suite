@@ -1,16 +1,58 @@
 import { getCorticoUrl, getOrigin, getNamespace } from "../Utils/Utils";
 
+export function RefreshTokenDecorator(response, accessToken) {
+  console.log("Refresh Token Decorator Request");
+  return response
+    .then((res) => {
+      if (res.status === 401) {
+        loadExtensionStorageValue("jwt_refresh_token")
+          .then((refreshToken) => {
+            if (refreshToken) {
+              return refreshToken(refreshToken);
+            } else {
+              throw Error("Could not refresh token");
+            }
+          })
+          .then((res) => {
+            if (res.status !== 200) {
+              throw Error("Could not refresh token");
+            } else {
+              return res.json();
+            }
+          })
+          .then((json) => {
+            saveExtensionStorageValue("jwt_refresh_token", json.refresh);
+            saveExtensionStorageValue("jwt_access_token", json.access);
+            saveExtensionStorageValue("jwt_expired", false);
+            console.log("Retry response object", response);
+            return fetch(response.url, response.init);
+          })
+          .catch((error) => {
+            return Promise.reject(error);
+          });
+      } else {
+        return Promise.resolve(res);
+      }
+    })
+    .catch((error) => {
+      return Promise.reject(error);
+    });
+}
+
 export function sendEmail(data, token, opts) {
   const url = getCorticoUrl() + "/api/plug-in/email-form/";
-  return fetch(url, {
-    method: "POST",
-    body: JSON.stringify(data),
-    mode: "cors",
-    headers: {
-      "Content-type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  return RefreshTokenDecorator(
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify(data),
+      mode: "cors",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }),
+    token
+  );
 }
 
 export function sendMessage(data, token, opts) {
@@ -128,6 +170,18 @@ export function getBootstrap(token) {
   const url = `${getCorticoUrl()}/api/plug-in/bootstrap/`;
   return fetch(url, {
     method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+  });
+}
+
+export function refreshToken(refreshToken) {
+  const url = `${getCorticoUrl()}/api/plug-in/refresh/`;
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(refreshToken),
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + token,
