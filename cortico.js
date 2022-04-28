@@ -1384,7 +1384,7 @@ function setupFaxButton() {
 
 function getPharmacyDetails(pharmacyCode) {
   const clinicName = localStorage["clinicname"];
-  const url = `${getCorticoUrl()}/api/pharmacies/?code=${pharmacyCode}`;
+  const url = `https://cerebro-release.cortico.ca/api/pharmacies/${pharmacyCode}/`;
 
   return fetch(url, {
     method: "GET",
