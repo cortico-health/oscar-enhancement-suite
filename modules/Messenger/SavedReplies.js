@@ -135,7 +135,7 @@ function SavedReplies({ loadReply, ...props }) {
     };
     loadExtensionStorageValue("jwt_access_token")
       .then((token) => {
-        return addCannedReply(temp, token);
+        return addCannedReply(token, temp);
       })
       .then((res) => {
         return loadReplies();
@@ -154,7 +154,7 @@ function SavedReplies({ loadReply, ...props }) {
   const deleteReply = (id) => {
     loadExtensionStorageValue("jwt_access_token")
       .then((token) => {
-        return deleteCannedReply(id, token);
+        return deleteCannedReply(token, id);
       })
       .then((res) => {
         console.log(res);

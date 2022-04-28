@@ -50,7 +50,6 @@ export function Notification({
   const dispatch = useDispatch();
 
   const dismiss = () => {
-    console.log("Dismiss called");
     dispatch({
       type: "notifications/remove",
       payload: id,
@@ -58,13 +57,11 @@ export function Notification({
   };
 
   useEffect(() => {
-    console.log("Notification Mounted", id);
     let timeoutId = setTimeout(() => {
       dismiss();
     }, dismissAfter);
 
     return () => {
-      console.log("Notification Clean Up Ran", id);
       clearTimeout(timeoutId);
     };
   }, []);
