@@ -1,61 +1,70 @@
-import { getCorticoUrl, getOrigin, getNamespace } from "../Utils/Utils";
+import {
+  getCorticoUrl,
+  getOrigin,
+  getNamespace,
+  loadExtensionStorageValue,
+  saveExtensionStorageValue,
+} from "../Utils/Utils";
 
-export function RefreshTokenDecorator(response, accessToken) {
-  console.log("Refresh Token Decorator Request");
-  return response
-    .then((res) => {
-      if (res.status === 401) {
-        loadExtensionStorageValue("jwt_refresh_token")
-          .then((refreshToken) => {
-            if (refreshToken) {
-              return refreshToken(refreshToken);
-            } else {
-              throw Error("Could not refresh token");
-            }
-          })
-          .then((res) => {
-            if (res.status !== 200) {
-              throw Error("Could not refresh token");
-            } else {
-              return res.json();
-            }
-          })
-          .then((json) => {
-            saveExtensionStorageValue("jwt_refresh_token", json.refresh);
-            saveExtensionStorageValue("jwt_access_token", json.access);
-            saveExtensionStorageValue("jwt_expired", false);
-            console.log("Retry response object", response);
-            return fetch(response.url, response.init);
-          })
-          .catch((error) => {
-            return Promise.reject(error);
-          });
-      } else {
-        return Promise.resolve(res);
-      }
-    })
-    .catch((error) => {
-      return Promise.reject(error);
+export function RefreshTokenDecorator(fn) {
+  return function () {
+    return new Promise((resolve, reject) => {
+      fn.apply(this, arguments)
+        .then((res) => {
+          if (res.status === 401) {
+            loadExtensionStorageValue("jwt_refresh_token")
+              .then((jwt_refresh_token) => {
+                if (jwt_refresh_token) {
+                  return refreshToken(jwt_refresh_token);
+                } else {
+                  reject(
+                    "Could not refresh token. Please sign out and sign in again."
+                  );
+                }
+              })
+              .then((res) => {
+                if (res.status !== 200) {
+                  reject(
+                    "Could not refresh token. Please sign out and sign in again."
+                  );
+                } else {
+                  return res.json();
+                }
+              })
+              .then((json) => {
+                saveExtensionStorageValue("jwt_access_token", json.access);
+                saveExtensionStorageValue("jwt_expired", false);
+                arguments[0] = json.access;
+                console.log("Retrying here", json, arguments);
+                return resolve(fn.apply(this, arguments));
+              });
+          } else {
+            return resolve(res);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+          reject(error);
+        });
     });
+  };
 }
 
-export function sendEmail(data, token, opts) {
+export const sendEmail = RefreshTokenDecorator((token, data) => {
   const url = getCorticoUrl() + "/api/plug-in/email-form/";
-  return RefreshTokenDecorator(
-    fetch(url, {
-      method: "POST",
-      body: JSON.stringify(data),
-      mode: "cors",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }),
-    token
-  );
-}
 
-export function sendMessage(data, token, opts) {
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data),
+    mode: "cors",
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+});
+
+export const sendMessage = RefreshTokenDecorator((token, data, opts) => {
   const url = getCorticoUrl() + "/api/plug-in/custom-message/";
   return fetch(url, {
     method: "POST",
@@ -66,9 +75,9 @@ export function sendMessage(data, token, opts) {
       Authorization: `Bearer ${token}`,
     },
   });
-}
+});
 
-export function getCannedReplies(token) {
+export const getCannedReplies = RefreshTokenDecorator((token) => {
   const url = getCorticoUrl() + "/api/plug-in/messages/";
   return fetch(url, {
     method: "GET",
@@ -78,9 +87,9 @@ export function getCannedReplies(token) {
       Authorization: `Bearer ${token}`,
     },
   });
-}
+});
 
-export function deleteCannedReply(id, token) {
+export const deleteCannedReply = RefreshTokenDecorator((token, id) => {
   const url = getCorticoUrl() + `/api/plug-in/messages/${id}/?action=delete`;
   return fetch(url, {
     method: "GET",
@@ -90,9 +99,9 @@ export function deleteCannedReply(id, token) {
       Authorization: `Bearer ${token}`,
     },
   });
-}
+});
 
-export function addCannedReply(data, token) {
+export const addCannedReply = RefreshTokenDecorator((token, data) => {
   const url = getCorticoUrl() + "/api/plug-in/messages/";
   return fetch(url, {
     method: "POST",
@@ -103,7 +112,7 @@ export function addCannedReply(data, token) {
       Authorization: `Bearer ${token}`,
     },
   });
-}
+});
 
 export function getEncounterNotes(demographicNo) {
   const payload = {
@@ -155,7 +164,7 @@ export function postCaseManagementEntry(
   });
 }
 
-export function getClinicSettings(token) {
+export const getClinicSettings = RefreshTokenDecorator((token) => {
   const url = `${getCorticoUrl()}/api/public/clinic-settings/`;
   return fetch(url, {
     method: "GET",
@@ -164,9 +173,9 @@ export function getClinicSettings(token) {
       Authorization: "Bearer " + token,
     },
   });
-}
+});
 
-export function getBootstrap(token) {
+export const getBootstrap = RefreshTokenDecorator((token) => {
   const url = `${getCorticoUrl()}/api/plug-in/bootstrap/`;
   return fetch(url, {
     method: "GET",
@@ -175,16 +184,17 @@ export function getBootstrap(token) {
       Authorization: "Bearer " + token,
     },
   });
-}
+});
 
 export function refreshToken(refreshToken) {
-  const url = `${getCorticoUrl()}/api/plug-in/refresh/`;
+  const url = `${getCorticoUrl()}/api/token/refresh/`;
   return fetch(url, {
     method: "POST",
-    body: JSON.stringify(refreshToken),
+    body: JSON.stringify({
+      refresh: refreshToken,
+    }),
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
     },
   });
 }
