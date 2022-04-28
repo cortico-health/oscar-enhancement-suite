@@ -266,10 +266,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
 
       let result = null;
       if (scheme === "email") {
-        result = await sendEmail(
-          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjUwMDAwMCwiaWF0IjoxNjUxMTA5OTI2LCJqdGkiOiI5Mzg5ZTliNDcyZDk0NzRhOWQzN2RjYzQwYjUzMmRmZSIsInVzZXJfaWQiOjJ9.ZShRMIn3EHZF_wiE5gDPROsNRMxbGkQCE6ECHJmRXXE",
-          data
-        );
+        result = await sendEmail(token, data);
       } else if (scheme === "sms") {
         result = await sendMessage(token, data);
       }

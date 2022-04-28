@@ -1432,6 +1432,11 @@ async function setupPreferredPharmacy(code, demographic_no) {
     state.errorMessage = "Pharmacy not found";
     return state;
   }
+
+  if (corticoPharmacyText instanceof Object) {
+    corticoPharmacyText = [corticoPharmacyText];
+  }
+  console.log("Cortico Pharmacy Text", corticoPharmacyText);
   let corticoFaxNumber = corticoPharmacyText[0]["fax_number"] || null;
 
   if (!corticoFaxNumber) {
