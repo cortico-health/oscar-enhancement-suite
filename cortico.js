@@ -114,12 +114,10 @@ const init_cortico = async function () {
     route.indexOf("/appointment/addappointment.jsp") > -1 ||
     route.indexOf("/appointment/appointmentcontrol.jsp") > -1
   ) {
-    if ((window.location.href + "").includes("appointment_no")) {
-      CorticoWidget(document.body, corticoWidgetContainer, {
-        mode: "appointment",
-      });
-      init_diagnostic_viewer_button();
-    }
+    CorticoWidget(document.body, corticoWidgetContainer, {
+      mode: "appointment",
+    });
+    init_diagnostic_viewer_button();
 
     // only show on add appointment
     if (route.indexOf("/appointment/addappointment.jsp") > -1) {

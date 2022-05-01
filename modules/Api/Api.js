@@ -50,7 +50,7 @@ export function RefreshTokenDecorator(fn) {
   };
 }
 
-export const sendEmail = RefreshTokenDecorator((token, data) => {
+export const sendEmail = (token, data) => {
   const url = getCorticoUrl() + "/api/plug-in/email-form/";
 
   return fetch(url, {
@@ -62,9 +62,9 @@ export const sendEmail = RefreshTokenDecorator((token, data) => {
       Authorization: `Bearer ${token}`,
     },
   });
-});
+};
 
-export const sendMessage = RefreshTokenDecorator((token, data, opts) => {
+export const sendMessage = (token, data, opts) => {
   const url = getCorticoUrl() + "/api/plug-in/custom-message/";
   return fetch(url, {
     method: "POST",
@@ -75,9 +75,9 @@ export const sendMessage = RefreshTokenDecorator((token, data, opts) => {
       Authorization: `Bearer ${token}`,
     },
   });
-});
+};
 
-export const getCannedReplies = RefreshTokenDecorator((token) => {
+export const getCannedReplies = (token) => {
   const url = getCorticoUrl() + "/api/plug-in/messages/";
   return fetch(url, {
     method: "GET",
@@ -87,9 +87,9 @@ export const getCannedReplies = RefreshTokenDecorator((token) => {
       Authorization: `Bearer ${token}`,
     },
   });
-});
+};
 
-export const deleteCannedReply = RefreshTokenDecorator((token, id) => {
+export const deleteCannedReply = (token, id) => {
   const url = getCorticoUrl() + `/api/plug-in/messages/${id}/?action=delete`;
   return fetch(url, {
     method: "GET",
@@ -99,9 +99,9 @@ export const deleteCannedReply = RefreshTokenDecorator((token, id) => {
       Authorization: `Bearer ${token}`,
     },
   });
-});
+};
 
-export const addCannedReply = RefreshTokenDecorator((token, data) => {
+export const addCannedReply = (token, data) => {
   const url = getCorticoUrl() + "/api/plug-in/messages/";
   return fetch(url, {
     method: "POST",
@@ -112,7 +112,7 @@ export const addCannedReply = RefreshTokenDecorator((token, data) => {
       Authorization: `Bearer ${token}`,
     },
   });
-});
+};
 
 export function getEncounterNotes(demographicNo) {
   const payload = {
@@ -164,7 +164,7 @@ export function postCaseManagementEntry(
   });
 }
 
-export const getClinicSettings = RefreshTokenDecorator((token) => {
+export const getClinicSettings = (token) => {
   const url = `${getCorticoUrl()}/api/public/clinic-settings/`;
   return fetch(url, {
     method: "GET",
@@ -173,9 +173,9 @@ export const getClinicSettings = RefreshTokenDecorator((token) => {
       Authorization: "Bearer " + token,
     },
   });
-});
+};
 
-export const getBootstrap = RefreshTokenDecorator((token) => {
+export const getBootstrap = (token) => {
   const url = `${getCorticoUrl()}/api/plug-in/bootstrap/`;
   return fetch(url, {
     method: "GET",
@@ -184,7 +184,7 @@ export const getBootstrap = RefreshTokenDecorator((token) => {
       Authorization: "Bearer " + token,
     },
   });
-});
+};
 
 export function refreshToken(refreshToken) {
   const url = `${getCorticoUrl()}/api/token/refresh/`;

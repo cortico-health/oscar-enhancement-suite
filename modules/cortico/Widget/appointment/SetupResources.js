@@ -42,12 +42,6 @@ const mediums = [
   },
 ];
 
-const getResourceFieldString = (medium, workflow) => {
-  return `${medium === "placeholder" ? "" : medium}|${
-    workflow === "placeholder" ? "" : workflow
-  }`;
-};
-
 export default function SetupResources({
   resourcesField,
   resourcesContainer,
@@ -56,41 +50,48 @@ export default function SetupResources({
   ...props
 }) {
   const isMount = useIsMount();
-  const [medium, setMedium] = useState(() => {
-    if (!resourcesField?.value) {
-      return localStorage.getItem("medium-option") || "placeholder";
-    } else if (resourcesField.value.includes("|")) {
-      const [medium] = resourcesField.value.split("|");
-      const existingMedium = mediums.find((m) => m.value === medium);
-      return existingMedium?.value || "placeholder";
-    } else {
-      return "placeholder";
-    }
-  });
-  const [workflow, setWorkflow] = useState(() => {
-    if (!resourcesField?.value) {
-      return localStorage.getItem("medium-option") || "placeholder";
-    } else if (resourcesField.value.includes("|")) {
-      const [medium, workflow] = resourcesField.value.split("|");
-      const existingWorkflow = mediums.find((m) => m.value === workflow);
-      return existingWorkflow?.value || "placeholder";
-    } else {
-      return "placeholder";
-    }
-  });
+  const [medium, setMedium] = useState(null);
+  const [workflow, setWorkflow] = useState(null);
   const [textField, setTextField] = useState(false);
   const [slugs, setSlugs] = useState([]);
   const [buttonContainer, setButtonContainer] = useState(null);
 
   useEffect(() => {
-    if (resourcesField && !isMount) {
-      resourcesField.value = getResourceFieldString(medium, workflow);
-      resourcesField.setAttribute(
-        "value",
-        getResourceFieldString(medium, workflow)
-      );
+    const resourcesFieldValue = resourcesField.value;
+    if (!resourcesFieldValue) {
+      const defaultMedium = localStorage.getItem("medium-option");
+      setMedium(defaultMedium);
+      handleMediumChange(defaultMedium);
+      setWorkflow("placeholder");
+    } else {
+      const [medium, workflow] = resourcesFieldValue.split("|");
+      if (medium && mediums.some((m) => m.value === medium)) {
+        setMedium(medium);
+      } else {
+        setMedium("placeholder");
+      }
+      if (workflow && slugs.some((w) => w.value === workflow)) {
+        setWorkflow(workflow);
+      } else {
+        setWorkflow("placeholder");
+      }
     }
-  }, [medium, workflow]);
+  }, [slugs]);
+
+  const handleMediumChange = (val) => {
+    setMedium(val);
+    resourcesField.value = [
+      val,
+      workflow === "placeholder" ? "" : workflow,
+    ].join("|");
+  };
+
+  const handleWorkflowChange = (val) => {
+    setWorkflow(val);
+    resourcesField.value = [medium === "placeholder" ? "" : medium, val].join(
+      "|"
+    );
+  };
 
   useEffect(() => {
     if (textField === false) {
@@ -110,12 +111,6 @@ export default function SetupResources({
         };
       });
       setSlugs(slugs);
-
-      if (resourcesField?.value && resourcesField.value.includes("|")) {
-        const [medium, workflow] = resourcesField.value.split("|");
-        const existingWorkflow = slugs.find((w) => w.value === workflow);
-        setWorkflow(existingWorkflow?.value || "placeholder");
-      }
     }
   }, [workflowSlugs]);
 
@@ -128,14 +123,14 @@ export default function SetupResources({
   }, []);
 
   return (
-    <div className="tw-p-4 tw-font-sans">
-      <div className="tw-bg-gray-100 tw-p-2 tw-rounded-md tw-shadow-lg tw-flex tw-flex-col tw-space-y-3">
+    <div className="tw-p-0 tw-font-sans">
+      <div className="tw-flex tw-items-center">
         <div>
           <Select
             label="Medium"
             className="tw-bg-white tw-text-gray-700"
             options={mediums}
-            onChange={(val) => setMedium(val)}
+            onChange={(val) => handleMediumChange(val)}
             defaultValue={medium}
             placeholder={true}
             placeholderText="Select a Medium"
@@ -147,22 +142,22 @@ export default function SetupResources({
             label="Workflow"
             className="tw-bg-white tw-text-gray-700 "
             options={slugs}
-            onChange={(val) => setWorkflow(val)}
+            onChange={(val) => handleWorkflowChange(val)}
             defaultValue={workflow}
             placeholderText="Select a Workflow"
             placeholder={true}
             value={workflow}
           ></Select>
         </div>
-        <div className="tw-block">
-          <Checkbox
-            className="tw-border"
-            label="Show Text Field"
-            checked={textField}
-            onChange={(isChecked) => setTextField(isChecked)}
-            defaultChecked={textField}
-          />
-        </div>
+      </div>
+      <div className="tw-block">
+        <Checkbox
+          className="tw-border"
+          label="Show Text Field"
+          checked={textField}
+          onChange={(isChecked) => setTextField(isChecked)}
+          defaultChecked={textField}
+        />
       </div>
       {buttonContainer &&
         medium === "virtual" &&
