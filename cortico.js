@@ -112,16 +112,20 @@ const init_cortico = async function () {
 */
   if (
     route.indexOf("/appointment/addappointment.jsp") > -1 ||
-    route.indexOf("/appointment/appointmentcontrol.jsp") > -1
+    route.indexOf("/appointment/editappointment.jsp") > -1
   ) {
     CorticoWidget(document.body, corticoWidgetContainer, {
       mode: "appointment",
     });
     init_diagnostic_viewer_button();
-
-    // only show on add appointment
-    if (route.indexOf("/appointment/addappointment.jsp") > -1) {
-    }
+  } else if (
+    route.indexOf("/appointment/appointmentcontrol.jsp") > -1 &&
+    route.includes("appointment_no")
+  ) {
+    CorticoWidget(document.body, corticoWidgetContainer, {
+      mode: "appointment",
+    });
+    init_diagnostic_viewer_button();
   } else if (oscar.isSchedulePage()) {
     init_schedule();
 
