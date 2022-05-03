@@ -55,9 +55,9 @@ export default function SetupResources({
   const [textField, setTextField] = useState(false);
   const [slugs, setSlugs] = useState([]);
   const [buttonContainer, setButtonContainer] = useState(null);
+  const resourcesFieldValue = resourcesField.value;
 
   useEffect(() => {
-    const resourcesFieldValue = resourcesField.value;
     if (!resourcesFieldValue) {
       const defaultMedium = localStorage.getItem("medium-option");
       setMedium(defaultMedium);
@@ -80,6 +80,8 @@ export default function SetupResources({
 
   const handleMediumChange = (val) => {
     setMedium(val);
+    const [inputMedium, workflow] = resourcesFieldValue.split("|");
+    console.log(val, workflow);
     resourcesField.value = [
       val,
       workflow === "placeholder" ? "" : workflow,
@@ -88,6 +90,7 @@ export default function SetupResources({
 
   const handleWorkflowChange = (val) => {
     setWorkflow(val);
+    const [medium, inputWorkflow] = resourcesFieldValue.split("|");
     resourcesField.value = [medium === "placeholder" ? "" : medium, val].join(
       "|"
     );
@@ -102,6 +105,7 @@ export default function SetupResources({
   }, [textField]);
 
   useEffect(() => {
+    console.log("Workflow slugs", workflowSlugs);
     if (workflowSlugs) {
       const slugs = workflowSlugs.map((wf) => {
         return {
@@ -138,16 +142,18 @@ export default function SetupResources({
           ></Select>
         </div>
         <div>
-          <Select
-            label="Workflow"
-            className="tw-bg-white tw-text-gray-700 "
-            options={slugs}
-            onChange={(val) => handleWorkflowChange(val)}
-            defaultValue={workflow}
-            placeholderText="Select a Workflow"
-            placeholder={true}
-            value={workflow}
-          ></Select>
+          {workflowSlugs && workflowSlugs.length > 0 && (
+            <Select
+              label="Workflow"
+              className="tw-bg-white tw-text-gray-700 "
+              options={slugs}
+              onChange={(val) => handleWorkflowChange(val)}
+              defaultValue={workflow}
+              placeholderText="Select a Workflow"
+              placeholder={true}
+              value={workflow}
+            ></Select>
+          )}
         </div>
       </div>
       <div className="tw-block">
