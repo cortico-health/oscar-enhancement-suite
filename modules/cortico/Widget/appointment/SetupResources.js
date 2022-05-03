@@ -188,6 +188,7 @@ function VideoCallButton() {
         "Please save your appointment first, before starting a video call."
       );
     }
+    console.log("Cortico URL", getCorticoUrl());
     window.open(getCorticoUrl() + "/appointment/" + apptNo);
   };
   return (
