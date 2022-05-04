@@ -87,5 +87,9 @@ export default function SetupRecall() {
     };
   }, []);
 
-  return <>{show === true ? <RecallButton /> : null}</>;
+  return (
+    <>
+      <RecallButton />
+    </>
+  );
 }
