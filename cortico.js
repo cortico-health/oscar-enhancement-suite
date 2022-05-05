@@ -162,10 +162,12 @@ const init_cortico = async function () {
     if (oscar.isEncounterPage()) {
       CorticoWidget(document.body, corticoWidgetContainer, {
         disabledFeatures: ["automation"],
+        defaultMenu: "Messenger",
       });
     } else {
       CorticoWidget(document.body, corticoWidgetContainer, {
         disabledFeatures: ["text", "automation"],
+        defaultMenu: "Messenger",
         eForm: true,
       });
 
@@ -176,11 +178,13 @@ const init_cortico = async function () {
   } else if (oscar.isDocumentPage()) {
     CorticoWidget(document.body, corticoWidgetContainer, {
       disabledFeatures: ["text", "automation"],
+      defaultMenu: "Messenger",
       document: true,
     });
   } else if (oscar.isInboxDocument()) {
     CorticoWidget(document.body, corticoWidgetContainer, {
       disabledFeatures: ["text", "encounter", "automation"],
+      defaultMenu: "Messenger",
       inboxDocument: true,
     });
   } else if (route.indexOf("/oscarRx/ViewScript2.jsp") > -1) {
