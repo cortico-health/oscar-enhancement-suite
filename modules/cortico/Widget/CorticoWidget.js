@@ -76,6 +76,13 @@ function App({ mode = "normal", ...props }) {
       });
     }
 
+    if (props.defaultMenu) {
+      dispatch({
+        type: "sidebar/setCurrent",
+        payload: props.defaultMenu,
+      });
+    }
+
     dispatch({
       type: "app/set",
       payload: { ...props, uid },
