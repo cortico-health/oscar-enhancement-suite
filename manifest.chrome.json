@@ -26,7 +26,8 @@
         "https://*/*/casemgmt/forward.jsp*",
         "https://*/*/eform/efmformadd_data.jsp*",
         "https://*/*/eform/efmshowform_data.jsp*",
-        "https://*/*/dms/documentReport.jsp*"
+        "https://*/*/dms/documentReport.jsp*",
+        "https://*/*/dms/showDocument.jsp*"
       ],
       "js": [
         "dist/cortico-min.js"
