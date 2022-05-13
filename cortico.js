@@ -70,6 +70,7 @@ const corticoWidgetContainer = document.createElement("div");
 document.body.append(corticoWidgetContainer);
 
 const init_cortico = async function () {
+  console.log("Init cortico called");
   // create an element to indicate the library is loaded in the dom, and to contain fixed menus/elements.
   const anchor = document.createElement("div");
   anchor.id = "cortico_anchor";
@@ -432,9 +433,32 @@ const init_styles = function () {
   addGlobalStyle(style);
 };
 
+console.log("It got here though");
 if (!document.getElementById("cortico_anchor")) {
   // avoid duplicating the extension/script.
-  init_cortico();
+  const oscar_elements = Array.from(
+    document.getElementsByTagName("script")
+  ).filter(function (s) {
+    return (
+      s.src.indexOf("/Oscar.js") > 0 ||
+      s.src.indexOf("/oscar/js/") > 0 ||
+      s.src.indexOf("/appointment.js") > 0 ||
+      s.src.indexOf("phr/phr.js" > -1) // Encounter page
+    );
+  });
+
+  // some pages have no scripts, but they have other elements.
+  if (!oscar_elements) {
+    oscar_elements = document.querySelectorAll("div.DoNotPrint>table");
+  }
+
+  // do not run unless we're on an Oscar page.
+
+  if (oscar_elements.length === 0) {
+    console.log("Cortico could not find any oscar script");
+  } else {
+    init_cortico();
+  }
 } else {
   console.warn("Cortico plug-in installed more than once. A");
 }
@@ -1423,9 +1447,14 @@ async function setupPreferredPharmacy(code, demographic_no) {
 
   try {
     corticoPharmacy = await getPharmacyDetails(pharmacyCode);
+    if (corticoPharmacy.status !== 200) {
+      throw Error(corticoPharmacy);
+    }
     corticoPharmacyText = await corticoPharmacy.text();
   } catch (e) {
+    console.log("Making pharmacy error occured");
     console.error(e);
+    console.log("The error occurs here");
     state.error = true;
     state.errorMessage = "Pharmacy not found";
     return state;
@@ -1797,6 +1826,8 @@ export async function setupPreferredPharmacies() {
         pharmacyCode,
         demographicNo
       );
+
+      console.log("Demo State", demographicState);
 
       if (demographicState.error === true) {
         widgetStore.dispatch({
