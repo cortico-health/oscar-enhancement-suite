@@ -1461,7 +1461,16 @@ async function setupPreferredPharmacy(code, demographic_no) {
     return state;
   }
 
-  corticoPharmacyText = JSON.parse(corticoPharmacyText);
+  console.log("Cortico Pharmacy Text", corticoPharmacyText);
+
+  try {
+    corticoPharmacyText = JSON.parse(corticoPharmacyText);
+  } catch (e) {
+    state.error = true;
+    state.errorMessage = "Unable to parse cortico pharmacy text";
+    return state;
+  }
+
   if (corticoPharmacyText.length <= 0) {
     //Show this message if the pharmacy code is not found
     state.error = true;
