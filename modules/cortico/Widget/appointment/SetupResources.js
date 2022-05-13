@@ -64,7 +64,7 @@ export default function SetupResources({
       handleMediumChange(defaultMedium);
       setWorkflow("placeholder");
     } else {
-      const [medium, workflow] = resourcesFieldValue.split("|");
+      const [medium, workflow] = resourcesFieldValue.split("+");
       if (medium && mediums.some((m) => m.value === medium)) {
         setMedium(medium);
       } else {
@@ -80,19 +80,19 @@ export default function SetupResources({
 
   const handleMediumChange = (val) => {
     setMedium(val);
-    const [inputMedium, workflow] = resourcesFieldValue.split("|");
+    const [inputMedium, workflow] = resourcesFieldValue.split("+");
     console.log(val, workflow);
     resourcesField.value = [
       val,
       workflow === "placeholder" ? "" : workflow,
-    ].join("|");
+    ].join("+");
   };
 
   const handleWorkflowChange = (val) => {
     setWorkflow(val);
-    const [medium, inputWorkflow] = resourcesFieldValue.split("|");
+    const [medium, inputWorkflow] = resourcesFieldValue.split("+");
     resourcesField.value = [medium === "placeholder" ? "" : medium, val].join(
-      "|"
+      "+"
     );
   };
 
