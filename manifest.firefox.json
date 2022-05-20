@@ -16,6 +16,8 @@
         "https://*/appointment/appointmentcontrol.jsp*",
         "https://*/provider/providercontrol.jsp*",
         "https://*/casemgmt/forward.jsp*",
+        "https://*/oscarEncounter/IncomingEncounter.do*",
+        "https://*/juno/oscarEncounter/IncomingEncounter.do*",
         "https://*/eform/efmformadd_data.jsp*",
         "https://*/eform/efmshowform_data.jsp*",
         "https://*/dms/documentReport.jsp*",
@@ -26,7 +28,8 @@
         "https://*/*/casemgmt/forward.jsp*",
         "https://*/*/eform/efmformadd_data.jsp*",
         "https://*/*/eform/efmshowform_data.jsp*",
-        "https://*/*/dms/documentReport.jsp*"
+        "https://*/*/dms/documentReport.jsp*",
+        "https://*/*/dms/showDocument.jsp*"
       ],
       "js": [
         "dist/cortico-min.js"
