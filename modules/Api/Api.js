@@ -6,6 +6,9 @@ import {
   saveExtensionStorageValue,
 } from "../Utils/Utils";
 
+// Sample Expired Token
+// eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxMDAwMDAwLCJpYXQiOjE2NTMzMzc4MjEsImp0aSI6ImExYWQ5YTk2Y2MyYzQ0ZTU4YzRkMGRiZjhkYTYzNjZkIiwidXNlcl9pZCI6Mn0.n8slNMnK0oMcZGsb9_vzVL131W__edk91HQKPsHFqZY
+
 export function RefreshTokenDecorator(fn) {
   return function () {
     return new Promise((resolve, reject) => {

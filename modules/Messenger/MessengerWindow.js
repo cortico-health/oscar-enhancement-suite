@@ -28,8 +28,7 @@ import FeatureDetector from "../cortico/Widget/adapters/FeatureDetecter";
 import InboxDocument from "../cortico/Widget/adapters/InboxDocument";
 import Encounter from "../core/Encounter";
 import { BroadcastChannel } from "broadcast-channel";
-
-import dayjs from "dayjs";
+import { handleTokenExpiry } from "../../modules/cortico/Widget/common/utils";
 class MessengerError extends Error {
   constructor(title, message) {
     super(message);
@@ -309,10 +308,13 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         if (scheme === "sms") {
           title = "SMS not sent";
         }
-        throw new MessengerError(
-          title,
-          errorResponse.message || errorResponse?.messages[0]?.message
-        );
+
+        if (!handleTokenExpiry(result, errorResponse)) {
+          throw new MessengerError(
+            title,
+            errorResponse.message || errorResponse?.messages[0]?.message
+          );
+        }
       }
     } catch (error) {
       console.error(error);
