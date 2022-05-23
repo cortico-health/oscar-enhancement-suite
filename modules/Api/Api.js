@@ -59,7 +59,7 @@ export const sendEmail = (token, data) => {
     mode: "cors",
     headers: {
       "Content-type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxMDAwMDAwLCJpYXQiOjE2NTMzMjg1NzAsImp0aSI6IjcwYzYyMThhODFlNDQ2N2E5MDc0MTI2NTkwYjIxZjdlIiwidXNlcl9pZCI6Mn0.R_RVCAwzXMhD55BGvhq560KF-cpfpbI1pX0QdoPUMPY"}`,
     },
   });
 };

@@ -93,10 +93,14 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
   return (
     <div className="tw-flex tw-h-full">
       {refresh ? (
-        <RefreshDialog
+        <AlertDialog
+          icon={
+            <RefreshIcon className="tw-text-indigo-600 tw-w-10 tw-h-10"></RefreshIcon>
+          }
           title={refresh.title}
           desc={refresh.description}
           onClick={handleRefresh}
+          callToActionText="Refresh"
         />
       ) : null}
       <Notifications />
@@ -134,14 +138,19 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
   );
 }
 
-function RefreshDialog({ title, desc, onClick, ...props }) {
+function AlertDialog({
+  icon,
+  title,
+  desc,
+  onClick,
+  callToActionText,
+  ...props
+}) {
   return (
     <Dialog open={true}>
       <div className="tw-absolute tw-left-[50%] tw-translate-x-[-50%] tw-top-[50%] tw-translate-y-[-50%] tw-shadow-md">
         <div className="tw-bg-white tw-rounded-lg tw-p-4">
-          <div className="tw-flex tw-justify-center">
-            <RefreshIcon className="tw-text-indigo-600 tw-w-10 tw-h-10"></RefreshIcon>
-          </div>
+          <div className="tw-flex tw-justify-center">{icon}</div>
           <p className="tw-text-base tw-text-gray-900 tw-font-medium tw-text-center tw-mt-4">
             {title}
           </p>
@@ -156,7 +165,7 @@ function RefreshDialog({ title, desc, onClick, ...props }) {
               size="sm"
             >
               <div className="tw-text-center tw-w-full tw-cursor-pointer">
-                Refresh
+                {callToActionText}
               </div>
             </Button>
           </div>
