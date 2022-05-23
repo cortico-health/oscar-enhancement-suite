@@ -6,6 +6,9 @@ import {
   saveExtensionStorageValue,
 } from "../Utils/Utils";
 
+// Sample Expired Token
+// eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxMDAwMDAwLCJpYXQiOjE2NTMzMzc4MjEsImp0aSI6ImExYWQ5YTk2Y2MyYzQ0ZTU4YzRkMGRiZjhkYTYzNjZkIiwidXNlcl9pZCI6Mn0.n8slNMnK0oMcZGsb9_vzVL131W__edk91HQKPsHFqZY
+
 export function RefreshTokenDecorator(fn) {
   return function () {
     return new Promise((resolve, reject) => {
@@ -59,7 +62,7 @@ export const sendEmail = (token, data) => {
     mode: "cors",
     headers: {
       "Content-type": "application/json",
-      Authorization: `Bearer ${"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxMDAwMDAwLCJpYXQiOjE2NTMzMjg1NzAsImp0aSI6IjcwYzYyMThhODFlNDQ2N2E5MDc0MTI2NTkwYjIxZjdlIiwidXNlcl9pZCI6Mn0.R_RVCAwzXMhD55BGvhq560KF-cpfpbI1pX0QdoPUMPY"}`,
+      Authorization: `Bearer ${token}`,
     },
   });
 };

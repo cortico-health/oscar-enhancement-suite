@@ -19,6 +19,7 @@ import Dialog from "./features/Dialog/Dialog";
 import { RefreshIcon } from "@heroicons/react/outline";
 import Button from "../../core/Button";
 import { BroadcastChannel } from "broadcast-channel";
+import { handleTokenExpiry } from "./common/utils";
 
 export default function CorticoPlugin({ onMinimize, ...props }) {
   const dispatch = useDispatch();
@@ -64,6 +65,10 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
         .then((token) => getClinicSettings(token))
         .then((response) => {
           console.log("Response", response);
+          if (response.status !== 200) {
+            handleTokenExpiry(response, response.data);
+            throw Error(response.statusText);
+          }
           return response.json();
         })
         .then((settings) => (settingsToLoad = settings))
@@ -81,10 +86,17 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
         .then((token) => {
           return getBootstrap(token);
         })
-        .then((response) => response.json())
+        .then((response) => {
+          if (response.status !== 200) {
+            handleTokenExpiry(response, response.data);
+            throw Error(response.statusText);
+          }
+          return response.json();
+        })
         .then((bootstrap) => {
           console.log("Bootstrap", bootstrap);
-        });
+        })
+        .catch((error) => console.error(error));
     }
   }, [loggedIn]);
 

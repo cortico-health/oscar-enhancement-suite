@@ -1,15 +1,14 @@
 import { useState, useEffect } from "preact/hooks";
-import corticoIcon from "../../resources/icons/96x96.png";
 import { PlusIcon, LeftArrowIcon, TrashIcon } from "../Icons/HeroIcons";
 import Input from "../cortico/Widget/base/Input";
 import Textarea from "../cortico/Widget/base/Textarea";
-
 import {
   getCannedReplies,
   addCannedReply,
   deleteCannedReply,
 } from "../Api/Api";
 import { loadExtensionStorageValue } from "../Utils/Utils";
+import { handleTokenExpiry } from "../../modules/cortico/Widget/common/utils";
 function AddReply({ add, cancel, ...props }) {
   const [subject, setSubject] = useState(null);
   const [body, setBody] = useState(null);
@@ -138,7 +137,12 @@ function SavedReplies({ loadReply, ...props }) {
         return addCannedReply(token, temp);
       })
       .then((res) => {
-        return loadReplies();
+        if (res.status !== 200) {
+          handleTokenExpiry(res);
+          throw new Error(res.statusText);
+        } else {
+          loadReplies();
+        }
       })
       .catch((err) => {
         console.error(err);
@@ -157,8 +161,12 @@ function SavedReplies({ loadReply, ...props }) {
         return deleteCannedReply(token, id);
       })
       .then((res) => {
-        console.log(res);
-        loadReplies();
+        if (res.status !== 200) {
+          handleTokenExpiry(res);
+          throw new Error(res.statusText);
+        } else {
+          loadReplies();
+        }
       })
       .catch((err) => {
         console.error(err);
@@ -172,6 +180,7 @@ function SavedReplies({ loadReply, ...props }) {
       .then((res) => {
         console.log("Canned Response", res);
         if (res.status !== 200) {
+          handleTokenExpiry(res);
           throw new Error(res.statusText);
         }
         return res.json();
