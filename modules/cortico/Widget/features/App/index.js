@@ -3,6 +3,7 @@ const initialState = {
   disabledFeatures: [],
   clinic_name: "",
   refresh: null,
+  refreshToken: null,
 };
 
 export function appReducer(state = initialState, action) {

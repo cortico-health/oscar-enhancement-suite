@@ -9,16 +9,20 @@ import { MinusIcon } from "@heroicons/react/solid";
 import { useDispatch, useSelector } from "react-redux";
 import WidgetMessenger from "./messenger/WidgetMessenger";
 import Notifications from "./features/Notifications/Notifications";
-import { loadExtensionStorageValue } from "../../Utils/Utils";
+import {
+  loadExtensionStorageValue,
+  removeExtensionStorageValue,
+} from "../../Utils/Utils";
 import { getClinicSettings, getBootstrap } from "../../Api/Api";
 import storage from "./storage/index";
 import Dialog from "./features/Dialog/Dialog";
 import { RefreshIcon } from "@heroicons/react/outline";
 import Button from "../../core/Button";
+import { BroadcastChannel } from "broadcast-channel";
 
 export default function CorticoPlugin({ onMinimize, ...props }) {
   const dispatch = useDispatch();
-  const { refresh } = useSelector((state) => state.app);
+  const { refresh, refreshToken, uid } = useSelector((state) => state.app);
   const { items } = useSelector((state) => state.sidebar);
   const loggedIn = useSelector((state) => state.auth.isLoggedIn);
   const [activeItem, setActiveItem] = useState("Account");
@@ -90,6 +94,42 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
     });
   };
 
+  const handleSignOut = async () => {
+    const remove = [
+      "jwt_username",
+      "jwt_expired",
+      "jwt_access_token",
+      "name",
+      "clinicname",
+      "customUrlSuffix",
+    ];
+
+    for (let i = 0; i < remove.length; i++) {
+      await removeExtensionStorageValue(remove[i]);
+    }
+
+    const authChannel = new BroadcastChannel("cortico/oes/auth");
+    authChannel.postMessage({
+      title: "Sign Out Detected",
+      description: "Refresh is required to have the plugin working smoothly",
+      uid,
+    });
+    authChannel.close();
+
+    storage.removeItem("oes").then(() => {
+      setTimeout(() => window.location.reload());
+    });
+  };
+
+  const handleRefreshToken = () => {
+    dispatch({
+      type: "app/set",
+      payload: {
+        refreshToken: null,
+      },
+    });
+  };
+
   return (
     <div className="tw-flex tw-h-full">
       {refresh ? (
@@ -101,6 +141,39 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
           desc={refresh.description}
           onClick={handleRefresh}
           callToActionText="Refresh"
+        />
+      ) : null}
+      {refreshToken ? (
+        <AlertDialog
+          icon={
+            <RefreshIcon className="tw-text-indigo-600 tw-w-10 tw-h-10"></RefreshIcon>
+          }
+          title={refreshToken.title}
+          desc={
+            <>
+              The following operation was unsuccessful because:{" "}
+              <span className="tw-text-red-600 tw-bg-red-200">
+                {refreshToken.description}
+              </span>{" "}
+              <span className="tw-block tw-mt-2">
+                You will need to{" "}
+                <span className="tw-font-bold tw-text-black">
+                  sign out and login again
+                </span>{" "}
+                to refresh your session.
+              </span>
+            </>
+          }
+          onClick={handleSignOut}
+          callToActionText="Okay, I understand, Sign me out"
+          footer={
+            <p
+              onClick={handleRefreshToken}
+              className="tw-text-2xs tw-text-blue-800 tw-text-center tw-mt-2 tw-cursor-pointer"
+            >
+              I will sign out myself.
+            </p>
+          }
         />
       ) : null}
       <Notifications />
@@ -144,6 +217,7 @@ function AlertDialog({
   desc,
   onClick,
   callToActionText,
+  footer,
   ...props
 }) {
   return (
@@ -169,6 +243,7 @@ function AlertDialog({
               </div>
             </Button>
           </div>
+          {footer}
         </div>
       </div>
     </Dialog>
