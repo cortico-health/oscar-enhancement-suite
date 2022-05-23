@@ -1,4 +1,5 @@
 import { useState, useEffect } from "preact/hooks";
+import { useDispatch } from "react-redux";
 import { PlusIcon, LeftArrowIcon, TrashIcon } from "../Icons/HeroIcons";
 import Input from "../cortico/Widget/base/Input";
 import Textarea from "../cortico/Widget/base/Textarea";
@@ -9,6 +10,7 @@ import {
 } from "../Api/Api";
 import { loadExtensionStorageValue } from "../Utils/Utils";
 import { handleTokenExpiry } from "../../modules/cortico/Widget/common/utils";
+import { nanoid } from "nanoid";
 function AddReply({ add, cancel, ...props }) {
   const [subject, setSubject] = useState(null);
   const [body, setBody] = useState(null);
@@ -123,6 +125,7 @@ function Reply({
 }
 
 function SavedReplies({ loadReply, ...props }) {
+  const dispatch = useDispatch();
   const [addReply, setAddReply] = useState(false);
   const [replies, setReplies] = useState([]);
 
@@ -137,15 +140,33 @@ function SavedReplies({ loadReply, ...props }) {
         return addCannedReply(token, temp);
       })
       .then((res) => {
-        if (res.status !== 200) {
+        if (res.status >= 300 || res.status < 200) {
           handleTokenExpiry(res);
           throw new Error(res.statusText);
         } else {
+          dispatch({
+            type: "notifications/add",
+            payload: {
+              type: "success",
+              message: "Canned reply has been added",
+              title: "Success",
+              id: nanoid(),
+            },
+          });
           loadReplies();
         }
       })
-      .catch((err) => {
-        console.error(err);
+      .catch((error) => {
+        console.error(error);
+        dispatch({
+          type: "notifications/add",
+          payload: {
+            type: "error",
+            message: error.message || error.toString(),
+            title: error.title || "Error Occured",
+            id: nanoid(),
+          },
+        });
       })
       .finally(() => {
         setAddReply(false);
@@ -161,15 +182,33 @@ function SavedReplies({ loadReply, ...props }) {
         return deleteCannedReply(token, id);
       })
       .then((res) => {
-        if (res.status !== 200) {
+        if (res.status >= 300 || res.status < 200) {
           handleTokenExpiry(res);
-          throw new Error(res.statusText);
+          throw Error(res.statusText);
         } else {
+          dispatch({
+            type: "notifications/add",
+            payload: {
+              type: "success",
+              message: "Canned reply has been deleted",
+              title: "Success",
+              id: nanoid(),
+            },
+          });
           loadReplies();
         }
       })
-      .catch((err) => {
-        console.error(err);
+      .catch((error) => {
+        console.error(error);
+        dispatch({
+          type: "notifications/add",
+          payload: {
+            type: "error",
+            message: error.message || error.toString(),
+            title: error.title || "Error Occured",
+            id: nanoid(),
+          },
+        });
       });
   };
   const loadReplies = () => {
@@ -179,7 +218,7 @@ function SavedReplies({ loadReply, ...props }) {
       })
       .then((res) => {
         console.log("Canned Response", res);
-        if (res.status !== 200) {
+        if (res.status >= 300 || res.status < 200) {
           handleTokenExpiry(res);
           throw new Error(res.statusText);
         }
@@ -189,8 +228,17 @@ function SavedReplies({ loadReply, ...props }) {
         console.log("Canned Replies Loaded", data);
         setReplies(data);
       })
-      .catch((err) => {
-        console.error(err);
+      .catch((error) => {
+        console.error(error);
+        dispatch({
+          type: "notifications/add",
+          payload: {
+            type: "error",
+            message: error.message || error.toString(),
+            title: error.title || "Error Occured",
+            id: nanoid(),
+          },
+        });
       });
   };
 

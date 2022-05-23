@@ -20,7 +20,7 @@ export default function Notifications() {
     <>
       {notifications.length > 0 && node
         ? createPortal(
-            <div className="tw-absolute tw-bottom-3 tw-w-[325px] tw-block tw-mx-auto tw-left-[50%] tw-translate-x-[-50%] tw-space-y-2">
+            <div className="tw-absolute tw-bottom-3 tw-w-[325px] tw-block tw-mx-auto tw-left-[50%] tw-translate-x-[-50%] tw-space-y-2 tw-z-10005">
               {notifications.map((notification) => (
                 <Notification
                   id={notification.id}
