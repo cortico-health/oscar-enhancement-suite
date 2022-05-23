@@ -35,8 +35,8 @@ function Login() {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     const { username, password, clinicName, suffix, remember } = data;
 
-    localStorage.setItem("clinicname", clinicName);
-    localStorage.setItem("customUrlSuffix", suffix);
+    localStorage.setItem("clinicname", clinicName.toLowerCase());
+    localStorage.setItem("customUrlSuffix", suffix.toLowerCase());
 
     try {
       const response = await signInRequest(username, password);
@@ -64,8 +64,8 @@ function Login() {
       if (remember) {
         localStorage.setItem("rememberMe", true);
         localStorage.setItem("remUsername", username);
-        localStorage.setItem("remClinicName", clinicName);
-        localStorage.setItem("remSuffix", suffix);
+        localStorage.setItem("remClinicName", clinicName.toLowerCase());
+        localStorage.setItem("remSuffix", suffix.toLowerCase());
       } else {
         localStorage.removeItem("rememberMe", false);
         localStorage.removeItem("remUsername");
