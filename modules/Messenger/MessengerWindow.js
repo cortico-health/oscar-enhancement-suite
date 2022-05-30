@@ -52,6 +52,8 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
     inboxDocument,
   } = useSelector((state) => state.messenger);
   const [openSavedReplies, setOpenSavedReplies] = useState(false);
+  const [attachmentSent, setAttachmentSent] = useState(false);
+  const [attachmentUrl, setAttachmentUrl] = useState(null);
   const [patientInfo, setPatientInfo] = useState(null);
   const { clinic_name: clinicName, uid } = useSelector((state) => state.app);
 
@@ -155,6 +157,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
   };
 
   const submitData = async (scheme) => {
+    setAttachmentSent(false);
     try {
       setLoading(true);
 
@@ -291,6 +294,10 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
             id: nanoid(),
           },
         });
+
+        if (attachment) {
+          setAttachmentSent(true);
+        }
       } else {
         let errorResponse = null;
         try {
@@ -490,6 +497,20 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         </div>
 
         <hr className="tw-my-4" />
+
+        {setAttachmentSent ? (
+          <div className="tw-flex tw-justify-between tw-mt-4 tw-w-full">
+            <div className="tw-bg-blue-100 tw-text-blue-800 tw-p-3 tw-rounded-md tw-text-xs tw-w-full">
+              File sent successfully, Preview the file here:{" "}
+              <a
+                className="tw-text-underline tw-font-semibold"
+                href="https://google.ca"
+              >
+                https://google.ca
+              </a>
+            </div>
+          </div>
+        ) : null}
 
         <div className="tw-flex tw-justify-between tw-mt-4 tw-w-full">
           <div>
