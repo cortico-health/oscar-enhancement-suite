@@ -11,9 +11,6 @@ export default function Notifications() {
   useEffect(() => {
     const body = document.querySelector(".cortico-widget-body");
     setNode(body);
-
-    console.log("Notifications got here");
-    console.log(notifications);
   }, []);
 
   return (

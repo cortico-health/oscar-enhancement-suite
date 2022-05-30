@@ -70,7 +70,6 @@ const corticoWidgetContainer = document.createElement("div");
 document.body.append(corticoWidgetContainer);
 
 const init_cortico = async function () {
-  console.log("Init cortico called");
   // create an element to indicate the library is loaded in the dom, and to contain fixed menus/elements.
   const anchor = document.createElement("div");
   anchor.id = "cortico_anchor";
@@ -261,7 +260,6 @@ const init_schedule = function () {
 };
 
 function update_video_button() {
-  console.log("It got here");
   var cortico_button = document.getElementById("cortico-video-appt-btn");
   var resources_field = document.querySelector('[name="resources"]');
   /* TODO: when other appoitment types supported. 
@@ -434,7 +432,6 @@ const init_styles = function () {
   addGlobalStyle(style);
 };
 
-console.log("It got here though");
 if (!document.getElementById("cortico_anchor")) {
   // avoid duplicating the extension/script.
   const oscar_elements = Array.from(
@@ -1692,7 +1689,6 @@ async function getDiagnosticFromCortico(appt_no, notes, token) {
     },
   })
     .then((res) => {
-      console.log("IT GOT HEREEEE");
       if ((res + "").includes("Unauthorized") || res.status == 401) {
         pubsub.publish("signin");
 

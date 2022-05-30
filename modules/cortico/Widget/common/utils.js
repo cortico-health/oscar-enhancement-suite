@@ -1,7 +1,8 @@
 import store from "../store/store.js";
 
 export const handleTokenExpiry = (response, data) => {
-  if (response.status === 401 || data?.code === "token_not_valid") {
+  console.log("Resposne and data", response, data);
+  if (response.status === 401 && data?.code === "token_not_valid") {
     store.dispatch({
       type: "app/set",
       payload: {
