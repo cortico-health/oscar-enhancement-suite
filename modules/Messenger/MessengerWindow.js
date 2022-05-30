@@ -52,8 +52,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
     inboxDocument,
   } = useSelector((state) => state.messenger);
   const [openSavedReplies, setOpenSavedReplies] = useState(false);
-  const [attachmentSent, setAttachmentSent] = useState(false);
-  const [attachmentUrl, setAttachmentUrl] = useState(null);
+  const [filePreviewLink, setFilePreviewLink] = useState(false);
   const [patientInfo, setPatientInfo] = useState(null);
   const { clinic_name: clinicName, uid } = useSelector((state) => state.app);
 
@@ -157,7 +156,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
   };
 
   const submitData = async (scheme) => {
-    setAttachmentSent(false);
+    setFilePreviewLink(false);
     try {
       setLoading(true);
 
@@ -295,8 +294,10 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
           },
         });
 
-        if (attachment) {
-          setAttachmentSent(true);
+        const clonedResult = result.clone();
+        const responseData = await result.json();
+        if (responseData.preview) {
+          setFilePreviewLink(true);
         }
       } else {
         let errorResponse = null;
@@ -498,15 +499,16 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
 
         <hr className="tw-my-4" />
 
-        {setAttachmentSent ? (
-          <div className="tw-flex tw-justify-between tw-mt-4 tw-w-full">
+        {filePreviewLink === false ? (
+          <div className="tw-flex tw-justify-between tw-mt-4 tw-w-full tw-max-w-[368px]">
             <div className="tw-bg-blue-100 tw-text-blue-800 tw-p-3 tw-rounded-md tw-text-xs tw-w-full">
-              File sent successfully, Preview the file here:{" "}
+              File sent successfully, Preview the file:{" "}
               <a
-                className="tw-text-underline tw-font-semibold"
-                href="https://google.ca"
+                className="tw-text-underline tw-font-semibold tw-block tw-break-words"
+                href={filePreviewLink}
+                target="_blank"
               >
-                https://google.ca
+                {filePreviewLink}
               </a>
             </div>
           </div>
