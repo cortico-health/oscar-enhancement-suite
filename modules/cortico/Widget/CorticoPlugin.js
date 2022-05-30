@@ -90,13 +90,16 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
           return getBootstrap(token);
         })
         .then((response) => {
-          if (response.status !== 200) {
-            handleTokenExpiry(response, response.data);
-            throw Error(response.statusText);
-          }
-          return response.json();
+          return Promise.all([response.json(), Promise.resolve(response)]);
         })
-        .then((bootstrap) => {})
+        .then((results) => {
+          const [bootstrap, response] = results;
+          if (response.status !== 200) {
+            if (!handleTokenExpiry(response, bootstrap)) {
+              throw Error(response.statusText);
+            }
+          }
+        })
         .catch((error) => console.error(error));
     }
   }, [loggedIn]);
