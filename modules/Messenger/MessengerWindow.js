@@ -295,7 +295,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         });
 
         const clonedResult = result.clone();
-        const responseData = await result.json();
+        const responseData = await clonedResult.json();
         if (responseData.preview) {
           setFilePreviewLink(true);
         }
@@ -499,7 +499,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
 
         <hr className="tw-my-4" />
 
-        {filePreviewLink === false ? (
+        {filePreviewLink === true ? (
           <div className="tw-flex tw-justify-between tw-mt-4 tw-w-full tw-max-w-[368px]">
             <div className="tw-bg-blue-100 tw-text-blue-800 tw-p-3 tw-rounded-md tw-text-xs tw-w-full">
               File sent successfully, Preview the file:{" "}

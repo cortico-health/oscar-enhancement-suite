@@ -141,8 +141,7 @@ function SavedReplies({ loadReply, ...props }) {
       })
       .then((res) => {
         if (res.status >= 300 || res.status < 200) {
-          handleTokenExpiry(res);
-          throw new Error(res.statusText);
+          return Promise.all([res.json(), Promise.resolve(res)]);
         } else {
           dispatch({
             type: "notifications/add",
@@ -154,6 +153,17 @@ function SavedReplies({ loadReply, ...props }) {
             },
           });
           loadReplies();
+        }
+      })
+      .then((results) => {
+        if (results) {
+          data = results[0];
+          const response = results[1];
+          if (response.status !== 200) {
+            if (!handleTokenExpiry(response, data)) {
+              throw Error(response.statusText);
+            }
+          }
         }
       })
       .catch((error) => {
@@ -183,8 +193,7 @@ function SavedReplies({ loadReply, ...props }) {
       })
       .then((res) => {
         if (res.status >= 300 || res.status < 200) {
-          handleTokenExpiry(res);
-          throw Error(res.statusText);
+          return Promise.all([res.json(), Promise.resolve(res)]);
         } else {
           dispatch({
             type: "notifications/add",
@@ -196,6 +205,17 @@ function SavedReplies({ loadReply, ...props }) {
             },
           });
           loadReplies();
+        }
+      })
+      .then((results) => {
+        if (results) {
+          const data = results[0];
+          const response = results[1];
+          if (response.status !== 200) {
+            if (!handleTokenExpiry(response, data)) {
+              throw Error(response.statusText);
+            }
+          }
         }
       })
       .catch((error) => {
@@ -217,15 +237,16 @@ function SavedReplies({ loadReply, ...props }) {
         return getCannedReplies(token);
       })
       .then((res) => {
-        console.log("Canned Response", res);
-        if (res.status >= 300 || res.status < 200) {
-          handleTokenExpiry(res);
-          throw new Error(res.statusText);
-        }
-        return res.json();
+        return Promise.all([res.json(), Promise.resolve(res)]);
       })
-      .then((data) => {
-        console.log("Canned Replies Loaded", data);
+      .then((results) => {
+        const data = results[0];
+        const response = results[1];
+        if (response.status >= 300 || response.status < 200) {
+          if (!handleTokenExpiry(response, data)) {
+            throw new Error(response.statusText);
+          }
+        }
         setReplies(data);
       })
       .catch((error) => {
