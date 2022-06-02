@@ -1848,7 +1848,7 @@ export async function setupPreferredPharmacies() {
     } catch (err) {
       console.error(err);
       storePharmaciesFailureCache(demographicNo, err.message);
-      displayPharmaciesFailure(demographicNo, err.message);
+      //displayPharmaciesFailure(demographicNo, err.message);
       widgetStore.dispatch({
         type: "setupPharmacyFailures/add",
         payload: {

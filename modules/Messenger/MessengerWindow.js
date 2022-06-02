@@ -267,6 +267,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
 
       let result = null;
       if (scheme === "email") {
+        console.log("Data", data);
         result = await sendEmail(token, data);
       } else if (scheme === "sms") {
         result = await sendMessage(token, data);
