@@ -1816,6 +1816,7 @@ export async function setupPreferredPharmacies() {
       const pharmacyCode = getPharmacyCodeFromReasonOrNotes(apptTitle);
       if (!pharmacyCode) {
         storePharmaciesCache(demographicNo, false);
+        /*
         widgetStore.dispatch({
           type: "setupPharmacyFailures/add",
           payload: {
@@ -1823,6 +1824,7 @@ export async function setupPreferredPharmacies() {
             reason: "Pharmacy code not found from appt",
           },
         });
+        */
         continue;
       }
       storePharmaciesCache(demographicNo, true);
