@@ -39,6 +39,7 @@ class MessengerError extends Error {
 
 function MessengerWindow({ encounter: encounterOption, ...props }) {
   const dispatch = useDispatch();
+  const [demographicNo, setDemographicNo] = useState(null);
   const [loading, setLoading] = useState();
   const {
     to,
@@ -266,6 +267,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
       }
 
       let result = null;
+      data.demographic_no = demographicNo;
       if (scheme === "email") {
         console.log("Data", data);
         result = await sendEmail(token, data);
@@ -370,6 +372,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
 
   useEffect(() => {
     const demographicNo = getDemographicNo();
+    setDemographicNo(demographicNo);
     if (demographicNo && !patientInfo) {
       getPatientInfo().then((patientInfo) => {
         if (patientInfo) {
