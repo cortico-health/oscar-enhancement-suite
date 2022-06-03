@@ -1478,13 +1478,12 @@ async function setupPreferredPharmacy(code, demographic_no) {
   if (corticoPharmacyText instanceof Object) {
     corticoPharmacyText = [corticoPharmacyText];
   }
-  console.log("Cortico Pharmacy Text", corticoPharmacyText);
   let corticoFaxNumber = corticoPharmacyText[0]["fax_number"] || null;
 
   if (!corticoFaxNumber) {
     state.error = true;
     state.errorMessage = "Cortico Fax Number is blank";
-    return;
+    return state;
   }
 
   // cleanup fax number to format starting with 1
@@ -1496,7 +1495,7 @@ async function setupPreferredPharmacy(code, demographic_no) {
   if (!corticoSearchTerm) {
     state.error = true;
     state.errorMessage = "Cortico Pharmacy Name is blank";
-    return;
+    return state;
   }
 
   let fullPharmacyName = corticoSearchTerm;
