@@ -1501,7 +1501,7 @@ async function setupPreferredPharmacy(code, demographic_no) {
   let fullPharmacyName = corticoSearchTerm;
   // only use the first word on the pharmacy name to search for list
   // then remove letter or number
-  corticoSearchTerm = corticoSearchTerm.split(" ")[0];
+  corticoSearchTerm = corticoSearchTerm.split(/[\s\-]/)[0];
   corticoSearchTerm = corticoSearchTerm.replace(/[^\w\s]/gi, "");
 
   let demographicNo = demographic_no;

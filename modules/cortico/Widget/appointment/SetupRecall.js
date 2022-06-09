@@ -33,8 +33,12 @@ function RecallButton() {
     window.location.href =
       `mailto:${patientEmail}?subject=Your doctor wants to speak with you&` +
       `body=Dear ${cleanedPatient},%0d%0aYour doctor needs to follow up with you regarding some documents or results.%0d%0a` +
-      `We have tentatively booked you an appointment at ${cleanedSchedule}.%0d%0a%0d%0aPlease confirm with the following link:` +
-      `${getCorticoUrl()}/get-patient-appointment-lookup-url/%0d%0a%0d%0a` +
+      `We have tentatively booked you an appointment at ${cleanedSchedule}.` +
+      `${
+        getCorticoUrl()
+          ? `%0d%0a%0d%0aPlease confirm with the following link: + ${getCorticoUrl()}/get-patient-appointment-lookup-url/%0d%0a%0d%0a`
+          : "%0d%0a%0d%0a"
+      }` +
       `Sincerely,%0d%0a${clinicName.toUpperCase()} STAFF`;
   };
 
