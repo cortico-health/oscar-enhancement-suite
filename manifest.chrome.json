@@ -2,7 +2,7 @@
   "description": "Installs the Cortico Telehealth Platform in Oscar",
   "manifest_version": 3,
   "name": "Cortico Oscar EMR Telehealth",
-  "version": "2022.5.18",
+  "version": "2022.6.10",
   "homepage_url": "https://cortico.ca",
   "author": "Cortico Health Technologies",
   "icons": {
@@ -11,25 +11,25 @@
   "content_scripts": [
     {
       "matches": [
-        "https://*/appointment/addappointment.jsp*",
-        "https://*/appointment/editappointment.jsp*",
-        "https://*/appointment/appointmentcontrol.jsp*",
-        "https://*/provider/providercontrol.jsp*",
-        "https://*/casemgmt/forward.jsp*",
-        "https://*/oscarEncounter/IncomingEncounter.do*",
-        "https://*/juno/oscarEncounter/IncomingEncounter.do*",
-        "https://*/eform/efmformadd_data.jsp*",
-        "https://*/eform/efmshowform_data.jsp*",
-        "https://*/dms/documentReport.jsp*",
-        "https://*/*/appointment/addappointment.jsp*",
-        "https://*/*/appointment/editappointment.jsp*",
-        "https://*/*/appointment/appointmentcontrol.jsp*",
-        "https://*/*/provider/providercontrol.jsp*",
-        "https://*/*/casemgmt/forward.jsp*",
-        "https://*/*/eform/efmformadd_data.jsp*",
-        "https://*/*/eform/efmshowform_data.jsp*",
-        "https://*/*/dms/documentReport.jsp*",
-        "https://*/*/dms/showDocument.jsp*"
+        "*://*/appointment/addappointment.jsp*",
+        "*://*/appointment/editappointment.jsp*",
+        "*://*/appointment/appointmentcontrol.jsp*",
+        "*://*/provider/providercontrol.jsp*",
+        "*://*/casemgmt/forward.jsp*",
+        "*://*/oscarEncounter/IncomingEncounter.do*",
+        "*://*/juno/oscarEncounter/IncomingEncounter.do*",
+        "*://*/eform/efmformadd_data.jsp*",
+        "*://*/eform/efmshowform_data.jsp*",
+        "*://*/dms/documentReport.jsp*",
+        "*://*/*/appointment/addappointment.jsp*",
+        "*://*/*/appointment/editappointment.jsp*",
+        "*://*/*/appointment/appointmentcontrol.jsp*",
+        "*://*/*/provider/providercontrol.jsp*",
+        "*://*/*/casemgmt/forward.jsp*",
+        "*://*/*/eform/efmformadd_data.jsp*",
+        "*://*/*/eform/efmshowform_data.jsp*",
+        "*://*/*/dms/documentReport.jsp*",
+        "*://*/*/dms/showDocument.jsp*"
       ],
       "js": [
         "dist/cortico-min.js"
