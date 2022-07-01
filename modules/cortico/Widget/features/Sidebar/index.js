@@ -9,22 +9,22 @@ const initialState = {
   items: [
     {
       name: "Account",
-      icon: <UserIcon className="tw-w-4 tw-h-4" />,
+      icon: <UserIcon className="tw-w-6 tw-h-6" />,
       current: true,
     },
     {
       name: "Automation",
-      icon: <DesktopComputerIcon className="tw-w-4 tw-h-4" />,
+      icon: <DesktopComputerIcon className="tw-w-6 tw-h-6" />,
       current: false,
     },
     {
       name: "Settings",
-      icon: <CogIcon className="tw-w-4 tw-h-4" />,
+      icon: <CogIcon className="tw-w-6 tw-h-6" />,
       current: false,
     },
     {
       name: "Messenger",
-      icon: <ChatIcon className="tw-w-4 tw-h-4" />,
+      icon: <ChatIcon className="tw-w-6 tw-h-6" />,
       current: false, // default to messenger if on eChart page
     },
   ],

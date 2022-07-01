@@ -20,6 +20,7 @@ import { RefreshIcon } from "@heroicons/react/outline";
 import Button from "../../core/Button";
 import { BroadcastChannel } from "broadcast-channel";
 import { handleTokenExpiry } from "./common/utils";
+import PatientPanel from "./PatientPanel";
 
 export default function CorticoPlugin({ onMinimize, ...props }) {
   const dispatch = useDispatch();
@@ -195,6 +196,10 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
       <Notifications />
       <div className="">
         <WidgetSidebar items={items} onClick={handleClick} />
+      </div>
+
+      <div>
+        <PatientPanel />
       </div>
       <div className=" tw-text-black tw-relative">
         <div

@@ -1,23 +1,20 @@
 import classNames from "classnames";
-import Logo from "../../../resources/icons/logo.svg";
+import Logo from "../../../resources/icons/logo-regular-white.svg";
 
 export default function WidgetSidebar({ onClick, items, ...props }) {
   return (
-    <div className="tw-w-full tw-h-full tw-rounded-l-xl tw-px-6 tw-shadow-right tw-bg-gradient-to-bl tw-from-indigo-500 tw-to-blue-1000 tw-bg-blue-1000 ">
+    <div className="tw-w-full tw-h-full tw-rounded-l-xl tw-px-2 tw-shadow-right tw-bg-gradient-to-bl tw-from-indigo-500 tw-to-blue-1000 tw-bg-blue-1000 ">
       <div className="tw-py-8 tw-flex tw-flex-col tw-justify-between tw-h-full tw-w-full">
         <div>
           <div className="tw-mb-8">
-            <img className="tw-w-[140px] tw-mx-auto" src={Logo} alt="Cortico" />
-            <span className="tw-block tw-text-white tw-text-xs tw-text-center tw-mt-2 tw-font-sans tw-font-normal tw-tracking-wider">
-              Oscar Enhancement Suite
-            </span>
+            <img className="tw-w-[30px] tw-mx-auto" src={Logo} alt="Cortico" />
           </div>
           {items.map((item, i) => (
             <div
               className={classNames(
-                "tw-font-sans tw-flex tw-space-x-4 tw-my-2 tw-items-center tw-px-4 tw-py-3 tw-cursor-pointer",
+                "tw-font-sans tw-flex tw-my-2 tw-items-center tw-cursor-pointer tw-flex-col tw-py-2 tw-w-[65px]",
                 item.current === true
-                  ? "tw-bg-white tw-bg-opacity-20 tw-rounded-md"
+                  ? "tw-bg-white tw-bg-opacity-10 tw-rounded-md"
                   : "",
                 "hover:tw-bg-white hover:tw-bg-opacity-20 hover:tw-rounded-md"
               )}
@@ -34,7 +31,7 @@ export default function WidgetSidebar({ onClick, items, ...props }) {
               </p>
               <p
                 className={classNames(
-                  "tw-text-sm tw-cursor-pointer tw-tracking-wide",
+                  "tw-text-3xs tw-cursor-pointer tw-tracking-wide tw-m-0 tw-p-0",
                   item.current === true ? "tw-opacity-100" : "tw-opacity-60"
                 )}
               >

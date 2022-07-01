@@ -14,6 +14,8 @@ import { nanoid } from "nanoid";
 import { getDemographicNo, formEncounterMessage } from "../../Utils/Utils";
 import Encounter from "../../core/Encounter";
 import Appointment from "./appointment/Appointment";
+import { QueryClient, QueryClientProvider } from "react-query";
+
 const uid = nanoid();
 
 function App({ mode = "normal", ...props }) {
@@ -205,11 +207,13 @@ function App({ mode = "normal", ...props }) {
     </div>
   );
 }
-
+const queryClient = new QueryClient();
 export default function CorticoWidget(container, replaceNode, opts) {
   return render(
     <Provider store={store}>
-      <App {...opts} />
+      <QueryClientProvider client={queryClient}>
+        <App {...opts} />
+      </QueryClientProvider>
     </Provider>,
     container,
     replaceNode
