@@ -21,11 +21,10 @@ import Button from "../../core/Button";
 import { BroadcastChannel } from "broadcast-channel";
 import { handleTokenExpiry } from "./common/utils";
 import PatientPanel from "./PatientPanel";
-
+import PatientAdapter from "./adapters/PatientAdapter";
 export default function CorticoPlugin({ onMinimize, ...props }) {
   const dispatch = useDispatch();
   const { refresh, refreshToken, uid } = useSelector((state) => state.app);
-  const { items } = useSelector((state) => state.sidebar);
   const loggedIn = useSelector((state) => state.auth.isLoggedIn);
   const [activeItem, setActiveItem] = useState("Account");
 
@@ -34,12 +33,8 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
       type: "sidebar/setCurrent",
       payload: name,
     });
+    setActiveItem(name);
   };
-
-  useEffect(() => {
-    const activeItem = items.find((item) => item.current === true);
-    setActiveItem(activeItem.name);
-  }, [items]);
 
   useEffect(() => {
     isLoggedIn().then((result) => {
@@ -149,6 +144,7 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
 
   return (
     <div className="tw-flex tw-h-full">
+      <PatientAdapter></PatientAdapter>
       {refresh ? (
         <AlertDialog
           icon={
@@ -195,12 +191,9 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
       ) : null}
       <Notifications />
       <div className="">
-        <WidgetSidebar items={items} onClick={handleClick} />
+        <WidgetSidebar onClick={handleClick} />
       </div>
 
-      <div>
-        <PatientPanel />
-      </div>
       <div className=" tw-text-black tw-relative">
         <div
           className="tw-absolute tw-top-2 tw-right-2 tw-cursor-pointer tw-bg-amber-400 tw-rounded-full"
@@ -224,9 +217,11 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
           <div className="tw-p-4 tw-h-full">
             <WidgetMessenger />
           </div>
-        ) : (
-          ""
-        )}
+        ) : activeItem === "Patient" ? (
+          <div className="tw-p-4 tw-h-full">
+            <PatientPanel />
+          </div>
+        ) : null}
       </div>
     </div>
   );
