@@ -26,14 +26,12 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
   const dispatch = useDispatch();
   const { refresh, refreshToken, uid } = useSelector((state) => state.app);
   const loggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const [activeItem, setActiveItem] = useState("Account");
 
   const handleClick = (name) => {
     dispatch({
       type: "sidebar/setCurrent",
       payload: name,
     });
-    setActiveItem(name);
   };
 
   useEffect(() => {
@@ -201,27 +199,7 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
         >
           <MinusIcon className="tw-w-5 tw-h-5 tw-text-white" />
         </div>
-        {activeItem === "Account" ? (
-          <div className="tw-p-4 tw-h-full">
-            {loggedIn === true ? <AccountInformation /> : <Login />}
-          </div>
-        ) : activeItem === "Automation" ? (
-          <div className="tw-p-4 tw-overflow-y-auto tw-max-h-[600px]">
-            <WidgetAutomation />
-          </div>
-        ) : activeItem === "Settings" ? (
-          <div className="tw-p-4 tw-h-full">
-            <WidgetSettings />
-          </div>
-        ) : activeItem === "Messenger" ? (
-          <div className="tw-p-4 tw-h-full">
-            <WidgetMessenger />
-          </div>
-        ) : activeItem === "Patient" ? (
-          <div className="tw-p-4 tw-h-full">
-            <PatientPanel />
-          </div>
-        ) : null}
+        <PluginContentRenderer></PluginContentRenderer>
       </div>
     </div>
   );
@@ -263,5 +241,43 @@ function AlertDialog({
         </div>
       </div>
     </Dialog>
+  );
+}
+
+function PluginContentRenderer() {
+  const loggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const { items: sidebarItems } = useSelector((state) => state.sidebar);
+  const [activeItem, setActiveItem] = useState("Account");
+  useEffect(() => {
+    const activeItem = sidebarItems.find((item) => item.current);
+    if (activeItem) {
+      setActiveItem(activeItem.name);
+    }
+  }, [sidebarItems]);
+
+  return (
+    <>
+      {activeItem === "Account" ? (
+        <div className="tw-p-4 tw-h-full">
+          {loggedIn === true ? <AccountInformation /> : <Login />}
+        </div>
+      ) : activeItem === "Automation" ? (
+        <div className="tw-p-4 tw-overflow-y-auto tw-max-h-[600px]">
+          <WidgetAutomation />
+        </div>
+      ) : activeItem === "Settings" ? (
+        <div className="tw-p-4 tw-h-full">
+          <WidgetSettings />
+        </div>
+      ) : activeItem === "Messenger" ? (
+        <div className="tw-p-4 tw-h-full">
+          <WidgetMessenger />
+        </div>
+      ) : activeItem === "Patient" ? (
+        <div className="tw-p-4 tw-h-full">
+          <PatientPanel />
+        </div>
+      ) : null}
+    </>
   );
 }

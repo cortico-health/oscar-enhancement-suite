@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   ShareIcon,
   ChatAltIcon,
@@ -10,6 +10,14 @@ import { PrimaryButton, SecondaryButton } from "../../core/Button";
 export default function PatientPanel() {
   const { info } = useSelector((state) => state.patient);
   console.log("Info", info);
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    dispatch({
+      type: "sidebar/setCurrent",
+      payload: "Messenger",
+    });
+  };
 
   return (
     <div className=" tw-text-gray-700 tw-p-4 tw-font-sans">
@@ -46,6 +54,7 @@ export default function PatientPanel() {
         </div>
         <div className="tw-flex tw-flex-col tw-space-y-2 tw-shrink-0 tw-justify-center">
           <PrimaryButton
+            onClick={handleClick}
             icon={
               <MailIcon className="tw-h-4 tw-w-4 tw-ml-2 tw-cursor-pointer" />
             }
@@ -53,6 +62,7 @@ export default function PatientPanel() {
           >
             Send Email
           </PrimaryButton>
+          {/*
           <SecondaryButton
             icon={
               <ChatAltIcon className="tw-h-4 tw-w-4 tw-ml-2 tw-cursor-pointer" />
@@ -61,6 +71,7 @@ export default function PatientPanel() {
           >
             Send Text
           </SecondaryButton>
+          */}
         </div>
       </div>
       <hr className="tw-my-2" />
