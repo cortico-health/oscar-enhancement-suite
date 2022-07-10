@@ -6,6 +6,7 @@ import {
   PhoneIcon,
 } from "@heroicons/react/solid";
 import { PrimaryButton, SecondaryButton } from "../../core/Button";
+import { getCorticoUrl } from "../../Utils/Utils";
 
 export default function PatientPanel() {
   const { info } = useSelector((state) => state.patient);
@@ -18,6 +19,20 @@ export default function PatientPanel() {
       payload: "Messenger",
     });
   };
+
+  const pickedKeys = [
+    "Last Name",
+    "First Name",
+    "Sex",
+    "Age",
+    "Patient Status",
+    "PhoneHHistory",
+    "PhoneWHistory",
+    "Cell PhoneHistory",
+    "Province",
+    "Health Ins",
+    "Helath Card Type",
+  ];
 
   return (
     <div className=" tw-text-gray-700 tw-p-4 tw-font-sans">
@@ -78,12 +93,19 @@ export default function PatientPanel() {
       <div className="tw-p-2 tw-flex">
         <p className="tw-text-sm tw-flex tw-items-center">
           <ShareIcon className="tw-mr-2 tw-w-3 tw-h-3 tw-text-gray-700"></ShareIcon>
-          <a href="">Invite Patient</a>
+          <a
+            href={`${getCorticoUrl()}/invite-patient-booking/?demographic_no=${
+              info.demographicNo
+            }`}
+            target="_blank"
+          >
+            Invite Patient
+          </a>
         </p>
       </div>
 
       <div className="tw-grid tw-grid-cols-3 tw-gap-3 tw-bg-gray-50 tw-p-4 tw-rounded-xl tw-mt-2">
-        {Object.keys(info).map((key) => {
+        {pickedKeys.map((key) => {
           const infoItem = info[key];
           if (infoItem) {
             return (

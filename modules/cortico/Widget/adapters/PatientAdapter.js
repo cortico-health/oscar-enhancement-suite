@@ -28,11 +28,6 @@ export default function () {
         visible: true,
       },
     });
-
-    dispatch({
-      type: "sidebar/setCurrent",
-      payload: "Patient",
-    });
   }
   return <></>;
 }

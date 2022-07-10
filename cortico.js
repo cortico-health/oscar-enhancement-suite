@@ -52,7 +52,7 @@ import {
 } from "./modules/Utils/Utils";
 import "./index.css";
 const CORTICO = {}; // container for global state. Use this rather than `window`
-
+import qs from "qs";
 import LoginOscar from "./modules/Login/LoginOscar";
 import CorticoWidget from "./modules/cortico/Widget/CorticoWidget";
 import produce from "immer";
@@ -1930,6 +1930,7 @@ async function init_diagnostic_viewer_button() {
 
 export async function getPatientInfo(demographicNo) {
   const result = await getDemographicPageResponse(demographicNo);
+
   if (!result) {
     return {};
   }
@@ -1967,8 +1968,28 @@ export async function getPatientInfo(demographicNo) {
   // var re = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi;
   // var emails = text.match(re);
   // if (emails && emails.length) info.email = emails[0];
-
+  info.demographicNo = getPatientDemographicNo();
   return info;
+}
+
+function getPatientDemographicNo(demographic) {
+  const origin = getOrigin();
+  const namespace = getNamespace();
+
+  let demographicNo = demographic || getDemographicNo(window.location.search);
+
+  if (!demographicNo && window.opener)
+    demographicNo = getDemographicNo(window.opener.location.search);
+
+  if (!demographicNo) {
+    // TODO: always try this when getting demo #.
+    document.querySelectorAll("form").forEach(function (f) {
+      console.log(f);
+      demographicNo = demographicNo || getDemographicNo(f.action).trim();
+    });
+  }
+
+  return demographicNo;
 }
 
 function getDemographicPageResponse(demographic) {
@@ -1987,7 +2008,6 @@ function getDemographicPageResponse(demographic) {
       demographicNo = demographicNo || getDemographicNo(f.action).trim();
     });
   }
-  //const demographicNo = demographic || getDemographicNo();
 
   if (!demographicNo) {
     console.trace();
