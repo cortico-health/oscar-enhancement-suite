@@ -20,13 +20,12 @@ import { RefreshIcon } from "@heroicons/react/outline";
 import Button from "../../core/Button";
 import { BroadcastChannel } from "broadcast-channel";
 import { handleTokenExpiry } from "./common/utils";
-
+import PatientPanel from "./PatientPanel";
+import PatientAdapter from "./adapters/PatientAdapter";
 export default function CorticoPlugin({ onMinimize, ...props }) {
   const dispatch = useDispatch();
   const { refresh, refreshToken, uid } = useSelector((state) => state.app);
-  const { items } = useSelector((state) => state.sidebar);
   const loggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const [activeItem, setActiveItem] = useState("Account");
 
   const handleClick = (name) => {
     dispatch({
@@ -34,11 +33,6 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
       payload: name,
     });
   };
-
-  useEffect(() => {
-    const activeItem = items.find((item) => item.current === true);
-    setActiveItem(activeItem.name);
-  }, [items]);
 
   useEffect(() => {
     isLoggedIn().then((result) => {
@@ -148,6 +142,7 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
 
   return (
     <div className="tw-flex tw-h-full">
+      <PatientAdapter></PatientAdapter>
       {refresh ? (
         <AlertDialog
           icon={
@@ -194,8 +189,9 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
       ) : null}
       <Notifications />
       <div className="">
-        <WidgetSidebar items={items} onClick={handleClick} />
+        <WidgetSidebar onClick={handleClick} />
       </div>
+
       <div className=" tw-text-black tw-relative">
         <div
           className="tw-absolute tw-top-2 tw-right-2 tw-cursor-pointer tw-bg-amber-400 tw-rounded-full"
@@ -203,25 +199,7 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
         >
           <MinusIcon className="tw-w-5 tw-h-5 tw-text-white" />
         </div>
-        {activeItem === "Account" ? (
-          <div className="tw-p-4 tw-h-full">
-            {loggedIn === true ? <AccountInformation /> : <Login />}
-          </div>
-        ) : activeItem === "Automation" ? (
-          <div className="tw-p-4 tw-overflow-y-auto tw-max-h-[600px]">
-            <WidgetAutomation />
-          </div>
-        ) : activeItem === "Settings" ? (
-          <div className="tw-p-4 tw-h-full">
-            <WidgetSettings />
-          </div>
-        ) : activeItem === "Messenger" ? (
-          <div className="tw-p-4 tw-h-full">
-            <WidgetMessenger />
-          </div>
-        ) : (
-          ""
-        )}
+        <PluginContentRenderer></PluginContentRenderer>
       </div>
     </div>
   );
@@ -263,5 +241,43 @@ function AlertDialog({
         </div>
       </div>
     </Dialog>
+  );
+}
+
+function PluginContentRenderer() {
+  const loggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const { items: sidebarItems } = useSelector((state) => state.sidebar);
+  const [activeItem, setActiveItem] = useState("Account");
+  useEffect(() => {
+    const activeItem = sidebarItems.find((item) => item.current);
+    if (activeItem) {
+      setActiveItem(activeItem.name);
+    }
+  }, [sidebarItems]);
+
+  return (
+    <>
+      {activeItem === "Account" ? (
+        <div className="tw-p-4 tw-h-full">
+          {loggedIn === true ? <AccountInformation /> : <Login />}
+        </div>
+      ) : activeItem === "Automation" ? (
+        <div className="tw-p-4 tw-overflow-y-auto tw-max-h-[600px]">
+          <WidgetAutomation />
+        </div>
+      ) : activeItem === "Settings" ? (
+        <div className="tw-p-4 tw-h-full">
+          <WidgetSettings />
+        </div>
+      ) : activeItem === "Messenger" ? (
+        <div className="tw-p-4 tw-h-full">
+          <WidgetMessenger />
+        </div>
+      ) : activeItem === "Patient" ? (
+        <div className="tw-p-4 tw-h-full">
+          <PatientPanel />
+        </div>
+      ) : null}
+    </>
   );
 }

@@ -3,35 +3,48 @@ import {
   DesktopComputerIcon,
   ChatIcon,
   CogIcon,
+  IdentificationIcon,
 } from "@heroicons/react/solid";
 
 const initialState = {
   items: [
     {
-      name: "Account",
-      icon: <UserIcon className="tw-w-4 tw-h-4" />,
-      current: true,
+      name: "Patient",
+      icon: <IdentificationIcon className="tw-w-6 tw-h-6" />,
+      current: false, // default to messenger if on eChart page
+      visible: false,
     },
     {
       name: "Automation",
-      icon: <DesktopComputerIcon className="tw-w-4 tw-h-4" />,
-      current: false,
-    },
-    {
-      name: "Settings",
-      icon: <CogIcon className="tw-w-4 tw-h-4" />,
+      icon: <DesktopComputerIcon className="tw-w-6 tw-h-6" />,
       current: false,
     },
     {
       name: "Messenger",
-      icon: <ChatIcon className="tw-w-4 tw-h-4" />,
+      icon: <ChatIcon className="tw-w-6 tw-h-6" />,
       current: false, // default to messenger if on eChart page
+    },
+    {
+      name: "Account",
+      icon: <UserIcon className="tw-w-6 tw-h-6" />,
+      current: true,
+    },
+    {
+      name: "Settings",
+      icon: <CogIcon className="tw-w-6 tw-h-6" />,
+      current: false,
     },
   ],
 };
 
 export function sidebarReducer(state = initialState, action) {
   switch (action.type) {
+    case "sidebar/setVisible":
+      const item = state.items.find(
+        (item) => item.name === action.payload.name
+      );
+      item.visible = action.payload.visible;
+      return { ...state };
     case "sidebar/addItems":
       const temp = state.slice();
       temp.push(action.payload);
