@@ -1,0 +1,20 @@
+{
+  "name": "vcn",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.7",
+    "postcss": "^8.4.13",
+    "preact": "^10.5.15",
+    "tailwindcss": "^3.0.24"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.1.5",
+    "vite": "^2.9.7"
+  }
+}
