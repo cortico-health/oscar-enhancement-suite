@@ -1,0 +1,10 @@
+.c-select-list__data {
+  min-height: calc(100vh - 180px);
+}
+
+@screen lg {
+  .c-select-list__data {
+    min-height: calc(100vh - 84px);
+  }
+}
+
