@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name     Cortico
-// @version  2022.6.22
+// @version  2022.7.14
 // @grant    none
 // ==/UserScript==
 
@@ -60,7 +60,7 @@ import { initialState as setupPharmacyState } from "./modules/cortico/Widget/fea
 import { initialState as eligCheckState } from "./modules/cortico/Widget/features/EligCheck/EligCheck";
 import widgetStore from "./modules/cortico/Widget/store/store";
 import { getAccountProviderNo } from "./modules/Utils/Utils";
-const version = "2022.6.22";
+const version = "2022.7.14";
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
 window.is_dev = process.env.NODE_ENV === "development" ? true : false;
@@ -676,8 +676,7 @@ function dragAndDrop() {
     handleColors(ev.target);
 
     // Sibling table cell has the start time
-    const newStartTime =
-      ev.target.parentElement.firstElementChild.firstElementChild.textContent.trim();
+    const newStartTime = ev.target.parentElement.firstElementChild.firstElementChild.textContent.trim();
 
     // Get the appointment edit link, we're going to fetch this page in memory later
     const apptLink = getAppointmentLink(dragSelectedTarget);
@@ -1943,10 +1942,11 @@ export async function getPatientInfo(demographicNo) {
   el.querySelectorAll("span.label").forEach(function (label) {
     if (label.closest("#otherContacts2")) return; // do not match contacts.
 
-    info[label.innerText.replace(/[^\w\s]+/g, "")?.trim()] =
-      label.nextElementSibling
-        ? label.nextElementSibling.innerText.trim()
-        : null;
+    info[
+      label.innerText.replace(/[^\w\s]+/g, "")?.trim()
+    ] = label.nextElementSibling
+      ? label.nextElementSibling.innerText.trim()
+      : null;
   });
 
   const emailInput = el.querySelector("input[name='email']");

@@ -2,7 +2,7 @@
   "description": "Installs the Cortico Telehealth Platform in Oscar",
   "manifest_version": 2,
   "name": "Cortico Oscar EMR Telehealth",
-  "version": "2022.6.22",
+  "version": "2022.7.14",
   "homepage_url": "https://cortico.ca",
   "author": "Cortico Health Technologies",
   "icons": {
@@ -31,9 +31,7 @@
         "https://*/*/dms/documentReport.jsp*",
         "https://*/*/dms/showDocument.jsp*"
       ],
-      "js": [
-        "dist/cortico-min.js"
-      ]
+      "js": ["dist/cortico-min.js"]
     }
   ],
   "permissions": [
