@@ -3,7 +3,7 @@ import { getAppointments, getAppointmentInfo } from "./Appointments";
 import "./AppointmentMenu.css";
 import { Masterfile } from "../../core/Masterfile";
 import { Appointment } from "../../core/Appointment";
-import { getPortalPage, getCorticoAppointmentUrl } from "../../Utils/Utils";
+import { getDaySheet, getCorticoAppointmentUrl } from "../../Utils/Utils";
 import { CorticoIcon } from "../../Icons/CorticoIcon";
 import { create, getCorticoUrl } from "../../Utils/Utils";
 import { Loader } from "../../Loader/Loader";
@@ -125,8 +125,8 @@ export function getCorticoLinks(apptTd) {
   return `
   <ul>
     <li>
-      <a href="${getPortalPage()}" target="_blank">
-        ☛ Portal Page
+      <a href="${getDaySheet()}" target="_blank">
+        ☛ Day Sheet
       </a>
     </li><li>
       <a href="${getCorticoAppointmentUrl(
