@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import { useDispatch } from "react-redux";
 import { getPatientInfo } from "../../../../cortico";
 
-export default function () {
+export function PatientAdapter() {
   const dispatch = useDispatch();
   const result = useQuery(
     "patient",
@@ -12,6 +12,7 @@ export default function () {
     {
       staleTime: Infinity,
       cacheTime: Infinity,
+      retry: false,
     }
   );
 
@@ -31,3 +32,5 @@ export default function () {
   }
   return <></>;
 }
+
+export default PatientAdapter;

@@ -1968,7 +1968,7 @@ export async function getPatientInfo(demographicNo) {
   // var re = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi;
   // var emails = text.match(re);
   // if (emails && emails.length) info.email = emails[0];
-  info.demographicNo = getPatientDemographicNo();
+  info.demographicNo = demographicNo || getPatientDemographicNo();
   return info;
 }
 

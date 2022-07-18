@@ -15,11 +15,12 @@ import { getDemographicNo, formEncounterMessage } from "../../Utils/Utils";
 import Encounter from "../../core/Encounter";
 import Appointment from "./appointment/Appointment";
 import { QueryClient, QueryClientProvider } from "react-query";
-
+import PatientAdapter from "./adapters/PatientAdapter";
 const uid = nanoid();
 
 function App({ mode = "normal", ...props }) {
-  const { open } = useSelector((state) => state.app);
+  const open = useSelector((state) => state.app.open);
+  console.log("App Re-render");
   const containerRef = useRef();
   const dispatch = useDispatch();
   const [dragging, setDragging] = useState(false);
@@ -177,6 +178,7 @@ function App({ mode = "normal", ...props }) {
               {open === true ? (
                 <>
                   <CorticoPlugin onMinimize={handleMinimize} />
+                  <PatientAdapter></PatientAdapter>
                 </>
               ) : (
                 <Draggable
