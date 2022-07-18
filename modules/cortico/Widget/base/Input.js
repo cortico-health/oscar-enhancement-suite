@@ -14,7 +14,7 @@ const Input = forwardRef(
       label = "",
       labelPosition = "left",
       labelClassName = "",
-      defaultValue = "",
+      defaultValue,
       minValue = "",
       maxValue = "",
       exempt = false,
@@ -51,7 +51,7 @@ const Input = forwardRef(
             type={type}
             placeholder={placeholder}
             className={classNames(
-              "tw-text-sm tw-border-b tw-border-gray-300 tw-outline-none tw-inline-block tw-py-2 tw-mx-1 tw-w-full tw-text-gray-700",
+              "tw-text-sm tw-border-b tw-border-gray-300 tw-outline-none tw-inline-block tw-py-2 tw-w-full tw-text-gray-700",
               "placeholder:tw-text-sm",
               className
             )}
