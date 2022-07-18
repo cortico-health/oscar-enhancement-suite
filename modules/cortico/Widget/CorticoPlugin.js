@@ -142,7 +142,6 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
 
   return (
     <div className="tw-flex tw-h-full">
-      <PatientAdapter></PatientAdapter>
       {refresh ? (
         <AlertDialog
           icon={
