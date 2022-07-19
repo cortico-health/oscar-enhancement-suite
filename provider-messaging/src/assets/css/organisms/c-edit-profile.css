@@ -1,0 +1,47 @@
+.c-edit-profile {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+  & div:first-child {
+    border-radius: 20px;
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  }
+}
+
+.c-edit-profile__heading {
+  @apply text-contact1 text-secondary-500 font-medium;
+}
+
+.c-edit-profile__copy {
+  @apply text-contact2 text-secondary-300;
+}
+
+.c-edit-profile__left-section {
+  padding: 34px 36px 0 36px; 
+}
+
+.c-edit-profile__right-section {
+  background: white;
+  max-width: 450px;
+  padding: 54px 39px 19px 46px;
+  border-radius: 20px;
+}
+.c-edit-profile__textarea {
+  @apply resize-none pl-5.5 pr-7 pt-3 pb-10 outline-1 w-full rounded-lg outline-secondary-100 placeholder:text-secondary-200 text-secondary-300 text-description border border-secondary-100 mb-8;
+  
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "vcn",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build && npm run build:server",
+    "build:server": "npm run build --prefix server",
+    "watch:server": "npm run watch --prefix server",
+    "start": "npm run start --prefix server",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dompurify": "^2.3.8",
+    "express": "^4.18.1",
+    "jsonwebtoken": "^8.5.1",
+    "preact": "^10.5.15",
+    "preact-cli-svg-loader": "^1.1.0",
+    "preact-custom-element": "^4.2.1",
+    "preact-router": "^4.0.1",
+    "preactement": "^1.8.2",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.3.6"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.1.5",
+    "autoprefixer": "^10.4.7",
+    "postcss": "^8.4.14",
+    "postcss-import": "^14.1.0",
+    "postcss-preset-env": "^7.7.1",
+    "tailwindcss": "^3.0.24",
+    "vite": "^2.9.9",
+    "vite-plugin-svgr": "^2.1.0"
+  }
+}

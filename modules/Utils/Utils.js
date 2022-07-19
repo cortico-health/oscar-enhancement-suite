@@ -74,7 +74,7 @@ export function getCorticoUrl() {
   return `https://${clinicName}.${suffix}`;
 }
 
-export function getPortalPage() {
+export function getDaySheet() {
   const corticoUrl = getCorticoUrl();
   if (!corticoUrl) {
     return null;

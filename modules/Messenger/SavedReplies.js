@@ -21,7 +21,7 @@ function AddReply({ add, cancel, ...props }) {
   return (
     <div>
       <div className="tw-p-4">
-        <Input placeholder="Subject" onChange={(val) => setSubject(val)} />
+        <Input placeholder="Subject" className="tw-border-opacity-20 tw-rounded-md tw-px-2 border border-gray-200 rounded-md" onChange={(val) => setSubject(val)} />
         <hr className="tw-bg-opacity-25" />
         <Textarea
           placeholder="Place message here"
