@@ -32,14 +32,14 @@ const CProfileCard = ({ profile, opened, setOpenModal }) => {
           <a href={`mailto:${profile.email}`} className="text-primary-500 text-title4 block mb-1.5">{profile.email}</a>
           <a href={`tel:${profile.phone}`} className="text-primary-500 text-title4 block mb-5">{profile.phone}</a>
 
-      { profile.twitter || profile.instagram || profile.linkedin || profile.facebook &&
+      { (profile.twitter || profile.instagram || profile.linkedin || profile.facebook) &&
         <>
           <h2 className="c-profile-card__heading mb-4.5"> Socials </h2>
           <div className="flex gap-x-3 pb-11">
-            { profile.twitter ?<a href={profile.twitter}><ASvg src='twitter' /></a>: null }
-            { profile.instagram ? <a href={profile.instagram}><ASvg src='instagram' /></a> : null }
-            { profile.linkedin ? <a href={profile.linkedin}><ASvg src='linkedin' /></a> : null }
-            { profile.facebook ? <a href={profile.facebook}><ASvg src='facebook' /></a> : null }
+            { profile.twitter && <a target="_blank" href={profile.twitter}><ASvg src='twitter' /></a> }
+            { profile.instagram && <a target="_blank" href={profile.instagram}><ASvg src='instagram' /></a> }
+            { profile.linkedin && <a target="_blank" href={profile.linkedin}><ASvg src='linkedin' /></a> }
+            { profile.facebook && <a target="_blank" href={profile.facebook}><ASvg src='facebook' /></a> }
           </div> </> }
         </div>
 
