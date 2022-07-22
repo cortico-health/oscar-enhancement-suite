@@ -36,12 +36,19 @@ We hope this repository can provide a helpful testing ground for some new Oscar 
 
 # Developing
 
+## OES
+
 1. `docker-compose up oes-web`
 
 This will start webpack on watch mode and have source maps enabled by default.
 
 The minified file located in `dist` directory named `cortico-min.js` may be loaded
 into tampermonkey, or greasemonkey for direct testing before publishing.
+
+## VCN
+
+1. `cp dc.dev.yml docker-compose.override.yml`
+2. `docker-compose up`
 
 # Manual Testing
 
