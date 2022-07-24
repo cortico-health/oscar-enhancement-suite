@@ -48,6 +48,58 @@ export default function Button({
   );
 }
 
+export function PrimaryButton({
+  className,
+  loading,
+  children,
+  icon,
+  ...props
+}) {
+  return (
+    <Button
+      size="sm"
+      loading={loading}
+      className={classNames(
+        "tw-bg-indigo-100 tw-text-blue-1000 tw-text-sm  tw-rounded-md tw-font-medium",
+        className
+      )}
+      variant="custom"
+      {...props}
+    >
+      <span className="tw-flex tw-items-center tw-cursor-pointer tw-justify-between tw-w-full">
+        <span className="tw-cursor-pointer">{children}</span>
+        {icon}
+      </span>
+    </Button>
+  );
+}
+
+export function SecondaryButton({
+  className,
+  loading,
+  children,
+  icon,
+  ...props
+}) {
+  return (
+    <Button
+      size="sm"
+      loading={loading}
+      variant="custom"
+      className={classNames(
+        "tw-bg-emerald-100 tw-text-emerald-900 tw-text-sm tw-mr-2 tw-rounded-md tw-font-medium",
+        className
+      )}
+      {...props}
+    >
+      <span className="tw-flex tw-items-center tw-cursor-pointer tw-justify-between tw-w-full">
+        <span className="tw-cursor-pointer">{children}</span>
+        {icon}
+      </span>
+    </Button>
+  );
+}
+
 function Loading() {
   return (
     <span className="tw-flex tw-justify-center">

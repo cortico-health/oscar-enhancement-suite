@@ -28,8 +28,7 @@ import FeatureDetector from "../cortico/Widget/adapters/FeatureDetecter";
 import InboxDocument from "../cortico/Widget/adapters/InboxDocument";
 import Encounter from "../core/Encounter";
 import { BroadcastChannel } from "broadcast-channel";
-
-import dayjs from "dayjs";
+import { handleTokenExpiry } from "../../modules/cortico/Widget/common/utils";
 class MessengerError extends Error {
   constructor(title, message) {
     super(message);
@@ -40,6 +39,7 @@ class MessengerError extends Error {
 
 function MessengerWindow({ encounter: encounterOption, ...props }) {
   const dispatch = useDispatch();
+  const [demographicNo, setDemographicNo] = useState(null);
   const [loading, setLoading] = useState();
   const {
     to,
@@ -53,6 +53,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
     inboxDocument,
   } = useSelector((state) => state.messenger);
   const [openSavedReplies, setOpenSavedReplies] = useState(false);
+  const [filePreviewLink, setFilePreviewLink] = useState(false);
   const [patientInfo, setPatientInfo] = useState(null);
   const { clinic_name: clinicName, uid } = useSelector((state) => state.app);
 
@@ -156,6 +157,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
   };
 
   const submitData = async (scheme) => {
+    setFilePreviewLink(false);
     try {
       setLoading(true);
 
@@ -265,10 +267,12 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
       }
 
       let result = null;
+      data.demographic_no = demographicNo;
       if (scheme === "email") {
-        result = await sendEmail(data, token);
+        console.log("Data", data);
+        result = await sendEmail(token, data);
       } else if (scheme === "sms") {
-        result = await sendMessage(data, token);
+        result = await sendMessage(token, data);
       }
 
       if (result.status === 200) {
@@ -292,12 +296,19 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
             id: nanoid(),
           },
         });
+
+        const clonedResult = result.clone();
+        const responseData = await clonedResult.json();
+        console.log("Response Data", responseData);
+        if (responseData.preview) {
+          setFilePreviewLink(responseData.preview);
+        }
       } else {
         let errorResponse = null;
         try {
           errorResponse = await result.json();
         } catch (error) {
-          throw new MessengerErrorError(
+          throw new MessengerError(
             `Error Occured`,
             `Server responded with ${result.status} without a valid response`
           );
@@ -307,10 +318,13 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         if (scheme === "sms") {
           title = "SMS not sent";
         }
-        throw new MessengerError(
-          title,
-          errorResponse.message || errorResponse?.messages[0]?.message
-        );
+
+        if (!handleTokenExpiry(result, errorResponse)) {
+          throw new MessengerError(
+            title,
+            errorResponse.message || errorResponse?.messages[0]?.message
+          );
+        }
       }
     } catch (error) {
       console.error(error);
@@ -359,6 +373,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
 
   useEffect(() => {
     const demographicNo = getDemographicNo();
+    setDemographicNo(demographicNo);
     if (demographicNo && !patientInfo) {
       getPatientInfo().then((patientInfo) => {
         if (patientInfo) {
@@ -476,6 +491,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
                   <Checkbox
                     label="Copy Message To Encounter"
                     defaultChecked={encounter}
+                    value={encounter}
                     onChange={(val) => handleChange("encounter", val)}
                   />
                 </div>
@@ -487,6 +503,21 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         </div>
 
         <hr className="tw-my-4" />
+
+        {filePreviewLink !== false ? (
+          <div className="tw-flex tw-justify-between tw-mt-4 tw-w-full tw-max-w-[368px]">
+            <div className="tw-bg-blue-100 tw-text-blue-800 tw-p-3 tw-rounded-md tw-text-xs tw-w-full">
+              File sent successfully, Preview the file:{" "}
+              <a
+                className="tw-text-underline tw-font-semibold tw-block tw-break-words"
+                href={filePreviewLink}
+                target="_blank"
+              >
+                {filePreviewLink}
+              </a>
+            </div>
+          </div>
+        ) : null}
 
         <div className="tw-flex tw-justify-between tw-mt-4 tw-w-full">
           <div>

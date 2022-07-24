@@ -11,16 +11,13 @@ export default function Notifications() {
   useEffect(() => {
     const body = document.querySelector(".cortico-widget-body");
     setNode(body);
-
-    console.log("Notifications got here");
-    console.log(notifications);
   }, []);
 
   return (
     <>
       {notifications.length > 0 && node
         ? createPortal(
-            <div className="tw-absolute tw-bottom-3 tw-w-[325px] tw-block tw-mx-auto tw-left-[50%] tw-translate-x-[-50%] tw-space-y-2">
+            <div className="tw-absolute tw-bottom-3 tw-w-[325px] tw-block tw-mx-auto tw-left-[50%] tw-translate-x-[-50%] tw-space-y-2 tw-z-10005">
               {notifications.map((notification) => (
                 <Notification
                   id={notification.id}
@@ -50,7 +47,6 @@ export function Notification({
   const dispatch = useDispatch();
 
   const dismiss = () => {
-    console.log("Dismiss called");
     dispatch({
       type: "notifications/remove",
       payload: id,
@@ -58,13 +54,11 @@ export function Notification({
   };
 
   useEffect(() => {
-    console.log("Notification Mounted", id);
     let timeoutId = setTimeout(() => {
       dismiss();
     }, dismissAfter);
 
     return () => {
-      console.log("Notification Clean Up Ran", id);
       clearTimeout(timeoutId);
     };
   }, []);

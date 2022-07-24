@@ -49,7 +49,11 @@ export class Oscar {
   }
 
   isEncounterPage() {
-    return this.route.indexOf("/casemgmt/forward.jsp") > -1;
+    console.log(this.route);
+    return (
+      this.route.indexOf("/casemgmt/forward.jsp") > -1 ||
+      this.route.indexOf("/oscarEncounter/IncomingEncounter") > -1
+    );
   }
 
   isDocumentPage() {

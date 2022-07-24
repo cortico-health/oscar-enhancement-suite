@@ -16,7 +16,6 @@ export function addAppointmentMenu() {
   );
 
   const apptInfo = getAppointmentInfo(appointments);
-  console.log(apptInfo);
 
   appointments.map((appt) => {
     appt.appendChild(appointmentMenu(appt));
