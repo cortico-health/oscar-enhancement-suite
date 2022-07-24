@@ -5,6 +5,7 @@ export default function Select({
   options,
   onChange,
   label,
+  tooltip,
   defaultValue,
   value,
   placeholder = false,
@@ -21,6 +22,7 @@ export default function Select({
         <span className="tw-text-sm tw-text-gray-900 tw-font-medium">
           {label}
         </span>
+        <div className="tw-inline-block">{tooltip}</div>
         <select
           onChange={handleChange}
           defaultValue={defaultValue}
