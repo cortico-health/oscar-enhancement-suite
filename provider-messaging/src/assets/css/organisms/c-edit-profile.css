@@ -37,6 +37,7 @@
   max-width: 450px;
   padding: 54px 39px 19px 46px;
   border-radius: 20px;
+  height: fit-content;
 }
 .c-edit-profile__textarea {
   @apply resize-none pl-5.5 pr-7 pt-3 pb-10 outline-1 w-full rounded-lg outline-secondary-100 placeholder:text-secondary-200 text-secondary-300 text-description border border-secondary-100 mb-8;

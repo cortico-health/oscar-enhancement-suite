@@ -36,6 +36,8 @@
 .c-profile-card__right-section {
   background: white;
   max-width: 380px;
+  padding-bottom: auto;
+  height: 100%;
   padding: 54px 40px 19px 48px;
   border-radius: 20px;
 }

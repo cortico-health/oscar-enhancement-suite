@@ -5,7 +5,6 @@ import AButton from "../atoms/a-button";
 import ARadio from "../atoms/a-radio";
 
 import { usersData } from "../../data";
-import AInput from "../atoms/a-input";
 import { useState } from "preact/hooks";
 import MProfileInput from "../molecules/m-profile-input";
 
@@ -29,11 +28,17 @@ const CEditProfile = ({ profile = usersData[0], opened, setOpenModal }) => {
               className="o-aspect-ratio__content rounded-2xl object-cover"
               src={profile.avatar}
             />
+
+          <label className="absolute bottom-0 right-0">
+            {/* That's not fisnished, but there is a place to load image */}
+            <input onChange={(e) => console.log(e.target.files[0]) } type="file" accept="image/png, image/gif, image/jpeg" class="hidden" name="avatar"/>
             <ASvg
               role="button"
               className="absolute child-hover:fill-primary-700 bottom-0 right-0 w-6 h-6 border-4 border-white rounded-full"
               src="add"
             />
+          </label>
+            
           </div>
 
           <h2 className="c-edit-profile__heading mb-2">Status</h2>
@@ -109,10 +114,7 @@ const CEditProfile = ({ profile = usersData[0], opened, setOpenModal }) => {
             name="phone"
             onChange={handleChange}
           />
-          {profile.twitter ||
-          profile.instagram ||
-          profile.linkedin ||
-          profile.facebook && (
+          
             <>
               <div className="mt-6 mb-4.5 flex justify-between">
                 <h2 className="c-edit-profile__heading"> Socials </h2>
@@ -149,7 +151,6 @@ const CEditProfile = ({ profile = usersData[0], opened, setOpenModal }) => {
                 />
               </div>
             </>
-          )}
         </div>
 
         <div className="c-edit-profile__right-section">
@@ -223,7 +224,9 @@ const CEditProfile = ({ profile = usersData[0], opened, setOpenModal }) => {
                 value="Never"
               />
           </div>
-          <AButton onClick={() => alert(JSON.stringify(inputs, null, 2))}>Save</AButton>
+          <div className="w-full flex justify-end">
+          <AButton className="w-28" onClick={() => alert(JSON.stringify(inputs, null, 2))}>Save</AButton>
+            </div>
         </div>
       </div>
     </div>
