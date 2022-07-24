@@ -4,8 +4,13 @@ import Select from "../base/Select";
 import Checkbox from "../base/Checkbox";
 import { createPortal } from "preact/compat";
 import Button from "../../../core/Button";
-import { VideoCameraIcon } from "@heroicons/react/outline";
+import {
+  VideoCameraIcon,
+  QuestionMarkCircleIcon,
+} from "@heroicons/react/outline";
 import { getCorticoUrl } from "../../../Utils/Utils";
+import Tooltip from "../base/Tooltip";
+
 function useIsMount() {
   const isMountRef = useRef(true);
   useEffect(() => {
@@ -145,6 +150,15 @@ export default function SetupResources({
           {workflowSlugs && workflowSlugs.length > 0 && (
             <Select
               label="Workflow"
+              tooltip={
+                <>
+                  <a href={`${getCorticoUrl()}/settings`} target="_blank">
+                    <Tooltip description="The Cortico workflow influences what reminder Cortico will send. click this icon, and go to 'Policies' to review your email reminders text.">
+                      <QuestionMarkCircleIcon className="tw-w-4 tw-h-4 tw-mx-1 tw-cursor-pointer tw-text-black"></QuestionMarkCircleIcon>
+                    </Tooltip>
+                  </a>
+                </>
+              }
               className="tw-bg-white tw-text-gray-700 "
               options={slugs}
               onChange={(val) => handleWorkflowChange(val)}
