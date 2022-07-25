@@ -10,7 +10,7 @@ services:
 
   vcn-web:
     image: node:16
-    command: "./command.sh"
+    command: bash -c "yarn && yarn dev"
     volumes:
       - ./provider-messaging:/provider-messaging
     working_dir: /provider-messaging
