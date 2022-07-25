@@ -1,5 +1,4 @@
 import { LOGIN, GET_USER, LOGOUT } from "../actions";
-import { usersData } from '../data';
 
 export const authReducer = (state, action) => {
   switch (action.type) {

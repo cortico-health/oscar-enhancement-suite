@@ -14,15 +14,14 @@ import PAddToChat from "./pages/p-add-to-chat";
 import { useEffect, useState } from "preact/hooks";
 import CEditProfile from "./components/organisms/c-edit-profile";
 import { useStateValue } from "./state";
-import { usersData } from "./data";
 
 export const App = () => {
   const { getUser, login, auth } = useStateValue();
 
-	const [ inputs, setInputs ] = useState({
-		email: usersData[0].email,
-		password: ''
-	})
+  const [inputs, setInputs] = useState({
+    email: import.meta.env.VITE_TEST_EMAIL || '',
+    password: import.meta.env.VITE_TEST_PASSWORD || ''
+  })
 
   addEventListener(
     "hashchange",
@@ -34,10 +33,15 @@ export const App = () => {
     false
   );
 
-	const onChange = (e) => {
-		const { name, value } = e.target;
-		setInputs({...inputs, [name]: value })
-	}
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    setInputs({ ...inputs, [name]: value })
+  }
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    login(inputs.email, inputs.password)
+  }
 
   useEffect(() => {
     getUser();
@@ -46,7 +50,7 @@ export const App = () => {
 
   const [editProfile, setEditProfile] = useState(false);
 
-  if(!auth){
+  if (!auth) {
     return <div>loading...</div>
   }
 
@@ -55,7 +59,7 @@ export const App = () => {
 
       {auth && Object.keys(auth).length !== 0 ? (
         <>
-        <CEditProfile profile={auth} opened={editProfile} setOpenModal={setEditProfile} />
+          <CEditProfile profile={auth.profile} opened={editProfile} setOpenModal={setEditProfile} />
           <CNav />
           <main className="min-h-screen bg-secondary-10 lg:ml-20 ml-0">
             <Router>
@@ -70,20 +74,20 @@ export const App = () => {
             </Router>
           </main>
         </>
-      ) : <form className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" onSubmit={() => login( inputs.email, inputs.password)}>
-						<div className="mb-2">
-              <label htmlFor="email">Email:</label>
-              <input className="ml-2 border border-primary-500" defaultValue={inputs.email} onChange={onChange} name="email"/>
-            </div>
-            {/* No need to write anything - it's just mock just click Login, eventually write some email from usersData from data.js file */}
-						<div className="mb-2">
-              <label htmlFor="password">Password:</label>
-              <input className="ml-2 border border-primary-500" onChange={onChange} placeholder="No need to write anything" type="password" name="password"/>
-            </div>
-            <div className="flex justify-center items-center w-full">
-						  <button className="block px-2 py-2 bg-primary-500 text-white rounded-md" type="submit">Login</button>
-            </div>
-        </form>}
+      ) : <form className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" onSubmit={handleLogin}>
+        <div className="mb-2">
+          <label htmlFor="email">Email:</label>
+          <input className="ml-2 border border-primary-500" defaultValue={inputs.email} onChange={onChange} name="email" />
+        </div>
+        {/* No need to write anything - it's just mock just click Login, eventually write some email from usersData from data.js file */}
+        <div className="mb-2">
+          <label htmlFor="password">Password:</label>
+          <input className="ml-2 border border-primary-500" onChange={onChange} defaultValue={inputs.password} placeholder="No need to write anything" type="password" name="password" />
+        </div>
+        <div className="flex justify-center items-center w-full">
+          <button className="block px-2 py-2 bg-primary-500 text-white rounded-md" type="submit">Login</button>
+        </div>
+      </form>}
     </div>
   );
 };
