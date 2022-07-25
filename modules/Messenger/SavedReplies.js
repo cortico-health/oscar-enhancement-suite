@@ -1,15 +1,16 @@
 import { useState, useEffect } from "preact/hooks";
-import corticoIcon from "../../resources/icons/96x96.png";
+import { useDispatch } from "react-redux";
 import { PlusIcon, LeftArrowIcon, TrashIcon } from "../Icons/HeroIcons";
 import Input from "../cortico/Widget/base/Input";
 import Textarea from "../cortico/Widget/base/Textarea";
-
 import {
   getCannedReplies,
   addCannedReply,
   deleteCannedReply,
 } from "../Api/Api";
 import { loadExtensionStorageValue } from "../Utils/Utils";
+import { handleTokenExpiry } from "../../modules/cortico/Widget/common/utils";
+import { nanoid } from "nanoid";
 function AddReply({ add, cancel, ...props }) {
   const [subject, setSubject] = useState(null);
   const [body, setBody] = useState(null);
@@ -21,7 +22,11 @@ function AddReply({ add, cancel, ...props }) {
   return (
     <div>
       <div className="tw-p-4">
-        <Input placeholder="Subject" className="tw-border-opacity-20 tw-rounded-md tw-px-2 border border-gray-200 rounded-md" onChange={(val) => setSubject(val)} />
+        <Input
+          placeholder="Subject"
+          className="tw-border-opacity-20 tw-rounded-md tw-px-2 border border-gray-200 rounded-md"
+          onChange={(val) => setSubject(val)}
+        />
         <hr className="tw-bg-opacity-25" />
         <Textarea
           placeholder="Place message here"
@@ -120,6 +125,7 @@ function Reply({
 }
 
 function SavedReplies({ loadReply, ...props }) {
+  const dispatch = useDispatch();
   const [addReply, setAddReply] = useState(false);
   const [replies, setReplies] = useState([]);
 
@@ -131,13 +137,46 @@ function SavedReplies({ loadReply, ...props }) {
     };
     loadExtensionStorageValue("jwt_access_token")
       .then((token) => {
-        return addCannedReply(temp, token);
+        return addCannedReply(token, temp);
       })
       .then((res) => {
-        return loadReplies();
+        if (res.status >= 300 || res.status < 200) {
+          return Promise.all([res.json(), Promise.resolve(res)]);
+        } else {
+          dispatch({
+            type: "notifications/add",
+            payload: {
+              type: "success",
+              message: "Canned reply has been added",
+              title: "Success",
+              id: nanoid(),
+            },
+          });
+          loadReplies();
+        }
       })
-      .catch((err) => {
-        console.error(err);
+      .then((results) => {
+        if (results) {
+          data = results[0];
+          const response = results[1];
+          if (response.status !== 200) {
+            if (!handleTokenExpiry(response, data)) {
+              throw Error(response.statusText);
+            }
+          }
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        dispatch({
+          type: "notifications/add",
+          payload: {
+            type: "error",
+            message: error.message || error.toString(),
+            title: error.title || "Error Occured",
+            id: nanoid(),
+          },
+        });
       })
       .finally(() => {
         setAddReply(false);
@@ -150,14 +189,46 @@ function SavedReplies({ loadReply, ...props }) {
   const deleteReply = (id) => {
     loadExtensionStorageValue("jwt_access_token")
       .then((token) => {
-        return deleteCannedReply(id, token);
+        return deleteCannedReply(token, id);
       })
       .then((res) => {
-        console.log(res);
-        loadReplies();
+        if (res.status >= 300 || res.status < 200) {
+          return Promise.all([res.json(), Promise.resolve(res)]);
+        } else {
+          dispatch({
+            type: "notifications/add",
+            payload: {
+              type: "success",
+              message: "Canned reply has been deleted",
+              title: "Success",
+              id: nanoid(),
+            },
+          });
+          loadReplies();
+        }
       })
-      .catch((err) => {
-        console.error(err);
+      .then((results) => {
+        if (results) {
+          const data = results[0];
+          const response = results[1];
+          if (response.status !== 200) {
+            if (!handleTokenExpiry(response, data)) {
+              throw Error(response.statusText);
+            }
+          }
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        dispatch({
+          type: "notifications/add",
+          payload: {
+            type: "error",
+            message: error.message || error.toString(),
+            title: error.title || "Error Occured",
+            id: nanoid(),
+          },
+        });
       });
   };
   const loadReplies = () => {
@@ -166,18 +237,29 @@ function SavedReplies({ loadReply, ...props }) {
         return getCannedReplies(token);
       })
       .then((res) => {
-        console.log("Canned Response", res);
-        if (res.status !== 200) {
-          throw new Error(res.statusText);
-        }
-        return res.json();
+        return Promise.all([res.json(), Promise.resolve(res)]);
       })
-      .then((data) => {
-        console.log("Canned Replies Loaded", data);
+      .then((results) => {
+        const data = results[0];
+        const response = results[1];
+        if (response.status >= 300 || response.status < 200) {
+          if (!handleTokenExpiry(response, data)) {
+            throw new Error(response.statusText);
+          }
+        }
         setReplies(data);
       })
-      .catch((err) => {
-        console.error(err);
+      .catch((error) => {
+        console.error(error);
+        dispatch({
+          type: "notifications/add",
+          payload: {
+            type: "error",
+            message: error.message || error.toString(),
+            title: error.title || "Error Occured",
+            id: nanoid(),
+          },
+        });
       });
   };
 

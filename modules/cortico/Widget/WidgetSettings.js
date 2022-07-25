@@ -103,6 +103,7 @@ export default function WidgetSettings() {
               </select>
             </label>
           </div>
+          {/*
           <div className="tw-flex tw-justify-between tw-w-full tw-mt-7">
             <label class="tw-flex tw-w-full tw-justify-between tw-items-center">
               <span class="tw-text-gray-700 tw-text-sm">
@@ -129,6 +130,7 @@ export default function WidgetSettings() {
               />
             </label>
           </div>
+          */}
         </div>
         <div>
           <hr className="tw-my-5" />

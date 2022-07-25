@@ -1,5 +1,5 @@
 import { h } from "preact";
-import { Link, useRouter } from "preact-router";
+import { useRouter, route } from "preact-router";
 import { useEffect, useState } from "preact/hooks";
 import { useStateValue } from "../../state";
 import CProfileCard from "../organisms/c-profile-card";
@@ -24,9 +24,8 @@ const MDiscussionTab = ({ discussion, ...props }) => {
     return <div>loading...</div>;
   }
   return (
-    <Link
-    // <div>
-    // activeClassName="bg-red-500"
+    <div
+      onClick={() => route('/chat/'+discussion?.id)}
       href={'/chat/'+discussion?.id}
       {...props}
       className={`px-2.5 block ${
@@ -108,8 +107,7 @@ const MDiscussionTab = ({ discussion, ...props }) => {
           </p>
         </div>
       </div>
-      {/* </div> */}
-    </Link>
+    </div>
   );
 };
 

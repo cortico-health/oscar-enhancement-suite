@@ -12,6 +12,14 @@ services:
       - .:/code
     working_dir: /code
     build: .
+  vcn-web:
+    image: node:16
+    volumes:
+      - ./provider-messaging/:/code
+    working_dir: /code
+    command: bash -c "yarn && yarn dev"
+    ports:
+      - "3500:3500"
 
 networks:
   back-tier:

@@ -15,8 +15,8 @@ module.exports = {
     ignored: /dist/,
   },
   cache: false,
-  devtool: "eval-source-map",
   mode: "development",
+  devtool: "inline-source-map",
   plugins: [
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("development"),
