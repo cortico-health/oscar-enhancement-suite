@@ -1,3 +1,6 @@
+import AButton from "./components/atoms/a-button";
+import CNav from "./components/organisms/c-nav";
+
 export function App() {
   const chatSocket = new WebSocket('ws://localhost:8426/chat/1/');
 
@@ -18,6 +21,8 @@ export function App() {
 
   return (
     <>
+      <CNav />
+      {/* <AButton className='w-full block' variant='button-secondary-sm'> Select patient</AButton> */}
       <input id="chatMessage" type="text" />
       <button onClick={sendMessage}>Submit</button>
       <div id="messages">

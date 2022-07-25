@@ -1,0 +1,19 @@
+.a-button--lg {
+  height: 48px;
+}
+
+.a-button--sm {
+  height: 38px;
+}
+
+.a-button--primary {
+  @apply text-white bg-primary-500 hover:bg-primary-700 font-medium;
+}
+
+.a-button--secondary {
+  @apply text-primary-600 bg-white border border-secondary-100 hover:border-primary-600 font-medium;
+}
+
+.a-button--tertiary {
+  @apply text-secondary-500 bg-white border border-secondary-100 hover:border-secondary-500 font-medium;
+}
