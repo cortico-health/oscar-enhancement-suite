@@ -1,5 +1,14 @@
 import { render } from 'preact'
 import { App } from './app'
-import './index.css'
+import "./assets/css/index.css";
 
-render(<App />, document.getElementById('app'))
+import "preact/debug";
+import "preact/devtools";
+import { StateProvider } from './state';
+
+render(
+    <StateProvider>
+      <App />
+    </StateProvider>,
+    document.getElementById("app")
+  );

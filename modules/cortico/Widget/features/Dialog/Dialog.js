@@ -10,8 +10,6 @@ export default function Dialog({
   className,
   ...props
 }) {
-  //const { open } = useSelector((state) => state.dialog);
-  //const dispatch = useDispatch();
   const dialogRef = useRef();
 
   const [node, setNode] = useState(null);

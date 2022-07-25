@@ -15,6 +15,7 @@ import { appReducer } from "../features/App";
 import { sidebarReducer } from "../features/Sidebar";
 import { dialogReducer } from "../features/Dialog/index";
 import { notificationsReducer } from "../features/Notifications";
+import { patientReducer } from "../features/Patient";
 
 const rootReducer = combineReducers({
   eligCheck: eligCheckReducer,
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   sidebar: sidebarReducer,
   dialog: dialogReducer,
   notifications: notificationsReducer,
+  patient: patientReducer,
 });
 
 function logger({ getState }) {

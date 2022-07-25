@@ -1,27 +1,37 @@
+import Router from "preact-router";
+import { useState } from "preact/hooks";
+
+//Components
+import CNav from "./components/organisms/c-nav";
+import { usersData } from "./data";
+
+//Pages
+import PChat from "./pages/p-chat";
+import PTestChat from "./pages/p-test-chat";
+import { useStateValue } from "./state";
+
 export function App() {
-  const chatSocket = new WebSocket('ws://localhost:8426/chat/1/');
 
-  const sendMessage = (e) => {
-    const messageEl = document.getElementById('chatMessage')
-    const message = messageEl.value
-    chatSocket.send(JSON.stringify({
-      'body': message,
-    }));
-    messageEl.value = ''
-  }
+  const {auth} = useStateValue();
 
-  chatSocket.onmessage = (e) => {
-    const data = JSON.parse(e.data);
-    const newMessage = JSON.parse(data.text);
-    document.getElementById('messages').innerHTML += newMessage.body
+  if(!auth){
+    return <div>loading...</div>
   }
 
   return (
     <>
-      <input id="chatMessage" type="text" />
+      <CNav />
+      <main className="min-h-screen bg-secondary-10 lg:ml-20 ml-0">
+        <Router>
+          <PTestChat path="/"/>
+          <PChat path="/chat" />
+          <PChat path="/chat/:id" />
+        </Router>
+      </main>
+      {/* <input id="chatMessage" type="text" />
       <button onClick={sendMessage}>Submit</button>
       <div id="messages">
-      </div>
+      </div> */}
     </>
   )
 }
