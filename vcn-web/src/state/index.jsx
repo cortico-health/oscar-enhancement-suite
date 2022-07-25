@@ -60,8 +60,10 @@ export const StateProvider = ({children}) => {
     addUser: (newUser) => {
       dispatch({ type: ADD_USER, payload: newUser })
     },
-    auth: state.auth,
-    login: (email, password) => {
+    /* This is for testing, thus no need for login */
+    auth: usersData[0],
+    /* this is commented for future reference */
+    /* login: (email, password) => {
       localStorage.setItem('user',
         JSON.stringify({
           email: email,
@@ -75,7 +77,7 @@ export const StateProvider = ({children}) => {
       }
       else { auth = null }
       dispatch({ type: LOGIN, payload: auth })
-    },
+    }, */
     logout: () => {
       localStorage.clear();
       dispatch({ type: LOGOUT })
