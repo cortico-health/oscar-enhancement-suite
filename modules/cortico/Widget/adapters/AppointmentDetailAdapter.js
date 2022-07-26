@@ -19,7 +19,7 @@ export default function AppointmentDetailAdapter() {
         {appointments.map((appointment) => {
           return createPortal(
             <div className="tw-inline-block tw-relative">
-              <AppointmentDetails></AppointmentDetails>
+              <AppointmentDetails apptTd={appointment}></AppointmentDetails>
             </div>,
             appointment
           );
