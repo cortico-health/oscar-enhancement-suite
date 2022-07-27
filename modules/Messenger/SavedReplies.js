@@ -11,6 +11,8 @@ import {
 import { loadExtensionStorageValue } from "../Utils/Utils";
 import { handleTokenExpiry } from "../../modules/cortico/Widget/common/utils";
 import { nanoid } from "nanoid";
+import Loader from "./Loader";
+
 function AddReply({ add, cancel, ...props }) {
   const [subject, setSubject] = useState(null);
   const [body, setBody] = useState(null);
@@ -128,6 +130,7 @@ function SavedReplies({ loadReply, ...props }) {
   const dispatch = useDispatch();
   const [addReply, setAddReply] = useState(false);
   const [replies, setReplies] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleAdd = (data) => {
     const { body, subject } = data;
@@ -231,7 +234,9 @@ function SavedReplies({ loadReply, ...props }) {
         });
       });
   };
+
   const loadReplies = () => {
+    setLoading(true);
     loadExtensionStorageValue("jwt_access_token")
       .then((token) => {
         return getCannedReplies(token);
@@ -248,6 +253,7 @@ function SavedReplies({ loadReply, ...props }) {
           }
         }
         setReplies(data);
+        setLoading(false);
       })
       .catch((error) => {
         console.error(error);
@@ -287,28 +293,37 @@ function SavedReplies({ loadReply, ...props }) {
       >
         {addReply === false ? (
           <div>
-            <div className="tw-my-3">
-              {replies.length > 0 ? (
-                replies.map((reply, index) => {
-                  return (
-                    <div className="tw-my-3" key={index}>
-                      <Reply
-                        onClick={(data) => {
-                          loadReply(data);
-                        }}
-                        uuid={reply.uuid}
-                        onDelete={deleteReply}
-                        {...reply}
-                      />
+            {!loading ? (
+                <div className="tw-my-3">
+                  {replies.length > 0 ? (
+                    replies.map((reply, index) => {
+                      return (
+                        <div className="tw-my-3" key={index}>
+                          <Reply
+                            onClick={(data) => {
+                              loadReply(data);
+                            }}
+                            uuid={reply.uuid}
+                            onDelete={deleteReply}
+                            {...reply}
+                          />
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <div className="tw-font-sans tw-p-4 tw-text-2xl tw-text-center tw-tracking-widest tw-text-gray-700 tw-text-opacity-60">
+                      No Canned Responses! Click New Response to get started
                     </div>
-                  );
-                })
+                  )}
+                </div>
               ) : (
-                <div className="tw-font-sans tw-p-4 tw-text-2xl tw-text-center tw-tracking-widest tw-text-gray-700 tw-text-opacity-60">
-                  No Canned Responses! Click New Response to get started
+                <div className="tw-my-3 tw-text-center">
+                  <Loader color="black" size={10}/>
+                  <div className="tw-font-sans tw-p-4 tw-text-2xl tw-tracking-widest tw-text-gray-700 tw-text-opacity-60">
+                    Fetching Canned Responses....
+                  </div>
                 </div>
               )}
-            </div>
           </div>
         ) : (
           <AddReply add={handleAdd} cancel={handleCancel} />
