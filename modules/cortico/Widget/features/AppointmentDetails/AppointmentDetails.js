@@ -1,10 +1,12 @@
 import { DotsVerticalIcon } from "@heroicons/react/solid";
+import classNames from "classnames";
 import { forwardRef } from "preact/compat";
 import { useRef, useState } from "preact/hooks";
 import { useQuery } from "react-query";
 import { Appointment } from "../../../../core/Appointment";
 import { Masterfile } from "../../../../core/Masterfile";
-import useComponentOutsideHandler from "../../../../Hooks/useComponentOutsideHandler";
+import useComponentOutsideHandler from "../../../../Hooks/useComponentOutsideObserver";
+import useLeftPositionObserver from "../../../../Hooks/useLeftPositionObserver";
 import { CorticoPreactIcon } from "../../../../Icons/CorticoIcon";
 import Loader from "../../../../Messenger/Loader";
 import { getCorticoAppointmentUrl, getCorticoUrl, getDaySheet } from "../../../../Utils/Utils";
@@ -13,7 +15,8 @@ export default function AppointmentDetails({ apptTd }) {
   const [on, setOn] = useState(false);
   const detailsRef = useRef(null);
   //In order for it to exit if clicked outside
-  useComponentOutsideHandler(detailsRef, setOn)
+  useComponentOutsideHandler(detailsRef, setOn);
+  const className = useLeftPositionObserver(on, detailsRef);
 
   const [masterFile, setMasterfile] = useState(new Masterfile(apptTd));
 
@@ -25,14 +28,14 @@ export default function AppointmentDetails({ apptTd }) {
     {
       staleTime: Infinity,
       cacheTime: Infinity,
-      retry: false,
+      retry: true,
     }
   );
 
   return (
     <>
       <ReferenceElement onClick={() => setOn((on) => !on)}></ReferenceElement>
-      {on && <Details ref={detailsRef} masterFile={masterFile} isError={isError} isLoading={isLoading} apptTd={apptTd} setOn={setOn}></Details>}
+      {on && <Details ref={detailsRef} className={className} masterFile={masterFile} isError={isError} isLoading={isLoading} apptTd={apptTd} setOn={setOn}></Details>}
     </>
   );
 }
@@ -63,7 +66,7 @@ function DetailLinks({ apptTd }) {
 
   if(!corticoURL) {
     return (
-      <div style="white-space: initial;">
+      <div className="text-center text-white">
         Cortico clinic has not been set. Please set the Cortico Clinic URL from the sidebar.
       </div>
     )
@@ -133,11 +136,16 @@ function DetailContactInfo({ masterFile }) {
   );
 }
 
-const Details = forwardRef(({ apptTd, masterFile, isError, isLoading, setOn }, ref) => {
+const Details = forwardRef(({ apptTd, className, masterFile, isError, isLoading, setOn }, ref) => {
   return (
-      <div ref={ref} className="tw-absolute text-white tw-top-0 tw-right-0 tw-p-6 tw-rounded-lg tw-bg-[#5b6ce2] tw-border tw-border-[#d8ddff] tw-border-solid z-[1500] text-sm tw-shadow-sm">
-        <div className="tw-absolute tw-top-0 tw-right-0 tw-text-xs tw-px-[5px] tw-py-0 hover:tw-cursor-pointer mr-1 mt-1" onClick={() => setOn(() => false)}>
-          <span className="tw-text-white">X</span>
+      <div ref={ref} 
+        className={
+          classNames(className, 
+          `tw-absolute text-white tw-p-6 tw-rounded-lg tw-bg-[#5b6ce2] -tw-top-3
+           tw-border tw-border-[#d8ddff] tw-border-solid tw-z-10002 text-sm tw-shadow-sm`)
+          }>
+        <div className="tw-absolute tw-top-0 tw-right-0 tw-text-xs tw-px-[5px] tw-py-0 hover:tw-cursor-pointer tw-mr-1 tw-mt-1" onClick={() => setOn(() => false)}>
+          <span className="tw-text-white tw-text-sm">X</span>
         </div>
 
         <DetailHeader />

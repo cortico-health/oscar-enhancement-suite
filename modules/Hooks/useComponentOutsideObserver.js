@@ -2,13 +2,14 @@ import { useEffect } from "react";
 
 
 /* Hook that helps the certain component hide if it is clicked outside */
+/* Reference: https://stackoverflow.com/a/42234988 */
  
-export default function useComponentOutsideHandler(ref, setTask) {
+export default function useComponentOutsideObserver(ref, setTask) {
   useEffect(() => {
     /* Function that will be perform if the component is clicked outside */
     function handleClickOutside(event) {
       /* if the once clicked is not the DOM itself */
-      if (ref.current && !ref.current.contains(event.target)) {
+      if (ref.current && !ref?.current.contains(event.target)) {
         setTask(() => false);
       }
     }
