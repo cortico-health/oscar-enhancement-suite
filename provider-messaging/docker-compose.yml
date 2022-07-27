@@ -6,6 +6,6 @@ services:
     volumes:
       - .:/code/
     working_dir: /code/
-    command: ./command.sh
+    command: bash -c "yarn && yarn dev"
     ports:
-      - 3000:3000
+      - 3000:3500
