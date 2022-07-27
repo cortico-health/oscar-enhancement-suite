@@ -30,16 +30,17 @@ export const StateProvider = ({children}) => {
 
   const store = useLocalObservable(() => ({
     users: {
-      all: usersData,
-      selected: null
+      all: usersData
     }
   }))
 
   
 
   const value = {
-    //patients
+    // This is the MobX store. TODO: move any other global state here too, it's easier.
     store,
+
+    //patients
     patients: state.patients,
     getPatients: () => {
       dispatch({ type: GET_PATIENTS })
@@ -59,16 +60,6 @@ export const StateProvider = ({children}) => {
       dispatch({ type: ADD_MESSAGE, payload: message })
     },
     //users
-    users: state.users,
-    getUsers: () => {
-      dispatch({ type: GET_USERS })
-    },
-    selectUser: (id) => {
-      dispatch({ type: SELECT_USER, payload: id  })
-    },
-    addUser: (newUser) => {
-      dispatch({ type: ADD_USER, payload: newUser })
-    },
     auth: state.auth,
     login: (email, password) => {
       localStorage.setItem('user', 
