@@ -3,7 +3,7 @@ import { h } from 'preact';
 import { useRef } from 'preact/hooks';
 import ASvg from '../atoms/a-svg';
 import DOMPurify from 'dompurify'
-import { useStateValue } from '../../state';
+import { useStore } from '../../state';
 
 const formatURL = (string) => {
   return string.replace(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g, (url) => '<a class="text-primary-500" href="' + url + '">' + url + '</a>')
@@ -15,7 +15,7 @@ const MMessageCard = ({ messageDetails }) => {
     __html: DOMPurify.sanitize(formatURL(messageDetails.content))
   });
 
-  const { auth } = useStateValue();
+  const { auth } = useStore();
 
   
   const textRef = useRef(null);

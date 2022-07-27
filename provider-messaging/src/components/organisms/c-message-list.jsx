@@ -1,7 +1,7 @@
 import { h } from "preact";
 import { useRouter } from "preact-router";
 import { useState, useRef, useEffect } from "preact/hooks";
-import { useStateValue } from "../../state";
+import { useStore } from "../../state";
 import MChatTools from "../molecules/m-chat-tools";
 import MMessageCard from "../molecules/m-message-card";
 import MSend from "../molecules/m-send";
@@ -12,7 +12,7 @@ const CMessageList = () => {
   const router = useRouter()[0];
 
   const { addNewMessage, discussions, selectDiscussion, auth } =
-    useStateValue();
+    useStore();
 
   const isValidURL = (string) => {
     var res = string.match(

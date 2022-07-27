@@ -2,13 +2,13 @@ import { h } from 'preact';
 import ASvg from '../atoms/a-svg';
 import AButton from '../atoms/a-button';
 import { useEffect, useState } from 'preact/hooks';
-import { useStateValue } from '../../state';
+import { useStore } from '../../state';
 
 const CPatientCard = ({...props}) => {
 
   const [patient, setPatient] = useState(undefined);
 
-  const { patients, selectPatient, getPatients } = useStateValue();
+  const { patients, selectPatient, getPatients } = useStore();
 
   useEffect(() => {
     getPatients();

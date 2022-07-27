@@ -1,9 +1,10 @@
+import classNames from "classnames";
 import { render } from "preact";
 
-function Loader() {
+function Loader({ color = "white", size = 5 }) {
   return (
     <svg
-      className="tw-animate-spin tw--ml-1 tw-mr-3 tw-h-5 tw-w-5 tw-text-white tw-inline-block"
+      className={classNames(`tw-text-${color} tw-h-${size} tw-w-${size}`, "tw-animate-spin tw--ml-1 tw-mr-3 tw-inline-block")}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"

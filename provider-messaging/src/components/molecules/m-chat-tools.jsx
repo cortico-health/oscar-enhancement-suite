@@ -1,13 +1,13 @@
 import { h } from 'preact';
 import { useMemo, useState } from 'preact/hooks';
-import { useStateValue } from '../../state';
+import { useStore } from '../../state';
 import AButton from '../atoms/a-button';
 import ASvg from '../atoms/a-svg';
 import MSearch from './m-search';
 
 const MChatTools = ({ setDiscussion, selectedDiscussion ,...props}) => {
 
-  const { patients, discussions } = useStateValue();
+  const { patients, discussions } = useStore();
 
 
   const patient = useMemo(() => {

@@ -6,11 +6,11 @@ import CFilesList from "../components/organisms/c-files-list";
 import CMessageList from "../components/organisms/c-message-list";
 import CPatientCard from "../components/organisms/c-patient-card";
 
-import { useStateValue } from "../state";
+import { useStore } from "../state";
 
 const PChat = () => {
   
-  const { patients, getPatients } = useStateValue();
+  const { patients, getPatients } = useStore();
 
   useEffect(() => {
     getPatients();

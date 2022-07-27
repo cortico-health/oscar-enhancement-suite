@@ -1,13 +1,13 @@
 import { h } from "preact";
 import { useRouter, route } from "preact-router";
 import { useEffect, useState } from "preact/hooks";
-import { useStateValue } from "../../state";
+import { useStore } from "../../state";
 import CProfileCard from "../organisms/c-profile-card";
 
 const MDiscussionTab = ({ discussion, ...props }) => {
   const selected = useRouter()[0].matches.id == discussion.id;
 
-  const { auth } = useStateValue();
+  const { auth } = useStore();
 
   const [showDiscussion, setShowDiscussion] = useState(undefined);
 

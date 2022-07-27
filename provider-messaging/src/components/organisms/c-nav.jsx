@@ -4,7 +4,7 @@ import ASvg from '../atoms/a-svg';
 import CPlugin from './c-plugin';
 import { Link } from 'preact-router/match';
 import MMobileNav from '../molecules/m-mobile-nav';
-import { useStateValue } from '../../state';
+import { useStore } from '../../state';
 import AButton from '../atoms/a-button';
 import { useRouter } from 'preact-router';
 
@@ -13,7 +13,7 @@ const CNav = () => {
   const route = useRouter()[0];
   console.log(route);
 
-  const { patients, logout } = useStateValue();
+  const { patients, logout } = useStore();
 
   const [ patient, setPatient ] = useState(undefined);
 

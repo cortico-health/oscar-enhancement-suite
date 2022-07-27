@@ -1,9 +1,9 @@
 import { useMemo, useState } from "preact/hooks";
 import React from "react";
-import { useStateValue } from "../../state";
+import { useStore } from "../../state";
 
 const CFilesList = () => {
-  const { discussions } = useStateValue();
+  const { discussions } = useStore();
 
   const [ filterType, setFilterType ] = useState('');
   const assets = useMemo(() => {
