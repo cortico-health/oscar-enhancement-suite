@@ -3,11 +3,11 @@ import { useEffect } from "preact/hooks";
 import CMessageList from "../components/organisms/c-message-list";
 import CPatientCard from "../components/organisms/c-patient-card";
 import CUsersList from "../components/organisms/c-users-list";
-import { useStateValue } from "../state";
+import { useStore } from "../state";
 
 const PAddToChat = () => {
 
-  const { patients, getPatients } = useStateValue();
+  const { patients, getPatients } = useStore();
 
   useEffect(() => {
     getPatients();

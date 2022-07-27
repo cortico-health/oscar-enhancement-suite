@@ -1,12 +1,12 @@
 import { useEffect, useState } from "preact/hooks";
 import React from "react";
-import { useStateValue } from "../../state";
+import { useStore } from "../../state";
 import AButton from "../atoms/a-button";
 import ASvg from "../atoms/a-svg";
 import CDiscussionList from "../organisms/c-discussion-list";
 
 const MMobileNav = ({ patient, setIsOpened }) => {
-  const { discussions } = useStateValue();
+  const { discussions } = useStore();
 
   const [ discussion, setDiscussion ] = useState(undefined);
 

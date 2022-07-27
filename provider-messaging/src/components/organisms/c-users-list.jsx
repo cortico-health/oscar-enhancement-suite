@@ -1,17 +1,17 @@
 import { h } from "preact";
 import { useEffect, useState } from "preact/hooks";
-import { useStateValue } from "../../state";
+import { useStore } from "../../state";
 import AButton from "../atoms/a-button";
+import { observer } from 'mobx-react-lite'
 
 import MSearch from "../molecules/m-search";
 import MUserTab from "../molecules/m-user-tab";
 
-const CUsersList = () => {
+const CUsersList = observer(() => {
 
-  const { getUsers, users, auth } = useStateValue();
+  const { store } = useStore();
 
   const [checked, setChecked] = useState(undefined);
-
   const [ confirm, setConfirm ] = useState(false);
 
   const searchHandler = (e) => {
@@ -26,21 +26,16 @@ const CUsersList = () => {
   const [ showUsers, setShowUsers] = useState(undefined);
 
   useEffect(() => {
-    getUsers();
-  },[]);
-
-
-  useEffect(() => {
-    if(users?.all){
-      setShowUsers(users?.all);
+    if(store.users?.all){
+      setShowUsers(store.users?.all);
 
       const res = {}
-      users?.all.forEach( user => {
+      store.users?.all.forEach( user => {
         res[user.id] = false
       })
       setChecked( res)
     }
-  }, [users])
+  }, [store.users])
 
   const handleOnChange = (e) => {
     setChecked({ ...checked,  [e.target.value]: e.target.checked  })
@@ -56,7 +51,7 @@ const CUsersList = () => {
     }
   }
 
-  if(!users.all.length || !showUsers){
+  if(!showUsers){
     return <div>loading...</div>
   }
   
@@ -70,7 +65,7 @@ const CUsersList = () => {
           <p className="text-secondary-500 text-h2 pb-4">Are you sure you want to start a new conversation with the following users?</p>
 
           {
-            users?.all.map( user => {
+            store.users?.all.map( user => {
               return checked[user.id] ? <p className="text-secondary-500 text-h2 font-bold mb-2" key={user.name}>{ user.name }</p>: null 
             })
           }
@@ -80,8 +75,6 @@ const CUsersList = () => {
         </div>
 
       </div> : null }
-
-
 
       <div className="flex mt-7 mx-5 gap-x-3.5 justify-between items-center">
         <AButton href="/chat" className="w-full" variant="button-secondary-sm"> Cancel </AButton>
@@ -106,6 +99,6 @@ const CUsersList = () => {
     }
     </div>
   );
-};
+});
 
 export default CUsersList;

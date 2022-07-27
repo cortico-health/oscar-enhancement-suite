@@ -4,6 +4,7 @@ import { Router } from "preact-router";
 // import Header from './components/organisms/header';
 
 // Code-splitting is automated for `pages` directory
+
 import PHome from "./pages/p-home";
 import PProfile from "./pages/p-profile";
 import PUi from "./pages/p-ui";
@@ -13,11 +14,14 @@ import PSelect from "./pages/p-select";
 import PAddToChat from "./pages/p-add-to-chat";
 import { useEffect, useState } from "preact/hooks";
 import CEditProfile from "./components/organisms/c-edit-profile";
-import { useStateValue } from "./state";
+import { useStore } from "./state";
 import { usersData } from "./data";
 
+
+
+
 export const App = () => {
-  const { getUser, login, auth } = useStateValue();
+  const { getUser, login, auth } = useStore();
 
 	const [ inputs, setInputs ] = useState({
 		email: usersData[0].email,

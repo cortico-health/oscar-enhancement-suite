@@ -8,4 +8,4 @@ services:
     working_dir: /code/
     command: ./command.sh
     ports:
-      - 3000:3000
+      - 3000:3500

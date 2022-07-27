@@ -1,5 +1,4 @@
 import { LOGIN, GET_USER, LOGOUT } from "../actions";
-import { usersData } from '../data';
 
 export const authReducer = (state, action) => {
   switch (action.type) {
@@ -7,7 +6,7 @@ export const authReducer = (state, action) => {
       return {
         ...state,
         // payload fetch/axios username - password, create token etc.
-        ...action.payload
+        ...action.payload,
       };
     }
     case LOGOUT: {
@@ -17,8 +16,7 @@ export const authReducer = (state, action) => {
       return {
         ...state,
         // payload - get from cookies, compare tokens etc...
-        ...action.payload
-
+        ...action.payload,
       };
     }
     default:

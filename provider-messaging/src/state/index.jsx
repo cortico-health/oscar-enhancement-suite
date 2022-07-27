@@ -3,14 +3,13 @@ import { useContext, useReducer } from 'preact/hooks';
 import { GET_DISCUSSIONS, ADD_MESSAGE, GET_PATIENTS, SELECT_DISCUSSION, SELECT_PATIENT, GET_USERS, SELECT_USER, ADD_USER, LOGIN, LOGOUT, GET_USER } from '../actions';
 import { usersData } from '../data';
 import reducers from '../reducers';
+import { useLocalObservable } from 'mobx-react-lite'
 
 // const discussionsSocket = new WebSocket(process.env.WEBSOCKET_URL);
 
+
+
 export const initialState = {
-  users: {
-    all: [],
-    selected: null
-  },
   user: {},
   patients: {
     all: [],
@@ -29,8 +28,18 @@ export const StateProvider = ({children}) => {
 
   const [ state, dispatch ]  = useReducer(reducers, initialState);
 
+  const store = useLocalObservable(() => ({
+    users: {
+      all: usersData,
+      selected: null
+    }
+  }))
+
+  
+
   const value = {
     //patients
+    store,
     patients: state.patients,
     getPatients: () => {
       dispatch({ type: GET_PATIENTS })
@@ -98,4 +107,4 @@ export const StateProvider = ({children}) => {
   )
 };
 
-export const useStateValue = () => useContext(StateContext);
+export const useStore = () => useContext(StateContext);

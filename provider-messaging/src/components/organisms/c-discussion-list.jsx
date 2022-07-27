@@ -1,6 +1,6 @@
 import { h } from "preact";
 import { useEffect, useState } from "preact/hooks";
-import { useStateValue } from "../../state";
+import { useStore } from "../../state";
 
 import MDiscussionTab from "../molecules/m-discussion-tab";
 import MSearch from "../molecules/m-search";
@@ -9,14 +9,13 @@ import CNotFound from "./c-not-found";
 const CDiscussionList = () => {
 
   const { discussions, getDiscussions, 
-    patients, getPatients, getUsers, users } = useStateValue();
+    patients, getPatients, store } = useStore();
   const [showDiscussions, setShowDiscussions] = useState(undefined);
 
   const [ name, setName] = useState('');
 
   useEffect(() => {
     getPatients();
-    getUsers();
   },[])
 
   useEffect(() => {
@@ -31,7 +30,7 @@ const CDiscussionList = () => {
     }
   },[discussions]);
 
-  if(!discussions.all.length || !showDiscussions || !users.all.length){
+  if(!discussions.all.length || !showDiscussions || !store.users.all.length){
     return <div>loading...</div>
   }
 
@@ -52,7 +51,7 @@ const CDiscussionList = () => {
       showDiscussions.map((discussionListed) => {
         return (
           <MDiscussionTab
-            users={users}
+            users={store.users}
             discussion={discussionListed}
           />
         );
