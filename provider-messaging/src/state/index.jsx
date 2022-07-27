@@ -1,6 +1,6 @@
 import { createContext } from 'preact';
-import { useContext, useReducer } from 'preact/hooks';
-import { GET_DISCUSSIONS, ADD_MESSAGE, GET_PATIENTS, SELECT_DISCUSSION, SELECT_PATIENT, GET_USERS, SELECT_USER, ADD_USER, LOGIN, LOGOUT, GET_USER } from '../actions';
+import { useContext, useEffect, useReducer } from 'preact/hooks';
+import { GET_DISCUSSIONS, ADD_MESSAGE, GET_PATIENTS, SELECT_DISCUSSION, SELECT_PATIENT, LOGIN, LOGOUT, GET_USER } from '../actions';
 import { usersData } from '../data';
 import reducers from '../reducers';
 import { useLocalObservable } from 'mobx-react-lite'
@@ -30,11 +30,14 @@ export const StateProvider = ({children}) => {
 
   const store = useLocalObservable(() => ({
     users: {
-      all: usersData
+      all: []
     }
   }))
 
-  
+  useEffect(() => {
+    // TODO: Fetch here.
+    store.users.all = usersData
+  }, [])
 
   const value = {
     // This is the MobX store. TODO: move any other global state here too, it's easier.
