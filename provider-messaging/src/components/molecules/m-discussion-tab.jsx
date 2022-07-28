@@ -29,7 +29,7 @@ const MDiscussionTab = ({ discussion, ...props }) => {
       className={`flex flex-column items-center px-2.5 block my-8 ${selected ? "h-24 rounded-lg bg-primary-500" : ""}`}
     >
       <div
-        className={`flex relative ${selected ? "" : "items-center"
+        className={`flex relative overflow-hidden text-ellipsis ${selected ? "" : "items-center"
           } justify-between`}
       >
         {/* TODO: Will uncomment this if its dependency will be okay */}
@@ -103,14 +103,10 @@ const MDiscussionTab = ({ discussion, ...props }) => {
             );
           })}
           <p
-            className={`text-contact3 lg:text-contact2 mt-2  ${selected ? "text-white" : "text-secondary-500"
+            className={`text-contact3 relative lg:text-contact2 mt-2 text-ellipsis overflow-hidden ${selected ? "text-white" : "text-secondary-500"
               }`}
           >
-            <div></div>
-            <span
-              className="truncate"
-              style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
-            >
+            <span className="truncate">
               {discussion?.last_message.from_user.full_name}: {discussion?.last_message?.body}
             </span>
           </p>
