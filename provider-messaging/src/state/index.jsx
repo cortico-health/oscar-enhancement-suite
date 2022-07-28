@@ -34,26 +34,45 @@ export const StateProvider = observer(({ children }) => {
     users: {
       all: []
     },
+    user: null,
+    accessToken: localStorage["vcnAccessToken"] || null,
     auth: localStorage["user"] || {},
     login(email, password) {
-      console.log(email, password)
-      localStorage.setItem('user',
-        JSON.stringify({
-          email: email,
-          password: password
+      console.log(this.accessToken)
+      axios.post('http://localhost:8426/api/token/', {
+        username: email,
+        password: password
+      })
+        .then((response) => {
+          this.accessToken = response.data.access;
+          localStorage.setItem('vcnAccessToken', this.accessToken)
         })
-      )
-      const user = JSON.parse(localStorage.getItem('user'));
-      if (user) {
-        this.auth = usersData.find(users => users.email == user.email)
-      }
-      else { this.auth = null }
+        .catch((error) => {
+          console.log(error);
+        });
     },
     logout() {
-      localStorage.clear();
-      this.auth = {};
-    },
+      this.user = null;
+      this.accessToken = null;
+    }
   }))
+
+  useEffect(() => {
+    if (!store.accessToken) return;
+
+    axios.get('http://localhost:8426/api/vcn/user/', {
+      headers: {
+        'Authorization': `Bearer ${store.accessToken}`
+      }
+    })
+      .then((response) => {
+        store.user = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [store.accessToken])
+
   /* TODO: will convert everything t Mobx, but not yet priority. */
   /* const authStore = useLocalObservable(() => ({
     auth: localStorage["user"] ? JSON.parse(localStorage["user"]) : {},
@@ -76,11 +95,6 @@ export const StateProvider = observer(({ children }) => {
       localStorage.clear();
     },
   })) */
-
-  useEffect(() => {
-    // TODO: Fetch here.
-    store.users.all = usersData
-  }, [])
 
   const value = {
     // This is the MobX store. TODO: move any other global state here too, it's easier.

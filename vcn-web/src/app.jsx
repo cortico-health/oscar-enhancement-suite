@@ -23,7 +23,7 @@ export function App() {
       <CNav />
       <main className="min-h-screen bg-secondary-10 lg:ml-20 ml-0">
         <Router>
-          <PTestChat path="/"/>
+          <PTestChat path="/" />
           <PChat path="/chat" />
           <PChat path="/chat/:id" />
         </Router>

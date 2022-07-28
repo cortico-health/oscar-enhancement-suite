@@ -23,17 +23,15 @@ const MDiscussionTab = ({ discussion, ...props }) => {
 
   return (
     <div
-      onClick={() => route('/chat/'+discussion?.id)}
-      href={'/chat/'+discussion?.id}
+      onClick={() => route('/chat/' + discussion?.id)}
+      href={'/chat/' + discussion?.id}
       {...props}
-      className={`px-2.5 block ${
-        selected ? "h-24 rounded-lg pt-4 bg-primary-500" : "h-12 my-8"
-      }`}
+      className={`px-2.5 block ${selected ? "h-24 rounded-lg pt-4 bg-primary-500" : "h-12 my-8"
+        }`}
     >
       <div
-        className={`flex relative ${
-          selected ? "" : "items-center"
-        } w-12.5 max-w-12.5 justify-between`}
+        className={`flex relative ${selected ? "" : "items-center"
+          } w-12.5 max-w-12.5 justify-between`}
       >
         {/* TODO: Will uncomment this if its dependency will be okay */}
         {/* {showDiscussion?.members.length > 1 ? (
@@ -87,7 +85,7 @@ const MDiscussionTab = ({ discussion, ...props }) => {
         </div>
         <div className="max-w-100 hover:cursor-pointer">
           {showDiscussion?.members.map((member, index) => {
-            if(index > 1) return;
+            if (index > 1) return;
             return (
               <div key={member.id}>
                 {/* <CProfileCard 
@@ -95,11 +93,10 @@ const MDiscussionTab = ({ discussion, ...props }) => {
                   opened={openModal} 
                   profile={participiant}/> */}
                 <p
-                  className={`whitespace-nowrap font-medium text-contact2 lg:text-contact1 cursor-pointer ${
-                    selected ? "text-white" : "text-secondary-500"
-                  }`}
+                  className={`whitespace-nowrap font-medium text-contact2 lg:text-contact1 cursor-pointer ${selected ? "text-white" : "text-secondary-500"
+                    }`}
                 >
-                  {member.email +
+                  {member.full_name +
                     (index != showDiscussion.members.length - 1
                       ? ", "
                       : "")}
@@ -108,12 +105,16 @@ const MDiscussionTab = ({ discussion, ...props }) => {
             );
           })}
           <p
-            className={`text-contact3 lg:text-contact2 mt-2  ${
-              selected ? "text-white" : "text-secondary-500"
-            }`}
+            className={`text-contact3 lg:text-contact2 mt-2  ${selected ? "text-white" : "text-secondary-500"
+              }`}
           >
-            <span>{discussion?.last_message?.from_user.email.split("@")[0]}: </span> 
-            <span className="truncate" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{discussion?.last_message?.body}</span>
+            <div></div>
+            <span
+              className="truncate"
+              style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+            >
+              {discussion?.last_message.from_user.full_name}: {discussion?.last_message?.body}
+            </span>
           </p>
         </div>
       </div>

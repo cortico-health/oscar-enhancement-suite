@@ -22,7 +22,7 @@ import { observable } from "mobx";
 import { observer } from "mobx-react-lite";
 
 export const App = observer(() => {
-  const { getUser, login, auth, store } = useStore();
+  const { getUser, store } = useStore();
 
   const [inputs, setInputs] = useState({
     email: usersData[0].email,
@@ -56,16 +56,12 @@ export const App = observer(() => {
 
   const [editProfile, setEditProfile] = useState(false);
 
-  if (!store.auth) {
-    return <div>loading...</div>
-  }
-
   return (
     <div id="app">
 
-      {store.auth && Object.keys(store.auth).length !== 0 ? (
+      {store.user && Object.keys(store.user).length !== 0 ? (
         <>
-          {/* <CEditProfile profile={store.auth.profile} opened={editProfile} setOpenModal={setEditProfile} /> */}
+          <CEditProfile profile={store.user.profile} opened={editProfile} setOpenModal={setEditProfile} />
           <CNav />
           <main className="min-h-screen bg-secondary-10 lg:ml-20 ml-0">
             <Router>

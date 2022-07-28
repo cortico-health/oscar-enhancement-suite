@@ -8,23 +8,30 @@ import { useStore } from "../../state";
 import MDiscussionTab from "../molecules/m-discussion-tab";
 import MSearch from "../molecules/m-search";
 import CNotFound from "./c-not-found";
+import axios from 'axios';
 
 const CDiscussionList = () => {
-  
+  const { store } = useStore();
+
   /* To be checked ion what causes this infinite loop*/
   //const {data, isError, isLoading} = getQueryConversation();
-  const [data,setData] = useState({});
+  const [data, setData] = useState({});
 
   useEffect(() => {
     setData(conversations);
 
-    //Fetch Here - You can delete the set above if it works
-    /* fetch("http://localhost:8426/api/vcn/conversations").then((result) => result.json).then((data) =>{
-      setData("data na gusto nimu i change")
-    }) */
-  },[data])
-
-  console.log(data)
+    axios.get('http://localhost:8426/api/vcn/conversations/', {
+      headers: {
+        'Authorization': `Bearer ${store.accessToken}`
+      }
+    })
+      .then((response) => {
+        setData(response.data.results)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [])
 
   const searchHandler = (e) => {
     console.log(e.target.value + "is being searched...")
@@ -38,11 +45,11 @@ const CDiscussionList = () => {
     <div className="mx-2.5">
       <MSearch onInput={searchHandler} />
       {
-        data?.results && data?.results.length ? (
+        data && data?.length ? (
           <>
-            {data?.results.map(discussion => {
+            {data?.map(discussion => {
               return (
-                <MDiscussionTab discussion={discussion}/>
+                <MDiscussionTab discussion={discussion} />
               )
             })}
           </>

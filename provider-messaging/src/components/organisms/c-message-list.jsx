@@ -6,8 +6,10 @@ import { useStore } from "../../state";
 import MChatTools from "../molecules/m-chat-tools";
 import MMessageCard from "../molecules/m-message-card";
 import MSend from "../molecules/m-send";
+import axios from 'axios';
 
 const CMessageList = () => {
+  const { store } = useStore();
   const router = useRouter()[0];
   /* const chatSocket = new WebSocket('ws://localhost:8426/chat/1/'); */
 
@@ -25,11 +27,22 @@ const CMessageList = () => {
   };
 
   useEffect(() => {
+    axios.get(`http://localhost:8426/api/vcn/chat-messages/${router.matches.id}/`, {
+      headers: {
+        'Authorization': `Bearer ${store.accessToken}`
+      }
+    })
+      .then((response) => {
+        console.log(response.data.results)
+        setDiscussion(response.data.results)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, [router.matches?.id]);
 
   //const {data, isError, isLoading} = getQueryConversation();
   useEffect(() => {
-    setDiscussion(chatMessage);
     //Fetch Here - You can delete the set above if it works
     /* fetch("http://localhost:8426/api/vcn/conversations").then((result) => result.json).then((data) =>{
       setDiscussion("data na gusto nimu i change")
@@ -117,7 +130,7 @@ const CMessageList = () => {
           setDiscussion={setDiscussion}
           selectedDiscussion={discussion}
         />
-        {discussion?.results?.map((message) => {
+        {discussion?.map((message) => {
           return <MMessageCard messageDetails={message} />;
         })}
       </div>
