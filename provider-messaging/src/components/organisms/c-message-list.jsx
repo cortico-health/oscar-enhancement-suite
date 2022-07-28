@@ -72,7 +72,7 @@ const CMessageList = () => {
   }, [router.matches?.id]);
 
   useEffect(() => {
-    messagesEndRef?.current?.scrollIntoView({ behavior: 'smooth' })
+    messagesEndRef?.current?.scrollIntoView()
   }, [discussion]);
 
   // These are code from before the VCN updates. They will be used in the future
