@@ -26,6 +26,7 @@
     "preact-router": "^4.0.1",
     "preactement": "^1.8.2",
     "react-query": "^4.0.0",
+    "react-use-websocket": "3.0.0",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.3.6"
   },
