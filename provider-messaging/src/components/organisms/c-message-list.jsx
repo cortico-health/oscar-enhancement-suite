@@ -100,7 +100,7 @@ const CMessageList = () => {
         setDiscussion={setDiscussion}
         selectedDiscussion={discussion}
       />
-      <div class="flex-grow overflow-y-auto px-9 lg:px-12">
+      <div className="flex-grow overflow-y-auto px-9 lg:px-12">
         {discussion?.map((message) => {
           return <MMessageCard messageDetails={message} />;
         })}
