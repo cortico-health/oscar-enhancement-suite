@@ -7,62 +7,30 @@ import MChatTools from "../molecules/m-chat-tools";
 import MMessageCard from "../molecules/m-message-card";
 import MSend from "../molecules/m-send";
 import axios from 'axios';
+import useWebSocket from "react-use-websocket";
 
 const CMessageList = () => {
   const { store } = useStore();
   const router = useRouter()[0];
+  const sendRef = useRef(null);
 
   const [discussion, setDiscussion] = useState(undefined);
-  const [selectedDiscussion, setSelectedDiscussion] = useState(undefined);
-  const [chatSocket, setChatSocket] = useState(undefined);
-
-  const { addNewMessage, discussions, selectDiscussion, auth } =
-    useStore();
-
-  const isValidURL = (string) => {
-    var res = string.match(
-      /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
-    );
-    return res;
-  };
-
-  useEffect(() => {
-    axios.get(`http://localhost:8426/api/vcn/chat-messages/${router.matches.id}/`, {
-      headers: {
-        'Authorization': `Bearer ${store.accessToken}`
-      }
-    })
-      .then((response) => {
-        setChatSocket(new WebSocket(`ws://localhost:8426/chat/${router.matches.id}/?token=${store.accessToken}`))
-        setDiscussion(response.data.results)
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [router.matches?.id]);
-
-  useEffect(() => {
-    if (chatSocket) {
-      chatSocket.onmessage = (e) => {
-        const data = JSON.parse(e.data);
-        const newMessage = JSON.parse(data.text);
-        setDiscussion([...discussion, newMessage])
-      }
-    }
-  }, [chatSocket])
-
-  const sendMessage = (e) => {
-    const messageEl = document.getElementById('chatMessage')
-    const message = messageEl.value
-
-    messageEl.value = ''
-  }
-
+  const [socketUrl, setSocketUrl] = useState(null);
   const [attachements, setAttachements] = useState([]);
-
   const [previews, setPreviews] = useState([]);
 
-  const sendRef = useRef(null);
+  const { getWebSocket } = useWebSocket(socketUrl, {
+    onOpen: () => console.log('WebSocket connection opened.'),
+    onClose: () => console.log('WebSocket connection closed.'),
+    shouldReconnect: (closeEvent) => true,
+    onMessage: (event) => processMessage(event)
+  });
+
+  const processMessage = (e) => {
+    const data = JSON.parse(e.data);
+    const newMessage = JSON.parse(data.text);
+    setDiscussion([...discussion, newMessage])
+  }
 
   const handlers = {
     onUpload: (e) => {
@@ -76,7 +44,7 @@ const CMessageList = () => {
     onSend: () => {
       const value = sendRef?.current?.base?.lastElementChild?.value;
       if (value) {
-        chatSocket.send(JSON.stringify({
+        getWebSocket().send(JSON.stringify({
           'body': value,
         }));
         sendRef.current.base.lastElementChild.value = "";
@@ -84,6 +52,33 @@ const CMessageList = () => {
       }
     },
   };
+
+  useEffect(() => {
+    if (router.matches.id) {
+      axios.get(`http://localhost:8426/api/vcn/chat-messages/${router.matches.id}/`, {
+        headers: {
+          'Authorization': `Bearer ${store.accessToken}`
+        }
+      })
+        .then((response) => {
+          setSocketUrl(`ws://localhost:8426/chat/${router.matches.id}/?token=${store.accessToken}`)
+          setDiscussion(response.data.results)
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [router.matches?.id]);
+
+  // These are code from before the VCN updates. They will be used in the future
+  // const [selectedDiscussion, setSelectedDiscussion] = useState(undefined);
+  // const { addNewMessage, discussions, selectDiscussion, auth } = useStore();
+  // const isValidURL = (string) => {
+  //   var res = string.match(
+  //     /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
+  //   );
+  //   return res;
+  // };
 
   if (!discussion) {
     return (
