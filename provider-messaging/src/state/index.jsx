@@ -76,33 +76,19 @@ export const StateProvider = ({ children }) => {
     },
     auth: state.auth,
     login: (email, password) => {
-      dispatch({ type: LOGIN })
-      axios.post('http://localhost:8426/api/token/', {
-        username: email,
-        password: password
-      })
-        .then(function (response) {
-          // TODO - Save token
-          axios.get('http://localhost:8426/api/vcn/user/', {
-            headers: {
-              authorization: `Bearer ${response.data.access}`
-            }
-          })
-            .then(function (response) {
-              console.log('success');
-              dispatch({ type: LOGIN, payload: response.data })
-            })
-            .catch(function (error) {
-              console.log(error);
-              // TODO - Handle login error
-              dispatch({ type: LOGIN })
-            });
+      localStorage.setItem('user',
+        JSON.stringify({
+          email: email,
+          password: password
         })
-        .catch(function (error) {
-          console.log(error);
-          // TODO - Handle login error
-          dispatch({ type: LOGIN })
-        });
+      )
+      let auth;
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user) {
+        auth = usersData.find(users => users.email == user.email)
+      }
+      else { auth = null }
+      dispatch({ type: LOGIN, payload: auth })
     },
     logout: () => {
       localStorage.clear();

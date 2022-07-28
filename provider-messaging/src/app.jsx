@@ -15,7 +15,7 @@ import PAddToChat from "./pages/p-add-to-chat";
 import { useEffect, useState } from "preact/hooks";
 import CEditProfile from "./components/organisms/c-edit-profile";
 import { useStore } from "./state";
-
+import { usersData } from "./data";
 
 
 
@@ -23,8 +23,8 @@ export const App = () => {
   const { getUser, login, auth } = useStore();
 
   const [inputs, setInputs] = useState({
-    email: import.meta.env.VITE_TEST_EMAIL || '',
-    password: import.meta.env.VITE_TEST_PASSWORD || ''
+    email: usersData[0].email,
+    password: ''
   })
 
   addEventListener(
