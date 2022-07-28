@@ -11,10 +11,10 @@ import axios from 'axios';
 const CMessageList = () => {
   const { store } = useStore();
   const router = useRouter()[0];
-  /* const chatSocket = new WebSocket('ws://localhost:8426/chat/1/'); */
 
   const [discussion, setDiscussion] = useState(undefined);
   const [selectedDiscussion, setSelectedDiscussion] = useState(undefined);
+  const [chatSocket, setChatSocket] = useState(undefined);
 
   const { addNewMessage, discussions, selectDiscussion, auth } =
     useStore();
@@ -33,7 +33,7 @@ const CMessageList = () => {
       }
     })
       .then((response) => {
-        console.log(response.data.results)
+        setChatSocket(new WebSocket(`ws://localhost:8426/chat/${router.matches.id}/?token=${store.accessToken}`))
         setDiscussion(response.data.results)
       })
       .catch((error) => {
@@ -41,41 +41,22 @@ const CMessageList = () => {
       });
   }, [router.matches?.id]);
 
-  //const {data, isError, isLoading} = getQueryConversation();
   useEffect(() => {
-    //Fetch Here - You can delete the set above if it works
-    /* fetch("http://localhost:8426/api/vcn/conversations").then((result) => result.json).then((data) =>{
-      setDiscussion("data na gusto nimu i change")
-    }) */
-  }, [discussion])
-
-  /* useEffect(() => {
-    if (router.matches?.id && discussions?.all.length) {
-      setDiscussion(
-        discussions?.all.find((disc) => disc.id == router.matches?.id)
-      );
+    if (chatSocket) {
+      chatSocket.onmessage = (e) => {
+        const data = JSON.parse(e.data);
+        const newMessage = JSON.parse(data.text);
+        setDiscussion([...discussion, newMessage])
+      }
     }
-    if(!router.matches?.id) {
-      setDiscussion(undefined);
-    }
-  }, [discussions, router]); */
+  }, [chatSocket])
 
-
-  /* TODO: Will unomment this if I can get the data from websocket */
-  /* const sendMessage = (e) => {
+  const sendMessage = (e) => {
     const messageEl = document.getElementById('chatMessage')
     const message = messageEl.value
-    chatSocket.send(JSON.stringify({
-        'body': message,
-    }));
+
     messageEl.value = ''
   }
-
-  chatSocket.onmessage = (e) => {
-    const data = JSON.parse(e.data);
-    const newMessage = JSON.parse(data.text);
-    document.getElementById('messages').innerHTML += newMessage.body
-  } */
 
   const [attachements, setAttachements] = useState([]);
 
@@ -95,19 +76,9 @@ const CMessageList = () => {
     onSend: () => {
       const value = sendRef?.current?.base?.lastElementChild?.value;
       if (value) {
-        const links = isValidURL(value);
-        addNewMessage({
-          author: auth,
-          content: value,
-          date: new Date(),
-          assets: [
-            // {
-            //   type: "jpg",
-            //   src: "https://images.unsplash.com/photo-1527613426441-4da17471b66d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=852&q=80",
-            // },
-          ],
-          links: links ? links : [],
-        });
+        chatSocket.send(JSON.stringify({
+          'body': value,
+        }));
         sendRef.current.base.lastElementChild.value = "";
         window.scrollTo(0, document.body.scrollHeight);
       }

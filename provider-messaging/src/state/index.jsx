@@ -38,7 +38,6 @@ export const StateProvider = observer(({ children }) => {
     accessToken: localStorage["vcnAccessToken"] || null,
     auth: localStorage["user"] || {},
     login(email, password) {
-      console.log(this.accessToken)
       axios.post('http://localhost:8426/api/token/', {
         username: email,
         password: password
@@ -54,6 +53,7 @@ export const StateProvider = observer(({ children }) => {
     logout() {
       this.user = null;
       this.accessToken = null;
+      localStorage.setItem('vcnAccessToken', null)
     }
   }))
 

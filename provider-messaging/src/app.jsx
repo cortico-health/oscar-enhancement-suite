@@ -61,7 +61,7 @@ export const App = observer(() => {
 
       {store.user && Object.keys(store.user).length !== 0 ? (
         <>
-          <CEditProfile profile={store.user.profile} opened={editProfile} setOpenModal={setEditProfile} />
+          {/* <CEditProfile profile={store.user.profile} opened={editProfile} setOpenModal={setEditProfile} /> */}
           <CNav />
           <main className="min-h-screen bg-secondary-10 lg:ml-20 ml-0">
             <Router>
