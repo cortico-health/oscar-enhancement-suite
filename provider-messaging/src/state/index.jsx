@@ -4,7 +4,8 @@ import { GET_DISCUSSIONS, ADD_MESSAGE, GET_PATIENTS, SELECT_DISCUSSION, SELECT_P
 import { usersData } from '../data';
 import reducers from '../reducers';
 import axios from 'axios';
-import { useLocalObservable } from 'mobx-react-lite'
+import { observer, useLocalObservable } from 'mobx-react-lite'
+import { action } from 'mobx';
 
 // const discussionsSocket = new WebSocket(process.env.WEBSOCKET_URL);
 
@@ -25,15 +26,56 @@ export const initialState = {
 
 const StateContext = createContext();
 
-export const StateProvider = ({ children }) => {
+export const StateProvider = observer(({ children }) => {
 
   const [state, dispatch] = useReducer(reducers, initialState);
 
   const store = useLocalObservable(() => ({
     users: {
       all: []
-    }
+    },
+    auth: localStorage["user"] || {},
+    login(email, password) {
+      console.log(email, password)
+      localStorage.setItem('user',
+        JSON.stringify({
+          email: email,
+          password: password
+        })
+      )
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user) {
+        this.auth = usersData.find(users => users.email == user.email)
+      }
+      else { this.auth = null }
+    },
+    logout() {
+      localStorage.clear();
+      this.auth = {};
+    },
   }))
+  /* TODO: will convert everything t Mobx, but not yet priority. */
+  /* const authStore = useLocalObservable(() => ({
+    auth: localStorage["user"] ? JSON.parse(localStorage["user"]) : {},
+    login: (email, password) => {
+      console.log(email, password)
+      localStorage.setItem('user',
+        JSON.stringify({
+          email: email,
+          password: password
+        })
+      )
+      let auth;
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user) {
+        auth = usersData.find(users => users.email == user.email)
+      }
+      else { auth = null }
+    },
+    logout: () => {
+      localStorage.clear();
+    },
+  })) */
 
   useEffect(() => {
     // TODO: Fetch here.
@@ -74,7 +116,7 @@ export const StateProvider = ({ children }) => {
     addUser: (newUser) => {
       dispatch({ type: ADD_USER, payload: newUser })
     },
-    auth: state.auth,
+    /* auth: JSON.parse(localStorage["user"]), */
     login: (email, password) => {
       localStorage.setItem('user',
         JSON.stringify({
@@ -110,6 +152,6 @@ export const StateProvider = ({ children }) => {
       {children}
     </StateContext.Provider>
   )
-};
+});
 
 export const useStore = () => useContext(StateContext);

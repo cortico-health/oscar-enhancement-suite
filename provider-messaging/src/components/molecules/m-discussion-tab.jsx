@@ -14,22 +14,20 @@ const MDiscussionTab = ({ discussion, ...props }) => {
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
-    let participiants = discussion.participiants.filter(
-      (participiant) => participiant.id !== auth.id
-    );
-    setShowDiscussion({ ...discussion, participiants: participiants });
+    setShowDiscussion(discussion);
   }, [discussion]);
 
   if (!showDiscussion) {
     return <div>loading...</div>;
   }
+
   return (
     <div
       onClick={() => route('/chat/'+discussion?.id)}
       href={'/chat/'+discussion?.id}
       {...props}
       className={`px-2.5 block ${
-        selected ? "h-24 rounded-lg pt-4 bg-primary-500" : "h-12 my-5"
+        selected ? "h-24 rounded-lg pt-4 bg-primary-500" : "h-12 my-8"
       }`}
     >
       <div
@@ -37,14 +35,15 @@ const MDiscussionTab = ({ discussion, ...props }) => {
           selected ? "" : "items-center"
         } w-12.5 max-w-12.5 justify-between`}
       >
-        {showDiscussion?.participiants.length > 1 ? (
+        {/* TODO: Will uncomment this if its dependency will be okay */}
+        {/* {showDiscussion?.members.length > 1 ? (
           <div className="cursor-pointer" onClick={() => setOpenModal(true)}>
             <div className="o-aspect-ratio w-8 min-w-8 h-8 min-h-8">
               <img
                 className="left-0 o-aspect-ratio__content object-cover rounded-full"
                 src={
-                  showDiscussion?.participiants[
-                    showDiscussion?.participiants.length - 1
+                  showDiscussion?.members[
+                    showDiscussion?.members.length - 1
                   ].avatar
                 }
                 alt=""
@@ -55,8 +54,8 @@ const MDiscussionTab = ({ discussion, ...props }) => {
               <img
                 className="-left-4 o-aspect-ratio__content object-cover rounded-full"
                 src={
-                  showDiscussion?.participiants[
-                    showDiscussion?.participiants.length - 2
+                  showDiscussion?.members[
+                    showDiscussion?.members.length - 2
                   ].avatar
                 }
                 alt=""
@@ -70,27 +69,38 @@ const MDiscussionTab = ({ discussion, ...props }) => {
           >
             <img
               className="o-aspect-ratio__content object-cover rounded-full"
-              src={showDiscussion?.participiants[0].avatar}
+              src={showDiscussion?.members[0].avatar}
               alt=""
             />
           </div>
-        )}
-        <div className="max-w-40">
-          {showDiscussion?.participiants.map((participiant, index) => {
+        )} */}
+        <div
+          onClick={() => setOpenModal(true)}
+          className="o-aspect-ratio cursor-pointer w-11 min-w-11 lg:w-12.5 lg:min-w-12.5 mr-4"
+        >
+          {/* TODO: will change this if I have a photo data from API */}
+          <img
+            className="o-aspect-ratio__content object-cover rounded-full"
+            src="https://images.unsplash.com/photo-1611695434398-4f4b330623e6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80"
+            alt=""
+          />
+        </div>
+        <div className="max-w-100 hover:cursor-pointer">
+          {showDiscussion?.members.map((member, index) => {
+            if(index > 1) return;
             return (
-              <div key={participiant.id}>
-                <CProfileCard 
+              <div key={member.id}>
+                {/* <CProfileCard 
                   setOpenModal={setOpenModal}
                   opened={openModal} 
-                  profile={participiant}/>
+                  profile={participiant}/> */}
                 <p
-                  onClick={() => setOpenModal(true)}
                   className={`whitespace-nowrap font-medium text-contact2 lg:text-contact1 cursor-pointer ${
                     selected ? "text-white" : "text-secondary-500"
                   }`}
                 >
-                  {participiant.name +
-                    (index != showDiscussion.participiants.length - 1
+                  {member.email +
+                    (index != showDiscussion.members.length - 1
                       ? ", "
                       : "")}
                 </p>
@@ -98,12 +108,12 @@ const MDiscussionTab = ({ discussion, ...props }) => {
             );
           })}
           <p
-            className={`text-contact3 lg:text-contact2 truncate mt-1.5  ${
+            className={`text-contact3 lg:text-contact2 mt-2  ${
               selected ? "text-white" : "text-secondary-500"
             }`}
           >
-            {" "}
-            {discussion.messages[discussion.messages.length - 1].content}
+            <span>{discussion?.last_message?.from_user.email.split("@")[0]}: </span> 
+            <span className="truncate" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{discussion?.last_message?.body}</span>
           </p>
         </div>
       </div>

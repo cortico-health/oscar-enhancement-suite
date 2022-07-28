@@ -7,13 +7,14 @@ import MMobileNav from '../molecules/m-mobile-nav';
 import { useStore } from '../../state';
 import AButton from '../atoms/a-button';
 import { useRouter } from 'preact-router';
+import { observer } from 'mobx-react-lite';
 
 const CNav = () => {
 
   const route = useRouter()[0];
   console.log(route);
 
-  const { patients, logout } = useStore();
+  const { patients, store } = useStore();
 
   const [ patient, setPatient ] = useState(undefined);
 
@@ -43,7 +44,7 @@ const CNav = () => {
 
       <div className='flex flex-col'>
         <div className="mx-auto p-3 rounded-full"><ASvg src="info"/></div>
-        <div role="button" onClick={() => logout()} className="mx-auto p-3 cursor-pointer rounded-full"> <ASvg src="log-out"/></div>
+        <div role="button" onClick={() => store.logout()} className="mx-auto p-3 cursor-pointer rounded-full"> <ASvg src="log-out"/></div>
         <CPlugin className="lg:flex hidden ml-4" />
       </div>
     </nav>
@@ -83,4 +84,4 @@ const CNav = () => {
   )
 }
 
-export default CNav
+export default observer(CNav);

@@ -12,19 +12,19 @@ const formatURL = (string) => {
 const MMessageCard = ({ messageDetails }) => {
 
   const message = () => ({
-    __html: DOMPurify.sanitize(formatURL(messageDetails.content))
+    __html: DOMPurify.sanitize(formatURL(messageDetails.body))
   });
 
-  const { auth } = useStore();
+  const { store } = useStore();
 
   
   const textRef = useRef(null);
   return (
-    messageDetails.author.name===auth.name ?
+    messageDetails.from_user.email === store.auth.email ?
       <div className='w-1/2 ml-auto my-14 rounded-2xl relative'>
 
           {
-            messageDetails.assets.map( asset => {
+            messageDetails?.assets && messageDetails?.assets.map( asset => {
               if(asset.type="jpg"){
                 return <div className='flex justify-end'>
                     <img className='rounded-3xl object-cover' src={asset.src}/>
@@ -40,20 +40,22 @@ const MMessageCard = ({ messageDetails }) => {
             
             }} className="cursor-pointer min-w-max w-7 h-7" src="download"/>
         </div>
-        <p className='absolute -top-8 right-0 text-secondary-200 text-title6'>{messageDetails.date.toLocaleTimeString('en-us', 
+        <p className='absolute -top-8 right-0 text-secondary-200 text-title6'>{(new Date()).toLocaleTimeString('en-us', 
             { hour: 'numeric', minute: '2-digit' })}</p>
         </div>:
 
 
       <div className='my-14 w-1/2 relative ml-24'>
         <div>
-          <img className='rounded-full absolute -left-16 -top-8 w-12 h-12 object-cover' src={messageDetails.author.avatar}/>
-          <p className='text-secondary-500 text-h2 absolute left-0 -top-7 font-medium'>{messageDetails.author.name}</p>
-          <p className='text-secondary-200 text-title6 absolute right-9 -top-8'>{messageDetails.date.toLocaleTimeString('en-us', 
+          {/* TODO: will place a avatar on here if there are any in api */}
+          <img className='rounded-full absolute -left-16 -top-8 w-12 h-12 object-cover' src="https://images.unsplash.com/photo-1611695434398-4f4b330623e6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80"/>
+          <p className='text-secondary-500 text-h2 absolute left-0 -top-7 font-medium'>{messageDetails.from_user.email}</p>
+          {/* TODO: will do if date field is available in api */}
+          <p className='text-secondary-200 text-title6 absolute right-9 -top-8'>{(new Date()).toLocaleTimeString('en-us', 
             { hour: 'numeric', minute: '2-digit' })}</p>
 
           {
-            messageDetails.assets.map( asset => {
+            messageDetails?.assets && messageDetails.assets.map( asset => {
               if(asset.type="jpg"){
                 return <img className='rounded-3xl max-w-xs' src={asset.src}/>
               }

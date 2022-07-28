@@ -1,4 +1,5 @@
 import { render } from "preact";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { App } from "./app";
 import "./assets/css/index.css";
 import { StateProvider } from "./state";
@@ -8,9 +9,13 @@ import { StateProvider } from "./state";
 //   <definition.default/>
 // });
 
+const queryClient = new QueryClient()
+
 render(
-  <StateProvider>
-    <App />
-  </StateProvider>,
+  <QueryClientProvider client={ queryClient }>
+    <StateProvider>
+      <App />
+    </StateProvider>
+  </QueryClientProvider>,
   document.getElementById("app")
 );

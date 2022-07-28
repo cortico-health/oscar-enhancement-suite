@@ -9,19 +9,19 @@ const MChatTools = ({ setDiscussion, selectedDiscussion ,...props}) => {
 
   const { patients, discussions } = useStore();
 
-
-  const patient = useMemo(() => {
+  /* TODO: to be edited since patient is not prioritize now. */
+  /* const patient = useMemo(() => {
     if(!patients.selected){
       return patients?.all.find( pat => pat.id == discussions?.all.find(disc => disc?.id== discussions?.selected).patientId)
     }
     return null
-  },[patients]);
+  },[patients]); */
   
-  const searchHandler = (e) => {
+  /* const searchHandler = (e) => {
     const discussion =  discussions?.all.find(disc => disc?.id== discussions?.selected)
     let filteredData = discussion.messages.filter( message => message.content.toLowerCase().includes(e.target.value.toLowerCase()) || message.author.name.includes(e.target.value.toLowerCase()) )
     setDiscussion({...discussion, messages: filteredData} )
-  }
+  } */
 
   const numberOfAssets = discussions?.selected ? discussions?.all.find(disc => disc?.id== discussions?.selected)?.messages?.reduce((acc, current) => {
     acc[0]+=current?.assets?.length
@@ -34,18 +34,18 @@ const MChatTools = ({ setDiscussion, selectedDiscussion ,...props}) => {
       <div className='flex gap-x-2.5 items-center'>
         <div className='w-fit'>
           <h1 className='text-secondary-500 font-bold text-title3'>
-          {
-            selectedDiscussion.participiants?.map(( (user,index) => {
-              return user.name + (index!=selectedDiscussion.participiants.length-1 ? ', ': '')
+          {/* {
+            selectedDiscussion.members.map(( (user,index) => {
+              return user.email + (index != selectedDiscussion.members.length-1 ? ', ': '')
             }))
-          }
+          } */}
           </h1>
-          {
+          {/* {
             patient==null ? null :
             <p className='text-select2 text-secondary-300'> RE: {
               `${patient.firstName} ${patient.lastName}, ${patient.facility}`
             } </p>
-          }
+          } */}
         </div>
         <ASvg src="add"/>
       </div>
@@ -66,7 +66,7 @@ const MChatTools = ({ setDiscussion, selectedDiscussion ,...props}) => {
           <p className='text-secondary-500 font-medium text-h3'>{`${numberOfAssets[1]}/${numberOfAssets[0]+numberOfAssets[1]}`}</p> 
         </AButton>
 
-        <MSearch placeholder="Search this chat" onInput={searchHandler}/>
+        <MSearch placeholder="Search this chat" /* onInput={searchHandler} *//>
       </div>
 
     </div>

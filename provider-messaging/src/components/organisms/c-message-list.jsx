@@ -1,15 +1,18 @@
 import { h } from "preact";
 import { useRouter } from "preact-router";
 import { useState, useRef, useEffect } from "preact/hooks";
+import { chatMessage } from "../../../test-data";
 import { useStore } from "../../state";
 import MChatTools from "../molecules/m-chat-tools";
 import MMessageCard from "../molecules/m-message-card";
 import MSend from "../molecules/m-send";
 
 const CMessageList = () => {
-  const [discussion, setDiscussion] = useState(undefined);
-
   const router = useRouter()[0];
+  /* const chatSocket = new WebSocket('ws://localhost:8426/chat/1/'); */
+
+  const [discussion, setDiscussion] = useState(undefined);
+  const [selectedDiscussion, setSelectedDiscussion] = useState(undefined);
 
   const { addNewMessage, discussions, selectDiscussion, auth } =
     useStore();
@@ -22,10 +25,18 @@ const CMessageList = () => {
   };
 
   useEffect(() => {
-    selectDiscussion(router.matches?.id);
   }, [router.matches?.id]);
 
+  //const {data, isError, isLoading} = getQueryConversation();
   useEffect(() => {
+    setDiscussion(chatMessage);
+    //Fetch Here - You can delete the set above if it works
+    /* fetch("http://localhost:8426/api/vcn/conversations").then((result) => result.json).then((data) =>{
+      setDiscussion("data na gusto nimu i change")
+    }) */
+  }, [discussion])
+
+  /* useEffect(() => {
     if (router.matches?.id && discussions?.all.length) {
       setDiscussion(
         discussions?.all.find((disc) => disc.id == router.matches?.id)
@@ -34,7 +45,24 @@ const CMessageList = () => {
     if(!router.matches?.id) {
       setDiscussion(undefined);
     }
-  }, [discussions, router]);
+  }, [discussions, router]); */
+
+
+  /* TODO: Will unomment this if I can get the data from websocket */
+  /* const sendMessage = (e) => {
+    const messageEl = document.getElementById('chatMessage')
+    const message = messageEl.value
+    chatSocket.send(JSON.stringify({
+        'body': message,
+    }));
+    messageEl.value = ''
+  }
+
+  chatSocket.onmessage = (e) => {
+    const data = JSON.parse(e.data);
+    const newMessage = JSON.parse(data.text);
+    document.getElementById('messages').innerHTML += newMessage.body
+  } */
 
   const [attachements, setAttachements] = useState([]);
 
@@ -89,7 +117,7 @@ const CMessageList = () => {
           setDiscussion={setDiscussion}
           selectedDiscussion={discussion}
         />
-        {discussion?.messages?.map((message) => {
+        {discussion?.results?.map((message) => {
           return <MMessageCard messageDetails={message} />;
         })}
       </div>

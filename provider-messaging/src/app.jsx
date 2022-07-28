@@ -16,16 +16,18 @@ import { useEffect, useState } from "preact/hooks";
 import CEditProfile from "./components/organisms/c-edit-profile";
 import { useStore } from "./state";
 import { usersData } from "./data";
+import { getData } from "./adapters";
+import { getQueryConversation } from "./hooks/useApi";
+import { observable } from "mobx";
+import { observer } from "mobx-react-lite";
 
-
-
-export const App = () => {
-  const { getUser, login, auth } = useStore();
+export const App = observer(() => {
+  const { getUser, login, auth, store } = useStore();
 
   const [inputs, setInputs] = useState({
     email: usersData[0].email,
     password: ''
-  })
+  });
 
   addEventListener(
     "hashchange",
@@ -44,7 +46,7 @@ export const App = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    login(inputs.email, inputs.password)
+    store.login(inputs.email, inputs.password)
   }
 
   useEffect(() => {
@@ -54,16 +56,16 @@ export const App = () => {
 
   const [editProfile, setEditProfile] = useState(false);
 
-  if (!auth) {
+  if (!store.auth) {
     return <div>loading...</div>
   }
 
   return (
     <div id="app">
 
-      {auth && Object.keys(auth).length !== 0 ? (
+      {store.auth && Object.keys(store.auth).length !== 0 ? (
         <>
-          <CEditProfile profile={auth.profile} opened={editProfile} setOpenModal={setEditProfile} />
+          {/* <CEditProfile profile={store.auth.profile} opened={editProfile} setOpenModal={setEditProfile} /> */}
           <CNav />
           <main className="min-h-screen bg-secondary-10 lg:ml-20 ml-0">
             <Router>
@@ -94,4 +96,4 @@ export const App = () => {
       </form>}
     </div>
   );
-};
+});
