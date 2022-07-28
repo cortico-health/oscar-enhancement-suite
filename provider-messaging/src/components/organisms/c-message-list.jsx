@@ -13,6 +13,7 @@ const CMessageList = () => {
   const { store } = useStore();
   const router = useRouter()[0];
   const sendRef = useRef(null);
+  const messagesEndRef = useRef(null);
 
   const [discussion, setDiscussion] = useState(undefined);
   const [socketUrl, setSocketUrl] = useState(null);
@@ -70,6 +71,10 @@ const CMessageList = () => {
     }
   }, [router.matches?.id]);
 
+  useEffect(() => {
+    messagesEndRef?.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [discussion]);
+
   // These are code from before the VCN updates. They will be used in the future
   // const [selectedDiscussion, setSelectedDiscussion] = useState(undefined);
   // const { addNewMessage, discussions, selectDiscussion, auth } = useStore();
@@ -99,6 +104,7 @@ const CMessageList = () => {
         {discussion?.map((message) => {
           return <MMessageCard messageDetails={message} />;
         })}
+        <div ref={messagesEndRef} />
       </div>
 
       {previews.map((preview, index) => {
