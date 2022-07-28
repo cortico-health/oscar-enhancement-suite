@@ -90,12 +90,12 @@ const CMessageList = () => {
 
   return (
     // TODO!
-    <div className="c-message-list px-9 w-full lg:px-12 relative lg:h-screen table lg:flex lg:flex-col justify-between overflow-x-hidden">
-      <div>
-        <MChatTools
-          setDiscussion={setDiscussion}
-          selectedDiscussion={discussion}
-        />
+    <div className="c-message-list w-full relative lg:h-screen table lg:flex lg:flex-col justify-between overflow-x-hidden">
+      <MChatTools
+        setDiscussion={setDiscussion}
+        selectedDiscussion={discussion}
+      />
+      <div class="flex-grow overflow-y-auto px-9 lg:px-12">
         {discussion?.map((message) => {
           return <MMessageCard messageDetails={message} />;
         })}
@@ -104,7 +104,7 @@ const CMessageList = () => {
       {previews.map((preview, index) => {
         return <img width="20" key={index} src={preview} />;
       })}
-      <div className="sticky bg-secondary-10">
+      <div className="sticky bg-secondary-10 mx-9 lg:mx-12">
         <MSend
           placeholder="Type message..."
           ref={sendRef}
