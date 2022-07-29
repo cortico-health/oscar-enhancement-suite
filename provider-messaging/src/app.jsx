@@ -16,8 +16,6 @@ import { useEffect, useState } from "preact/hooks";
 import CEditProfile from "./components/organisms/c-edit-profile";
 import { useStore } from "./state";
 import { usersData } from "./data";
-import { getData } from "./adapters";
-import { getQueryConversation } from "./hooks/useApi";
 import { observable } from "mobx";
 import { observer } from "mobx-react-lite";
 

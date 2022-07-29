@@ -20,7 +20,7 @@ const MMessageCard = ({ messageDetails }) => {
   
   const textRef = useRef(null);
   return (
-    messageDetails.author.name===auth.name ?
+    messageDetails.author.name === auth.name ?
       <div className='w-1/2 ml-auto my-14 rounded-2xl relative'>
 
           {
