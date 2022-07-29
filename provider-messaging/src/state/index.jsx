@@ -61,6 +61,7 @@ export const StateProvider = observer(({ children }) => {
 
   const conversationStore = useLocalObservable(() => ({
     selectedConversation: null,
+    conversations: [],
     setSelectedConversation(id) {
       getConversationsList(authStore.accessToken).then((response) => {
         this.selectedConversation = response.data?.results.filter((result) => {
@@ -69,6 +70,14 @@ export const StateProvider = observer(({ children }) => {
       }).catch((error) => {
         console.log(error)
       })
+    },
+    setConversations() {
+      getConversationsList(authStore.accessToken).then((response) => {
+        this.conversations = response.data.results;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     }
   }))
 
@@ -82,6 +91,7 @@ export const StateProvider = observer(({ children }) => {
       console.log(error);
     });
 
+    conversationStore.setConversations();
   },[authStore.accessToken])
 
   /* TODO: will convert everything t Mobx, but not yet priority. */

@@ -24,10 +24,10 @@ const MDiscussionTab = ({ discussion, ...props }) => {
 
   return (
     <div
-      onClick={() => route('/chat/' + discussion?.id)}
+      onClick={() => {route('/chat/' + discussion?.id)}}
       href={'/chat/' + discussion?.id}
       {...props}
-      className={`flex flex-column items-center px-2.5 block my-8 ${selected ? "h-24 rounded-lg bg-primary-500" : ""}`}
+      className={`flex flex-column items-center px-2.5 block my-8 cursor-pointer ${selected ? "h-24 rounded-lg bg-primary-500" : ""}`}
     >
       <div
         className={`flex relative overflow-hidden text-ellipsis ${selected ? "" : "items-center"
@@ -74,7 +74,7 @@ const MDiscussionTab = ({ discussion, ...props }) => {
         )} */}
         <div
           onClick={() => setOpenModal(true)}
-          className="o-aspect-ratio cursor-pointer w-11 min-w-11 lg:w-12.5 lg:min-w-12.5 mr-4"
+          className="o-aspect-ratio w-11 min-w-11 lg:w-12.5 lg:min-w-12.5 mr-4"
         >
           {/* TODO: will change this if I have a photo data from API */}
           <img
@@ -83,7 +83,7 @@ const MDiscussionTab = ({ discussion, ...props }) => {
             alt=""
           />
         </div>
-        <div className="max-w-100 hover:cursor-pointer">
+        <div className="max-w-100">
           <span
             className={`font-medium text-contact2 lg:text-contact1 cursor-pointer ${selected ? "text-white" : "text-secondary-500"
               }`}
@@ -92,7 +92,7 @@ const MDiscussionTab = ({ discussion, ...props }) => {
                     setOpenModal={setOpenModal}
                     opened={openModal} 
                     profile={participiant}/> */}
-            {multipleObjectDataFormatting(getOtherMembersName(showDiscussion?.members))}
+            {multipleObjectDataFormatting(getOtherMembersName(discussion?.members))}
           </span>
           <p
             className={`text-contact3 relative lg:text-contact2 mt-2 text-ellipsis overflow-hidden ${selected ? "text-white" : "text-secondary-500"

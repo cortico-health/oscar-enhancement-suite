@@ -6,23 +6,25 @@ import MDiscussionTab from "../molecules/m-discussion-tab";
 import MSearch from "../molecules/m-search";
 import CNotFound from "./c-not-found";
 import useBackend from "../../hooks/useBackend";
+import { observer } from "mobx-react-lite";
 
 const CDiscussionList = () => {
   const { getConversationsList } = useBackend();
-  const { authStore } = useStore();
+  const { authStore, conversationStore } = useStore();
 
   /* TODO: To be checked ion what causes this infinite loop*/
   //const {data, isError, isLoading} = getQueryConversation();
   const [data, setData] = useState({});
-
   useEffect(() => {
-    getConversationsList(authStore.accessToken).then((response) => {
+    /* TODO: in case this solution failed I can just uncomment this. */
+    /* getConversationsList(authStore.accessToken).then((response) => {
         setData(response.data.results)
       })
       .catch((error) => {
         console.log(error);
-      });
-  }, [])
+      }); */
+      setData(conversationStore.conversations)
+  }, [conversationStore.conversations])
 
   const searchHandler = (e) => {
     console.log(e.target.value + "is being searched...")
@@ -38,9 +40,9 @@ const CDiscussionList = () => {
       {
         data && data?.length ? (
           <>
-            {data?.map(discussion => {
+            {data.map(conversation => {
               return (
-                <MDiscussionTab discussion={discussion} />
+                <MDiscussionTab discussion={conversation} />
               )
             })}
           </>
@@ -51,4 +53,4 @@ const CDiscussionList = () => {
   );
 };
 
-export default CDiscussionList;
+export default observer(CDiscussionList);

@@ -33,6 +33,7 @@ const CMessageList = () => {
   const processMessage = (e) => {
     const data = JSON.parse(e.data);
     const newMessage = JSON.parse(data.text);
+    conversationStore.setConversations();
     setDiscussion([...discussion, newMessage])
   }
 
@@ -57,7 +58,7 @@ const CMessageList = () => {
     },
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     if (router.matches?.id) {
       conversationStore.setSelectedConversation(router.matches?.id);
 
