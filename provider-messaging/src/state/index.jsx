@@ -29,7 +29,7 @@ const StateContext = createContext();
 
 export const StateProvider = observer(({ children }) => {
   //get necessary backend
-  const { getConversationsList } = useBackend();
+  const { getConversationsList, getUserData, postLoginAccess } = useBackend();
 
   const [state, dispatch] = useReducer(reducers, initialState);
 
@@ -44,17 +44,13 @@ export const StateProvider = observer(({ children }) => {
     accessToken: localStorage["vcnAccessToken"] || null,
     auth: localStorage["user"] || {},
     login(email, password) {
-      axios.post('http://localhost:8426/api/token/', {
-        username: email,
-        password: password
+      postLoginAccess(email, password).then((response) => {
+        this.accessToken = response.data.access;
+        localStorage.setItem('vcnAccessToken', this.accessToken)
       })
-        .then((response) => {
-          this.accessToken = response.data.access;
-          localStorage.setItem('vcnAccessToken', this.accessToken)
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      .catch((error) => {
+        console.log(error);
+      });
     },
     logout() {
       userStore.user = null;
@@ -77,19 +73,15 @@ export const StateProvider = observer(({ children }) => {
   }))
 
   useEffect(() => {
-    if (!authStore.accessToken) return;
+    if (!authStore?.accessToken) return;
 
-    axios.get('http://localhost:8426/api/vcn/user/', {
-      headers: {
-        'Authorization': `Bearer ${authStore.accessToken}`
-      }
+    getUserData(authStore.accessToken).then((response) => {
+      userStore.user = response.data;
     })
-      .then((response) => {
-        userStore.user = response.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    .catch((error) => {
+      console.log(error);
+    });
+
   },[authStore.accessToken])
 
   /* TODO: will convert everything t Mobx, but not yet priority. */
