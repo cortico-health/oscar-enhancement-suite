@@ -6,6 +6,7 @@ import reducers from '../reducers';
 import axios from 'axios';
 import { observer, useLocalObservable } from 'mobx-react-lite'
 import { action } from 'mobx';
+import useBackend from '../hooks/useBackend';
 
 // const discussionsSocket = new WebSocket(process.env.WEBSOCKET_URL);
 
@@ -27,14 +28,19 @@ export const initialState = {
 const StateContext = createContext();
 
 export const StateProvider = observer(({ children }) => {
+  //get necessary backend
+  const { getConversationsList } = useBackend();
 
   const [state, dispatch] = useReducer(reducers, initialState);
 
-  const store = useLocalObservable(() => ({
+  const userStore = useLocalObservable(() => ({
     users: {
       all: []
     },
     user: null,
+  }))
+
+  const authStore = useLocalObservable(() => ({
     accessToken: localStorage["vcnAccessToken"] || null,
     auth: localStorage["user"] || {},
     login(email, password) {
@@ -51,55 +57,49 @@ export const StateProvider = observer(({ children }) => {
         });
     },
     logout() {
-      this.user = null;
+      userStore.user = null;
       this.accessToken = null;
       localStorage.setItem('vcnAccessToken', null)
     }
   }))
 
+  const conversationStore = useLocalObservable(() => ({
+    selectedConversation: null,
+    setSelectedConversation(id) {
+      getConversationsList(authStore.accessToken).then((response) => {
+        this.selectedConversation = response.data?.results.filter((result) => {
+          return result.id === parseInt(id);
+        })[0]
+      }).catch((error) => {
+        console.log(error)
+      })
+    }
+  }))
+
   useEffect(() => {
-    if (!store.accessToken) return;
+    if (!authStore.accessToken) return;
 
     axios.get('http://localhost:8426/api/vcn/user/', {
       headers: {
-        'Authorization': `Bearer ${store.accessToken}`
+        'Authorization': `Bearer ${authStore.accessToken}`
       }
     })
       .then((response) => {
-        store.user = response.data;
+        userStore.user = response.data;
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [store.accessToken])
+  },[authStore.accessToken])
 
   /* TODO: will convert everything t Mobx, but not yet priority. */
-  /* const authStore = useLocalObservable(() => ({
-    auth: localStorage["user"] ? JSON.parse(localStorage["user"]) : {},
-    login: (email, password) => {
-      console.log(email, password)
-      localStorage.setItem('user',
-        JSON.stringify({
-          email: email,
-          password: password
-        })
-      )
-      let auth;
-      const user = JSON.parse(localStorage.getItem('user'));
-      if (user) {
-        auth = usersData.find(users => users.email == user.email)
-      }
-      else { auth = null }
-    },
-    logout: () => {
-      localStorage.clear();
-    },
-  })) */
 
   const value = {
     // This is the MobX store. TODO: move any other global state here too, it's easier.
-    store,
-
+    userStore,
+    authStore,
+    conversationStore,
+    /* TODO: remove the ones below once I'll do their functions */
     //patients
     patients: state.patients,
     getPatients: () => {
@@ -110,55 +110,6 @@ export const StateProvider = observer(({ children }) => {
     },
     //discussions
     discussions: state.discussions,
-    getDiscussions: (patientId) => {
-      dispatch({ type: GET_DISCUSSIONS, payload: patientId })
-    },
-    selectDiscussion: (id) => {
-      dispatch({ type: SELECT_DISCUSSION, payload: id })
-    },
-    addNewMessage: (message) => {
-      dispatch({ type: ADD_MESSAGE, payload: message })
-    },
-    //users
-    users: state.users,
-    getUsers: () => {
-      dispatch({ type: GET_USERS })
-    },
-    selectUser: (id) => {
-      dispatch({ type: SELECT_USER, payload: id })
-    },
-    addUser: (newUser) => {
-      dispatch({ type: ADD_USER, payload: newUser })
-    },
-    /* auth: JSON.parse(localStorage["user"]), */
-    login: (email, password) => {
-      localStorage.setItem('user',
-        JSON.stringify({
-          email: email,
-          password: password
-        })
-      )
-      let auth;
-      const user = JSON.parse(localStorage.getItem('user'));
-      if (user) {
-        auth = usersData.find(users => users.email == user.email)
-      }
-      else { auth = null }
-      dispatch({ type: LOGIN, payload: auth })
-    },
-    logout: () => {
-      localStorage.clear();
-      dispatch({ type: LOGOUT })
-    },
-    getUser: () => {
-      let auth;
-      const user = JSON.parse(localStorage.getItem('user'));
-      if (user) {
-        auth = usersData.find(users => users.email == user.email)
-      }
-      else { auth = null }
-      dispatch({ type: GET_USER, payload: auth })
-    }
   }
 
   return (

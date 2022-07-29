@@ -11,7 +11,7 @@ import { observer } from 'mobx-react-lite';
 
 const CNav = () => {
   const route = useRouter()[0];
-  const { patients, store } = useStore();
+  const { patients, authStore } = useStore();
   const [patient, setPatient] = useState(undefined);
 
 
@@ -40,7 +40,7 @@ const CNav = () => {
 
         <div className='flex flex-col'>
           <div className="mx-auto p-3 rounded-full"><ASvg src="info" /></div>
-          <div role="button" onClick={() => store.logout()} className="mx-auto p-3 cursor-pointer rounded-full"> <ASvg src="log-out" /></div>
+          <div role="button" onClick={ () => authStore.logout() } className="mx-auto p-3 cursor-pointer rounded-full"> <ASvg src="log-out" /></div>
           <CPlugin className="lg:flex hidden ml-4" />
         </div>
       </nav>

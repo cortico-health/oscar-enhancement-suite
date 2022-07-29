@@ -15,12 +15,12 @@ const MMessageCard = ({ messageDetails }) => {
     __html: DOMPurify.sanitize(formatURL(messageDetails.body))
   });
 
-  const { store } = useStore();
+  const { userStore } = useStore();
 
 
   const textRef = useRef(null);
   return (
-    messageDetails.from_user.id === store.user.id ?
+    messageDetails.from_user.id === userStore.user.id ?
       <div>
         <p className='text-secondary-200 text-title6 text-center'>{(new Date(messageDetails.created_date)).toLocaleTimeString('en-us',
           { hour: 'numeric', minute: '2-digit' })}</p>

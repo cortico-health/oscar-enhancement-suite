@@ -9,14 +9,14 @@ import MUserTab from "../molecules/m-user-tab";
 
 const CUsersList = observer(() => {
 
-  const { store } = useStore();
+  const { userStore } = useStore();
 
   const [checked, setChecked] = useState(undefined);
   const [ confirm, setConfirm ] = useState(false);
 
   const searchHandler = (e) => {
-    let filteredData = users?.all.filter( user => {
-      return user.name.toLowerCase().includes(e.target.value.toLowerCase()) 
+    let filteredData = userStore.users?.all.filter(user => {
+      return user.name.toLowerCase().includes(e.target.value.toLowerCase())
       || user.title.toLowerCase().includes(e.target.value.toLowerCase())
       || user.clinic.toLowerCase().includes(e.target.value.toLowerCase())
     });
@@ -26,16 +26,16 @@ const CUsersList = observer(() => {
   const [ showUsers, setShowUsers] = useState(undefined);
 
   useEffect(() => {
-    if(store.users?.all){
-      setShowUsers(store.users?.all);
+    if (userStore.users?.all) {
+      setShowUsers(userStore.users?.all);
 
       const res = {}
-      store.users?.all.forEach( user => {
+      userStore.users?.all.forEach(user => {
         res[user.id] = false
       })
-      setChecked( res)
+      setChecked(res)
     }
-  }, [store.users])
+  },[userStore.users])
 
   const handleOnChange = (e) => {
     setChecked({ ...checked,  [e.target.value]: e.target.checked  })
@@ -54,7 +54,7 @@ const CUsersList = observer(() => {
   if(!showUsers){
     return <div>loading...</div>
   }
-  
+
   return (
     <div className="mx-2.5">
 
@@ -65,8 +65,8 @@ const CUsersList = observer(() => {
           <p className="text-secondary-500 text-h2 pb-4">Are you sure you want to start a new conversation with the following users?</p>
 
           {
-            store.users?.all.map( user => {
-              return checked[user.id] ? <p className="text-secondary-500 text-h2 font-bold mb-2" key={user.name}>{ user.name }</p>: null 
+              userStore.users?.all.map(user => {
+                return checked[user.id] ? <p className="text-secondary-500 text-h2 font-bold mb-2" key={ user.name }>{ user.name }</p> : null
             })
           }
         <div className="flex w-full mt-8 justify-center">
@@ -82,8 +82,8 @@ const CUsersList = observer(() => {
         <AButton onClick={nextHandle} className="w-full" variant="button-primary-sm"> Next </AButton>
       </div>
 
-      <MSearch 
-        onInput={searchHandler} 
+      <MSearch
+        onInput={ searchHandler }
       />
     {
       showUsers.map((user) => {

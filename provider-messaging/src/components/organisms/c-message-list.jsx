@@ -1,19 +1,18 @@
 import { h } from "preact";
 import { useRouter } from "preact-router";
-import { useState, useRef, useEffect } from "preact/hooks";
-import { chatMessage } from "../../../test-data";
+import { useState,useRef,useEffect } from "preact/hooks";
 import { useStore } from "../../state";
 import MChatTools from "../molecules/m-chat-tools";
 import MMessageCard from "../molecules/m-message-card";
 import MSend from "../molecules/m-send";
-import axios from 'axios';
 import useWebSocket from "react-use-websocket";
 import useBackend from "../../hooks/useBackend";
+import { observer } from "mobx-react-lite";
 
 const CMessageList = () => {
   const { getChatMessageData } = useBackend();
 
-  const { store } = useStore();
+  const { authStore, conversationStore } = useStore();
   const router = useRouter()[0];
   const sendRef = useRef(null);
   const messagesEndRef = useRef(null);
@@ -60,8 +59,10 @@ const CMessageList = () => {
 
   useEffect(async () => {
     if (router.matches?.id) {
-      getChatMessageData(router.matches?.id, store.accessToken).then((response) => {
-        setSocketUrl(`ws://localhost:8426/chat/${router.matches?.id}/?token=${store.accessToken}`)
+      conversationStore.setSelectedConversation(router.matches?.id);
+
+      getChatMessageData(router.matches?.id, authStore.accessToken).then((response) => {
+        setSocketUrl(`ws://localhost:8426/chat/${router.matches?.id}/?token=${authStore.accessToken}`)
         setDiscussion(response[0].data.results)
         setDiscussionInfo(() => {
           return response[1].data?.results.filter((result) => {
@@ -80,7 +81,7 @@ const CMessageList = () => {
 
   // These are code from before the VCN updates. They will be used in the future
   // const [selectedDiscussion, setSelectedDiscussion] = useState(undefined);
-  // const { addNewMessage, discussions, selectDiscussion, auth } = useStore();
+  // const { discussions, auth } = useStore();
   // const isValidURL = (string) => {
   //   var res = string.match(
   //     /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
@@ -131,4 +132,4 @@ const CMessageList = () => {
   );
 };
 
-export default CMessageList;
+export default observer(CMessageList);

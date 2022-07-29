@@ -20,7 +20,7 @@ import { observable } from "mobx";
 import { observer } from "mobx-react-lite";
 
 export const App = observer(() => {
-  const { getUser, store } = useStore();
+  const { authStore, userStore } = useStore();
 
   const [inputs, setInputs] = useState({
     email: usersData[0].email,
@@ -44,11 +44,10 @@ export const App = observer(() => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    store.login(inputs.email, inputs.password)
+    authStore.login(inputs.email,inputs.password)
   }
 
   useEffect(() => {
-    getUser();
     history.pushState(null, null, " ");
   }, []);
 
@@ -57,9 +56,9 @@ export const App = observer(() => {
   return (
     <div id="app">
 
-      {store.user && Object.keys(store.user).length !== 0 ? (
+      { userStore.user && Object.keys(userStore.user).length !== 0 ? (
         <>
-          {/* <CEditProfile profile={store.user.profile} opened={editProfile} setOpenModal={setEditProfile} /> */}
+          {/* <CEditProfile profile={userStore.user.profile} opened={editProfile} setOpenModal={setEditProfile} /> */ }
           <CNav />
           <main className="min-h-screen bg-secondary-10 lg:ml-20 ml-0">
             <Router>
