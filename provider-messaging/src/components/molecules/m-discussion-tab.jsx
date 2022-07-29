@@ -1,13 +1,14 @@
 import { h } from "preact";
 import { useRouter, route } from "preact-router";
 import { useEffect, useState } from "preact/hooks";
+import multipleDataFormatting from "../../helper/multipleDataFormatting";
 import { useStore } from "../../state";
 import CProfileCard from "../organisms/c-profile-card";
 
 const MDiscussionTab = ({ discussion, ...props }) => {
   const selected = useRouter()[0].matches.id == discussion.id;
 
-  const { auth } = useStore();
+  const { store } = useStore();
 
   const [showDiscussion, setShowDiscussion] = useState(undefined);
 
@@ -83,25 +84,16 @@ const MDiscussionTab = ({ discussion, ...props }) => {
           />
         </div>
         <div className="max-w-100 hover:cursor-pointer">
-          {showDiscussion?.members.map((member, index) => {
-            return (
-              <span key={member.id}>
-                {/* <CProfileCard 
-                  setOpenModal={setOpenModal}
-                  opened={openModal} 
-                  profile={participiant}/> */}
-                <span
-                  className={`font-medium text-contact2 lg:text-contact1 cursor-pointer ${selected ? "text-white" : "text-secondary-500"
-                    }`}
-                >
-                  {member.full_name +
-                    (index != showDiscussion.members.length - 1
-                      ? ", "
-                      : "")}
-                </span>
-              </span>
-            );
-          })}
+          <span
+            className={`font-medium text-contact2 lg:text-contact1 cursor-pointer ${selected ? "text-white" : "text-secondary-500"
+              }`}
+          >
+            {/* <CProfileCard 
+                    setOpenModal={setOpenModal}
+                    opened={openModal} 
+                    profile={participiant}/> */}
+            {multipleDataFormatting(showDiscussion?.members)}
+          </span>
           <p
             className={`text-contact3 relative lg:text-contact2 mt-2 text-ellipsis overflow-hidden ${selected ? "text-white" : "text-secondary-500"
               }`}

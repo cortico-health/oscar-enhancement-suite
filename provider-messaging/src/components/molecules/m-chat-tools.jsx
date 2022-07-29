@@ -1,6 +1,7 @@
 import { h } from 'preact';
 import { useMemo, useState } from 'preact/hooks';
 import { useStore } from '../../state';
+import multipleDataFormatting from "../../helper/multipleDataFormatting";
 import AButton from '../atoms/a-button';
 import ASvg from '../atoms/a-svg';
 import MSearch from './m-search';
@@ -34,12 +35,9 @@ const MChatTools = ({ setDiscussion, selectedDiscussion, ...props }) => {
       <div className='flex gap-x-2.5 items-center'>
         <div className='w-fit'>
           <h1 className='text-secondary-500 font-bold text-title3'>
-            {/* {
-            selectedDiscussion.members.map(( (user,index) => {
-              return user.email + (index != selectedDiscussion.members.length-1 ? ', ': '')
-            }))
-          } */}
+            {multipleDataFormatting(selectedDiscussion.members)}
           </h1>
+          {/* TODO: will uncomment this if patient will be available. */}
           {/* {
             patient==null ? null :
             <p className='text-select2 text-secondary-300'> RE: {
