@@ -8,14 +8,18 @@ import MMessageCard from "../molecules/m-message-card";
 import MSend from "../molecules/m-send";
 import axios from 'axios';
 import useWebSocket from "react-use-websocket";
+import useBackend from "../../hooks/useBackend";
 
 const CMessageList = () => {
+  const { getChatMessageData } = useBackend();
+
   const { store } = useStore();
   const router = useRouter()[0];
   const sendRef = useRef(null);
   const messagesEndRef = useRef(null);
 
   const [discussion, setDiscussion] = useState(undefined);
+  const [discussionInfo, setDiscussionInfo] = useState(undefined); // for chat header
   const [socketUrl, setSocketUrl] = useState(null);
   const [attachements, setAttachements] = useState([]);
   const [previews, setPreviews] = useState([]);
@@ -54,20 +58,19 @@ const CMessageList = () => {
     },
   };
 
-  useEffect(() => {
-    if (router.matches.id) {
-      axios.get(`http://localhost:8426/api/vcn/chat-messages/${router.matches.id}/`, {
-        headers: {
-          'Authorization': `Bearer ${store.accessToken}`
-        }
-      })
-        .then((response) => {
-          setSocketUrl(`ws://localhost:8426/chat/${router.matches.id}/?token=${store.accessToken}`)
-          setDiscussion(response.data.results)
+  useEffect(async () => {
+    if (router.matches?.id) {
+      getChatMessageData(router.matches?.id, store.accessToken).then((response) => {
+        setSocketUrl(`ws://localhost:8426/chat/${router.matches?.id}/?token=${store.accessToken}`)
+        setDiscussion(response[0].data.results)
+        setDiscussionInfo(() => {
+          return response[1].data?.results.filter((result) => {
+            return result.id === parseInt(router.matches?.id);
+          })[0]
         })
-        .catch((error) => {
-          console.log(error);
-        });
+      }).catch((error) => {
+        console.log(error);
+      });
     }
   }, [router.matches?.id]);
 
@@ -98,7 +101,7 @@ const CMessageList = () => {
     <div className="c-message-list w-full relative lg:h-screen table lg:flex lg:flex-col justify-between overflow-x-hidden">
       <MChatTools
         setDiscussion={setDiscussion}
-        selectedDiscussion={discussion}
+        selectedDiscussion={discussionInfo}
       />
       <div className="flex-grow overflow-y-auto px-9 lg:px-12">
         {discussion?.map((message) => {

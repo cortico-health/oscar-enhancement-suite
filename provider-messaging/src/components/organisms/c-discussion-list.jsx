@@ -1,16 +1,16 @@
 import { h } from "preact";
 import { useEffect, useState } from "preact/hooks";
 import { conversations } from "../../../test-data";
-import { getData } from "../../adapters";
-import { getQueryConversation } from "../../hooks/useApi";
 import { useStore } from "../../state";
 
 import MDiscussionTab from "../molecules/m-discussion-tab";
 import MSearch from "../molecules/m-search";
 import CNotFound from "./c-not-found";
 import axios from 'axios';
+import useBackend from "../../hooks/useBackend";
 
 const CDiscussionList = () => {
+  const { getConversationsList } = useBackend();
   const { store } = useStore();
 
   /* To be checked ion what causes this infinite loop*/
@@ -20,12 +20,7 @@ const CDiscussionList = () => {
   useEffect(() => {
     setData(conversations);
 
-    axios.get('http://localhost:8426/api/vcn/conversations/', {
-      headers: {
-        'Authorization': `Bearer ${store.accessToken}`
-      }
-    })
-      .then((response) => {
+    getConversationsList(store.accessToken).then((response) => {
         setData(response.data.results)
       })
       .catch((error) => {

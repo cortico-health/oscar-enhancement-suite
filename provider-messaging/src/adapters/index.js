@@ -1,20 +1,17 @@
-const BACKENDURL = "http://localhost:8426/api/vcn";
+import axios from "axios"
 
-//In getting the conversation
-export const getData = async() => {
-    let data;
+export const getChatMessages = async (id, accessToken) => {
+    return axios.get(`http://localhost:8426/api/vcn/chat-messages/${id}/`, {
+        headers: {
+        'Authorization': `Bearer ${accessToken}`
+        }
+    })
+}
 
-    try {
-        //await fetch(`${BACKENDURL}/conversations`).then((result) => {data = result.json()});
-
-        data = await fetch('http://localhost:8426/api/vcn/conversations')
-        
-        /* data = await data.json(); */
-        
-        return data;
-    } catch (err) {
-        console.log(err);
-        
-        return {};
-    }
+export const getConversations = async (accessToken) => {
+    return axios.get(`http://localhost:8426/api/vcn/conversations`, {
+        headers: {
+        'Authorization': `Bearer ${accessToken}`
+        }
+    })
 }
