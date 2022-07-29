@@ -1,13 +1,14 @@
 import { h } from 'preact';
 import { useMemo, useState } from 'preact/hooks';
 import { useStore } from '../../state';
-import multipleDataFormatting from "../../helper/multipleDataFormatting";
+import { multipleObjectDataFormatting } from "../../helper/multipleDataFormatting";
 import AButton from '../atoms/a-button';
 import ASvg from '../atoms/a-svg';
 import MSearch from './m-search';
+import useUtils from '../../hooks/useUtils';
 
 const MChatTools = ({ setDiscussion, selectedDiscussion, ...props }) => {
-
+  const { getOtherMembersName } = useUtils();
   const { patients, discussions } = useStore();
 
   /* TODO: to be edited since patient is not prioritize now. */
@@ -35,7 +36,7 @@ const MChatTools = ({ setDiscussion, selectedDiscussion, ...props }) => {
       <div className='flex gap-x-2.5 items-center'>
         <div className='w-fit'>
           <h1 className='text-secondary-500 font-bold text-title3'>
-            {multipleDataFormatting(selectedDiscussion.members)}
+            {multipleObjectDataFormatting(getOtherMembersName(selectedDiscussion?.members))}
           </h1>
           {/* TODO: will uncomment this if patient will be available. */}
           {/* {

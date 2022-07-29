@@ -1,14 +1,14 @@
 import { h } from "preact";
 import { useRouter, route } from "preact-router";
 import { useEffect, useState } from "preact/hooks";
-import multipleDataFormatting from "../../helper/multipleDataFormatting";
-import { useStore } from "../../state";
+import { multipleObjectDataFormatting } from "../../helper/multipleDataFormatting";
+import useUtils from "../../hooks/useUtils";
 import CProfileCard from "../organisms/c-profile-card";
 
 const MDiscussionTab = ({ discussion, ...props }) => {
   const selected = useRouter()[0].matches.id == discussion.id;
 
-  const { store } = useStore();
+  const { getOtherMembersName } = useUtils();
 
   const [showDiscussion, setShowDiscussion] = useState(undefined);
 
@@ -92,7 +92,7 @@ const MDiscussionTab = ({ discussion, ...props }) => {
                     setOpenModal={setOpenModal}
                     opened={openModal} 
                     profile={participiant}/> */}
-            {multipleDataFormatting(showDiscussion?.members)}
+            {multipleObjectDataFormatting(getOtherMembersName(showDiscussion?.members))}
           </span>
           <p
             className={`text-contact3 relative lg:text-contact2 mt-2 text-ellipsis overflow-hidden ${selected ? "text-white" : "text-secondary-500"
