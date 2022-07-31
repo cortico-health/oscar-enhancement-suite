@@ -129,9 +129,9 @@ export function getCorticoLinks(apptTd) {
       </a>
     </li><li>
       <a href="${getCorticoAppointmentUrl(
-        providerNo,
-        appointmentNo
-      )}" target="_blank">☛ Go To Appointment (Cortico)
+    providerNo,
+    appointmentNo
+  )}" target="_blank">☛ Go To Appointment (Cortico)
       </a>
       </li>
   </ul>
