@@ -22,7 +22,6 @@ export default function AppointmentDetails({
   type,
   ...props
 }) {
-  console.log("Appointment Details Status", patientStatus, type);
   const [on, setOn] = useState(false);
   const detailsRef = useRef(null);
   //In order for it to exit if clicked outside
@@ -76,7 +75,9 @@ function ReferenceElement({ patientStatus, type, className, ...props }) {
             ? "tw-bg-green-600"
             : patientStatus === "unverified"
             ? "tw-bg-blue-1000"
-            : "tw-bg-pink-500"
+            : patientStatus === "uninsured"
+            ? "tw-bg-pink-500"
+            : "tw-bg-blue-1000"
         )}
       >
         {type === "private" ? (
