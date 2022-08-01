@@ -32,7 +32,6 @@ import {
   extractApptUrl,
   getAppointmentInfo,
 } from "./modules/cortico/Appointments/Appointments";
-import { addAppointmentMenu } from "./modules/cortico/Appointments/AppointmentMenu";
 import { Oscar } from "./modules/core/Oscar.js";
 import "element-closest-polyfill";
 import { getOrigin, getNamespace, htmlToElement } from "./modules/Utils/Utils";
@@ -144,7 +143,6 @@ const init_cortico = async function () {
     CorticoWidget(document.body, corticoWidgetContainer, {
       disabledFeatures: ["messenger"],
     });
-    addAppointmentMenu();
 
     const isMarkham = window.location.href.includes("mmfcc");
     if ((!oscar.isJuno() && !oscar.containsKaiBar()) || isMarkham) {
@@ -676,7 +674,8 @@ function dragAndDrop() {
     handleColors(ev.target);
 
     // Sibling table cell has the start time
-    const newStartTime = ev.target.parentElement.firstElementChild.firstElementChild.textContent.trim();
+    const newStartTime =
+      ev.target.parentElement.firstElementChild.firstElementChild.textContent.trim();
 
     // Get the appointment edit link, we're going to fetch this page in memory later
     const apptLink = getAppointmentLink(dragSelectedTarget);
@@ -1942,11 +1941,10 @@ export async function getPatientInfo(demographicNo) {
   el.querySelectorAll("span.label").forEach(function (label) {
     if (label.closest("#otherContacts2")) return; // do not match contacts.
 
-    info[
-      label.innerText.replace(/[^\w\s]+/g, "")?.trim()
-    ] = label.nextElementSibling
-      ? label.nextElementSibling.innerText.trim()
-      : null;
+    info[label.innerText.replace(/[^\w\s]+/g, "")?.trim()] =
+      label.nextElementSibling
+        ? label.nextElementSibling.innerText.trim()
+        : null;
   });
 
   const emailInput = el.querySelector("input[name='email']");
