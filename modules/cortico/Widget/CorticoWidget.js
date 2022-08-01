@@ -16,6 +16,8 @@ import Encounter from "../../core/Encounter";
 import Appointment from "./appointment/Appointment";
 import { QueryClient, QueryClientProvider } from "react-query";
 import PatientAdapter from "./adapters/PatientAdapter";
+import AppointmentDetailAdapter from "./adapters/AppointmentDetailAdapter";
+
 const uid = nanoid();
 
 function App({ mode = "normal", ...props }) {
@@ -166,6 +168,7 @@ function App({ mode = "normal", ...props }) {
       <div className="tailwind preflight">
         {mode === "normal" ? (
           <>
+            <AppointmentDetailAdapter />
             <div
               className={classNames(
                 "tw-fixed tw-bottom-5 tw-right-5 tw-z-10005  tw-text-white cortico-widget-body",

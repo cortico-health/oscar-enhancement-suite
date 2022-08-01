@@ -15,3 +15,8 @@ export const CorticoIcon = ({ attrs }) => {
 
   return clone;
 };
+
+export const CorticoPreactIcon = (props) => {
+
+  return <img src={corticoIcon} {...props}/>
+}
