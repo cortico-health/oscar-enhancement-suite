@@ -7,6 +7,7 @@ import axios from 'axios';
 import { observer, useLocalObservable } from 'mobx-react-lite'
 import { action } from 'mobx';
 import useBackend from '../hooks/useBackend';
+import useAuth from '../hooks/useAuth';
 
 // const discussionsSocket = new WebSocket(process.env.WEBSOCKET_URL);
 
@@ -29,7 +30,8 @@ const StateContext = createContext();
 
 export const StateProvider = observer(({ children }) => {
   //get necessary backend
-  const { getConversationsList, getUserData, postLoginAccess } = useBackend();
+  const { getConversationsList,getUserData } = useBackend();
+  const { login } = useAuth();
 
   const [state, dispatch] = useReducer(reducers, initialState);
 
@@ -38,24 +40,32 @@ export const StateProvider = observer(({ children }) => {
       all: []
     },
     user: null,
+    setUserData() {
+      getUserData(authStore.accessToken).then((response) => {
+        this.user = response.data;
+      }).catch((error) => {
+        console.log(error);
+      });
+    }
   }))
 
   const authStore = useLocalObservable(() => ({
     accessToken: localStorage["vcnAccessToken"] || null,
     auth: localStorage["user"] || {},
     login(email, password) {
-      postLoginAccess(email, password).then((response) => {
+      login(email,password).then((response) => {
         this.accessToken = response.data.access;
         localStorage.setItem('vcnAccessToken', this.accessToken)
-      })
-      .catch((error) => {
+        console.log("Login Successful")
+      }).catch((error) => {
         console.log(error);
+        console.log("Login Failed")
       });
     },
     logout() {
       userStore.user = null;
       this.accessToken = null;
-      localStorage.setItem('vcnAccessToken', null)
+      localStorage.setItem('vcnAccessToken',null);
     }
   }))
 
@@ -84,12 +94,10 @@ export const StateProvider = observer(({ children }) => {
   useEffect(() => {
     if (!authStore?.accessToken) return;
 
-    getUserData(authStore.accessToken).then((response) => {
-      userStore.user = response.data;
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    //Fetting the users
+    userStore.users = usersData;
+
+    userStore.setUserData();
 
     conversationStore.setConversations();
   },[authStore.accessToken])
