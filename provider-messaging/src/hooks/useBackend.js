@@ -19,11 +19,17 @@ const useBackend = () => {
         return await patchUser(inputs);
     }
 
+    const createConversation = async(inputs) => {
+        console.log(inputs)
+            /* return await postConversation(inputs); */
+    }
+
     return {
         getChatMessageData,
         getConversationsList,
+        createConversation,
         getUserData,
-        updateUser
+        updateUser,
     }
 }
 
