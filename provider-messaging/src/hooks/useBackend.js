@@ -20,6 +20,7 @@ const useBackend = () => {
     }
 
     const createConversation = async(inputs) => {
+        /* TODO: will do this if I have the api documentation */
         console.log(inputs)
             /* return await postConversation(inputs); */
     }
