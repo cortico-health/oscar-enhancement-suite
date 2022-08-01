@@ -144,7 +144,6 @@ const init_cortico = async function () {
     CorticoWidget(document.body, corticoWidgetContainer, {
       disabledFeatures: ["messenger"],
     });
-    addAppointmentMenu();
 
     const isMarkham = window.location.href.includes("mmfcc");
     if ((!oscar.isJuno() && !oscar.containsKaiBar()) || isMarkham) {

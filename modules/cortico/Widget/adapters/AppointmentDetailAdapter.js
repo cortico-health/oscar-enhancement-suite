@@ -3,11 +3,14 @@ import { createPortal } from "preact/compat";
 import { useEffect, useState } from "preact/hooks";
 import {
   extractApptUrl,
+  getAppointmentInfo,
   getAppointmentLink,
   getAppointments,
 } from "../../Appointments/Appointments";
 import AppointmentDetails from "../features/AppointmentDetails/AppointmentDetails";
 import { getDemographicNo } from "../../../Utils/Utils";
+import { Appointment } from "../../../core/Appointment";
+import { CheckIcon } from "../../../Icons/HeroIcons";
 
 const getAppointmentDemographicNo = (apptTd) => {
   const apptLink = getAppointmentLink(apptTd);
@@ -27,7 +30,16 @@ const getPharmacyCache = () => {
   return pharmaciesCache;
 };
 
-const isPharmacyCached = (cachedDemographics) => {
+const isPharmacyCached = (apptTd, appointments) => {
+  const appointment = new Appointment(apptTd);
+  const appointmentNo = appointment.getAppointmentNo();
+  const apptInfo = getAppointmentInfo(appointments);
+  const apptInfoItem =
+    apptInfo.find((item) => {
+      return item.appointment_no === appointmentNo;
+    }) || {};
+  const pharmaciesCache = getPharmacyCache();
+  let cachedDemographics = pharmaciesCache.demographics;
   let demographics = Array.isArray(cachedDemographics)
     ? cachedDemographics
     : JSON.parse(cachedDemographics);
@@ -81,7 +93,11 @@ export default function AppointmentDetailAdapter() {
                   type={getAppointmentType(appointment)}
                 ></AppointmentDetails>
               </div>
-              <div className="tw-inline-block tw-ml-5">Test</div>
+              {true ? (
+                <div className="tw-inline-block tw-ml-5">
+                  <CheckIcon className="tw-h-3 tw-w-3 tw-bg-green-500"></CheckIcon>
+                </div>
+              ) : null}
             </>,
             appointment
           );
