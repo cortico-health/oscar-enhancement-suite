@@ -10,7 +10,7 @@ import {
 import AppointmentDetails from "../features/AppointmentDetails/AppointmentDetails";
 import { getDemographicNo } from "../../../Utils/Utils";
 import { Appointment } from "../../../core/Appointment";
-import { CheckIcon } from "../../../Icons/HeroIcons";
+import { CheckIcon } from "@heroicons/react/solid";
 
 const getAppointmentDemographicNo = (apptTd) => {
   const apptLink = getAppointmentLink(apptTd);
@@ -93,9 +93,10 @@ export default function AppointmentDetailAdapter() {
                   type={getAppointmentType(appointment)}
                 ></AppointmentDetails>
               </div>
-              {true ? (
+              {isPharmacyCached(appointment, appointments) ? (
                 <div className="tw-inline-block tw-ml-5">
-                  <CheckIcon className="tw-h-3 tw-w-3 tw-bg-green-500"></CheckIcon>
+                  <span className="tw-font-semibold tw-font-xs">Rx</span>
+                  <CheckIcon className="tw-h-3 tw-w-3 tw-text-green-600"></CheckIcon>
                 </div>
               ) : null}
             </>,

@@ -69,7 +69,7 @@ function ReferenceElement({ patientStatus, type, className, ...props }) {
       <div
         {...props}
         className={classNames(
-          "tw-rounded-full tw-p-[1px] tw-shadow-xl tw-flex tw-justify-center tw-items-center tw-border tw-border-white tw-border-solid tw-absolute -tw-top-[12px] tw-z-10001 tw-cursor-pointer",
+          "tw-rounded-full tw-p-[1px] tw-shadow-xl tw-flex tw-justify-center tw-items-center tw-border tw-border-white tw-border-solid tw-absolute -tw-top-[13px] tw-z-10001 tw-cursor-pointer",
           type === "private"
             ? "tw-bg-gray-800"
             : patientStatus === true
