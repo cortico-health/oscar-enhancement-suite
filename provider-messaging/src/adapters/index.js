@@ -35,12 +35,18 @@ export const postLogin = async(email, password) => {
     });
 }
 
+export const postConversation = async(data) => {
+    return axios.post(`${BACKEND_URL}//`, {
+
+    })
+}
+
 //PUT
-export const udpateUser = async(inputs) => {
+export const patchUser = async(inputs) => {
     /* TODO: change URL */
-    /* return axios.put(`${BACKEND_URL}`, JSON.stringify(inputs), {
+    return axios.patch(`${BACKEND_URL}`, JSON.stringify(inputs), {
         headers: {
-          'Content-Type': 'application/json'
+            'Content-Type': 'application/json'
         }
-    }) */
+    })
 }
