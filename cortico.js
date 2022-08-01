@@ -32,7 +32,6 @@ import {
   extractApptUrl,
   getAppointmentInfo,
 } from "./modules/cortico/Appointments/Appointments";
-import { addAppointmentMenu } from "./modules/cortico/Appointments/AppointmentMenu";
 import { Oscar } from "./modules/core/Oscar.js";
 import "element-closest-polyfill";
 import { getOrigin, getNamespace, htmlToElement } from "./modules/Utils/Utils";
@@ -134,7 +133,7 @@ const init_cortico = async function () {
      * TODO: fixme?
      */
     if (!oscar.isJuno() && !oscar.isKaiOscarHost()) {
-      //dragAndDrop();
+      dragAndDrop();
     }
 
     addCorticoLogo();
