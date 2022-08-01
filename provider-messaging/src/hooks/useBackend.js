@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getConversations, getChatMessages, getUser, postLogin } from "../adapters";
+import { getConversations, getChatMessages, getUser, postLogin, udpateUser } from "../adapters";
 
 const useBackend = () => {
     const getChatMessageData = async (id, accessToken) => {
@@ -18,11 +18,16 @@ const useBackend = () => {
         return await postLogin(email, password);
     }
 
+    const updateUser = async (inputs) => {
+        return await udpateUser(inputs);
+    }
+
     return {
         getChatMessageData,
         getConversationsList,
         getUserData,
-        postLoginAccess
+        postLoginAccess,
+        updateUser
     }
 }
 

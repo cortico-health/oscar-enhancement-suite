@@ -3,7 +3,7 @@ import axios from "axios"
 const BACKEND_URL = "http://localhost:8426/api";
 
 //GET
-export const getChatMessages = async (id, accessToken) => {
+export const getChatMessages = async(id, accessToken) => {
     return axios.get(`${BACKEND_URL}/vcn/chat-messages/${id}/`, {
         headers: {
             'Authorization': `Bearer ${accessToken}`
@@ -11,7 +11,7 @@ export const getChatMessages = async (id, accessToken) => {
     })
 }
 
-export const getConversations = async (accessToken) => {
+export const getConversations = async(accessToken) => {
     return axios.get(`${BACKEND_URL}/vcn/conversations`, {
         headers: {
             'Authorization': `Bearer ${accessToken}`
@@ -19,7 +19,7 @@ export const getConversations = async (accessToken) => {
     })
 }
 
-export const getUser = async (accessToken) => {
+export const getUser = async(accessToken) => {
     return axios.get(`${BACKEND_URL}/vcn/user`, {
         headers: {
             'Authorization': `Bearer ${accessToken}`
@@ -28,10 +28,19 @@ export const getUser = async (accessToken) => {
 }
 
 //POST
-export const postLogin = async (email, password) => {
+export const postLogin = async(email, password) => {
     return axios.post(`${BACKEND_URL}/token/`, {
         username: email,
         password: password
     });
 }
 
+//PUT
+export const udpateUser = async(inputs) => {
+    /* TODO: change URL */
+    /* return axios.put(`${BACKEND_URL}`, JSON.stringify(inputs), {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+    }) */
+}

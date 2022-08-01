@@ -14,11 +14,33 @@ const PRONOUNS = ["She/Her", "He/His"];
 
 const CEditProfile = ({ profile, opened, setOpenModal }) => {
   const [inputs, setInputs] = useState(profile);
+  const [isLoading,setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setInputs({ ...inputs, [name]: value });
   };
+
+  const handleSave = () => {
+    /* Clarify the Update API */
+    console.log(JSON.stringify(inputs))
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    },2000)
+    /*
+    axios.put(URL, JSON.stringify(inputs), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      setInputs(() => inputs);
+    }).catch((error) => {
+      console.log(error);
+      setInputs((prevInputs) => prevInputs);
+    })
+    */
+  }
 
   return (
     <div className={`${opened ? "flex" : "hidden"} c-edit-profile py-4`}>
@@ -216,8 +238,8 @@ const CEditProfile = ({ profile, opened, setOpenModal }) => {
               />
           </div>
           <div className="w-full flex justify-end">
-          <AButton className="w-28" onClick={() => alert(JSON.stringify(inputs, null, 2))}>Save</AButton>
-            </div>
+            <AButton className="w-28" isLoading={ isLoading } onClick={ handleSave }>Save</AButton>
+          </div>
         </div>
       </div>
     </div>
