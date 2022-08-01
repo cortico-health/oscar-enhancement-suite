@@ -1,5 +1,11 @@
 import { DotsVerticalIcon } from "@heroicons/react/solid";
-import { CurrencyDollarIcon, XIcon, CheckIcon } from "@heroicons/react/outline";
+import {
+  CurrencyDollarIcon,
+  XIcon,
+  CheckIcon,
+  TableIcon,
+  ClipboardCheckIcon,
+} from "@heroicons/react/outline";
 import classNames from "classnames";
 import { forwardRef } from "preact/compat";
 import { useRef, useState } from "preact/hooks";
@@ -8,8 +14,8 @@ import { Appointment } from "../../../../core/Appointment";
 import { Masterfile } from "../../../../core/Masterfile";
 import useComponentOutsideHandler from "../../../../Hooks/useComponentOutsideObserver";
 import useLeftPositionObserver from "../../../../Hooks/useLeftPositionObserver";
-import { CorticoPreactIcon } from "../../../../Icons/CorticoIcon";
 import Loader from "../../../../Messenger/Loader";
+import { AtSymbolIcon, PhoneOutgoingIcon } from "@heroicons/react/solid";
 import {
   getCorticoAppointmentUrl,
   getCorticoUrl,
@@ -28,7 +34,6 @@ export default function AppointmentDetails({
   useComponentOutsideHandler(detailsRef, setOn);
   const className = useLeftPositionObserver(on, detailsRef);
   const [masterFile] = useState(() => new Masterfile(apptTd));
-
   const { isError, isLoading } = useQuery(
     [`detailContactInfo`, masterFile, apptTd],
     async () => {
@@ -94,15 +99,6 @@ function ReferenceElement({ patientStatus, type, className, ...props }) {
   );
 }
 
-function DetailHeader() {
-  return (
-    <div className="tw-bg-white tw-rounded-lg tw-py-[5px] tw-px-[10px] tw-flex tw-items-center tw-gap-1 tw-mb-[5px]">
-      <CorticoPreactIcon height="15" />
-      <h5 className="tw-p-0 tw-m-0 tw-text-sm tw-text-[#5b6ce2]">Cortico</h5>
-    </div>
-  );
-}
-
 function DetailLinks({ apptTd }) {
   const corticoURL = getCorticoUrl();
 
@@ -120,23 +116,21 @@ function DetailLinks({ apptTd }) {
   const appointmentNo = appointment.getAppointmentNo();
 
   return (
-    <ul className="tw-list-none tw-pl-0">
-      <li className="tw-mb-2">
-        <a
-          href={`${getDaySheet()}`}
-          target="_blank"
-          className="tw-text-white hover:tw-text-[#d8ddff] tw-underline"
-        >
-          ☛ Day Sheet
+    <ul className="tw-list-none tw-p-0 tw-m-0 tw-font-normal tw-text-gray-600">
+      <li className="tw-flex tw-items-center tw-space-x-1">
+        <TableIcon className="tw-w-5 tw-h-5"></TableIcon>
+        <a href={`${getDaySheet()}`} target="_blank" className="">
+          Day Sheet
         </a>
       </li>
-      <li>
+      <li className="tw-flex tw-items-center tw-space-x-1">
+        <ClipboardCheckIcon className="tw-w-5 tw-h-5"></ClipboardCheckIcon>
         <a
           href={`${getCorticoAppointmentUrl(providerNo, appointmentNo)}`}
           target="_blank"
-          className="tw-text-white hover:tw-text-[#d8ddff] tw-underline"
+          className="  "
         >
-          ☛ Go To Appointment (Cortico)
+          Go To Appointment (Cortico)
         </a>
       </li>
     </ul>
@@ -152,53 +146,59 @@ function DetailContactInfo({ masterFile }) {
 
   return (
     <>
-      {email && (
-        <div>
-          <span class="tw-text-white">☛ </span>
-          <a
-            href={`mailto:${email}`}
-            className="tw-text-white hover:tw-text-[#d8ddff] tw-underline"
-          >
-            {email}
-          </a>
-        </div>
-      )}
-      {homePhone?.phone && (
-        <div>
-          <span class="tw-text-white">☛ </span>
-          <a
-            href={`tel:${homePhone.phone}`}
-            className="tw-text-white hover:tw-text-[#d8ddff] tw-underline"
-          >
-            {homePhone.phone}
-          </a>
-        </div>
-      )}
-      {workPhone?.phone && (
-        <div>
-          <span class="tw-text-white">☛ </span>
-          <a
-            href={`tel:${workPhone.phone}`}
-            className="tw-text-white hover:tw-text-[#d8ddff] tw-underline"
-          >
-            {workPhone.phone}
-          </a>
-        </div>
-      )}
-      {cellphone?.phone && (
-        <div>
-          <span class="tw-text-white">☛ </span>
-          <a
-            href={`tel:${cellphone.phone}`}
-            className="tw-text-white hover:tw-text-[#d8ddff] tw-underline"
-          >
-            {cellphone.phone}
-          </a>
-        </div>
-      )}
+      <div>
+        <p className="tw-text-gray-500 tw-text-sm tw-font-semibold tw-m-0 tw-p-0 tw-mb-2">
+          Patient Information
+        </p>
+      </div>
+      <div className="tw-space-y-2">
+        {email && (
+          <DetailItem
+            icon={<AtSymbolIcon></AtSymbolIcon>}
+            email={email}
+          ></DetailItem>
+        )}
+        {homePhone?.phone && (
+          <DetailItem
+            phone={homePhone.phone}
+            icon={<PhoneOutgoingIcon></PhoneOutgoingIcon>}
+          ></DetailItem>
+        )}
+        {workPhone?.phone && (
+          <DetailItem
+            icon={<PhoneOutgoingIcon></PhoneOutgoingIcon>}
+            phone={workPhone.phone}
+          ></DetailItem>
+        )}
+        {cellphone?.phone && (
+          <DetailItem
+            icon={<PhoneOutgoingIcon></PhoneOutgoingIcon>}
+            phone={cellphone.phone}
+          ></DetailItem>
+        )}
+      </div>
     </>
   );
 }
+
+const DetailItem = ({ phone, email, icon, anchor, ...props }) => {
+  return (
+    <div className="tw-text-gray-500 tw-text-xs tw-font-regular">
+      <div className="tw-flex tw-space-x-1 tw-bg-gray-100 tw-rounded-md tw-px-2 tw-py-1 tw-items-center">
+        <div className="tw-w-3 tw-h-3">{icon}</div>
+        {phone ? (
+          <a href={`tel:${phone}`} className="">
+            {phone}
+          </a>
+        ) : email ? (
+          <a href={`mailto:${email}`} className="">
+            {email}
+          </a>
+        ) : null}
+      </div>
+    </div>
+  );
+};
 
 const Details = forwardRef(
   ({ apptTd, className, masterFile, isError, isLoading, setOn }, ref) => {
@@ -207,35 +207,30 @@ const Details = forwardRef(
         ref={ref}
         className={classNames(
           className,
-          `tw-absolute text-white tw-p-6 tw-rounded-lg tw-bg-[#5b6ce2] -tw-top-3
-           tw-border tw-border-[#d8ddff] tw-border-solid tw-z-10002 text-sm tw-shadow-sm`
+          `tw-absolute text-white tw-rounded-lg tw-bg-white -tw-top-3
+           tw-border tw-border-black tw-border-opacity-10 tw-border-solid tw-z-10002 text-sm tw-shadow-xl`
         )}
       >
-        <div
-          className="tw-absolute tw-top-0 tw-right-0 tw-text-xs tw-px-[5px] tw-py-0 hover:tw-cursor-pointer tw-mr-1 tw-mt-1"
-          onClick={() => setOn(() => false)}
-        >
-          <span className="tw-text-white tw-text-sm">X</span>
+        <div className="tw-px-6 tw-pb-6 tw-pt-4">
+          <p className="tw-text-gray-500 tw-text-sm tw-font-semibold tw-m-0 tw-p-0">
+            Quick Links
+          </p>
+          <p className="tw-text-xs tw-text-gray-500 tw-m-0 tw-p-0 tw-mb-2">
+            Deep links to Cortico regarding the appointment
+          </p>
+          <DetailLinks apptTd={apptTd} />
         </div>
 
-        <DetailHeader />
-
-        <h5 class="color-[#5b6ce2] appointment-menu-subheading">
-          Cortico Links
-        </h5>
-        <DetailLinks apptTd={apptTd} />
-
-        <hr className="tw-m-py-[10px] tw-m-px-0 tw-border-white tw-border-opacity-30 tw-my-0"></hr>
-
-        <h5 className="tw-text-xs tw-text-[#d8ddff]">Contact Information</h5>
         {isError && <div>Failed to Fetch.</div>}
         {isLoading && (
-          <div className="text-center">
+          <div className="tw-text-center">
             <Loader />
           </div>
         )}
         {!isError && !isLoading && (
-          <DetailContactInfo masterFile={masterFile} />
+          <div className="tw-px-6 tw-pb-6 tw-pt-4 tw-bg-slate-200 tw-rounded-b-md">
+            <DetailContactInfo masterFile={masterFile} />
+          </div>
         )}
       </div>
     );
