@@ -50,9 +50,15 @@ const MMessageCard = ({ messageDetails }) => {
           { hour: 'numeric', minute: '2-digit' })}</p>
         <div className='mb-14 w-1/2 mt-3'>
           <div className="flex items-center tw-gap-3">
-            <p className='text-secondary-500 text-h2 font-medium'>
-              { messageDetails.from_user.full_name }
-            </p>
+            <div>
+              <p className='text-secondary-500 text-h1 font-medium'>
+                { messageDetails.from_user.full_name }
+              </p>
+              {/* TODO: Change this once there is an info for clinic */ }
+              <p className='text-secondary-300 text-select2'>
+                { messageDetails.from_user.full_name }'s Clinic
+              </p>
+            </div>
             <div className="text-white bg-blue-600 rounded-full -tw-ml-2">
               <ASvg src="verified" />
             </div>
