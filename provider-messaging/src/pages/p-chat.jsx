@@ -11,13 +11,13 @@ import { useStore } from "../state";
 
 const PChat = observer(() => {
 
-  const { patients,getPatients } = useStore();
+  const { patientStore } = useStore();
 
   useEffect(() => {
-    getPatients();
+    patientStore.getPatientList();
   },[])
 
-  if(!patients?.all.length){
+  if (!patientStore.patients.all?.length) {
     return <div>loading...</div>
   }
 
@@ -32,11 +32,11 @@ const PChat = observer(() => {
             <div className="flex mt-7 mx-5 justify-between items-center">
               <h2 className="text-secondary-500 font-bold text-h2">
                 {
-                  patients?.selected ? <>
+                  patientStore.patients?.selected ? <>
                     Conversations on
                     <span className="text-primary-500">
-                      { " " + patients?.all.find(patient => patient.id == patients?.selected).firstName
-                        + " " + patients?.all.find(patient => patient.id == patients?.selected).lastName }
+                      { " " + patientStore.patients?.selected.firstName
+                        + " " + patientStore.patients?.selected.lastName }
                     </span>
                   </>
                     : "All conversations"

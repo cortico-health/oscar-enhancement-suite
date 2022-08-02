@@ -1,7 +1,7 @@
 import { createContext } from 'preact';
 import { useContext, useEffect, useReducer } from 'preact/hooks';
 import { GET_PATIENTS,SELECT_PATIENT } from '../actions';
-import { usersData } from '../data';
+import { patientsData,usersData } from '../data';
 import reducers from '../reducers';
 import { observer,useLocalObservable } from 'mobx-react-lite'
 import useBackend from '../hooks/useBackend';
@@ -39,6 +39,21 @@ export const StateProvider = observer(({ children }) => {
       }).catch((error) => {
         console.log(error);
       });
+    }
+  }))
+
+  const patientStore = useLocalObservable(() => ({
+    patients: {
+      all: [],
+      selected: null,
+    },
+    getPatientList() {
+      this.patients.all = patientsData;
+    },
+    setSelectedPatient(id) {
+      //Get the patient value
+      const selectedPatient = patientsData.find(patient => patient.id == id);
+      this.patients.selected = selectedPatient ? selectedPatient : null;
     }
   }))
 
@@ -93,6 +108,8 @@ export const StateProvider = observer(({ children }) => {
     userStore.setUserData();
 
     conversationStore.setConversations();
+
+    patientStore.patients = patientsData;
   },[authStore.accessToken])
 
   /* TODO: will convert everything t Mobx, but not yet priority. */
@@ -102,15 +119,7 @@ export const StateProvider = observer(({ children }) => {
     userStore,
     authStore,
     conversationStore,
-    /* TODO: remove the ones below once I'll do their functions */
-    //patients
-    patients: state.patients,
-    getPatients: () => {
-      dispatch({ type: GET_PATIENTS })
-    },
-    selectPatient: (id) => {
-      dispatch({ type: SELECT_PATIENT, payload: id })
-    },
+    patientStore
   }
 
   return (

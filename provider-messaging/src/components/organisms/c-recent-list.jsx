@@ -5,20 +5,21 @@ import { useEffect, useState } from 'preact/hooks';
 import { useStore } from '../../state';
 import MRecentItem from '../molecules/m-recent-item';
 import { route } from 'preact-router';
+import { observer } from 'mobx-react-lite';
 
 const CRecentList = ({...props}) => {
 
-  const { patients, selectPatient, getPatients } = useStore();
+  const { patientStore } = useStore();
 
   useEffect(() => {
-    getPatients();
+    patientStore.getPatientList();
   },[]);
 
   return (
     <div className='px-5 pt-6 bg-secondary-20' {...props}>
       <h2 className='text-secondary-500 font-medium text-h1'>Recent patients</h2>
       {
-        patients?.all.map( patient => {
+        patientStore.patients.all?.map(patient => {
           return <MRecentItem onClick={() => {
             selectPatient(patient.id)
             route('/chat')
@@ -26,8 +27,8 @@ const CRecentList = ({...props}) => {
         })
       }
     </div>
-      
+
   )
 }
 
-export default CRecentList
+export default observer(CRecentList)

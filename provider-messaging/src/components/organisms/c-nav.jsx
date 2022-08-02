@@ -11,18 +11,18 @@ import { observer } from 'mobx-react-lite';
 
 const CNav = () => {
   const route = useRouter()[0];
-  const { patients, authStore } = useStore();
+  const { patientStore,authStore } = useStore();
   const [patient, setPatient] = useState(undefined);
 
 
   useEffect(() => {
-    if (patients.all.length) {
-      if (patients.selected) {
-        setPatient(patients.all.find(pat => pat.id == patients.selected));
+    if (patientStore.patients.all?.length) {
+      if (patientStore.patients.selected) {
+        setPatient(patientStore.patients.selected);
       }
       else setPatient(undefined);
     }
-  }, [patients]);
+  },[patientStore.patients]);
 
   const [isOpened, setIsOpened] = useState(false);
   return (

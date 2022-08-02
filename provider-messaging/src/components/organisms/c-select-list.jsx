@@ -8,10 +8,11 @@ import { route } from 'preact-router';
 import MSearch from '../molecules/m-search';
 import ARadio from '../atoms/a-radio';
 import MSelectItem from '../molecules/m-select-item';
+import { observer } from "mobx-react-lite";
 
 const CSelectList = ({...props}) => {
 
-  const { patients, selectPatient, getPatients } = useStore();
+  const { patientStore } = useStore();
 
   const [select, setSelect] = useState(undefined);
 
@@ -24,26 +25,32 @@ const CSelectList = ({...props}) => {
   }
 
   useEffect(() => {
-    getPatients();
+    if (!patientStore.patients.all) {
+      patientStore.getPatientList();
+    }
   },[]);
 
   useEffect(() => {
-    if(patients?.all.length){
-      setShowPatients(patients?.all);
+    if (patientStore.patients.all?.length) {
+      setShowPatients(patientStore.patients.all);
     }
-  },[patients]);
+  },[patientStore.patients]);
 
+  const searchHandler = (e) => {
+    let filteredData = patientStore.patients.all?.filter(patient => {
+      return patient[filter].toLowerCase().includes(e.target.value.toLowerCase())
+    })
+    setShowPatients(filteredData)
+  }
 
-    const searchHandler = (e) => {
-      let filteredData = patients?.all.filter( patient => {
-        return patient[filter].toLowerCase().includes(e.target.value.toLowerCase())
-      } )
-      setShowPatients(filteredData)
-    }
+  const handleStartConversation = () => {
+    patientStore.setSelectedPatient(select);
+    route('/chat');
+  }
 
-    if(!patients.all.length || !showPatients){
-      return <div>loading...</div>
-    }
+  if (!patientStore.patients.all?.length || !showPatients) {
+    return <div>loading...</div>
+  }
 
 
   return (
@@ -68,10 +75,8 @@ const CSelectList = ({...props}) => {
             }
           </table>
         </div>
-        <AButton onClick={ () => {
-            selectPatient(select)
-            route('/chat')
-        } } className='w-44 right-10 bottom-10 absolute' variant='button-primary-lg'>
+        <AButton onClick={ handleStartConversation }
+          className='w-44 right-10 bottom-10 absolute' variant='button-primary-lg'>
           Get Started
         </AButton>
       </div>
@@ -80,4 +85,4 @@ const CSelectList = ({...props}) => {
   )
 }
 
-export default CSelectList
+export default observer(CSelectList);
