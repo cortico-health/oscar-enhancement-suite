@@ -1,6 +1,6 @@
 import { useEffect, useState } from "preact/hooks";
 import { getPatientInfo } from "../../../../cortico";
-import Button from "../../../core/Button";
+import Button, { PrimaryButton } from "../../../core/Button";
 import dayjs from "dayjs";
 import { getCorticoUrl } from "../../../Utils/Utils";
 
@@ -43,16 +43,11 @@ function RecallButton() {
   };
 
   return (
-    <Button
-      onClick={sendRecallEmail}
-      size="sm"
-      className="tw-bg-indigo-100 tw-text-blue-1000 tw-text-sm  tw-rounded-md tw-font-medium"
-      variant="custom"
-    >
+    <PrimaryButton onClick={sendRecallEmail} size="sm">
       <span className="tw-flex tw-items-center tw-cursor-pointer">
         <span className="tw-cursor-pointer">Recall Email</span>
       </span>
-    </Button>
+    </PrimaryButton>
   );
 }
 
