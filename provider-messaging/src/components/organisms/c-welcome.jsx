@@ -29,7 +29,7 @@ const fields =
 
 const CWelcome = () => {
   return (
-    <div className="bg-white py-20 max-w-4xl mx-auto">
+    <div className="bg-white py-20 px-40 max-w-6xl mx-auto">
       <h1 className="font-bold text-title2 text-secondary-500 mb-2">Welcome back { loggedUser.name }</h1>
       <p className="text-secondary-300 mb-16">Let's start with one option below</p>
       <div className="lg:flex">
@@ -38,7 +38,7 @@ const CWelcome = () => {
             return <MWelcomeOption field={field} />
           })
         }
-        
+
       </div>
     </div>
   );
