@@ -49,7 +49,14 @@ const MMessageCard = ({ messageDetails }) => {
         <p className='text-secondary-200 text-title6 text-center'>{(new Date(messageDetails.created_date)).toLocaleTimeString('en-us',
           { hour: 'numeric', minute: '2-digit' })}</p>
         <div className='mb-14 w-1/2 mt-3'>
-          <p className='text-secondary-500 text-h2 font-medium'>{messageDetails.from_user.full_name}</p>
+          <div className="flex items-center tw-gap-3">
+            <p className='text-secondary-500 text-h2 font-medium'>
+              { messageDetails.from_user.full_name }
+            </p>
+            <div className="text-white bg-blue-600 rounded-full -tw-ml-2">
+              <ASvg src="verified" />
+            </div>
+          </div>
           <div className="flex mt-3">
             {/* TODO: will place a avatar on here if there are any in api */}
             <img className='rounded-full w-12 h-12 object-cover' src="https://images.unsplash.com/photo-1611695434398-4f4b330623e6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80" />
