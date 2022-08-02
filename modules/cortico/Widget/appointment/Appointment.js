@@ -75,16 +75,22 @@ export default function Appointment() {
       {resourcesContainer &&
         resourcesField &&
         createPortal(
-          <>
+          <div className="tailwind preflight tw-inline-block">
             <SetupResources
               resourcesContainer={resourcesContainer}
               resourcesField={resourcesField}
               workflowSlugs={workflowSlugs}
             />
-          </>,
+          </div>,
           resourcesContainer
         )}
-      {buttonContainer && createPortal(<SetupRecall />, buttonContainer)}
+      {buttonContainer &&
+        createPortal(
+          <div className="tailwind preflight tw-inline-block">
+            <SetupRecall />
+          </div>,
+          buttonContainer
+        )}
     </>
   );
 }

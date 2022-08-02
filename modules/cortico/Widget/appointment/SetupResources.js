@@ -137,7 +137,7 @@ export default function SetupResources({
         <div>
           <Select
             label="Medium"
-            className="tw-bg-white tw-text-gray-700"
+            className="tw-bg-white tw-text-gray-700 tw-text-sm"
             options={mediums}
             onChange={(val) => handleMediumChange(val)}
             defaultValue={medium}
@@ -159,7 +159,7 @@ export default function SetupResources({
                   </a>
                 </>
               }
-              className="tw-bg-white tw-text-gray-700 "
+              className="tw-bg-white tw-text-gray-700 tw-text-sm"
               options={slugs}
               onChange={(val) => handleWorkflowChange(val)}
               defaultValue={workflow}

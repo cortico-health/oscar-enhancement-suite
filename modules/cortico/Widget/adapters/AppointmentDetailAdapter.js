@@ -86,7 +86,7 @@ export default function AppointmentDetailAdapter() {
         {appointments.map((appointment) => {
           return createPortal(
             <>
-              <div className="tw-inline-block tw-relative">
+              <div className="tw-inline-block tw-relative tailwind preflight">
                 <AppointmentDetails
                   apptTd={appointment}
                   patientStatus={getPatientStatus(appointment)}
