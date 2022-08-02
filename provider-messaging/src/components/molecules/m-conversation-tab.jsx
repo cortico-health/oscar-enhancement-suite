@@ -5,27 +5,27 @@ import { multipleObjectDataFormatting } from "../../helper/multipleDataFormattin
 import useUtils from "../../hooks/useUtils";
 import CProfileCard from "../organisms/c-profile-card";
 
-const MDiscussionTab = ({ discussion, ...props }) => {
-  const selected = useRouter()[0].matches.id == discussion.id;
+const MConversationTab = ({ conversation,...props }) => {
+  const selected = useRouter()[0].matches.id == conversation.id;
 
   const { getOtherMembersName } = useUtils();
 
-  const [showDiscussion, setShowDiscussion] = useState(undefined);
+  const [showConversation,setShowConversation] = useState(undefined);
 
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
-    setShowDiscussion(discussion);
-  }, [discussion]);
+    setShowConversation(conversation);
+  },[conversation]);
 
-  if (!showDiscussion) {
+  if (!showConversation) {
     return <div>loading...</div>;
   }
 
   return (
     <div
-      onClick={() => {route('/chat/' + discussion?.id)}}
-      href={'/chat/' + discussion?.id}
+      onClick={ () => { route('/chat/' + conversation?.id) } }
+      href={ '/chat/' + conversation?.id }
       {...props}
       className={`flex flex-column items-center px-2.5 block my-8 cursor-pointer ${selected ? "h-24 rounded-lg bg-primary-500" : ""}`}
     >
@@ -88,18 +88,18 @@ const MDiscussionTab = ({ discussion, ...props }) => {
             className={`font-medium text-contact2 lg:text-contact1 cursor-pointer ${selected ? "text-white" : "text-secondary-500"
               }`}
           >
-            {/* <CProfileCard 
+            {/* <CProfileCard
                     setOpenModal={setOpenModal}
-                    opened={openModal} 
+                    opened={openModal}
                     profile={participiant}/> */}
-            {multipleObjectDataFormatting(getOtherMembersName(discussion?.members))}
+            { multipleObjectDataFormatting(getOtherMembersName(conversation?.members)) }
           </span>
           <p
             className={`text-contact3 relative lg:text-contact2 mt-2 text-ellipsis overflow-hidden ${selected ? "text-white" : "text-secondary-500"
               }`}
           >
             <span className="truncate">
-              {discussion?.last_message.from_user.full_name}: {discussion?.last_message?.body}
+              { conversation?.last_message.from_user.full_name }: { conversation?.last_message?.body }
             </span>
           </p>
         </div>
@@ -108,4 +108,4 @@ const MDiscussionTab = ({ discussion, ...props }) => {
   );
 };
 
-export default MDiscussionTab;
+export default MConversationTab;

@@ -17,8 +17,8 @@ const CMessageList = () => {
   const sendRef = useRef(null);
   const messagesEndRef = useRef(null);
 
-  const [discussion, setDiscussion] = useState(undefined);
-  const [discussionInfo, setDiscussionInfo] = useState(undefined); // for chat header
+  const [conversation,setConversation] = useState(undefined);
+  const [conversationInfo,setConversationInfo] = useState(undefined); // for chat header
   const [socketUrl, setSocketUrl] = useState(null);
   const [attachements, setAttachements] = useState([]);
   const [previews, setPreviews] = useState([]);
@@ -34,7 +34,7 @@ const CMessageList = () => {
     const data = JSON.parse(e.data);
     const newMessage = JSON.parse(data.text);
     conversationStore.setConversations();
-    setDiscussion([...discussion, newMessage])
+    setConversation([...conversation,newMessage])
   }
 
   const handlers = {
@@ -64,8 +64,8 @@ const CMessageList = () => {
 
       getChatMessageData(router.matches?.id, authStore.accessToken).then((response) => {
         setSocketUrl(`ws://localhost:8426/chat/${router.matches?.id}/?token=${authStore.accessToken}`)
-        setDiscussion(response[0].data.results)
-        setDiscussionInfo(() => {
+        setConversation(response[0].data.results)
+        setConversationInfo(() => {
           return response[1].data?.results.filter((result) => {
             return result.id === parseInt(router.matches?.id);
           })[0]
@@ -78,10 +78,10 @@ const CMessageList = () => {
 
   useEffect(() => {
     messagesEndRef?.current?.scrollIntoView()
-  }, [discussion]);
+  },[conversation]);
 
   // These are code from before the VCN updates. They will be used in the future
-  // const [selectedDiscussion, setSelectedDiscussion] = useState(undefined);
+  // const [selectedConversationInfo, setSelectedDiscussion] = useState(undefined);
   // const { discussions, auth } = useStore();
   // const isValidURL = (string) => {
   //   var res = string.match(
@@ -90,7 +90,7 @@ const CMessageList = () => {
   //   return res;
   // };
 
-  if (!discussion) {
+  if (!conversation) {
     return (
       <div className="flex items-center justify-center w-full">
         Choose the discussion
@@ -102,11 +102,11 @@ const CMessageList = () => {
     // TODO!
     <div className="c-message-list w-full relative lg:h-screen table lg:flex lg:flex-col justify-between overflow-x-hidden">
       <MChatTools
-        setDiscussion={setDiscussion}
-        selectedDiscussion={discussionInfo}
+        setConversation={ setConversation }
+        selectedConversationInfo={ conversationInfo }
       />
       <div className="flex-grow overflow-y-auto px-9 lg:px-12">
-        {discussion?.map((message) => {
+        { conversation?.map((message) => {
           return <MMessageCard messageDetails={message} />;
         })}
         <div ref={messagesEndRef} />

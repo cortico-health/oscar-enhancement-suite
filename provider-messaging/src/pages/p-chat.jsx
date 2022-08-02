@@ -1,10 +1,8 @@
 import { observer } from "mobx-react-lite";
 import { h } from "preact";
-import { useRouter } from "preact-router";
-import { useEffect, useState } from "preact/hooks";
-import AButton from "../components/atoms/a-button";
+import { useEffect,useState } from "preact/hooks";
 import ASvg from "../components/atoms/a-svg";
-import CDiscussionList from "../components/organisms/c-discussion-list";
+import CConversationList from "../components/organisms/c-conversation-list";
 import CFilesList from "../components/organisms/c-files-list";
 import CMessageList from "../components/organisms/c-message-list";
 import CPatientCard from "../components/organisms/c-patient-card";
@@ -48,7 +46,7 @@ const PChat = observer(() => {
                 <ASvg className="cursor-pointer" src="add" />
               </a>
             </div>
-            <CDiscussionList />
+            <CConversationList />
         </>
       }
 

@@ -3,32 +3,32 @@ import React from "react";
 import { useStore } from "../../state";
 import AButton from "../atoms/a-button";
 import ASvg from "../atoms/a-svg";
-import CDiscussionList from "../organisms/c-discussion-list";
+import CConversationList from "../organisms/c-conversation-list";
 
 const MMobileNav = ({ patient, setIsOpened }) => {
-  const { discussions } = useStore();
+  const { conversationStore } = useStore();
 
-  const [ discussion, setDiscussion ] = useState(undefined);
+  const [conversation,setConversation] = useState(undefined);
 
   const [ numberOfAssets, setNumberOfAssets ] = useState([0,0]);
 
-
   useEffect(() => {
-    if( discussions?.all.length && discussions?.selected) {
-      setDiscussion( discussions?.all.find( disc => disc.id == discussions?.selected) )
+    const { conversations } = conversationStore;
+    if (conversations?.length && conversations?.selected) {
+      setConversation(conversations?.find(disc => disc.id == conversations?.selected))
       setIsOpened(false)
     }
-  },[discussions])
+  },[conversationStore.conversations])
 
   useEffect(() => {
-    if(discussion) {
-      setNumberOfAssets( discussion.messages.reduce((acc, current) => {
+    if (conversation) {
+      setNumberOfAssets(conversation.messages.reduce((acc,current) => {
         acc[0]+=current.assets.length
         acc[1]+=current.links.length
           return acc;
         },[0,0]))
     }
-  },[discussion])
+  },[conversation])
 
   return (
     <div style={ { width: '425px' } } className="m-mobile-nav relative overflow-y-auto h-screen bg-white rounded-r-lg px-5 pt-5.5">
@@ -91,7 +91,7 @@ const MMobileNav = ({ patient, setIsOpened }) => {
 
       <h2 className="text-secondary-500 font-bold text-h3">Directory</h2>
 
-      <CDiscussionList/>
+      <CConversationList />
 
     </div>
   );

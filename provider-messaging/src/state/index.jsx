@@ -1,17 +1,11 @@
 import { createContext } from 'preact';
 import { useContext, useEffect, useReducer } from 'preact/hooks';
-import { GET_DISCUSSIONS, ADD_MESSAGE, GET_PATIENTS, SELECT_DISCUSSION, SELECT_PATIENT, LOGIN, LOGOUT, GET_USER } from '../actions';
+import { GET_PATIENTS,SELECT_PATIENT } from '../actions';
 import { usersData } from '../data';
 import reducers from '../reducers';
-import axios from 'axios';
-import { observer, useLocalObservable } from 'mobx-react-lite'
-import { action } from 'mobx';
+import { observer,useLocalObservable } from 'mobx-react-lite'
 import useBackend from '../hooks/useBackend';
 import useAuth from '../hooks/useAuth';
-
-// const discussionsSocket = new WebSocket(process.env.WEBSOCKET_URL);
-
-
 
 export const initialState = {
   user: {},
@@ -23,7 +17,6 @@ export const initialState = {
     all: [],
     selected: null
   }
-  // discussionsSocket: discussionsSocket
 };
 
 const StateContext = createContext();
@@ -118,8 +111,6 @@ export const StateProvider = observer(({ children }) => {
     selectPatient: (id) => {
       dispatch({ type: SELECT_PATIENT, payload: id })
     },
-    //discussions
-    discussions: state.discussions,
   }
 
   return (

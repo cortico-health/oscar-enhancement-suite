@@ -7,9 +7,8 @@ import ASvg from '../atoms/a-svg';
 import MSearch from './m-search';
 import useUtils from '../../hooks/useUtils';
 
-const MChatTools = ({ setDiscussion, selectedDiscussion, ...props }) => {
+const MChatTools = ({ setDiscussion,selectedConversationInfo,...props }) => {
   const { getOtherMembersName } = useUtils();
-  const { patients, discussions } = useStore();
 
   /* TODO: to be edited since patient is not prioritize now. */
   /* const patient = useMemo(() => {
@@ -25,18 +24,14 @@ const MChatTools = ({ setDiscussion, selectedDiscussion, ...props }) => {
     setDiscussion({...discussion, messages: filteredData} )
   } */
 
-  const numberOfAssets = discussions?.selected ? discussions?.all.find(disc => disc?.id == discussions?.selected)?.messages?.reduce((acc, current) => {
-    acc[0] += current?.assets?.length
-    acc[1] += current?.links?.length
-    return acc;
-  }, [0, 0]) : [0, 0];
+  const numberOfAssets = [0,0];
 
   return (
     <div {...props} className='flex justify-between items-center my-10 mx-9 lg:mx-12 pb-10 border-b border-secondary-100'>
       <div className='flex gap-x-2.5 items-center'>
         <div className='w-fit'>
           <h1 className='text-secondary-500 font-bold text-title3'>
-            {multipleObjectDataFormatting(getOtherMembersName(selectedDiscussion?.members))}
+            { multipleObjectDataFormatting(getOtherMembersName(selectedConversationInfo?.members)) }
           </h1>
           {/* TODO: will uncomment this if patient will be available. */}
           {/* {
