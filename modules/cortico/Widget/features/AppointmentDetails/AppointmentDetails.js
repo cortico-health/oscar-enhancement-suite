@@ -5,6 +5,7 @@ import {
   CheckIcon,
   TableIcon,
   ClipboardCheckIcon,
+  LockClosedIcon,
 } from "@heroicons/react/outline";
 import classNames from "classnames";
 import { forwardRef } from "preact/compat";
@@ -21,6 +22,9 @@ import {
   getCorticoUrl,
   getDaySheet,
 } from "../../../../Utils/Utils";
+import SignInButton from "../../base/buttons/SignInButton";
+import { useDispatch } from "react-redux";
+import corticoIcon from "../../../../../resources/icons/logo-dark-blue.svg";
 
 export default function AppointmentDetails({
   apptTd,
@@ -100,14 +104,30 @@ function ReferenceElement({ patientStatus, type, className, ...props }) {
 }
 
 function DetailLinks({ apptTd }) {
+  const dispatch = useDispatch();
   const corticoURL = getCorticoUrl();
+
+  const handleClick = () => {
+    dispatch({
+      type: "app/setOpen",
+      payload: true,
+    });
+    dispatch({
+      type: "sidebar/setVisible",
+      payload: "Account",
+    });
+  };
 
   if (!corticoURL) {
     return (
-      <div className="text-center text-white">
-        Cortico clinic has not been set. Please set the Cortico Clinic URL from
-        the sidebar.
-      </div>
+      <>
+        <div className="tw-max-w-[300px]">
+          <div className="tw-whitespace-normal">
+            This feature requires the user to be signed in.
+          </div>
+          <SignInButton onClick={handleClick}></SignInButton>
+        </div>
+      </>
     );
   }
 
@@ -211,6 +231,9 @@ const Details = forwardRef(
            tw-border tw-border-black tw-border-opacity-10 tw-border-solid tw-z-10002 text-sm tw-shadow-xl`
         )}
       >
+        <div className="tw-p-4 tw-flex tw-justify-center tw-items-center">
+          <img src={corticoIcon} className="tw-w-12 tw-h-12" />
+        </div>
         <div className="tw-px-6 tw-pb-6 tw-pt-4">
           <p className="tw-text-gray-500 tw-text-sm tw-font-semibold tw-m-0 tw-p-0">
             Quick Links
