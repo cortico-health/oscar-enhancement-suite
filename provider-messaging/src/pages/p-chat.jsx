@@ -9,7 +9,7 @@ import CPatientCard from "../components/organisms/c-patient-card";
 
 import { useStore } from "../state";
 
-const PChat = observer(() => {
+const PChat = () => {
 
   const { patientStore } = useStore();
 
@@ -28,32 +28,35 @@ const PChat = observer(() => {
         className="mt-7 pb-6 px-5.5 h-min border-b border-secondary-100"
       />
       {
-        location.hash== "#assets" ? <CFilesList />: <>
-            <div className="flex mt-7 mx-5 justify-between items-center">
-              <h2 className="text-secondary-500 font-bold text-h2">
-                {
-                  patientStore.patients?.selected ? <>
-                    Conversations on
-                    <span className="text-primary-500">
-                      { " " + patientStore.patients?.selected.firstName
-                        + " " + patientStore.patients?.selected.lastName }
-                    </span>
-                  </>
-                    : "All conversations"
-                }
-              </h2>
-              <a href="/add-to-chat">
-                <ASvg className="cursor-pointer" src="add" />
-              </a>
-            </div>
-            <CConversationList />
-        </>
+          location.hash == "#assets" ?
+            <CFilesList />
+            :
+            <>
+              <div className="flex mt-7 mx-5 justify-between items-center">
+                <h2 className="text-secondary-500 font-bold text-h2">
+                  {
+                    patientStore.patients?.selected ? <>
+                      Conversations on
+                      <span className="text-primary-500">
+                        { " " + patientStore.patients?.selected.firstName
+                          + " " + patientStore.patients?.selected.lastName }
+                      </span>
+                    </>
+                      : "All conversations"
+                  }
+                </h2>
+                <a href="/add-to-chat">
+                  <ASvg className="cursor-pointer" src="add" />
+                </a>
+              </div>
+              <CConversationList />
+            </>
       }
 
     </div>
     <CMessageList />
   </div>
   )
-});
+};
 
-export default PChat;
+export default observer(PChat);

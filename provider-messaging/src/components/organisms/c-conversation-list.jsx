@@ -5,27 +5,41 @@ import { useStore } from "../../state";
 import MConversationTab from "../molecules/m-conversation-tab";
 import MSearch from "../molecules/m-search";
 import CNotFound from "./c-not-found";
-import useBackend from "../../hooks/useBackend";
 import { observer } from "mobx-react-lite";
 
 const CConversationList = () => {
-  const { getConversationsList } = useBackend();
-  const { authStore,conversationStore } = useStore();
+  const { conversationStore,patientStore } = useStore();
 
+  const [patientName,setPatientName] = useState("");
   const [conversations,setConversations] = useState({});
+
+  /* useEffect(() => {
+    if(patients?.all.length){
+      getDiscussions(patients?.selected);
+    }
+  }, [patientStore.patients]) */
+
   useEffect(() => {
-    /* TODO: in case this solution failed I can just uncomment this. */
-    /* getConversationsList(authStore.accessToken).then((response) => {
-        setConversations(response.data.results)
-      })
-      .catch((error) => {
-        console.log(error);
-      }); */
+    /* TODO: getUsers and Patients */
+    /* getPatients();
+    getUsers(); */
+  },[])
+
+  useEffect(() => {
     setConversations(conversationStore.conversations)
   },[conversationStore.conversations])
 
   const searchHandler = (e) => {
-    console.log(e.target.value + "is being searched...")
+    /* TODO: Improved if needed */
+    const nameQuery = e.target.value;
+    const filteredData = conversationStore.conversations.filter((conversation) => {
+      return conversation.members.find((member) => {
+        return member.full_name.includes(nameQuery);
+      })
+    })
+
+    setConversations(filteredData);
+    setPatientName(nameQuery);
   }
 
   return (
@@ -41,7 +55,7 @@ const CConversationList = () => {
             }) }
           </>
         )
-          : <CNotFound name="Hello" />
+          : <CNotFound name={ patientName } />
       }
     </div>
   );

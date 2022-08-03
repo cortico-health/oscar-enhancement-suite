@@ -92,6 +92,7 @@ export const StateProvider = observer(({ children }) => {
     setConversations() {
       getConversationsList(authStore.accessToken).then((response) => {
         this.conversations = response.data.results;
+
       })
       .catch((error) => {
         console.log(error);
@@ -109,7 +110,7 @@ export const StateProvider = observer(({ children }) => {
 
     conversationStore.setConversations();
 
-    patientStore.patients = patientsData;
+    patientStore.getPatientList();
   },[authStore.accessToken])
 
   /* TODO: will convert everything t Mobx, but not yet priority. */
