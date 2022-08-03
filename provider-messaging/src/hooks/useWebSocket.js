@@ -1,6 +1,6 @@
 import React from 'react'
 
-/* TODO: I'll transform this into hooks if I'll fully grasp the */
+/* TODO: I'll transform this into hooks if I'll fully grasp the behaviour of WebSocket in Preact */
 
 const useWebSocket = (url) => {
     const socket = new WebSocket('ws://localhost:8426/chat/1/');
