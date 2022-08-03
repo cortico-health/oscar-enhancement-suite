@@ -4,6 +4,7 @@ import { useRef } from 'preact/hooks';
 import ASvg from '../atoms/a-svg';
 import DOMPurify from 'dompurify'
 import { useStore } from '../../state';
+import MProfilePicture from './m-profile-picture';
 
 const formatURL = (string) => {
   return string.replace(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g, (url) => '<a class="text-primary-500" href="' + url + '">' + url + '</a>')
@@ -16,7 +17,6 @@ const MMessageCard = ({ messageDetails }) => {
   });
 
   const { userStore } = useStore();
-
 
   const textRef = useRef(null);
   return (
@@ -64,8 +64,7 @@ const MMessageCard = ({ messageDetails }) => {
             </div>
           </div>
           <div className="flex mt-3">
-            {/* TODO: will place a avatar on here if there are any in api */}
-            <img className='rounded-full w-12 h-12 object-cover' src="https://images.unsplash.com/photo-1611695434398-4f4b330623e6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80" />
+            <MProfilePicture avatar={ messageDetails.author?.avatar } className="relative w-11 h-11" />
             {
               messageDetails?.assets && messageDetails.assets.map(asset => {
                 if (asset.type = "jpg") {
