@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 import Select from "../base/Select";
 import Checkbox from "../base/Checkbox";
 import { createPortal } from "preact/compat";
-import Button from "../../../core/Button";
+import Button, { PrimaryButton } from "../../../core/Button";
 import {
   VideoCameraIcon,
   QuestionMarkCircleIcon,
@@ -137,7 +137,7 @@ export default function SetupResources({
         <div>
           <Select
             label="Medium"
-            className="tw-bg-white tw-text-gray-700"
+            className="tw-bg-white tw-text-gray-700 tw-text-sm"
             options={mediums}
             onChange={(val) => handleMediumChange(val)}
             defaultValue={medium}
@@ -159,7 +159,7 @@ export default function SetupResources({
                   </a>
                 </>
               }
-              className="tw-bg-white tw-text-gray-700 "
+              className="tw-bg-white tw-text-gray-700 tw-text-sm"
               options={slugs}
               onChange={(val) => handleWorkflowChange(val)}
               defaultValue={workflow}
@@ -182,7 +182,7 @@ export default function SetupResources({
       {buttonContainer &&
         medium === "virtual" &&
         createPortal(
-          <div className="tw-p-2 tw-inline-block">
+          <div className="tw-p-2 tw-inline-block tailwind preflight">
             <VideoCallButton></VideoCallButton>
           </div>,
           buttonContainer
@@ -206,16 +206,11 @@ function VideoCallButton() {
     window.open(getCorticoUrl() + "/appointment/" + apptNo);
   };
   return (
-    <Button
-      onClick={openAppointmentLink}
-      size="sm"
-      className="tw-bg-indigo-100 tw-text-blue-1000 tw-text-sm  tw-rounded-md tw-font-medium"
-      variant="custom"
-    >
+    <PrimaryButton onClick={openAppointmentLink}>
       <span className="tw-flex tw-items-center tw-cursor-pointer">
         <span className="tw-cursor-pointer">Video Call</span>
         <VideoCameraIcon className="tw-h-4 tw-w-4 tw-ml-2 tw-cursor-pointer" />
       </span>
-    </Button>
+    </PrimaryButton>
   );
 }

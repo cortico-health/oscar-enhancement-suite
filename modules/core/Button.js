@@ -60,7 +60,7 @@ export function PrimaryButton({
       size="sm"
       loading={loading}
       className={classNames(
-        "tw-bg-indigo-100 tw-text-blue-1000 tw-text-sm  tw-rounded-md tw-font-medium",
+        "tw-bg-indigo-100 tw-text-blue-1000 tw-text-sm  tw-rounded-md tw-font-semibold",
         className
       )}
       variant="custom"

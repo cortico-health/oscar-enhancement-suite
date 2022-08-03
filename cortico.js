@@ -133,7 +133,6 @@ const init_cortico = async function () {
      * TODO: fixme?
      */
     if (!oscar.isJuno() && !oscar.isKaiOscarHost()) {
-      dragAndDrop();
     }
 
     addCorticoLogo();
