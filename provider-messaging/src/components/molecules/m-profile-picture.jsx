@@ -7,12 +7,7 @@ import ASvg from '../atoms/a-svg'
 const MProfilePicture = ({ avatar,className = "" }) => {
     if (!avatar) {
         return (
-            <div className={ classNames(
-                "overflow-hidden bg-gray-200 rounded-full",
-                className
-            ) }>
-                <ASvg src="user-circle" />
-            </div>
+            <ASvg className={ classNames(className) } src="avatar" />
         )
     }
     return (

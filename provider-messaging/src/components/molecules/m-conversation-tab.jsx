@@ -28,7 +28,7 @@ const MConversationTab = ({ conversation,...props }) => {
       onClick={ () => { route('/chat/' + conversation?.id) } }
       href={ '/chat/' + conversation?.id }
       {...props}
-      className={ `flex flex-column items-center px-2.5 block my-8 cursor-pointer ${selected ? "h-24 rounded-lg bg-primary-500" : ""}` }
+      className={ `flex flex-column items-center px-2.5 block my-8 cursor-pointer ${selected ? "h-24 rounded-lg bg-primary-700" : ""}` }
     >
       <div
         className={ `flex relative overflow-hidden text-ellipsis items-center` }
