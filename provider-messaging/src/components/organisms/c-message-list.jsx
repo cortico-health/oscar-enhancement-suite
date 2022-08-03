@@ -8,6 +8,9 @@ import MSend from "../molecules/m-send";
 import useWebSocket from "react-use-websocket";
 import useBackend from "../../hooks/useBackend";
 import { observer } from "mobx-react-lite";
+import ASvg from "../atoms/a-svg";
+
+const fileTypes = ['jpg','jpeg','png','pdf']
 
 const CMessageList = () => {
   const { getChatMessageData } = useBackend();
@@ -40,10 +43,14 @@ const CMessageList = () => {
   const handlers = {
     onUpload: (e) => {
       setAttachements([...attachements, ...e.target.files]);
-      var reader = new FileReader();
-      reader.readAsDataURL(e.target.files[0]);
+
+      const file = e.target.files[0];
+      const extension = file.name.split(".").pop().toLowerCase();
+
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
       reader.onload = function (event) {
-        setPreviews([...previews, event.target.result]);
+        setPreviews([...previews,{ dataURL: event.target.result,type: extension }]);
       };
     },
     onSend: () => {
@@ -90,6 +97,15 @@ const CMessageList = () => {
   //   return res;
   // };
 
+  //Delete files that are incorrectly placed and not sent.
+  const handleDeleteFile = (e,data) => {
+    setPreviews((prevPreviews) => {
+      return prevPreviews.filter((previews) => {
+        return previews.dataURL !== data
+      })
+    });
+  }
+
   if (!conversation) {
     return (
       <div className="flex items-center justify-center w-full">
@@ -112,9 +128,25 @@ const CMessageList = () => {
         <div ref={messagesEndRef} />
       </div>
 
-      {previews.map((preview, index) => {
-        return <img width="20" key={index} src={preview} />;
-      })}
+      <div className="flex items-center gap-4">
+        { previews.map((preview,index) => {
+          const { dataURL,type } = preview;
+          /* Doesn't do anything */
+          if (fileTypes.indexOf(type) === -1) return;
+
+          return (
+            <div className="relative">
+              <ASvg onClick={ (e) => handleDeleteFile(e,preview.dataURL) } className="cursor-pointer absolute tw-bg-white rounded-full color-white h-5 w-5 -top-1 -right-1" src="exit" />
+              { (type !== fileTypes[3]) ?
+                <img width="50" key={ index } src={ dataURL } />
+                :
+                <ASvg src="document" className="h-16 w-16" /> // If pdf
+              }
+            </div>
+          );
+        }) }
+      </div>
+
       <div className="sticky bg-secondary-10 mx-9 lg:mx-12">
         <MSend
           placeholder="Type message..."

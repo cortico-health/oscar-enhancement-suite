@@ -8,7 +8,7 @@ const MSend = ({ className = "", ...props}) => {
     <AInput type='textarea' name='send' {...props} className={`m-send ${className}`}>
       <label htmlFor="file">
         <ASvg className='absolute cursor-pointer pointer-events-auto left-2 top-9 -translate-y-1/2' src="attach"/>
-        <input type="file" id="file" className='hidden' name="file" accept="image/gif,image/jpeg,image/jpg,image/png" multiple="" data-original-title="upload photos"/>
+        <input type="file" id="file" className='hidden' name="file" accept="image/gif,image/jpeg,image/jpg,image/png,*.pdf" multiple="" data-original-title="upload photos" />
       </label>
       <div class="mb-1">
         <ASvg className='absolute cursor-pointer pointer-events-auto right-2 top-9 -translate-y-1/2' src="send"/>
