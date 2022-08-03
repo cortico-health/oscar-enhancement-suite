@@ -106,7 +106,6 @@ const CUsersList = observer(() => {
       />
     {
         showUsers.map((user,index) => {
-        // const selected = discussionListed.id == discussions?.selected;
         return (
           <MUserTab
             key={user.id}

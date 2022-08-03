@@ -7,13 +7,13 @@ import { useStore } from "../state";
 
 const PAddToChat = () => {
 
-  const { patients, getPatients } = useStore();
+  const { patientStore } = useStore();
 
   useEffect(() => {
-    getPatients();
+    patientStore.getPatientList();
   },[])
 
-  if(!patients?.all.length){
+  if (!patientStore.patients?.all.length) {
     return <div>loading...</div>
   }
 
