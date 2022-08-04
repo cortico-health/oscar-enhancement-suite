@@ -47,8 +47,8 @@ into tampermonkey, or greasemonkey for direct testing before publishing.
 
 ## VCN
 
-1. `cp dc.dev.yml docker-compose.override.yml`
-2. `docker-compose up`
+1. `docker-compose up vcn-web`
+2. Navigate to `localhost:3500`
 
 # Manual Testing
 
