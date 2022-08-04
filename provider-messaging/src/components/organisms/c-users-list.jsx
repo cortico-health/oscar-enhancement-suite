@@ -66,9 +66,11 @@ const CUsersList = observer(() => {
 
 
   const handleCreateConversation = () => {
-    createConversation(getCheckedPatients()).then((response) => {
-      console.log(response)
-      conversationStore.conversations.push(response.data)
+    createConversation([userStore.user.id, ...getCheckedPatients()]).then((response) => {
+      const existingConversation = conversationStore.conversations.find((conversation) => {
+        return conversation.id === parseInt(response.data.id);
+      })
+      if (!existingConversation) conversationStore.conversations.push(response.data)
       conversationStore.setSelectedConversation(response.data.id)
       route(`/chat/${response.data.id}`)
     }).catch((error) => {
