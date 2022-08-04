@@ -1,11 +1,11 @@
 import axios from "./axios";
 
 export const getUserData = async () => {
-    return await axios.get(`/vcn/user`);
+    return await axios.get(`/vcn/user/`);
 }
 
 export const getUsersData = async () => {
-    return await axios.get(`/vcn/users`);
+    return await axios.get(`/vcn/users/`);
 }
 
 export const updateUser = async (inputs) => {

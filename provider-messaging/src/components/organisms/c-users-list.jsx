@@ -1,4 +1,5 @@
 import { h } from "preact";
+import { route } from 'preact-router';
 import { useEffect, useState } from "preact/hooks";
 import { useStore } from "../../state";
 import AButton from "../atoms/a-button";
@@ -10,7 +11,7 @@ import { createConversation } from "../../api/conversations";
 
 const CUsersList = observer(() => {
 
-  const { userStore } = useStore();
+  const { userStore, conversationStore } = useStore();
 
   const [checked, setChecked] = useState(undefined);
   const [confirm, setConfirm] = useState(false);
@@ -43,9 +44,15 @@ const CUsersList = observer(() => {
   }
 
   const getCheckedPatients = () => {
-    return userStore.users?.filter(user => {
-      return checked[user.id]
-    })
+    const userIds = []
+
+    if (checked) {
+      for (const key in checked) {
+        if (checked[key]) userIds.push(parseInt(key))
+      }
+    }
+
+    return userIds
   }
 
   const nextHandle = () => {
@@ -59,13 +66,13 @@ const CUsersList = observer(() => {
 
 
   const handleCreateConversation = () => {
-    createConversation(getCheckedPatients())/* .then((response) => {
-      setIsLoading(false);
-      setConfirm(false);
+    createConversation(getCheckedPatients()).then((response) => {
+      console.log(response)
+      conversationStore.conversations.push(response.data)
+      route(`/chat/${response.data.id}`)
     }).catch((error) => {
-      setIsLoading(false);
-      setConfirm(false);
-    }) */
+      console.log(error);
+    });
   }
 
   if (!showUsers) {
