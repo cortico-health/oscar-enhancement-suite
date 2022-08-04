@@ -80,8 +80,8 @@ export const StateProvider = observer(({ children }) => {
     selectedConversation: null,
     conversations: [],
     setSelectedConversation(id) {
-      this.selectedConversation = this.conversations.find((result) => {
-        return result.id === parseInt(id);
+      this.selectedConversation = this.conversations.find((conversation) => {
+        return conversation.id === parseInt(id);
       })
     },
     setConversations() {
