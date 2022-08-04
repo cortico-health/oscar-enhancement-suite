@@ -11,6 +11,7 @@ import { multipleDataFormatting } from "../../helper/multipleDataFormatting";
 
 const STATUS = ["Available", "Away", "On Vacation"];
 const PRONOUNS = ["She/Her", "He/His"];
+const NOTIFY = ["Every message","Once a day","Never"];
 
 const CEditProfile = ({ profile, opened, setOpenModal }) => {
   const [inputs, setInputs] = useState(profile);
@@ -52,7 +53,7 @@ const CEditProfile = ({ profile, opened, setOpenModal }) => {
           <div className="o-aspect-ratio w-40 mb-7 mx-auto">
             <img
               className="o-aspect-ratio__content rounded-2xl object-cover"
-              src={profile.avatar || "https://images.unsplash.com/photo-1611695434398-4f4b330623e6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80"}
+              src={ inputs.avatar || "https://images.unsplash.com/photo-1611695434398-4f4b330623e6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80" }
             />
 
           <label className="absolute bottom-0 right-0">
@@ -72,7 +73,7 @@ const CEditProfile = ({ profile, opened, setOpenModal }) => {
             {STATUS.map((status) => {
               return (
                 <ARadio
-                  checked={profile.availability_status === status.toLowerCase()}
+                  checked={ inputs.availability_status === status.toLowerCase() }
                   onChange={handleChange}
                   name="availability_status"
                   className="font-normal"
@@ -85,7 +86,7 @@ const CEditProfile = ({ profile, opened, setOpenModal }) => {
           <h2 className="c-edit-profile__heading mb-2">Languages</h2>
           <div className="flex items-center gap-x-2.5 mb-5">
             <p className="c-edit-profile__copy">
-              {multipleDataFormatting(profile.languages)}
+              { multipleDataFormatting(inputs.languages) }
             </p>
             <ASvg
               role="button"
@@ -99,7 +100,7 @@ const CEditProfile = ({ profile, opened, setOpenModal }) => {
             {PRONOUNS.map((pronouns) => {
               return (
                 <ARadio
-                  checked={profile.pronouns === pronouns}
+                  checked={ inputs.pronouns === pronouns }
                   onChange={handleChange}
                   name="pronouns"
                   className="font-normal"
@@ -110,18 +111,18 @@ const CEditProfile = ({ profile, opened, setOpenModal }) => {
           </div>
 
           <h2 className="c-edit-profile__heading mb-2">Location</h2>
-          <p className="c-edit-profile__copy mb-5">{profile.location}</p>
+          <p className="c-edit-profile__copy mb-5">{ inputs.location }</p>
 
           <h2 className="c-edit-profile__heading mb-2">Contacts</h2>
           <MProfileInput
-            defaultValue={profile.email}
+            defaultValue={ inputs.email }
             placeholder="email"
             icon="email"
             name="email"
             onChange={handleChange}
           />
           <MProfileInput
-            defaultValue={profile.cell_phone}
+            defaultValue={ inputs.cell_phone }
             placeholder="phone"
             icon="phone"
             name="cell_phone"
@@ -135,28 +136,28 @@ const CEditProfile = ({ profile, opened, setOpenModal }) => {
             </div>
             <div className="pb-11">
               <MProfileInput
-                defaultValue={profile.twitter_url}
+                defaultValue={ inputs.twitter_url }
                 placeholder="twitter account"
                 name="twitter_url"
                 icon="twitter"
                 onChange={handleChange}
               />
               <MProfileInput
-                defaultValue={profile.instagram_url}
+                defaultValue={ inputs.instagram_url }
                 placeholder="instagram account"
                 name="instagram_url"
                 icon="instagram"
                 onChange={handleChange}
               />
               <MProfileInput
-                defaultValue={profile.linked_in_url}
+                defaultValue={ inputs.linked_in_url }
                 placeholder="linkedin account"
                 name="linked_in_url"
                 icon="linkedin"
                 onChange={handleChange}
               />
               <MProfileInput
-                defaultValue={profile.facebook_url}
+                defaultValue={ inputs.facebook_url }
                 placeholder="facebook account"
                 name="facebook_url"
                 icon="facebook"
@@ -168,74 +169,53 @@ const CEditProfile = ({ profile, opened, setOpenModal }) => {
 
         <div className="c-edit-profile__right-section">
           <h1 className="font-bold text-secondary-500 text-title1 mb-2">
-            {profile.name}
+            { inputs.name }
           </h1>
-          <p className="text-secondary-300 text-title7">{profile.clinic}</p>
+          <p className="text-secondary-300 text-title7">{ inputs.clinic_name }</p>
           <p role="button" className="text-primary-500 text-title6 font-medium">Add/change clinic &#10132;</p>
 
           <textarea
             name="biography"
             onChange={handleChange}
-            defaultValue={profile.biography}
+            defaultValue={ inputs.biography }
             className="c-edit-profile__textarea"
-            rows={9}
-
+            rows={ 9 }
             />
           <h2 className="c-edit-profile__heading mb-3">Special Interests</h2>
           <textarea
             name="special_interests"
             onChange={handleChange}
-            defaultValue={profile.special_interests}
+            defaultValue={ inputs.special_interests }
             className="c-edit-profile__textarea"
             rows={5}
           />
           <h2 className="c-edit-profile__heading mb-3">Notify via sms</h2>
           <div className="flex gap-x-4.5">
-              <ARadio
-                checked={inputs.smsNotify=='Every message'}
-                onChange={handleChange}
-                name="smsNotify"
-                className="font-normal"
-                value="Every message"
-              />
-              <ARadio
-                checked={inputs.smsNotify=='Once a day'}
-                onChange={handleChange}
-                name="smsNotify"
-                className="font-normal"
-                value="Once a day"
-              />
-              <ARadio
-                checked={inputs.smsNotify=='Never'}
-                onChange={handleChange}
-                name="smsNotify"
-                className="font-normal"
-                value="Never"
-              />
+            { NOTIFY.map((notify) => {
+              return (
+                <ARadio
+                  checked={ inputs.sms_notification_frequency == notify.toLowerCase() }
+                  onChange={ handleChange }
+                  name="sms_notification_frequency"
+                  className="font-normal"
+                  value={ notify }
+                />
+              )
+            }) }
           </div>
           <h2 className="c-edit-profile__heading mt-4 mb-3">Notify via email</h2>
-            <div className="flex gap-x-4.5">
-              <ARadio
-                checked={inputs.emailNotify=='Every message'}
-                onChange={handleChange}
-                name="emailNotify"
-                className="font-normal"
-                value="Every message"
-              />
-              <ARadio
-                checked={inputs.emailNotify=='Once a day'}
-                onChange={handleChange}
-                name="emailNotify"
-                className="font-normal"
-                value="Once a day"
-              />
-              <ARadio
-                checked={inputs.emailNotify=='Never'}
-                onChange={handleChange}
-                name="emailNotify"
-                className="font-normal"
-                value="Never"
-              />
+          <div className="flex gap-x-4.5">
+            { NOTIFY.map((notify) => {
+              return (
+                <ARadio
+                  checked={ inputs.email_notification_frequency == notify.toLowerCase() }
+                  onChange={ handleChange }
+                  name="email_notification_frequency"
+                  className="font-normal"
+                  value={ notify }
+                />
+              )
+            }) }
           </div>
           <div className="w-full flex justify-end">
             <AButton className="w-28" isLoading={ isLoading } onClick={ handleSave }>Save</AButton>
