@@ -69,6 +69,7 @@ const CUsersList = observer(() => {
     createConversation(getCheckedPatients()).then((response) => {
       console.log(response)
       conversationStore.conversations.push(response.data)
+      conversationStore.setSelectedConversation(response.data.id)
       route(`/chat/${response.data.id}`)
     }).catch((error) => {
       console.log(error);

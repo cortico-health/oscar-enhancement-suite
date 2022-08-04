@@ -80,22 +80,16 @@ export const StateProvider = observer(({ children }) => {
     selectedConversation: null,
     conversations: [],
     setSelectedConversation(id) {
-      getConversationsList(authStore.accessToken).then((response) => {
-        this.selectedConversation = response.data?.results.filter((result) => {
-          return result.id === parseInt(id);
-        })[0]
-      }).catch((error) => {
-        console.log(error)
+      this.selectedConversation = this.conversations.find((result) => {
+        return result.id === parseInt(id);
       })
     },
     setConversations() {
       getConversationsList(authStore.accessToken).then((response) => {
         this.conversations = response.data.results;
-
-      })
-        .catch((error) => {
-          console.log(error);
-        });
+      }).catch((error) => {
+        console.log(error);
+      });
     }
   }))
 
