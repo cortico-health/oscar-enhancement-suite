@@ -1,9 +1,9 @@
 import { createContext } from 'preact';
-import { useContext,useEffect,useReducer } from 'preact/hooks';
-import { patientsData,usersData } from '../data';
-import { observer,useLocalObservable } from 'mobx-react-lite'
+import { useContext, useEffect, useReducer } from 'preact/hooks';
+import { patientsData, usersData } from '../data';
+import { observer, useLocalObservable } from 'mobx-react-lite'
 import { getConversationsList } from '../api/conversations';
-import { getUserData } from '../api/users';
+import { getUserData, getUsersData } from '../api/users';
 import { login } from '../api/auth';
 
 export const initialState = {
@@ -23,8 +23,13 @@ const StateContext = createContext();
 export const StateProvider = observer(({ children }) => {
 
   const userStore = useLocalObservable(() => ({
-    users: {
-      all: []
+    users: [],
+    setUsersData() {
+      getUsersData(authStore.accessToken).then((response) => {
+        this.users = response.data.results;
+      }).catch((error) => {
+        console.log(error);
+      });
     },
     user: null,
     setUserData() {
@@ -55,7 +60,7 @@ export const StateProvider = observer(({ children }) => {
     accessToken: localStorage["vcnAccessToken"] || null,
     auth: localStorage["user"] || {},
     login(email, password) {
-      login(email,password).then((response) => {
+      login(email, password).then((response) => {
         this.accessToken = response.data.access;
         localStorage.setItem('vcnAccessToken', this.accessToken)
         console.log("Login Successful")
@@ -67,7 +72,7 @@ export const StateProvider = observer(({ children }) => {
     logout() {
       userStore.user = null;
       this.accessToken = null;
-      localStorage.setItem('vcnAccessToken',null);
+      localStorage.setItem('vcnAccessToken', null);
     }
   }))
 
@@ -88,9 +93,9 @@ export const StateProvider = observer(({ children }) => {
         this.conversations = response.data.results;
 
       })
-      .catch((error) => {
-        console.log(error);
-      });
+        .catch((error) => {
+          console.log(error);
+        });
     }
   }))
 
@@ -98,14 +103,13 @@ export const StateProvider = observer(({ children }) => {
     if (!authStore?.accessToken) return;
 
     //Fetting the users
-    userStore.users = usersData;
-
     userStore.setUserData();
+    userStore.setUsersData();
 
     conversationStore.setConversations();
 
     patientStore.getPatientList();
-  },[authStore.accessToken])
+  }, [authStore.accessToken])
 
   /* TODO: will convert everything t Mobx, but not yet priority. */
 
