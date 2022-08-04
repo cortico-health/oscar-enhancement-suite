@@ -1,5 +1,4 @@
 import axios from "./axios";
-import { getAccessToken } from "./utils";
 
 export const getChatMessageData = async(id) => {
     return await axios.get(`/vcn/chat-messages/${id}/`);
