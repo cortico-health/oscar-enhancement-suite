@@ -1,5 +1,5 @@
 import { h } from "preact";
-import { useEffect,useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import { useStore } from "../../state";
 
 import MConversationTab from "../molecules/m-conversation-tab";
@@ -8,26 +8,8 @@ import CNotFound from "./c-not-found";
 import { observer } from "mobx-react-lite";
 
 const CConversationList = () => {
-  const { conversationStore,patientStore } = useStore();
-
-  const [patientName,setPatientName] = useState("");
-  const [conversations,setConversations] = useState({});
-
-  /* useEffect(() => {
-    if(patients?.all.length){
-      getDiscussions(patients?.selected);
-    }
-  }, [patientStore.patients]) */
-
-  useEffect(() => {
-    /* TODO: getUsers and Patients */
-    /* getPatients();
-    getUsers(); */
-  },[])
-
-  useEffect(() => {
-    setConversations(conversationStore.conversations)
-  },[conversationStore.conversations])
+  const { conversationStore } = useStore();
+  const [patientName, setPatientName] = useState("");
 
   const searchHandler = (e) => {
     /* TODO: Improved if needed */
@@ -44,18 +26,18 @@ const CConversationList = () => {
 
   return (
     <div className="mx-2.5">
-      <MSearch onInput={ searchHandler } />
+      <MSearch onInput={searchHandler} />
       {
-        conversations && conversations?.length ? (
+        conversationStore.conversations && conversationStore.conversations?.length ? (
           <>
-            { conversations.map(conversation => {
+            {conversationStore.conversations.map(conversation => {
               return (
-                <MConversationTab conversation={ conversation } />
+                <MConversationTab conversation={conversation} />
               )
-            }) }
+            })}
           </>
         )
-          : <CNotFound name={ patientName } />
+          : <CNotFound name={patientName} />
       }
     </div>
   );

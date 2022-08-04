@@ -85,7 +85,7 @@ export const StateProvider = observer(({ children }) => {
       })
     },
     setConversations() {
-      getConversationsList(authStore.accessToken).then((response) => {
+      getConversationsList().then((response) => {
         this.conversations = response.data.results;
       }).catch((error) => {
         console.log(error);
@@ -96,12 +96,10 @@ export const StateProvider = observer(({ children }) => {
   useEffect(() => {
     if (!authStore?.accessToken) return;
 
-    //Fetting the users
+    // Fetch all initial data after logging in
     userStore.setUserData();
     userStore.setUsersData();
-
     conversationStore.setConversations();
-
     patientStore.getPatientList();
   }, [authStore.accessToken])
 
