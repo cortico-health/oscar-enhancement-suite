@@ -67,14 +67,14 @@ const MConversationTab = ({ conversation,...props }) => {
                     setOpenModal={setOpenModal}
                     opened={openModal}
                     profile={participiant}/> */}
-            { multipleObjectDataFormatting(getOtherMembersName(conversation?.members)) }
+            { multipleObjectDataFormatting(getOtherMembersName(showConversation?.members)) }
           </span>
           <p
             className={`text-contact3 relative lg:text-contact2 mt-2 text-ellipsis overflow-hidden ${selected ? "text-white" : "text-secondary-500"
               }`}
           >
             <span className="truncate">
-              { conversation?.last_message.from_user.full_name }: { conversation?.last_message?.body }
+              { showConversation?.last_message.from_user.full_name }: { showConversation?.last_message?.body }
             </span>
           </p>
         </div>
