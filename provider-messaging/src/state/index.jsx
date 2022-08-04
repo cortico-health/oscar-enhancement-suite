@@ -1,11 +1,10 @@
 import { createContext } from 'preact';
-import { useContext, useEffect, useReducer } from 'preact/hooks';
-import { GET_PATIENTS,SELECT_PATIENT } from '../actions';
+import { useContext,useEffect,useReducer } from 'preact/hooks';
 import { patientsData,usersData } from '../data';
-import reducers from '../reducers';
 import { observer,useLocalObservable } from 'mobx-react-lite'
-import useBackend from '../hooks/useBackend';
-import useAuth from '../hooks/useAuth';
+import { getConversationsList } from '../api/conversations';
+import { getUserData } from '../api/users';
+import { login } from '../api/auth';
 
 export const initialState = {
   user: {},
@@ -22,11 +21,6 @@ export const initialState = {
 const StateContext = createContext();
 
 export const StateProvider = observer(({ children }) => {
-  //get necessary backend
-  const { getConversationsList,getUserData } = useBackend();
-  const { login } = useAuth();
-
-  const [state, dispatch] = useReducer(reducers, initialState);
 
   const userStore = useLocalObservable(() => ({
     users: {

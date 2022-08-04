@@ -6,12 +6,11 @@ import { observer } from 'mobx-react-lite'
 
 import MSearch from "../molecules/m-search";
 import MUserTab from "../molecules/m-user-tab";
-import useBackend from "../../hooks/useBackend";
+import { createConversation } from "../../api/conversations";
 
 const CUsersList = observer(() => {
 
   const { userStore } = useStore();
-  const { createConversation } = useBackend();
 
   const [checked,setChecked] = useState(undefined);
   const [ confirm, setConfirm ] = useState(false);

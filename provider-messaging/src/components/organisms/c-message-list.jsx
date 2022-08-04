@@ -6,14 +6,13 @@ import MChatTools from "../molecules/m-chat-tools";
 import MMessageCard from "../molecules/m-message-card";
 import MSend from "../molecules/m-send";
 import useWebSocket from "react-use-websocket";
-import useBackend from "../../hooks/useBackend";
 import { observer } from "mobx-react-lite";
 import ASvg from "../atoms/a-svg";
+import { getChatMessageData } from "../../api/conversations";
 
 const fileTypes = ['jpg','jpeg','png','pdf']
 
 const CMessageList = () => {
-  const { getChatMessageData } = useBackend();
 
   const { authStore,conversationStore,patientStore } = useStore();
   const router = useRouter()[0];
