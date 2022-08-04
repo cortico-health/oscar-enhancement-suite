@@ -1,6 +1,4 @@
 import { h } from 'preact';
-import { useMemo, useState } from 'preact/hooks';
-import { useStore } from '../../state';
 import { multipleObjectDataFormatting } from "../../helper/multipleDataFormatting";
 import AButton from '../atoms/a-button';
 import ASvg from '../atoms/a-svg';
