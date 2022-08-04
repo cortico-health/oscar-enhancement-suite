@@ -1,0 +1,5 @@
+.m-search {
+  & input {
+    @apply rounded-l-full rounded-r-full pl-11 py-3;
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "vcn",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.7",
+    "dompurify": "^2.3.10",
+    "preact": "^10.5.15",
+    "preact-cli-svg-loader": "^1.1.0",
+    "preact-custom-element": "^4.2.1",
+    "preact-router": "^4.1.0",
+    "preactement": "^1.8.2",
+    "tailwindcss": "^3.1.6"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.1.5",
+    "postcss": "^8.4.14",
+    "postcss-import": "^14.1.0",
+    "postcss-preset-env": "^7.7.2",
+    "vite": "^2.9.7",
+    "vite-plugin-svgr": "^2.2.1"
+  }
+}

@@ -1,79 +1,101 @@
 import { h } from "preact";
 import { useRouter } from "preact-router";
-import { useState, useRef, useEffect } from "preact/hooks";
+import { useState,useRef,useEffect } from "preact/hooks";
 import { useStore } from "../../state";
 import MChatTools from "../molecules/m-chat-tools";
 import MMessageCard from "../molecules/m-message-card";
 import MSend from "../molecules/m-send";
+import useWebSocket from "react-use-websocket";
+import { observer } from "mobx-react-lite";
+import ASvg from "../atoms/a-svg";
+import { getChatMessageData } from "../../api/conversations";
+
+const fileTypes = ['jpg','jpeg','png','pdf']
 
 const CMessageList = () => {
-  const [discussion, setDiscussion] = useState(undefined);
 
+  const { authStore,conversationStore,patientStore } = useStore();
   const router = useRouter()[0];
-
-  const { addNewMessage, discussions, selectDiscussion, auth } =
-    useStore();
-
-  const isValidURL = (string) => {
-    var res = string.match(
-      /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
-    );
-    return res;
-  };
-
-  useEffect(() => {
-    selectDiscussion(router.matches?.id);
-  }, [router.matches?.id]);
-
-  useEffect(() => {
-    if (router.matches?.id && discussions?.all.length) {
-      setDiscussion(
-        discussions?.all.find((disc) => disc.id == router.matches?.id)
-      );
-    }
-    if(!router.matches?.id) {
-      setDiscussion(undefined);
-    }
-  }, [discussions, router]);
-
-  const [attachements, setAttachements] = useState([]);
-
-  const [previews, setPreviews] = useState([]);
-
   const sendRef = useRef(null);
+  const messagesEndRef = useRef(null);
+
+  const [messages,setMessages] = useState(undefined);
+  const [socketUrl, setSocketUrl] = useState(null);
+  const [attachements, setAttachements] = useState([]);
+  const [preview,setPreview] = useState(null);
+  const [patientSelected,setPatientSelected] = useState(null);
+
+  const { getWebSocket } = useWebSocket(socketUrl, {
+    onOpen: () => console.log('WebSocket connection opened.'),
+    onClose: () => console.log('WebSocket connection closed.'),
+    shouldReconnect: (closeEvent) => true,
+    onMessage: (event) => processMessage(event)
+  });
+
+  const processMessage = (e) => {
+    const data = JSON.parse(e.data);
+    const newMessage = JSON.parse(data.text);
+    conversationStore.setConversations();
+    setMessages([...messages,newMessage])
+  }
 
   const handlers = {
     onUpload: (e) => {
       setAttachements([...attachements, ...e.target.files]);
-      var reader = new FileReader();
-      reader.readAsDataURL(e.target.files[0]);
+
+      const file = e.target.files[0];
+      const extension = file.name.split(".").pop().toLowerCase();
+
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
       reader.onload = function (event) {
-        setPreviews([...previews, event.target.result]);
+        setPreview({ dataURL: event.target.result,name: file.name,type: extension });
       };
     },
     onSend: () => {
       const value = sendRef?.current?.base?.lastElementChild?.value;
       if (value) {
-        const links = isValidURL(value);
-        addNewMessage({
-          author: auth,
-          content: value,
-          date: new Date(),
-          assets: [
-            // {
-            //   type: "jpg",
-            //   src: "https://images.unsplash.com/photo-1527613426441-4da17471b66d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=852&q=80",
-            // },
-          ],
-          links: links ? links : [],
-        });
+        getWebSocket().send(JSON.stringify({
+          'body': value,
+        }));
         sendRef.current.base.lastElementChild.value = "";
         window.scrollTo(0, document.body.scrollHeight);
       }
     },
   };
 
-  if (!discussion) {
+  useEffect(() => {
+    if (router.matches?.id) {
+      conversationStore.setSelectedConversation(router.matches?.id);
+
+      getChatMessageData(router.matches?.id,authStore.accessToken).then((response) => {
+        setSocketUrl(`ws://localhost:8426/chat/${router.matches?.id}/?token=${authStore.accessToken}`)
+        setMessages(response.data.results)
+      }).catch((error) => {
+        console.log(error);
+      });
+    }
+  }, [router.matches?.id]);
+
+  useEffect(() => {
+    setPatientSelected(patientStore.patients.selected);
+  },[patientStore.patients.selected]);
+
+  useEffect(() => {
+    messagesEndRef?.current?.scrollIntoView()
+  },[messages]);
+
+  // These are code from before the VCN updates. They will be used in the future
+  // const [selectedConversationInfo, setSelectedDiscussion] = useState(undefined);
+  // const { discussions, auth } = useStore();
+  // const isValidURL = (string) => {
+  //   var res = string.match(
+  //     /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
+  //   );
+  //   return res;
+  // };
+
+  if (!messages) {
     return (
       <div className="flex items-center justify-center w-full">
         Choose the discussion
@@ -83,31 +105,52 @@ const CMessageList = () => {
 
   return (
     // TODO!
-    <div className="c-message-list px-9 w-full lg:px-12 relative lg:h-screen table lg:flex lg:flex-col justify-between overflow-x-hidden">
-      <div>
-        <MChatTools
-          setDiscussion={setDiscussion}
-          selectedDiscussion={discussion}
-        />
-        {discussion?.messages?.map((message) => {
+    <div className="c-message-list w-full relative lg:h-screen table lg:flex lg:flex-col justify-between overflow-x-hidden">
+      <MChatTools
+        setMessages={ setMessages }
+        selectedConversationInfo={ conversationStore.selectedConversation }
+      />
+      <div className="flex-grow overflow-y-auto px-9 lg:px-12">
+        { messages?.map((message) => {
           return <MMessageCard messageDetails={message} />;
         })}
+        <div ref={messagesEndRef} />
       </div>
 
-      {previews.map((preview, index) => {
-        return <img width="20" key={index} src={preview} />;
-      })}
-      <div className="sticky bg-secondary-10">
+      <div className="sticky bg-secondary-10 mx-9 lg:mx-12 tw-pt-4">
+        {
+          (fileTypes.indexOf(preview?.type) > -1) ? (
+            <div className="flex items-center gap-4">
+              { (preview.type !== fileTypes[3]) ?
+                <img width="50" src={ preview.dataURL } />
+                :
+                <ASvg src="document" className="h-16 w-16" /> // If pdf
+              }
+              <p>{ preview.name }</p>
+              <ASvg src="exit" className="cursor-pointer" onClick={ () => setPreview(null) } />
+            </div>
+          ) : (
+            null
+          )
+        }
+
         <MSend
           placeholder="Type message..."
           ref={sendRef}
           handlers={handlers}
         />
         <p className="text-h3 text-right text-secondary-500 pb-4">
-          Sending a message about{" "}
-          <span className="font-bold">Hanson Deck.</span>{" "}
-          <a className="font-medium text-primary-500" href="select">
-            Switch Patient
+          { patientSelected && "Sending a message about " }
+
+          <span className="font-bold">
+            { (patientSelected) ?
+              `${patientSelected?.firstName} ${patientSelected?.lastName}.`
+              :
+              "No Patient."
+            }</span>
+          { " " }
+          <a className="font-medium text-primary-500" href="/select">
+            { patientSelected ? "Switch" : "Choose" } Patient
           </a>
         </p>
       </div>
@@ -115,4 +158,4 @@ const CMessageList = () => {
   );
 };
 
-export default CMessageList;
+export default observer(CMessageList);

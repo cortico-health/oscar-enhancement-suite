@@ -1,13 +1,13 @@
 import { h } from "preact";
-import { useRouter, route } from "preact-router";
+import { Link, useRouter } from "preact-router";
 import { useEffect, useState } from "preact/hooks";
-import { useStore } from "../../state";
+import { useStateValue } from "../../state";
 import CProfileCard from "../organisms/c-profile-card";
 
 const MDiscussionTab = ({ discussion, ...props }) => {
   const selected = useRouter()[0].matches.id == discussion.id;
 
-  const { auth } = useStore();
+  const { auth } = useStateValue();
 
   const [showDiscussion, setShowDiscussion] = useState(undefined);
 
@@ -24,8 +24,9 @@ const MDiscussionTab = ({ discussion, ...props }) => {
     return <div>loading...</div>;
   }
   return (
-    <div
-      onClick={() => route('/chat/'+discussion?.id)}
+    <Link
+    // <div>
+    // activeClassName="bg-red-500"
       href={'/chat/'+discussion?.id}
       {...props}
       className={`px-2.5 block ${
@@ -107,7 +108,8 @@ const MDiscussionTab = ({ discussion, ...props }) => {
           </p>
         </div>
       </div>
-    </div>
+      {/* </div> */}
+    </Link>
   );
 };
 

@@ -34,6 +34,11 @@
   }
 
   &:hover {
+    @apply p-6;
+    @apply bg-white;
+    @apply rounded-3xl;
+    box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.1);
+
     & .m-welcome-option__circle {
       @apply bg-primary-500;
     }

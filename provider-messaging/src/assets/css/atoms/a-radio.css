@@ -36,8 +36,8 @@
   & input:checked ~ .a-radio__checkmark:after {
     @apply bg-primary-500 border border-white;
     display: block;
-    width: 8px;
-    height: 8px;
+    width: 7.5px;
+    height: 7.5px;
     border-radius: 50%;
   }
 }

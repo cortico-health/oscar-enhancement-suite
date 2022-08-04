@@ -6,7 +6,7 @@ import { useRef } from "preact/hooks";
 const AInput = ({
   children,
   name,
-  className,
+  className = "",
   onInput,
   onChange,
   onKeyDown,

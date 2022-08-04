@@ -3,7 +3,7 @@ import CRecentList from "../components/organisms/c-recent-list";
 import CSelectList from "../components/organisms/c-select-list";
 // import ASvg from "../components/atoms/a-svg";
 // import MSearch from "../components/molecules/m-search";
-// import CDiscussionList from "../components/organisms/c-discussion-list";
+// import CConversationList from "../components/organisms/c-conversation-list";
 // import CMessageList from "../components/organisms/c-message-list";
 // import CPatientCard from "../components/organisms/c-patient-card";
 

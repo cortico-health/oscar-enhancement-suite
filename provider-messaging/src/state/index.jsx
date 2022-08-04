@@ -1,13 +1,10 @@
 import { createContext } from 'preact';
 import { useContext, useEffect, useReducer } from 'preact/hooks';
-import { GET_DISCUSSIONS, ADD_MESSAGE, GET_PATIENTS, SELECT_DISCUSSION, SELECT_PATIENT, LOGIN, LOGOUT, GET_USER } from '../actions';
-import { usersData } from '../data';
-import reducers from '../reducers';
-import { useLocalObservable } from 'mobx-react-lite'
-
-// const discussionsSocket = new WebSocket(process.env.WEBSOCKET_URL);
-
-
+import { patientsData, usersData } from '../data';
+import { observer, useLocalObservable } from 'mobx-react-lite'
+import { getConversationsList } from '../api/conversations';
+import { getUserData, getUsersData } from '../api/users';
+import { login } from '../api/auth';
 
 export const initialState = {
   user: {},
@@ -19,79 +16,109 @@ export const initialState = {
     all: [],
     selected: null
   }
-  // discussionsSocket: discussionsSocket
 };
 
 const StateContext = createContext();
 
-export const StateProvider = ({children}) => {
+export const StateProvider = observer(({ children }) => {
 
-  const [ state, dispatch ]  = useReducer(reducers, initialState);
+  const userStore = useLocalObservable(() => ({
+    users: [],
+    setUsersData() {
+      getUsersData(authStore.accessToken).then((response) => {
+        this.users = response.data.results;
+      }).catch((error) => {
+        console.log(error);
+      });
+    },
+    user: null,
+    setUserData() {
+      getUserData(authStore.accessToken).then((response) => {
+        this.user = response.data;
+      }).catch((error) => {
+        console.log(error);
+      });
+    }
+  }))
 
-  const store = useLocalObservable(() => ({
-    users: {
-      all: []
+  const patientStore = useLocalObservable(() => ({
+    patients: {
+      all: [],
+      selected: null,
+    },
+    getPatientList() {
+      this.patients.all = patientsData;
+    },
+    setSelectedPatient(id) {
+      //Get the patient value
+      const selectedPatient = patientsData.find(patient => patient.id == id);
+      this.patients.selected = selectedPatient ? selectedPatient : null;
+    }
+  }))
+
+  const authStore = useLocalObservable(() => ({
+    accessToken: localStorage["vcnAccessToken"] || null,
+    auth: localStorage["user"] || {},
+    login(email, password) {
+      login(email, password).then((response) => {
+        this.accessToken = response.data.access;
+        localStorage.setItem('vcnAccessToken', this.accessToken)
+        console.log("Login Successful")
+      }).catch((error) => {
+        console.log(error);
+        console.log("Login Failed")
+      });
+    },
+    logout() {
+      userStore.user = null;
+      this.accessToken = null;
+      localStorage.setItem('vcnAccessToken', null);
+    }
+  }))
+
+  const conversationStore = useLocalObservable(() => ({
+    selectedConversation: null,
+    conversations: [],
+    setSelectedConversation(id) {
+      getConversationsList(authStore.accessToken).then((response) => {
+        this.selectedConversation = response.data?.results.filter((result) => {
+          return result.id === parseInt(id);
+        })[0]
+      }).catch((error) => {
+        console.log(error)
+      })
+    },
+    setConversations() {
+      getConversationsList(authStore.accessToken).then((response) => {
+        this.conversations = response.data.results;
+
+      })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   }))
 
   useEffect(() => {
-    // TODO: Fetch here.
-    store.users.all = usersData
-  }, [])
+    if (!authStore?.accessToken) return;
+
+    //Fetting the users
+    userStore.setUserData();
+    userStore.setUsersData();
+
+    conversationStore.setConversations();
+
+    patientStore.getPatientList();
+  }, [authStore.accessToken])
+
+  /* TODO: will convert everything t Mobx, but not yet priority. */
 
   const value = {
     // This is the MobX store. TODO: move any other global state here too, it's easier.
-    store,
-
-    //patients
-    patients: state.patients,
-    getPatients: () => {
-      dispatch({ type: GET_PATIENTS })
-    },
-    selectPatient: (id) => {
-      dispatch({ type: SELECT_PATIENT, payload: id  })
-    },
-    //discussions
-    discussions: state.discussions,
-    getDiscussions: (patientId) => {
-      dispatch({ type: GET_DISCUSSIONS, payload: patientId  })
-    },
-    selectDiscussion: (id) => {
-      dispatch({ type: SELECT_DISCUSSION, payload: id  })
-    },
-    addNewMessage: (message) => {
-      dispatch({ type: ADD_MESSAGE, payload: message })
-    },
-    //users
-    auth: state.auth,
-    login: (email, password) => {
-      localStorage.setItem('user', 
-        JSON.stringify({
-          email: email,
-          password: password
-        })
-      )
-      let auth;
-      const user = JSON.parse(localStorage.getItem('user'));
-      if(user){
-        auth = usersData.find( users => users.email == user.email)
-      }
-      else { auth = null }
-      dispatch({ type: LOGIN, payload: auth })
-    },
-    logout: () => {
-      localStorage.clear();
-      dispatch({ type: LOGOUT })
-    },
-    getUser: () => {
-      let auth;
-      const user = JSON.parse(localStorage.getItem('user'));
-      if(user){
-        auth = usersData.find( users => users.email == user.email)
-      }
-      else { auth = null }
-      dispatch({ type: GET_USER, payload: auth })
-    } 
+    userStore,
+    authStore,
+    conversationStore,
+    patientStore
   }
 
   return (
@@ -99,6 +126,6 @@ export const StateProvider = ({children}) => {
       {children}
     </StateContext.Provider>
   )
-};
+});
 
 export const useStore = () => useContext(StateContext);
