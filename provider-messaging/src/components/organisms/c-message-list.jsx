@@ -23,7 +23,7 @@ const CMessageList = () => {
   const [messages,setMessages] = useState(undefined);
   const [socketUrl, setSocketUrl] = useState(null);
   const [attachements, setAttachements] = useState([]);
-  const [previews, setPreviews] = useState([]);
+  const [preview,setPreview] = useState(null);
   const [patientSelected,setPatientSelected] = useState(null);
 
   const { getWebSocket } = useWebSocket(socketUrl, {
@@ -50,7 +50,7 @@ const CMessageList = () => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = function (event) {
-        setPreviews([...previews,{ dataURL: event.target.result,type: extension }]);
+        setPreview({ dataURL: event.target.result,name: file.name,type: extension });
       };
     },
     onSend: () => {
@@ -96,15 +96,6 @@ const CMessageList = () => {
   //   return res;
   // };
 
-  //Delete files that are incorrectly placed and not sent.
-  const handleDeleteFile = (e,data) => {
-    setPreviews((prevPreviews) => {
-      return prevPreviews.filter((previews) => {
-        return previews.dataURL !== data
-      })
-    });
-  }
-
   if (!messages) {
     return (
       <div className="flex items-center justify-center w-full">
@@ -127,26 +118,23 @@ const CMessageList = () => {
         <div ref={messagesEndRef} />
       </div>
 
-      <div className="flex items-center gap-4">
-        { previews.map((preview,index) => {
-          const { dataURL,type } = preview;
-          /* Doesn't do anything */
-          if (fileTypes.indexOf(type) === -1) return;
-
-          return (
-            <div className="relative">
-              <ASvg onClick={ (e) => handleDeleteFile(e,preview.dataURL) } className="cursor-pointer absolute tw-bg-white rounded-full color-white h-5 w-5 -top-1 -right-1" src="exit" />
-              { (type !== fileTypes[3]) ?
-                <img width="50" key={ index } src={ dataURL } />
+      <div className="sticky bg-secondary-10 mx-9 lg:mx-12 tw-pt-4">
+        {
+          (fileTypes.indexOf(preview?.type) > -1) ? (
+            <div className="flex items-center gap-4">
+              { (preview.type !== fileTypes[3]) ?
+                <img width="50" src={ preview.dataURL } />
                 :
                 <ASvg src="document" className="h-16 w-16" /> // If pdf
               }
+              <p>{ preview.name }</p>
+              <ASvg src="exit" className="cursor-pointer" onClick={ () => setPreview(null) } />
             </div>
-          );
-        }) }
-      </div>
+          ) : (
+            null
+          )
+        }
 
-      <div className="sticky bg-secondary-10 mx-9 lg:mx-12">
         <MSend
           placeholder="Type message..."
           ref={sendRef}
