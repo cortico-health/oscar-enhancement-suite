@@ -15,7 +15,7 @@ const fileTypes = ['jpg','jpeg','png','pdf']
 const CMessageList = () => {
   const { getChatMessageData } = useBackend();
 
-  const { authStore, conversationStore } = useStore();
+  const { authStore,conversationStore,patientStore } = useStore();
   const router = useRouter()[0];
   const sendRef = useRef(null);
   const messagesEndRef = useRef(null);
@@ -24,6 +24,7 @@ const CMessageList = () => {
   const [socketUrl, setSocketUrl] = useState(null);
   const [attachements, setAttachements] = useState([]);
   const [previews, setPreviews] = useState([]);
+  const [patientSelected,setPatientSelected] = useState(null);
 
   const { getWebSocket } = useWebSocket(socketUrl, {
     onOpen: () => console.log('WebSocket connection opened.'),
@@ -76,6 +77,10 @@ const CMessageList = () => {
       });
     }
   }, [router.matches?.id]);
+
+  useEffect(() => {
+    setPatientSelected(patientStore.patients.selected);
+  },[patientStore.patients.selected]);
 
   useEffect(() => {
     messagesEndRef?.current?.scrollIntoView()
@@ -148,10 +153,17 @@ const CMessageList = () => {
           handlers={handlers}
         />
         <p className="text-h3 text-right text-secondary-500 pb-4">
-          Sending a message about{" "}
-          <span className="font-bold">Hanson Deck.</span>{" "}
-          <a className="font-medium text-primary-500" href="select">
-            Switch Patient
+          { patientSelected && "Sending a message about " }
+
+          <span className="font-bold">
+            { (patientSelected) ?
+              `${patientSelected?.firstName} ${patientSelected?.lastName}.`
+              :
+              "No Patient."
+            }</span>
+          { " " }
+          <a className="font-medium text-primary-500" href="/select">
+            { patientSelected ? "Switch" : "Choose" } Patient
           </a>
         </p>
       </div>
