@@ -33,7 +33,6 @@ const MConversationTab = ({ conversation,...props }) => {
       <div
         className={ `flex relative overflow-hidden text-ellipsis items-center` }
       >
-        {/* TODO: Will uncomment this if its dependency will be okay */}
         { showConversation?.members.length > 1 ? (
           <div className="cursor-pointer ml-4" onClick={ () => setOpenModal(true) }>
             <div className="o-aspect-ratio w-11 min-w-8 h-11 min-h-8">
