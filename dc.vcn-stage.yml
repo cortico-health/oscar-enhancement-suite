@@ -1,0 +1,10 @@
+version: "3.3"
+
+services:
+  vcn-web:
+    ports:
+      - "3500:3500"
+
+networks:
+  back-tier:
+    driver: bridge

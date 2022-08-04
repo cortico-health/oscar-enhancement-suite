@@ -1,6 +1,6 @@
 import { h } from "preact";
 import { useRouter } from "preact-router";
-import { useState,useRef,useEffect } from "preact/hooks";
+import { useState, useRef, useEffect } from "preact/hooks";
 import { useStore } from "../../state";
 import MChatTools from "../molecules/m-chat-tools";
 import MMessageCard from "../molecules/m-message-card";
@@ -10,20 +10,20 @@ import { observer } from "mobx-react-lite";
 import ASvg from "../atoms/a-svg";
 import { getChatMessageData } from "../../api/conversations";
 
-const fileTypes = ['jpg','jpeg','png','pdf']
+const fileTypes = ['jpg', 'jpeg', 'png', 'pdf']
 
 const CMessageList = () => {
 
-  const { authStore,conversationStore,patientStore } = useStore();
+  const { authStore, conversationStore, patientStore } = useStore();
   const router = useRouter()[0];
   const sendRef = useRef(null);
   const messagesEndRef = useRef(null);
 
-  const [messages,setMessages] = useState(undefined);
+  const [messages, setMessages] = useState(undefined);
   const [socketUrl, setSocketUrl] = useState(null);
   const [attachements, setAttachements] = useState([]);
-  const [preview,setPreview] = useState(null);
-  const [patientSelected,setPatientSelected] = useState(null);
+  const [preview, setPreview] = useState(null);
+  const [patientSelected, setPatientSelected] = useState(null);
 
   const { getWebSocket } = useWebSocket(socketUrl, {
     onOpen: () => console.log('WebSocket connection opened.'),
@@ -35,8 +35,7 @@ const CMessageList = () => {
   const processMessage = (e) => {
     const data = JSON.parse(e.data);
     const newMessage = JSON.parse(data.text);
-    conversationStore.setConversations();
-    setMessages([...messages,newMessage])
+    setMessages([...messages, newMessage])
   }
 
   const handlers = {
@@ -49,7 +48,7 @@ const CMessageList = () => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = function (event) {
-        setPreview({ dataURL: event.target.result,name: file.name,type: extension });
+        setPreview({ dataURL: event.target.result, name: file.name, type: extension });
       };
     },
     onSend: () => {
@@ -68,7 +67,7 @@ const CMessageList = () => {
     if (router.matches?.id) {
       conversationStore.setSelectedConversation(router.matches?.id);
 
-      getChatMessageData(router.matches?.id,authStore.accessToken).then((response) => {
+      getChatMessageData(router.matches?.id, authStore.accessToken).then((response) => {
         setSocketUrl(`ws://localhost:8426/chat/${router.matches?.id}/?token=${authStore.accessToken}`)
         setMessages(response.data.results)
       }).catch((error) => {
@@ -79,11 +78,11 @@ const CMessageList = () => {
 
   useEffect(() => {
     setPatientSelected(patientStore.patients.selected);
-  },[patientStore.patients.selected]);
+  }, [patientStore.patients.selected]);
 
   useEffect(() => {
     messagesEndRef?.current?.scrollIntoView()
-  },[messages]);
+  }, [messages]);
 
   // These are code from before the VCN updates. They will be used in the future
   // const [selectedConversationInfo, setSelectedDiscussion] = useState(undefined);
@@ -107,11 +106,11 @@ const CMessageList = () => {
     // TODO!
     <div className="c-message-list w-full relative lg:h-screen table lg:flex lg:flex-col justify-between overflow-x-hidden">
       <MChatTools
-        setMessages={ setMessages }
-        selectedConversationInfo={ conversationStore.selectedConversation }
+        setMessages={setMessages}
+        selectedConversationInfo={conversationStore.selectedConversation}
       />
       <div className="flex-grow overflow-y-auto px-9 lg:px-12">
-        { messages?.map((message) => {
+        {messages?.map((message) => {
           return <MMessageCard messageDetails={message} />;
         })}
         <div ref={messagesEndRef} />
@@ -121,13 +120,13 @@ const CMessageList = () => {
         {
           (fileTypes.indexOf(preview?.type) > -1) ? (
             <div className="flex items-center gap-4">
-              { (preview.type !== fileTypes[3]) ?
-                <img width="50" src={ preview.dataURL } />
+              {(preview.type !== fileTypes[3]) ?
+                <img width="50" src={preview.dataURL} />
                 :
                 <ASvg src="document" className="h-16 w-16" /> // If pdf
               }
-              <p>{ preview.name }</p>
-              <ASvg src="exit" className="cursor-pointer" onClick={ () => setPreview(null) } />
+              <p>{preview.name}</p>
+              <ASvg src="exit" className="cursor-pointer" onClick={() => setPreview(null)} />
             </div>
           ) : (
             null
@@ -140,17 +139,17 @@ const CMessageList = () => {
           handlers={handlers}
         />
         <p className="text-h3 text-right text-secondary-500 pb-4">
-          { patientSelected && "Sending a message about " }
+          {patientSelected && "Sending a message about "}
 
           <span className="font-bold">
-            { (patientSelected) ?
+            {(patientSelected) ?
               `${patientSelected?.firstName} ${patientSelected?.lastName}.`
               :
               "No Patient."
             }</span>
-          { " " }
+          {" "}
           <a className="font-medium text-primary-500" href="/select">
-            { patientSelected ? "Switch" : "Choose" } Patient
+            {patientSelected ? "Switch" : "Choose"} Patient
           </a>
         </p>
       </div>

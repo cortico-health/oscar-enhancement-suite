@@ -80,34 +80,26 @@ export const StateProvider = observer(({ children }) => {
     selectedConversation: null,
     conversations: [],
     setSelectedConversation(id) {
-      getConversationsList(authStore.accessToken).then((response) => {
-        this.selectedConversation = response.data?.results.filter((result) => {
-          return result.id === parseInt(id);
-        })[0]
-      }).catch((error) => {
-        console.log(error)
+      this.selectedConversation = this.conversations.find((conversation) => {
+        return conversation.id === parseInt(id);
       })
     },
     setConversations() {
-      getConversationsList(authStore.accessToken).then((response) => {
+      getConversationsList().then((response) => {
         this.conversations = response.data.results;
-
-      })
-        .catch((error) => {
-          console.log(error);
-        });
+      }).catch((error) => {
+        console.log(error);
+      });
     }
   }))
 
   useEffect(() => {
     if (!authStore?.accessToken) return;
 
-    //Fetting the users
+    // Fetch all initial data after logging in
     userStore.setUserData();
     userStore.setUsersData();
-
     conversationStore.setConversations();
-
     patientStore.getPatientList();
   }, [authStore.accessToken])
 
