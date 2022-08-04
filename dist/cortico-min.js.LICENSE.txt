@@ -13,8 +13,6 @@
 
 /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
 
-<<<<<<< HEAD
-=======
 /**
  * @license
  * Lodash <https://lodash.com/>
@@ -24,7 +22,6 @@
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
 
->>>>>>> 1f09c28cfd29edb0b64ea4d3f1483a7063310de7
 /** @license React v16.13.1
  * react-is.production.min.js
  *
