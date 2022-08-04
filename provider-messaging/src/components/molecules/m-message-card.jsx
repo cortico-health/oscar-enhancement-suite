@@ -49,19 +49,20 @@ const MMessageCard = ({ messageDetails }) => {
         <p className='text-secondary-200 text-title6 text-center'>{(new Date(messageDetails.created_date)).toLocaleTimeString('en-us',
           { hour: 'numeric', minute: '2-digit' })}</p>
         <div className='mb-14 w-1/2 mt-3'>
-          <div className="flex items-center tw-gap-3">
-            <div>
+          <div>
+            <div className="flex items-center tw-gap-3">
               <p className='text-secondary-500 text-h1 font-medium'>
                 { messageDetails.from_user.full_name }
               </p>
-              {/* TODO: Change this once there is an info for clinic */ }
-              <p className='text-secondary-300 text-select2'>
-                { messageDetails.from_user.full_name }'s Clinic
-              </p>
+              <div className="text-white bg-blue-600 rounded-full -tw-ml-2">
+                <ASvg src="verified" />
+              </div>
             </div>
-            <div className="text-white bg-blue-600 rounded-full -tw-ml-2">
-              <ASvg src="verified" />
-            </div>
+            {/* TODO: Change this once there is an info for clinic */ }
+
+            <p className='text-secondary-300 text-select2'>
+              { messageDetails.from_user.full_name }'s Clinic
+            </p>
           </div>
           <div className="flex mt-3">
             <MProfilePicture avatar={ messageDetails.author?.avatar } className="relative w-11 h-11" />
