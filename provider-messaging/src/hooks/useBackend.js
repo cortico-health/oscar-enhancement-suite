@@ -1,22 +1,42 @@
 import axios from "axios";
-import { getConversations, getChatMessages, getUser, postLogin, patchUser } from "../adapters";
+import { useEffect } from "preact/hooks";
+import { useStore } from "../state";
+
+const BACKEND_URL = "http://localhost:8426/api";
 
 const useBackend = () => {
 
     const getChatMessageData = async(id, accessToken) => {
-        return await axios.all([getChatMessages(id, accessToken), getConversations(accessToken)]);
+        return await axios.get(`${BACKEND_URL}/vcn/chat-messages/${id}/`, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }
+        });
     }
 
     const getConversationsList = async(accessToken) => {
-        return await getConversations(accessToken);
+        return await axios.get(`${BACKEND_URL}/vcn/conversations`, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }
+        });
     }
 
     const getUserData = async(accessToken) => {
-        return await getUser(accessToken);
+        return await axios.get(`${BACKEND_URL}/vcn/user`, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }
+        });
     }
 
     const updateUser = async(inputs) => {
-        return await patchUser(inputs);
+        /* Can be improved I think */
+        return await axios.patch(`${BACKEND_URL}`, JSON.stringify(inputs), {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
     }
 
     const createConversation = async(inputs) => {
