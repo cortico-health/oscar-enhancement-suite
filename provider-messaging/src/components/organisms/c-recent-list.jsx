@@ -11,9 +11,9 @@ const CRecentList = ({...props}) => {
 
   const { patientStore } = useStore();
 
-  useEffect(() => {
+  /* useEffect(() => {
     patientStore.getPatientList();
-  },[]);
+  },[]); */
 
   return (
     <div className='px-5 pt-6 bg-secondary-20' {...props}>
