@@ -4,7 +4,7 @@ import MProfilePicture from './m-profile-picture'
 
 const MUserTab = ({ user, onChange, index }) => {
   return (
-    <div className='flex justify-between items-center pb-4 tw-cursor-pointer'>
+    <div className='flex justify-evenly items-center pb-4 tw-cursor-pointer'>
       <div className='o-aspect-ratio w-12.5 tw-cursor-pointer'>
         <MProfilePicture className='o-aspect-ratio__content' avatar={ user.avatar } onClick={ () => alert('profile here') } />
       </div>
