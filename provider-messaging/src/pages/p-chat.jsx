@@ -1,5 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { h } from "preact";
+import { route } from "preact-router";
 import { useEffect,useState } from "preact/hooks";
 import ASvg from "../components/atoms/a-svg";
 import CConversationList from "../components/organisms/c-conversation-list";
@@ -11,10 +12,11 @@ import { useStore } from "../state";
 
 const PChat = () => {
 
-  const { patientStore } = useStore();
+  const { patientStore, conversationStore } = useStore();
 
   useEffect(() => {
-    patientStore.getPatientList();
+    //Redirect automatically
+    route('/chat/' + conversationStore.conversations[0].id);
   },[])
 
   if (!patientStore.patients.all?.length) {
