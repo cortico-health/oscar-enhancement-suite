@@ -30,7 +30,6 @@ const CUsersList = observer(() => {
   useEffect(() => {
     if (userStore.users) {
       setShowUsers(userStore.users);
-      console.log(userStore.users)
       const res = {}
       userStore.users?.forEach(user => {
         res[user.id] = false
