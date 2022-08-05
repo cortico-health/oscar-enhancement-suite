@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BACKEND_URL = "http://localhost:8426/api";
+const BACKEND_URL = import.meta.env.VITE_CEREBRO_URL;
 
 const getAccessToken = () => {
     return localStorage["vcnAccessToken"] || null;
