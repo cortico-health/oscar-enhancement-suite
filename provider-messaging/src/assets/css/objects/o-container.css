@@ -5,14 +5,12 @@
   --container-lg-content-max-width: 1016px; /* 1440px - 2 * 212px */
   --container-md-content-max-width: 808px; /* 1440px - 2 * 316px */
 }
-
+ 
 .o-container {
-  margin-left: auto;
-  margin-right: auto;
+  @apply mx-auto w-full;
   max-width: var(--container-max-width, calc(var(--container-content-max-width) + 2 * var(--container-padding-inline)));
   padding-left: var(--container-padding-inline);
   padding-right: var(--container-padding-inline);
-  width: 100%;
 }
 
 .o-container--2xl {

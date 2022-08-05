@@ -1,24 +1,18 @@
 .a-radio {
+  /* TEXT */
   @apply text-select2 font-medium;
 
-  display: block;
-  position: relative;
-  padding-left: 22px;
-  margin-bottom: 12px;
-  cursor: pointer;
+  @apply block relative pl-[22px] mb-[12px] cursor-pointer;
+  
+  user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  user-select: none;
 }
 
 .a-radio {
   & input {
-    position: absolute;
-    left: 0px;
-    width: 100%;
-    opacity: 0;
-    cursor: pointer;
+    @apply absolute left-0 w-full opacity-0 cursor-pointer;
   }
   & input + label {
     @apply text-secondary-50;
@@ -28,42 +22,20 @@
   }
 
   & input:checked ~ .a-radio__checkmark {
-    @apply border-primary-500;
-    width: 16px;
-    height: 16px;
+    @apply border-primary-500 w-[16px] h-[16px];
   }
 
   & input:checked ~ .a-radio__checkmark:after {
-    @apply bg-primary-500 border border-white;
-    display: block;
-    width: 7.5px;
-    height: 7.5px;
-    border-radius: 50%;
+    @apply block bg-primary-500 rounded-full w-[7px] h-[7px];
   }
 }
 
-
-
-
 /* Create a custom radio button */
 .a-radio__checkmark {
-  @apply border-secondary-50;
-  pointer-events: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 14px;
-  width: 14px;
-  border-width: 3px;
-  border-style: solid;
-  border-radius: 50%;
-
+  @apply border-secondary-50 pointer-events-none absolute top-0 left-0 
+    h-3.5 w-3.5 border-4 border-solid rounded-[50%];
 
   &:after {
-    content: "";
-    left: 1px;
-    top: 1px;
-    position: absolute;
-    display: none;
+    @apply content-[""] absolute left-[0.5px] top-[0.5px] hidden;
   }
 }
