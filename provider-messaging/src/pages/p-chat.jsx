@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { h } from "preact";
 import { route } from "preact-router";
-import { useEffect,useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import ASvg from "../components/atoms/a-svg";
 import CConversationList from "../components/organisms/c-conversation-list";
 import CFilesList from "../components/organisms/c-files-list";
@@ -14,22 +14,17 @@ const PChat = () => {
 
   const { patientStore, conversationStore } = useStore();
 
-  useEffect(() => {
-    //Redirect automatically
-    route('/chat/' + conversationStore.conversations[0].id);
-  },[])
-
   if (!patientStore.patients.all?.length) {
     return <div>loading...</div>
   }
 
   return (
-  <div className="flex">
-    <div className="hidden h-screen lg:block" style={{ minWidth: "350px" }}>
-      <CPatientCard
-        className="mt-7 pb-6 px-5.5 h-min border-b border-secondary-100"
-      />
-      {
+    <div className="flex">
+      <div className="hidden h-screen lg:block" style={{ minWidth: "350px" }}>
+        <CPatientCard
+          className="mt-7 pb-6 px-5.5 h-min border-b border-secondary-100"
+        />
+        {
           location.hash == "#assets" ?
             <CFilesList />
             :
@@ -40,8 +35,8 @@ const PChat = () => {
                     patientStore.patients?.selected ? <>
                       Conversations on
                       <span className="text-primary-500">
-                        { " " + patientStore.patients?.selected.firstName
-                          + " " + patientStore.patients?.selected.lastName }
+                        {" " + patientStore.patients?.selected.firstName
+                          + " " + patientStore.patients?.selected.lastName}
                       </span>
                     </>
                       : "All conversations"
@@ -53,11 +48,11 @@ const PChat = () => {
               </div>
               <CConversationList />
             </>
-      }
+        }
 
+      </div>
+      <CMessageList />
     </div>
-    <CMessageList />
-  </div>
   )
 };
 
