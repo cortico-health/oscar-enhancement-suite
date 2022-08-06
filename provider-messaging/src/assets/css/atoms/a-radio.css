@@ -2,12 +2,7 @@
   /* TEXT */
   @apply text-select2 font-medium;
 
-  @apply block relative pl-[22px] mb-[12px] cursor-pointer;
-  
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
+  @apply block relative pl-[22px] mb-[12px] cursor-pointer select-none;
 }
 
 .a-radio {
