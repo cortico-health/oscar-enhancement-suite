@@ -9,8 +9,7 @@
     &::-webkit-scrollbar {
       @apply hidden;
     }
-
-  /* Tailwind won't work here */
+    
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
   }
