@@ -8,10 +8,8 @@ export const getUsersData = async () => {
     return await axios.get(`/vcn/users/`);
 }
 
-export const updateUser = async (inputs) => {
-    /* Can be improved I think */
-    /* TODO (Justin or Dwight): Change the URL into url for user update */
-    return await axios.patch(``, JSON.stringify(inputs), {
+export const updateProfile = async (inputs) => {
+    return await axios.patch(`/vcn/profile/`, inputs, {
         headers: {
             'Content-Type': 'application/json'
         }
