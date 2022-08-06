@@ -1,18 +1,31 @@
 import { observer } from "mobx-react-lite";
-import { h } from "preact";
+import { useRouter } from "preact-router";
 import { route } from "preact-router";
-import { useEffect, useState } from "preact/hooks";
+import { useEffect } from "preact/hooks";
 import ASvg from "../components/atoms/a-svg";
 import CConversationList from "../components/organisms/c-conversation-list";
 import CFilesList from "../components/organisms/c-files-list";
 import CMessageList from "../components/organisms/c-message-list";
 import CPatientCard from "../components/organisms/c-patient-card";
+import _ from 'lodash';
 
 import { useStore } from "../state";
 
 const PChat = () => {
 
   const { patientStore, conversationStore } = useStore();
+  const router = useRouter()[0];
+
+  const getMostRecentConversation = () => {
+    return _.first(conversationStore.conversations)
+  }
+
+  useEffect(() => {
+    if (!_.has(router.matches, 'id')) {
+      const mostRecentConversation = getMostRecentConversation()
+      if (mostRecentConversation) route(`/chat/${mostRecentConversation.id}`)
+    }
+  }, [conversationStore.conversations]);
 
   if (!patientStore.patients.all?.length) {
     return <div>loading...</div>
