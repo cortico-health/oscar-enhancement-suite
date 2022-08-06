@@ -70,7 +70,6 @@ const CUsersList = observer(() => {
         return conversation.id === parseInt(response.data.id);
       })
       if (!existingConversation) conversationStore.conversations.push(response.data)
-      conversationStore.setSelectedConversation(response.data.id)
       route(`/chat/${response.data.id}`)
     }).catch((error) => {
       console.log(error);
