@@ -30,11 +30,11 @@ const CNav = () => {
         <a href="/" className="mx-auto"><ASvg src="logo" /> </a>
 
         <div className='flex flex-col'>
-          <MNavItem activeClassName='bg-primary-500 child:child:stroke-white' icon="grid" href="/" />
-          <MNavItem className={ `mx-auto p-3 rounded-full ${route.url.includes('/chat') && 'bg-primary-500 child:child:stroke-white'}` }
+          <MNavItem name="Home" activeClassName='bg-primary-500 child:child:stroke-white' icon="grid" href="/" />
+          <MNavItem name="Chat" className={ `mx-auto p-3 rounded-full ${route.url.includes('/chat') && 'bg-primary-500 child:child:stroke-white'}` }
             icon="selected" href="/chat" svgClass="stroke-secondary-500" />
-          <MNavItem activeClassName='bg-primary-500 child:child:stroke-white' icon="settings" href="#profile" />
-          <MNavItem activeClassName='bg-primary-500 child:child:stroke-white' icon="selected2" href="/add-to-chat" />
+          <MNavItem name="Profile" activeClassName='bg-primary-500 child:child:stroke-white' icon="settings" href="#profile" />
+          <MNavItem name="New Conversation" activeClassName='bg-primary-500 child:child:stroke-white' icon="selected2" href="/add-to-chat" />
           {/*
             TODO Dwight - Patient: Return this if this is functional
             <MNavItem activeClassName='bg-primary-500 child:child:stroke-white' icon="users" href="/select" />
@@ -42,7 +42,7 @@ const CNav = () => {
         </div>
 
         <div className='flex flex-col'>
-          <MNavItem icon="info" href="https://cortico.health/" target="_blank" />
+          <MNavItem name="Help Desk" icon="info" href="https://cortico.health/" target="_blank" />
           <div role="button" onClick={ () => authStore.logout() } className="mx-auto p-3 cursor-pointer rounded-full"> <ASvg src="log-out" /></div>
           <CPlugin className="lg:flex hidden ml-4" />
         </div>
