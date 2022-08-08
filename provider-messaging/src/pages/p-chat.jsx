@@ -33,7 +33,7 @@ const PChat = () => {
 
   return (
     <div className="flex">
-      <div className="hidden h-screen lg:block" style={{ minWidth: "350px" }}>
+      <div className="hidden h-screen lg:block w-[450px]">
         {/*
           TODO Dwight - Patient: Return this if this is functional
           <CPatientCard

@@ -31,7 +31,7 @@ const MConversationTab = ({ conversation, ...props }) => {
       className={`flex flex-column items-center px-2.5 block my-8 cursor-pointer ${selected ? "h-24 rounded-lg bg-primary-500" : ""}`}
     >
       <div
-        className={`flex relative overflow-hidden text-ellipsis items-center`}
+        className={ `flex relative items-center` }
       >
         {showConversation?.members.length > 1 ? (
           <div className="cursor-pointer ml-4" onClick={() => setOpenModal(true)}>
@@ -57,9 +57,9 @@ const MConversationTab = ({ conversation, ...props }) => {
             />
           </div>
         )}
-        <div className="max-w-100 ml-4">
+        <div className="max-w-full ml-4">
           <span
-            className={`font-medium text-contact2 lg:text-contact1 cursor-pointer ${selected ? "text-white" : "text-secondary-500"
+            className={ `text-contact2 lg:text-contact1 w-64 cursor-pointer whitespace-nowrap text-ellipsis overflow-hidden ${selected ? "text-white" : "text-secondary-500"
               }`}
           >
             {/* <CProfileCard
@@ -69,12 +69,12 @@ const MConversationTab = ({ conversation, ...props }) => {
             {multipleObjectDataFormatting(getOtherMembersName(showConversation?.members))}
           </span>
           <p
-            className={`text-contact3 relative lg:text-contact2 mt-2 text-ellipsis overflow-hidden ${selected ? "text-white" : "text-secondary-500"
+            className={ `text-contact3 relative lg:text-contact2 mt-2 w-64 whitespace-nowrap text-ellipsis overflow-hidden ${selected ? "text-white" : "text-secondary-500"
               }`}
           >
             {showConversation?.last_message ? (
-              <span className="truncate">
-                {showConversation?.last_message.from_user.full_name}: {showConversation?.last_message?.body}
+              <span>
+                { showConversation?.last_message.from_user.full_name }: { showConversation?.last_message?.body }
               </span>
             ) : ''}
           </p>
