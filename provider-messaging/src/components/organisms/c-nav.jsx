@@ -33,7 +33,10 @@ const CNav = () => {
         <div className='flex flex-col'>
           <Link activeClassName='bg-primary-500 child:child:stroke-white' className="mx-auto p-3 rounded-full" href="/"><ASvg src="grid" /> </Link>
           <Link className={`mx-auto p-3 rounded-full ${route.url.includes('/chat') && 'bg-primary-500 child:child:stroke-white'}`} href="/chat"> <ASvg className="stroke-secondary-500" src="selected" /> </Link>
-          <Link activeClassName='bg-primary-500 child:child:stroke-white' className="mx-auto p-3 rounded-full" href="/select"><ASvg src="users" /></Link>
+          {/*
+            TODO Dwight - Patient: Return this if this is functional
+            <Link activeClassName='bg-primary-500 child:child:stroke-white' className="mx-auto p-3 rounded-full" href="/select"><ASvg src="users" /></Link>
+          */}
           <Link activeClassName='bg-primary-500 child:child:stroke-white' className="mx-auto p-3 rounded-full" href="#profile"><ASvg src="settings" /></Link>
           <Link activeClassName='bg-primary-500 child:child:stroke-white' className="mx-auto p-3 rounded-full" href="/add-to-chat"><ASvg src="selected2" /></Link>
         </div>
@@ -50,30 +53,36 @@ const CNav = () => {
         <div className='z-10 flex w-full px-7 gap-x-7 bg-primary-500 rounded-tr-2xl rounded-br-2xl items-center'>
           <div onClick={() => setIsOpened(true)}><ASvg className="cursor-pointer" src="menu" /> </div>
 
-          {patient ? <>
-            <ASvg className="first:child:fill-primary-300 min-w-12.5 min-h-12.5" src="avatar" />
-            <div className='text-white'>
-              <h1>{patient?.firstName + " " + patient?.lastName}</h1>
-              <h2> {patient?.facility}</h2>
-            </div>
-          </>
-            : <div>
-              <p className='text-white'> No patient selected</p>
-              <AButton href="/select" className='w-full block' variant='button-secondary-sm'> Select patient</AButton>
-            </div>
-          }
+          {/*
+            TODO Dwight - Patient: Return this if this is functional
+            {patient ? <>
+              <ASvg className="first:child:fill-primary-300 min-w-12.5 min-h-12.5" src="avatar" />
+              <div className='text-white'>
+                <h1>{patient?.firstName + " " + patient?.lastName}</h1>
+                <h2> {patient?.facility}</h2>
+              </div>
+            </>
+              : <div>
+                <p className='text-white'> No patient selected</p>
+                <AButton href="/select" className='w-full block' variant='button-secondary-sm'> Select patient</AButton>
+              </div>
+            }
+          */}
         </div>
-        {patient ?
-          <div className='bg-secondary-20 pl-4 w-full flex flex-col justify-center'>
-            <p className='text-h4 text-secondary-300'> <span className='font-medium'>Gender:</span> {patient?.gender}  </p>
-            <p className='text-h4 text-secondary-300'> <span className='font-medium'>Date of birth: </span> {patient?.birthDate.toLocaleDateString()}  </p>
-            <p className='text-h4 text-secondary-300'> <span className='font-medium'>Health card number: </span> {patient?.healthCardNumber}  </p>
-          </div>
-          : null}
+        {/*
+          TODO Dwight - Patient: Return this if this is functional
+          {patient ?
+            <div className='bg-secondary-20 pl-4 w-full flex flex-col justify-center'>
+              <p className='text-h4 text-secondary-300'> <span className='font-medium'>Gender:</span> {patient?.gender}  </p>
+              <p className='text-h4 text-secondary-300'> <span className='font-medium'>Date of birth: </span> {patient?.birthDate.toLocaleDateString()}  </p>
+              <p className='text-h4 text-secondary-300'> <span className='font-medium'>Health card number: </span> {patient?.healthCardNumber}  </p>
+            </div>
+            : null}
+        */}
 
 
         <div className={`${isOpened ? 'block' : 'hidden'} fixed z-20 bg-black/50 left-0 h-screen top-0 w-screen`}>
-          <MMobileNav setIsOpened={setIsOpened} patient={patient} />
+          <MMobileNav setIsOpened={ setIsOpened } /* patient={patient} */ />
         </div>
       </div>
     </>

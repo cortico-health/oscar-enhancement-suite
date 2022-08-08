@@ -34,9 +34,12 @@ const PChat = () => {
   return (
     <div className="flex">
       <div className="hidden h-screen lg:block" style={{ minWidth: "350px" }}>
-        <CPatientCard
-          className="mt-7 pb-6 px-5.5 h-min border-b border-secondary-100"
-        />
+        {/*
+          TODO Dwight - Patient: Return this if this is functional
+          <CPatientCard
+            className="mt-7 pb-6 px-5.5 h-min border-b border-secondary-100"
+          />
+        */}
         {
           location.hash == "#assets" ?
             <CFilesList />

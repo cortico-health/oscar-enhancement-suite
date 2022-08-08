@@ -65,7 +65,10 @@ export const App = observer(() => {
               <PHome path="/" />
               <PChat path="/chat" />
               <PChat path="/chat/:id" />
-              <PSelect path="/select" />
+              {/* 
+                TODO Dwight - Patient: Return this if this is functional 
+                <PSelect path="/select" />
+              */}
               <PAddToChat path="/add-to-chat" />
               <PProfile path="#profile" user="me" />
               <PProfile path="/profile/:user" />
