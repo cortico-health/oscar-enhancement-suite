@@ -2,12 +2,11 @@ import { h } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 import ASvg from '../atoms/a-svg';
 import CPlugin from './c-plugin';
-import { Link } from 'preact-router/match';
 import MMobileNav from '../molecules/m-mobile-nav';
 import { useStore } from '../../state';
-import AButton from '../atoms/a-button';
 import { useRouter } from 'preact-router';
 import { observer } from 'mobx-react-lite';
+import MNavItem from '../molecules/m-nav-item';
 
 const CNav = () => {
   const route = useRouter()[0];
@@ -31,20 +30,19 @@ const CNav = () => {
         <a href="/" className="mx-auto"><ASvg src="logo" /> </a>
 
         <div className='flex flex-col'>
-          <Link activeClassName='bg-primary-500 child:child:stroke-white' className="mx-auto p-3 rounded-full" href="/"><ASvg src="grid" /> </Link>
-          <Link className={`mx-auto p-3 rounded-full ${route.url.includes('/chat') && 'bg-primary-500 child:child:stroke-white'}`} href="/chat"> <ASvg className="stroke-secondary-500" src="selected" /> </Link>
+          <MNavItem activeClassName='bg-primary-500 child:child:stroke-white' icon="grid" href="/" />
+          <MNavItem className={ `mx-auto p-3 rounded-full ${route.url.includes('/chat') && 'bg-primary-500 child:child:stroke-white'}` }
+            icon="selected" href="/chat" svgClass="stroke-secondary-500" />
+          <MNavItem activeClassName='bg-primary-500 child:child:stroke-white' icon="settings" href="#profile" />
+          <MNavItem activeClassName='bg-primary-500 child:child:stroke-white' icon="selected2" href="/add-to-chat" />
           {/*
             TODO Dwight - Patient: Return this if this is functional
-            <Link activeClassName='bg-primary-500 child:child:stroke-white' className="mx-auto p-3 rounded-full" href="/select"><ASvg src="users" /></Link>
+            <MNavItem activeClassName='bg-primary-500 child:child:stroke-white' icon="users" href="/select" />
           */}
-          <Link activeClassName='bg-primary-500 child:child:stroke-white' className="mx-auto p-3 rounded-full" href="#profile"><ASvg src="settings" /></Link>
-          <Link activeClassName='bg-primary-500 child:child:stroke-white' className="mx-auto p-3 rounded-full" href="/add-to-chat"><ASvg src="selected2" /></Link>
         </div>
 
         <div className='flex flex-col'>
-          <Link className="mx-auto p-3 rounded-full" href="https://cortico.health/" target="_blank">
-            <ASvg src="info" />
-          </Link>
+          <MNavItem icon="info" href="https://cortico.health/" target="_blank" />
           <div role="button" onClick={ () => authStore.logout() } className="mx-auto p-3 cursor-pointer rounded-full"> <ASvg src="log-out" /></div>
           <CPlugin className="lg:flex hidden ml-4" />
         </div>
