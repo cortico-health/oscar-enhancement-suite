@@ -69,7 +69,7 @@ const MConversationTab = ({ conversation, ...props }) => {
             {multipleObjectDataFormatting(getOtherMembersName(showConversation?.members))}
           </span>
           <p
-            className={ `text-contact3 relative lg:text-contact2 mt-2 w-64 whitespace-nowrap text-ellipsis overflow-hidden ${selected ? "text-white" : "text-secondary-500"
+            className={ `text-contact3 relative lg:text-contact2 mt-2 w-64 whitespace-nowrap text-ellipsis overflow-hidden ${selected ? "text-white" : "text-secondary-300"
               }`}
           >
             {showConversation?.last_message ? (
