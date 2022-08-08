@@ -32,7 +32,7 @@ const CEditProfile = ({ profile, opened, setOpenModal }) => {
 
   return (
     <div className={`${opened ? "flex" : "hidden"} c-edit-profile py-4`}>
-      <div className="flex max-h-full overflow-y-scroll bg-secondary-20 relative">
+      <div className="flex max-h-full overflow-y-hidden bg-secondary-20 relative">
         <a href="#" onClick={() => setOpenModal(false)}>
           <ASvg className="absolute cursor-pointer top-3 right-3" src="exit" />
         </a>
@@ -116,42 +116,41 @@ const CEditProfile = ({ profile, opened, setOpenModal }) => {
             onChange={handleChange}
           />
 
-          <>
-            <div className="mt-6 mb-4.5 flex justify-between">
-              <h2 className="c-edit-profile__heading"> Socials </h2>
-              <p className="text-select1 text-secondary-300">(optional)</p>
-            </div>
-            <div className="pb-11">
-              <MProfileInput
-                defaultValue={inputs.twitter_url}
-                placeholder="twitter account"
-                name="twitter_url"
-                icon="twitter"
-                onChange={handleChange}
-              />
-              <MProfileInput
-                defaultValue={inputs.instagram_url}
-                placeholder="instagram account"
-                name="instagram_url"
-                icon="instagram"
-                onChange={handleChange}
-              />
-              <MProfileInput
-                defaultValue={inputs.linked_in_url}
-                placeholder="linkedin account"
-                name="linked_in_url"
-                icon="linkedin"
-                onChange={handleChange}
-              />
-              <MProfileInput
-                defaultValue={inputs.facebook_url}
-                placeholder="facebook account"
-                name="facebook_url"
-                icon="facebook"
-                onChange={handleChange}
-              />
-            </div>
-          </>
+
+          <div className="mt-4 flex justify-between">
+            <h2 className="c-edit-profile__heading"> Socials </h2>
+            <p className="text-select1 text-secondary-300">(optional)</p>
+          </div>
+          <div className="pb-11">
+            <MProfileInput
+              defaultValue={ inputs.twitter_url }
+              placeholder="twitter account"
+              name="twitter_url"
+              icon="twitter"
+              onChange={ handleChange }
+            />
+            <MProfileInput
+              defaultValue={ inputs.instagram_url }
+              placeholder="instagram account"
+              name="instagram_url"
+              icon="instagram"
+              onChange={ handleChange }
+            />
+            <MProfileInput
+              defaultValue={ inputs.linked_in_url }
+              placeholder="linkedin account"
+              name="linked_in_url"
+              icon="linkedin"
+              onChange={ handleChange }
+            />
+            <MProfileInput
+              defaultValue={ inputs.facebook_url }
+              placeholder="facebook account"
+              name="facebook_url"
+              icon="facebook"
+              onChange={ handleChange }
+            />
+          </div>
         </div>
 
         <div className="c-edit-profile__right-section">
@@ -166,7 +165,7 @@ const CEditProfile = ({ profile, opened, setOpenModal }) => {
             onChange={handleChange}
             defaultValue={inputs.biography}
             className="c-edit-profile__textarea"
-            rows={9}
+            rows={ 9 }
           />
           <h2 className="c-edit-profile__heading mb-3">Special Interests</h2>
           <textarea
@@ -174,7 +173,7 @@ const CEditProfile = ({ profile, opened, setOpenModal }) => {
             onChange={handleChange}
             defaultValue={inputs.special_interests}
             className="c-edit-profile__textarea"
-            rows={5}
+            rows={ 4 }
           />
           <h2 className="c-edit-profile__heading mb-3">Notify via sms</h2>
           <div className="flex gap-x-4.5">
