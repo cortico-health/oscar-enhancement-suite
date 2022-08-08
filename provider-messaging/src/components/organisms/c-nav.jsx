@@ -42,7 +42,9 @@ const CNav = () => {
         </div>
 
         <div className='flex flex-col'>
-          <div className="mx-auto p-3 rounded-full"><ASvg src="info" /></div>
+          <Link className="mx-auto p-3 rounded-full" href="https://cortico.health/" target="_blank">
+            <ASvg src="info" />
+          </Link>
           <div role="button" onClick={ () => authStore.logout() } className="mx-auto p-3 cursor-pointer rounded-full"> <ASvg src="log-out" /></div>
           <CPlugin className="lg:flex hidden ml-4" />
         </div>
