@@ -1,5 +1,4 @@
 import React from 'react'
-import ARadio from '../atoms/a-radio'
 import MProfilePicture from './m-profile-picture'
 
 const MUserTab = ({ user, onChange, index }) => {

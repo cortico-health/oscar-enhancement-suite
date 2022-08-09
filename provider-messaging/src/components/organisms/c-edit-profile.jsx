@@ -60,7 +60,7 @@ const CEditProfile = ({ profile, opened, setOpenModal }) => {
             {STATUS.map((status) => {
               return (
                 <ARadio
-                  checked={inputs.availability_status === status.toLowerCase()}
+                  checked={ inputs?.availability_status === status.toLowerCase() }
                   onChange={handleChange}
                   name="availability_status"
                   className="font-normal"
@@ -73,7 +73,7 @@ const CEditProfile = ({ profile, opened, setOpenModal }) => {
           <h2 className="c-edit-profile__heading mb-2">Languages</h2>
           <div className="flex items-center gap-x-2.5 mb-5">
             <p className="c-edit-profile__copy">
-              {multipleDataFormatting(inputs.languages)}
+              { multipleDataFormatting(inputs?.languages) }
             </p>
             <ASvg
               role="button"
@@ -87,7 +87,7 @@ const CEditProfile = ({ profile, opened, setOpenModal }) => {
             {PRONOUNS.map((pronouns) => {
               return (
                 <ARadio
-                  checked={inputs.pronouns === pronouns}
+                  checked={ inputs?.pronouns === pronouns }
                   onChange={handleChange}
                   name="pronouns"
                   className="font-normal"
@@ -98,18 +98,18 @@ const CEditProfile = ({ profile, opened, setOpenModal }) => {
           </div>
 
           <h2 className="c-edit-profile__heading mb-2">Location</h2>
-          <p className="c-edit-profile__copy mb-5">{inputs.location}</p>
+          <p className="c-edit-profile__copy mb-5">{ inputs?.location }</p>
 
           <h2 className="c-edit-profile__heading mb-2">Contacts</h2>
           <MProfileInput
-            defaultValue={inputs.email}
+            defaultValue={ inputs?.email }
             placeholder="email"
             icon="email"
             name="email"
             onChange={handleChange}
           />
           <MProfileInput
-            defaultValue={inputs.cell_phone}
+            defaultValue={ inputs?.cell_phone }
             placeholder="phone"
             icon="phone"
             name="cell_phone"
@@ -123,28 +123,28 @@ const CEditProfile = ({ profile, opened, setOpenModal }) => {
           </div>
           <div className="pb-11">
             <MProfileInput
-              defaultValue={ inputs.twitter_url }
+              defaultValue={ inputs?.twitter_url }
               placeholder="twitter account"
               name="twitter_url"
               icon="twitter"
               onChange={ handleChange }
             />
             <MProfileInput
-              defaultValue={ inputs.instagram_url }
+              defaultValue={ inputs?.instagram_url }
               placeholder="instagram account"
               name="instagram_url"
               icon="instagram"
               onChange={ handleChange }
             />
             <MProfileInput
-              defaultValue={ inputs.linked_in_url }
+              defaultValue={ inputs?.linked_in_url }
               placeholder="linkedin account"
               name="linked_in_url"
               icon="linkedin"
               onChange={ handleChange }
             />
             <MProfileInput
-              defaultValue={ inputs.facebook_url }
+              defaultValue={ inputs?.facebook_url }
               placeholder="facebook account"
               name="facebook_url"
               icon="facebook"
@@ -155,15 +155,15 @@ const CEditProfile = ({ profile, opened, setOpenModal }) => {
 
         <div className="c-edit-profile__right-section">
           <h1 className="font-bold text-secondary-500 text-title1 mb-2">
-            {inputs.name}
+            { inputs?.name }
           </h1>
-          <p className="text-secondary-300 text-title7">{inputs.clinic_name}</p>
+          <p className="text-secondary-300 text-title7">{ inputs?.clinic_name }</p>
           <p role="button" className="text-primary-500 text-title6 font-medium">Add/change clinic &#10132;</p>
 
           <textarea
             name="biography"
             onChange={handleChange}
-            defaultValue={inputs.biography}
+            defaultValue={ inputs?.biography }
             className="c-edit-profile__textarea"
             rows={ 9 }
           />
@@ -171,7 +171,7 @@ const CEditProfile = ({ profile, opened, setOpenModal }) => {
           <textarea
             name="special_interests"
             onChange={handleChange}
-            defaultValue={inputs.special_interests}
+            defaultValue={ inputs?.special_interests }
             className="c-edit-profile__textarea"
             rows={ 4 }
           />
@@ -180,7 +180,7 @@ const CEditProfile = ({ profile, opened, setOpenModal }) => {
             {NOTIFY.map((notify) => {
               return (
                 <ARadio
-                  checked={inputs.sms_notification_frequency == notify.toLowerCase()}
+                  checked={ inputs?.sms_notification_frequency == notify.toLowerCase() }
                   onChange={handleChange}
                   name="sms_notification_frequency"
                   className="font-normal"
@@ -194,7 +194,7 @@ const CEditProfile = ({ profile, opened, setOpenModal }) => {
             {NOTIFY.map((notify) => {
               return (
                 <ARadio
-                  checked={inputs.email_notification_frequency == notify.toLowerCase()}
+                  checked={ inputs?.email_notification_frequency == notify.toLowerCase() }
                   onChange={handleChange}
                   name="email_notification_frequency"
                   className="font-normal"

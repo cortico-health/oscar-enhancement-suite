@@ -4,7 +4,7 @@ import ASvg from './a-svg';
 import { useRef } from 'preact/hooks';
 
 const ARadio = ({children, onChange, name, value, checked, className, onInput, ...props}) => {
-  
+
   const inputRef = useRef(null);
 
   const camelToWords = (text) => {
@@ -13,10 +13,15 @@ const ARadio = ({children, onChange, name, value, checked, className, onInput, .
   }
 
   return (
-    <div {...props} className={`a-radio ${className}`}>
-      <input onChange={onChange} defaultChecked={checked} value={value} name={name} type="radio"/>
-      <label htmlFor={name}>{ camelToWords(value) } </label>
-      <span className="a-radio__checkmark"></span>
+    <div { ...props } className={ `flex items-center mb-4 ${className}` }>
+      <input id={ `radio-${value.toLowerCase()}` } type="radio" value={ value } name={ name }
+        defaultChecked={ checked } onChange={ onChange }
+        className="w-4 h-4 text-primary-500 bg-gray-100 border-gray-300 focus:ring-primary-500" />
+      <label for={ `radio-${value.toLowerCase()}` }
+        className="ml-2 text-sm font-medium text-secondary-500"
+      >
+        { camelToWords(value) }
+      </label>
     </div>
   )
 }

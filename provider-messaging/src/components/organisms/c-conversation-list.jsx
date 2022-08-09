@@ -8,8 +8,17 @@ import CNotFound from "./c-not-found";
 import { observer } from "mobx-react-lite";
 
 const CConversationList = () => {
-  const { conversationStore } = useStore();
+  const { conversationStore,patientStore } = useStore();
   const [patientName, setPatientName] = useState("");
+  const [filteredConversation,setFilteredConversation] = useState(undefined);
+
+  useEffect(() => {
+    const selectedPatient = patientStore.patients?.selected;
+    setFilteredConversation(conversationStore.conversations.filter((conversation) => {
+      /* TODO Dwight: Change this if the API is ready */
+      return conversation.patient_full_name === selectedPatient?.firstName + " " + selectedPatient?.lastName
+    }))
+  },[patientStore.patients?.selected])
 
   const searchHandler = (e) => {
     /* TODO: Improved if needed */
@@ -28,9 +37,9 @@ const CConversationList = () => {
     <div className="mx-2.5">
       <MSearch onInput={searchHandler} />
       {
-        conversationStore.conversations && conversationStore.conversations?.length ? (
+        filteredConversation && filteredConversation?.length ? (
           <>
-            {conversationStore.conversations.map(conversation => {
+            { filteredConversation.map(conversation => {
               return (
                 <MConversationTab conversation={conversation} />
               )
