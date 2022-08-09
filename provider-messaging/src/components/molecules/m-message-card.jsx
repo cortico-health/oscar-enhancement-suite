@@ -24,23 +24,25 @@ const MMessageCard = ({ messageDetails }) => {
       <div>
         <p className='text-secondary-200 text-title6 text-center'>{(new Date(messageDetails.created_date)).toLocaleTimeString('en-us',
           { hour: 'numeric', minute: '2-digit' })}</p>
-        <div className='w-1/2 ml-auto mt-3 mb-14 rounded-2xl relative'>
-          {
-            messageDetails?.assets && messageDetails?.assets.map(asset => {
-              if (asset.type = "jpg") {
-                return <div className='flex justify-end'>
-                  <img className='rounded-3xl object-cover' src={asset.src} />
-                </div>
-              }
-            })
-          }
-          <div className='flex justify-between rounded-2xl p-5.5 bg-secondary-200 items-center gap-x-10'>
-            <p ref={textRef} dangerouslySetInnerHTML={message()} className='text-secondary-500 text-message1' />
-            <ASvg onClick={async () => {
-              await navigator.clipboard.writeText(textRef.current.innerHTML)
-              alert('Copied text to clipboard')
+        <div className="text-right">
+          <div className='inline-block ml-auto mt-3 mb-10 rounded-2xl relative max-w-[52%]'>
+            {
+              messageDetails?.assets && messageDetails?.assets.map(asset => {
+                if (asset.type = "jpg") {
+                  return <div className='flex justify-end'>
+                    <img className='rounded-3xl object-cover' src={ asset.src } />
+                  </div>
+                }
+              })
+            }
+            <div className='flex justify-between rounded-2xl p-4 bg-secondary-200 items-center gap-x-5'>
+              <p ref={ textRef } dangerouslySetInnerHTML={ message() } className='text-secondary-500 text-message1' />
+              <ASvg onClick={ async () => {
+                await navigator.clipboard.writeText(textRef.current.innerHTML)
+                alert('Copied text to clipboard')
 
-            }} className="cursor-pointer min-w-max w-7 h-7" src="download" />
+              } } className="cursor-pointer min-w-max w-7 h-7" src="download" />
+            </div>
           </div>
         </div>
       </div>
@@ -48,7 +50,7 @@ const MMessageCard = ({ messageDetails }) => {
       <div>
         <p className='text-secondary-200 text-title6 text-center'>{(new Date(messageDetails.created_date)).toLocaleTimeString('en-us',
           { hour: 'numeric', minute: '2-digit' })}</p>
-        <div className='mb-14 w-1/2 mt-3'>
+        <div className='mb-10 w-full mt-3'>
           <div>
             <div className="flex items-center tw-gap-3">
               <p className='text-secondary-500 text-h1 font-medium'>
@@ -58,7 +60,7 @@ const MMessageCard = ({ messageDetails }) => {
                 <ASvg src="verified" />
               </div>
             </div>
-            {/* TODO: Change this once there is an info for clinic */ }
+            {/* TODO - Dwight: Change this once there is an info for clinic */ }
 
             <p className='text-secondary-300 text-select2'>
               { messageDetails.from_user.full_name }'s Clinic
@@ -66,14 +68,16 @@ const MMessageCard = ({ messageDetails }) => {
           </div>
           <div className="flex mt-3">
             <MProfilePicture avatar={ messageDetails.author?.avatar } className="relative w-11 h-11" />
-            {
-              messageDetails?.assets && messageDetails.assets.map(asset => {
-                if (asset.type = "jpg") {
-                  return <img className='rounded-3xl max-w-xs' src={asset.src} />
-                }
-              })
-            }
-            <p className='text-secondary-500 bg-white rounded-2xl ml-3 p-5.5 text-message1' dangerouslySetInnerHTML={message()} />
+            <div className="inline-block max-w-[50%]">
+              {
+                messageDetails?.assets && messageDetails.assets.map(asset => {
+                  if (asset.type = "jpg") {
+                    return <img className='rounded-3xl max-w-xs' src={ asset.src } />
+                  }
+                })
+              }
+              <p className='text-secondary-500 bg-white rounded-2xl ml-3 p-4 text-message1' dangerouslySetInnerHTML={ message() } />
+            </div>
           </div>
         </div>
       </div>

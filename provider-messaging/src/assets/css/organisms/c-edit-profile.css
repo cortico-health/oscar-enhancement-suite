@@ -1,20 +1,15 @@
 .c-edit-profile {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 20;
-  height: 100vh;
-  width: 100vw;
-  background: rgba(0, 0, 0, 0.5);
-  align-items: center;
-  justify-content: center;
+  @apply fixed top-0 left-0 z-20 h-screen w-screen bg-[#00000080]
+    items-center justify-center;
+    
   & div:first-child {
-    border-radius: 20px;
+    @apply rounded-3xl;
 
     /* Hide scrollbar for Chrome, Safari and Opera */
     &::-webkit-scrollbar {
-      display: none;
+      @apply hidden;
     }
+    
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
   }
@@ -29,20 +24,16 @@
 }
 
 .c-edit-profile__left-section {
-  padding: 34px 36px 0 36px; 
+  @apply pt-8 pb-0 px-9;
 }
 
 .c-edit-profile__right-section {
-  background: white;
-  max-width: 450px;
-  padding: 54px 39px 19px 46px;
-  border-radius: 20px;
-  height: fit-content;
+  @apply bg-white max-w-md pt-14 pr-10 pb-5 pl-12 rounded-[20px] h-[fit-content];
 }
 .c-edit-profile__textarea {
   @apply resize-none pl-5.5 pr-7 pt-3 pb-10 outline-1 w-full rounded-lg outline-secondary-100 placeholder:text-secondary-200 text-secondary-300 text-description border border-secondary-100 mb-8;
   
   &::-webkit-scrollbar {
-    display: none;
+    @apply hidden;
   }
 }

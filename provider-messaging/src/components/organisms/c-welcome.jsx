@@ -2,6 +2,7 @@ import { h } from "preact";
 import MWelcomeOption from "../molecules/m-welcome-option";
 
 import { usersData } from '../../data';
+import { useStore } from "../../state";
 
 const fields =
   [
@@ -28,10 +29,12 @@ const fields =
   const loggedUser = usersData[0];
 
 const CWelcome = () => {
-  /* flex items-center justify-center w-full */
+
+  const { userStore } = useStore();
+
   return (
     <div className="bg-white rounded-3xl mt-[300px] md:mt-[320px] lg:mt-0 py-20 xs:px-10 sm:px-20 lg:px-40 max-w-6xl mx-auto">
-      <h1 className="font-bold text-title2 text-secondary-500 mb-2">Welcome back { loggedUser.name }</h1>
+      <h1 className="font-bold text-title2 text-secondary-500 mb-2">Welcome back { `${userStore.user.profile.first_name} ${userStore.user.profile.last_name}` }</h1>
       <p className="text-secondary-300 mb-16">Let's start with one option below</p>
       <div className="xs:flex-col lg:flex">
         {

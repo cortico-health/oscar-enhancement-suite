@@ -1,11 +1,8 @@
 .o-aspect-ratio {
-  display: block;
-  position: relative;
-  &:before {
-    content: "";
-    display: block;
-    padding-bottom: 100%;
-    width: 100%;
+  @apply block relative;
+  
+  &::before {
+    @apply content-[""] block pb-[100%] w-full
   }
 }
 
@@ -16,13 +13,7 @@
 .o-aspect-ratio__content > iframe,
 .o-aspect-ratio__content > embed,
 .o-aspect-ratio__content > object {
-  bottom: 0;
-  height: 100%;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 100%;
+  @apply absolute top-0 bottom-0 left-0 right-0 h-full w-full;
 }
 
 .o-aspect-ratio--16\:9 {

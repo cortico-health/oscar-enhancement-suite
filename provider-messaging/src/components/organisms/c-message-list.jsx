@@ -139,17 +139,17 @@ const CMessageList = () => {
           handlers={handlers}
         />
         <p className="text-h3 text-right text-secondary-500 pb-4">
-          {patientSelected && "Sending a message about "}
+          { patientSelected && "Sending a message about " }
 
           <span className="font-bold">
-            {(patientSelected) ?
+            { (patientSelected) ?
               `${patientSelected?.firstName} ${patientSelected?.lastName}.`
               :
               "No Patient."
             }</span>
-          {" "}
+          { " " }
           <a className="font-medium text-primary-500" href="/select">
-            {patientSelected ? "Switch" : "Choose"} Patient
+            { patientSelected ? "Switch" : "Choose" } Patient
           </a>
         </p>
       </div>

@@ -50,6 +50,13 @@ into tampermonkey, or greasemonkey for direct testing before publishing.
 1. `docker-compose up vcn-web`
 2. Navigate to `localhost:3500`
 
+# Staging
+
+## VCN
+
+1. `cp dc.vcn-stage.yml docker-compose.override.yml`
+2. `docker-compose up vcn-web`
+
 # Manual Testing
 
 **Chrome**

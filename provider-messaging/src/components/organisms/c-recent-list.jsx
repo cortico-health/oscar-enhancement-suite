@@ -11,9 +11,9 @@ const CRecentList = ({...props}) => {
 
   const { patientStore } = useStore();
 
-  useEffect(() => {
+  /* useEffect(() => {
     patientStore.getPatientList();
-  },[]);
+  },[]); */
 
   return (
     <div className='px-5 pt-6 bg-secondary-20' {...props}>
@@ -21,13 +21,12 @@ const CRecentList = ({...props}) => {
       {
         patientStore.patients.all?.map(patient => {
           return <MRecentItem onClick={() => {
-            selectPatient(patient.id)
+            patientStore.setSelectedPatient(patient.id)
             route('/chat')
           }} patient={patient} />
         })
       }
     </div>
-
   )
 }
 

@@ -1,11 +1,12 @@
 import React from 'react'
 import ARadio from '../atoms/a-radio'
+import MProfilePicture from './m-profile-picture'
 
 const MUserTab = ({ user, onChange, index }) => {
   return (
-    <div className='flex justify-between items-center pb-4 tw-cursor-pointer'>
+    <div className='flex justify-evenly items-center pb-4 tw-cursor-pointer'>
       <div className='o-aspect-ratio w-12.5 tw-cursor-pointer'>
-        <img className='o-aspect-ratio__content object-cover rounded-full' onClick={() => alert('profile here')} src={user.avatar} alt="" />
+        <MProfilePicture className='o-aspect-ratio__content' avatar={ user.avatar } onClick={ () => alert('profile here') } />
       </div>
       <label for={'name' + index} className='tw-cursor-pointer tw-text-left'>
         <h2 className='text-secondary-500 text-contact1 font-medium'> {user.full_name}</h2>

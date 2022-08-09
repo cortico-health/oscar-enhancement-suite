@@ -32,6 +32,10 @@ module.exports = {
         22: "5.5rem",
         40: "10rem",
         72: "18rem",
+        o_container__md: "808px",
+        o_container__lg: "1016px",
+        o_container__xl: "1224px",
+        o_container__2xl: "1400px",
       },
       colors: {
         primary: {
@@ -67,6 +71,14 @@ module.exports = {
         12.5: "3.125rem",
         22: "5.5rem",
         26: "6.5rem",
+        o_aspect_ratio__16_9: "calc(9 / 16 * 100%)",
+        o_aspect_ratio__3_2: "calc(2 / 3 * 100%)",
+        o_aspect_ratio__4_3: "calc(3 / 4 * 100%)",
+        o_aspect_ratio__4_5: "calc(5 / 4 * 100%)",
+        o_aspect_ratio__1_2: "calc(2 / 1 * 100%)",
+        o_aspect_ratio__9_16: "calc(16 / 9 * 100%)",
+        o_aspect_ratio__2_3: "calc(3 / 2 * 100%)",
+        o_aspect_ratio__3_4: "calc(4 / 3 * 100%)",
       },
       fontSize: {
         title1: [

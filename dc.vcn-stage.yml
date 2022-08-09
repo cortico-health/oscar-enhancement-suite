@@ -2,6 +2,8 @@ version: "3.3"
 
 services:
   vcn-web:
+    environment:
+      - VITE_CEREBRO_URL=https://cerebro-develop.cortico.ca/api
     ports:
       - "3500:3500"
 
