@@ -2,7 +2,7 @@ import React from 'react'
 import MSend from '../components/molecules/m-send'
 
 const PTestChat = () => {
-    const chatSocket = new WebSocket('ws://localhost:8426/chat/1/');
+    const chatSocket = new WebSocket(`${import.meta.env.VITE_WEBSOCKET_URL}/chat/1/`);
 
     const sendMessage = (e) => {
         const messageEl = document.getElementById('chatMessage')

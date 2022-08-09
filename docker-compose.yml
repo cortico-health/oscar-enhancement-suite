@@ -18,8 +18,6 @@ services:
       - ./provider-messaging/:/code
     working_dir: /code
     command: bash -c "yarn && yarn dev"
-    environment:
-      - VITE_CEREBRO_URL=http://localhost:8426/api
     ports:
       - "3500:3500"
 
