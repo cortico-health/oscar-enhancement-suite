@@ -67,7 +67,7 @@ const CMessageList = () => {
     if (router.matches?.id) {
       conversationStore.setSelectedConversation(router.matches?.id);
 
-      getChatMessageData(router.matches?.id,authStore.accessToken).then((response) => {
+      getChatMessageData(router.matches?.id).then((response) => {
         setSocketUrl(`${import.meta.env.VITE_WEBSOCKET_URL || "ws://localhost:8426"}/chat/${router.matches?.id}/?token=${authStore.accessToken}`)
         setMessages(response.data.results)
       }).catch((error) => {
@@ -94,7 +94,10 @@ const CMessageList = () => {
   //   return res;
   // };
 
-  if (!messages) {
+  if (!messages ||
+    !patientStore.patients?.selected ||
+    conversationStore.selectedConversation?.patient_full_name !== patientSelected?.firstName + " " + patientSelected?.lastName
+  ) {
     return (
       <div className="flex items-center justify-center w-full">
         Choose the discussion
