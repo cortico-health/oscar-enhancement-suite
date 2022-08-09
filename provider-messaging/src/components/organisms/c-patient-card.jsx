@@ -26,7 +26,7 @@ const CPatientCard = ({...props}) => {
         <>
           <div className='flex mb-5 gap-x-5 justify-between'>
             {
-              patient.image ? <img className="h-12.5 min-w-12.5" src={ patient.image } /> : <ASvg className="h-12.5 min-w-12.5 first:child:fill-primary-300 border-2 rounded-full p-0.25 border-primary-700" src="avatar" />
+              patient.image ? <img className="h-12.5 min-w-12.5" src={ patient.image } /> : <ASvg className="h-12.5 min-w-12.5 border-2 rounded-full p-0.25 border-primary-500" src="avatar" />
             }
             <div>
               <h1 className='text-h1 text-secondary-500 font-medium'>{ patient.firstName + " " + patient.lastName }</h1>

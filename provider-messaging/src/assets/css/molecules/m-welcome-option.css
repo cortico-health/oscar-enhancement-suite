@@ -1,32 +1,19 @@
 
 .m-welcome-option {
-  display: block;
-  padding-top: 28px;
-  padding-bottom: 25px;
-  padding-left: 38px;
-  padding-right: 38px;
+  @apply block pt-7 pb-[25px] px-[38px];
 
   & .m-welcome-option__circle {
-    @apply bg-secondary-200 flex justify-center items-center;
-    border-radius: 50%;
-    width: 104px;
-    height: 104px;
-    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.1);
-    margin-bottom: 29px;
+    @apply bg-secondary-200 flex justify-center items-center
+      rounded-[50%] w-[104px] h-[104px] shadow-2xl
+      mb-[29px];
   }
 
   & .m-welcome-option__logo {
-    background: rgba(255, 255, 255, 0.4);
-    box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.1);
-    width: 64px;
-    height: 64px;
-    padding: 17px;
-    border-radius: 20px;
+    @apply bg-[#ffffff66] shadow-lg	 w-16 h-16 p-[17px] rounded-[20px];
   }
 
   & .m-welcome-option__heading {
-    @apply font-bold text-title2 text-secondary-300;
-    margin-bottom: 13px;
+    @apply font-bold text-title2 text-secondary-300 mb-[13px];
   }
 
   & .m-welcome-option__copy {
@@ -34,16 +21,13 @@
   }
 
   &:hover {
-    @apply p-6;
-    @apply bg-white;
-    @apply rounded-3xl;
-    box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.1);
+    @apply p-6 bg-white rounded-3xl shadow-2xl;
 
     & .m-welcome-option__circle {
       @apply bg-primary-500;
     }
     & .m-welcome-option__logo {
-      background: #B5BEFF;
+      @apply bg-[#B5BEFF]
     }
     & .m-welcome-option__heading {
       @apply text-primary-500;

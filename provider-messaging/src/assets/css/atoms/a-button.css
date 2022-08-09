@@ -1,9 +1,9 @@
 .a-button--lg {
-  height: 48px;
+  @apply h-[48px];
 }
 
 .a-button--sm {
-  height: 38px;
+  @apply h-[38px];
 }
 
 .a-button--primary {

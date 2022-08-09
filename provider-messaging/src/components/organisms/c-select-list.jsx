@@ -25,12 +25,6 @@ const CSelectList = ({...props}) => {
   }
 
   useEffect(() => {
-    if (!patientStore.patients.all) {
-      patientStore.getPatientList();
-    }
-  },[]);
-
-  useEffect(() => {
     if (patientStore.patients.all?.length) {
       setShowPatients(patientStore.patients.all);
     }

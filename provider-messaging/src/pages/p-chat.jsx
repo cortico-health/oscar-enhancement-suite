@@ -1,33 +1,43 @@
 import { observer } from "mobx-react-lite";
-import { h } from "preact";
-import { useEffect,useState } from "preact/hooks";
+import { useRouter } from "preact-router";
+import { route } from "preact-router";
+import { useEffect } from "preact/hooks";
 import ASvg from "../components/atoms/a-svg";
 import CConversationList from "../components/organisms/c-conversation-list";
 import CFilesList from "../components/organisms/c-files-list";
 import CMessageList from "../components/organisms/c-message-list";
 import CPatientCard from "../components/organisms/c-patient-card";
+import _ from 'lodash';
 
 import { useStore } from "../state";
 
 const PChat = () => {
 
-  const { patientStore } = useStore();
+  const { patientStore, conversationStore } = useStore();
+  const router = useRouter()[0];
+
+  const getMostRecentConversation = () => {
+    return _.first(conversationStore.conversations)
+  }
 
   useEffect(() => {
-    patientStore.getPatientList();
-  },[])
+    if (!_.has(router.matches, 'id')) {
+      const mostRecentConversation = getMostRecentConversation()
+      if (mostRecentConversation) route(`/chat/${mostRecentConversation.id}`)
+    }
+  }, [conversationStore.conversations]);
 
   if (!patientStore.patients.all?.length) {
     return <div>loading...</div>
   }
 
   return (
-  <div className="flex">
-    <div className="hidden h-screen lg:block" style={{ minWidth: "350px" }}>
-      <CPatientCard
-        className="mt-7 pb-6 px-5.5 h-min border-b border-secondary-100"
-      />
-      {
+    <div className="flex">
+      <div className="hidden h-screen lg:block w-[450px]">
+        <CPatientCard
+          className="mt-7 pb-6 px-5.5 h-min border-b border-secondary-100"
+        />
+        {
           location.hash == "#assets" ?
             <CFilesList />
             :
@@ -38,8 +48,8 @@ const PChat = () => {
                     patientStore.patients?.selected ? <>
                       Conversations on
                       <span className="text-primary-500">
-                        { " " + patientStore.patients?.selected.firstName
-                          + " " + patientStore.patients?.selected.lastName }
+                        {" " + patientStore.patients?.selected.firstName
+                          + " " + patientStore.patients?.selected.lastName}
                       </span>
                     </>
                       : "All conversations"
@@ -51,11 +61,11 @@ const PChat = () => {
               </div>
               <CConversationList />
             </>
-      }
+        }
 
+      </div>
+      <CMessageList />
     </div>
-    <CMessageList />
-  </div>
   )
 };
 

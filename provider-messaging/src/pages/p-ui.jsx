@@ -76,7 +76,7 @@ const chatRoom = {
 
 const PUi = () => (
   <div className="p-ui">
-    <section className="py-16 o-container o-container--lg">
+    <section className="py-16 o-container max-w-o_container__lg">
     <h1 className="text-title1 mb-4">Atoms</h1>
 
     <h2 className="text-title2 mb-4">Buttons: </h2>
