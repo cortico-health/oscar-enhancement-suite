@@ -1,8 +1,0 @@
-.m-send {
-  & input{
-    @apply rounded-l-full rounded-r-full pl-16 py-4;
-  }
-  & textarea{
-    @apply rounded-l-full rounded-r-full pl-16 py-4;
-  }
-}
