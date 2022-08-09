@@ -5,14 +5,13 @@ import { usersData } from '../../data';
 import { useStore } from "../../state";
 
 const fields =
-  /* TODO Dwight - Patient: Return this if this is functional */
   [
-    /* {
+    {
       link: '/select',
       logo: 'user',
       heading: 'Select a patient',
       copy: 'Praesent ut gravida elit. Cras vehicula felis diam, sed mollis nisl cursus vitae. '
-    }, */
+    },
     {
       link: '/chat',
       logo: 'selected',

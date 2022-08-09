@@ -138,23 +138,20 @@ const CMessageList = () => {
           ref={sendRef}
           handlers={handlers}
         />
-        {/*
-          TODO Dwight - Patient: Return this if this is functional
-          <p className="text-h3 text-right text-secondary-500 pb-4">
-            {patientSelected && "Sending a message about "}
+        <p className="text-h3 text-right text-secondary-500 pb-4">
+          { patientSelected && "Sending a message about " }
 
-            <span className="font-bold">
-              {(patientSelected) ?
-                `${patientSelected?.firstName} ${patientSelected?.lastName}.`
-                :
-                "No Patient."
-              }</span>
-            {" "}
-            <a className="font-medium text-primary-500" href="/select">
-              {patientSelected ? "Switch" : "Choose"} Patient
-            </a>
-          </p>
-        */}
+          <span className="font-bold">
+            { (patientSelected) ?
+              `${patientSelected?.firstName} ${patientSelected?.lastName}.`
+              :
+              "No Patient."
+            }</span>
+          { " " }
+          <a className="font-medium text-primary-500" href="/select">
+            { patientSelected ? "Switch" : "Choose" } Patient
+          </a>
+        </p>
       </div>
     </div>
   );
