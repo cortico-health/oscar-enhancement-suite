@@ -67,8 +67,8 @@ const CMessageList = () => {
     if (router.matches?.id) {
       conversationStore.setSelectedConversation(router.matches?.id);
 
-      getChatMessageData(router.matches?.id).then((response) => {
-        setSocketUrl(`${import.meta.env.VITE_WEBSOCKET_URL || "ws://localhost:8426"}/chat/${router.matches?.id}/?token=${authStore.accessToken}`)
+      getChatMessageData(router.matches?.id,authStore.accessToken).then((response) => {
+        setSocketUrl(`${import.meta.env.VITE_WEBSOCKET_URL}/chat/${router.matches?.id}/?token=${authStore.accessToken}`)
         setMessages(response.data.results)
       }).catch((error) => {
         console.log(error);

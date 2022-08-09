@@ -186,10 +186,10 @@ function Teleplan({ goBack, ...props }) {
           Go Back
         </Button>
         <p className="tw-text-sm tw-mt-4 tw-block tw-max-w-[325px] tw-mx-auto">
-          This is likely because there is a problem with your teleplan
-          configurations.
+          This is likely because there is a problem with your clinic's teleplan
+          configurations. Try checking eligibility manually.
           <p className="tw-mt-2">
-            If this is not the case, please contact us at{" "}
+            If that works, please contact us at{" "}
             <a
               href="mailto:help@cortico.health"
               className="tw-text-blue-1000 tw-font-medium"
