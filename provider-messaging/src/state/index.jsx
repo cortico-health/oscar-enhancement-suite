@@ -86,7 +86,11 @@ export const StateProvider = observer(({ children }) => {
     },
     setConversations() {
       getConversationsList().then((response) => {
-        this.conversations = response.data.results;
+        /* TODO Dwight: Change this once there is a patient functionality */
+        this.conversations = response.data.results.map((conversation,index) => {
+          const patientFullName = patientsData[index % 2].firstName + " " + patientsData[index % 2].lastName;
+          return { ...conversation,patient_full_name: patientFullName }
+        });
       }).catch((error) => {
         console.log(error);
       });
