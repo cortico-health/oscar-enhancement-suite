@@ -1,19 +1,19 @@
 
 .m-welcome-option {
-  @apply block pt-7 pb-[25px] px-[38px];
+  @apply block pt-7 pb-6 px-9 w-72 h-72;
 
   & .m-welcome-option__circle {
-    @apply bg-secondary-200 flex justify-center items-center
+    @apply flex justify-center items-center bg-primary-500
       rounded-[50%] w-[104px] h-[104px] shadow-2xl
       mb-[29px];
   }
 
   & .m-welcome-option__logo {
-    @apply bg-[#ffffff66] shadow-lg	 w-16 h-16 p-[17px] rounded-[20px];
+    @apply bg-[#B5BEFF] shadow-lg	 w-16 h-16 p-[17px] rounded-[20px];
   }
 
   & .m-welcome-option__heading {
-    @apply font-bold text-title2 text-secondary-300 mb-[13px];
+    @apply font-bold text-title2 text-primary-500 mb-[13px];
   }
 
   & .m-welcome-option__copy {
@@ -22,15 +22,5 @@
 
   &:hover {
     @apply p-6 bg-white rounded-3xl shadow-2xl;
-
-    & .m-welcome-option__circle {
-      @apply bg-primary-500;
-    }
-    & .m-welcome-option__logo {
-      @apply bg-[#B5BEFF]
-    }
-    & .m-welcome-option__heading {
-      @apply text-primary-500;
-    }
   }
 }

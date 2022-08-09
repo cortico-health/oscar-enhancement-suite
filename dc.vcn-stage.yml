@@ -7,12 +7,7 @@ services:
       - VITE_WEBSOCKET_URL=wss://cerebro-develop.cortico.ca
     ports:
       - "3500:3500"
-  nginx:
-    networks:
-      - back-tier
-    image: nginx
-    volumes:
-     - ./nginx/conf.d:/etc/nginx/conf.d
+    command: bash -c "yarn && yarn stage"
 
 networks:
   back-tier:

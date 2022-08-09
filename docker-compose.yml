@@ -20,6 +20,7 @@ services:
     command: bash -c "yarn && yarn dev"
     environment:
       - VITE_CEREBRO_URL=http://localhost:8426/api
+      - VITE_WEBSOCKET_URL=ws://localhost:8426
     ports:
       - "3500:3500"
 
