@@ -1,3 +1,17 @@
 .c-plugin {
-  @apply whitespace-nowrap rounded-l-full rounded-r-full bg-green-300 w-fit flex items-center;
+  @apply whitespace-nowrap rounded-l-full rounded-r-full bg-green-300 w-fit flex items-center cursor-pointer;
 }
+
+.c-plugin__content {
+  width: 0px;
+  overflow-x: hidden;
+  -webkit-transition: width 1s ease-in-out;
+  -moz-transition: width 1s ease-in-out;
+  -o-transition: width 1s ease-in-out;
+  transition: width 1s ease-in-out;
+}
+
+.c-plugin:hover .c-plugin__content {
+  width: 350px;
+}
+
