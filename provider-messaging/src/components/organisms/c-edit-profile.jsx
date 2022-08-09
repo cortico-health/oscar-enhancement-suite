@@ -40,7 +40,7 @@ const CEditProfile = ({ profile, opened, setOpenModal }) => {
           <div className="o-aspect-ratio w-40 mb-7 mx-auto">
             <img
               className="o-aspect-ratio__content rounded-2xl object-cover"
-              src={inputs.avatar || "https://images.unsplash.com/photo-1611695434398-4f4b330623e6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80"}
+              src={ "https://images.unsplash.com/photo-1611695434398-4f4b330623e6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80" }
             />
 
             <label className="absolute bottom-0 right-0">
