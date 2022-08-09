@@ -34,7 +34,13 @@ export const StateProvider = observer(({ children }) => {
     user: null,
     setUserData() {
       getUserData(authStore.accessToken).then((response) => {
-        this.user = response.data;
+        if (!response.data.profile) {
+          userStore.user = null;
+          this.accessToken = null;
+          localStorage.removeItem('vcnAccessToken');
+        } else {
+          this.user = response.data;
+        }
       }).catch((error) => {
         console.log(error);
       });
@@ -72,7 +78,7 @@ export const StateProvider = observer(({ children }) => {
     logout() {
       userStore.user = null;
       this.accessToken = null;
-      localStorage.setItem('vcnAccessToken', null);
+      localStorage.removeItem('vcnAccessToken');
     }
   }))
 
@@ -87,9 +93,9 @@ export const StateProvider = observer(({ children }) => {
     setConversations() {
       getConversationsList().then((response) => {
         /* TODO Dwight: Change this once there is a patient functionality */
-        this.conversations = response.data.results.map((conversation,index) => {
+        this.conversations = response.data.results.map((conversation, index) => {
           const patientFullName = patientsData[index % 2].firstName + " " + patientsData[index % 2].lastName;
-          return { ...conversation,patient_full_name: patientFullName }
+          return { ...conversation, patient_full_name: patientFullName }
         });
       }).catch((error) => {
         console.log(error);
