@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name     Cortico
-// @version  2022.7.22
+// @version  __PLUGIN__VERSION__ 
 // @grant    none
 // ==/UserScript==
 
@@ -59,7 +59,7 @@ import { initialState as setupPharmacyState } from "./modules/cortico/Widget/fea
 import { initialState as eligCheckState } from "./modules/cortico/Widget/features/EligCheck/EligCheck";
 import widgetStore from "./modules/cortico/Widget/store/store";
 import { getAccountProviderNo } from "./modules/Utils/Utils";
-const version = "2022.7.20";
+const version = "__PLUGIN_VERSION__";
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
 window.is_dev = process.env.NODE_ENV === "development" ? true : false;
