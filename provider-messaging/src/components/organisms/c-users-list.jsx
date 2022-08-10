@@ -93,7 +93,7 @@ const CUsersList = observer(() => {
                 return checked[user.id] ? <p className="text-secondary-500 text-h2 font-bold mb-2" key={user.name}>{user.name}</p> : null
               })
             }
-            <div className="flex w-full mt-8 justify-center">
+            <div className="flex w-full mt-8 justify-between">
               <AButton onClick={() => setConfirm(false)} className="px-5" variant="button-secondary-sm">Cancel</AButton>
               <AButton onClick={handleCreateConversation} className="px-5 ml-5">Confirm</AButton>
             </div>
