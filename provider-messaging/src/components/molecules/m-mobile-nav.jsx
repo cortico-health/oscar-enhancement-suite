@@ -1,3 +1,4 @@
+import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "preact/hooks";
 import React from "react";
 import { useStore } from "../../state";
@@ -95,4 +96,4 @@ const MMobileNav = ({ patient,setIsOpened }) => {
   );
 };
 
-export default MMobileNav;
+export default observer(MMobileNav);
