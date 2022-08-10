@@ -1,4 +1,3 @@
-import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "preact/hooks";
 import React from "react";
 import { useStore } from "../../state";
