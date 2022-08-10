@@ -99,8 +99,9 @@ const CMessageList = () => {
     conversationStore.selectedConversation?.patient_full_name !== patientSelected?.firstName + " " + patientSelected?.lastName
   ) {
     return (
-      <div className="flex items-center justify-center w-full">
-        Choose the discussion
+      <div className="flex flex-col items-center justify-center gap-2 w-full">
+        <ASvg src="chat-alt2" />
+        <h4 className="text-secondary-300 text-2xl">Choose the discussion</h4>
       </div>
     );
   }
