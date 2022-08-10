@@ -19,7 +19,7 @@ const PAddToChat = () => {
 
   return (
   <div className="flex">
-      <div className="hidden h-screen lg:block" style={ { minWidth: "350px" } }>
+      <div className="bg-gray-50 shadow hidden h-screen lg:block w-[350px]">
         <CPatientCard
           className="mt-7 pb-6 px-5.5 h-min border-b border-secondary-100"
         />

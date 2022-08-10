@@ -17,7 +17,7 @@ const CNav = () => {
   const [isOpened, setIsOpened] = useState(false);
   return (
     <>
-      <nav className='c-nav fixed pt-6 pb-3 z-10 lg:flex hidden flex-col justify-between bg-white left-0 h-screen w-20'>
+      <nav className='c-nav shadow fixed pt-6 pb-3 z-10 lg:flex hidden flex-col justify-between bg-white left-0 h-screen w-20'>
         <a href="/" className="mx-auto"><ASvg src="logo" /> </a>
 
         <div className='flex flex-col'>
