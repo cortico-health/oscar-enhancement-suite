@@ -58,7 +58,7 @@ const MConversationTab = ({ conversation, ...props }) => {
           </div>
         )}
         <div className="max-w-full ml-4">
-          <span
+          <p
             className={ `text-contact2 lg:text-contact1 w-64 cursor-pointer whitespace-nowrap text-ellipsis overflow-hidden ${selected ? "text-white" : "text-secondary-500"
               }`}
           >
@@ -66,8 +66,8 @@ const MConversationTab = ({ conversation, ...props }) => {
                     setOpenModal={setOpenModal}
                     opened={openModal}
                     profile={participiant}/> */}
-            {multipleObjectDataFormatting(getOtherMembersName(showConversation?.members))}
-          </span>
+            { multipleObjectDataFormatting(getOtherMembersName(showConversation?.members)) }
+          </p>
           <p
             className={ `text-contact3 relative lg:text-contact2 mt-2 w-64 whitespace-nowrap text-ellipsis overflow-hidden ${selected ? "text-white" : "text-secondary-300"
               }`}
