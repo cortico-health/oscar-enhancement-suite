@@ -16,7 +16,7 @@ const CRecentList = ({...props}) => {
   },[]); */
 
   return (
-    <div className='px-5 pt-6 bg-secondary-20' {...props}>
+    <div className='px-5 pt-6' { ...props }>
       <h2 className='text-secondary-500 font-medium text-h1'>Recent patients</h2>
       {
         patientStore.patients.all?.map(patient => {
