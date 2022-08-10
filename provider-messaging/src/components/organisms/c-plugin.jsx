@@ -2,13 +2,9 @@ import { h } from 'preact';
 import { useState } from 'preact/hooks';
 import ASvg from '../atoms/a-svg';
 
-const CPlugin = ({className, ...props}) => {
-
-  const [expandBanner, setExpandBanner] = useState(false);
+const CPlugin = ({ className,...props }) => {
   return (
-    <div {...props}
-      onMouseEnter={ () => setExpandBanner(true) }
-      onMouseLeave={() => setExpandBanner(false)}
+    <div { ...props }
       className={`c-plugin ${className}`}>
       <ASvg className="my-4 mx-4" src="plug" />
       <div className='c-plugin__content'>
