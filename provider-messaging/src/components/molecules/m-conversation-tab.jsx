@@ -33,17 +33,17 @@ const MConversationTab = ({ conversation, ...props }) => {
       <div
         className={ `flex relative items-center` }
       >
-        { showConversation?.members.length > 2 ? (
+        { showConversation?.members.length > 1 ? (
           <div className="cursor-pointer ml-4" onClick={ () => setOpenModal(true) }>
             <div className="o-aspect-ratio w-11 min-w-8 h-11 min-h-8">
               <MProfilePicture avatar={showConversation?.members[showConversation?.members.length - 1].avatar}
-                className="left-0 o-aspect-ratio__content"
+                className="left-0 top-[8px] o-aspect-ratio__content"
               />
             </div>
 
             <div className="o-aspect-ratio w-11 min-w-8 h-11 min-h-8">
               <MProfilePicture avatar={showConversation?.members[showConversation?.members.length - 2].avatar}
-                className="-left-4 o-aspect-ratio__content"
+                className="-left-4 -top-[8px] o-aspect-ratio__content"
               />
             </div>
           </div>
