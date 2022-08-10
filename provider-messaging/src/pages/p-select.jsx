@@ -15,7 +15,7 @@ const PSelect= () => {
 
   return (
     <div className="flex">
-      <div className="hidden h-screen lg:block" style={{ minWidth: "350px" }}>
+      <div className="bg-gray-50 shadow hidden h-screen lg:block w-[450px]">
         <CRecentList />
       </div>
       <CSelectList />

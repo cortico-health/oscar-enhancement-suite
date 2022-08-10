@@ -12,22 +12,12 @@ import AButton from '../atoms/a-button';
 const CNav = () => {
   const route = useRouter()[0];
   const { patientStore,authStore } = useStore();
-  const [patient, setPatient] = useState(undefined);
-
-
-  useEffect(() => {
-    if (patientStore.patients.all?.length) {
-      if (patientStore.patients.selected) {
-        setPatient(patientStore.patients.selected);
-      }
-      else setPatient(undefined);
-    }
-  },[patientStore.patients]);
+  const selectedPatient = patientStore.patients.selected;
 
   const [isOpened, setIsOpened] = useState(false);
   return (
     <>
-      <nav className='c-nav fixed pt-6 pb-3 z-10 lg:flex hidden flex-col justify-between bg-white left-0 h-screen w-20'>
+      <nav className='c-nav shadow fixed pt-6 pb-3 z-10 lg:flex hidden flex-col justify-between bg-white left-0 h-screen w-20'>
         <a href="/" className="mx-auto"><ASvg src="logo" /> </a>
 
         <div className='flex flex-col'>
@@ -51,32 +41,32 @@ const CNav = () => {
         <div className='z-10 flex w-full px-7 gap-x-7 bg-primary-500 rounded-tr-2xl rounded-br-2xl items-center'>
           <div onClick={ () => setIsOpened(true) }><ASvg className="cursor-pointer" src="menu" /> </div>
 
-          { patient ?
+          { selectedPatient ?
             <>
               <ASvg className="first:child:fill-primary-300 min-w-12.5 min-h-12.5" src="avatar" />
               <div className='text-white'>
-                <h1>{ patient?.firstName + " " + patient?.lastName }</h1>
-                <h2> { patient?.facility }</h2>
+                <h1>{ selectedPatient?.firstName + " " + selectedPatient?.lastName }</h1>
+                <h2> { selectedPatient?.facility }</h2>
               </div>
             </>
             :
             <div>
                 <p className='text-white'> No patient selected</p>
-                <AButton href="/select" className='w-full block' variant='button-secondary-sm'> Select patient</AButton>
-              </div>
+              <AButton href="/select" className='w-full block' variant='button-secondary-sm'>Select patient</AButton>
+            </div>
           }
         </div>
 
-        { patient ?
+        { selectedPatient ?
           <div className='bg-secondary-20 pl-4 w-full flex flex-col justify-center'>
-            <p className='text-h4 text-secondary-300'> <span className='font-medium'>Gender:</span> { patient?.gender }  </p>
-            <p className='text-h4 text-secondary-300'> <span className='font-medium'>Date of birth: </span> { patient?.birthDate.toLocaleDateString() }  </p>
-            <p className='text-h4 text-secondary-300'> <span className='font-medium'>Health card number: </span> { patient?.healthCardNumber }  </p>
+            <p className='text-h4 text-secondary-300'> <span className='font-medium'>Gender:</span> { selectedPatient?.gender }  </p>
+            <p className='text-h4 text-secondary-300'> <span className='font-medium'>Date of birth: </span> { selectedPatient?.birthDate?.toLocaleDateString() }  </p>
+            <p className='text-h4 text-secondary-300'> <span className='font-medium'>Health card number: </span> { selectedPatient?.healthCardNumber }  </p>
           </div>
           : null }
 
         <div className={`${isOpened ? 'block' : 'hidden'} fixed z-20 bg-black/50 left-0 h-screen top-0 w-screen`}>
-          <MMobileNav setIsOpened={ setIsOpened } patient={ patient } />
+          <MMobileNav setIsOpened={ setIsOpened } patient={ selectedPatient } />
         </div>
       </div>
     </>
