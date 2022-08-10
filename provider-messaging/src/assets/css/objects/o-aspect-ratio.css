@@ -1,5 +1,5 @@
 .o-aspect-ratio {
-  @apply block relative;
+  @apply relative;
   
   &::before {
     @apply content-[""] block pb-[100%] w-full

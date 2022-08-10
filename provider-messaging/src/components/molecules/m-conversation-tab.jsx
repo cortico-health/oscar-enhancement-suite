@@ -28,22 +28,22 @@ const MConversationTab = ({ conversation, ...props }) => {
       onClick={() => { route('/chat/' + conversation?.id) }}
       href={'/chat/' + conversation?.id}
       {...props}
-      className={`flex flex-column items-center px-2.5 block my-8 cursor-pointer ${selected ? "h-24 rounded-lg bg-primary-500" : ""}`}
+      className={ `flex flex-column items-center px-2.5 block my-3 cursor-pointer ${selected ? "h-24 rounded-lg bg-primary-500" : ""}` }
     >
       <div
         className={ `flex relative items-center` }
       >
-        { showConversation?.members.length > 2 ? (
+        { showConversation?.members.length > 1 ? (
           <div className="cursor-pointer ml-4" onClick={ () => setOpenModal(true) }>
             <div className="o-aspect-ratio w-11 min-w-8 h-11 min-h-8">
               <MProfilePicture avatar={showConversation?.members[showConversation?.members.length - 1].avatar}
-                className="left-0 o-aspect-ratio__content"
+                className="left-0 top-2 o-aspect-ratio__content"
               />
             </div>
 
             <div className="o-aspect-ratio w-11 min-w-8 h-11 min-h-8">
               <MProfilePicture avatar={showConversation?.members[showConversation?.members.length - 2].avatar}
-                className="-left-4 o-aspect-ratio__content"
+                className="-left-4 -top-2 o-aspect-ratio__content"
               />
             </div>
           </div>
@@ -58,7 +58,7 @@ const MConversationTab = ({ conversation, ...props }) => {
           </div>
         )}
         <div className="max-w-full ml-4">
-          <span
+          <p
             className={ `text-contact2 lg:text-contact1 w-64 cursor-pointer whitespace-nowrap text-ellipsis overflow-hidden ${selected ? "text-white" : "text-secondary-500"
               }`}
           >
@@ -66,8 +66,8 @@ const MConversationTab = ({ conversation, ...props }) => {
                     setOpenModal={setOpenModal}
                     opened={openModal}
                     profile={participiant}/> */}
-            {multipleObjectDataFormatting(getOtherMembersName(showConversation?.members))}
-          </span>
+            { multipleObjectDataFormatting(getOtherMembersName(showConversation?.members)) }
+          </p>
           <p
             className={ `text-contact3 relative lg:text-contact2 mt-2 w-64 whitespace-nowrap text-ellipsis overflow-hidden ${selected ? "text-white" : "text-secondary-300"
               }`}
