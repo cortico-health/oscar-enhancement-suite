@@ -96,4 +96,4 @@ const MMobileNav = ({ patient,setIsOpened }) => {
   );
 };
 
-export default observer(MMobileNav);
+export default MMobileNav;
