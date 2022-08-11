@@ -115,7 +115,7 @@ const CMessageList = () => {
       />
       <div className="flex-grow overflow-y-auto px-9 lg:px-12">
         { messages?.map((message) => {
-          return <MMessageCard messageDetails={ message } />;
+          return <MMessageCard messageDetails={ message } attachment={ preview } />;
         }) }
         <div ref={ messagesEndRef } />
       </div>
