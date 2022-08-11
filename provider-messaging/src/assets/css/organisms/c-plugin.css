@@ -3,8 +3,8 @@
 }
 
 .c-plugin__content {
-  width: 0px;
-  overflow-x: hidden;
+  @apply w-0 overflow-hidden;
+  /* TODO: Change this to tailwind if possible. */
   -webkit-transition: width 1s ease-in-out;
   -moz-transition: width 1s ease-in-out;
   -o-transition: width 1s ease-in-out;
@@ -12,6 +12,6 @@
 }
 
 .c-plugin:hover .c-plugin__content {
-  width: 350px;
+  @apply w-[350px];
 }
 
