@@ -10,9 +10,7 @@ export const getConversationsList = async () => {
 
 export const createConversation = async (inputs) => {
     return await axios.post('/vcn/conversations/', {
-        "patient_full_name": "",
-        "patient_dob": null,
-        "patient_hin": "",
+        "patient": null,
         "members": inputs
     });
 }
