@@ -10,7 +10,7 @@ const formatURL = (string) => {
   return string.replace(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g, (url) => '<a class="text-primary-500" href="' + url + '">' + url + '</a>')
 }
 
-const MMessageCard = ({ messageDetails }) => {
+const MMessageCard = ({ messageDetails,attachment }) => {
 
   const message = () => ({
     __html: DOMPurify.sanitize(formatURL(messageDetails.body))
@@ -21,20 +21,12 @@ const MMessageCard = ({ messageDetails }) => {
   const textRef = useRef(null);
   return (
     messageDetails.from_user.id === userStore.user.id ?
-      <div>
+      <div className="mb-10">
         <p className='text-secondary-200 text-title6 text-center'>{(new Date(messageDetails.created_date)).toLocaleTimeString('en-us',
-          { hour: 'numeric', minute: '2-digit' })}</p>
+          { hour: 'numeric',minute: '2-digit' }) }
+        </p>
         <div className="text-right">
-          <div className='inline-block ml-auto mt-3 mb-10 rounded-2xl relative max-w-[52%]'>
-            {
-              messageDetails?.assets && messageDetails?.assets.map(asset => {
-                if (asset.type = "jpg") {
-                  return <div className='flex justify-end'>
-                    <img className='rounded-3xl object-cover' src={ asset.src } />
-                  </div>
-                }
-              })
-            }
+          <div className='inline-block ml-auto mt-3 mb-1 rounded-2xl relative max-w-[52%]'>
             <div className='flex justify-between rounded-2xl p-4 bg-secondary-200 items-center gap-x-5'>
               <p ref={ textRef } dangerouslySetInnerHTML={ message() } className='text-secondary-500 text-message1' />
               <ASvg onClick={ async () => {
@@ -43,6 +35,9 @@ const MMessageCard = ({ messageDetails }) => {
 
               } } className="cursor-pointer min-w-max w-7 h-7" src="download" />
             </div>
+          </div>
+          <div className='flex justify-end'>
+            { <img className='rounded-2xl object-cover' width="400" src={ "https://nikonrumors.com/wp-content/uploads/2014/03/Nikon-1-V3-sample-photo.jpg" } /> }
           </div>
         </div>
       </div>
