@@ -21,7 +21,6 @@ const CMessageList = () => {
 
   const [messages,setMessages] = useState(undefined);
   const [socketUrl,setSocketUrl] = useState(null);
-  const [attachements,setAttachements] = useState([]);
   const [preview,setPreview] = useState(null);
   const [patientSelected,setPatientSelected] = useState(null);
 
@@ -40,8 +39,6 @@ const CMessageList = () => {
 
   const handlers = {
     onUpload: (e) => {
-      setAttachements([...attachements,...e.target.files]);
-
       const file = e.target.files[0];
       const extension = file.name.split(".").pop().toLowerCase();
 
@@ -93,6 +90,10 @@ const CMessageList = () => {
   //   );
   //   return res;
   // };
+
+  const handleCancelFile = () => {
+    setPreview(null);
+  }
 
   if (!messages ||
     !patientStore.patients?.selected ||
