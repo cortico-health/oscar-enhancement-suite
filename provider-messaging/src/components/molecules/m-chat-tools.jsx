@@ -25,7 +25,7 @@ const MChatTools = ({ setDiscussion,selectedConversationInfo,...props }) => {
   const numberOfAssets = [0,0];
 
   return (
-    <div {...props} className='flex justify-between items-center my-10 mx-9 lg:mx-12 pb-10 border-b border-secondary-100'>
+    <div { ...props } className='flex justify-between items-center mt-10 mb-2 mx-9 lg:mx-12 pb-10 border-b border-secondary-100'>
       <div className='flex gap-x-2.5 items-center'>
         <div className='w-fit'>
           <h1 className='text-secondary-500 font-bold text-title3'>
