@@ -1,3 +1,4 @@
+import { useState } from 'preact/hooks'
 import React from 'react'
 import { isAudio,isDocument,isHTML,isImage,isSheet,isTextFile } from '../../helper/determine-file-type'
 import ASvg from '../atoms/a-svg'
@@ -18,6 +19,28 @@ const ShowSVGFile = ({ dataURL,icon,name,isUser }) => {
     )
 }
 
+const ShowImgFile = ({ url }) => {
+    const [confirm,setConfirm] = useState(false);
+    return (
+        <>
+            {
+                confirm ?
+                    (
+                        <div className="fixed z-50 top-0 left-0 bottom-0 right-0 bg-black/50 w-screen h-screen cursor-pointer"
+                            onClick={ () => setConfirm(false) }
+                        >
+                            <div className="text-center fixed left-1/2 -translate-x-2/4 top-1/2 -translate-y-1/2">
+                                <img className='rounded-2xl object-cover h-auto' src={ url } />
+                            </div>
+                        </div >
+                    )
+                    : null
+            }
+            <img className='rounded-2xl object-cover w-1/2 h-auto cursor-pointer' src={ url } onClick={ () => setConfirm(true) } />
+        </>
+    );
+}
+
 const MMessageFile = ({ dataURL,name,extension,isUser }) => {
 
     return (
@@ -29,7 +52,7 @@ const MMessageFile = ({ dataURL,name,extension,isUser }) => {
             {
                 isImage(extension)
                 &&
-                <img className='rounded-2xl object-cover w-1/2 h-auto' src={ dataURL } />
+                <ShowImgFile url={ dataURL } />
             }
             {
                 isAudio(extension)
