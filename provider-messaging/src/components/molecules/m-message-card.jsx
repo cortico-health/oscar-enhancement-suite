@@ -65,10 +65,10 @@ const MMessageCard = ({ messageDetails }) => {
         </div>
       </div>
       :
-      <div>
+      <div className="mb-10">
         <p className='text-secondary-200 text-title6 text-center'>{ (new Date(created_date)).toLocaleTimeString('en-us',
           { hour: 'numeric',minute: '2-digit' }) }</p>
-        <div className='mb-10 mt-3'>
+        <div className='mb-10 mt-3 mr-auto'>
           <div>
             <div className="flex items-center tw-gap-3">
               <p className='text-secondary-500 text-h1 font-medium'>
@@ -85,11 +85,11 @@ const MMessageCard = ({ messageDetails }) => {
           </div>
           <div className="flex gap-3 mt-3">
             <MProfilePicture avatar={ author?.avatar } className="relative w-11 h-11" />
-            <div className="flex flex-col gap-2">
-              <div className="bg-white rounded-2xl p-4 max-w-[45%]">
+            <div className="flex flex-col gap-2 w-full">
+              <div className="bg-white rounded-2xl p-4 inline-block w-[45%] max-w-fit">
                 <p className='text-secondary-500 text-message1' dangerouslySetInnerHTML={ message() } />
               </div>
-              <div className='flex'>
+              <div className='flex max-w-[80%]'>
                 {
                   asset
                   &&
