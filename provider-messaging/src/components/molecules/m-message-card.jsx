@@ -29,7 +29,21 @@ const MMessageCard = ({ messageDetails }) => {
           { hour: 'numeric',minute: '2-digit' }) }
         </p>
         <div className='ml-auto mt-3 mb-1 rounded-2xl flex flex-col items-end'>
-          <div className='flex items-center rounded-2xl p-4 mb-2 bg-secondary-200 gap-x-5 max-w-[45%]'>
+          <div>
+            <div className="flex items-center tw-gap-3">
+              <p className='text-secondary-500 text-h1 font-medium'>
+                { from_user.full_name }
+              </p>
+              <div className="text-white bg-blue-600 rounded-full -tw-ml-2">
+                <ASvg src="verified" />
+              </div>
+            </div>
+            {/* TODO - Dwight: Change this once there is an info for clinic */ }
+            <p className='text-secondary-300 text-select2 text-right'>
+              { from_user.full_name }'s Clinic
+            </p>
+          </div>
+          <div className='flex items-center rounded-2xl p-4 mb-2 mt-3 bg-secondary-200 gap-x-5 max-w-[45%]'>
             <p ref={ textRef } dangerouslySetInnerHTML={ message() } className='text-secondary-500 text-message1' />
             <ASvg onClick={ async () => {
               await navigator.clipboard.writeText(textRef.current.innerHTML)
