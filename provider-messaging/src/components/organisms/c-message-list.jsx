@@ -9,6 +9,7 @@ import useWebSocket from "react-use-websocket";
 import { observer } from "mobx-react-lite";
 import ASvg from "../atoms/a-svg";
 import { getChatMessageData } from "../../api/conversations";
+import AFileInputShow from "../atoms/a-file-input-show";
 
 const fileTypes = ['jpg','jpeg','png','pdf']
 
@@ -21,7 +22,6 @@ const CMessageList = () => {
 
   const [messages,setMessages] = useState(undefined);
   const [socketUrl,setSocketUrl] = useState(null);
-  const [attachements,setAttachements] = useState([]);
   const [preview,setPreview] = useState(null);
   const [patientSelected,setPatientSelected] = useState(null);
 
@@ -40,8 +40,6 @@ const CMessageList = () => {
 
   const handlers = {
     onUpload: (e) => {
-      setAttachements([...attachements,...e.target.files]);
-
       const file = e.target.files[0];
       const extension = file.name.split(".").pop().toLowerCase();
 
@@ -115,27 +113,13 @@ const CMessageList = () => {
       />
       <div className="flex-grow overflow-y-auto px-9 lg:px-12">
         { messages?.map((message) => {
-          return <MMessageCard messageDetails={ message } />;
+          return <MMessageCard messageDetails={ message } attachment={ preview } />;
         }) }
         <div ref={ messagesEndRef } />
       </div>
 
       <div className="sticky bg-secondary-10 mx-9 lg:mx-12 tw-pt-4">
-        {
-          (fileTypes.indexOf(preview?.type) > -1) ? (
-            <div className="flex items-center gap-4">
-              { (preview.type !== fileTypes[3]) ?
-                <img width="50" src={ preview.dataURL } />
-                :
-                <ASvg src="document" className="h-16 w-16" /> // If pdf
-              }
-              <p>{ preview.name }</p>
-              <ASvg src="exit" className="cursor-pointer" onClick={ () => setPreview(null) } />
-            </div>
-          ) : (
-            null
-          )
-        }
+        <AFileInputShow fileInput={ preview } exit={ () => setPreview(null) } />
 
         <MSend
           placeholder="Type message..."
