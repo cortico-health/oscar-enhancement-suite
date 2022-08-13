@@ -9,6 +9,7 @@ import useWebSocket from "react-use-websocket";
 import { observer } from "mobx-react-lite";
 import ASvg from "../atoms/a-svg";
 import { getChatMessageData } from "../../api/conversations";
+import AFileInputShow from "../atoms/a-file-input-show";
 
 const fileTypes = ['jpg','jpeg','png','pdf']
 
@@ -91,10 +92,6 @@ const CMessageList = () => {
   //   return res;
   // };
 
-  const handleCancelFile = () => {
-    setPreview(null);
-  }
-
   if (!messages ||
     !patientStore.patients?.selected ||
     conversationStore.selectedConversation?.patient_full_name !== patientSelected?.firstName + " " + patientSelected?.lastName
@@ -122,21 +119,7 @@ const CMessageList = () => {
       </div>
 
       <div className="sticky bg-secondary-10 mx-9 lg:mx-12 tw-pt-4">
-        {
-          (fileTypes.indexOf(preview?.type) > -1) ? (
-            <div className="flex items-center gap-4">
-              { (preview.type !== fileTypes[3]) ?
-                <img width="50" src={ preview.dataURL } />
-                :
-                <ASvg src="document" className="h-16 w-16" /> // If pdf
-              }
-              <p>{ preview.name }</p>
-              <ASvg src="exit" className="cursor-pointer" onClick={ () => setPreview(null) } />
-            </div>
-          ) : (
-            null
-          )
-        }
+        <AFileInputShow fileInput={ preview } exit={ () => setPreview(null) } />
 
         <MSend
           placeholder="Type message..."

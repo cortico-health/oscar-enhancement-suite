@@ -5,73 +5,87 @@ import ASvg from '../atoms/a-svg';
 import DOMPurify from 'dompurify'
 import { useStore } from '../../state';
 import MProfilePicture from './m-profile-picture';
+import MMessageFile from './m-message-file';
 
 const formatURL = (string) => {
   return string.replace(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g, (url) => '<a class="text-primary-500" href="' + url + '">' + url + '</a>')
 }
 
-const MMessageCard = ({ messageDetails,attachment }) => {
+const MMessageCard = ({ messageDetails }) => {
+  const { asset,author,body,created_date,from_user } = messageDetails;
 
   const message = () => ({
-    __html: DOMPurify.sanitize(formatURL(messageDetails.body))
+    __html: DOMPurify.sanitize(formatURL(body))
   });
 
   const { userStore } = useStore();
 
   const textRef = useRef(null);
   return (
-    messageDetails.from_user.id === userStore.user.id ?
+    from_user.id === userStore.user.id
+      ?
       <div className="mb-10">
-        <p className='text-secondary-200 text-title6 text-center'>{(new Date(messageDetails.created_date)).toLocaleTimeString('en-us',
+        <p className='text-secondary-200 text-title6 text-center'>{ (new Date(created_date)).toLocaleTimeString('en-us',
           { hour: 'numeric',minute: '2-digit' }) }
         </p>
-        <div className="text-right">
-          <div className='inline-block ml-auto mt-3 mb-1 rounded-2xl relative max-w-[52%]'>
-            <div className='flex justify-between rounded-2xl p-4 bg-secondary-200 items-center gap-x-5'>
-              <p ref={ textRef } dangerouslySetInnerHTML={ message() } className='text-secondary-500 text-message1' />
-              <ASvg onClick={ async () => {
-                await navigator.clipboard.writeText(textRef.current.innerHTML)
-                alert('Copied text to clipboard')
+        <div className='ml-auto mt-3 mb-1 rounded-2xl flex flex-col items-end'>
+          <div className='flex items-center rounded-2xl p-4 mb-2 bg-secondary-200 gap-x-5 max-w-[45%]'>
+            <p ref={ textRef } dangerouslySetInnerHTML={ message() } className='text-secondary-500 text-message1' />
+            <ASvg onClick={ async () => {
+              await navigator.clipboard.writeText(textRef.current.innerHTML)
+              alert('Copied text to clipboard')
 
-              } } className="cursor-pointer min-w-max w-7 h-7" src="download" />
-            </div>
+            } } className="cursor-pointer min-w-max w-7 h-7" src="download" />
           </div>
           <div className='flex justify-end'>
-            { <img className='rounded-2xl object-cover' width="400" src={ "https://nikonrumors.com/wp-content/uploads/2014/03/Nikon-1-V3-sample-photo.jpg" } /> }
+            {
+              asset
+              &&
+              <MMessageFile dataURL={ asset?.dataURL }
+                name={ asset?.name }
+                extension={ asset?.type }
+                isUser={ true }
+              />
+            }
           </div>
         </div>
       </div>
       :
       <div>
-        <p className='text-secondary-200 text-title6 text-center'>{(new Date(messageDetails.created_date)).toLocaleTimeString('en-us',
-          { hour: 'numeric', minute: '2-digit' })}</p>
-        <div className='mb-10 w-full mt-3'>
+        <p className='text-secondary-200 text-title6 text-center'>{ (new Date(created_date)).toLocaleTimeString('en-us',
+          { hour: 'numeric',minute: '2-digit' }) }</p>
+        <div className='mb-10 mt-3'>
           <div>
             <div className="flex items-center tw-gap-3">
               <p className='text-secondary-500 text-h1 font-medium'>
-                { messageDetails.from_user.full_name }
+                { from_user.full_name }
               </p>
               <div className="text-white bg-blue-600 rounded-full -tw-ml-2">
                 <ASvg src="verified" />
               </div>
             </div>
             {/* TODO - Dwight: Change this once there is an info for clinic */ }
-
             <p className='text-secondary-300 text-select2'>
-              { messageDetails.from_user.full_name }'s Clinic
+              { from_user.full_name }'s Clinic
             </p>
           </div>
-          <div className="flex mt-3">
-            <MProfilePicture avatar={ messageDetails.author?.avatar } className="relative w-11 h-11" />
-            <div className="inline-block max-w-[50%]">
-              {
-                messageDetails?.assets && messageDetails.assets.map(asset => {
-                  if (asset.type = "jpg") {
-                    return <img className='rounded-3xl max-w-xs' src={ asset.src } />
-                  }
-                })
-              }
-              <p className='text-secondary-500 bg-white rounded-2xl ml-3 p-4 text-message1' dangerouslySetInnerHTML={ message() } />
+          <div className="flex gap-3 mt-3">
+            <MProfilePicture avatar={ author?.avatar } className="relative w-11 h-11" />
+            <div className="flex flex-col gap-2">
+              <div className="bg-white rounded-2xl p-4 max-w-[45%]">
+                <p className='text-secondary-500 text-message1' dangerouslySetInnerHTML={ message() } />
+              </div>
+              <div className='flex'>
+                {
+                  asset
+                  &&
+                  <MMessageFile dataURL={ asset?.dataURL }
+                    name={ asset?.name }
+                    extension={ asset?.type }
+                    isUser={ false }
+                  />
+                }
+              </div>
             </div>
           </div>
         </div>
@@ -79,4 +93,4 @@ const MMessageCard = ({ messageDetails,attachment }) => {
   )
 }
 
-export default MMessageCard
+export default MMessageCard;
