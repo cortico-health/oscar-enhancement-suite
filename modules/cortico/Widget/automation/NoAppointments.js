@@ -1,5 +1,5 @@
 import { InformationCircleIcon } from "@heroicons/react/solid";
-import Button from "../../../core/Button";
+import { PrimaryButton } from "../../../core/Button";
 
 export default function NoAppointments({ title, goBack, children, ...props }) {
   return (
@@ -7,9 +7,9 @@ export default function NoAppointments({ title, goBack, children, ...props }) {
       <div className="tw-flex tw-flex-col tw-items-center tw-justify-center">
         <InformationCircleIcon className="tw-w-12 tw-h-12 tw-text-blue-1000" />
         <p className="tw-text-lg tw-mt-4">{title}</p>
-        <Button onClick={goBack} className="tw-my-4" size="sm">
+        <PrimaryButton onClick={goBack} className="tw-my-4" size="sm">
           Go Back
-        </Button>
+        </PrimaryButton>
         <p className="tw-text-sm tw-mt-4 tw-block tw-max-w-[350px] tw-mx-auto">
           {children}
         </p>
