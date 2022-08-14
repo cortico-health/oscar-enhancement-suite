@@ -5,7 +5,7 @@ import NoAppointments from "./NoAppointments";
 import Table from "../Table.js";
 import ProgressBar from "../ProgressBar.js";
 import Alert from "../Alert.js";
-import Button from "../../../core/Button";
+import { PrimaryButton } from "../../../core/Button";
 import Header from "../base/Header";
 
 export default function PreferredPharmacies({ goBack, ...props }) {
@@ -115,9 +115,9 @@ function Running({
 
       {complete === true ? (
         <div className="tw-flex tw-justify-center tw-mt-2">
-          <Button size="sm" onClick={goBack}>
+          <PrimaryButton size="sm" onClick={goBack}>
             Go Back
-          </Button>
+          </PrimaryButton>
         </div>
       ) : null}
 
