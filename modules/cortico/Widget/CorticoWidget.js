@@ -200,7 +200,7 @@ function App({ mode = "normal", ...props }) {
                 </Draggable>
               )}
             </div>
-            <>{props.document === true ? <SetupDocuments /> : null}</>
+            <>{/*props.document === true ? <SetupDocuments /> : null*/}</>
           </>
         ) : mode === "appointment" ? (
           <Appointment />
