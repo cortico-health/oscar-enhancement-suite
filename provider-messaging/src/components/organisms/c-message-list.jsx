@@ -1,6 +1,6 @@
 import { h } from "preact";
 import { useRouter } from "preact-router";
-import { useState,useRef,useEffect } from "preact/hooks";
+import { useState, useRef, useEffect } from "preact/hooks";
 import { useStore } from "../../state";
 import MChatTools from "../molecules/m-chat-tools";
 import MMessageCard from "../molecules/m-message-card";
@@ -11,21 +11,21 @@ import ASvg from "../atoms/a-svg";
 import { getChatMessageData } from "../../api/conversations";
 import AFileInputShow from "../atoms/a-file-input-show";
 
-const fileTypes = ['jpg','jpeg','png','pdf']
+const fileTypes = ['jpg', 'jpeg', 'png', 'pdf']
 
 const CMessageList = () => {
 
-  const { authStore,conversationStore,patientStore } = useStore();
+  const { authStore, conversationStore, patientStore } = useStore();
   const router = useRouter()[0];
   const sendRef = useRef(null);
   const messagesEndRef = useRef(null);
 
-  const [messages,setMessages] = useState(undefined);
-  const [socketUrl,setSocketUrl] = useState(null);
-  const [preview,setPreview] = useState(null);
-  const [patientSelected,setPatientSelected] = useState(null);
+  const [messages, setMessages] = useState(undefined);
+  const [socketUrl, setSocketUrl] = useState(null);
+  const [preview, setPreview] = useState(null);
+  const [patientSelected, setPatientSelected] = useState(null);
 
-  const { getWebSocket } = useWebSocket(socketUrl,{
+  const { getWebSocket } = useWebSocket(socketUrl, {
     onOpen: () => console.log('WebSocket connection opened.'),
     onClose: () => console.log('WebSocket connection closed.'),
     shouldReconnect: (closeEvent) => true,
@@ -35,7 +35,7 @@ const CMessageList = () => {
   const processMessage = (e) => {
     const data = JSON.parse(e.data);
     const newMessage = JSON.parse(data.text);
-    setMessages([...messages,newMessage])
+    setMessages([...messages, newMessage])
   }
 
   const handlers = {
@@ -46,7 +46,7 @@ const CMessageList = () => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = function (event) {
-        setPreview({ dataURL: event.target.result,name: file.name,type: extension });
+        setPreview({ dataURL: event.target.result, name: file.name, type: extension });
       };
     },
     onSend: () => {
@@ -56,7 +56,7 @@ const CMessageList = () => {
           'body': value,
         }));
         sendRef.current.base.lastElementChild.value = "";
-        window.scrollTo(0,document.body.scrollHeight);
+        window.scrollTo(0, document.body.scrollHeight);
       }
     },
   };
@@ -65,22 +65,22 @@ const CMessageList = () => {
     if (router.matches?.id) {
       conversationStore.setSelectedConversation(router.matches?.id);
 
-      getChatMessageData(router.matches?.id,authStore.accessToken).then((response) => {
+      getChatMessageData(router.matches?.id, authStore.accessToken).then((response) => {
         setSocketUrl(`${import.meta.env.VITE_WEBSOCKET_URL || "ws://localhost:8426"}/chat/${router.matches?.id}/?token=${authStore.accessToken}`)
         setMessages(response.data.results)
       }).catch((error) => {
         console.log(error);
       });
     }
-  },[router.matches?.id]);
+  }, [router.matches?.id]);
 
   useEffect(() => {
     setPatientSelected(patientStore.patients.selected);
-  },[patientStore.patients.selected]);
+  }, [patientStore.patients.selected]);
 
   useEffect(() => {
     messagesEndRef?.current?.scrollIntoView()
-  },[messages]);
+  }, [messages]);
 
   // These are code from before the VCN updates. They will be used in the future
   // const [selectedConversationInfo, setSelectedDiscussion] = useState(undefined);
@@ -92,10 +92,7 @@ const CMessageList = () => {
   //   return res;
   // };
 
-  if (!messages ||
-    !patientStore.patients?.selected ||
-    conversationStore.selectedConversation?.patient_full_name !== patientSelected?.firstName + " " + patientSelected?.lastName
-  ) {
+  if (!conversationStore.selectedConversation) {
     return (
       <div className="flex flex-col items-center justify-center gap-2 w-full">
         <ASvg src="chat-alt2" />
@@ -108,36 +105,36 @@ const CMessageList = () => {
     // TODO!
     <div className="c-message-list w-full relative lg:h-screen table lg:flex lg:flex-col justify-between overflow-x-hidden">
       <MChatTools
-        setMessages={ setMessages }
-        selectedConversationInfo={ conversationStore.selectedConversation }
+        setMessages={setMessages}
+        selectedConversationInfo={conversationStore.selectedConversation}
       />
       <div className="flex-grow overflow-y-auto px-9 lg:px-12">
-        { messages?.map((message) => {
-          return <MMessageCard messageDetails={ message } attachment={ preview } />;
-        }) }
-        <div ref={ messagesEndRef } />
+        {messages?.map((message) => {
+          return <MMessageCard messageDetails={message} attachment={preview} />;
+        })}
+        <div ref={messagesEndRef} />
       </div>
 
       <div className="sticky bg-secondary-10 mx-9 lg:mx-12 tw-pt-4">
-        <AFileInputShow fileInput={ preview } exit={ () => setPreview(null) } />
+        <AFileInputShow fileInput={preview} exit={() => setPreview(null)} />
 
         <MSend
           placeholder="Type message..."
-          ref={ sendRef }
-          handlers={ handlers }
+          ref={sendRef}
+          handlers={handlers}
         />
         <p className="text-h3 text-right text-secondary-500 pb-4">
-          { patientSelected && "Sending a message about " }
+          {patientSelected && "Sending a message about "}
 
           <span className="font-bold">
-            { (patientSelected) ?
-              `${patientSelected?.firstName} ${patientSelected?.lastName}.`
+            {(patientSelected) ?
+              `${patientSelected?.first_name} ${patientSelected?.last_name}.`
               :
               "No Patient."
             }</span>
-          { " " }
+          {" "}
           <a className="font-medium text-primary-500" href="/select">
-            { patientSelected ? "Switch" : "Choose" } Patient
+            {patientSelected ? "Switch" : "Choose"} Patient
           </a>
         </p>
       </div>

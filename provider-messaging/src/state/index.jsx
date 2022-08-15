@@ -60,10 +60,10 @@ export const StateProvider = observer(({ children }) => {
         console.log(error);
       });
     },
-    setSelectedPatient(id) {
-      //Get the patient value
-      const selectedPatient = patientsData.find(patient => patient.id == id);
-      this.patients.selected = selectedPatient ? selectedPatient : null;
+    setSelectedPatient(patient) {
+      if (patient) {
+        this.patients.selected = patient
+      }
     }
   }))
 
@@ -94,12 +94,13 @@ export const StateProvider = observer(({ children }) => {
       this.selectedConversation = this.conversations.find((conversation) => {
         return conversation.id === parseInt(id);
       })
+      patientStore.setSelectedPatient(this.selectedConversation.patient)
     },
     setConversations() {
       getConversationsList().then((response) => {
         /* TODO Dwight: Change this once there is a patient functionality */
         this.conversations = response.data.results.map((conversation, index) => {
-          const patientFullName = patientsData[index % 2].firstName + " " + patientsData[index % 2].lastName;
+          const patientFullName = patientsData[index % 2].first_name + " " + patientsData[index % 2].last_name;
           return { ...conversation, patient_full_name: patientFullName }
         });
       }).catch((error) => {

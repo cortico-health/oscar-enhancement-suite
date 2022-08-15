@@ -48,8 +48,8 @@ const PChat = () => {
                     patientStore.patients?.selected ? <>
                       Conversations on
                       <span className="text-primary-500">
-                        {" " + patientStore.patients?.selected.firstName
-                          + " " + patientStore.patients?.selected.lastName}
+                        {" " + patientStore.patients?.selected.first_name
+                          + " " + patientStore.patients?.selected.last_name}
                       </span>
                     </>
                       : "All conversations"
