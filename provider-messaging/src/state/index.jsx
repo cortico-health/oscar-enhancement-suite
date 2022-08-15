@@ -60,10 +60,10 @@ export const StateProvider = observer(({ children }) => {
         console.log(error);
       });
     },
-    setSelectedPatient(id) {
-      //Get the patient value
-      const selectedPatient = this.patients.all.find(patient => patient.id == id);
-      this.patients.selected = selectedPatient ? selectedPatient : null;
+    setSelectedPatient(patient) {
+      if (patient) {
+        this.patients.selected = patient
+      }
     }
   }))
 
@@ -94,6 +94,7 @@ export const StateProvider = observer(({ children }) => {
       this.selectedConversation = this.conversations.find((conversation) => {
         return conversation.id === parseInt(id);
       })
+      patientStore.setSelectedPatient(this.selectedConversation.patient)
     },
     setConversations() {
       getConversationsList().then((response) => {

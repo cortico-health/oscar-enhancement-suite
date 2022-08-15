@@ -64,7 +64,7 @@ const CSelectList = ({ ...props }) => {
             {
               showPatients.map(patient => {
                 const selected = patient.id == select;
-                return <MSelectItem selected={selected} onClick={() => setSelect(patient.id)} patient={patient} />
+                return <MSelectItem selected={selected} onClick={() => setSelect(patient)} patient={patient} />
               })
             }
           </table>
