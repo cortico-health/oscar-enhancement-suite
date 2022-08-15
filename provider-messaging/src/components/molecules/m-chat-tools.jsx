@@ -5,7 +5,7 @@ import ASvg from '../atoms/a-svg';
 import MSearch from './m-search';
 import useUtils from '../../hooks/useUtils';
 
-const MChatTools = ({ setDiscussion,selectedConversationInfo,...props }) => {
+const MChatTools = ({ setDiscussion, selectedConversationInfo, ...props }) => {
   const { getOtherMembersName } = useUtils();
 
   /* TODO: to be edited since patient is not prioritize now. */
@@ -22,20 +22,20 @@ const MChatTools = ({ setDiscussion,selectedConversationInfo,...props }) => {
     setDiscussion({...discussion, messages: filteredData} )
   } */
 
-  const numberOfAssets = [0,0];
+  const numberOfAssets = [0, 0];
 
   return (
-    <div { ...props } className='flex justify-between items-center mt-10 mb-2 mx-9 lg:mx-12 pb-10 border-b border-secondary-100'>
+    <div {...props} className='flex justify-between items-center mt-10 mb-2 mx-9 lg:mx-12 pb-10 border-b border-secondary-100'>
       <div className='flex gap-x-2.5 items-center'>
         <div className='w-fit'>
           <h1 className='text-secondary-500 font-bold text-title3'>
-            { multipleObjectDataFormatting(getOtherMembersName(selectedConversationInfo?.members)) }
+            {multipleObjectDataFormatting(getOtherMembersName(selectedConversationInfo?.members))}
           </h1>
           {/* TODO: will uncomment this if patient will be available. */}
           {/* {
             patient==null ? null :
             <p className='text-select2 text-secondary-300'> RE: {
-              `${patient.firstName} ${patient.lastName}, ${patient.facility}`
+              `${patient.first_name} ${patient.last_name}, ${patient.facility}`
             } </p>
           } */}
         </div>

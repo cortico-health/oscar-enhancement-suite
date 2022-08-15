@@ -99,7 +99,7 @@ export const StateProvider = observer(({ children }) => {
       getConversationsList().then((response) => {
         /* TODO Dwight: Change this once there is a patient functionality */
         this.conversations = response.data.results.map((conversation, index) => {
-          const patientFullName = patientsData[index % 2].firstName + " " + patientsData[index % 2].lastName;
+          const patientFullName = patientsData[index % 2].first_name + " " + patientsData[index % 2].last_name;
           return { ...conversation, patient_full_name: patientFullName }
         });
       }).catch((error) => {

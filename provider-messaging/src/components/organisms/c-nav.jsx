@@ -45,7 +45,7 @@ const CNav = () => {
             <>
               <ASvg className="first:child:fill-primary-300 min-w-12.5 min-h-12.5" src="avatar" />
               <div className='text-white'>
-                <h1>{selectedPatient?.firstName + " " + selectedPatient?.lastName}</h1>
+                <h1>{selectedPatient?.first_name + " " + selectedPatient?.last_name}</h1>
                 <h2> {selectedPatient?.facility}</h2>
               </div>
             </>
@@ -59,7 +59,7 @@ const CNav = () => {
 
         {selectedPatient ?
           <div className='bg-secondary-20 pl-4 w-full flex flex-col justify-center'>
-            {/* <p className='text-h4 text-secondary-300'> <span className='font-medium'>Gender:</span> {selectedPatient?.gender}  </p> */}
+            <p className='text-h4 text-secondary-300'> <span className='font-medium'>Gender:</span> {selectedPatient?.gender}  </p>
             <p className='text-h4 text-secondary-300'> <span className='font-medium'>Date of birth: </span> {new Date(selectedPatient.birth_date).toLocaleDateString()}  </p>
             <p className='text-h4 text-secondary-300'> <span className='font-medium'>Health card number: </span> {selectedPatient.hin}  </p>
           </div>
