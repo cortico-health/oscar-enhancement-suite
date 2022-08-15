@@ -55,7 +55,6 @@ export const StateProvider = observer(({ children }) => {
     },
     getPatientList() {
       getPatients().then((response) => {
-        console.log('patients fetched')
         this.patients.all = response.data.results;
       }).catch((error) => {
         console.log(error);
@@ -67,6 +66,7 @@ export const StateProvider = observer(({ children }) => {
       } else {
         this.patients.selected = null;
       }
+      // conversationStore.setConversations();
     }
   }))
 
@@ -104,12 +104,8 @@ export const StateProvider = observer(({ children }) => {
       }
     },
     setConversations() {
-      getConversationsList().then((response) => {
-        /* TODO Dwight: Change this once there is a patient functionality */
-        this.conversations = response.data.results.map((conversation, index) => {
-          const patientFullName = patientsData[index % 2].first_name + " " + patientsData[index % 2].last_name;
-          return { ...conversation, patient_full_name: patientFullName }
-        });
+      getConversationsList(this.patientStore?.patients.selected).then((response) => {
+        this.conversations = response.data.results;
       }).catch((error) => {
         console.log(error);
       });

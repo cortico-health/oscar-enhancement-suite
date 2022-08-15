@@ -66,7 +66,7 @@ const CUsersList = observer(() => {
 
   const handleCreateConversation = () => {
     const inputs = {
-      patient: patientStore.patients.selected ? patientStore.patients.selected : null,
+      patient: patientStore.patients.selected ? patientStore.patients.selected : {},
       members: [userStore.user.id, ...getCheckedPatients()]
     }
     createConversation(inputs).then((response) => {
