@@ -104,7 +104,7 @@ export const StateProvider = observer(({ children }) => {
       }
     },
     setConversations() {
-      getConversationsList(this.patientStore?.patients.selected).then((response) => {
+      getConversationsList().then((response) => {
         this.conversations = response.data.results;
       }).catch((error) => {
         console.log(error);
