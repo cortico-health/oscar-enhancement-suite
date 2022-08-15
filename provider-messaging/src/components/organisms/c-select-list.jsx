@@ -42,7 +42,7 @@ const CSelectList = ({ ...props }) => {
     route('/chat');
   }
 
-  if (!patientStore.patients.all?.length || !showPatients) {
+  if (!patientStore.patients.all?.length) {
     return <div>loading...</div>
   }
 
@@ -54,16 +54,16 @@ const CSelectList = ({ ...props }) => {
       <div className='p-8 overflow-y-scroll overflow-x-hidden relative c-select-list__data'>
         <MSearch onInput={searchHandler} />
         <div className='flex gap-x-5'>
-          <ARadio onChange={handleChange} checked name="filter" value="first_name" />
-          <ARadio onChange={handleChange} name="filter" value="last_name" />
+          <ARadio onChange={handleChange} checked name="filter" value="firstName" />
+          <ARadio onChange={handleChange} name="filter" value="lastName" />
           <ARadio onChange={handleChange} name="filter" value="healthCardNumber" />
           <ARadio onChange={handleChange} name="filter" value="email" />
         </div>
         <div className="overflow-x-auto">
           <table className='w-full border-separate' style={{ borderSpacing: '0' }}>
             {
-              showPatients.map(patient => {
-                const selected = patient.id == select;
+              patientStore.patients.all?.map(patient => {
+                const selected = patient.id == select?.id;
                 return <MSelectItem selected={selected} onClick={() => setSelect(patient)} patient={patient} />
               })
             }

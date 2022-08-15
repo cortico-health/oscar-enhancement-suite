@@ -71,6 +71,9 @@ const CMessageList = () => {
       }).catch((error) => {
         console.log(error);
       });
+    } else {
+      conversationStore.setSelectedConversation(null);
+      patientStore.setSelectedPatient(null);
     }
   }, [router.matches?.id]);
 
