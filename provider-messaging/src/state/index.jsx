@@ -55,6 +55,7 @@ export const StateProvider = observer(({ children }) => {
     },
     getPatientList() {
       getPatients().then((response) => {
+        console.log('patients fetched')
         this.patients.all = response.data.results;
       }).catch((error) => {
         console.log(error);
@@ -62,7 +63,9 @@ export const StateProvider = observer(({ children }) => {
     },
     setSelectedPatient(patient) {
       if (patient) {
-        this.patients.selected = patient
+        this.patients.selected = patient;
+      } else {
+        this.patients.selected = null;
       }
     }
   }))
@@ -91,10 +94,14 @@ export const StateProvider = observer(({ children }) => {
     selectedConversation: null,
     conversations: [],
     setSelectedConversation(id) {
-      this.selectedConversation = this.conversations.find((conversation) => {
-        return conversation.id === parseInt(id);
-      })
-      patientStore.setSelectedPatient(this.selectedConversation.patient)
+      if (id) {
+        this.selectedConversation = this.conversations.find((conversation) => {
+          return conversation.id === parseInt(id);
+        })
+        patientStore.setSelectedPatient(this.selectedConversation.patient);
+      } else {
+        this.selectedConversation = null;
+      }
     },
     setConversations() {
       getConversationsList().then((response) => {

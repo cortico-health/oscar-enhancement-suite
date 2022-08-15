@@ -21,10 +21,12 @@ const PChat = () => {
   }
 
   useEffect(() => {
-    if (!_.has(router.matches, 'id')) {
-      const mostRecentConversation = getMostRecentConversation()
-      if (mostRecentConversation) route(`/chat/${mostRecentConversation.id}`)
-    }
+    // Justin: Disable this behavior for now
+    // Reason: It auto selects patient on conversation select, so user cannot see all conversations
+    // if (!_.has(router.matches, 'id')) {
+    //   const mostRecentConversation = getMostRecentConversation()
+    //   if (mostRecentConversation) route(`/chat/${mostRecentConversation.id}`)
+    // }
   }, [conversationStore.conversations]);
 
   if (!patientStore.patients.all?.length) {
