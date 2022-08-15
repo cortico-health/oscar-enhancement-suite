@@ -29,6 +29,8 @@ import InboxDocument from "../cortico/Widget/adapters/InboxDocument";
 import Encounter from "../core/Encounter";
 import { BroadcastChannel } from "broadcast-channel";
 import { handleTokenExpiry } from "../../modules/cortico/Widget/common/utils";
+import LabResultsAdapter from "../cortico/Widget/adapters/LabResultsAdapter";
+
 class MessengerError extends Error {
   constructor(title, message) {
     super(message);
@@ -430,6 +432,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
 
   return (
     <div className="tw-m-0 no-print">
+      <LabResultsAdapter></LabResultsAdapter>
       {inboxDocument === true ? (
         <InboxDocument onSuccess={handleInboxDoc}></InboxDocument>
       ) : null}

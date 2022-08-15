@@ -193,6 +193,7 @@ export function getDemographicNo(apptUrl) {
       searchParams.get("demographic_no") ||
       searchParams.get("demographicNo") ||
       searchParams.get("functionid") ||
+      searchParams.get("demographicId") ||
       searchParams.get("efmdemographic_no")
     );
   } else {

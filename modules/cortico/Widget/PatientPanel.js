@@ -10,7 +10,6 @@ import { getCorticoUrl } from "../../Utils/Utils";
 
 export default function PatientPanel() {
   const { info } = useSelector((state) => state.patient);
-  console.log("Info", info);
   const dispatch = useDispatch();
 
   const handleClick = () => {
