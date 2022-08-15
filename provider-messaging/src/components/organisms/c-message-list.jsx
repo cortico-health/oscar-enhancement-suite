@@ -73,7 +73,6 @@ const CMessageList = () => {
       });
     } else {
       conversationStore.setSelectedConversation(null);
-      patientStore.setSelectedPatient(null);
     }
   }, [router.matches?.id]);
 

@@ -26,7 +26,7 @@ const fields =
     }
   ];
 
-  const loggedUser = usersData[0];
+const loggedUser = usersData[0];
 
 const CWelcome = () => {
 
@@ -34,11 +34,11 @@ const CWelcome = () => {
 
   return (
     <div className="bg-white rounded-3xl mt-64 xs:mt-[320px] lg:mt-0 py-20 px-20 lg:px-40 max-w-7xl mx-auto shadow">
-      <h1 className="font-bold text-title2 text-secondary-500 mb-2">Welcome back { `${userStore.user.profile.first_name} ${userStore.user.profile.last_name}` }</h1>
+      <h1 className="font-bold text-title2 text-secondary-500 mb-2">Welcome back {`${userStore.user.profile.first_name} ${userStore.user.profile.last_name}`}</h1>
       <p className="text-secondary-300 mb-16">Let's start with one option below</p>
       <div className="xs:flex-col md:flex">
         {
-          fields.map( field => {
+          fields.map(field => {
             return <MWelcomeOption field={field} />
           })
         }
