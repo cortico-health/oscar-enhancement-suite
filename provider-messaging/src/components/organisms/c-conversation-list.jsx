@@ -37,9 +37,9 @@ const CConversationList = () => {
     <div className="mx-2.5">
       <MSearch onInput={searchHandler} />
       {
-        filteredConversation && filteredConversation?.length ? (
+        conversationStore.conversations && conversationStore.conversations?.length ? (
           <>
-            {filteredConversation.map(conversation => {
+            {conversationStore.conversations.map(conversation => {
               return (
                 <MConversationTab conversation={conversation} />
               )
