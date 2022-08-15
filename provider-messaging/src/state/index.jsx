@@ -3,6 +3,7 @@ import { useContext, useEffect, useReducer } from 'preact/hooks';
 import { patientsData, usersData } from '../data';
 import { observer, useLocalObservable } from 'mobx-react-lite'
 import { getConversationsList } from '../api/conversations';
+import { getPatients } from '../api/patients';
 import { getUserData, getUsersData } from '../api/users';
 import { login } from '../api/auth';
 
@@ -53,7 +54,11 @@ export const StateProvider = observer(({ children }) => {
       selected: null,
     },
     getPatientList() {
-      this.patients.all = patientsData;
+      getPatients().then((response) => {
+        this.patients.all = response.data.results;
+      }).catch((error) => {
+        console.log(error);
+      });
     },
     setSelectedPatient(id) {
       //Get the patient value
