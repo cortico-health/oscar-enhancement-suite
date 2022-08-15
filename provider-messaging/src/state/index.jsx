@@ -62,7 +62,7 @@ export const StateProvider = observer(({ children }) => {
     },
     setSelectedPatient(id) {
       //Get the patient value
-      const selectedPatient = patientsData.find(patient => patient.id == id);
+      const selectedPatient = this.patients.all.find(patient => patient.id == id);
       this.patients.selected = selectedPatient ? selectedPatient : null;
     }
   }))
