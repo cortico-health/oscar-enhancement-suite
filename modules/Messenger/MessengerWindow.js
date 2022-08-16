@@ -29,6 +29,7 @@ import InboxDocument from "../cortico/Widget/adapters/InboxDocument";
 import Encounter from "../core/Encounter";
 import { BroadcastChannel } from "broadcast-channel";
 import { handleTokenExpiry } from "../../modules/cortico/Widget/common/utils";
+
 class MessengerError extends Error {
   constructor(title, message) {
     super(message);

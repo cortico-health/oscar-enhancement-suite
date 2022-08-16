@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Button from "../../../core/Button";
 import NotAvailable from "../base/NotAvailable";
 import Header from "../base/Header";
+import LabResultsAdapter from "../adapters/LabResultsAdapter";
 
 export default function WidgetMessenger() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -36,7 +37,9 @@ export default function WidgetMessenger() {
               ) : isLoggedIn === false ? (
                 <RequiresLogin />
               ) : disabled === false && isLoggedIn === true ? (
-                <MessengerWindow />
+                <>
+                  <MessengerWindow />
+                </>
               ) : null}
             </div>
           </>
