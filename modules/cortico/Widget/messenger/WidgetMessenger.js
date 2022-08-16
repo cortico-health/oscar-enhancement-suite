@@ -2,7 +2,7 @@ import MessengerWindow from "../../../Messenger/MessengerWindow";
 import FeatureDetector from "../adapters/FeatureDetecter";
 import SignIn from "../../../../resources/illustrations/undraw_signin.svg";
 import { useSelector, useDispatch } from "react-redux";
-import Button from "../../../core/Button";
+import Button, { PrimaryButton } from "../../../core/Button";
 import NotAvailable from "../base/NotAvailable";
 import Header from "../base/Header";
 import LabResultsAdapter from "../adapters/LabResultsAdapter";
@@ -72,9 +72,9 @@ function RequiresLogin() {
           <span className="tw-font-semibold">sign in</span>{" "}
         </p>
         <div className="tw-flex tw-justify-center tw-mt-4">
-          <Button size="sm" onClick={handleSignIn}>
+          <PrimaryButton size="sm" onClick={handleSignIn}>
             Sign In
-          </Button>
+          </PrimaryButton>
         </div>
       </div>
     </div>
