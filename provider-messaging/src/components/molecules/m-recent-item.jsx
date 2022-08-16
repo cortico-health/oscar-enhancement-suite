@@ -2,7 +2,7 @@ import { h } from 'preact';
 import AInput from '../atoms/a-input';
 import ASvg from '../atoms/a-svg';
 
-const MRecentItem = ({className, patient, ...props}) => {
+const MRecentItem = ({ className, patient, ...props }) => {
 
   return (
     <div {...props} className='flex justify-between my-4 cursor-pointer'>
@@ -10,11 +10,11 @@ const MRecentItem = ({className, patient, ...props}) => {
       <div className='flex items-center'>
         <div className='rounded-full border-primary-500 border-2 bg-primary-300 w-12 h-12'>
           <div className='border border-white flex items-center justify-center rounded-full w-full h-full'>
-            <ASvg src='user2'/>
+            <ASvg src='user2' />
           </div>
         </div>
         <div className='ml-3.5'>
-          <h2 className='text-secondary-500 font-medium text-contact1'>{ patient.firstName + " " + patient.lastName }</h2>
+          <h2 className='text-secondary-500 font-medium text-contact1'>{patient.first_name + " " + patient.last_name}</h2>
           <p className='text-secondary-300 text-contact2'>Tempora et placeat</p>
         </div>
       </div>

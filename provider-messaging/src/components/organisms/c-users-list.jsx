@@ -11,7 +11,7 @@ import { createConversation } from "../../api/conversations";
 
 const CUsersList = observer(() => {
 
-  const { userStore, conversationStore } = useStore();
+  const { userStore, conversationStore, patientStore } = useStore();
 
   const [checked, setChecked] = useState(undefined);
   const [confirm, setConfirm] = useState(false);
@@ -65,7 +65,11 @@ const CUsersList = observer(() => {
 
 
   const handleCreateConversation = () => {
-    createConversation([userStore.user.id, ...getCheckedPatients()]).then((response) => {
+    const inputs = {
+      patient: patientStore.patients.selected ? patientStore.patients.selected : {},
+      members: [userStore.user.id, ...getCheckedPatients()]
+    }
+    createConversation(inputs).then((response) => {
       const existingConversation = conversationStore.conversations.find((conversation) => {
         return conversation.id === parseInt(response.data.id);
       })

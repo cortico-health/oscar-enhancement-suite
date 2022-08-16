@@ -3,6 +3,7 @@ import { useContext, useEffect, useReducer } from 'preact/hooks';
 import { patientsData, usersData } from '../data';
 import { observer, useLocalObservable } from 'mobx-react-lite'
 import { getConversationsList } from '../api/conversations';
+import { getPatients } from '../api/patients';
 import { getUserData, getUsersData } from '../api/users';
 import { login } from '../api/auth';
 
@@ -53,12 +54,19 @@ export const StateProvider = observer(({ children }) => {
       selected: null,
     },
     getPatientList() {
-      this.patients.all = patientsData;
+      getPatients().then((response) => {
+        this.patients.all = response.data.results;
+      }).catch((error) => {
+        console.log(error);
+      });
     },
-    setSelectedPatient(id) {
-      //Get the patient value
-      const selectedPatient = patientsData.find(patient => patient.id == id);
-      this.patients.selected = selectedPatient ? selectedPatient : null;
+    setSelectedPatient(patient) {
+      if (patient) {
+        this.patients.selected = patient;
+      } else {
+        this.patients.selected = null;
+      }
+      // conversationStore.setConversations();
     }
   }))
 
@@ -86,17 +94,18 @@ export const StateProvider = observer(({ children }) => {
     selectedConversation: null,
     conversations: [],
     setSelectedConversation(id) {
-      this.selectedConversation = this.conversations.find((conversation) => {
-        return conversation.id === parseInt(id);
-      })
+      if (id) {
+        this.selectedConversation = this.conversations.find((conversation) => {
+          return conversation.id === parseInt(id);
+        })
+        patientStore.setSelectedPatient(this.selectedConversation.patient);
+      } else {
+        this.selectedConversation = null;
+      }
     },
     setConversations() {
       getConversationsList().then((response) => {
-        /* TODO Dwight: Change this once there is a patient functionality */
-        this.conversations = response.data.results.map((conversation, index) => {
-          const patientFullName = patientsData[index % 2].firstName + " " + patientsData[index % 2].lastName;
-          return { ...conversation, patient_full_name: patientFullName }
-        });
+        this.conversations = response.data.results;
       }).catch((error) => {
         console.log(error);
       });
