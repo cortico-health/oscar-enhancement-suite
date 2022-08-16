@@ -4,7 +4,8 @@ import {
   ChatIcon,
   CogIcon,
   IdentificationIcon,
-} from "@heroicons/react/solid";
+  ChatAlt2Icon
+} from "@heroicons/react/outline";
 
 const initialState = {
   items: [
@@ -32,6 +33,11 @@ const initialState = {
     {
       name: "Settings",
       icon: <CogIcon className="tw-w-6 tw-h-6" />,
+      current: false,
+    },
+    {
+      name: "VCN",
+      icon: <ChatAlt2Icon className="tw-w-6 tw-h-6" />,
       current: false,
     },
   ],
