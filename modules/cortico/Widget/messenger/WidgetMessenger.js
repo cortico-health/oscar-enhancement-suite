@@ -38,7 +38,6 @@ export default function WidgetMessenger() {
                 <RequiresLogin />
               ) : disabled === false && isLoggedIn === true ? (
                 <>
-                  <LabResultsAdapter />
                   <MessengerWindow />
                 </>
               ) : null}

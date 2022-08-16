@@ -16,6 +16,8 @@ import Encounter from "../../core/Encounter";
 import Appointment from "./appointment/Appointment";
 import { QueryClient, QueryClientProvider } from "react-query";
 import PatientAdapter from "./adapters/PatientAdapter";
+import LabResultsAdapter from "./adapters/LabResultsAdapter";
+
 const uid = nanoid();
 
 function App({ mode = "normal", ...props }) {
@@ -177,6 +179,7 @@ function App({ mode = "normal", ...props }) {
             >
               {open === true ? (
                 <>
+                  <LabResultsAdapter />
                   <CorticoPlugin onMinimize={handleMinimize} />
                   <PatientAdapter></PatientAdapter>
                 </>
