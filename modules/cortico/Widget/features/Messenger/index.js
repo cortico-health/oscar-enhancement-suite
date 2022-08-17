@@ -1,10 +1,20 @@
+/*
+
+  attachment = {
+  name: fileName || node.textContent,
+  data: dataUrl,
+  extension,
+  type: 'eform
+  }
+*/
+
 export const initialState = {
   to: null,
   subject: null,
   body: null,
   scheme: null,
   encounter: null,
-  attachment: null,
+  attachments: [],
   document: null,
   eform: null,
   phone: null,
@@ -22,6 +32,8 @@ export function messengerReducer(state = initialState, action) {
       return { ...state, ...action.payload };
     case "messenger/reset":
       return { ...state, ...initialState };
+    case "messenger/addAttachment":
+      return { ...state, attachments: [...state.attachments, action.payload] };
     default:
       return state;
   }

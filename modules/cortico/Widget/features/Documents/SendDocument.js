@@ -65,7 +65,7 @@ export default function SendDocument({ node, ...props }) {
       });
 
       dispatch({
-        type: "messenger/setAll",
+        type: "messenger/addAttachment",
         payload: {
           attachment: {
             name: fileName || node.textContent,

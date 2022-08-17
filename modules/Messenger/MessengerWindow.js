@@ -29,6 +29,8 @@ import InboxDocument from "../cortico/Widget/adapters/InboxDocument";
 import Encounter from "../core/Encounter";
 import { BroadcastChannel } from "broadcast-channel";
 import { handleTokenExpiry } from "../../modules/cortico/Widget/common/utils";
+import FileUploader from "../cortico/Widget/FileUploader";
+import EFormAdapter from "../cortico/Widget/adapters/EFormAdapter";
 
 class MessengerError extends Error {
   constructor(title, message) {
@@ -48,7 +50,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
     subject,
     body,
     encounter,
-    attachment,
+    attachments,
     eform,
     document,
     inboxDocument,
@@ -234,37 +236,6 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         if (data.attachment && !data.body && scheme === "email") {
           data.body += "\nThe file link will only be valid for 7 days.\n";
         }
-      } else if (eform === true && attachment) {
-        const clone = window.document.cloneNode(true);
-        const widget = clone.querySelector(".cortico-widget");
-        widget.parentNode.removeChild(widget);
-
-        /* Eform Letter Head Begin */
-        const richTextLetterForm = clone.querySelector(
-          `form[name="RichTextLetter"]`
-        );
-        const iframe = window.document.querySelector("iframe#edit");
-        if (richTextLetterForm && iframe) {
-          clone.querySelector("iframe")?.remove();
-          clone.querySelector("table")?.remove();
-          const iframeClone = iframe.contentDocument.cloneNode(true);
-          clone
-            .querySelector("body")
-            .appendChild(iframeClone.querySelector("body"));
-        }
-        /* Eform Letter Head End */
-        if (scheme === "email") {
-          data.body += "\nThe file link will only be valid for 7 days.\n";
-        }
-
-        try {
-          data.pdf_html = await setFormInputValueAttributes(clone);
-        } catch (error) {
-          throw new MessengerError(
-            "Error Parsing",
-            "There was an error parsing this eform"
-          );
-        }
       }
 
       let result = null;
@@ -300,7 +271,6 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
 
         const clonedResult = result.clone();
         const responseData = await clonedResult.json();
-        console.log("Response Data", responseData);
         if (responseData.preview) {
           setFilePreviewLink(responseData.preview);
         }
@@ -365,14 +335,6 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
   };
 
   useEffect(() => {
-    if (eform === true) {
-      handleChange("attachment", {
-        name: "eForm",
-      });
-    }
-  }, [eform]);
-
-  useEffect(() => {
     const demographicNo = getDemographicNo();
     setDemographicNo(demographicNo);
     if (demographicNo && !patientInfo) {
@@ -406,7 +368,6 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
   }, [clinicName]);
 
   const handleLoadReply = (reply) => {
-    console.log("Load Reply", reply);
     dispatch({
       type: "messenger/setAll",
       payload: {
@@ -418,7 +379,6 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
   };
 
   const handleInboxDoc = (doc) => {
-    console.log("Succes Doc", doc);
     if (doc && !attachment) {
       handleChange("attachment", {
         name: doc.name,
@@ -426,11 +386,11 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         extension: doc.extension,
       });
     }
-    console.log("Inbox Document?", inboxDocument);
   };
 
   return (
     <div className="tw-m-0 no-print">
+      {eform === true && <EFormAdapter />}
       {inboxDocument === true ? (
         <InboxDocument onSuccess={handleInboxDoc}></InboxDocument>
       ) : null}
@@ -474,16 +434,20 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
           </div>
           <hr className="tw-opacity-40" />
 
-          {attachment ? (
-            <div className="tw-mt-4 tw-border tw-border-opacity-20 tw-rounded-md tw-p-2">
-              <Documents
-                onDelete={() => handleChange("attachment", null)}
-                name={attachment.name}
-              ></Documents>
-            </div>
-          ) : (
-            ""
-          )}
+          {attachments.map((attachment) => {
+            return (
+              <div className="tw-mt-4 tw-border tw-border-opacity-20 tw-rounded-md tw-p-2">
+                <Documents
+                  onDelete={() => handleChange("attachment", null)}
+                  name={attachment.name}
+                ></Documents>
+              </div>
+            );
+          })}
+
+          <div className="tw-mt-3 tw-mb-1">
+            <FileUploader />
+          </div>
 
           <FeatureDetector featureName="encounter">
             {({ disabled }) => {

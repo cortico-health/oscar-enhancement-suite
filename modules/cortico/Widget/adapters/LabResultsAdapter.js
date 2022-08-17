@@ -123,7 +123,7 @@ export default function LabResultsAdapter() {
       if (dataUrl) {
         const dispatch = useDispatch();
         dispatch({
-          type: "messenger/setAll",
+          type: "messenger/addAttachment",
           payload: {
             attachment: {
               name: fileName,
