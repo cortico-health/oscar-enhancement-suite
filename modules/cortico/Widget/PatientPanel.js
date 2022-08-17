@@ -72,20 +72,28 @@ export default function PatientPanel() {
             icon={
               <MailIcon className="tw-h-4 tw-w-4 tw-ml-2 tw-cursor-pointer" />
             }
-            className="tw-w-[125px]"
+            className="tw-w-[150px]"
           >
-            Send Email
+            Send Message
           </PrimaryButton>
-          {/*
-          <SecondaryButton
-            icon={
-              <ChatAltIcon className="tw-h-4 tw-w-4 tw-ml-2 tw-cursor-pointer" />
-            }
-            className="tw-w-[125px]"
-          >
-            Send Text
-          </SecondaryButton>
-          */}
+          {
+            <SecondaryButton
+              onClick={() => {
+                window.open(
+                  `${getCorticoUrl()}/invoices/create/?demographic_no=${
+                    info.demographicNo
+                  }`,
+                  "_blank"
+                );
+              }}
+              icon={
+                <ChatAltIcon className="tw-h-4 tw-w-4 tw-ml-2 tw-cursor-pointer" />
+              }
+              className="tw-w-[150px]"
+            >
+              Invoice Patient
+            </SecondaryButton>
+          }
         </div>
       </div>
       <hr className="tw-my-2" />
