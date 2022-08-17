@@ -2009,10 +2009,13 @@ function getDemographicPageResponse(demographic) {
 
   if (!demographicNo) {
     // TODO: always try this when getting demo #.
-    document.querySelectorAll("form").forEach(function (f) {
-      console.log(f);
-      demographicNo = demographicNo || getDemographicNo(f.action).trim();
-    });
+    const form = document.querySelectorAll("form");
+    if (form) {
+      form.forEach(function (f) {
+        console.log(f);
+        demographicNo = demographicNo || getDemographicNo(f.action)?.trim();
+      });
+    }
   }
 
   if (!demographicNo) {
