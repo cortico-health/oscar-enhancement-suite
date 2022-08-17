@@ -35,7 +35,17 @@ const MConversationTab = ({ conversation, ...props }) => {
       onClick={() => { route('/chat/' + conversation?.id) }}
       href={'/chat/' + conversation?.id}
       {...props}
-      className={`flex flex-column items-center px-2.5 block my-3 cursor-pointer ${selected ? "h-24 rounded-lg bg-primary-500" : ""}`}
+      className={`
+        flex
+        flex-column
+        items-center
+        px-2.5
+        block
+        my-3
+        cursor-pointer
+        ${selected ? "h-24 rounded-lg bg-primary-500" : ""}
+        ${showConversation.unread_messages_count ? 'font-bold' : ""}`
+      }
     >
       <div
         className={`flex relative items-center`}
@@ -84,6 +94,8 @@ const MConversationTab = ({ conversation, ...props }) => {
                 {showConversation?.last_message.from_user.full_name}: {showConversation?.last_message?.body}
               </span>
             ) : ''}
+            <br />
+            Unread Messages: {showConversation.unread_messages_count}
           </p>
         </div>
       </div>
