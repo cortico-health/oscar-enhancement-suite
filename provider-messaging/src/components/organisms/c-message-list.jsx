@@ -26,8 +26,8 @@ const CMessageList = () => {
   const [patientSelected, setPatientSelected] = useState(null);
 
   const { getWebSocket } = useWebSocket(socketUrl, {
-    onOpen: () => console.log('WebSocket connection opened.'),
-    onClose: () => console.log('WebSocket connection closed.'),
+    onOpen: () => handlers.onRead(),
+    onClose: () => { },
     shouldReconnect: (closeEvent) => true,
     onMessage: (event) => processMessage(event)
   });
@@ -35,7 +35,8 @@ const CMessageList = () => {
   const processMessage = (e) => {
     const data = JSON.parse(e.data);
     const newMessage = JSON.parse(data.text);
-    setMessages([...messages, newMessage])
+    setMessages([newMessage, ...messages]);
+    handlers.onRead();
   }
 
   const handlers = {
@@ -57,6 +58,13 @@ const CMessageList = () => {
         }));
         sendRef.current.base.lastElementChild.value = "";
         window.scrollTo(0, document.body.scrollHeight);
+      }
+    },
+    onRead: () => {
+      if (conversationStore.selectedConversation) {
+        getWebSocket().send(JSON.stringify({
+          'conversation': conversationStore.selectedConversation.id,
+        }));
       }
     },
   };
@@ -111,8 +119,8 @@ const CMessageList = () => {
         selectedConversationInfo={conversationStore.selectedConversation}
       />
       <div className="flex-grow overflow-y-auto px-9 lg:px-12">
-        {messages?.map((message) => {
-          return <MMessageCard messageDetails={message} attachment={preview} />;
+        {messages?.slice(0).reverse().map((message) => {
+          return <MMessageCard key={`message-${message.id}`} messageDetails={message} attachment={preview} />;
         })}
         <div ref={messagesEndRef} />
       </div>

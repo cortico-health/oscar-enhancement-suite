@@ -1,11 +1,13 @@
 import { createContext } from 'preact';
-import { useContext, useEffect, useReducer } from 'preact/hooks';
+import { useContext, useEffect, useState } from 'preact/hooks';
 import { patientsData, usersData } from '../data';
 import { observer, useLocalObservable } from 'mobx-react-lite'
 import { getConversationsList } from '../api/conversations';
 import { getPatients } from '../api/patients';
 import { getUserData, getUsersData } from '../api/users';
 import { login } from '../api/auth';
+import useWebSocket from "react-use-websocket";
+import _ from 'lodash';
 
 export const initialState = {
   user: {},
@@ -22,6 +24,20 @@ export const initialState = {
 const StateContext = createContext();
 
 export const StateProvider = observer(({ children }) => {
+  const [socketUrl, setSocketUrl] = useState(null);
+
+  const { getWebSocket } = useWebSocket(socketUrl, {
+    onOpen: () => { },
+    onClose: () => { },
+    shouldReconnect: (closeEvent) => true,
+    onMessage: (event) => processMessage(event)
+  });
+
+  const processMessage = (e) => {
+    const data = JSON.parse(e.data);
+    const updatedConversation = JSON.parse(data.text);
+    conversationStore.updateOrInsertConversation(updatedConversation)
+  }
 
   const userStore = useLocalObservable(() => ({
     users: [],
@@ -98,7 +114,7 @@ export const StateProvider = observer(({ children }) => {
         this.selectedConversation = this.conversations.find((conversation) => {
           return conversation.id === parseInt(id);
         })
-        patientStore.setSelectedPatient(this.selectedConversation.patient);
+        if (this.selectedConversation) patientStore.setSelectedPatient(this.selectedConversation.patient);
       } else {
         this.selectedConversation = null;
       }
@@ -109,6 +125,19 @@ export const StateProvider = observer(({ children }) => {
       }).catch((error) => {
         console.log(error);
       });
+    },
+    updateOrInsertConversation(updatedConversation) {
+      const existingConversation = this.conversations.find((conversation) => {
+        return conversation.id === updatedConversation.id;
+      })
+      if (existingConversation) {
+        this.conversations = this.conversations.map((conversation) => {
+          return conversation.id === updatedConversation.id ? updatedConversation : conversation;
+        });
+      } else {
+        this.conversations.push(updatedConversation)
+      }
+      this.conversations = _.orderBy(this.conversations, ['last_message.created_date'], ['desc']);
     }
   }))
 
@@ -120,6 +149,8 @@ export const StateProvider = observer(({ children }) => {
     userStore.setUsersData();
     conversationStore.setConversations();
     patientStore.getPatientList();
+
+    setSocketUrl(`${import.meta.env.VITE_WEBSOCKET_URL || "ws://localhost:8426"}/updates/?token=${authStore.accessToken}`)
   }, [authStore.accessToken])
 
   /* TODO: will convert everything t Mobx, but not yet priority. */
