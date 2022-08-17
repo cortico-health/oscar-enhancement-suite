@@ -130,7 +130,6 @@ export const StateProvider = observer(({ children }) => {
       const existingConversation = this.conversations.find((conversation) => {
         return conversation.id === updatedConversation.id;
       })
-      console.log('IS CONVERSATION EXISTING: ', existingConversation)
       if (existingConversation) {
         this.conversations = this.conversations.map((conversation) => {
           return conversation.id === updatedConversation.id ? updatedConversation : conversation;
