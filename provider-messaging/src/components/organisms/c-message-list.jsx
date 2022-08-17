@@ -35,7 +35,7 @@ const CMessageList = () => {
   const processMessage = (e) => {
     const data = JSON.parse(e.data);
     const newMessage = JSON.parse(data.text);
-    setMessages([...messages, newMessage])
+    setMessages([newMessage, ...messages])
   }
 
   const handlers = {
@@ -111,8 +111,8 @@ const CMessageList = () => {
         selectedConversationInfo={conversationStore.selectedConversation}
       />
       <div className="flex-grow overflow-y-auto px-9 lg:px-12">
-        {messages?.map((message) => {
-          return <MMessageCard messageDetails={message} attachment={preview} />;
+        {messages?.slice(0).reverse().map((message) => {
+          return <MMessageCard key={`message-${message.id}`} messageDetails={message} attachment={preview} />;
         })}
         <div ref={messagesEndRef} />
       </div>

@@ -41,7 +41,7 @@ const CConversationList = () => {
           <>
             {conversationStore.conversations.map(conversation => {
               return (
-                <MConversationTab conversation={conversation} />
+                <MConversationTab key={`conversation-${conversation.id}`} conversation={conversation} />
               )
             })}
           </>
