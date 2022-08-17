@@ -27,8 +27,8 @@ export const StateProvider = observer(({ children }) => {
   const [socketUrl, setSocketUrl] = useState(null);
 
   const { getWebSocket } = useWebSocket(socketUrl, {
-    onOpen: () => console.log('WebSocket connection for Updates opened.'),
-    onClose: () => console.log('WebSocket connection for Updates closed.'),
+    onOpen: () => { },
+    onClose: () => { },
     shouldReconnect: (closeEvent) => true,
     onMessage: (event) => processMessage(event)
   });
@@ -114,7 +114,7 @@ export const StateProvider = observer(({ children }) => {
         this.selectedConversation = this.conversations.find((conversation) => {
           return conversation.id === parseInt(id);
         })
-        patientStore.setSelectedPatient(this.selectedConversation.patient);
+        if (this.selectedConversation) patientStore.setSelectedPatient(this.selectedConversation.patient);
       } else {
         this.selectedConversation = null;
       }
