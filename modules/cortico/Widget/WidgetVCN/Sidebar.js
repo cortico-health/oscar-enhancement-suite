@@ -1,8 +1,18 @@
+import { useDispatch } from "react-redux";
 import AddLogo from "../../../../resources/icons/add.svg";
 import PatientCard from "./Organisms/CPatientCard";
 
 const Sidebar = () => {
+  const dispatch = useDispatch();
   const patientStore = null;
+
+  const handleClick = (name) => {
+    dispatch({
+      type: "sidebar/setCurrent",
+      payload: "VCN Add Chat",
+    });
+  };
+
   return (
     <div className="tw-flex tw-w-[300px]">
       <div className="tw-bg-gray-50 tw-shadow tw-h-full tw-w-full tw-block">
@@ -28,7 +38,7 @@ const Sidebar = () => {
                 }
               </h2>
 
-              <img className="tw-cursor-pointer" src={ AddLogo } alt="Cortico" />
+              <img className="tw-cursor-pointer" src={ AddLogo } alt="Cortico" onClick={ handleClick } />
             </div>
 
             {/* <ConversationList /> */ }

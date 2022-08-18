@@ -45,6 +45,12 @@ const initialState = {
       icon: <ChatAlt2Icon className="tw-w-6 tw-h-6" />,
       current: false,
     },
+    {
+      name: "VCN Add Chat",
+      icon: <ChatAlt2Icon className="tw-w-6 tw-h-6" />,
+      current: false,
+      visible: false,
+    },
   ],
 };
 
