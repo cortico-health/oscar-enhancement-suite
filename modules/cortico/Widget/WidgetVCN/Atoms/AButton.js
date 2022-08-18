@@ -2,8 +2,8 @@
 const a_button_sm = "tw-h-[38px]";
 const a_button_lg = "tw-h-[48px]";
 const a_button_primary = "tw-text-white tw-bg-primary-500 hover:tw-bg-primary-700 tw-font-medium";
-const a_button_secondary = "text-primary-600 bg-white border border-secondary-100 hover:border-primary-600 font-medium";
-const a_button_tertiary = "text-secondary-500 bg-white border border-secondary-100 hover:border-secondary-500 font-medium";
+const a_button_secondary = "tw-text-primary-600 tw-bg-white tw-border tw-border-secondary-100 hover:tw-border-primary-600 tw-font-medium";
+const a_button_tertiary = "tw-text-secondary-500 tw-bg-white tw-border tw-border-secondary-100 hover:tw-border-secondary-500 tw-font-medium";
 
 const variantClass = {
   'button-primary-sm': `${a_button_sm} ${a_button_primary}`,
