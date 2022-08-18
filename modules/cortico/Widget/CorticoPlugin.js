@@ -23,6 +23,7 @@ import { BroadcastChannel } from "broadcast-channel";
 import { handleTokenExpiry } from "./common/utils";
 import PatientPanel from "./PatientPanel";
 import PatientAdapter from "./adapters/PatientAdapter";
+import PSelect from "./WidgetVCN/Pages/PSelect";
 export default function CorticoPlugin({ onMinimize, ...props }) {
   const dispatch = useDispatch();
   const { refresh, refreshToken, uid } = useSelector((state) => state.app);
@@ -277,10 +278,14 @@ function PluginContentRenderer() {
         <div className="tw-p-4 tw-h-full">
           <PatientPanel />
         </div>
-              ) : activeItem === "VCN" ? (
-                <div className="tw-h-full tw-font-sans">
-                  <WidgetVCN />
-                </div>
+      ) : activeItem === "VCN" ? (
+        <div className="tw-h-full tw-font-sans">
+          <WidgetVCN />
+        </div>
+      ) : activeItem === "VCN Patient" ? (
+        <div className="tw-h-full tw-font-sans">
+          <PSelect />
+        </div>
       ) : null}
     </>
   );

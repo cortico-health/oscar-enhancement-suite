@@ -1,6 +1,16 @@
+import { useDispatch } from "react-redux";
 import AButton from "../Atoms/AButton";
 
 const PatientCard = (props) => {
+    const dispatch = useDispatch();
+
+    const handleClick = (name) => {
+        dispatch({
+            type: "sidebar/setCurrent",
+            payload: "VCN Patient",
+        });
+    };
+
     const patient = null;
     return (
         <div { ...props }>
@@ -27,7 +37,7 @@ const PatientCard = (props) => {
                 <>
                     <h1 className='tw-text-md tw-text-secondary-500 tw-font-bold tw-mb-1.5'>Viewing all conversations</h1>
                     <p className='tw-text-sm tw-mb-5'>No patient selected</p>
-                    <AButton href="/select" className='tw-w-full' variant='button-primary-sm'> Select patient</AButton>
+                    <AButton onClick={ handleClick } className='tw-w-full' variant='button-primary-sm'> Select patient</AButton>
                 </>
             }
         </div>

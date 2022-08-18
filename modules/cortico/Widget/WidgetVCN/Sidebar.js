@@ -1,5 +1,5 @@
 import AddLogo from "../../../../resources/icons/add.svg";
-import PatientCard from "./Patients/PatientCard";
+import PatientCard from "./Organisms/CPatientCard";
 
 const Sidebar = () => {
   const patientStore = null;
