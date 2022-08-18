@@ -1,3 +1,8 @@
 {
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "prettier.jsxBracketSameLine": true,
+    "prettier.bracketSpacing": false,
+    "files.associations": {
+        "*.js": "javascriptreact"
+    }
 }

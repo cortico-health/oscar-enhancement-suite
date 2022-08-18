@@ -3,6 +3,7 @@ import { useState, useEffect } from "preact/hooks";
 import WidgetSidebar from "./WidgetSidebar";
 import WidgetSettings from "./WidgetSettings";
 import WidgetAutomation from "./WidgetAutomation";
+import WidgetVCN from "./WidgetVCN";
 import { isLoggedIn } from "../../Utils/Utils";
 import AccountInformation from "./AccountInformation";
 import { MinusIcon } from "@heroicons/react/solid";
@@ -193,7 +194,7 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
 
       <div className=" tw-text-black tw-relative">
         <div
-          className="tw-absolute tw-top-2 tw-right-2 tw-cursor-pointer tw-bg-amber-400 tw-rounded-full"
+          className="tw-absolute tw-z-5000 tw-top-2 tw-right-2 tw-cursor-pointer tw-bg-amber-400 tw-rounded-full"
           onClick={onMinimize}
         >
           <MinusIcon className="tw-w-5 tw-h-5 tw-text-white" />
@@ -276,6 +277,10 @@ function PluginContentRenderer() {
         <div className="tw-p-4 tw-h-full">
           <PatientPanel />
         </div>
+              ) : activeItem === "VCN" ? (
+                <div className="tw-h-full tw-font-sans">
+                  <WidgetVCN />
+                </div>
       ) : null}
     </>
   );
