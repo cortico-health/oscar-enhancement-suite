@@ -3,7 +3,6 @@ import { useState, useEffect } from "preact/hooks";
 import WidgetSidebar from "./WidgetSidebar";
 import WidgetSettings from "./WidgetSettings";
 import WidgetAutomation from "./WidgetAutomation";
-import WidgetVCN from "./WidgetVCN";
 import { isLoggedIn } from "../../Utils/Utils";
 import AccountInformation from "./AccountInformation";
 import { MinusIcon } from "@heroicons/react/solid";
@@ -24,6 +23,8 @@ import { handleTokenExpiry } from "./common/utils";
 import PatientPanel from "./PatientPanel";
 import PatientAdapter from "./adapters/PatientAdapter";
 import PSelect from "./WidgetVCN/Pages/PSelect";
+import PAddChat from "./WidgetVCN/Pages/PAddChat";
+import PIndex from "./WidgetVCN/Pages/PIndex";
 export default function CorticoPlugin({ onMinimize, ...props }) {
   const dispatch = useDispatch();
   const { refresh, refreshToken, uid } = useSelector((state) => state.app);
@@ -280,11 +281,15 @@ function PluginContentRenderer() {
         </div>
       ) : activeItem === "VCN" ? (
         <div className="tw-h-full tw-font-sans">
-          <WidgetVCN />
+          <PIndex />
         </div>
       ) : activeItem === "VCN Patient" ? (
         <div className="tw-h-full tw-font-sans">
           <PSelect />
+        </div>
+      ) : activeItem === "VCN Add Chat" ? (
+        <div className="tw-h-full tw-font-sans">
+          <PAddChat />
         </div>
       ) : null}
     </>
