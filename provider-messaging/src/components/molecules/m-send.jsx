@@ -8,7 +8,7 @@ const MSend = ({ handlers, className, ...props }) => {
     <AInput onKeyDown={handlers.onSend} type='textarea' name='send' {...props} className={`m-send ${className}`}>
       <label htmlFor="file">
         <ASvg className='absolute cursor-pointer pointer-events-auto left-2 top-[1.2rem]' src="attach" />
-        <input onChange={handlers.onUpload} onFocus={handlers.onRead} type="file" id="file" className='hidden' name="file"
+        <input onChange={handlers.onUpload} type="file" id="file" className='hidden' name="file"
           multiple=""
           data-original-title="upload photos"
           accept="image/jpeg,.png,.doc,.docx,.mp3,.pdf,.txt,.csv,.xls,.xlsx,.html,.htm"

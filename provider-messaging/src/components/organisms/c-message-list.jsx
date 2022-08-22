@@ -10,6 +10,7 @@ import { observer } from "mobx-react-lite";
 import ASvg from "../atoms/a-svg";
 import { getChatMessageData } from "../../api/conversations";
 import AFileInputShow from "../atoms/a-file-input-show";
+import { createFile, deleteFile } from "../../api/conversations";
 
 const fileTypes = ['jpg', 'jpeg', 'png', 'pdf']
 
@@ -24,6 +25,7 @@ const CMessageList = () => {
   const [socketUrl, setSocketUrl] = useState(null);
   const [preview, setPreview] = useState(null);
   const [patientSelected, setPatientSelected] = useState(null);
+  const [uploadedFile, setUploadedFile] = useState(null);
 
   const { getWebSocket } = useWebSocket(socketUrl, {
     onOpen: () => handlers.onRead(),
@@ -44,18 +46,30 @@ const CMessageList = () => {
       const file = e.target.files[0];
       const extension = file.name.split(".").pop().toLowerCase();
 
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = function (event) {
-        setPreview({ dataURL: event.target.result, name: file.name, type: extension });
-      };
+      createFile(file).then((response) => {
+        setUploadedFile(response.data);
+        setPreview({ dataURL: response.data.file, name: file.name, type: extension });
+      }).catch((error) => {
+        console.log(error);
+      });
+    },
+    removeFile: () => {
+      deleteFile(uploadedFile.id).then((response) => {
+        setUploadedFile(null);
+        setPreview(null);
+      }).catch((error) => {
+        console.log(error);
+      });
     },
     onSend: () => {
       const value = sendRef?.current?.base?.lastElementChild?.value;
       if (value) {
         getWebSocket().send(JSON.stringify({
           'body': value,
+          'file': uploadedFile ? uploadedFile.id : null
         }));
+        setUploadedFile(null);
+        setPreview(null);
         sendRef.current.base.lastElementChild.value = "";
         window.scrollTo(0, document.body.scrollHeight);
       }
@@ -126,7 +140,7 @@ const CMessageList = () => {
       </div>
 
       <div className="sticky bg-secondary-10 mx-9 lg:mx-12 tw-pt-4">
-        <AFileInputShow fileInput={preview} exit={() => setPreview(null)} />
+        <AFileInputShow fileInput={preview} exit={handlers.removeFile} />
 
         <MSend
           placeholder="Type message..."

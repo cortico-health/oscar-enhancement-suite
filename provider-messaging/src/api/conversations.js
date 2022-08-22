@@ -14,3 +14,13 @@ export const createConversation = async (inputs) => {
         "members": inputs.members
     });
 }
+
+export const createFile = async (file) => {
+    const data = new FormData();
+    data.append('file', file, file.name);
+    return await axios.post('/vcn/files/', data, { headers: { "Content-Type": "multipart/form-data" } });
+}
+
+export const deleteFile = async (id) => {
+    return await axios.delete(`/vcn/files/${id}`);
+}
