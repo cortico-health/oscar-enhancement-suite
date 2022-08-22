@@ -10,7 +10,7 @@ import { observer } from "mobx-react-lite";
 import ASvg from "../atoms/a-svg";
 import { getChatMessageData } from "../../api/conversations";
 import AFileInputShow from "../atoms/a-file-input-show";
-import { createFile, deleteFile } from "../../api/conversations";
+import { createFile } from "../../api/conversations";
 
 const fileTypes = ['jpg', 'jpeg', 'png', 'pdf']
 
@@ -54,18 +54,14 @@ const CMessageList = () => {
       });
     },
     removeFile: () => {
-      deleteFile(uploadedFile.id).then((response) => {
-        setUploadedFile(null);
-        setPreview(null);
-      }).catch((error) => {
-        console.log(error);
-      });
+      setUploadedFile(null);
+      setPreview(null);
     },
     onSend: () => {
       const value = sendRef?.current?.base?.lastElementChild?.value;
-      if (value) {
+      if (value || uploadedFile) {
         getWebSocket().send(JSON.stringify({
-          'body': value,
+          'body': value ? value : '',
           'file': uploadedFile ? uploadedFile.id : null
         }));
         setUploadedFile(null);
