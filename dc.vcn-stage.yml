@@ -3,7 +3,7 @@ version: "3.3"
 services:
   vcn-web:
     environment:
-      - VITE_CEREBRO_URL=https://cerebro-develop.cortico.ca/api
+      - VITE_CEREBRO_URL=https://cerebro-develop.cortico.ca
       - VITE_WEBSOCKET_URL=wss://cerebro-develop.cortico.ca
     ports:
       - "3500:3500"
