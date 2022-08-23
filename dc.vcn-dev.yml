@@ -3,6 +3,6 @@ version: '3.3'
 services:
   vcn-web:
     environment:
-      - VITE_CEREBRO_URL=http://localhost:8426/api
+      - VITE_CEREBRO_URL=http://localhost:8426
       - VITE_WEBSOCKET_URL=http://localhost:8426/api
 
