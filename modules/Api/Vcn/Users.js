@@ -3,7 +3,8 @@ import { cerebroURL,getAccessToken } from "../../Utils/VcnUtils";
 export const getUserData = async () => {
     return await fetch(`${cerebroURL}/vcn/user/`,{
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${getAccessToken}`,
         }
     });
 }
@@ -11,7 +12,8 @@ export const getUserData = async () => {
 export const getUsersData = async () => {
     return await fetch(`${cerebroURL}/vcn/users/`,{
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${getAccessToken}`,
         }
     });
 }
@@ -21,7 +23,7 @@ export const updateProfile = async (inputs) => {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${getAccessToken()}`,
+            Authorization: `Bearer ${getAccessToken}`,
         },
         body: JSON.stringify(inputs),
     });
