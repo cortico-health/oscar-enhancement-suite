@@ -3,8 +3,9 @@ import { useDispatch } from "react-redux";
 import { useStore } from "../../store/mobx";
 import AButton from "../Atoms/AButton";
 
-import { ExitLogo } from "../../../../../resources/icons/exit.svg";
-import { SwitchLogo } from "../../../../../resources/icons/switch.svg";
+import ExitLogo from "../../../../../resources/icons/exit.svg";
+import SwitchLogo from "../../../../../resources/icons/switch.svg";
+import DefaultAvatarLogo from "../../../../../resources/icons/avatar.svg";
 import ASvg from "../Atoms/ASvg";
 
 const PatientCard = (props) => {
@@ -35,9 +36,9 @@ const PatientCard = (props) => {
             {/* <ASvg className="h-12.5 min-w-12.5 border-2 rounded-full p-0.25 border-primary-500" src="avatar" /> */ }
             { patient ?
                 <>
-                    <div className='tw-flex tw-mb-5 tw-gap-x-5 tw-justify-between'>
+                    <div className='tw-flex tw-mb-5 tw-gap-x-5 tw-justify-between tw-items-start'>
                         {
-                            patient.image ? <img className="tw-h-12 tw-min-w-12" src={ patient.image } /> : null
+                            patient.image ? <img className="tw-h-12 tw-min-w-12" src={ patient.image } /> : <ASvg className="tw-h-12 tw-min-w-12 tw-rounded-full tw-p-0.5" src={ DefaultAvatarLogo } />
                         }
                         <div>
                             <h1 className='tw-text-h1 tw-text-secondary-500 tw-font-bold'>{ patient.first_name + " " + patient.last_name }</h1>
