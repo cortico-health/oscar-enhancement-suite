@@ -464,15 +464,26 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
       <div>
         <div>
           {scheme === "email" ? (
-            <div>
-              <Input
-                type="email"
-                placeholder="To"
-                value={to}
-                onChange={(val) => handleChange("to", val)}
-                defaultValue={to}
-              />
-            </div>
+            <>
+              <div>
+                <Input
+                  type="email"
+                  placeholder="To"
+                  value={to}
+                  onChange={(val) => handleChange("to", val)}
+                  defaultValue={to}
+                />
+              </div>
+              <hr className="tw-opacity-10" />
+              <div className="tw-w-full">
+                <Input
+                  placeholder="Subject"
+                  onChange={(val) => handleChange("subject", val)}
+                  value={subject}
+                  defaultValue={subject}
+                ></Input>
+              </div>
+            </>
           ) : null}
           {scheme === "sms" ? (
             <div>
@@ -485,15 +496,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
               />
             </div>
           ) : null}
-          <hr className="tw-opacity-10" />
-          <div className="tw-w-full">
-            <Input
-              placeholder="Subject"
-              onChange={(val) => handleChange("subject", val)}
-              value={subject}
-              defaultValue={subject}
-            ></Input>
-          </div>
+
           <hr className="tw-opacity-10" />
           {body && body.length > 140 && scheme === "sms" ? (
             <Alert
