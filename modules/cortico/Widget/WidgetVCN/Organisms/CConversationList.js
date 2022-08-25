@@ -4,7 +4,7 @@ import { useStore } from "../../store/mobx";
 
 import MConversationTab from "../Molecules/MConversationTab"
 import MSearch from "../Molecules/MSearch";
-/* import CNotFound from "./c-not-found"; */
+import CNotFound from "./CNotFound";
 import { observer } from "mobx-react-lite";
 
 const CConversationList = () => {
