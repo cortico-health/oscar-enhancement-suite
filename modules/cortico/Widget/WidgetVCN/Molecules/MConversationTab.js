@@ -69,10 +69,7 @@ const MConversationTab = ({ conversation,...props }) => {
                         onClick={ () => setOpenModal(true) }
                             className="tw-cursor-pointer"
                     >
-                            {/* tw-absolute tw-top-0 tw-bottom-0 tw-left-0 tw-right-0  */ }
-                            <MProfilePicture avatar={ conversation?.members[0].avatar }
-                                className="tw-w-16 tw-h-16"
-                        />
+                            <MProfilePicture avatar={ conversation?.members[0].avatar } />
                     </div>
                 ) }
                 <div className="tw-max-w-full tw-ml-4">

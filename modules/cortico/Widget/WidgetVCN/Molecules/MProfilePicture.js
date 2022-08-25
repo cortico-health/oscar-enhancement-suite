@@ -7,7 +7,7 @@ import DefaultAvatar from "../../../../../resources/icons/avatar.svg";
 const MProfilePicture = ({ avatar,className = "" }) => {
     if (!avatar) {
         return (
-            <ASvg className={ className } src={ DefaultAvatar } />
+            <ASvg className={ classNames(className,"tw-w-12 tw-h-12") } src={ DefaultAvatar } />
         )
     }
     return (

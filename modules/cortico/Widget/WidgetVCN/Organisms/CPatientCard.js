@@ -5,8 +5,8 @@ import AButton from "../Atoms/AButton";
 
 import ExitLogo from "../../../../../resources/icons/exit.svg";
 import SwitchLogo from "../../../../../resources/icons/switch.svg";
-import DefaultAvatarLogo from "../../../../../resources/icons/avatar.svg";
 import ASvg from "../Atoms/ASvg";
+import MProfilePicture from "../Molecules/MProfilePicture";
 
 const PatientCard = (props) => {
     const [patient,setPatient] = useState(undefined);
@@ -38,7 +38,7 @@ const PatientCard = (props) => {
                 <>
                     <div className='tw-flex tw-mb-5 tw-gap-x-5 tw-justify-between tw-items-start'>
                         {
-                            patient.image ? <img className="tw-h-12 tw-min-w-12" src={ patient.image } /> : <ASvg className="tw-h-12 tw-min-w-12 tw-rounded-full tw-p-0.5" src={ DefaultAvatarLogo } />
+                            <MProfilePicture avatar={ patient.image } />
                         }
                         <div>
                             <h1 className='tw-text-h1 tw-text-secondary-500 tw-font-bold'>{ patient.first_name + " " + patient.last_name }</h1>
