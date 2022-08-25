@@ -1,9 +1,14 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { ExclamationIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
-export default function Alert({ size, title, message, ...props }) {
+export default function Alert({ size, title, message, className, ...props }) {
   return (
-    <div className="tw-rounded-md tw-bg-yellow-50 tw-p-4 tw-border tw-border-black tw-border-opacity-5">
+    <div
+      className={classNames(
+        "tw-rounded-md tw-bg-yellow-50 tw-p-4 tw-border tw-border-black tw-border-opacity-5",
+        className
+      )}
+    >
       <div className="tw-flex">
         <div className="tw-flex-shrink-0">
           <ExclamationIcon
