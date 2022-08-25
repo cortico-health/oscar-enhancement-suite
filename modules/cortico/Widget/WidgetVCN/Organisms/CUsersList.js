@@ -2,6 +2,8 @@ import { h } from "preact";
 import { useEffect,useState } from "preact/hooks";
 import { useDispatch } from "react-redux";
 import { usersData } from "../../../../../resources/js/data";
+import { createConversation } from "../../../../Api/Vcn/Conversations";
+import { useStore } from "../../store/mobx";
 import AButton from "../Atoms/AButton";
 import MSearch from "../Molecules/MSearch";
 import MUserTab from "../Molecules/MUserTab";
@@ -13,11 +15,7 @@ import { createConversation } from "../../api/conversations"; */
 const CUsersList = () => {
     const dispatch = useDispatch();
     /* Insert here once the mobx has been integrated */
-    /* const { userStore,conversationStore,patientStore } = useStore(); */
-
-    const userStore = null;
-    const conversationStore = null;
-    const patientStore = null;
+    const { userStore,conversationStore,patientStore } = useStore();
 
     const [checked,setChecked] = useState(undefined);
     const [confirm,setConfirm] = useState(false);
@@ -33,7 +31,7 @@ const CUsersList = () => {
 
     const [showUsers,setShowUsers] = useState(usersData);
 
-    /* useEffect(() => {
+    useEffect(() => {
         if (userStore.users) {
             setShowUsers(userStore.users);
             const res = {}
@@ -42,7 +40,7 @@ const CUsersList = () => {
             })
             setChecked(res)
         }
-    },[userStore.users]) */
+    },[userStore.users])
 
     const handleOnChange = (e) => {
         console.log(e.target.value)
@@ -84,12 +82,16 @@ const CUsersList = () => {
             patient: patientStore.patients.selected ? patientStore.patients.selected : {},
             members: [userStore.user.id,...getCheckedPatients()]
         }
-        createConversation(inputs).then((response) => {
+        createConversation(inputs).then((response) => { return response.json() }).then((data) => {
             const existingConversation = conversationStore.conversations.find((conversation) => {
-                return conversation.id === parseInt(response.data.id);
+                return conversation.id === parseInt(data.id);
             })
-            if (!existingConversation) conversationStore.conversations.push(response.data)
-            route(`/chat/${response.data.id}`)
+            if (!existingConversation) conversationStore.conversations.push(data)
+            /* route(`/chat/${response.data.id}`) */
+            dispatch({
+                type: "sidebar/setCurrent",
+                payload: { name: "VCN",id: data.id }
+            });
         }).catch((error) => {
             console.log(error);
         });
