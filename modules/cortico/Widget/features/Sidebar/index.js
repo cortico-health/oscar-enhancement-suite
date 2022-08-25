@@ -68,6 +68,13 @@ export function sidebarReducer(state = initialState, action) {
       return temp;
     case "sidebar/setCurrent": {
       const temp = state.items.slice().map((i) => {
+        //If the value is object for Chat Routing because id will be passed.
+        if (typeof (action.payload) == 'object' && i.name === action.payload.name) {
+          return { ...i,current: true,id: action.payload.id };
+        }
+
+        //delete action.payload.id;
+
         if (i.name === action.payload) {
           return { ...i, current: true };
         }

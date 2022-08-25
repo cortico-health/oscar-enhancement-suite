@@ -118,7 +118,9 @@ export const StateProvider = ({ children }) => {
   }))
 
   const conversationStore = useLocalObservable(() => ({
-    selectedConversation() {
+    selectedConversation: null,
+    conversations: [],
+    setSelectedConversation(id) {
       this.selectedConversation = this.conversations.find((conversation) => {
         return conversation.id === parseInt(id);
       })
@@ -161,7 +163,7 @@ export const StateProvider = ({ children }) => {
     conversationStore.setConversations();
     patientStore.getPatientList();
 
-    setSocketUrl(`${/* import.meta.env.VITE_WEBSOCKET_URL ||  */"ws://localhost:8426"}/updates/?token=${authStore.accessToken}`)
+    setSocketUrl(`${/* import.meta.env.VITE_WEBSOCKET_URL ||  */"wss://localhost:8426"}/updates/?token=${authStore.accessToken}`)
   },[authStore.accessToken])
 
   /* TODO: will convert everything t Mobx, but not yet priority. */

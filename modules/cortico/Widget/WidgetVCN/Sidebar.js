@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import AddLogo from "../../../../resources/icons/add.svg";
+import CConversationList from "./Organisms/CConversationList";
 import PatientCard from "./Organisms/CPatientCard";
 
 const Sidebar = () => {
@@ -41,7 +42,7 @@ const Sidebar = () => {
               <img className="tw-cursor-pointer" src={ AddLogo } alt="Cortico" onClick={ handleClick } />
             </div>
 
-            {/* <ConversationList /> */ }
+            <CConversationList />
           </>
         }
       </div>

@@ -24,12 +24,32 @@ export const createConversation = async (userInputs) => {
         "members": userInputs.members
     };
 
-    return await fetch('/vcn/conversations/',{
+    return await fetch(`${cerebroURL}/vcn/conversations/`,{
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${getAccessToken}`,
         },
         body: JSON.stringify(inputs),
+    });
+}
+
+export const createFile = async (file) => {
+    const data = new FormData();
+    data.append('file',file,file.name);
+
+    return await fetch(`${cerebroURL}/vcn/files/`,{
+        method: "POST",
+        headers: {
+            "Content-Type": "multipart/form-data",
+            "Authorization": `Bearer ${getAccessToken}`,
+        },
+        body: data,
+    });
+}
+
+export const deleteFile = async (id) => {
+    return await fetch(`/vcn/files/${id}`,{
+        method: "DELETE"
     });
 }

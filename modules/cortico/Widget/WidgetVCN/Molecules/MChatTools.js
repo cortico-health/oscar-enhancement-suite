@@ -1,8 +1,9 @@
 import { h } from 'preact';
-import { multipleObjectDataFormatting } from "../../../../../resources/js/multipleDataFormatting";
+
 import AButton from '../Atoms/AButton';
-import ASvg from '../Atoms/ASvg';
-/* import useUtils from '../../hooks/useUtils'; */
+import useUtils from '../../../../Hooks/useUtils';
+
+import { multipleObjectDataFormatting } from "../../../../helper/name-formatting";
 
 import AddLogo from "../../../../../resources/icons/add.svg";
 import FilesLogo from "../../../../../resources/icons/files.svg";
@@ -10,7 +11,7 @@ import LinksLogo from "../../../../../resources/icons/links.svg";
 import MSearch from './MSearch';
 
 const MChatTools = ({ setDiscussion,selectedConversationInfo,...props }) => {
-  /* const { getOtherMembersName } = useUtils(); */
+  const { getOtherMembersName } = useUtils();
 
   /* TODO: to be edited since patient is not prioritize now. */
   /* const patient = useMemo(() => {
@@ -33,8 +34,7 @@ const MChatTools = ({ setDiscussion,selectedConversationInfo,...props }) => {
       <div className='tw-flex tw-gap-x-2.5 tw-items-center'>
         <div className='tw-w-fit'>
           <h1 className='tw-text-secondary-500 tw-font-bold tw-text-title3'>
-            {/* {multipleObjectDataFormatting(getOtherMembersName(selectedConversationInfo?.members))} */ }
-            Test User, Test User 2, and Last User
+            { multipleObjectDataFormatting(getOtherMembersName(selectedConversationInfo?.members)) }
           </h1>
           {/* TODO: will uncomment this if patient will be available. */ }
           {/* {

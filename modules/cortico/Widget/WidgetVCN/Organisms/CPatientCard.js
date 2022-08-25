@@ -1,7 +1,27 @@
+import { useEffect,useState } from "preact/hooks";
 import { useDispatch } from "react-redux";
+import { useStore } from "../../store/mobx";
 import AButton from "../Atoms/AButton";
 
+import { ExitLogo } from "../../../../../resources/icons/exit.svg";
+import { SwitchLogo } from "../../../../../resources/icons/switch.svg";
+import ASvg from "../Atoms/ASvg";
+
 const PatientCard = (props) => {
+    const [patient,setPatient] = useState(undefined);
+
+    const { patientStore } = useStore();
+
+    useEffect(() => {
+        if (!patientStore.patients.all) {
+            patientStore.getPatientList();
+        }
+    },[]);
+
+    useEffect(() => {
+        setPatient(patientStore.patients?.selected);
+    },[patientStore.patients?.selected])
+
     const dispatch = useDispatch();
 
     const handleClick = (name) => {
@@ -10,8 +30,6 @@ const PatientCard = (props) => {
             payload: "VCN Patient",
         });
     };
-
-    const patient = null;
     return (
         <div { ...props }>
             {/* <ASvg className="h-12.5 min-w-12.5 border-2 rounded-full p-0.25 border-primary-500" src="avatar" /> */ }
@@ -19,19 +37,19 @@ const PatientCard = (props) => {
                 <>
                     <div className='tw-flex tw-mb-5 tw-gap-x-5 tw-justify-between'>
                         {
-                            patient.image ? <img className="tw-h-12.5 tw-min-w-12.5" src={ patient.image } /> : null
+                            patient.image ? <img className="tw-h-12 tw-min-w-12" src={ patient.image } /> : null
                         }
                         <div>
-                            <h1 className='tw-text-md tw-font-medium'>{ patient.first_name + " " + patient.last_name }</h1>
-                            <h2 className='tw-text-md tw-mb-2.5'>{ patient.facility }</h2>
-                            <p className='tw-text-md'> <span className='tw-font-medium'>Gender:</span> { patient.gender }  </p>
-                            <p className='tw-text-md'> <span className='tw-font-medium'>Date of birth: </span> { new Date(patient.birth_date).toLocaleDateString() }  </p>
-                            <p className='tw-text-md'> <span className='tw-font-medium'>Health card number: </span> { patient.hin }  </p>
+                            <h1 className='tw-text-h1 tw-text-secondary-500 tw-font-bold'>{ patient.first_name + " " + patient.last_name }</h1>
+                            <h2 className='tw-text-h2 tw-text-secondary-500 tw-mb-2'>{ patient.facility }</h2>
+                            <p className='tw-text-md tw-text-secondary-300'> <span className='tw-font-bold'>Gender:</span> { patient.gender }  </p>
+                            <p className='tw-text-md tw-text-secondary-300'> <span className='tw-font-bold'>Date of birth: </span> { new Date(patient.birth_date).toLocaleDateString() }  </p>
+                            <p className='tw-text-md tw-text-secondary-300'> <span className='tw-font-bold'>Health card number: </span> { patient.hin }  </p>
                         </div>
                         {/* TODO: Will definitely improved this since I don't know why the 2nd useEffect above won't retrigger */ }
-                        {/* <ASvg onClick={ () => { patientStore.setSelectedPatient(null); setPatient(null); } } className="cursor-pointer" src="exit" /> */ }
+                        <ASvg onClick={ () => { patientStore.setSelectedPatient(null); setPatient(null); } } className="tw-cursor-pointer" src={ ExitLogo } />
                     </div>
-                    {/* <AButton href="/select" className='w-full flex items-center justify-center gap-x-2' variant='button-tertiary-sm'> <ASvg src="switch" /> Switch patient</AButton> */ }
+                    <AButton onClick={ handleClick } className='tw-w-full tw-flex tw-items-center tw-justify-center tw-gap-x-2' variant='button-tertiary-sm'> <ASvg src={ SwitchLogo } /> Switch patient</AButton>
                 </>
                 :
                 <>

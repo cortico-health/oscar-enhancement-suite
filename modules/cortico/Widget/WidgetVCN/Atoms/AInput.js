@@ -3,7 +3,7 @@ import { useRef } from "preact/hooks";
 
 const inputEffects = "placeholder:tw-text-primary-300 focus:tw-outline-primary-600";
 
-const a_input = "tw-text-input tw-w-full tw-my-3 tw-text-secondary-500 tw-outline tw-outline-1 tw-outline-secondary-100 " + inputEffects;
+const a_input = "tw-text-input tw-w-full tw-my-3 tw-text-secondary-500" + inputEffects;
 
 const textarea_class = "tw-text-input tw-w-full tw-my-3 tw-text-secondary-500 tw-outline tw-outline-1 tw-outline-secondary-100 " + inputEffects;
 
@@ -17,6 +17,7 @@ const AInput = ({
   onKeyDown,
   type = "text",
   placeholder = "Search...",
+  inputClass = "",
   ...props
 }) => {
   const inputRef = useRef(null);
@@ -29,6 +30,7 @@ const AInput = ({
       <label htmlFor={ name }></label>
       { type == "text" ? (
         <input
+          className={ `${inputClass}` }
           onInput={ onInput }
           onChange={ onChange }
           ref={ inputRef }
@@ -38,7 +40,7 @@ const AInput = ({
         />
       ) : (
         <textarea
-          className={ `${textarea_class} tw-resize-none` }
+            className={ `${textarea_class} tw-resize-none ${inputClass}` }
           onKeyDown={ (e) => {
             if (e.key === "Enter" && e.ctrlKey) {
               onKeyDown()

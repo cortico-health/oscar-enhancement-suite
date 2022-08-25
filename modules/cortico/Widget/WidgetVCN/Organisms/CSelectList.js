@@ -7,12 +7,12 @@ import AButton from '../Atoms/AButton';
 import MSearch from '../Molecules/MSearch';
 import { useDispatch } from 'react-redux';
 import MSelectItem from '../Molecules/MSelectItem';
-import { patientsData } from '../../../../../resources/js/data';
+import { useStore } from "../../store/mobx";
 
 const CSelectList = ({ ...props }) => {
     const dispatch = useDispatch();
 
-    const patientStore = patientsData;
+    const { patientStore } = useStore();
 
     const [select,setSelect] = useState(undefined);
 
@@ -40,6 +40,7 @@ const CSelectList = ({ ...props }) => {
     const handleStartConversation = () => {
         /* patientStore.setSelectedPatient(select); */
         /* route('/chat'); */
+        patientStore.setSelectedPatient(select);
         dispatch({
             type: "sidebar/setCurrent",
             payload: "VCN",
@@ -83,4 +84,4 @@ const CSelectList = ({ ...props }) => {
     )
 }
 
-export default /* observer(CSelectList) */ CSelectList;
+export default CSelectList;
