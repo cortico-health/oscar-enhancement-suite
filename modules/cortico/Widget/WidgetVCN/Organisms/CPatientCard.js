@@ -12,13 +12,6 @@ const PatientCard = (props) => {
     const [patient,setPatient] = useState(undefined);
 
     const { patientStore } = useStore();
-
-    useEffect(() => {
-        if (!patientStore.patients.all) {
-            patientStore.getPatientList();
-        }
-    },[]);
-
     useEffect(() => {
         setPatient(patientStore.patients?.selected);
     },[patientStore.patients?.selected])
