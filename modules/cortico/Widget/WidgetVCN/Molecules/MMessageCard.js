@@ -5,6 +5,7 @@ import ASvg from "../Atoms/ASvg";
 import MMessageFile from "./MMessageFile";
 
 import VerifiedLogo from "../../../../../resources/icons/verified.svg"
+import MProfilePicture from "./MProfilePicture";
 
 const formatURL = (string) => {
     return string.replace(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g,(url) => '<a class="text-primary-500" href="' + url + '">' + url + '</a>')
@@ -72,30 +73,30 @@ const MMessageCard = ({ messageDetails }) => {
                 </div>
             </div>
             :
-            <div className="mb-10">
-                <p className='text-secondary-200 text-title6 text-center'>{ (new Date(created_date)).toLocaleTimeString('en-us',
+            <div className="tw-mb-10">
+                <p className='tw-text-secondary-200 tw-text-title6 tw-text-center'>{ (new Date(created_date)).toLocaleTimeString('en-us',
                     { hour: 'numeric',minute: '2-digit' }) }</p>
-                <div className='mb-10 mt-3 mr-auto'>
+                <div className='tw-mb-10 tw-mt-3 tw-mr-auto'>
                     <div>
-                        <div className="flex items-center tw-gap-3">
-                            <p className='text-secondary-500 text-h1 font-medium'>
+                        <div className="tw-flex tw-items-center tw-gap-3">
+                            <p className='tw-text-secondary-500 tw-text-h1 tw-font-medium'>
                                 { from_user.full_name }
                             </p>
-                            <div className="text-white bg-blue-600 rounded-full -tw-ml-2">
+                            <div className="tw-text-white tw-bg-blue-600 tw-rounded-full -tw-ml-2">
                                 <ASvg src="verified" />
                             </div>
                         </div>
-                        <p className='text-secondary-300 text-select2'>
+                        <p className='tw-text-secondary-300 tw-text-select2'>
                             { from_user.full_name }'s Clinic
                         </p>
                     </div>
-                    <div className="flex gap-3 mt-3">
-                        <MProfilePicture avatar={ author?.avatar } className="relative w-11 h-11" />
-                        <div className="flex flex-col gap-2 w-full">
-                            <div className="bg-white rounded-2xl p-4 inline-block w-[45%] max-w-fit">
-                                <p className='text-secondary-500 text-message1' dangerouslySetInnerHTML={ message() } />
+                    <div className="tw-flex tw-gap-3 tw-mt-3">
+                        <MProfilePicture avatar={ author?.avatar } className="tw-relative tw-w-11 tw-h-11" />
+                        <div className="tw-flex tw-flex-col tw-gap-2 tw-w-full">
+                            <div className="tw-bg-white tw-rounded-2xl tw-p-4 tw-inline-block tw-w-[45%] tw-max-w-fit">
+                                <p className='tw-text-secondary-500 tw-text-message1' dangerouslySetInnerHTML={ message() } />
                             </div>
-                            <div className='flex'>
+                            <div className='tw-flex'>
                                 {
                                     file_url
                                     &&
