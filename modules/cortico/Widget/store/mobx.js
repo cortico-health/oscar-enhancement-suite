@@ -163,7 +163,7 @@ export const StateProvider = ({ children }) => {
     conversationStore.setConversations();
     patientStore.getPatientList();
 
-    setSocketUrl(`${/* import.meta.env.VITE_WEBSOCKET_URL ||  */"wss://localhost:8426"}/updates/?token=${authStore.accessToken}`)
+    setSocketUrl(`${/* import.meta.env.VITE_WEBSOCKET_URL ||  */"wss://cerebro-develop.cortico.ca"}/updates/?token=${authStore.accessToken}`)
   },[authStore.accessToken])
 
   /* TODO: will convert everything t Mobx, but not yet priority. */

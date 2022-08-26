@@ -84,7 +84,7 @@ const CMessageList = () => {
             getChatMessageData(item?.id).then((response) => {
                 return response.json();
             }).then((data) => {
-                setSocketUrl(`${/* import.meta.env.VITE_WEBSOCKET_URL ||  */"ws://localhost:8426"}/chat/${item?.id}/?token=${authStore.accessToken}`)
+                setSocketUrl(`${/* import.meta.env.VITE_WEBSOCKET_URL ||  */"wss://cerebro-develop.cortico.ca"}/chat/${item?.id}/?token=${authStore.accessToken}`)
                 setMessages(data.results)
             }).catch((error) => {
                 console.log(error);
@@ -119,7 +119,7 @@ const CMessageList = () => {
                 selectedConversationInfo={ conversationStore.selectedConversation }
             />
 
-            <div className="tw-flex-grow tw-overflow-y-auto tw-px-9 lg:tw-px-12">
+            <div className="tw-flex-grow tw-overflow-y-auto tw-h-96 tw-px-9">
                 { messages?.slice(0).reverse().map((message) => {
                     return <MMessageCard key={ `message-${message.id}` } messageDetails={ message } attachment={ preview } />;
                 }) }

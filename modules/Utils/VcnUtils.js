@@ -1,3 +1,3 @@
-export const cerebroURL = /* import.meta.env.VITE_CEREBRO_URL ||  */"http://localhost:8426/api";
+export const cerebroURL = /* import.meta.env.VITE_CEREBRO_URL ||  */"https://cerebro-develop.cortico.ca/api";
 
 export const getAccessToken = localStorage["vcnAccessToken"] || null;
