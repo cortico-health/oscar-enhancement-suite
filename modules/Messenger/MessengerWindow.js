@@ -231,16 +231,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         );
       }
 
-      if (document === true || inboxDocument === true) {
-        data.attachment = attachment.data;
-        if (attachment.extension) {
-          data.extension = attachment.extension;
-        }
-
-        if (data.attachment && !data.body && scheme === "email") {
-          data.body += "\nThe file link will only be valid for 7 days.\n";
-        }
-      }
+      data.files = attachments;
 
       let result = null;
       data.demographic_no = demographicNo;

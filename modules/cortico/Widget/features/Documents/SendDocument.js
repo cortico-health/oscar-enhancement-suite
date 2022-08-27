@@ -71,13 +71,10 @@ export default function SendDocument({ node, ...props }) {
       dispatch({
         type: "messenger/addAttachment",
         payload: {
-          attachment: {
-            id: nanoid(),
-            name: fileName || node.textContent,
-            data: dataUrl,
-            extension,
-          },
-          document: true,
+          id: nanoid(),
+          name: fileName || node.textContent,
+          data: dataUrl,
+          extension,
         },
       });
 
