@@ -40,9 +40,7 @@ const MMessageCard = ({ messageDetails }) => {
                             <p className='tw-text-secondary-500 tw-text-h1 tw-font-medium'>
                                 { from_user.full_name }
                             </p>
-                            <div className="tw-text-white tw-bg-blue-600 tw-rounded-full -tw-ml-2">
-                                <ASvg src={ VerifiedLogo } />
-                            </div>
+                            <ASvg src={ VerifiedLogo } className="tw-text-white tw-bg-blue-600 tw-rounded-full -tw-ml-2 tw-w-6 tw-h-6" />
                         </div>
                         {/* TODO - Dwight: Change this once there is an info for clinic */ }
                         <p className='tw-text-secondary-300 tw-text-select2 tw-text-right'>
@@ -82,9 +80,7 @@ const MMessageCard = ({ messageDetails }) => {
                             <p className='tw-text-secondary-500 tw-text-h1 tw-font-medium'>
                                 { from_user.full_name }
                             </p>
-                            <div className="tw-text-white tw-bg-blue-600 tw-rounded-full -tw-ml-2">
-                                <ASvg src="verified" />
-                            </div>
+                            <ASvg src={ VerifiedLogo } className="tw-text-white tw-bg-blue-600 tw-rounded-full -tw-ml-2 tw-w-6 tw-h-6" />
                         </div>
                         <p className='tw-text-secondary-300 tw-text-select2'>
                             { from_user.full_name }'s Clinic
