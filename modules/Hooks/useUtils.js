@@ -4,13 +4,10 @@ const useUtils = () => {
     const { userStore } = useStore();
 
     const getOtherMembersName = (members) => {
-        if (!members) return "";
-
-        const { first_name,last_name } = userStore.user?.profile;
-        const userFullName = first_name + " " + last_name;
+        if (!members) return "No Members";
 
         return members.filter((member) => {
-            return member.full_name !== userFullName
+            return member.full_name !== userStore.user?.profile.first_name + " " + userStore.user?.profile.last_name;
         })
     }
 
