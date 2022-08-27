@@ -7,10 +7,6 @@ import CMessageList from "../Organisms/CMessageList";
 const PAddChat = () => {
     const { patientStore } = { patientStore: patientsData };
 
-    /* useEffect(() => {
-        patientStore.getPatientList();
-    },[]) */
-
     if (!patientStore.patients?.all.length) {
         return <div>loading...</div>
     }
