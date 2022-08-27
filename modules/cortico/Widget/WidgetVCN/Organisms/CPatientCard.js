@@ -7,11 +7,13 @@ import ExitLogo from "../../../../../resources/icons/exit.svg";
 import SwitchLogo from "../../../../../resources/icons/switch.svg";
 import ASvg from "../Atoms/ASvg";
 import MProfilePicture from "../Molecules/MProfilePicture";
+import { observer } from "mobx-react-lite";
 
 const PatientCard = (props) => {
     const [patient,setPatient] = useState(undefined);
 
     const { patientStore } = useStore();
+
     useEffect(() => {
         setPatient(patientStore.patients?.selected);
     },[patientStore.patients?.selected])
@@ -41,7 +43,7 @@ const PatientCard = (props) => {
                             <p className='tw-text-md tw-text-secondary-300'> <span className='tw-font-bold'>Health card number: </span> { patient.hin }  </p>
                         </div>
                         {/* TODO: Will definitely improved this since I don't know why the 2nd useEffect above won't retrigger */ }
-                        <ASvg onClick={ () => { patientStore.setSelectedPatient(null); setPatient(null); } } className="tw-cursor-pointer" src={ ExitLogo } />
+                        <ASvg onClick={ () => { patientStore.selectPatient(null); setPatient(null); } } className="tw-cursor-pointer" src={ ExitLogo } />
                     </div>
                     <AButton onClick={ handleClick } className='tw-w-full tw-flex tw-items-center tw-justify-center tw-gap-x-2' variant='button-tertiary-sm'> <ASvg src={ SwitchLogo } /> Switch patient</AButton>
                 </>
@@ -56,4 +58,4 @@ const PatientCard = (props) => {
     )
 }
 
-export default PatientCard
+export default observer(PatientCard);

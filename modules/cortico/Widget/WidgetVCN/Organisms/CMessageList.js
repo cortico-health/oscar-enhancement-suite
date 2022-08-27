@@ -9,12 +9,11 @@ import MSend from "../Molecules/MSend";
 import MMessageCard from "../Molecules/MMessageCard";
 import ASvg from "../Atoms/ASvg";
 import NoDiscussionLogo from "../../../../../resources/icons/chat-alt2.svg"
+import { getWsChatUrl } from "../../../../Utils/VcnUtils";
+import { observer } from "mobx-react-lite";
 
 
 const CMessageList = () => {
-    const { items } = useSelector((state) => state.sidebar);
-    const item = items.find((side) => side.name === "VCN");
-
     const { authStore,conversationStore,patientStore } = useStore();
     const sendRef = useRef(null);
     const messagesEndRef = useRef(null);
@@ -78,22 +77,22 @@ const CMessageList = () => {
     };
 
     useEffect(() => {
-        if (item?.id) {
-            conversationStore.setSelectedConversation(item?.id);
+        const selectedId = conversationStore.conversations.selected?.id;
 
-            getChatMessageData(item?.id).then((response) => {
+        if (selectedId) {
+            console.log("Message True");
+            getChatMessageData(selectedId).then((response) => {
                 return response.json();
             }).then((data) => {
-                setSocketUrl(`${/* import.meta.env.VITE_WEBSOCKET_URL ||  */"wss://cerebro-develop.cortico.ca"}/chat/${item?.id}/?token=${authStore.accessToken}`)
+                setSocketUrl(getWsChatUrl(selectedId,authStore.accessToken));
                 setMessages(data.results)
             }).catch((error) => {
                 console.log(error);
             });
         } else {
-            conversationStore.setSelectedConversation(null);
+            console.log("Message False")
         }
-        conversationStore.setSelectedConversation(item?.id);
-    },[item?.id]);
+    },[conversationStore.conversations.selected]);
 
     useEffect(() => {
         setPatientSelected(patientStore.patients.selected);
@@ -103,7 +102,7 @@ const CMessageList = () => {
         messagesEndRef?.current?.scrollIntoView()
     },[messages]);
 
-    if (!conversationStore.selectedConversation) {
+    if (!conversationStore.conversations.selected) {
         return (
             <div className="tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-2 tw-px-64">
                 <ASvg src={ NoDiscussionLogo } />
@@ -116,7 +115,7 @@ const CMessageList = () => {
         <div className="tw-relative tw-h-full tw-flex tw-flex-col tw-justify-between tw-overflow-x-hidden tw-w-[1000px]">
             <MChatTools
                 setMessages={ setMessages }
-                selectedConversationInfo={ conversationStore.selectedConversation }
+                selectedConversationInfo={ conversationStore.conversations.selected }
             />
 
             <div className="tw-flex-grow tw-overflow-y-auto tw-h-96 tw-px-9">
@@ -154,4 +153,4 @@ const CMessageList = () => {
     )
 }
 
-export default CMessageList
+export default observer(CMessageList)

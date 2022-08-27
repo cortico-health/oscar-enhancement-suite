@@ -9,7 +9,7 @@ import { useStore } from "../../store/mobx";
 const CRecentList = ({ ...props }) => {
 
 
-    const { patientStore } = useStore()
+    const { patientStore } = useStore();
 
     const dispatch = useDispatch();
 
@@ -19,7 +19,7 @@ const CRecentList = ({ ...props }) => {
             {
                 patientStore?.patients?.all?.map(patient => {
                     return <MRecentItem onClick={ () => {
-                        patientStore.setSelectedPatient(patient)
+                        patientStore.selectPatient(patient)
                         dispatch({
                             type: "sidebar/setCurrent",
                             payload: "VCN",

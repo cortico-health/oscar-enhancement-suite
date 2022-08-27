@@ -1,37 +1,30 @@
 import classNames from "classnames";
+import { observer } from "mobx-react-lite";
 import { h } from "preact";
 /* import { useRouter,route } from "preact-router"; */
 import { useEffect,useState } from "preact/hooks";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
 import { multipleObjectDataFormatting } from "../../../../helper/name-formatting";
 import useUtils from "../../../../Hooks/useUtils";
+import { useStore } from "../../store/mobx";
 /* import CProfileCard from "../organisms/c-profile-card"; */
 import MProfilePicture from "./MProfilePicture";
 
-const MConversationTab = ({ conversation,...props }) => {
-    const dispatch = useDispatch();
-    const { items } = useSelector((state) => state.sidebar);
-    const item = items.find((side) => side.name === "VCN");
-    /* const router = useRouter()[0]; */
+const MConversationTab = ({ conversation,selected,...props }) => {
+    const { conversationStore } = useStore();
 
     const { getOtherMembersName } = useUtils();
 
-    const [selected,setSelected] = useState(false);
-
     const [openModal,setOpenModal] = useState(false);
 
+    const [isSelected,setIsSelected] = useState(null);
+
     useEffect(() => {
-        if (item?.id && conversation?.id) {
-            setSelected(item?.id == conversation?.id);
-        }
-    },[item?.id]);
+        const selectedId = conversationStore.conversations.selected?.id;
+        setIsSelected(selectedId == conversation.id);
+    },[conversationStore.conversations.selected]);
 
     const handleChatRedirect = (e) => {
-        dispatch({
-            type: "sidebar/setCurrent",
-            payload: { name: "VCN",id: conversation.id }
-        });
+        conversationStore.selectConversation(conversation.id);
     }
 
     if (!conversation) {
@@ -43,7 +36,7 @@ const MConversationTab = ({ conversation,...props }) => {
             onClick={ handleChatRedirect }
             { ...props }
             className={ classNames("tw-flex tw-flex-column tw-items-center tw-px-2.5 tw-my-3 hover:tw-cursor-pointer",
-                selected ? "tw-h-24 tw-rounded-lg tw-bg-primary-500" : "",
+                isSelected ? "tw-h-24 tw-rounded-lg tw-bg-primary-500" : "",
                 conversation.unread_messages_count ? 'tw-font-bold' : "")
             }
         >
@@ -74,7 +67,7 @@ const MConversationTab = ({ conversation,...props }) => {
                 ) }
                 <div className="tw-max-w-full tw-ml-4">
                     <p
-                        className={ `tw-text-contact2 tw-w-64 tw-cursor-pointer tw-whitespace-nowrap tw-text-ellipsis tw-overflow-hidden ${selected ? "tw-text-white" : "tw-text-secondary-500"
+                        className={ `tw-text-contact2 tw-w-64 tw-cursor-pointer tw-whitespace-nowrap tw-text-ellipsis tw-overflow-hidden ${isSelected ? "tw-text-white" : "tw-text-secondary-500"
                             }` }
                     >
                         {/* <CProfileCard
@@ -84,7 +77,7 @@ const MConversationTab = ({ conversation,...props }) => {
                         { multipleObjectDataFormatting(getOtherMembersName(conversation?.members)) }
                     </p>
                     <p
-                        className={ `tw-text-contact3 tw-relative tw-mt-2 tw-w-64 tw-whitespace-nowrap tw-text-ellipsis tw-overflow-hidden ${selected ? "tw-text-white" : "tw-text-secondary-300"
+                        className={ `tw-text-contact3 tw-relative tw-mt-2 tw-w-64 tw-whitespace-nowrap tw-text-ellipsis tw-overflow-hidden ${isSelected ? "tw-text-white" : "tw-text-secondary-300"
                             }` }
                     >
                         { conversation?.last_message ? (
@@ -101,4 +94,4 @@ const MConversationTab = ({ conversation,...props }) => {
     );
 };
 
-export default MConversationTab;
+export default observer(MConversationTab);

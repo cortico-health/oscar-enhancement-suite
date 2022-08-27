@@ -12,7 +12,7 @@ const MUserTab = ({ user,onChange,index }) => {
                     <MProfilePicture avatar={ user.avatar } />
                 </div>
                 <label for={ 'name' + index } className='tw-cursor-pointer tw-text-left'>
-                    <h2 className='tw-text-secondary-500 tw-text-contact1 tw-font-medium'> { user.title && user.title + ". " } { user.full_name }</h2>
+                    <h2 className='tw-text-secondary-500 tw-text-contact1 tw-font-medium'> { user.title ? `${user.title}. ` : "" } { user.full_name }</h2>
                     <p className='tw-text-secondary-300 tw-text-select3'> { user.clinic_name }</p>
                 </label>
             </div>

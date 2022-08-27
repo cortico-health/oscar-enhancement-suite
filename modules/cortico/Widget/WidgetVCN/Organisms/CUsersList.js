@@ -21,7 +21,7 @@ const CUsersList = () => {
     const [confirm,setConfirm] = useState(false);
 
     const searchHandler = (e) => {
-        let filteredData = userStore.users?.filter(user => {
+        let filteredData = userStore.users.all?.filter(user => {
             return user.name.toLowerCase().includes(e.target.value.toLowerCase())
                 || user.title.toLowerCase().includes(e.target.value.toLowerCase())
                 || user.clinic.toLowerCase().includes(e.target.value.toLowerCase())
@@ -32,15 +32,15 @@ const CUsersList = () => {
     const [showUsers,setShowUsers] = useState(usersData);
 
     useEffect(() => {
-        if (userStore.users) {
-            setShowUsers(userStore.users);
+        if (userStore.users.all) {
+            setShowUsers(userStore.users.all);
             const res = {}
-            userStore.users?.forEach(user => {
+            userStore.users.all?.map(user => {
                 res[user.id] = false
-            })
-            setChecked(res)
+            });
+            setChecked(res);
         }
-    },[userStore.users])
+    },[userStore.users.all])
 
     const handleOnChange = (e) => {
         console.log(e.target.value)
@@ -120,7 +120,7 @@ const CUsersList = () => {
 
                 </div> : null }
 
-            <div className="tw-flex tw-mt-7 tw-gap-x-2 tw-justify-between tw-items-center">
+            <div className="tw-flex tw-mt-2 tw-gap-x-2 tw-justify-between tw-items-center">
                 <AButton onClick={ gotToChat } className="tw-w-[40%]" variant="button-secondary-sm">Cancel</AButton>
                 <h2 className="tw-text-secondary-500 tw-font-bold tw-text-h2 tw-text-center"> New conversation</h2>
                 <AButton onClick={ nextHandle } className="tw-w-[40%]" variant="button-primary-sm">Next</AButton>

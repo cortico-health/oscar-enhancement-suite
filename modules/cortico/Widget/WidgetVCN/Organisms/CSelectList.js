@@ -38,9 +38,7 @@ const CSelectList = ({ ...props }) => {
     }
 
     const handleStartConversation = () => {
-        /* patientStore.setSelectedPatient(select); */
-        /* route('/chat'); */
-        patientStore.setSelectedPatient(select);
+        patientStore.selectPatient(select);
         dispatch({
             type: "sidebar/setCurrent",
             payload: "VCN",
