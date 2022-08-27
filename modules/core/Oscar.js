@@ -57,8 +57,15 @@ export class Oscar {
   }
 
   isLabPage() {
-    console.log(this.route);
     return this.route.indexOf("labDisplay.jsp") > -1;
+  }
+
+  isReportGenerationPage() {
+    return (
+      this.route.indexOf(
+        "/oscarReport/reportByTemplate/GenerateReportAction.do"
+      ) > -1
+    );
   }
 
   isDocumentPage() {

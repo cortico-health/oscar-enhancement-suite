@@ -12,7 +12,7 @@ export const initialState = {
   to: null,
   subject: null,
   body: null,
-  scheme: null,
+  scheme: "email",
   encounter: null,
   attachments: [],
   document: null,
@@ -34,6 +34,13 @@ export function messengerReducer(state = initialState, action) {
       return { ...state, ...initialState };
     case "messenger/addAttachment":
       return { ...state, attachments: [...state.attachments, action.payload] };
+    case "messenger/deleteAttachment":
+      return {
+        ...state,
+        attachments: state.attachments.filter(
+          (attachment) => attachment.id !== action.payload.id
+        ),
+      };
     default:
       return state;
   }

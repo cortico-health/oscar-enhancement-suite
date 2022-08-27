@@ -211,6 +211,11 @@ const init_cortico = async function () {
       defaultMenu: "Messenger",
       document: true,
     });
+  } else if (oscar.isReportGenerationPage()) {
+    CorticoWidget(document.body, corticoWidgetContainer, {
+      disabledFeatures: ["text"],
+      defaultMenu: "Automation",
+    });
   }
   init_styles();
 };

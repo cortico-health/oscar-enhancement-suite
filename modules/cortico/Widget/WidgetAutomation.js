@@ -9,7 +9,12 @@ import NotAvailable from "./base/NotAvailable";
 import GridList from "./base/GridList";
 import EligCheckImage from "../../../resources/illustrations/undraw_check_boxes.svg";
 import PharImage from "../../../resources/illustrations/undraw_medical_care.svg";
+import BatchImage from "../../../resources/illustrations/undraw_batch.svg";
 import Header from "./base/Header";
+import { Oscar } from "../../core/Oscar";
+import { getCorticoUrl } from "../../Utils/Utils";
+
+const oscar = new Oscar(window.location.hostname);
 
 const automations = [
   {
@@ -23,6 +28,7 @@ const automations = [
         <img src={EligCheckImage} className="tw-w-20 tw-h-16" />
       </div>
     ),
+    disabled: Boolean(oscar.isReportGenerationPage()),
   },
   {
     name: "Preferred Pharmacies",
@@ -36,6 +42,20 @@ const automations = [
       </div>
     ),
     premium: true,
+    disabled: Boolean(oscar.isReportGenerationPage()),
+  },
+  {
+    name: "Batch Invite",
+    value: "batch_invite",
+    id: nanoid(),
+    description: "Send out batch invites to all patients in the report",
+    icon: (
+      <div className="tw-rounded-lg tw-inline-flex tw-p-3 tw-ring-4 tw-ring-white tw-bg-red-50 ">
+        <img src={BatchImage} className="tw-w-20 tw-h-16" />
+      </div>
+    ),
+    premium: false,
+    disabled: !Boolean(oscar.isReportGenerationPage()),
   },
 ];
 
@@ -44,8 +64,56 @@ export default function WidgetAutomation() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const dispatch = useDispatch();
 
+  const handleBatchInvite = (automation) => {
+    const rows = document.querySelectorAll(
+      "table.reportTable tbody tr td:nth-child(2)"
+    );
+
+    if (rows.length === 0) {
+      dispatch({
+        type: "notifications/add",
+        payload: {
+          type: "error",
+          message: "Reminder to run query before running the automation.",
+          title: "No Demographic Numbers Found",
+          id: nanoid(),
+        },
+      });
+      return;
+    }
+    const demographicNumbers = [];
+    rows.forEach((row) => {
+      demographicNumbers.push(row.innerText);
+    });
+
+    const url = `${getCorticoUrl()}/invite-patient-booking/?demographic_no=${demographicNumbers.join(
+      ","
+    )}`;
+    window.open(url, "_blank");
+    console.log("Demographic Numbers", demographicNumbers);
+  };
+
   const handleClick = (value) => {
     const automation = automations.find((item) => item.value === value);
+
+    if (automation.disabled === true) {
+      dispatch({
+        type: "notifications/add",
+        payload: {
+          type: "error",
+          message: "Not available",
+          title: "This function is not available on this page",
+          id: nanoid(),
+        },
+      });
+      return;
+    }
+
+    if (automation.value === "batch_invite") {
+      handleBatchInvite(automation);
+      return;
+    }
+
     const premium = automation.premium;
     if (premium && !isLoggedIn) {
       dispatch({
@@ -131,59 +199,7 @@ export function WidgetAutomationOptions({ isLoggedIn, onClick, ...props }) {
       <div className="tw-max-w-[600px]">
         <GridList actions={automations} onClick={onClick} />
       </div>
-      <div>
-        {/*automations.map((automation) => {
-          return (
-            <div
-              key={automation.id}
-              className={classNames(
-                isLoggedIn === false && automation.premium === true
-                  ? "tw-bg-gray-100 tw-border-2 tw-border-blue-1000"
-                  : "tw-bg-gray-50 hover:tw-bg-gray-200",
-                "tw-min-w-[600px] tw-relative tw-p-6 tw-my-8 tw-rounded-lg tw-shadow-md tw-flex tw-justify-between tw-items-center  tw-cursor-pointer"
-              )}
-              onClick={() => onClick(automation.value)}
-            >
-              <div className="tw-cursor-pointer">
-                <span
-                  className={classNames(
-                    "tw-flex tw-text-base  tw-font-normal tw-mb-4 tw-items-center tw-w-full",
-                    isLoggedIn === false && automation.premium === true
-                      ? "tw-text-gray-700"
-                      : "tw-text-gray-700"
-                  )}
-                >
-                  <span>{automation.icon}</span>
-                  {automation.name}
-                </span>
-                <p
-                  className={classNames(
-                    "tw-text-sm tw-text-gray-700 tw-max-w-[300px] tw-opacity-80",
-                    automation.premium === true
-                      ? "tw-text-gray-700"
-                      : "tw-text-gray-700"
-                  )}
-                >
-                  {automation.description}
-                </p>
-              </div>
-              <div className="tw-px-4 tw-cursor-pointer">
-                <ArrowRightIcon className="tw-w-4 tw-h-4 tw-text-gray-600" />
-              </div>
-              {isLoggedIn === false && automation.premium === true ? (
-                <div className="tw-absolute tw-top-[-5px] tw-right-[-5px] tw-rounded-xl tw-p-2 tw-bg-blue-1000 tw-shadow-md">
-                  <p className="tw-text-sm tw-text-gray-50 tw-font-normal">
-                    <StarIcon className="tw-inline-block tw-mr-1 tw-w-4 tw-h-4 tw-text-white"></StarIcon>
-                    Requires Login
-                  </p>
-                </div>
-              ) : (
-                ""
-              )}
-            </div>
-          );
-        })*/}
-      </div>
+      <div></div>
     </div>
   );
 }

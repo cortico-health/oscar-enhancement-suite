@@ -103,7 +103,7 @@ function Running({
         <Alert
           size="sm"
           title="Warning"
-          message="Refreshing the page will stop the eligibility check."
+          message="Refreshing the page will stop the pharmacy sync."
         ></Alert>
       </div>
       <ProgressBar

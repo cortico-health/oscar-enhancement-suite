@@ -1,7 +1,10 @@
 import { PlusIcon } from "@heroicons/react/outline";
 import { useRef } from "preact/hooks";
+import { useDispatch } from "react-redux";
+import { nanoid } from "nanoid";
 
 export default function FileUploader() {
+  const dispatch = useDispatch();
   const fileRef = useRef(null);
 
   const openFileUpload = () => {
@@ -11,6 +14,17 @@ export default function FileUploader() {
   const handleFileChange = (e) => {
     console.log("File change", e);
     const files = e.target.files;
+    for (const file of files) {
+      dispatch({
+        type: "messenger/addAttachment",
+        payload: {
+          id: nanoid(),
+          name: file.name,
+          data: file,
+          extension: file.name.split(".").pop(),
+        },
+      });
+    }
   };
 
   return (
