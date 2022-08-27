@@ -76,7 +76,7 @@ export const StateProvider = ({ children }) => {
     },
     selectPatient(patient) {
       if (!patient) {
-        this.patient.selected = null;
+        this.patients.selected = null;
         return;
       }
 
