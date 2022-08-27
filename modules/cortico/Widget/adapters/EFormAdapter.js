@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import { useEffect, useState } from "preact/hooks";
 import { useDispatch } from "react-redux";
 import { setFormInputValueAttributes } from "../../../Utils/Utils";
@@ -39,10 +40,11 @@ export default function EFormAdapter() {
       dispatch({
         type: "messenger/addAttachment",
         payload: {
+          id: nanoid(),
           name: "eForm",
           data,
           type: "eForm",
-          extension: "",
+          extension: "pdf_html",
         },
       });
     }
