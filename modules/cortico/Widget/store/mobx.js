@@ -29,15 +29,12 @@ export const StateProvider = ({ children }) => {
   }
 
   const userStore = useLocalObservable(() => ({
-    users: {
-      all: [],
-      selected: null,
-    },
-    user: {},
+    users: [],
+    user: null,
     fetchUsers() {
       getUsersData(authStore.accessToken).then((res) => { return res.json() }).then(
         (data) => {
-          this.users.all = data.results;
+          this.users = data.results;
         }
       ).catch(
         (error) => console.error(error)
@@ -136,19 +133,19 @@ export const StateProvider = ({ children }) => {
       patientStore.selectPatient(selectedConversation?.patient);
     },
     updateOrInsertConversation(updatedConversation) {
-      const existingConversation = this.conversations.find((conversation) => {
+      const existingConversation = this.conversations.all.find((conversation) => {
         return conversation.id === updatedConversation.id;
       })
 
       if (existingConversation) {
-        this.conversations = this.conversations.map((conversation) => {
+        this.conversations.all = this.conversations.all.map((conversation) => {
           return conversation.id === updatedConversation.id ? updatedConversation : conversation;
         });
       } else {
-        this.conversations.push(updatedConversation)
+        this.conversations.all.push(updatedConversation)
       }
 
-      this.conversations = _.orderBy(this.conversations,['last_message.created_date'],['desc']);
+      this.conversations.all = _.orderBy(this.conversations.all,['last_message.created_date'],['desc']);
     }
   }))
 

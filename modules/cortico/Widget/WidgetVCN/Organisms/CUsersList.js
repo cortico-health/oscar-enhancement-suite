@@ -21,7 +21,7 @@ const CUsersList = () => {
     const [confirm,setConfirm] = useState(false);
 
     const searchHandler = (e) => {
-        let filteredData = userStore.users.all?.filter(user => {
+        let filteredData = userStore.users?.filter(user => {
             return user.name.toLowerCase().includes(e.target.value.toLowerCase())
                 || user.title.toLowerCase().includes(e.target.value.toLowerCase())
                 || user.clinic.toLowerCase().includes(e.target.value.toLowerCase())
@@ -29,18 +29,18 @@ const CUsersList = () => {
         setShowUsers(filteredData)
     }
 
-    const [showUsers,setShowUsers] = useState(usersData);
+    const [showUsers,setShowUsers] = useState([]);
 
     useEffect(() => {
-        if (userStore.users.all) {
-            setShowUsers(userStore.users.all);
+        if (userStore.users) {
+            setShowUsers(userStore.users);
             const res = {}
-            userStore.users.all?.map(user => {
+            userStore.users?.map(user => {
                 res[user.id] = false
             });
             setChecked(res);
         }
-    },[userStore.users.all])
+    },[userStore.users])
 
     const handleOnChange = (e) => {
         console.log(e.target.value)
@@ -83,14 +83,14 @@ const CUsersList = () => {
             members: [userStore.user.id,...getCheckedPatients()]
         }
         createConversation(inputs).then((response) => { return response.json() }).then((data) => {
-            const existingConversation = conversationStore.conversations.find((conversation) => {
+            const existingConversation = conversationStore.conversations.all.find((conversation) => {
                 return conversation.id === parseInt(data.id);
             })
-            if (!existingConversation) conversationStore.conversations.push(data)
+            if (!existingConversation) conversationStore.conversations.all.push(data)
             /* route(`/chat/${response.data.id}`) */
             dispatch({
                 type: "sidebar/setCurrent",
-                payload: { name: "VCN",id: data.id }
+                payload: "VCN"
             });
         }).catch((error) => {
             console.log(error);
@@ -104,7 +104,7 @@ const CUsersList = () => {
     return (
         <div className="tw-mx-2.5 tw-h-full">
             { confirm ?
-                <div className="tw-absolute tw-z-50 tw-bg-white/40 tw-w-[1350px] tw-h-full tw-top-0 tw-right-0">
+                <div className="tw-absolute tw-z-50 tw-bg-white/40 tw-w-full tw-h-full tw-top-0 tw-right-0">
                     <div className="tw-bg-white tw-max-w-max tw-w-72 tw-px-9 tw-pt-16 tw-pb-8 tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-left-4">
                         <p className="tw-text-secondary-500 tw-text-h2 tw-pb-4">Are you sure you want to start a new conversation with the following users?</p>
                         {
