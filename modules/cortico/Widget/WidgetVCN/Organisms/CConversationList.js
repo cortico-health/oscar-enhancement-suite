@@ -12,8 +12,15 @@ const CConversationList = () => {
     const { conversationStore,patientStore } = useStore();
 
     const [patientName,setPatientName] = useState("");
-    const [conversations,setConversations] = useState([]);
-    const [filteredConversation,setFilteredConversation] = useState(undefined);
+    const [filteredConversation,setFilteredConversation] = useState([]);
+
+    useEffect(() => {
+        /* TODO Dwight: Make this functionl to make conversation searchable */
+        if (conversationStore.conversations.all) {
+            setFilteredConversation(conversationStore.conversations.all);
+        }
+        setFilteredConversation(conversationStore.conversations.all);
+    },[conversationStore.conversations.all]);
 
     useEffect(() => {
         const selectedPatient = patientStore.patients?.selected;
@@ -23,14 +30,10 @@ const CConversationList = () => {
         }))
     },[patientStore.patients?.selected]);
 
-    useEffect(() => {
-        setConversations(conversationStore.conversations.all);
-    },[conversationStore.conversations.all]);
-
     const searchHandler = (e) => {
         /* TODO: Improved if needed */
         const nameQuery = e.target.value;
-        const filteredData = conversationStore.conversations.filter((conversation) => {
+        const filteredData = conversationStore.conversations.all.filter((conversation) => {
             return conversation.members.find((member) => {
                 return member.full_name.includes(nameQuery);
             })
@@ -47,7 +50,7 @@ const CConversationList = () => {
                 {
                     conversationStore.conversations.all ? (
                         <>
-                            { conversationStore.conversations.all.map(conversation => {
+                            { conversationStore.conversations.all?.map(conversation => {
                                 return (
                                     <MConversationTab
                                         key={ `conversation-${conversation.id}` }
