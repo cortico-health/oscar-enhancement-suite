@@ -68,9 +68,9 @@ const CMessageList = () => {
             }
         },
         onRead: () => {
-            if (conversationStore.selectedConversation) {
+            if (conversationStore.conversations.selected) {
                 getWebSocket().send(JSON.stringify({
-                    'conversation': conversationStore.selectedConversation.id,
+                    'conversation': conversationStore.conversations.selected.id,
                 }));
             }
         },
