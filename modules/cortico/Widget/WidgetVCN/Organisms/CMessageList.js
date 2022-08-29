@@ -11,9 +11,11 @@ import ASvg from "../Atoms/ASvg";
 import NoDiscussionLogo from "../../../../../resources/icons/chat-alt2.svg"
 import { getWsChatUrl } from "../../../../Utils/VcnUtils";
 import { observer } from "mobx-react-lite";
+import { useDispatch } from "react-redux";
 
 
 const CMessageList = () => {
+    const dispatch = useDispatch();
     const { authStore,conversationStore,patientStore } = useStore();
     const sendRef = useRef(null);
     const messagesEndRef = useRef(null);
@@ -143,7 +145,7 @@ const CMessageList = () => {
                                 "No Patient."
                             }</span>
                         { " " }
-                        <a className="tw-font-medium tw-text-primary-500" href="/select">
+                        <a onClick={ () => dispatch({ type: "sidebar/setCurrent",payload: "VCN Patient" }) } className="tw-font-medium tw-text-primary-500">
                             { patientSelected ? "Switch" : "Choose" } Patient
                         </a>
                     </p>
