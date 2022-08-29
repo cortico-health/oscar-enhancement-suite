@@ -11,6 +11,7 @@ import ASvg from "../Atoms/ASvg";
 import NoDiscussionLogo from "../../../../../resources/icons/chat-alt2.svg"
 import { getWsChatUrl } from "../../../../Utils/VcnUtils";
 import { observer } from "mobx-react-lite";
+import { loadExtensionStorageValue } from "../../../../Utils/Utils";
 
 
 const CMessageList = () => {
