@@ -76,7 +76,7 @@ const MMessageCard = ({ messageDetails }) => {
                     { hour: 'numeric',minute: '2-digit' }) }</p>
                 <div className='tw-mb-10 tw-mt-3 tw-mr-auto'>
                     <div>
-                        <div className="tw-flex tw-items-center tw-gap-3">
+                        <div className="tw-flex tw-items-center tw-gap-5">
                             <p className='tw-text-secondary-500 tw-text-h1 tw-font-medium'>
                                 { from_user.full_name }
                             </p>
