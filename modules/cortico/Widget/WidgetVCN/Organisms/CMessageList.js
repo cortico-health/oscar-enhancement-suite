@@ -11,10 +11,11 @@ import ASvg from "../Atoms/ASvg";
 import NoDiscussionLogo from "../../../../../resources/icons/chat-alt2.svg"
 import { getWsChatUrl } from "../../../../Utils/VcnUtils";
 import { observer } from "mobx-react-lite";
+import { useDispatch } from "react-redux";
 import { loadExtensionStorageValue } from "../../../../Utils/Utils";
 
-
 const CMessageList = () => {
+    const dispatch = useDispatch();
     const { conversationStore, patientStore } = useStore();
     const sendRef = useRef(null);
     const messagesEndRef = useRef(null);

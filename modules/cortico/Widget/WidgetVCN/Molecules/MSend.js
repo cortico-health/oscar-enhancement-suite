@@ -9,7 +9,7 @@ const MSend = ({ handlers,className,...props }) => {
 
     return (
         <AInput onKeyDown={ handlers.onSend } type='textarea' name='send' { ...props } className={ className }
-            inputClass="tw-rounded-l-full tw-rounded-r-full tw-pl-16 tw-py-4">
+            inputClass="tw-rounded-l-full tw-rounded-r-full tw-px-16 tw-py-4">
             <label htmlFor="file">
                 <ASvg className='tw-absolute tw-cursor-pointer tw-pointer-events-auto tw-left-2 tw-top-[1.2rem]' src={ AttachLogo } />
                 <input onChange={ handlers.onUpload } type="file" id="file" className='tw-hidden' name="file"

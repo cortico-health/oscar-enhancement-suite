@@ -23,6 +23,13 @@ const MConversationTab = ({ conversation,selected,...props }) => {
         setIsSelected(selectedId == conversation.id);
     },[conversationStore.conversations.selected]);
 
+    const unreadMessagesView = () => {
+        const unreadMessages = conversation.unread_messages_count;
+
+        if (unreadMessages > 99) return "99+"
+        else return "" + unreadMessages
+    }
+
     const handleChatRedirect = (e) => {
         conversationStore.selectConversation(conversation.id);
     }
@@ -89,6 +96,15 @@ const MConversationTab = ({ conversation,selected,...props }) => {
                         Unread Messages: { conversation.unread_messages_count }
                     </p>
                 </div>
+                { conversation.unread_messages_count ?
+                    (
+                        <div className='tw-rounded-full tw-flex tw-items-center tw-justify-center tw-text-contact3 tw-w-8 tw-h-7 tw-font-bold tw-text-white tw-bg-primary-500'>
+                            { unreadMessagesView() }
+                        </div>
+                    )
+                    :
+                    null
+                }
             </div>
         </div>
     );
