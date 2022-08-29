@@ -1,21 +1,20 @@
+import _ from 'lodash';
+import useWebSocket from "react-use-websocket";
 import { createContext } from 'preact';
-import { useContext,useEffect,useState } from 'preact/hooks';
-import { patientsData,usersData } from '../../../../provider-messaging/src/data';
-import { observer,useLocalObservable,Observer } from 'mobx-react-lite'
+import { useContext, useEffect, useState } from 'preact/hooks';
+import { observer, useLocalObservable } from 'mobx-react-lite'
 import { getConversationsList } from '../../../Api/Vcn/Conversations.js';
 import { getPatients } from '../../../Api/Vcn/Patients.js';
-import { getUserData,getUsersData } from '../../../Api/Vcn/Users.js';
-import { login } from '../../../Api/Vcn/Auth.js';
-import useWebSocket from "react-use-websocket";
-import _ from 'lodash';
+import { getUserData, getUsersData } from '../../../Api/Vcn/Users.js';
 import { getWsUpdateUrl } from '../../../Utils/VcnUtils';
+import { loadExtensionStorageValue } from '../../../Utils/Utils';
 
 const StateContext = createContext();
 
-export const StateProvider = ({ children }) => {
-  const [socketUrl,setSocketUrl] = useState(null);
+export const StateProvider = observer(({ children }) => {
+  const [socketUrl, setSocketUrl] = useState(null);
 
-  const { getWebSocket } = useWebSocket(socketUrl,{
+  const { getWebSocket } = useWebSocket(socketUrl, {
     onOpen: () => { },
     onClose: () => { },
     shouldReconnect: (closeEvent) => true,
@@ -32,7 +31,7 @@ export const StateProvider = ({ children }) => {
     users: [],
     user: null,
     fetchUsers() {
-      getUsersData(authStore.accessToken).then((res) => { return res.json() }).then(
+      getUsersData().then((res) => { return res.json() }).then(
         (data) => {
           this.users = data.results;
         }
@@ -41,7 +40,7 @@ export const StateProvider = ({ children }) => {
       )
     },
     fetchUser() {
-      getUserData(authStore.accessToken).then((res) => { return res.json() }).then(
+      getUserData().then((res) => { return res.json() }).then(
         (data) => {
           if (!data?.profile) {
             this.user = {};
@@ -76,31 +75,7 @@ export const StateProvider = ({ children }) => {
         this.patients.selected = null;
         return;
       }
-
       this.patients.selected = patient;
-    }
-  }))
-
-  const authStore = useLocalObservable(() => ({
-    accessToken: localStorage["vcnAccessToken"] || null,
-    login(email,password) {
-      login(email,password).then((res) => { return res.json() }).then(
-        (data) => {
-          this.accessToken = data.access;
-          localStorage.setItem('vcnAccessToken',this.accessToken)
-          console.log("Login Successful");
-        }
-      ).catch(
-        (error) => {
-          console.log(error);
-          console.log("Login Failed")
-        }
-      )
-    },
-    logout() {
-      userStore.user = null;
-      this.accessToken = null;
-      localStorage.removeItem('vcnAccessToken');
     }
   }))
 
@@ -145,34 +120,35 @@ export const StateProvider = ({ children }) => {
         this.conversations.all.push(updatedConversation)
       }
 
-      this.conversations.all = _.orderBy(this.conversations.all,['last_message.created_date'],['desc']);
+      this.conversations.all = _.orderBy(this.conversations.all, ['last_message.created_date'], ['desc']);
     }
   }))
 
   useEffect(() => {
-    if (!authStore?.accessToken) return;
+    loadExtensionStorageValue("jwt_access_token").then((accessToken) => {
+      if (accessToken) {
+        // Fetch all initial data after logging in
+        userStore.fetchUser();
+        userStore.fetchUsers();
+        conversationStore.fetchConversations();
+        patientStore.fetchPatients();
 
-    // Fetch all initial data after logging in
-    userStore.fetchUser();
-    userStore.fetchUsers();
-    conversationStore.fetchConversations();
-    patientStore.fetchPatients();
-
-    setSocketUrl(getWsUpdateUrl(authStore.accessToken));
-  },[authStore.accessToken])
+        setSocketUrl(getWsUpdateUrl(accessToken));
+      }
+    });
+  }, [])
 
   const value = {
     userStore,
-    authStore,
     conversationStore,
     patientStore
   }
 
   return (
-    <StateContext.Provider value={ value }>
-      { children }
+    <StateContext.Provider value={value}>
+      {children}
     </StateContext.Provider>
   )
-};
+});
 
 export const useStore = () => useContext(StateContext);
