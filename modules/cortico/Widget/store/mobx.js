@@ -2,7 +2,7 @@ import _ from 'lodash';
 import useWebSocket from "react-use-websocket";
 import { createContext } from 'preact';
 import { useContext, useEffect, useState } from 'preact/hooks';
-import { observer, useLocalObservable, Observer } from 'mobx-react-lite'
+import { observer, useLocalObservable } from 'mobx-react-lite'
 import { getConversationsList } from '../../../Api/Vcn/Conversations.js';
 import { getPatients } from '../../../Api/Vcn/Patients.js';
 import { getUserData, getUsersData } from '../../../Api/Vcn/Users.js';
@@ -31,7 +31,7 @@ export const StateProvider = observer(({ children }) => {
     users: [],
     user: null,
     fetchUsers() {
-      getUsersData(authStore.accessToken).then((res) => { return res.json() }).then(
+      getUsersData().then((res) => { return res.json() }).then(
         (data) => {
           this.users = data.results;
         }
@@ -40,7 +40,7 @@ export const StateProvider = observer(({ children }) => {
       )
     },
     fetchUser() {
-      getUserData(authStore.accessToken).then((res) => { return res.json() }).then(
+      getUserData().then((res) => { return res.json() }).then(
         (data) => {
           if (!data?.profile) {
             this.user = {};
@@ -75,17 +75,7 @@ export const StateProvider = observer(({ children }) => {
         this.patients.selected = null;
         return;
       }
-
       this.patients.selected = patient;
-    }
-  }))
-
-  const authStore = useLocalObservable(() => ({
-    accessToken: null,
-    fetchAccessToken() {
-      loadExtensionStorageValue("jwt_access_token").then((accessToken) => {
-        this.accessToken = accessToken;
-      });
     }
   }))
 
@@ -135,22 +125,21 @@ export const StateProvider = observer(({ children }) => {
   }))
 
   useEffect(() => {
-    if (!authStore.accessToken) {
-      return authStore.fetchAccessToken();
-    }
+    loadExtensionStorageValue("jwt_access_token").then((accessToken) => {
+      if (accessToken) {
+        // Fetch all initial data after logging in
+        userStore.fetchUser();
+        userStore.fetchUsers();
+        conversationStore.fetchConversations();
+        patientStore.fetchPatients();
 
-    // Fetch all initial data after logging in
-    userStore.fetchUser();
-    userStore.fetchUsers();
-    conversationStore.fetchConversations();
-    patientStore.fetchPatients();
-
-    setSocketUrl(getWsUpdateUrl(authStore.accessToken));
-  }, [authStore.accessToken])
+        setSocketUrl(getWsUpdateUrl(accessToken));
+      }
+    });
+  }, [])
 
   const value = {
     userStore,
-    authStore,
     conversationStore,
     patientStore
   }

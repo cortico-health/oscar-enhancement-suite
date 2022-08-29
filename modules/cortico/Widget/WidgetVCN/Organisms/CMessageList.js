@@ -1,9 +1,9 @@
-import { useEffect,useRef,useState } from "preact/hooks";
+import { useEffect, useRef, useState } from "preact/hooks";
 import { useStore } from "../../store/mobx";
 import { useSelector } from "react-redux";
 import MChatTools from "../Molecules/MChatTools";
 import useWebSocket from "react-use-websocket";
-import { createFile,getChatMessageData } from "../../../../Api/Vcn/Conversations.js";
+import { createFile, getChatMessageData } from "../../../../Api/Vcn/Conversations.js";
 import AFileInputShow from "../Atoms/AFileInputShow";
 import MSend from "../Molecules/MSend";
 import MMessageCard from "../Molecules/MMessageCard";
@@ -14,17 +14,17 @@ import { observer } from "mobx-react-lite";
 
 
 const CMessageList = () => {
-    const { authStore,conversationStore,patientStore } = useStore();
+    const { conversationStore, patientStore } = useStore();
     const sendRef = useRef(null);
     const messagesEndRef = useRef(null);
 
-    const [messages,setMessages] = useState(undefined);
-    const [socketUrl,setSocketUrl] = useState(null);
-    const [preview,setPreview] = useState(null);
-    const [patientSelected,setPatientSelected] = useState(null);
-    const [uploadedFile,setUploadedFile] = useState(null);
+    const [messages, setMessages] = useState(undefined);
+    const [socketUrl, setSocketUrl] = useState(null);
+    const [preview, setPreview] = useState(null);
+    const [patientSelected, setPatientSelected] = useState(null);
+    const [uploadedFile, setUploadedFile] = useState(null);
 
-    const { getWebSocket } = useWebSocket(socketUrl,{
+    const { getWebSocket } = useWebSocket(socketUrl, {
         onOpen: () => handlers.onRead(),
         onClose: () => { },
         shouldReconnect: (closeEvent) => true,
@@ -34,7 +34,7 @@ const CMessageList = () => {
     const processMessage = (e) => {
         const data = JSON.parse(e.data);
         const newMessage = JSON.parse(data.text);
-        setMessages([newMessage,...messages]);
+        setMessages([newMessage, ...messages]);
         handlers.onRead();
     }
 
@@ -45,7 +45,7 @@ const CMessageList = () => {
 
             createFile(file).then((response) => { return response.json() }).then((data) => {
                 setUploadedFile(data);
-                setPreview({ dataURL: data.file,name: file.name,type: extension });
+                setPreview({ dataURL: data.file, name: file.name, type: extension });
             }).catch((error) => {
                 console.log(error);
             });
@@ -64,7 +64,7 @@ const CMessageList = () => {
                 setUploadedFile(null);
                 setPreview(null);
                 sendRef.current.base.lastElementChild.value = "";
-                window.scrollTo(0,document.body.scrollHeight);
+                window.scrollTo(0, document.body.scrollHeight);
             }
         },
         onRead: () => {
@@ -84,7 +84,9 @@ const CMessageList = () => {
             getChatMessageData(selectedId).then((response) => {
                 return response.json();
             }).then((data) => {
-                setSocketUrl(getWsChatUrl(selectedId,authStore.accessToken));
+                loadExtensionStorageValue("jwt_access_token").then((accessToken) => {
+                    if (accessToken) setSocketUrl(getWsChatUrl(selectedId, accessToken));
+                });
                 setMessages(data.results)
             }).catch((error) => {
                 console.log(error);
@@ -92,20 +94,20 @@ const CMessageList = () => {
         } else {
             console.log("Message False")
         }
-    },[conversationStore.conversations.selected]);
+    }, [conversationStore.conversations.selected]);
 
     useEffect(() => {
         setPatientSelected(patientStore.patients.selected);
-    },[patientStore.patients.selected]);
+    }, [patientStore.patients.selected]);
 
     useEffect(() => {
         messagesEndRef?.current?.scrollIntoView()
-    },[messages]);
+    }, [messages]);
 
     if (!conversationStore.conversations.selected) {
         return (
             <div className="tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-2 tw-px-64">
-                <ASvg src={ NoDiscussionLogo } />
+                <ASvg src={NoDiscussionLogo} />
                 <h4 className="text-secondary-300 text-2xl">Choose the discussion</h4>
             </div>
         );
@@ -114,37 +116,37 @@ const CMessageList = () => {
     return (
         <div className="tw-relative tw-h-full tw-flex tw-flex-col tw-justify-between tw-overflow-x-hidden tw-w-[1000px]">
             <MChatTools
-                setMessages={ setMessages }
-                selectedConversationInfo={ conversationStore.conversations.selected }
+                setMessages={setMessages}
+                selectedConversationInfo={conversationStore.conversations.selected}
             />
 
             <div className="tw-flex-grow tw-overflow-y-auto tw-h-96 tw-px-9">
-                { messages?.slice(0).reverse().map((message) => {
-                    return <MMessageCard key={ `message-${message.id}` } messageDetails={ message } attachment={ preview } />;
-                }) }
-                <div ref={ messagesEndRef } />
+                {messages?.slice(0).reverse().map((message) => {
+                    return <MMessageCard key={`message-${message.id}`} messageDetails={message} attachment={preview} />;
+                })}
+                <div ref={messagesEndRef} />
             </div>
             <div className="tw-sticky tw-bg-secondary-10 tw-w-full">
                 <div className="tw-mx-12">
-                    <AFileInputShow fileInput={ preview } exit={ handlers.removeFile } />
+                    <AFileInputShow fileInput={preview} exit={handlers.removeFile} />
 
                     <MSend
                         placeholder="Type message..."
-                        ref={ sendRef }
-                        handlers={ handlers }
+                        ref={sendRef}
+                        handlers={handlers}
                     />
                     <p className="tw-text-h3 tw-text-right tw-text-secondary-500 tw-pb-4">
-                        { patientSelected && "Sending a message about " }
+                        {patientSelected && "Sending a message about "}
 
                         <span className="tw-font-bold">
-                            { (patientSelected) ?
+                            {(patientSelected) ?
                                 `${patientSelected?.first_name} ${patientSelected?.last_name}.`
                                 :
                                 "No Patient."
                             }</span>
-                        { " " }
+                        {" "}
                         <a className="tw-font-medium tw-text-primary-500" href="/select">
-                            { patientSelected ? "Switch" : "Choose" } Patient
+                            {patientSelected ? "Switch" : "Choose"} Patient
                         </a>
                     </p>
                 </div>

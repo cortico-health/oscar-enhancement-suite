@@ -1,29 +1,33 @@
-import { cerebroURL,getAccessToken } from "../../Utils/VcnUtils";
+import { cerebroURL } from "../../Utils/VcnUtils";
+import { loadExtensionStorageValue } from "../../Utils/Utils";
 
 export const getUserData = async () => {
-    return await fetch(`${cerebroURL}/vcn/user/`,{
+    const accessToken = await (loadExtensionStorageValue('jwt_access_token'));
+    return await fetch(`${cerebroURL}/vcn/user/`, {
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${getAccessToken}`,
+            "Authorization": `Bearer ${accessToken}`
         }
     });
 }
 
 export const getUsersData = async () => {
-    return await fetch(`${cerebroURL}/vcn/users/`,{
+    const accessToken = await (loadExtensionStorageValue('jwt_access_token'));
+    return await fetch(`${cerebroURL}/vcn/users/`, {
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${getAccessToken}`,
+            "Authorization": `Bearer ${accessToken}`
         }
     });
 }
 
 export const updateProfile = async (inputs) => {
-    return await fetch(`${cerebroURL}/vcn/profile/`,{
+    const accessToken = await (loadExtensionStorageValue('jwt_access_token'));
+    return await fetch(`${cerebroURL}/vcn/profile/`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${getAccessToken}`,
+            Authorization: `Bearer ${accessToken}`
         },
         body: JSON.stringify(inputs),
     });
