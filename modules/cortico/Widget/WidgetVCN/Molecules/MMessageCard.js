@@ -36,7 +36,7 @@ const MMessageCard = ({ messageDetails }) => {
                 </p>
                 <div className='tw-ml-auto tw-mt-3 tw-mb-1 tw-rounded-2xl tw-flex tw-flex-col tw-items-end'>
                     <div>
-                        <div className="tw-flex tw-items-center tw-gap-3">
+                        <div className="tw-flex tw-items-center tw-gap-5">
                             <p className='tw-text-secondary-500 tw-text-h1 tw-font-medium'>
                                 { from_user.full_name }
                             </p>
