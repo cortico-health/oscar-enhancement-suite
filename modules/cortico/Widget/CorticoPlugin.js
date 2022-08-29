@@ -22,6 +22,9 @@ import { BroadcastChannel } from "broadcast-channel";
 import { handleTokenExpiry } from "./common/utils";
 import PatientPanel from "./PatientPanel";
 import PatientAdapter from "./adapters/PatientAdapter";
+import PSelect from "./WidgetVCN/Pages/PSelect";
+import PAddChat from "./WidgetVCN/Pages/PAddChat";
+import PIndex from "./WidgetVCN/Pages/PIndex";
 export default function CorticoPlugin({ onMinimize, ...props }) {
   const dispatch = useDispatch();
   const { refresh, refreshToken, uid } = useSelector((state) => state.app);
@@ -193,7 +196,7 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
 
       <div className=" tw-text-black tw-relative">
         <div
-          className="tw-absolute tw-top-2 tw-right-2 tw-cursor-pointer tw-bg-amber-400 tw-rounded-full"
+          className="tw-absolute tw-z-5000 tw-top-2 tw-right-2 tw-cursor-pointer tw-bg-amber-400 tw-rounded-full"
           onClick={onMinimize}
         >
           <MinusIcon className="tw-w-5 tw-h-5 tw-text-white" />
@@ -275,6 +278,18 @@ function PluginContentRenderer() {
       ) : activeItem === "Patient" ? (
         <div className="tw-p-4 tw-h-full">
           <PatientPanel />
+        </div>
+      ) : activeItem === "VCN" ? (
+        <div className="tw-h-full tw-font-sans">
+          <PIndex />
+        </div>
+      ) : activeItem === "VCN Patient" ? (
+        <div className="tw-h-full tw-font-sans">
+          <PSelect />
+        </div>
+      ) : activeItem === "VCN Add Chat" ? (
+        <div className="tw-h-full tw-font-sans">
+          <PAddChat />
         </div>
       ) : null}
     </>

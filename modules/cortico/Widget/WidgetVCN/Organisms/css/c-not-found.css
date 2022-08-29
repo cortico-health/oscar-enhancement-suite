@@ -1,0 +1,10 @@
+.c-not-found__label {
+    @apply tw-text-select3 tw-text-secondary-200 tw-pb-1 tw-font-medium tw-block;
+    & span {
+        @apply tw-text-primary-500;
+    }
+}
+
+.c-not-found__input {
+    @apply tw-text-select1 tw-text-secondary-500 tw-font-medium tw-pb-1 tw-border-b tw-border-secondary-100 tw-w-full tw-mb-3;
+}

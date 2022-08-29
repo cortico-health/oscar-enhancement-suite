@@ -29,7 +29,7 @@ const CConversationList = () => {
       })
     })
 
-    setConversations(filteredData);
+    setFilteredConversation(filteredData);
     setPatientName(nameQuery);
   }
 
