@@ -1,11 +1,9 @@
 import { h } from "preact";
 import { useRef } from "preact/hooks";
 
-const inputEffects = "placeholder:tw-text-primary-300 focus:tw-outline-primary-600";
+const inputEffects = "placeholder:tw-text-primary-300 focus:tw-outline-[#5c70ff] focus:tw-outline-[0.2rem]";
 
-const input_class = "tw-text-input tw-w-full tw-my-3 tw-text-secondary-500 tw-outline " + inputEffects;
-
-const textarea_class = "tw-text-input tw-w-full tw-my-3 tw-text-secondary-500 tw-outline " + inputEffects;
+const input_class = "tw-text-input tw-w-full tw-my-3 tw-text-secondary-500 tw-outline tw-outline-[0.10rem] " + inputEffects;
 
 
 const AInput = ({
@@ -40,7 +38,7 @@ const AInput = ({
         />
       ) : (
         <textarea
-            className={ `${textarea_class} tw-resize-none ${inputClass}` }
+            className={ `${input_class} tw-resize-none ${inputClass}` }
           onKeyDown={ (e) => {
             if (e.key === "Enter" && e.ctrlKey) {
               onKeyDown()
