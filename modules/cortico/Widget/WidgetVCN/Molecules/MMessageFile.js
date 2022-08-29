@@ -1,5 +1,6 @@
 import { useState } from "preact/hooks";
 import { isAudio,isDocument,isHTML,isImage,isSheet,isTextFile } from "../../../../helper/determine-file-type";
+import { cerebroURL } from "../../../../Utils/VcnUtils";
 import ASvg from "../Atoms/ASvg";
 
 const ShowSVGFile = ({ dataURL,icon,name,isUser }) => {
@@ -35,7 +36,7 @@ const ShowImgFile = ({ url }) => {
 }
 
 const MMessageFile = ({ dataURL,name,extension,isUser }) => {
-    dataURL = `${import.meta.env.VITE_CEREBRO_URL}${dataURL}`
+    dataURL = `${cerebroURL}${dataURL}`
 
     return (
         <>
