@@ -14,5 +14,3 @@ export const getWsUpdateUrl = (accessToken) => {
 }
 
 export const cerebroURL = envCerebroURL + "/api";
-
-export const getAccessToken = localStorage["vcnAccessToken"] || null;
