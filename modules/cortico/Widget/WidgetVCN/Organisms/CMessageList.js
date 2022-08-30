@@ -27,7 +27,7 @@ const CMessageList = () => {
     const [uploadedFile, setUploadedFile] = useState(null);
 
     const { getWebSocket } = useWebSocket(socketUrl, {
-        onOpen: () => handlers.onRead(),
+        onOpen: () => onChatSocketOpen(),
         onClose: () => { },
         shouldReconnect: (closeEvent) => true,
         onMessage: (event) => processMessage(event)
@@ -37,6 +37,11 @@ const CMessageList = () => {
         const data = JSON.parse(e.data);
         const newMessage = JSON.parse(data.text);
         setMessages([newMessage, ...messages]);
+        handlers.onRead();
+    }
+
+    const onChatSocketOpen = () => {
+        messagesEndRef?.current?.scrollIntoView();
         handlers.onRead();
     }
 
