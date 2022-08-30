@@ -13,7 +13,7 @@ import MConfirmationModal from "./MConfirmationModal";
 
 const ShowSVGFile = ({ url, icon, name, isUser }) => {
     return (
-        <div className={`tw-flex tw-items-center tw-gap-4 tw-rounded-2xl tw-p-4 ${isUser ? "tw-bg-secondary-200" : "tw-bg-white"}`}>
+        <div className={`tw-flex tw-items-center tw-gap-2 tw-rounded-2xl tw-p-2 ${isUser ? "tw-bg-secondary-200" : "tw-bg-slate-200"}`}>
             <ASvg src={icon} className="tw-h-12 tw-w-12" />
             <a href={url} target="_blank" className='tw-text-secondary-500 tw-text-sm'>{name || "File"}</a>
         </div>
@@ -43,6 +43,7 @@ const ShowImgFile = ({ url }) => {
 }
 
 const MMessageFile = ({ dataURL, name, extension, isUser }) => {
+    name = name.replace('provider_messenger/', '')
     const fileUrl = dataURL;
 
     const [isOpen, setIsOpen] = useState(false);
