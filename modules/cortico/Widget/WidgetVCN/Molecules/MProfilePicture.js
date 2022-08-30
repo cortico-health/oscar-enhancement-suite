@@ -4,7 +4,7 @@ import DefaultAvatar from "../../../../../resources/icons/avatar.svg";
 
 /* Either it will return the picture or set the avatar. */
 
-const MProfilePicture = ({ avatar,className = "" }) => {
+const MProfilePicture = ({ avatar = null,className = "" }) => {
     if (!avatar) {
         return (
             <ASvg className={ classNames("tw-rounded-full tw-w-12 tw-h-12",className) } src={ DefaultAvatar } />
