@@ -30,7 +30,7 @@ const PIndex = () => {
   },[conversationStore.conversations.all]);
 
   return (
-    <div className="tw-flex tw-h-full">
+    <div id="upload-confirm" className="tw-relative tw-flex tw-w-full tw-h-full">
       <Sidebar />
 
       <CMessageList />

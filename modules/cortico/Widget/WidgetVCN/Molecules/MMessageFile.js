@@ -1,4 +1,5 @@
 import { useState } from "preact/hooks";
+import { createPortal } from "preact/compat";
 import { isAudio,isDocument,isHTML,isImage,isSheet,isTextFile } from "../../../../helper/determine-file-type";
 import { cerebroUrl } from "../../../../Utils/VcnUtils";
 import ASvg from "../Atoms/ASvg";
@@ -7,13 +8,14 @@ import DocumentLogo from "../../../../../resources/icons/document.svg";
 import DocumentTextLogo from "../../../../../resources/icons/document-text.svg";
 import TableLogo from "../../../../../resources/icons/table.svg";
 import CodeLogo from "../../../../../resources/icons/code.svg";
+import DownloadLogo from "../../../../../resources/icons/download.svg";
+import MConfirmationModal from "./MConfirmationModal";
 
 const ShowSVGFile = ({ url,icon,name,isUser }) => {
     return (
         <div className={ `tw-flex tw-items-center tw-gap-4 tw-rounded-2xl tw-p-4 ${isUser ? "tw-bg-secondary-200" : "tw-bg-white"}` }>
             <ASvg src={ icon } className="tw-h-12 tw-w-12" />
             <a href={ url } target="_blank" className='tw-text-secondary-500 tw-text-sm'>{ name || "File" }</a>
-            { isUser && <ASvg src="download" className="tw-cursor-pointer tw-w-7 tw-h-7" /> }
         </div>
     )
 }
@@ -40,48 +42,63 @@ const ShowImgFile = ({ url }) => {
     );
 }
 
-const MMessageFile = ({ dataURL,name,extension,isUser }) => {
-    const fileUrl = `${cerebroUrl}${dataURL}`
+const MMessageFile = ({ dataURL,name,extension: ext,isUser }) => {
+    /* TODO Justin or Dwight: this is just for view visual puposes, we will turn it back to site if it is workable */
+    const fileUrl = /* `${cerebroUrl}${dataURL}` */ "https://nikonrumors.com/wp-content/uploads/2014/03/Nikon-1-V3-sample-photo.jpg";
+    const extension = "jpg";
+
+    const [isOpen,setIsOpen] = useState(false);
+    const modalContainer = document.getElementById('upload-confirm');
+
+    const onConfirm = () => {
+        console.log("File Uploaded to Oscar");
+    }
 
     return (
         <>
-            {
-                /* If there is missing fields */
-                (!fileUrl || !name || !extension) && null
-            }
-            {
-                isImage(extension)
-                &&
-                <ShowImgFile url={ fileUrl } />
-            }
-            {
-                isAudio(extension)
-                &&
-                <audio controls>
-                        <source src={ fileUrl } type="audio/mp3" />
-                    Your browser does not support the audio element.
-                </audio>
-            }
-            {
-                isDocument(extension)
-                &&
-                <ShowSVGFile url={ fileUrl } icon={ DocumentLogo } name={ name } isUser={ isUser } />
-            }
-            {
-                isTextFile(extension)
-                &&
-                <ShowSVGFile url={ fileUrl } icon={ DocumentTextLogo } name={ name } isUser={ isUser } />
-            }
-            {
-                isSheet(extension)
-                &&
-                <ShowSVGFile url={ fileUrl } icon={ TableLogo } name={ name } isUser={ isUser } />
-            }
-            {
-                isHTML(extension)
-                &&
-                <ShowSVGFile url={ fileUrl } icon={ CodeLogo } name={ name } isUser={ isUser } />
-            }
+            <div className="tw-flex tw-items-center tw-gap-2">
+                { isUser && <ASvg src={ DownloadLogo } className="tw-cursor-pointer tw-w-7 tw-h-7" onClick={ () => setIsOpen(true) } /> }
+
+                {
+                    /* If there is missing fields */
+                    (!fileUrl || !name || !extension) && null
+                }
+                {
+                    isImage(extension)
+                    &&
+                    <ShowImgFile url={ fileUrl } />
+                }
+                {
+                    isAudio(extension)
+                    &&
+                    <audio controls>
+                        <source src={ fileUrl } />
+                        Your browser does not support the audio element.
+                    </audio>
+                }
+                {
+                    isDocument(extension)
+                    &&
+                    <ShowSVGFile url={ fileUrl } icon={ DocumentLogo } name={ name } isUser={ isUser } />
+                }
+                {
+                    isTextFile(extension)
+                    &&
+                    <ShowSVGFile url={ fileUrl } icon={ DocumentTextLogo } name={ name } isUser={ isUser } />
+                }
+                {
+                    isSheet(extension)
+                    &&
+                    <ShowSVGFile url={ fileUrl } icon={ TableLogo } name={ name } isUser={ isUser } />
+                }
+                {
+                    isHTML(extension)
+                    &&
+                    <ShowSVGFile url={ fileUrl } icon={ CodeLogo } name={ name } isUser={ isUser } />
+                }
+            </div>
+
+            { isOpen && createPortal(<MConfirmationModal setIsOpen={ setIsOpen } onConfirm={ onConfirm } />,modalContainer) }
         </>
     )
 }

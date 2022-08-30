@@ -60,13 +60,15 @@ const MMessageCard = ({ messageDetails }) => {
                         }
                     </div>
                     <div className='tw-flex tw-justify-end'>
-                        {
+                        {/* TODO Justin or Dwight: this is just for view visual puposes, we will turn it back to site if it is workable */ }
+                        {/* {
                             file_url
-                            &&
+                            && */}
                             <MMessageFile dataURL={ file_url }
                                 extension={ getFileExtension() }
+                            isUser={ from_user.id === userStore.user.id }
                             />
-                        }
+                        {/* } */ }
                     </div>
                 </div>
             </div>
