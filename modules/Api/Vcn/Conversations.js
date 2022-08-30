@@ -1,9 +1,9 @@
-import { cerebroURL } from "../../Utils/VcnUtils";
+import { cerebroApiUrl } from "../../Utils/VcnUtils";
 import { loadExtensionStorageValue } from "../../Utils/Utils";
 
 export const getChatMessageData = async (id) => {
     const accessToken = await (loadExtensionStorageValue('jwt_access_token'));
-    return await fetch(`${cerebroURL}/vcn/chat-messages/${id}/`, {
+    return await fetch(`${cerebroApiUrl}/vcn/chat-messages/${id}/`,{
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${accessToken}`
@@ -13,7 +13,7 @@ export const getChatMessageData = async (id) => {
 
 export const getConversationsList = async () => {
     const accessToken = await (loadExtensionStorageValue('jwt_access_token'));
-    return await fetch(`${cerebroURL}/vcn/conversations/`, {
+    return await fetch(`${cerebroApiUrl}/vcn/conversations/`,{
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${accessToken}`
@@ -28,7 +28,7 @@ export const createConversation = async (userInputs) => {
         "members": userInputs.members
     };
 
-    return await fetch(`${cerebroURL}/vcn/conversations/`, {
+    return await fetch(`${cerebroApiUrl}/vcn/conversations/`,{
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -43,7 +43,7 @@ export const createFile = async (file) => {
     const data = new FormData();
     data.append('file', file, file.name);
 
-    return await fetch(`${cerebroURL}/vcn/files/`, {
+    return await fetch(`${cerebroApiUrl}/vcn/files/`,{
         method: "POST",
         headers: {
             "Content-Type": "multipart/form-data",
