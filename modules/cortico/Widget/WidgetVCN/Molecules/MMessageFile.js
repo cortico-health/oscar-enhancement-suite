@@ -1,13 +1,18 @@
 import { useState } from "preact/hooks";
 import { isAudio,isDocument,isHTML,isImage,isSheet,isTextFile } from "../../../../helper/determine-file-type";
-import { cerebroURL } from "../../../../Utils/VcnUtils";
+import { cerebroUrl } from "../../../../Utils/VcnUtils";
 import ASvg from "../Atoms/ASvg";
 
-const ShowSVGFile = ({ dataURL,icon,name,isUser }) => {
+import DocumentLogo from "../../../../../resources/icons/document.svg";
+import DocumentTextLogo from "../../../../../resources/icons/document-text.svg";
+import TableLogo from "../../../../../resources/icons/table.svg";
+import CodeLogo from "../../../../../resources/icons/code.svg";
+
+const ShowSVGFile = ({ url,icon,name,isUser }) => {
     return (
-        <div className={ `tw-flex tw-items-center tw-gap-4 ${isUser ? "tw-bg-secondary-200" : "tw-bg-white"} tw-rounded-2xl tw-p-4` }>
+        <div className={ `tw-flex tw-items-center tw-gap-4 tw-rounded-2xl tw-p-4 ${isUser ? "tw-bg-secondary-200" : "tw-bg-white"}` }>
             <ASvg src={ icon } className="tw-h-12 tw-w-12" />
-            <p className='tw-text-secondary-500 tw-text-sm'>{ name }</p>
+            <a href={ url } target="_blank" className='tw-text-secondary-500 tw-text-sm'>{ name || "File" }</a>
             { isUser && <ASvg src="download" className="tw-cursor-pointer tw-w-7 tw-h-7" /> }
         </div>
     )
@@ -36,46 +41,46 @@ const ShowImgFile = ({ url }) => {
 }
 
 const MMessageFile = ({ dataURL,name,extension,isUser }) => {
-    dataURL = `${cerebroURL}${dataURL}`
+    const fileUrl = `${cerebroUrl}${dataURL}`
 
     return (
         <>
             {
                 /* If there is missing fields */
-                (!dataURL || !name || !extension) && null
+                (!fileUrl || !name || !extension) && null
             }
             {
                 isImage(extension)
                 &&
-                <ShowImgFile url={ dataURL } />
+                <ShowImgFile url={ fileUrl } />
             }
             {
                 isAudio(extension)
                 &&
                 <audio controls>
-                    <source src={ dataURL } type="audio/mp3" />
+                        <source src={ fileUrl } type="audio/mp3" />
                     Your browser does not support the audio element.
                 </audio>
             }
             {
                 isDocument(extension)
                 &&
-                <ShowSVGFile icon="document" name={ name } isUser={ isUser } />
+                <ShowSVGFile url={ fileUrl } icon={ DocumentLogo } name={ name } isUser={ isUser } />
             }
             {
                 isTextFile(extension)
                 &&
-                <ShowSVGFile icon="document-text" name={ name } isUser={ isUser } />
+                <ShowSVGFile url={ fileUrl } icon={ DocumentTextLogo } name={ name } isUser={ isUser } />
             }
             {
                 isSheet(extension)
                 &&
-                <ShowSVGFile icon="table" name={ name } isUser={ isUser } />
+                <ShowSVGFile url={ fileUrl } icon={ TableLogo } name={ name } isUser={ isUser } />
             }
             {
                 isHTML(extension)
                 &&
-                <ShowSVGFile icon="code" name={ name } isUser={ isUser } />
+                <ShowSVGFile url={ fileUrl } icon={ CodeLogo } name={ name } isUser={ isUser } />
             }
         </>
     )
