@@ -17,17 +17,20 @@ const MConversationTab = ({ conversation,selected,...props }) => {
     const [openModal,setOpenModal] = useState(false);
 
     const [isSelected,setIsSelected] = useState(null);
+    const [unreadMessages,setUnreadMessages] = useState(0);
 
     useEffect(() => {
         const selectedId = conversationStore.conversations.selected?.id;
         setIsSelected(selectedId == conversation.id);
     },[conversationStore.conversations.selected]);
 
-    const unreadMessagesView = () => {
-        const unreadMessages = conversation.unread_messages_count;
+    useEffect(() => {
+        setUnreadMessages(conversation.unread_messages_count);
+    },[conversation.unread_messages_count]);
 
+    const unreadMessagesView = () => {
         if (unreadMessages > 99) return "99+"
-        else return "" + unreadMessages
+        else return unreadMessages
     }
 
     const handleChatRedirect = (e) => {
@@ -42,13 +45,13 @@ const MConversationTab = ({ conversation,selected,...props }) => {
         <div
             onClick={ handleChatRedirect }
             { ...props }
-            className={ classNames("tw-flex tw-flex-column tw-items-center tw-px-2.5 tw-my-3 hover:tw-cursor-pointer",
+            className={ classNames("tw-flex tw-flex-column tw-items-center tw-px-2 tw-my-3 hover:tw-cursor-pointer",
                 isSelected ? "tw-h-24 tw-rounded-lg tw-bg-primary-500" : "",
                 conversation.unread_messages_count ? 'tw-font-bold' : "")
             }
         >
             <div
-                className={ `tw-flex tw-relative tw-items-center tw-justify-between` }
+                className={ `tw-flex tw-relative tw-items-center tw-justify-between tw-space-x-3` }
             >
                 { conversation?.members.length > 2 ? (
                     <div className="tw-cursor-pointer tw-ml-4" onClick={ () => setOpenModal(true) }>
@@ -74,7 +77,7 @@ const MConversationTab = ({ conversation,selected,...props }) => {
                 ) }
                 <div className="tw-max-w-full tw-ml-4">
                     <p
-                        className={ `tw-text-contact2 tw-w-64 tw-cursor-pointer tw-whitespace-nowrap tw-text-ellipsis tw-overflow-hidden ${isSelected ? "tw-text-white" : "tw-text-secondary-500"
+                        className={ `tw-text-contact2 tw-w-56 tw-cursor-pointer tw-whitespace-nowrap tw-text-ellipsis tw-overflow-hidden ${isSelected ? "tw-text-white" : "tw-text-secondary-500"
                             }` }
                     >
                         {/* <CProfileCard
@@ -84,7 +87,7 @@ const MConversationTab = ({ conversation,selected,...props }) => {
                         { multipleObjectDataFormatting(getOtherMembersName(conversation?.members)) }
                     </p>
                     <p
-                        className={ `tw-text-contact3 tw-relative tw-mt-2 tw-w-64 tw-whitespace-nowrap tw-text-ellipsis tw-overflow-hidden ${isSelected ? "tw-text-white" : "tw-text-secondary-300"
+                        className={ `tw-text-contact3 tw-relative tw-mt-2 tw-w-56 tw-whitespace-nowrap tw-text-ellipsis tw-overflow-hidden ${isSelected ? "tw-text-white" : "tw-text-secondary-300"
                             }` }
                     >
                         { conversation?.last_message ? (
@@ -92,18 +95,14 @@ const MConversationTab = ({ conversation,selected,...props }) => {
                                 { conversation?.last_message.from_user.full_name }: { conversation?.last_message?.body }
                             </span>
                         ) : '' }
-                        <br />
-                        Unread Messages: { conversation.unread_messages_count }
                     </p>
                 </div>
-                { conversation.unread_messages_count ?
+                { unreadMessages > 0 &&
                     (
-                        <div className='tw-rounded-full tw-flex tw-items-center tw-justify-center tw-text-contact3 tw-w-8 tw-h-7 tw-font-bold tw-text-white tw-bg-primary-500'>
-                            { unreadMessagesView() }
-                        </div>
-                    )
-                    :
-                    null
+                    <div className='tw-rounded-full tw-flex tw-items-center tw-justify-center tw-text-contact3 tw-w-8 tw-h-8 tw-font-bold tw-text-white tw-bg-primary-500'>
+                        { unreadMessages < 99 ? unreadMessages : "99+" }
+                    </div>
+                )
                 }
             </div>
         </div>
