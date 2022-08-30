@@ -59,10 +59,10 @@ const CUsersList = () => {
         return userIds
     }
 
-    const gotToChat = () => {
+    const goToChat = () => {
         dispatch({
             type: "sidebar/setCurrent",
-            payload: "VCN",
+            payload: "Provider Messaging",
         })
     }
 
@@ -90,10 +90,8 @@ const CUsersList = () => {
                 conversationStore.conversations.all.push(data);
                 conversationStore.selectConversation(data.id);
             }
-            dispatch({
-                type: "sidebar/setCurrent",
-                payload: "VCN"
-            });
+
+            goToChat();
         }).catch((error) => {
             console.log(error);
         });
@@ -123,7 +121,7 @@ const CUsersList = () => {
                 </div> : null }
 
             <div className="tw-flex tw-mt-2 tw-gap-x-2 tw-justify-between tw-items-center">
-                <AButton onClick={ gotToChat } className="tw-w-[40%]" variant="button-secondary-sm">Cancel</AButton>
+                <AButton onClick={ goToChat } className="tw-w-[40%]" variant="button-secondary-sm">Cancel</AButton>
                 <h2 className="tw-text-secondary-500 tw-font-bold tw-text-h2 tw-text-center"> New conversation</h2>
                 <AButton onClick={ nextHandle } className="tw-w-[40%]" variant="button-primary-sm">Next</AButton>
             </div>

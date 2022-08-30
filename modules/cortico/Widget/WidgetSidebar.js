@@ -35,7 +35,7 @@ export default function WidgetSidebar({ onClick, ...props }) {
                   </p>
                   <p
                     className={classNames(
-                      "tw-text-3xs tw-cursor-pointer tw-tracking-wide tw-m-0 tw-p-0",
+                      "tw-text-3xs tw-cursor-pointer tw-tracking-wide tw-m-0 tw-p-0 tw-text-center",
                       item.current !== true ? "tw-text-black" : "tw-text-white",
                     )}
                   >
@@ -47,7 +47,7 @@ export default function WidgetSidebar({ onClick, ...props }) {
           </div>
         </div>
         <div className="tw-text-center tw-text-black tw-text-2xs tw-font-sans tw-font-normal tw-opacity-50 tw-mt-8">
-          __PLUGIN_VERSION__ 
+          __PLUGIN_VERSION__
         </div>
       </div>
     </div>

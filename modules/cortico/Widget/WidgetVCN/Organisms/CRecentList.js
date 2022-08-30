@@ -22,7 +22,7 @@ const CRecentList = ({ ...props }) => {
                         patientStore.selectPatient(patient)
                         dispatch({
                             type: "sidebar/setCurrent",
-                            payload: "VCN",
+                            payload: "Provider Messaging",
                         });
                     } }
                         patient={ patient } />

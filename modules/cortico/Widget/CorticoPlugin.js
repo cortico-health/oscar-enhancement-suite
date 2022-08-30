@@ -279,7 +279,7 @@ function PluginContentRenderer() {
         <div className="tw-p-4 tw-h-full">
           <PatientPanel />
         </div>
-      ) : activeItem === "VCN" ? (
+      ) : activeItem === "Provider Messaging" ? (
         <div className="tw-h-full tw-font-sans">
           <PIndex />
         </div>

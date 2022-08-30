@@ -41,7 +41,7 @@ const CSelectList = ({ ...props }) => {
         patientStore.selectPatient(select);
         dispatch({
             type: "sidebar/setCurrent",
-            payload: "VCN",
+            payload: "Provider Messaging",
         });
 
     }
