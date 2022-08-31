@@ -7,6 +7,7 @@ import MSearch from "../Molecules/MSearch";
 import CNotFound from "./CNotFound";
 import { observer } from "mobx-react-lite";
 import { set } from "lodash";
+import ASpinner from "../Atoms/ASpinner";
 
 const CConversationList = () => {
     const { conversationStore,patientStore } = useStore();
@@ -42,13 +43,12 @@ const CConversationList = () => {
         setFilteredConversation(filteredData);
         setPatientName(nameQuery);
     }
-
     return (
         <div className="tw-mx-2.5">
             <MSearch onInput={ searchHandler } />
             <div className="tw-h-[400px] tw-overflow-y-auto">
-                {
-                    conversationStore.conversations.all ? (
+                { conversationStore.conversations.all ? (
+                    conversationStore.conversations.all.length > 0 ? (
                         <>
                             { conversationStore.conversations.all?.map(conversation => {
                                 return (
@@ -59,8 +59,8 @@ const CConversationList = () => {
                                 )
                             }) }
                         </>
-                    )
-                        : <CNotFound name={ patientName } />
+                    ) : <CNotFound name={ patientName } />
+                ) : (<ASpinner />)
                 }
             </div>
         </div>
