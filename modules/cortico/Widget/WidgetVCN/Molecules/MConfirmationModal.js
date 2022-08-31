@@ -1,6 +1,7 @@
-import { UploadIcon } from "@heroicons/react/outline"
+import { UploadIcon,XCircleIcon } from "@heroicons/react/outline";
+import classNames from "classnames";
 
-const MConfirmationModal = ({ setIsOpen,onConfirm }) => {
+const MConfirmationModal = ({ setIsOpen,onConfirm,type }) => {
     return (
         <div id="popup-modal" tabindex="-1" className="tw-absolute tw-bg-white/40 tw-overflow-y-auto tw-overflow-x-hidden tw-w-full tw-h-full tw-z-50">
             <div className="tw-relative tw-p-4 tw-w-full tw-max-w-md tw-h-full md:tw-h-auto tw-top-1/2 -tw-translate-y-1/2 tw-left-1/2 -tw-translate-x-1/2">
@@ -10,9 +11,16 @@ const MConfirmationModal = ({ setIsOpen,onConfirm }) => {
                         <span className="tw-sr-only">Close modal</span>
                     </button>
                     <div className="tw-p-6 tw-text-center">
-                        <UploadIcon className="tw-mx-auto tw-mb-4 tw-w-14 tw-h-14 tw-text-gray-400" />
-                        <h3 className="tw-mb-5 tw-text-lg tw-font-normal tw-text-gray-500">Are you sure you to upload this on Oscar?</h3>
-                        <button onClick={ onConfirm } type="button" className="tw-text-white tw-bg-green-500 hover:tw-bg-green-700 focus:tw-ring-4 focus:tw-outline-none focus:tw-ring-green-300 tw-font-medium tw-rounded-lg tw-text-sm tw-inline-flex tw-items-center tw-px-5 tw-py-2.5 tw-text-center tw-mr-2">
+                        { type === "upload" && <UploadIcon className="tw-mx-auto tw-mb-4 tw-w-14 tw-h-14 tw-text-gray-400" /> }
+                        { type === "dismiss" && <XCircleIcon className="tw-mx-auto tw-mb-4 tw-w-14 tw-h-14 tw-text-gray-400" /> }
+                        <h3 className="tw-mb-5 tw-text-lg tw-font-normal tw-text-gray-500">
+                            { type === "upload" && "Are you sure you to upload this on Oscar?" }
+                            { type === "dismiss" && "Are you sure you to dismiss this file?" }
+                        </h3>
+                        <button onClick={ onConfirm } type="button"
+                            className={ classNames("tw-text-white focus:tw-ring-4 focus:tw-outline-none tw-font-medium tw-rounded-lg tw-text-sm tw-inline-flex tw-items-center tw-px-5 tw-py-2.5 tw-text-center tw-mr-2",
+                                type === "upload" && "tw-bg-green-500 hover:tw-bg-green-700 focus:tw-ring-green-300",
+                                type === "dismiss" && "tw-bg-red-500 hover:tw-bg-red-700 focus:tw-ring-red-300") }>
                             Yes
                         </button>
                         <button onClick={ () => setIsOpen(false) } type="button" className="tw-text-gray-500 tw-bg-white hover:tw-bg-gray-100 focus:tw-ring-4 focus:tw-outline-none focus:tw-ring-gray-200 tw-rounded-lg border tw-border-gray-200 tw-text-sm tw-font-medium tw-px-5 tw-py-2.5 hover:tw-text-gray-900 focus:tw-z-10">No</button>

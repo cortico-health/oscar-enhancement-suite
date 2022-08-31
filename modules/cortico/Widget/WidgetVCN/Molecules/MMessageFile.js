@@ -2,6 +2,7 @@ import { useState } from "preact/hooks";
 import { createPortal } from "preact/compat";
 import { isAudio, isDocument, isHTML, isImage, isSheet, isTextFile } from "../../../../helper/determine-file-type";
 import { cerebroUrl } from "../../../../Utils/VcnUtils";
+import { XCircleIcon } from "@heroicons/react/outline";
 import ASvg from "../Atoms/ASvg";
 
 import DocumentLogo from "../../../../../resources/icons/document.svg";
@@ -9,6 +10,7 @@ import DocumentTextLogo from "../../../../../resources/icons/document-text.svg";
 import TableLogo from "../../../../../resources/icons/table.svg";
 import CodeLogo from "../../../../../resources/icons/code.svg";
 import DownloadLogo from "../../../../../resources/icons/download.svg";
+import DismissedLogo from "../../../../../resources/icons/dismissed.svg";
 import MConfirmationModal from "./MConfirmationModal";
 
 const ShowSVGFile = ({ url, icon, name, isUser }) => {
@@ -22,6 +24,7 @@ const ShowSVGFile = ({ url, icon, name, isUser }) => {
 
 const ShowImgFile = ({ url }) => {
     const [confirm, setConfirm] = useState(false);
+
     return (
         <>
             {
@@ -42,21 +45,39 @@ const ShowImgFile = ({ url }) => {
     );
 }
 
-const MMessageFile = ({ dataURL, name, extension, isUser }) => {
-    name = name.replace('provider_messenger/', '')
+const MMessageFile = ({ dataURL,name,extension,isUser }) => {
+    name = name.replace('provider_messenger/','');
     const fileUrl = dataURL;
 
-    const [isOpen, setIsOpen] = useState(false);
+    const [isUploadOpen,setIsUploadOpen] = useState(false);
+    const [isDismissOpen,setIsDismissOpen] = useState(false);
+
     const modalContainer = document.getElementById('upload-confirm');
 
-    const onConfirm = () => {
+    const onUpload = () => {
         console.log("File Uploaded to Oscar");
+    }
+
+    const onDismiss = () => {
+        console.log("File is being dismissed");
     }
 
     return (
         <>
             <div className="tw-flex tw-items-center tw-gap-2">
-                {isUser && <ASvg src={DownloadLogo} className="tw-cursor-pointer tw-w-7 tw-h-7" onClick={() => setIsOpen(true)} />}
+                { isUser && (
+                    <div className="tw-flex tw-flex-col tw-gap-4">
+                        <ASvg src={ DownloadLogo }
+                            className="tw-cursor-pointer tw-w-7 tw-h-7"
+                            onClick={ () => setIsUploadOpen(true) }
+                        />
+
+                        <ASvg src={ DismissedLogo }
+                            className="tw-cursor-pointer tw-w-7 tw-h-7 tw-fill-current"
+                            onClick={ () => setIsDismissOpen(true) }
+                        />
+                    </div>
+                ) }
 
                 {
                     /* If there is missing fields */
@@ -97,7 +118,21 @@ const MMessageFile = ({ dataURL, name, extension, isUser }) => {
                 }
             </div>
 
-            {isOpen && createPortal(<MConfirmationModal setIsOpen={setIsOpen} onConfirm={onConfirm} />, modalContainer)}
+            { isUploadOpen && createPortal(
+                <MConfirmationModal
+                    setIsOpen={ setIsUploadOpen }
+                    onConfirm={ onUpload }
+                    type="upload" />
+                ,modalContainer)
+            }
+
+            { isDismissOpen && createPortal(
+                <MConfirmationModal
+                    setIsOpen={ setIsDismissOpen }
+                    onConfirm={ onDismiss }
+                    type="dismiss" />
+                ,modalContainer)
+            }
         </>
     )
 }
