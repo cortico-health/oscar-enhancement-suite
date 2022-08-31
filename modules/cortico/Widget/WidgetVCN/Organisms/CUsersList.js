@@ -1,16 +1,11 @@
 import { h } from "preact";
 import { useEffect, useState } from "preact/hooks";
 import { useDispatch } from "react-redux";
-import { usersData } from "../../../../../resources/js/data";
 import { createConversation } from "../../../../Api/Vcn/Conversations";
 import { useStore } from "../../store/mobx";
 import AButton from "../Atoms/AButton";
 import MSearch from "../Molecules/MSearch";
 import MUserTab from "../Molecules/MUserTab";
-
-/* import { useStore } from "../../state";
-import { observer } from 'mobx-react-lite'
-import { createConversation } from "../../api/conversations"; */
 
 const CUsersList = () => {
     const dispatch = useDispatch();
@@ -145,4 +140,4 @@ const CUsersList = () => {
     );
 };
 
-export default /* observer(CUsersList) */ CUsersList;
+export default CUsersList;
