@@ -29,6 +29,8 @@ import InboxDocument from "../cortico/Widget/adapters/InboxDocument";
 import Encounter from "../core/Encounter";
 import { BroadcastChannel } from "broadcast-channel";
 import { handleTokenExpiry } from "../../modules/cortico/Widget/common/utils";
+import FileUploader from "../cortico/Widget/FileUploader";
+import EFormAdapter from "../cortico/Widget/adapters/EFormAdapter";
 import classNames from "classnames";
 import Alert from "../cortico/Widget/Alert";
 
@@ -50,14 +52,14 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
     subject,
     body,
     encounter,
-    attachment,
+    attachments,
     eform,
     document,
     inboxDocument,
     scheme,
   } = useSelector((state) => state.messenger);
   const [openSavedReplies, setOpenSavedReplies] = useState(false);
-  const [filePreviewLink, setFilePreviewLink] = useState(false);
+  const [filePreview, setFilePreview] = useState([]);
   const [patientInfo, setPatientInfo] = useState(null);
   const [maxLength, setMaxLength] = useState(2000);
   const { clinic_name: clinicName, uid } = useSelector((state) => state.app);
@@ -162,7 +164,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
   };
 
   const submitData = async (scheme) => {
-    setFilePreviewLink(false);
+    setFilePreview([]);
     try {
       setLoading(true);
 
@@ -229,52 +231,26 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         );
       }
 
-      if (document === true || inboxDocument === true) {
-        data.attachment = attachment.data;
-        if (attachment.extension) {
-          data.extension = attachment.extension;
-        }
-
-        if (data.attachment && !data.body && scheme === "email") {
-          data.body += "\nThe file link will only be valid for 7 days.\n";
-        }
-      } else if (eform === true && attachment) {
-        const clone = window.document.cloneNode(true);
-        const widget = clone.querySelector(".cortico-widget");
-        widget.parentNode.removeChild(widget);
-
-        /* Eform Letter Head Begin */
-        const richTextLetterForm = clone.querySelector(
-          `form[name="RichTextLetter"]`
-        );
-        const iframe = window.document.querySelector("iframe#edit");
-        if (richTextLetterForm && iframe) {
-          clone.querySelector("iframe")?.remove();
-          clone.querySelector("table")?.remove();
-          const iframeClone = iframe.contentDocument.cloneNode(true);
-          clone
-            .querySelector("body")
-            .appendChild(iframeClone.querySelector("body"));
-        }
-        /* Eform Letter Head End */
-        if (scheme === "email") {
-          data.body += "\nThe file link will only be valid for 7 days.\n";
-        }
-
-        try {
-          data.pdf_html = await setFormInputValueAttributes(clone);
-        } catch (error) {
-          throw new MessengerError(
-            "Error Parsing",
-            "There was an error parsing this eform"
-          );
-        }
-      }
-
       let result = null;
       data.demographic_no = demographicNo;
       if (scheme === "email") {
-        console.log("Data", data);
+        data.files = [];
+        for (let i = 0; i < attachments.length; i++) {
+          const file = attachments[i];
+          const reader = new FileReader();
+          reader.readAsDataURL(file.data);
+          const contents = await new Promise((resolve, reject) => {
+            reader.addEventListener("load", () => {
+              resolve(reader.result);
+            });
+          });
+
+          data.files.push({
+            ...file,
+            data: contents,
+          });
+        }
+
         result = await sendEmail(token, data);
       } else if (scheme === "sms") {
         result = await sendMessage(token, data);
@@ -304,9 +280,9 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
 
         const clonedResult = result.clone();
         const responseData = await clonedResult.json();
-        console.log("Response Data", responseData);
-        if (responseData.preview) {
-          setFilePreviewLink(responseData.preview);
+        if (responseData.files) {
+          console.log("Response data", responseData);
+          setFilePreview(responseData.files);
         }
       } else {
         let errorResponse = null;
@@ -362,13 +338,14 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
     });
   };
 
-  useEffect(() => {
-    if (eform === true) {
-      handleChange("attachment", {
-        name: "eForm",
-      });
-    }
-  }, [eform]);
+  const deleteAttachment = (id) => {
+    dispatch({
+      type: "messenger/deleteAttachment",
+      payload: {
+        id,
+      },
+    });
+  };
 
   useEffect(() => {
     const demographicNo = getDemographicNo();
@@ -404,7 +381,6 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
   }, [clinicName]);
 
   const handleLoadReply = (reply) => {
-    console.log("Load Reply", reply);
     dispatch({
       type: "messenger/setAll",
       payload: {
@@ -423,7 +399,6 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         extension: doc.extension,
       });
     }
-    console.log("Inbox Document?", inboxDocument);
   };
 
   const handleSchemeChange = (scheme) => {
@@ -446,6 +421,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
 
   return (
     <div className="tw-m-0 no-print">
+      {eform === true && <EFormAdapter />}
       <FeatureDetector featureName="text">
         {({ disabled }) => {
           return disabled === false ? (
@@ -517,16 +493,26 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
           </div>
           <hr className="tw-opacity-40" />
 
-          {attachment ? (
-            <div className="tw-mt-4 tw-border tw-border-opacity-20 tw-rounded-md tw-p-2">
-              <Documents
-                onDelete={() => handleChange("attachment", null)}
-                name={attachment.name}
-              ></Documents>
+          {attachments.map((attachment) => {
+            return (
+              <div
+                className="tw-mt-4 tw-border tw-border-opacity-20 tw-rounded-md tw-p-2"
+                key={attachment.id}
+              >
+                <Documents
+                  id={attachment.id}
+                  onDelete={deleteAttachment}
+                  name={attachment.name}
+                ></Documents>
+              </div>
+            );
+          })}
+
+          {scheme === "email" ? (
+            <div className="tw-mt-3 tw-mb-1">
+              <FileUploader />
             </div>
-          ) : (
-            ""
-          )}
+          ) : null}
 
           <FeatureDetector featureName="encounter">
             {({ disabled }) => {
@@ -545,23 +531,25 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
             }}
           </FeatureDetector>
         </div>
-
         <hr className="tw-my-4" />
 
-        {filePreviewLink !== false ? (
+        {filePreview.length > 0 && (
           <div className="tw-flex tw-justify-between tw-mt-4 tw-w-full tw-max-w-[368px]">
             <div className="tw-bg-blue-100 tw-text-blue-800 tw-p-3 tw-rounded-md tw-text-xs tw-w-full">
-              File sent successfully, Preview the file:{" "}
-              <a
-                className="tw-text-underline tw-font-semibold tw-block tw-break-words"
-                href={filePreviewLink}
-                target="_blank"
-              >
-                {filePreviewLink}
-              </a>
+              File sent successfully, Preview the file(s):{" "}
+              {filePreview.map((file) => (
+                <a
+                  className="tw-text-underline tw-font-semibold tw-block tw-break-words"
+                  href={file.previewLink}
+                  target="_blank"
+                  key={file.previewLink}
+                >
+                  {file.filename}
+                </a>
+              ))}
             </div>
           </div>
-        ) : null}
+        )}
 
         <div className="tw-flex tw-justify-between tw-mt-4 tw-w-full">
           <div>
