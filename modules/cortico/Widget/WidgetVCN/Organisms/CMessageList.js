@@ -13,6 +13,7 @@ import { getWsChatUrl } from "../../../../Utils/VcnUtils";
 import { observer } from "mobx-react-lite";
 import { useDispatch } from "react-redux";
 import { loadExtensionStorageValue } from "../../../../Utils/Utils";
+import ASpinner from "../Atoms/ASpinner";
 
 const CMessageList = () => {
     const dispatch = useDispatch();
@@ -26,6 +27,7 @@ const CMessageList = () => {
     const [patientSelected, setPatientSelected] = useState(null);
     const [uploadedFile, setUploadedFile] = useState(null);
     const [fileStats, setFileStats] = useState(null);
+    const [loading,setLoading] = useState(false);
 
     const { getWebSocket } = useWebSocket(socketUrl, {
         onOpen: () => onChatSocketOpen(),
@@ -88,13 +90,17 @@ const CMessageList = () => {
         const selectedId = conversationStore.conversations.selected?.id;
 
         if (selectedId) {
+            setLoading(true);
             getConversation(selectedId).then((res) => { return res.json() }).then(
                 (data) => {
                     setFileStats(data.stats)
                     patientStore.selectPatient(data.patient);
                 }
             ).catch(
-                (error) => console.log(error)
+                (error) => {
+                    console.log(error)
+                    setLoading(false);
+                }
             )
 
             getChatMessageData(selectedId).then((response) => {
@@ -104,8 +110,10 @@ const CMessageList = () => {
                     if (accessToken) setSocketUrl(getWsChatUrl(selectedId, accessToken));
                 });
                 setMessages(data.results)
+                setLoading(false);
             }).catch((error) => {
                 console.log(error);
+                setLoading(false);
             });
         } else {
             console.log("Message False")
@@ -125,6 +133,14 @@ const CMessageList = () => {
             <div className="tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-2 tw-px-64">
                 <ASvg src={NoDiscussionLogo} />
                 <h4 className="text-secondary-300 text-2xl">Choose the discussion</h4>
+            </div>
+        );
+    }
+
+    if (conversationStore.conversations.selected && loading) {
+        return (
+            <div className="tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-2 tw-px-64">
+                <ASpinner />
             </div>
         );
     }
