@@ -92,7 +92,7 @@ const MConversationTab = ({ conversation, selected, ...props }) => {
                     >
                         {conversation?.last_message ? (
                             <span>
-                                {conversation.last_message}
+                                {`${conversation.last_message.from_user}: ${conversation.last_message.body}`}
                             </span>
                         ) : ''}
                     </p>
