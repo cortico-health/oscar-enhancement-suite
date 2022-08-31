@@ -25,6 +25,7 @@ const CMessageList = () => {
     const [preview, setPreview] = useState(null);
     const [patientSelected, setPatientSelected] = useState(null);
     const [uploadedFile, setUploadedFile] = useState(null);
+    const [fileStats, setFileStats] = useState(null);
 
     const { getWebSocket } = useWebSocket(socketUrl, {
         onOpen: () => onChatSocketOpen(),
@@ -89,6 +90,7 @@ const CMessageList = () => {
         if (selectedId) {
             getConversation(selectedId).then((res) => { return res.json() }).then(
                 (data) => {
+                    setFileStats(data.stats)
                     patientStore.selectPatient(data.patient);
                 }
             ).catch(
@@ -130,8 +132,9 @@ const CMessageList = () => {
     return (
         <div className="tw-relative tw-h-full tw-flex tw-flex-col tw-justify-between tw-overflow-x-hidden tw-w-[1000px]">
             <MChatTools
-                setMessages={setMessages}
-                selectedConversationInfo={conversationStore.conversations.selected}
+                fileStats={fileStats}
+                patient={patientStore.patients.selected}
+                conversation={conversationStore.conversations.selected}
             />
 
             <div className="tw-flex-grow tw-overflow-y-auto tw-h-96 tw-px-9">
