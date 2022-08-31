@@ -70,6 +70,10 @@ const corticoWidgetContainer = document.createElement("div");
 document.body.append(corticoWidgetContainer);
 
 const init_cortico = async function () {
+  Object.prototype.toJSON = null;
+  String.prototype.toJSON = null;
+  Array.prototype.toJSON = null;
+
   // create an element to indicate the library is loaded in the dom, and to contain fixed menus/elements.
   const anchor = document.createElement("div");
   anchor.id = "cortico_anchor";

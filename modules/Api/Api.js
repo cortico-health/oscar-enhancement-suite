@@ -54,18 +54,16 @@ export function RefreshTokenDecorator(fn) {
 }
 
 export const sendEmail = (token, data) => {
+  console.log("Data", data, JSON.stringify(data));
   const url = getCorticoUrl() + "/api/plug-in/email-form/";
-
-  let formData = new FormData();
-  for (const key in data) {
-    formData.append(key, data[key]);
-  }
 
   return fetch(url, {
     method: "POST",
-    body: formData,
+    body: JSON.stringify(data),
     mode: "cors",
     headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
   });

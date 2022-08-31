@@ -59,7 +59,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
     scheme,
   } = useSelector((state) => state.messenger);
   const [openSavedReplies, setOpenSavedReplies] = useState(false);
-  const [filePreviewLink, setFilePreviewLink] = useState(false);
+  const [filePreview, setFilePreview] = useState([]);
   const [patientInfo, setPatientInfo] = useState(null);
   const [maxLength, setMaxLength] = useState(2000);
   const { clinic_name: clinicName, uid } = useSelector((state) => state.app);
@@ -164,7 +164,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
   };
 
   const submitData = async (scheme) => {
-    setFilePreviewLink(false);
+    setFilePreview([]);
     try {
       setLoading(true);
 
@@ -231,12 +231,26 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         );
       }
 
-      data.files = attachments;
-
       let result = null;
       data.demographic_no = demographicNo;
       if (scheme === "email") {
-        console.log("Data", data);
+        data.files = [];
+        for (let i = 0; i < attachments.length; i++) {
+          const file = attachments[i];
+          const reader = new FileReader();
+          reader.readAsDataURL(file.data);
+          const contents = await new Promise((resolve, reject) => {
+            reader.addEventListener("load", () => {
+              resolve(reader.result);
+            });
+          });
+
+          data.files.push({
+            ...file,
+            data: contents,
+          });
+        }
+
         result = await sendEmail(token, data);
       } else if (scheme === "sms") {
         result = await sendMessage(token, data);
@@ -266,8 +280,9 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
 
         const clonedResult = result.clone();
         const responseData = await clonedResult.json();
-        if (responseData.preview) {
-          setFilePreviewLink(responseData.preview);
+        if (responseData.files) {
+          console.log("Response data", responseData);
+          setFilePreview(responseData.files);
         }
       } else {
         let errorResponse = null;
@@ -516,23 +531,25 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
             }}
           </FeatureDetector>
         </div>
-
         <hr className="tw-my-4" />
 
-        {filePreviewLink !== false ? (
+        {filePreview.length > 0 && (
           <div className="tw-flex tw-justify-between tw-mt-4 tw-w-full tw-max-w-[368px]">
             <div className="tw-bg-blue-100 tw-text-blue-800 tw-p-3 tw-rounded-md tw-text-xs tw-w-full">
-              File sent successfully, Preview the file:{" "}
-              <a
-                className="tw-text-underline tw-font-semibold tw-block tw-break-words"
-                href={filePreviewLink}
-                target="_blank"
-              >
-                {filePreviewLink}
-              </a>
+              File sent successfully, Preview the file(s):{" "}
+              {filePreview.map((file) => (
+                <a
+                  className="tw-text-underline tw-font-semibold tw-block tw-break-words"
+                  href={file.previewLink}
+                  target="_blank"
+                  key={file.previewLink}
+                >
+                  {file.filename}
+                </a>
+              ))}
             </div>
           </div>
-        ) : null}
+        )}
 
         <div className="tw-flex tw-justify-between tw-mt-4 tw-w-full">
           <div>
