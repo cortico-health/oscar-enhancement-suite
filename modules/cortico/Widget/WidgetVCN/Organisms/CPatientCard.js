@@ -82,4 +82,4 @@ const PatientCard = (props) => {
     )
 }
 
-export default observer(PatientCard);
+export default PatientCard;

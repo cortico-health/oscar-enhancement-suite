@@ -11,7 +11,7 @@ import { loadExtensionStorageValue } from '../../../Utils/Utils';
 
 const StateContext = createContext();
 
-export const StateProvider = observer(({ children }) => {
+export const StateProvider = ({ children }) => {
   const [socketUrl, setSocketUrl] = useState(null);
 
   const { getWebSocket } = useWebSocket(socketUrl, {
@@ -147,6 +147,6 @@ export const StateProvider = observer(({ children }) => {
       {children}
     </StateContext.Provider>
   )
-});
+};
 
 export const useStore = () => useContext(StateContext);
