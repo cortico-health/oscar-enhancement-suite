@@ -3,7 +3,7 @@ import { useStore } from "../../store/mobx";
 import { useSelector } from "react-redux";
 import MChatTools from "../Molecules/MChatTools";
 import useWebSocket from "react-use-websocket";
-import { createFile, getChatMessageData } from "../../../../Api/Vcn/Conversations.js";
+import { createFile, getChatMessageData, getConversation } from "../../../../Api/Vcn/Conversations.js";
 import AFileInputShow from "../Atoms/AFileInputShow";
 import MSend from "../Molecules/MSend";
 import MMessageCard from "../Molecules/MMessageCard";
@@ -87,7 +87,14 @@ const CMessageList = () => {
         const selectedId = conversationStore.conversations.selected?.id;
 
         if (selectedId) {
-            console.log("Message True");
+            getConversation(selectedId).then((res) => { return res.json() }).then(
+                (data) => {
+                    patientStore.selectPatient(data.patient);
+                }
+            ).catch(
+                (error) => console.log(error)
+            )
+
             getChatMessageData(selectedId).then((response) => {
                 return response.json();
             }).then((data) => {

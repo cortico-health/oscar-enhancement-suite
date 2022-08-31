@@ -104,8 +104,6 @@ export const StateProvider = observer(({ children }) => {
         return conversation.id == id;
       });
       this.conversations.selected = selectedConversation;
-
-      patientStore.selectPatient(selectedConversation?.patient);
     },
     updateOrInsertConversation(updatedConversation) {
       const existingConversation = this.conversations.all.find((conversation) => {
