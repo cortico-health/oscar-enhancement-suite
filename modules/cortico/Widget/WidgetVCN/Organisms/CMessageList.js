@@ -3,7 +3,7 @@ import { useStore } from "../../store/mobx";
 import { useSelector } from "react-redux";
 import MChatTools from "../Molecules/MChatTools";
 import useWebSocket from "react-use-websocket";
-import { createFile, getChatMessageData } from "../../../../Api/Vcn/Conversations.js";
+import { createFile, getChatMessageData, getConversation } from "../../../../Api/Vcn/Conversations.js";
 import AFileInputShow from "../Atoms/AFileInputShow";
 import MSend from "../Molecules/MSend";
 import MMessageCard from "../Molecules/MMessageCard";
@@ -25,6 +25,7 @@ const CMessageList = () => {
     const [preview, setPreview] = useState(null);
     const [patientSelected, setPatientSelected] = useState(null);
     const [uploadedFile, setUploadedFile] = useState(null);
+    const [fileStats, setFileStats] = useState(null);
 
     const { getWebSocket } = useWebSocket(socketUrl, {
         onOpen: () => onChatSocketOpen(),
@@ -87,7 +88,15 @@ const CMessageList = () => {
         const selectedId = conversationStore.conversations.selected?.id;
 
         if (selectedId) {
-            console.log("Message True");
+            getConversation(selectedId).then((res) => { return res.json() }).then(
+                (data) => {
+                    setFileStats(data.stats)
+                    patientStore.selectPatient(data.patient);
+                }
+            ).catch(
+                (error) => console.log(error)
+            )
+
             getChatMessageData(selectedId).then((response) => {
                 return response.json();
             }).then((data) => {
@@ -123,8 +132,9 @@ const CMessageList = () => {
     return (
         <div className="tw-relative tw-h-full tw-flex tw-flex-col tw-justify-between tw-overflow-x-hidden tw-w-[1000px]">
             <MChatTools
-                setMessages={setMessages}
-                selectedConversationInfo={conversationStore.conversations.selected}
+                fileStats={fileStats}
+                patient={patientStore.patients.selected}
+                conversation={conversationStore.conversations.selected}
             />
 
             <div className="tw-flex-grow tw-overflow-y-auto tw-h-96 tw-px-9">
