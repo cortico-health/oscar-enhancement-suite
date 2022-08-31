@@ -7,6 +7,11 @@ export default function SetupDocuments() {
   const [docNodes, setDocNodes] = useState([]);
 
   useEffect(() => {
+    const search = window.location.search;
+    const params = new URLSearchParams(search);
+    if (params.get("function") !== "demographic") {
+      return;
+    }
     const pdf_links = document.querySelectorAll(
       "#privateDocs td:nth-child(2) a"
     );
