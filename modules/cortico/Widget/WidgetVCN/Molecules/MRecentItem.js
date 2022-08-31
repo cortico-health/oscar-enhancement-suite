@@ -12,10 +12,6 @@ const MRecentItem = ({ className,patient = null,...props }) => {
                     <p className='tw-text-secondary-300 tw-text-contact2'>Tempora et placeat</p>
                 </div>
             </div>
-
-            <div className='tw-rounded-full tw-flex tw-items-center tw-justify-center tw-text-contact2 tw-w-7 tw-h-7 tw-text-white tw-bg-primary-500'>
-                2
-            </div>
         </div>
     )
 }

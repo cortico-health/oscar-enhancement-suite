@@ -8,7 +8,6 @@ import { useStore } from "../../store/mobx";
 
 const CRecentList = ({ ...props }) => {
 
-
     const { patientStore } = useStore();
 
     const dispatch = useDispatch();
