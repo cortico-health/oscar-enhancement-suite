@@ -272,7 +272,7 @@ function PluginContentRenderer() {
           <WidgetSettings />
         </div>
       ) : activeItem === "Messenger" ? (
-        <div className="tw-p-4 tw-h-full">
+        <div className="tw-p-4 tw-h-full tw-max-w-[450px]">
           <WidgetMessenger />
         </div>
       ) : activeItem === "Patient" ? (

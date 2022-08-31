@@ -2,7 +2,7 @@ import { checkAllEligibility } from "../../../../cortico.js";
 import { useEffect, useState } from "preact/hooks";
 import { EmojiSadIcon } from "@heroicons/react/solid";
 import { ExclamationIcon } from "@heroicons/react/outline";
-import Button from "../../../core/Button";
+import Button, { PrimaryButton } from "../../../core/Button";
 import Table from "../Table.js";
 import ProgressBar from "../ProgressBar.js";
 import Alert from "../Alert.js";
@@ -148,9 +148,9 @@ function Running({
           </div>
           {complete === true ? (
             <div className="tw-text-center">
-              <Button onClick={goBack} className="tw-my-4" size="sm">
+              <PrimaryButton onClick={goBack} className="tw-my-4" size="sm">
                 Go Back
-              </Button>
+              </PrimaryButton>
             </div>
           ) : null}
           {fails.length > 0 ? (
@@ -182,9 +182,9 @@ function Teleplan({ goBack, ...props }) {
       <div className="tw-flex tw-flex-col tw-items-center tw-justify-center">
         <ExclamationIcon className="tw-w-14 tw-h-14 tw-text-red-600" />
         <p className="tw-text-lg tw-mt-4">Error in teleplan connection</p>
-        <Button onClick={goBack} className="tw-my-4" size="sm">
+        <PrimaryButton onClick={goBack} className="tw-my-4" size="sm">
           Go Back
-        </Button>
+        </PrimaryButton>
         <p className="tw-text-sm tw-mt-4 tw-block tw-max-w-[325px] tw-mx-auto">
           This is likely because there is a problem with your clinic's teleplan
           configurations. Try checking eligibility manually.

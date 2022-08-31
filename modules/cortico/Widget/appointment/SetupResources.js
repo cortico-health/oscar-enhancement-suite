@@ -137,6 +137,13 @@ export default function SetupResources({
         <div>
           <Select
             label="Medium"
+            tooltip={
+              <>
+                <Tooltip description="Is the appointment phone, video or in office? Note: This field is required for Cortico reminders to send properly. Use 'quite' to prevent reminders being sent.">
+                  <QuestionMarkCircleIcon className="tw-w-4 tw-h-4 tw-mx-1 tw-cursor-pointer tw-text-black"></QuestionMarkCircleIcon>
+                </Tooltip>
+              </>
+            }
             className="tw-bg-white tw-text-gray-700 tw-text-sm"
             options={mediums}
             onChange={(val) => handleMediumChange(val)}

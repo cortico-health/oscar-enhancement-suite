@@ -29,6 +29,9 @@ import InboxDocument from "../cortico/Widget/adapters/InboxDocument";
 import Encounter from "../core/Encounter";
 import { BroadcastChannel } from "broadcast-channel";
 import { handleTokenExpiry } from "../../modules/cortico/Widget/common/utils";
+import classNames from "classnames";
+import Alert from "../cortico/Widget/Alert";
+
 class MessengerError extends Error {
   constructor(title, message) {
     super(message);
@@ -51,10 +54,12 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
     eform,
     document,
     inboxDocument,
+    scheme,
   } = useSelector((state) => state.messenger);
   const [openSavedReplies, setOpenSavedReplies] = useState(false);
   const [filePreviewLink, setFilePreviewLink] = useState(false);
   const [patientInfo, setPatientInfo] = useState(null);
+  const [maxLength, setMaxLength] = useState(2000);
   const { clinic_name: clinicName, uid } = useSelector((state) => state.app);
 
   const handleEncounter = async (scheme, subject, body) => {
@@ -342,18 +347,12 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
     }
   };
 
-  const handleSend = (scheme) => {
-    dispatch({
-      type: "messenger/set",
-      payload: {
-        key: "scheme",
-        value: scheme,
-      },
-    });
+  const handleSend = () => {
     submitData(scheme);
   };
 
   const handleChange = (key, value) => {
+    console.log("Body", body);
     dispatch({
       type: "messenger/set",
       payload: {
@@ -417,7 +416,6 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
   };
 
   const handleInboxDoc = (doc) => {
-    console.log("Succes Doc", doc);
     if (doc && !attachment) {
       handleChange("attachment", {
         name: doc.name,
@@ -428,47 +426,93 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
     console.log("Inbox Document?", inboxDocument);
   };
 
+  const handleSchemeChange = (scheme) => {
+    dispatch({
+      type: "messenger/set",
+      payload: {
+        key: "scheme",
+        value: scheme,
+      },
+    });
+  };
+
+  useEffect(() => {
+    if (scheme === "sms") {
+      setMaxLength(140);
+    } else {
+      setMaxLength(2000);
+    }
+  }, [scheme]);
+
   return (
     <div className="tw-m-0 no-print">
+      <FeatureDetector featureName="text">
+        {({ disabled }) => {
+          return disabled === false ? (
+            <SchemeSelect
+              onClick={handleSchemeChange}
+              scheme={scheme}
+              className="tw-mt-0 tw-mb-4"
+            ></SchemeSelect>
+          ) : null;
+        }}
+      </FeatureDetector>
+
       {inboxDocument === true ? (
         <InboxDocument onSuccess={handleInboxDoc}></InboxDocument>
       ) : null}
       <div>
         <div>
-          <div>
-            <Input
-              type="email"
-              placeholder="To"
-              value={to}
-              onChange={(val) => handleChange("to", val)}
-              defaultValue={to}
-            />
-          </div>
-          <div>
-            <Input
-              type="text"
-              placeholder="Phone"
-              onChange={(val) => handleChange("phone", val)}
-              value={phone}
-              defaultValue={phone}
-            />
-          </div>
+          {scheme === "email" ? (
+            <>
+              <div>
+                <Input
+                  type="email"
+                  placeholder="To"
+                  value={to}
+                  onChange={(val) => handleChange("to", val)}
+                  defaultValue={to}
+                />
+              </div>
+              <hr className="tw-opacity-10" />
+              <div className="tw-w-full">
+                <Input
+                  placeholder="Subject"
+                  onChange={(val) => handleChange("subject", val)}
+                  value={subject}
+                  defaultValue={subject}
+                ></Input>
+              </div>
+            </>
+          ) : null}
+          {scheme === "sms" ? (
+            <div>
+              <Input
+                type="text"
+                placeholder="Phone"
+                onChange={(val) => handleChange("phone", val)}
+                value={phone}
+                defaultValue={phone}
+              />
+            </div>
+          ) : null}
+
           <hr className="tw-opacity-10" />
-          <div className="tw-w-full">
-            <Input
-              placeholder="Subject"
-              onChange={(val) => handleChange("subject", val)}
-              value={subject}
-              defaultValue={subject}
-            ></Input>
-          </div>
-          <hr className="tw-opacity-10" />
+          {body && body.length > 140 && scheme === "sms" ? (
+            <Alert
+              size="sm"
+              title="Warning"
+              message="You are over the SMS character limit of 140 characters, please shorten your message"
+              className="tw-w-full tw-my-2"
+            ></Alert>
+          ) : null}
           <div className="tw-relative tw-mt-4">
             <Textarea
               value={body}
               onChange={(val) => handleChange("body", val)}
               defaultValue={body}
               placeholder="Enter message here"
+              maxLength={maxLength}
             ></Textarea>
           </div>
           <hr className="tw-opacity-40" />
@@ -540,39 +584,41 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
             </Button>
           </div>
           <div>
-            <FeatureDetector featureName="text">
-              {({ disabled }) => {
-                return disabled === false ? (
-                  <Button
-                    size="sm"
-                    loading={loading}
-                    onClick={() => handleSend("sms")}
-                    variant="custom"
-                    className="tw-bg-emerald-100 tw-text-emerald-900 tw-text-sm  tw-mr-2 tw-rounded-md tw-font-medium "
-                  >
-                    <span className="tw-flex tw-items-center tw-cursor-pointer">
-                      <span className="tw-cursor-pointer">Send Text</span>
-                      <TextIcon className="tw-h-4 tw-w-4 tw-ml-2 tw-cursor-pointer" />
-                    </span>
-                  </Button>
-                ) : (
-                  ""
-                );
-              }}
-            </FeatureDetector>
-
-            <Button
-              size="sm"
-              loading={loading}
-              onClick={() => handleSend("email")}
-              className="tw-bg-indigo-100 tw-text-blue-1000 tw-text-sm  tw-rounded-md tw-font-medium "
-              variant="custom"
-            >
-              <span className="tw-flex tw-items-center tw-cursor-pointer">
-                <span className="tw-cursor-pointer">Send Email</span>
-                <MailIcon className="tw-h-4 tw-w-4 tw-ml-2 tw-cursor-pointer" />
-              </span>
-            </Button>
+            {scheme === "email" ? (
+              <Button
+                size="sm"
+                loading={loading}
+                onClick={handleSend}
+                className="tw-bg-indigo-100 tw-text-blue-1000 tw-text-sm  tw-rounded-md tw-font-medium "
+                variant="custom"
+              >
+                <span className="tw-flex tw-items-center tw-cursor-pointer">
+                  <span className="tw-cursor-pointer">Send Email</span>
+                  <MailIcon className="tw-h-4 tw-w-4 tw-ml-2 tw-cursor-pointer" />
+                </span>
+              </Button>
+            ) : scheme === "sms" ? (
+              <FeatureDetector featureName="text">
+                {({ disabled }) => {
+                  return disabled === false ? (
+                    <Button
+                      size="sm"
+                      loading={loading}
+                      onClick={handleSend}
+                      variant="custom"
+                      className="tw-bg-emerald-100 tw-text-emerald-900 tw-text-sm  tw-mr-2 tw-rounded-md tw-font-medium "
+                    >
+                      <span className="tw-flex tw-items-center tw-cursor-pointer">
+                        <span className="tw-cursor-pointer">Send Text</span>
+                        <TextIcon className="tw-h-4 tw-w-4 tw-ml-2 tw-cursor-pointer" />
+                      </span>
+                    </Button>
+                  ) : (
+                    ""
+                  );
+                }}
+              </FeatureDetector>
+            ) : null}
           </div>
         </div>
       </div>
@@ -581,3 +627,51 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
 }
 
 export default MessengerWindow;
+
+function SchemeSelect({ onClick, scheme, className, ...props }) {
+  return (
+    <div
+      className={classNames(
+        "tw-flex tw-text-xs tw-rounded-md tw-shadow-sm tw-border tw-border-cortico-blue",
+        className
+      )}
+    >
+      <div className="tw-flex-1 tw-text-center">
+        <div
+          onClick={() => {
+            onClick("sms");
+          }}
+          className={classNames(
+            "tw-p-2 tw-rounded-l-md tw-cursor-pointer tw-flex tw-items-center tw-justify-center",
+            scheme === "sms"
+              ? "tw-bg-cortico-blue tw-text-white tw-font-medium"
+              : "tw-bg-gray-100 tw-text-gray-700"
+          )}
+        >
+          <TextIcon
+            className={classNames("tw-w-4 tw-h-4 tw-mr-1 tw-inline-block")}
+          ></TextIcon>
+          Text Message
+        </div>
+      </div>
+      <div className="tw-flex-1 tw-text-center">
+        <div
+          onClick={() => {
+            onClick("email");
+          }}
+          className={classNames(
+            "tw-p-2 tw-rounded-r-md tw-cursor-pointer tw-flex tw-items-center tw-justify-center",
+            scheme === "email"
+              ? "tw-bg-cortico-blue tw-text-white tw-font-medium"
+              : "tw-bg-gray-100 tw-text-gray-700"
+          )}
+        >
+          <MailIcon
+            className={classNames("tw-w-4 tw-h-4 tw-mr-1 tw-inline-block")}
+          ></MailIcon>
+          Email
+        </div>
+      </div>
+    </div>
+  );
+}

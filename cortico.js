@@ -202,6 +202,17 @@ const init_cortico = async function () {
 
       // setupFaxButton();
     }
+  } else if (oscar.isLabPage()) {
+    CorticoWidget(document.body, corticoWidgetContainer, {
+      disabledFeatures: ["text", "automation"],
+      defaultMenu: "Messenger",
+      document: true,
+    });
+  } else if (oscar.isReportGenerationPage()) {
+    CorticoWidget(document.body, corticoWidgetContainer, {
+      disabledFeatures: ["text"],
+      defaultMenu: "Automation",
+    });
   }
   init_styles();
 };

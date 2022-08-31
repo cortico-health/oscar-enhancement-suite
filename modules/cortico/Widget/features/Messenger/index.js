@@ -2,7 +2,7 @@ export const initialState = {
   to: null,
   subject: null,
   body: null,
-  scheme: null,
+  scheme: "email",
   encounter: null,
   attachment: null,
   document: null,

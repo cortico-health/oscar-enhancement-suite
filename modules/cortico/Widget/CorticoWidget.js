@@ -17,6 +17,7 @@ import Appointment from "./appointment/Appointment";
 import { QueryClient, QueryClientProvider } from "react-query";
 import PatientAdapter from "./adapters/PatientAdapter";
 import AppointmentDetailAdapter from "./adapters/AppointmentDetailAdapter";
+import LabResultsAdapter from "./adapters/LabResultsAdapter";
 import { StateProvider } from "./store/mobx.js";
 
 const uid = nanoid();
@@ -181,6 +182,7 @@ function App({ mode = "normal", ...props }) {
             >
               {open === true ? (
                 <>
+                  <LabResultsAdapter />
                   <CorticoPlugin onMinimize={handleMinimize} />
                   <PatientAdapter></PatientAdapter>
                 </>
@@ -190,7 +192,7 @@ function App({ mode = "normal", ...props }) {
                   onStop={handleDragStop}
                 >
                   <div
-                      className="tw-transition-colors tw-duration-200 tw-ease-in-out tw-p-4 tw-cursor-pointer tw-rounded-full tw-bg-gradient-to-bl  tw-bg-indigo-600 tw-shadow-outer
+                    className="tw-transition-colors tw-duration-200 tw-ease-in-out tw-p-4 tw-cursor-pointer tw-rounded-full tw-bg-gradient-to-bl  tw-bg-indigo-600 tw-shadow-outer
                 hover:tw-bg-none hover:tw-bg-blue-1000"
                     onClick={handleOpen}
                   >
@@ -217,9 +219,9 @@ const queryClient = new QueryClient();
 export default function CorticoWidget(container, replaceNode, opts) {
   return render(
     <Provider store={store}>
-      <QueryClientProvider client={ queryClient }>
+      <QueryClientProvider client={queryClient}>
         <StateProvider>
-          <App { ...opts } />
+          <App {...opts} />
         </StateProvider>
       </QueryClientProvider>
     </Provider>,
