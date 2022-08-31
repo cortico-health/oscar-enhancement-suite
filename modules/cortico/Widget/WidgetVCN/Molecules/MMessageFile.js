@@ -9,7 +9,7 @@ import DocumentLogo from "../../../../../resources/icons/document.svg";
 import DocumentTextLogo from "../../../../../resources/icons/document-text.svg";
 import TableLogo from "../../../../../resources/icons/table.svg";
 import CodeLogo from "../../../../../resources/icons/code.svg";
-import DownloadLogo from "../../../../../resources/icons/download.svg";
+import UploadLogo from "../../../../../resources/icons/upload.svg";
 import DismissedLogo from "../../../../../resources/icons/dismissed.svg";
 import MConfirmationModal from "./MConfirmationModal";
 
@@ -66,16 +66,20 @@ const MMessageFile = ({ dataURL,name,extension,isUser }) => {
         <>
             <div className="tw-flex tw-items-center tw-gap-2">
                 { isUser && (
-                    <div className="tw-flex tw-flex-col tw-gap-4">
-                        <ASvg src={ DownloadLogo }
-                            className="tw-cursor-pointer tw-w-7 tw-h-7"
-                            onClick={ () => setIsUploadOpen(true) }
-                        />
+                    <div className="tw-flex tw-justify-between tw-items-end tw-gap-2">
+                        <div className="tw-p-2 hover:tw-bg-green-500/60 hover:tw-rounded-full tw-w-10 tw-h-10">
+                            <ASvg src={ UploadLogo }
+                                className="tw-cursor-pointer"
+                                onClick={ () => setIsUploadOpen(true) }
+                            />
+                        </div>
 
-                        <ASvg src={ DismissedLogo }
-                            className="tw-cursor-pointer tw-w-7 tw-h-7 tw-fill-current"
-                            onClick={ () => setIsDismissOpen(true) }
-                        />
+                        <div className="tw-p-2 hover:tw-bg-red-500/60 hover:tw-rounded-full tw-w-10 tw-h-10">
+                            <ASvg src={ DismissedLogo }
+                                className="tw-cursor-pointer"
+                                onClick={ () => setIsDismissOpen(true) }
+                            />
+                        </div>
                     </div>
                 ) }
 
