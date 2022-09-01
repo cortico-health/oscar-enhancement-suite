@@ -139,53 +139,55 @@ const CMessageList = () => {
         );
     }
 
-    if (conversationStore.conversations.selected && loading) {
-        return (
-            <div className="tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-2 tw-w-[1000px] tw-h-full">
-                <ASpinner />
-            </div>
-        );
-    }
-
     return (
         <div className="tw-relative tw-h-full tw-flex tw-flex-col tw-justify-between tw-overflow-x-hidden tw-w-[1000px]">
             <MChatTools
                 fileStats={fileStats}
                 patient={patientStore.patients.selected}
                 conversation={conversationStore.conversations.selected}
+                loading={ loading }
             />
 
-            <div className="tw-flex-grow tw-overflow-y-auto tw-h-96 tw-px-9">
-                {messages?.slice(0).reverse().map((message) => {
-                    return <MMessageCard key={`message-${message.id}`} messageDetails={message} attachment={preview} />;
-                })}
-                <div ref={messagesEndRef} />
-            </div>
-            <div className="tw-sticky tw-bg-secondary-10 tw-w-full">
-                <div className="tw-mx-12">
-                    <AFileInputShow fileInput={preview} exit={handlers.removeFile} />
+            { conversationStore.conversations.selected && !loading ? (
+                <>
+                    <div className="tw-flex-grow tw-overflow-y-auto tw-h-96 tw-px-9">
+                        { messages?.slice(0).reverse().map((message) => {
+                            return <MMessageCard key={ `message-${message.id}` } messageDetails={ message } attachment={ preview } />;
+                        }) }
+                        <div ref={ messagesEndRef } />
+                    </div>
+                    <div className="tw-sticky tw-bg-secondary-10 tw-w-full">
+                        <div className="tw-mx-12">
+                            <AFileInputShow fileInput={ preview } exit={ handlers.removeFile } />
 
-                    <MSend
-                        placeholder="Type message..."
-                        ref={sendRef}
-                        handlers={handlers}
-                    />
-                    <p className="tw-text-h3 tw-text-right tw-text-secondary-500 tw-pb-4">
-                        {patientSelected && "Sending a message about "}
+                            <MSend
+                                placeholder="Type message..."
+                                ref={ sendRef }
+                                handlers={ handlers }
+                            />
+                            <p className="tw-text-h3 tw-text-right tw-text-secondary-500 tw-pb-4">
+                                { patientSelected && "Sending a message about " }
 
-                        <span className="tw-font-bold">
-                            {(patientSelected) ?
-                                `${patientSelected?.first_name} ${patientSelected?.last_name}.`
-                                :
-                                "No Patient."
-                            }</span>
-                        {" "}
-                        <a className="tw-font-medium tw-text-primary-500" href="/select">
-                            {patientSelected ? "Switch" : "Choose"} Patient
-                        </a>
-                    </p>
+                                <span className="tw-font-bold">
+                                    { (patientSelected) ?
+                                        `${patientSelected?.first_name} ${patientSelected?.last_name}.`
+                                        :
+                                        "No Patient."
+                                    }</span>
+                                { " " }
+                                <a className="tw-font-medium tw-text-primary-500" href="/select">
+                                    { patientSelected ? "Switch" : "Choose" } Patient
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </>
+            ) : (
+                <div className="tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-2 tw-w-[1000px] tw-h-full">
+                    <ASpinner variant="md" />
                 </div>
-            </div>
+            ) }
+
         </div>
     )
 }
