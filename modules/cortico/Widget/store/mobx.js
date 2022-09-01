@@ -123,17 +123,21 @@ export const StateProvider = ({ children }) => {
   }))
 
   useEffect(() => {
-    loadExtensionStorageValue("jwt_access_token").then((accessToken) => {
-      if (accessToken) {
-        // Fetch all initial data after logging in
-        userStore.fetchUser();
-        userStore.fetchUsers();
-        conversationStore.fetchConversations();
-        patientStore.fetchPatients();
+    // PROVIDER MESSAGING FEATURE FLAG
+    if (process.env.NODE_ENV !== 'production') {
+      // FETCH ALL PROVIDER MESSAGING DATA
+      loadExtensionStorageValue("jwt_access_token").then((accessToken) => {
+        if (accessToken) {
+          // Fetch all initial data after logging in
+          userStore.fetchUser();
+          userStore.fetchUsers();
+          conversationStore.fetchConversations();
+          patientStore.fetchPatients();
 
-        setSocketUrl(getWsUpdateUrl(accessToken));
-      }
-    });
+          setSocketUrl(getWsUpdateUrl(accessToken));
+        }
+      });
+    }
   }, [])
 
   const value = {
