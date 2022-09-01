@@ -41,15 +41,13 @@ const PatientData = ({ patient,fromEChart,handleClick,handleClose }) => {
     )
 }
 
-const PatientCard = (props) => {
+const CPatientCard = (props) => {
     const { info } = useSelector((state) => state.patient);
-
-    const [patient,setPatient] = useState(undefined);
 
     const { patientStore } = useStore();
 
     useEffect(() => {
-        setPatient(() => { return info ? info : patientStore.patients?.selected });
+        patientStore.selectPatient(info ? info : patientStore.patients?.selected);
     },[patientStore.patients?.selected,info]);
 
     const dispatch = useDispatch();
@@ -69,8 +67,8 @@ const PatientCard = (props) => {
     return (
         <div { ...props }>
             {/* <ASvg className="h-12.5 min-w-12.5 border-2 rounded-full p-0.25 border-primary-500" src="avatar" /> */ }
-            { patient ?
-                <PatientData patient={ patient } fromEChart={ !info } handleClick={ handleClick } handleClose={ handleClose } />
+            { patientStore.patients.selected ?
+                <PatientData patient={ patientStore.patients.selected } fromEChart={ !info } handleClick={ handleClick } handleClose={ handleClose } />
                 :
                 <>
                     <h1 className='tw-text-md tw-text-secondary-500 tw-font-bold tw-mb-1.5'>Viewing all conversations</h1>
@@ -82,4 +80,4 @@ const PatientCard = (props) => {
     )
 }
 
-export default PatientCard;
+export default observer(CPatientCard);

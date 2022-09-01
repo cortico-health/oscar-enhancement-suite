@@ -6,51 +6,52 @@ import MConversationTab from "../Molecules/MConversationTab"
 import MSearch from "../Molecules/MSearch";
 import CNotFound from "./CNotFound";
 import { observer } from "mobx-react-lite";
-import { set } from "lodash";
+import { debounce } from "lodash";
 import ASpinner from "../Atoms/ASpinner";
 
 const CConversationList = () => {
     const { conversationStore,patientStore } = useStore();
 
-    const [patientName,setPatientName] = useState("");
-    const [filteredConversation,setFilteredConversation] = useState([]);
+    const [searchName,setSearchName] = useState("");
+    const [filteredConversation,setFilteredConversation] = useState(undefined);
 
     useEffect(() => {
-        /* TODO Dwight: Make this functionl to make conversation searchable */
-        if (conversationStore.conversations.all) {
+        setFilteredConversation(() => { return conversationStore.conversations.all });
+    },[]);
+
+    useEffect(() => {
+        const selectedPatient = patientStore.patients.selected;
+        if (!selectedPatient) {
             setFilteredConversation(conversationStore.conversations.all);
+            return;
         }
-        setFilteredConversation(conversationStore.conversations.all);
-    },[conversationStore.conversations.all]);
 
-    useEffect(() => {
-        const selectedPatient = patientStore.patients?.selected;
         setFilteredConversation(conversationStore.conversations.all.filter((conversation) => {
-            /* TODO Dwight: Change this if the API is ready */
-            return conversation.patient_full_name === selectedPatient?.first_name + " " + selectedPatient?.last_name
+            return conversation.patient === selectedPatient?.first_name + " " + selectedPatient?.last_name
         }))
-    },[patientStore.patients?.selected]);
+    },[patientStore.patients.selected]);
 
-    const searchHandler = (e) => {
-        /* TODO: Improved if needed */
-        const nameQuery = e.target.value;
+    const searchHandler = debounce(query => {
+        if (!query) return setFilteredConversation(conversationStore.conversations.all)
+
         const filteredData = conversationStore.conversations.all.filter((conversation) => {
             return conversation.members.find((member) => {
-                return member.full_name.includes(nameQuery);
+                return member.full_name.includes(query);
             })
         })
 
         setFilteredConversation(filteredData);
-        setPatientName(nameQuery);
-    }
+        setSearchName(query);
+    },500)
+
     return (
         <div className="tw-mx-2.5">
-            <MSearch onInput={ searchHandler } />
+            <MSearch onInput={ (e) => searchHandler(e.target.value) } />
             <div className="tw-h-[400px] tw-overflow-y-auto">
-                { conversationStore.conversations.all ? (
-                    conversationStore.conversations.all.length > 0 ? (
+                { filteredConversation ? (
+                    filteredConversation.length > 0 ? (
                         <>
-                            { conversationStore.conversations.all?.map(conversation => {
+                            { filteredConversation?.map(conversation => {
                                 return (
                                     <MConversationTab
                                         key={ `conversation-${conversation.id}` }
@@ -59,7 +60,7 @@ const CConversationList = () => {
                                 )
                             }) }
                         </>
-                    ) : <CNotFound name={ patientName } />
+                    ) : <CNotFound name={ searchName } />
                 ) : (<ASpinner />)
                 }
             </div>
