@@ -1,8 +1,6 @@
 import { useState } from "preact/hooks";
 import { createPortal } from "preact/compat";
 import { isAudio, isDocument, isHTML, isImage, isSheet, isTextFile } from "../../../../helper/determine-file-type";
-import { cerebroUrl } from "../../../../Utils/VcnUtils";
-import { XCircleIcon } from "@heroicons/react/outline";
 import ASvg from "../Atoms/ASvg";
 
 import DocumentLogo from "../../../../../resources/icons/document.svg";
@@ -45,12 +43,12 @@ const ShowImgFile = ({ url }) => {
     );
 }
 
-const MMessageFile = ({ dataURL,name,extension,isUser }) => {
-    name = name.replace('provider_messenger/','');
+const MMessageFile = ({ dataURL, name, extension, isUser }) => {
+    name = name.replace('provider_messenger/', '');
     const fileUrl = dataURL;
 
-    const [isUploadOpen,setIsUploadOpen] = useState(false);
-    const [isDismissOpen,setIsDismissOpen] = useState(false);
+    const [isUploadOpen, setIsUploadOpen] = useState(false);
+    const [isDismissOpen, setIsDismissOpen] = useState(false);
 
     const modalContainer = document.getElementById('upload-confirm');
 
@@ -65,23 +63,23 @@ const MMessageFile = ({ dataURL,name,extension,isUser }) => {
     return (
         <>
             <div className="tw-flex tw-items-center tw-gap-2">
-                { isUser && (
+                {isUser && (
                     <div className="tw-flex tw-justify-between tw-items-end tw-gap-2">
                         <div className="tw-p-2 hover:tw-bg-green-500/60 hover:tw-rounded-full tw-w-10 tw-h-10">
-                            <ASvg src={ UploadLogo }
+                            <ASvg src={UploadLogo}
                                 className="tw-cursor-pointer"
-                                onClick={ () => setIsUploadOpen(true) }
+                                onClick={() => setIsUploadOpen(true)}
                             />
                         </div>
 
                         <div className="tw-p-2 hover:tw-bg-red-500/60 hover:tw-rounded-full tw-w-10 tw-h-10">
-                            <ASvg src={ DismissedLogo }
+                            <ASvg src={DismissedLogo}
                                 className="tw-cursor-pointer"
-                                onClick={ () => setIsDismissOpen(true) }
+                                onClick={() => setIsDismissOpen(true)}
                             />
                         </div>
                     </div>
-                ) }
+                )}
 
                 {
                     /* If there is missing fields */
@@ -122,20 +120,20 @@ const MMessageFile = ({ dataURL,name,extension,isUser }) => {
                 }
             </div>
 
-            { isUploadOpen && createPortal(
+            {isUploadOpen && createPortal(
                 <MConfirmationModal
-                    setIsOpen={ setIsUploadOpen }
-                    onConfirm={ onUpload }
+                    setIsOpen={setIsUploadOpen}
+                    onConfirm={onUpload}
                     type="upload" />
-                ,modalContainer)
+                , modalContainer)
             }
 
-            { isDismissOpen && createPortal(
+            {isDismissOpen && createPortal(
                 <MConfirmationModal
-                    setIsOpen={ setIsDismissOpen }
-                    onConfirm={ onDismiss }
+                    setIsOpen={setIsDismissOpen}
+                    onConfirm={onDismiss}
                     type="dismiss" />
-                ,modalContainer)
+                , modalContainer)
             }
         </>
     )
