@@ -652,6 +652,12 @@ function SchemeSelect({ onClick, scheme, className, ...props }) {
             className={classNames("tw-w-4 tw-h-4 tw-mr-1 tw-inline-block")}
           ></TextIcon>
           Text Message
+
+          <span class={ classNames("tw-inline-flex tw-justify-center tw-items-center tw-ml-2 tw-w-4 tw-h-4 tw-text-xs tw-font-semibold tw-rounded-full",
+            scheme === "sms" ? "tw-bg-white tw-text-cortico-blue"
+              : "tw-bg-cortico-blue tw-text-white") }>
+            <svg class="tw-w-6 tw-h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+          </span>
         </div>
       </div>
       <div className="tw-flex-1 tw-text-center">
@@ -670,6 +676,15 @@ function SchemeSelect({ onClick, scheme, className, ...props }) {
             className={classNames("tw-w-4 tw-h-4 tw-mr-1 tw-inline-block")}
           ></MailIcon>
           Email
+
+          {/* '
+          TODO Dwight: Will go back to  this once there is a fetching from api
+          <span class={ classNames("tw-inline-flex tw-justify-center tw-items-center tw-ml-2 tw-w-4 tw-h-4 tw-text-xs tw-font-semibold tw-rounded-full",
+            scheme === "email" ? "tw-bg-white tw-text-cortico-blue"
+              : "tw-bg-cortico-blue tw-text-white") }>
+            <svg class="tw-w-6 tw-h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+          </span>
+           */}
         </div>
       </div>
     </div>
