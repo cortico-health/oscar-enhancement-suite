@@ -66,7 +66,7 @@ export default function WidgetAutomation() {
 
   const handleBatchInvite = (automation) => {
     const rows = document.querySelectorAll(
-      "table.reportTable tbody tr td:nth-child(2)"
+      "table.reportTable tbody tr td:nth-child(1)"
     );
 
     if (rows.length === 0) {

@@ -1,6 +1,7 @@
 import { useQuery } from "react-query";
 import { useDispatch } from "react-redux";
 import { getPatientInfo } from "../../../../cortico";
+import { isEmpty } from "lodash";
 
 export function PatientAdapter() {
   const dispatch = useDispatch();
@@ -16,7 +17,8 @@ export function PatientAdapter() {
     }
   );
 
-  if (result.isSuccess) {
+  if (result.isSuccess && !isEmpty(result.data)) {
+    console.log("Result", result, result.isSuccess);
     dispatch({
       type: "app/setPatientInfo",
       payload: result.data,
