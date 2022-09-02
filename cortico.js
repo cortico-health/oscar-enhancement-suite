@@ -2012,6 +2012,7 @@ function getDemographicPageResponse(demographic) {
   const namespace = getNamespace();
 
   let demographicNo = demographic || getDemographicNo(window.location.search);
+  console.log("Demographic", demographicNo, demographic);
 
   if (!demographicNo && window.opener)
     demographicNo = getDemographicNo(window.opener.location.search);

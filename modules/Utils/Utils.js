@@ -199,10 +199,12 @@ function getDemographicFromSearchParams(url) {
 
 export function getDemographicNo(apptUrl) {
   if (apptUrl) {
-    getDemographicFromSearchParams(apptUrl);
+    console.log("Appt url", apptUrl);
+    return getDemographicFromSearchParams(apptUrl);
   } else {
     // try several options
     let demographicNo = getDemographicFromSearchParams(window.location.search);
+    console.log("Demo found here", demographicNo);
     if (!demographicNo && window.opener) {
       demographicNo = getDemographicFromSearchParams(
         window.opener.location.search
