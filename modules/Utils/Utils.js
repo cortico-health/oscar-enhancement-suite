@@ -186,21 +186,27 @@ export function htmlToElement(html) {
     : undefined;
 }
 
+function getDemographicFromSearchParams(url) {
+  var searchParams = new URLSearchParams(url);
+  return (
+    searchParams.get("demographic_no") ||
+    searchParams.get("demographicNo") ||
+    searchParams.get("functionid") ||
+    searchParams.get("demographicId") ||
+    searchParams.get("efmdemographic_no")
+  );
+}
+
 export function getDemographicNo(apptUrl) {
   if (apptUrl) {
-    var searchParams = new URLSearchParams(apptUrl);
-    return (
-      searchParams.get("demographic_no") ||
-      searchParams.get("demographicNo") ||
-      searchParams.get("functionid") ||
-      searchParams.get("demographicId") ||
-      searchParams.get("efmdemographic_no")
-    );
+    getDemographicFromSearchParams(apptUrl);
   } else {
     // try several options
-    let demographicNo = getDemographicNo(window.location.search);
+    let demographicNo = getDemographicFromSearchParams(window.location.search);
     if (!demographicNo && window.opener) {
-      demographicNo = getDemographicNo(window.opener.location.search);
+      demographicNo = getDemographicFromSearchParams(
+        window.opener.location.search
+      );
     }
 
     if (!demographicNo) {
