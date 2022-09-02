@@ -45,18 +45,6 @@ This will start webpack on watch mode and have source maps enabled by default.
 The minified file located in `dist` directory named `cortico-min.js` may be loaded
 into tampermonkey, or greasemonkey for direct testing before publishing.
 
-## VCN
-
-1. `docker-compose up vcn-web`
-2. Navigate to `localhost:3500`
-
-# Staging
-
-## VCN
-
-1. `cp dc.vcn-stage.yml docker-compose.override.yml`
-2. `docker-compose up vcn-web`
-
 # Manual Testing
 
 **Chrome**
