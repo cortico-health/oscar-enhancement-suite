@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name     Cortico
-// @version  __PLUGIN__VERSION__ 
+// @version  __PLUGIN__VERSION__
 // @grant    none
 // ==/UserScript==
 
@@ -59,6 +59,7 @@ import { initialState as setupPharmacyState } from "./modules/cortico/Widget/fea
 import { initialState as eligCheckState } from "./modules/cortico/Widget/features/EligCheck/EligCheck";
 import widgetStore from "./modules/cortico/Widget/store/store";
 import { getAccountProviderNo } from "./modules/Utils/Utils";
+import { getPatientSubscription } from "./modules/Api/Api";
 const version = "__PLUGIN_VERSION__";
 const pubsub = pubSubInit();
 const oscar = new Oscar(window.location.hostname);
@@ -270,7 +271,7 @@ const init_schedule = function () {
 function update_video_button() {
   var cortico_button = document.getElementById("cortico-video-appt-btn");
   var resources_field = document.querySelector('[name="resources"]');
-  /* TODO: when other appoitment types supported. 
+  /* TODO: when other appoitment types supported.
   cortico_button.innerText =
     resources_field.value === "virtual" ? "Join Video Call" : "Join Appointment";
   */
@@ -345,12 +346,12 @@ function delegate(element, event, descendentSelector, callback) {
 const init_styles = function () {
   var style = `
   @media print
-  {    
+  {
       .no-print, .no-print *
       {
           display: none !important;
       }
-  }  
+  }
   .cortico-btn {
   -webkit-appearance:none;
   -moz-appearance:none;
@@ -1942,6 +1943,7 @@ export async function getPatientInfo(demographicNo) {
   if (!result) {
     return {};
   }
+
   const text = await result.text();
 
   var el = document.createElement("html");
@@ -1977,6 +1979,15 @@ export async function getPatientInfo(demographicNo) {
   // var emails = text.match(re);
   // if (emails && emails.length) info.email = emails[0];
   info.demographicNo = demographicNo || getPatientDemographicNo();
+
+  const accessToken = await (loadExtensionStorageValue('jwt_access_token'));
+
+  let subscription = await (getPatientSubscription(accessToken,info.demographicNo));
+  subscription = await subscription.json();
+
+  info.agreement_date_signed = subscription.agreement_date_signed;
+  info.subscriptions = subscription.subscriptions;
+
   return info;
 }
 

@@ -117,6 +117,19 @@ export const addCannedReply = (token, data) => {
   });
 };
 
+export const getPatientSubscription = (token,demographicNo) => {
+  const url = `${getCorticoUrl()}/api/plug-in/patient/${demographicNo}`;
+
+  return fetch(url,{
+    method: "GET",
+    mode: "cors",
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
 export function getEncounterNotes(demographicNo) {
   const payload = {
     method: "viewNotesOpt",
