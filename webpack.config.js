@@ -11,6 +11,8 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("production"),
+      "process.env.CEREBRO_URL": JSON.stringify("https://cerebro-release.cortico.ca"),
+      "process.env.WEBSOCKET_URL": JSON.stringify("wss://cerebro-release.cortico.ca"),
     }),
   ],
   resolve: {

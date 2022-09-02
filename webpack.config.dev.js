@@ -20,6 +20,8 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("development"),
+      "process.env.CEREBRO_URL": JSON.stringify(process.env.CEREBRO_URL),
+      "process.env.WEBSOCKET_URL": JSON.stringify(process.env.WEBSOCKET_URL),
     }),
   ],
   resolve: {
