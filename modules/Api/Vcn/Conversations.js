@@ -34,7 +34,7 @@ export const getConversation = async (id) => {
 export const createConversation = async (userInputs) => {
     const accessToken = await (loadExtensionStorageValue('jwt_access_token'));
     const inputs = {
-        "patient": userInputs.patient.id,
+        "patient": userInputs.patient,
         "members": userInputs.members
     };
 
