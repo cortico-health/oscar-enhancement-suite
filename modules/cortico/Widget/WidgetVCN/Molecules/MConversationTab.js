@@ -85,6 +85,11 @@ const MConversationTab = ({ conversation, selected, ...props }) => {
                     opened={openModal}
                     profile={participiant}/> */}
                         {multipleObjectDataFormatting(getOtherMembersName(conversation?.members))}
+                        {
+                            conversation?.patient
+                            &&
+                            <span> ({conversation.patient})</span>
+                        }
                     </p>
                     <p
                         className={`tw-text-contact3 tw-relative tw-mt-2 tw-w-56 tw-whitespace-nowrap tw-text-ellipsis tw-overflow-hidden ${isSelected ? "tw-text-white" : "tw-text-secondary-300"
