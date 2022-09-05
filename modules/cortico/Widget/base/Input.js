@@ -1,6 +1,5 @@
 import { forwardRef } from "preact/compat";
 import classNames from "classnames";
-import { useState } from "preact/hooks";
 
 const Input = forwardRef(
   (
@@ -22,6 +21,7 @@ const Input = forwardRef(
       units = "",
       onChange,
       value,
+      isError = false,
       ...props
     },
     ref
@@ -51,8 +51,9 @@ const Input = forwardRef(
             type={type}
             placeholder={placeholder}
             className={classNames(
-              "tw-text-sm tw-border-b tw-border-gray-300 tw-outline-none tw-inline-block tw-py-2 tw-w-full tw-text-gray-700",
+              "tw-text-sm tw-border-b tw-outline-none tw-inline-block tw-py-2 tw-w-full tw-text-gray-700",
               "placeholder:tw-text-sm",
+              !isError ? " tw-border-gray-300" : "tw-border-yellow-400",
               className
             )}
             min={minValue}
