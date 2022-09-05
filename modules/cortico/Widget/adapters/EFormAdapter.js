@@ -43,7 +43,7 @@ export default function EFormAdapter() {
           id: nanoid(),
           name: "eForm",
           data,
-          type: "eForm",
+          type: "dataUrl",
           extension: "pdf_html",
         },
       });

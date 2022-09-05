@@ -199,12 +199,10 @@ function getDemographicFromSearchParams(url) {
 
 export function getDemographicNo(apptUrl) {
   if (apptUrl) {
-    console.log("Appt url", apptUrl);
     return getDemographicFromSearchParams(apptUrl);
   } else {
     // try several options
     let demographicNo = getDemographicFromSearchParams(window.location.search);
-    console.log("Demo found here", demographicNo);
     if (!demographicNo && window.opener) {
       demographicNo = getDemographicFromSearchParams(
         window.opener.location.search
@@ -212,14 +210,17 @@ export function getDemographicNo(apptUrl) {
     }
 
     if (!demographicNo) {
-      console.log("Called!");
       const temp = document.body.innerHTML;
       demographicNo = temp.match(/demographic_no=[0-9]*/);
       if (demographicNo) {
-        console.log(demographicNo);
         demographicNo = demographicNo[0].split("=")[1];
-        console.log(demographicNo);
-        console.log("Found demographic Number!", demographicNo);
+      }
+
+      if (!demographicNo) {
+        const demoInput = document.querySelector('input[name="demog"]');
+        if (demoInput) {
+          demographicNo = demoInput.value;
+        }
       }
     }
 
@@ -420,3 +421,22 @@ export function formEncounterMessage(scheme, subject, body) {
   const suffix = `\n-------------------------------------------\n`;
   return prefix + body + suffix;
 }
+
+export const getFileInfo = (contentDisposition) => {
+  let fileName = null;
+  let extension = null;
+  if (contentDisposition.includes("filename")) {
+    fileName = contentDisposition
+      .match(/(?:"[^"]*"|^[^"]*$)/)[0]
+      .replace(/"/g, "");
+
+    if (fileName) {
+      extension = fileName.split(".").pop();
+    }
+
+    return {
+      fileName,
+      extension,
+    };
+  }
+};

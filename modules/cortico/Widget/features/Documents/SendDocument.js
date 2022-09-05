@@ -74,6 +74,7 @@ export default function SendDocument({ node, ...props }) {
           id: nanoid(),
           name: fileName || node.textContent,
           data: dataUrl,
+          type: "dataUrl",
           extension,
         },
       });

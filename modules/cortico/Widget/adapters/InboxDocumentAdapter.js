@@ -1,15 +1,19 @@
+import { useEffect, useState } from "preact/hooks";
 import { useQuery } from "react-query";
 import { useDispatch } from "react-redux";
 import { getFileInfo } from "../../../Utils/Utils";
 import { nanoid } from "nanoid";
-const url = "PrintPDF.do";
+
+function url(strings, docNo) {
+  return `ManageDocument.do?method=display&doc_no=${docNo}`;
+}
+
+const urlParams = new URLSearchParams(window.location.search);
+const segmentId = urlParams.get("segmentID");
 const id = nanoid();
 
-export default function LabResultsAdapter() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const segmentId = urlParams.get("segmentID");
+export default function InboxDocument({ onSuccess, onError, ...props }) {
   const dispatch = useDispatch();
-
   if (!segmentId) {
     return <></>;
   }
@@ -25,54 +29,11 @@ export default function LabResultsAdapter() {
     };
   }, []);
 
-  const form = document.querySelector(
-    `form[name="acknowledgeForm_${segmentId}"]`
-  );
-
-  const params = [
-    {
-      key: "segmentID",
-      value: form["segmentID"]?.value,
-    },
-    {
-      key: "multiID",
-      value: form["multiID"]?.value,
-    },
-    {
-      key: "providerNo",
-      value: form["providerNo"]?.value,
-    },
-    {
-      key: "status",
-      value: form["status"]?.value,
-    },
-    {
-      key: "comment",
-      value: form["comment"]?.value,
-    },
-    {
-      key: "labType",
-      value: form["labType"]?.value,
-    },
-    {
-      key: "lab_no",
-      value: form["lab_no"]?.value,
-    },
-    {
-      key: "label",
-      value: form["label"]?.value,
-    },
-  ];
-
-  const data = new FormData();
-  params.map((param) => data.append(param.key, param.value));
-
   const result = useQuery(
-    `labResults${segmentId}`,
+    `inboxDocument${segmentId}`,
     () => {
-      return fetch(url, {
-        method: "POST",
-        body: new URLSearchParams(data),
+      return fetch(url`${segmentId}`, {
+        method: "GET",
       }).then((response) => {
         if (!response.ok) throw Error("Network response was not ok");
         return response;
@@ -90,7 +51,7 @@ export default function LabResultsAdapter() {
     const { fileName, extension } = getFileInfo(contentDisposition);
 
     const { data: blob } = useQuery(
-      `labResults${segmentId}Blob`,
+      `inboxDocument${segmentId}Blob`,
       () => {
         return result.data.blob();
       },
@@ -103,7 +64,7 @@ export default function LabResultsAdapter() {
 
     if (blob) {
       const { data: dataUrl } = useQuery(
-        `labResults${segmentId}DataUrl`,
+        `inboxDocument${segmentId}DataUrl`,
         () => {
           return new Promise((resolve, reject) => {
             let reader = new FileReader();
@@ -137,5 +98,4 @@ export default function LabResultsAdapter() {
       }
     }
   }
-  return <></>;
 }

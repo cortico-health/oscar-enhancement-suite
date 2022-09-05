@@ -17,12 +17,13 @@ import Appointment from "./appointment/Appointment";
 import { QueryClient, QueryClientProvider } from "react-query";
 import PatientAdapter from "./adapters/PatientAdapter";
 import LabResultsAdapter from "./adapters/LabResultsAdapter";
+import FeatureDetector from "./adapters/FeatureDetecter";
+import InboxDocumentAdapter from "./adapters/InboxDocumentAdapter";
 
 const uid = nanoid();
 
 function App({ mode = "normal", ...props }) {
   const open = useSelector((state) => state.app.open);
-  console.log("App Re-render");
   const containerRef = useRef();
   const dispatch = useDispatch();
   const [dragging, setDragging] = useState(false);
@@ -179,9 +180,21 @@ function App({ mode = "normal", ...props }) {
             >
               {open === true ? (
                 <>
-                  <LabResultsAdapter />
+                  <FeatureDetector featureName="labResults">
+                    {({ disabled }) => {
+                      return disabled === false ? <LabResultsAdapter /> : null;
+                    }}
+                  </FeatureDetector>
+                  <InboxDocumentAdapter />
+
                   <CorticoPlugin onMinimize={handleMinimize} />
-                  <PatientAdapter></PatientAdapter>
+                  <FeatureDetector featureName="patient">
+                    {({ disabled }) => {
+                      return disabled === false ? (
+                        <PatientAdapter></PatientAdapter>
+                      ) : null;
+                    }}
+                  </FeatureDetector>
                 </>
               ) : (
                 <Draggable
