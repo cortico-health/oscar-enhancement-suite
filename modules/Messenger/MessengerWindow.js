@@ -25,7 +25,6 @@ import Dialog from "../cortico/Widget/features/Dialog/Dialog";
 import SavedReplies from "./SavedReplies";
 import { getDemographicNo } from "../Utils/Utils";
 import FeatureDetector from "../cortico/Widget/adapters/FeatureDetecter";
-import InboxDocument from "../cortico/Widget/adapters/InboxDocument";
 import Encounter from "../core/Encounter";
 import { BroadcastChannel } from "broadcast-channel";
 import { handleTokenExpiry } from "../../modules/cortico/Widget/common/utils";
@@ -237,13 +236,19 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         data.files = [];
         for (let i = 0; i < attachments.length; i++) {
           const file = attachments[i];
-          const reader = new FileReader();
-          reader.readAsDataURL(file.data);
-          const contents = await new Promise((resolve, reject) => {
-            reader.addEventListener("load", () => {
-              resolve(reader.result);
+          let contents = null;
+
+          if (file.type === "dataUrl") {
+            contents = file.data;
+          } else {
+            const reader = new FileReader();
+            reader.readAsDataURL(file.data);
+            contents = await new Promise((resolve, reject) => {
+              reader.addEventListener("load", () => {
+                resolve(reader.result);
+              });
             });
-          });
+          }
 
           data.files.push({
             ...file,
@@ -391,16 +396,6 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
     setOpenSavedReplies(false);
   };
 
-  const handleInboxDoc = (doc) => {
-    if (doc && !attachment) {
-      handleChange("attachment", {
-        name: doc.name,
-        data: doc.data,
-        extension: doc.extension,
-      });
-    }
-  };
-
   const handleSchemeChange = (scheme) => {
     dispatch({
       type: "messenger/set",
@@ -434,9 +429,6 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         }}
       </FeatureDetector>
 
-      {inboxDocument === true ? (
-        <InboxDocument onSuccess={handleInboxDoc}></InboxDocument>
-      ) : null}
       <div>
         <div>
           {scheme === "email" ? (

@@ -188,7 +188,7 @@ const init_cortico = async function () {
     });
   } else if (oscar.isInboxDocument()) {
     CorticoWidget(document.body, corticoWidgetContainer, {
-      disabledFeatures: ["text", "encounter", "automation"],
+      disabledFeatures: ["text", "encounter", "automation", "labResults"],
       defaultMenu: "Messenger",
       inboxDocument: true,
     });

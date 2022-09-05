@@ -18,6 +18,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import PatientAdapter from "./adapters/PatientAdapter";
 import LabResultsAdapter from "./adapters/LabResultsAdapter";
 import FeatureDetector from "./adapters/FeatureDetecter";
+import InboxDocumentAdapter from "./adapters/InboxDocumentAdapter";
 
 const uid = nanoid();
 
@@ -180,7 +181,13 @@ function App({ mode = "normal", ...props }) {
             >
               {open === true ? (
                 <>
-                  <LabResultsAdapter />
+                  <FeatureDetector featureName="labResults">
+                    {({ disabled }) => {
+                      return disabled === false ? <LabResultsAdapter /> : null;
+                    }}
+                  </FeatureDetector>
+                  <InboxDocumentAdapter />
+
                   <CorticoPlugin onMinimize={handleMinimize} />
                   <FeatureDetector featureName="patient">
                     {({ disabled }) => {

@@ -420,3 +420,22 @@ export function formEncounterMessage(scheme, subject, body) {
   const suffix = `\n-------------------------------------------\n`;
   return prefix + body + suffix;
 }
+
+export const getFileInfo = (contentDisposition) => {
+  let fileName = null;
+  let extension = null;
+  if (contentDisposition.includes("filename")) {
+    fileName = contentDisposition
+      .match(/(?:"[^"]*"|^[^"]*$)/)[0]
+      .replace(/"/g, "");
+
+    if (fileName) {
+      extension = fileName.split(".").pop();
+    }
+
+    return {
+      fileName,
+      extension,
+    };
+  }
+};
