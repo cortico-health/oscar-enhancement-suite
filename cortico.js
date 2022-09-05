@@ -216,6 +216,7 @@ const init_cortico = async function () {
       document: true,
     });
   } else if (oscar.isReportGenerationPage()) {
+    console.log("Report Generation Page Detected");
     CorticoWidget(document.body, corticoWidgetContainer, {
       disabledFeatures: ["text", "patient"],
       defaultMenu: "Automation",

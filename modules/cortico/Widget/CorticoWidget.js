@@ -182,7 +182,7 @@ function App({ mode = "normal", ...props }) {
                 <>
                   <LabResultsAdapter />
                   <CorticoPlugin onMinimize={handleMinimize} />
-                  <FeatureDetector name="patient">
+                  <FeatureDetector featureName="patient">
                     {({ disabled }) => {
                       return disabled === false ? (
                         <PatientAdapter></PatientAdapter>
