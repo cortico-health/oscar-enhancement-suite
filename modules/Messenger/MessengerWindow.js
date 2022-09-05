@@ -14,6 +14,7 @@ import {
   getEncounterNotes,
   addEncounterNote,
   postCaseManagementEntry,
+  setPatientChannelSubscription,
 } from "../Api/Api";
 import {
   loadExtensionStorageValue,
@@ -40,6 +41,34 @@ class MessengerError extends Error {
   }
 }
 
+
+
+function getSubscribedChannel(subscriptions) {
+  let subscribedChannel = {
+    sms: false,
+    email: false,
+  }
+
+  //If subscription is []
+  if (subscriptions.length === 0) {
+    return {
+      sms: true,
+      email: true
+    }
+  }
+
+  //if either sms and email has status opt_in then their corresponding channel is true
+  for (let sub of subscriptions) {
+    if (sub.subscription_type === "sms" && sub.status === "opt_in") {
+      subscribedChannel = { ...subscribedChannel,sms: true }
+    } else if (sub.subscription_type === "email" && sub.status === "opt_in") {
+      subscribedChannel = { ...subscribedChannel,email: true }
+    }
+  }
+
+  return subscribedChannel;
+}
+
 function MessengerWindow({ encounter: encounterOption, ...props }) {
   const dispatch = useDispatch();
   const [demographicNo, setDemographicNo] = useState(null);
@@ -59,6 +88,10 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
   const [openSavedReplies, setOpenSavedReplies] = useState(false);
   const [filePreviewLink, setFilePreviewLink] = useState(false);
   const [patientInfo, setPatientInfo] = useState(null);
+  const [subscribedChannel,setSubscribedChannel] = useState({
+    sms: false,
+    email: false
+  })
   const [maxLength, setMaxLength] = useState(2000);
   const { clinic_name: clinicName, uid } = useSelector((state) => state.app);
 
@@ -347,6 +380,61 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
     }
   };
 
+  const changeChannelSubscription = async (type,isSubscribed,value) => {
+    const payload = {
+      subscription_status: !isSubscribed ? "opt_in" : "opt_out",
+      subscription_type: type,
+      values: value
+    };
+
+    try {
+      const token = await loadExtensionStorageValue("jwt_access_token");
+
+      if (!token) {
+        throw new MessengerError(
+          "Could not get access token",
+          "Please try signing in again. Otherwise, please contact us"
+        );
+      }
+
+      await setPatientChannelSubscription(token,payload);
+
+      let changed_subscriptions =
+        patientInfo.subscriptions.find((sub) => { return sub.subscription_type === type });
+
+      changed_subscriptions.status = !isSubscribed ? "opt_in" : "opt_out";
+
+      const temp_subscriptions = [
+        patientInfo.subscriptions.find((sub) => { return sub.subscription_type !== type }),
+        changed_subscriptions
+      ];
+
+      dispatch({
+        type: "app/setPatientInfo",
+        payload: { ...patientInfo,subscriptions: temp_subscriptions }
+      })
+
+      setSubscribedChannel(() => { return getSubscribedChannel(temp_subscriptions) })
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  const handleChannelSubscription = () => {
+    let isSubscribedToThisChannel;
+    let value;
+
+    if (scheme === "email") {
+      isSubscribedToThisChannel = subscribedChannel.email;
+      value = to;
+    } else if (scheme === "sms") {
+      isSubscribedToThisChannel = subscribedChannel.sms;
+      value = phone;
+    }
+
+    changeChannelSubscription(scheme,isSubscribedToThisChannel,value);
+  }
+
   const handleSend = () => {
     submitData(scheme);
   };
@@ -377,6 +465,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
       getPatientInfo().then((patientInfo) => {
         if (patientInfo) {
           setPatientInfo(patientInfo);
+          setSubscribedChannel(() => { return getSubscribedChannel(patientInfo.subscriptions) });
         }
       });
     }
@@ -465,6 +554,19 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         <div>
           {scheme === "email" ? (
             <>
+              <Alert
+                title={ subscribedChannel.email ? "Success" : "Warning" }
+                message={ `Patient is ${subscribedChannel.email ? "unsubscribed" : "subscribed"} at this email address` }
+                className="tw-w-full tw-my-2"
+                variant={ subscribedChannel.email ? "success" : "warning" }
+              >
+                <>
+                  <br />
+                  <span onClick={ handleChannelSubscription } className="tw-font-bold tw-underline tw-cursor-pointer">
+                    { `${subscribedChannel.email ? "Unsubscribe" : "Subscribe"} to ${to}` }
+                  </span>
+                </>
+              </Alert>
               <div>
                 <Input
                   type="email"
@@ -472,6 +574,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
                   value={to}
                   onChange={(val) => handleChange("to", val)}
                   defaultValue={to}
+                  isError={ !subscribedChannel.email }
                 />
               </div>
               <hr className="tw-opacity-10" />
@@ -486,15 +589,31 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
             </>
           ) : null}
           {scheme === "sms" ? (
-            <div>
-              <Input
-                type="text"
-                placeholder="Phone"
-                onChange={(val) => handleChange("phone", val)}
-                value={phone}
-                defaultValue={phone}
-              />
-            </div>
+            <>
+              <Alert
+                title={ subscribedChannel.sms ? "Success" : "Warning" }
+                message={ `Patient is ${subscribedChannel.sms ? "subscribed" : "unsubscribed"} at this phone number` }
+                className="tw-w-full tw-my-2"
+                variant={ subscribedChannel.sms ? "success" : "warning" }
+              >
+                <>
+                  <br />
+                  <span onClick={ handleChannelSubscription } className="tw-font-bold tw-underline tw-cursor-pointer">
+                    { `${subscribedChannel.sms ? "Unsubscribe" : "Subscribe"} to ${phone}` }
+                  </span>
+                </>
+              </Alert>
+              <div>
+                <Input
+                  type="text"
+                  placeholder="Phone"
+                  onChange={ (val) => handleChange("phone",val) }
+                  value={ phone }
+                  defaultValue={ phone }
+                  isError={ !subscribedChannel.sms }
+                />
+              </div>
+            </>
           ) : null}
 
           <hr className="tw-opacity-10" />
@@ -591,6 +710,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
                 onClick={handleSend}
                 className="tw-bg-indigo-100 tw-text-blue-1000 tw-text-sm  tw-rounded-md tw-font-medium "
                 variant="custom"
+                disabled={ !subscribedChannel.email }
               >
                 <span className="tw-flex tw-items-center tw-cursor-pointer">
                   <span className="tw-cursor-pointer">Send Email</span>
@@ -607,6 +727,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
                       onClick={handleSend}
                       variant="custom"
                       className="tw-bg-emerald-100 tw-text-emerald-900 tw-text-sm  tw-mr-2 tw-rounded-md tw-font-medium "
+                      disabled={ !subscribedChannel.sms }
                     >
                       <span className="tw-flex tw-items-center tw-cursor-pointer">
                         <span className="tw-cursor-pointer">Send Text</span>
@@ -652,12 +773,6 @@ function SchemeSelect({ onClick, scheme, className, ...props }) {
             className={classNames("tw-w-4 tw-h-4 tw-mr-1 tw-inline-block")}
           ></TextIcon>
           Text Message
-
-          <span class={ classNames("tw-inline-flex tw-justify-center tw-items-center tw-ml-2 tw-w-4 tw-h-4 tw-text-xs tw-font-semibold tw-rounded-full",
-            scheme === "sms" ? "tw-bg-white tw-text-cortico-blue"
-              : "tw-bg-cortico-blue tw-text-white") }>
-            <svg class="tw-w-6 tw-h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-          </span>
         </div>
       </div>
       <div className="tw-flex-1 tw-text-center">
@@ -676,15 +791,6 @@ function SchemeSelect({ onClick, scheme, className, ...props }) {
             className={classNames("tw-w-4 tw-h-4 tw-mr-1 tw-inline-block")}
           ></MailIcon>
           Email
-
-          {/* '
-          TODO Dwight: Will go back to  this once there is a fetching from api
-          <span class={ classNames("tw-inline-flex tw-justify-center tw-items-center tw-ml-2 tw-w-4 tw-h-4 tw-text-xs tw-font-semibold tw-rounded-full",
-            scheme === "email" ? "tw-bg-white tw-text-cortico-blue"
-              : "tw-bg-cortico-blue tw-text-white") }>
-            <svg class="tw-w-6 tw-h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-          </span>
-           */}
         </div>
       </div>
     </div>

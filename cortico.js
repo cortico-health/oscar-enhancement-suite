@@ -1982,7 +1982,10 @@ export async function getPatientInfo(demographicNo) {
 
   const accessToken = await (loadExtensionStorageValue('jwt_access_token'));
 
-  let subscription = await (getPatientSubscription(accessToken,info.demographicNo));
+  let subscription = await (getPatientSubscription(accessToken,info.demographicNo,info.email,info["Cell PhoneHistory"] ||
+    info["PhoneHHistory"] ||
+    info["PhoneWHistory"] ||
+    "N/A"));
   subscription = await subscription.json();
 
   info.agreement_date_signed = subscription.agreement_date_signed;
