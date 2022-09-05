@@ -8,6 +8,7 @@ import {
 import { PrimaryButton,SecondaryButton } from "../../core/Button";
 import { getCorticoUrl } from "../../Utils/Utils";
 import Tooltip from "./base/Tooltip";
+import classNames from "classnames";
 
 export default function PatientPanel() {
   const { info } = useSelector((state) => state.patient);
@@ -37,7 +38,7 @@ export default function PatientPanel() {
   return (
     <div className=" tw-text-gray-700 tw-p-4 tw-font-sans">
       <div className="tw-p-2  tw-rounded-md tw-min-w-[600px] tw-flex tw-items-center">
-        <Tooltip description={ `Contract was consented last ${info.agreement_date_signed}` }>
+        <Tooltip description={ info.agreement_date_signed ? `Contract was consented last ${info.agreement_date_signed}` : "The Contract was not yet consented" }>
           <div className="tw-relative">
             <span className="tw-inline-block tw-h-24 tw-w-24 tw-rounded-full tw-overflow-hidden tw-bg-gray-100 tw-border-4 tw-border-white tw-items-end tw-shadow-xl">
               <svg
@@ -75,14 +76,17 @@ export default function PatientPanel() {
                 "N/A"}
             </a>
           </p>
+          {/*
+          TODO Dwight: Will bring this bac if needed
           <div className="tw-flex tw-gap-1 tw-mt-3">
-            <span class="tw-bg-green-100 tw-text-green-800 tw-text-xs tw-font-semibold tw-mr-2 tw-px-2.5 tw-py-0.5 tw-rounded">
+            <span class={classNames("tw-text-xs tw-font-semibold tw-mr-2 tw-px-2.5 tw-py-0.5 tw-rounded")}>
               Subscribed Phone
             </span>
             <span class="tw-bg-red-100 tw-text-red-800 tw-text-xs tw-font-semibold tw-mr-2 tw-px-2.5 tw-py-0.5 tw-rounded">
               Unsubscribed Email
             </span>
           </div>
+          */}
         </div>
         <div className="tw-flex tw-flex-col tw-space-y-2 tw-shrink-0 tw-justify-center">
           <PrimaryButton
