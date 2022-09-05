@@ -3,20 +3,32 @@ import { useDispatch } from "react-redux";
 import { getFileInfo } from "../../../Utils/Utils";
 import { nanoid } from "nanoid";
 const url = "PrintPDF.do";
+const id = nanoid();
 
 export default function LabResultsAdapter() {
   const urlParams = new URLSearchParams(window.location.search);
   const segmentId = urlParams.get("segmentID");
+  const dispatch = useDispatch();
 
   if (!segmentId) {
-    return;
+    return <></>;
   }
+
+  useEffect(() => {
+    return () => {
+      dispatch({
+        type: "messenger/deleteAttachment",
+        payload: {
+          id,
+        },
+      });
+    };
+  }, []);
 
   const form = document.querySelector(
     `form[name="acknowledgeForm_${segmentId}"]`
   );
 
-  console.log("Form", form);
   const params = [
     {
       key: "segmentID",
@@ -56,7 +68,7 @@ export default function LabResultsAdapter() {
   params.map((param) => data.append(param.key, param.value));
 
   const result = useQuery(
-    "labResults",
+    `labResults${segmentId}`,
     () => {
       return fetch(url, {
         method: "POST",
@@ -67,6 +79,8 @@ export default function LabResultsAdapter() {
       });
     },
     {
+      staleTime: Infinity,
+      cacheTime: Infinity,
       retry: false,
     }
   );
@@ -76,18 +90,20 @@ export default function LabResultsAdapter() {
     const { fileName, extension } = getFileInfo(contentDisposition);
 
     const { data: blob } = useQuery(
-      "labResultsBlob",
+      `labResults${segmentId}Blob`,
       () => {
         return result.data.blob();
       },
       {
+        staleTime: Infinity,
+        cacheTime: Infinity,
         retry: false,
       }
     );
 
     if (blob) {
       const { data: dataUrl } = useQuery(
-        "labResultsDataUrl",
+        `labResults${segmentId}DataUrl`,
         () => {
           return new Promise((resolve, reject) => {
             let reader = new FileReader();
@@ -101,16 +117,17 @@ export default function LabResultsAdapter() {
           });
         },
         {
+          staleTime: Infinity,
+          cacheTime: Infinity,
           retry: false,
         }
       );
 
       if (dataUrl) {
-        const dispatch = useDispatch();
         dispatch({
           type: "messenger/addAttachment",
           payload: {
-            id: nanoid(),
+            id: id,
             name: fileName,
             data: dataUrl,
             type: "dataUrl",

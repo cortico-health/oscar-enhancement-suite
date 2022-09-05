@@ -1998,6 +1998,14 @@ function getPatientDemographicNo(demographic) {
     demographicNo = getDemographicNo(window.opener.location.search);
 
   if (!demographicNo) {
+    const demoInput = document.querySelector('input[name="demog"]');
+    if (demoInput) {
+      console.log("demoInput.value", demoInput.value);
+      demographicNo = demoInput.value;
+    }
+  }
+
+  if (!demographicNo) {
     // TODO: always try this when getting demo #.
     document.querySelectorAll("form").forEach(function (f) {
       console.log(f);
@@ -2013,7 +2021,6 @@ function getDemographicPageResponse(demographic) {
   const namespace = getNamespace();
 
   let demographicNo = demographic || getDemographicNo(window.location.search);
-  console.log("Demographic", demographicNo, demographic);
 
   if (!demographicNo && window.opener)
     demographicNo = getDemographicNo(window.opener.location.search);
@@ -2023,14 +2030,21 @@ function getDemographicPageResponse(demographic) {
     const form = document.querySelectorAll("form");
     if (form) {
       form.forEach(function (f) {
-        console.log(f);
         demographicNo = demographicNo || getDemographicNo(f.action)?.trim();
       });
     }
   }
 
   if (!demographicNo) {
-    console.trace();
+    const demoInput = document.querySelector('input[name="demog"]');
+    if (demoInput) {
+      console.log("demoInput.value", demoInput.value);
+      demographicNo = demoInput.value;
+    }
+  }
+
+  if (!demographicNo) {
+    //console.trace();
     console.error("Failed to load demographics.");
     return "";
   }

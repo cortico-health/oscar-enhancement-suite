@@ -10,13 +10,24 @@ function url(strings, docNo) {
 
 const urlParams = new URLSearchParams(window.location.search);
 const segmentId = urlParams.get("segmentID");
+const id = nanoid();
 
 export default function InboxDocument({ onSuccess, onError, ...props }) {
+  const dispatch = useDispatch();
   if (!segmentId) {
     return <></>;
   }
 
-  console.log("Re-rendering");
+  useEffect(() => {
+    return () => {
+      dispatch({
+        type: "messenger/deleteAttachment",
+        payload: {
+          id,
+        },
+      });
+    };
+  }, []);
 
   const result = useQuery(
     `inboxDocument${segmentId}`,
@@ -29,6 +40,8 @@ export default function InboxDocument({ onSuccess, onError, ...props }) {
       });
     },
     {
+      staleTime: Infinity,
+      cacheTime: Infinity,
       retry: false,
     }
   );
@@ -36,7 +49,6 @@ export default function InboxDocument({ onSuccess, onError, ...props }) {
   if (result.data) {
     const contentDisposition = result.data.headers.get("Content-Disposition");
     const { fileName, extension } = getFileInfo(contentDisposition);
-    console.log("File name", fileName);
 
     const { data: blob } = useQuery(
       `inboxDocument${segmentId}Blob`,
@@ -44,6 +56,8 @@ export default function InboxDocument({ onSuccess, onError, ...props }) {
         return result.data.blob();
       },
       {
+        staleTime: Infinity,
+        cacheTime: Infinity,
         retry: false,
       }
     );
@@ -64,16 +78,17 @@ export default function InboxDocument({ onSuccess, onError, ...props }) {
           });
         },
         {
+          staleTime: Infinity,
+          cacheTime: Infinity,
           retry: false,
         }
       );
 
       if (dataUrl) {
-        const dispatch = useDispatch();
         dispatch({
           type: "messenger/addAttachment",
           payload: {
-            id: nanoid(),
+            id: id,
             name: fileName,
             data: dataUrl,
             type: "dataUrl",
@@ -83,6 +98,4 @@ export default function InboxDocument({ onSuccess, onError, ...props }) {
       }
     }
   }
-
-  console.log("Inbox document Result", result);
 }

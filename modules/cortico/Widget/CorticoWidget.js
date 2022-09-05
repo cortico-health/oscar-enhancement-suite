@@ -24,7 +24,6 @@ const uid = nanoid();
 
 function App({ mode = "normal", ...props }) {
   const open = useSelector((state) => state.app.open);
-  console.log("App Re-render");
   const containerRef = useRef();
   const dispatch = useDispatch();
   const [dragging, setDragging] = useState(false);

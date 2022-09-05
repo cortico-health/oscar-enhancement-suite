@@ -333,7 +333,6 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
   };
 
   const handleChange = (key, value) => {
-    console.log("Body", body);
     dispatch({
       type: "messenger/set",
       payload: {
