@@ -17,6 +17,7 @@ import Appointment from "./appointment/Appointment";
 import { QueryClient, QueryClientProvider } from "react-query";
 import PatientAdapter from "./adapters/PatientAdapter";
 import LabResultsAdapter from "./adapters/LabResultsAdapter";
+import FeatureDetector from "./adapters/FeatureDetecter";
 
 const uid = nanoid();
 
@@ -181,7 +182,13 @@ function App({ mode = "normal", ...props }) {
                 <>
                   <LabResultsAdapter />
                   <CorticoPlugin onMinimize={handleMinimize} />
-                  <PatientAdapter></PatientAdapter>
+                  <FeatureDetector name="patient">
+                    {({ disabled }) => {
+                      return disabled === false ? (
+                        <PatientAdapter></PatientAdapter>
+                      ) : null;
+                    }}
+                  </FeatureDetector>
                 </>
               ) : (
                 <Draggable
