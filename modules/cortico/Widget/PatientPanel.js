@@ -5,7 +5,7 @@ import {
   MailIcon,
   PhoneIcon,
 } from "@heroicons/react/solid";
-import { PrimaryButton, SecondaryButton } from "../../core/Button";
+import { PrimaryButton,SecondaryButton } from "../../core/Button";
 import { getCorticoUrl } from "../../Utils/Utils";
 import Tooltip from "./base/Tooltip";
 
@@ -31,13 +31,13 @@ export default function PatientPanel() {
     "Cell PhoneHistory",
     "Province",
     "Health Ins",
-    "Helath Card Type",
+    "Health Card Type",
   ];
 
   return (
     <div className=" tw-text-gray-700 tw-p-4 tw-font-sans">
       <div className="tw-p-2  tw-rounded-md tw-min-w-[600px] tw-flex tw-items-center">
-        <Tooltip description="Contract was consented last January 21, 2022">
+        <Tooltip description={ `Contract was consented last ${info.agreement_date_signed}` }>
           <div className="tw-relative">
             <span className="tw-inline-block tw-h-24 tw-w-24 tw-rounded-full tw-overflow-hidden tw-bg-gray-100 tw-border-4 tw-border-white tw-items-end tw-shadow-xl">
               <svg
