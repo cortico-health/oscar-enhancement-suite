@@ -99,6 +99,12 @@ Then
 
 # Building
 
+## Staging
+
+1. `docker-compose run oes-stg`
+
+## Production
+
 1. `docker-compose run oes-pkg`
 
 Upload cortico-firefox.zip and cortico-chrome.zip to respective stores.
