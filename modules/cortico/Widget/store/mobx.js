@@ -93,17 +93,14 @@ export const StateProvider = ({ children }) => {
         (error) => console.log(error)
       )
     },
-    selectConversation(id) {
-      if (!id) {
+    selectConversation(conversation) {
+      if (!conversation) {
         this.conversations.selected = null;
         patientStore.selectPatient(null);
         return;
       }
 
-      const selectedConversation = this.conversations.all.find((conversation) => {
-        return conversation.id == id;
-      });
-      this.conversations.selected = selectedConversation;
+      this.conversations.selected = conversation;
     },
     updateOrInsertConversation(updatedConversation) {
       const existingConversation = this.conversations.all.find((conversation) => {
@@ -119,6 +116,7 @@ export const StateProvider = ({ children }) => {
       }
 
       this.conversations.all = _.orderBy(this.conversations.all, ['last_message.created_date'], ['desc']);
+      if (this.conversations.selected.id === updatedConversation.id) this.conversations.selected = updatedConversation;
     }
   }))
 

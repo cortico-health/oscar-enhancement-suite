@@ -1,22 +1,20 @@
-import { useEffect, useRef, useState } from "preact/hooks";
-import { useStore } from "../../store/mobx";
-import { useSelector } from "react-redux";
-import MChatTools from "../Molecules/MChatTools";
 import useWebSocket from "react-use-websocket";
-import { createFile, getChatMessageData, getConversation } from "../../../../Api/Vcn/Conversations.js";
+import { useEffect, useRef, useState } from "preact/hooks";
+import { observer } from "mobx-react-lite";
+import { useStore } from "../../store/mobx";
+import MChatTools from "../Molecules/MChatTools";
 import AFileInputShow from "../Atoms/AFileInputShow";
 import MSend from "../Molecules/MSend";
 import MMessageCard from "../Molecules/MMessageCard";
 import ASvg from "../Atoms/ASvg";
 import NoDiscussionLogo from "../../../../../resources/icons/chat-alt2.svg"
-import { getWsChatUrl } from "../../../../Utils/VcnUtils";
-import { observer } from "mobx-react-lite";
-import { useDispatch } from "react-redux";
-import { loadExtensionStorageValue } from "../../../../Utils/Utils";
 import ASpinner from "../Atoms/ASpinner";
+import { getWsChatUrl } from "../../../../Utils/VcnUtils";
+import { loadExtensionStorageValue } from "../../../../Utils/Utils";
+import { createFile, getChatMessageData, getConversation } from "../../../../Api/Vcn/Conversations.js";
+
 
 const CMessageList = () => {
-    const dispatch = useDispatch();
     const { conversationStore, patientStore } = useStore();
     const sendRef = useRef(null);
     const messagesEndRef = useRef(null);
@@ -24,10 +22,12 @@ const CMessageList = () => {
     const [messages, setMessages] = useState(undefined);
     const [socketUrl, setSocketUrl] = useState(null);
     const [preview, setPreview] = useState(null);
+
     const [patientSelected, setPatientSelected] = useState(null);
     const [uploadedFile, setUploadedFile] = useState(null);
     const [fileStats, setFileStats] = useState(null);
-    const [loading,setLoading] = useState(false);
+    const [readHistory, setReadHistory] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const { getWebSocket } = useWebSocket(socketUrl, {
         onOpen: () => onChatSocketOpen(),
@@ -87,11 +87,12 @@ const CMessageList = () => {
     };
 
     useEffect(() => {
-        const selectedId = conversationStore.conversations.selected?.id;
+        const conversation = conversationStore.conversations.selected;
 
-        if (selectedId) {
+        if (conversation) {
             setLoading(true);
-            getConversation(selectedId).then((res) => { return res.json() }).then(
+
+            getConversation(conversation.id).then((res) => { return res.json() }).then(
                 (data) => {
                     setFileStats(data.stats)
                     patientStore.selectPatient(data.patient);
@@ -103,11 +104,11 @@ const CMessageList = () => {
                 }
             )
 
-            getChatMessageData(selectedId).then((response) => {
+            getChatMessageData(conversation.id).then((response) => {
                 return response.json();
             }).then((data) => {
                 loadExtensionStorageValue("jwt_access_token").then((accessToken) => {
-                    if (accessToken) setSocketUrl(getWsChatUrl(selectedId, accessToken));
+                    if (accessToken) setSocketUrl(getWsChatUrl(conversation.id, accessToken));
                 });
                 setMessages(data.results)
                 setLoading(false);
@@ -118,7 +119,11 @@ const CMessageList = () => {
         } else {
             console.log("Message False")
         }
-    }, [conversationStore.conversations.selected]);
+    }, [conversationStore.conversations.selected?.id]);
+
+    useEffect(() => {
+        setReadHistory(conversationStore.conversations.selected?.last_read_messages || []);
+    }, [conversationStore.conversations.selected?.last_read_messages]);
 
     useEffect(() => {
         setPatientSelected(patientStore.patients.selected);
@@ -132,7 +137,7 @@ const CMessageList = () => {
         return (
             <div className="tw-w-[1000px] tw-h-full tw-relative">
                 <div className="tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-2 tw-w-64 tw-h-full tw-absolute tw-left-1/2 -tw-translate-x-1/2">
-                    <ASvg src={ NoDiscussionLogo } />
+                    <ASvg src={NoDiscussionLogo} />
                     <h4 className="text-secondary-300 text-2xl">Choose the discussion</h4>
                 </div>
             </div>
@@ -145,38 +150,43 @@ const CMessageList = () => {
                 fileStats={fileStats}
                 patient={patientStore.patients.selected}
                 conversation={conversationStore.conversations.selected}
-                loading={ loading }
+                loading={loading}
             />
 
-            { conversationStore.conversations.selected && !loading ? (
+            {conversationStore.conversations.selected && !loading ? (
                 <>
                     <div className="tw-flex-grow tw-overflow-y-auto tw-h-96 tw-px-9">
-                        { messages?.slice(0).reverse().map((message) => {
-                            return <MMessageCard key={ `message-${message.id}` } messageDetails={ message } attachment={ preview } />;
-                        }) }
-                        <div ref={ messagesEndRef } />
+                        {messages?.slice(0).reverse().map((message) => {
+                            return (
+                                <MMessageCard
+                                    key={`message-${message.id}`}
+                                    messageDetails={message}
+                                    readHistory={readHistory.filter((m) => m.chat_message_id === message.id)}
+                                />);
+                        })}
+                        <div ref={messagesEndRef} />
                     </div>
                     <div className="tw-sticky tw-bg-secondary-10 tw-w-full">
                         <div className="tw-mx-12">
-                            <AFileInputShow fileInput={ preview } exit={ handlers.removeFile } />
+                            <AFileInputShow fileInput={preview} exit={handlers.removeFile} />
 
                             <MSend
                                 placeholder="Type message..."
-                                ref={ sendRef }
-                                handlers={ handlers }
+                                ref={sendRef}
+                                handlers={handlers}
                             />
                             <p className="tw-text-h3 tw-text-right tw-text-secondary-500 tw-pb-4">
-                                { patientSelected && "Sending a message about " }
+                                {patientSelected && "Sending a message about "}
 
                                 <span className="tw-font-bold">
-                                    { (patientSelected) ?
+                                    {(patientSelected) ?
                                         `${patientSelected?.first_name} ${patientSelected?.last_name}.`
                                         :
                                         "No Patient."
                                     }</span>
-                                { " " }
+                                {" "}
                                 <a className="tw-font-medium tw-text-primary-500" href="/select">
-                                    { patientSelected ? "Switch" : "Choose" } Patient
+                                    {patientSelected ? "Switch" : "Choose"} Patient
                                 </a>
                             </p>
                         </div>
@@ -186,7 +196,7 @@ const CMessageList = () => {
                 <div className="tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-2 tw-w-[1000px] tw-h-full">
                     <ASpinner variant="md" />
                 </div>
-            ) }
+            )}
 
         </div>
     )
