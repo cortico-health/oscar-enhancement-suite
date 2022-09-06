@@ -4,7 +4,7 @@ const useUtils = () => {
     const { userStore } = useStore();
 
     const getOtherMembersName = (members) => {
-        if (!members) return "No Members";
+        if (!members) return [];
 
         return members.filter((member) => {
             return member.full_name !== userStore.user?.profile.first_name + " " + userStore.user?.profile.last_name;
