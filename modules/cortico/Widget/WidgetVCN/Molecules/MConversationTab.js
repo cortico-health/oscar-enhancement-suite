@@ -34,7 +34,7 @@ const MConversationTab = ({ conversation, selected, ...props }) => {
     }
 
     const handleChatRedirect = (e) => {
-        conversationStore.selectConversation(conversation.id);
+        conversationStore.selectConversation(conversation);
     }
 
     if (!conversation) {
