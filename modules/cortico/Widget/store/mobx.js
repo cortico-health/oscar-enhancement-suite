@@ -122,7 +122,7 @@ export const StateProvider = ({ children }) => {
 
   useEffect(() => {
     // PROVIDER MESSAGING FEATURE FLAG
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.INCLUDE_PROVIDER_MESSAGING) {
       // FETCH ALL PROVIDER MESSAGING DATA
       loadExtensionStorageValue("jwt_access_token").then((accessToken) => {
         if (accessToken) {

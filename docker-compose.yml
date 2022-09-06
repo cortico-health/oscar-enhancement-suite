@@ -10,6 +10,7 @@ services:
     environment:
       - CEREBRO_URL=https://cerebro-develop.cortico.ca
       - WEBSOCKET_URL=wss://cerebro-develop.cortico.ca
+      - INCLUDE_PROVIDER_MESSAGING=1
   oes-pkg:
     volumes:
       - .:/code
