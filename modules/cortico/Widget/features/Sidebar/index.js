@@ -60,7 +60,7 @@ const providerMessagingPages = [
 ]
 
 // PROVIDER MESSAGING FEATURE FLAG
-if (INCLUDE_PROVIDER_MESSAGING) {
+if (process.env.INCLUDE_PROVIDER_MESSAGING) {
   initialState.items.push(...providerMessagingPages);
 }
 
