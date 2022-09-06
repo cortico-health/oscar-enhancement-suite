@@ -60,7 +60,7 @@ const providerMessagingPages = [
 ]
 
 // PROVIDER MESSAGING FEATURE FLAG
-if (process.env.NODE_ENV !== 'production') {
+if (INCLUDE_PROVIDER_MESSAGING) {
   initialState.items.push(...providerMessagingPages);
 }
 

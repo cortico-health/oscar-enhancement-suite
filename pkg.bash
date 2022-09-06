@@ -22,7 +22,16 @@ zip -r cortico-chrome.zip dist resources manifest.json
 
 zip -r oscar-enhancement-suite.zip . -x '*.git*' -x '*.zip' -x '*node_modules*'
 
-cp manifest.chrome.json.bak manifest.chrome.json
-cp manifest.firefox.json.bak manifest.firefox.json
-cp cortico.js.bak cortico.js
-cp modules/cortico/Widget/WidgetSidebar.js.bak modules/cortico/Widget/WidgetSidebar.js
+export INCLUDE_PROVIDER_MESSAGING=1
+export CEREBRO_URL=https://cerebro-develop.cortico.ca
+export WEBSOCKET_URL=wss://cerebro-develop.cortico.ca
+
+yarn build
+
+cp manifest.firefox.json manifest.json
+zip -r cortico-firefox-stage.zip dist resources manifest.json
+
+cp manifest.chrome.json manifest.json
+zip -r cortico-chrome-stage.zip dist resources manifest.json
+
+zip -r oscar-enhancement-suite-stage.zip . -x '*.git*' -x '*.zip' -x '*node_modules*'

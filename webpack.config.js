@@ -10,9 +10,9 @@ module.exports = {
   mode: "production",
   plugins: [
     new webpack.DefinePlugin({
-      "process.env.NODE_ENV": JSON.stringify("production"),
-      "process.env.CEREBRO_URL": JSON.stringify("https://cerebro-release.cortico.ca"),
-      "process.env.WEBSOCKET_URL": JSON.stringify("wss://cerebro-release.cortico.ca"),
+      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || "production"),
+      "process.env.CEREBRO_URL": JSON.stringify(process.env.CEREBRO_URL || "https://cerebro-release.cortico.ca"),
+      "process.env.WEBSOCKET_URL": JSON.stringify(process.env.WEBSOCKET_URL || "wss://cerebro-release.cortico.ca"),
     }),
   ],
   resolve: {
