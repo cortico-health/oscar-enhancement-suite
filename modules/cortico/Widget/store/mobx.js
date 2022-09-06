@@ -116,6 +116,7 @@ export const StateProvider = ({ children }) => {
       }
 
       this.conversations.all = _.orderBy(this.conversations.all, ['last_message.created_date'], ['desc']);
+      if (this.conversations.selected.id === updatedConversation.id) this.conversations.selected = updatedConversation;
     }
   }))
 

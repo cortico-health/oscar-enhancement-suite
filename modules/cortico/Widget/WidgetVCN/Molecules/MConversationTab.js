@@ -1,12 +1,9 @@
-import classNames from "classnames";
-import { observer } from "mobx-react-lite";
-import { h } from "preact";
-/* import { useRouter,route } from "preact-router"; */
 import { useEffect, useState } from "preact/hooks";
+import { observer } from "mobx-react-lite";
+import classNames from "classnames";
+import { useStore } from "../../store/mobx";
 import { multipleObjectDataFormatting } from "../../../../helper/name-formatting";
 import useUtils from "../../../../Hooks/useUtils";
-import { useStore } from "../../store/mobx";
-/* import CProfileCard from "../organisms/c-profile-card"; */
 import MProfilePicture from "./MProfilePicture";
 
 const MConversationTab = ({ conversation, selected, ...props }) => {
@@ -27,11 +24,6 @@ const MConversationTab = ({ conversation, selected, ...props }) => {
     useEffect(() => {
         setUnreadMessages(conversation.unread_messages_count);
     }, [conversation.unread_messages_count]);
-
-    const unreadMessagesView = () => {
-        if (unreadMessages > 99) return "99+"
-        else return unreadMessages
-    }
 
     const handleChatRedirect = (e) => {
         conversationStore.selectConversation(conversation);
@@ -80,10 +72,6 @@ const MConversationTab = ({ conversation, selected, ...props }) => {
                         className={`tw-text-contact2 tw-w-56 tw-cursor-pointer tw-whitespace-nowrap tw-text-ellipsis tw-overflow-hidden ${isSelected ? "tw-text-white" : "tw-text-secondary-500"
                             }`}
                     >
-                        {/* <CProfileCard
-                    setOpenModal={setOpenModal}
-                    opened={openModal}
-                    profile={participiant}/> */}
                         {multipleObjectDataFormatting(getOtherMembersName(conversation?.members))}
                         {
                             conversation?.patient
@@ -96,7 +84,7 @@ const MConversationTab = ({ conversation, selected, ...props }) => {
                             }`}
                     >
                         {conversation?.last_message ? (
-                            <span>
+                            <span className="tw-cursor-pointer">
                                 {`${conversation.last_message.from_user}: ${conversation.last_message.body}`}
                             </span>
                         ) : ''}
@@ -104,7 +92,7 @@ const MConversationTab = ({ conversation, selected, ...props }) => {
                 </div>
                 {unreadMessages > 0 &&
                     (
-                        <div className='tw-rounded-full tw-flex tw-items-center tw-justify-center tw-text-contact3 tw-w-8 tw-h-8 tw-font-bold tw-text-white tw-bg-primary-500'>
+                        <div className='tw-cursor-pointer tw-rounded-full tw-flex tw-items-center tw-justify-center tw-text-contact3 tw-w-8 tw-h-8 tw-font-bold tw-text-white tw-bg-red-500'>
                             {unreadMessages < 99 ? unreadMessages : "99+"}
                         </div>
                     )
