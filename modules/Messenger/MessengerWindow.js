@@ -32,6 +32,7 @@ import { BroadcastChannel } from "broadcast-channel";
 import { handleTokenExpiry } from "../../modules/cortico/Widget/common/utils";
 import classNames from "classnames";
 import Alert from "../cortico/Widget/Alert";
+import SubscriptionContainer from "./SubscriptionContainer";
 
 class MessengerError extends Error {
   constructor(title, message) {
@@ -41,33 +42,6 @@ class MessengerError extends Error {
   }
 }
 
-
-
-function getSubscribedChannel(subscriptions) {
-  let subscribedChannel = {
-    sms: false,
-    email: false,
-  }
-
-  //If subscription is []
-  if (subscriptions.length === 0) {
-    return {
-      sms: true,
-      email: true
-    }
-  }
-
-  //if either sms and email has status opt_in then their corresponding channel is true
-  for (let sub of subscriptions) {
-    if (sub.subscription_type === "sms" && sub.status === "opt_in") {
-      subscribedChannel = { ...subscribedChannel,sms: true }
-    } else if (sub.subscription_type === "email" && sub.status === "opt_in") {
-      subscribedChannel = { ...subscribedChannel,email: true }
-    }
-  }
-
-  return subscribedChannel;
-}
 
 function MessengerWindow({ encounter: encounterOption, ...props }) {
   const dispatch = useDispatch();
@@ -84,14 +58,11 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
     document,
     inboxDocument,
     scheme,
+    subscriptions
   } = useSelector((state) => state.messenger);
   const [openSavedReplies, setOpenSavedReplies] = useState(false);
   const [filePreviewLink, setFilePreviewLink] = useState(false);
-  const [patientInfo, setPatientInfo] = useState(null);
-  const [subscribedChannel,setSubscribedChannel] = useState({
-    sms: false,
-    email: false
-  })
+  const [patientInfo,setPatientInfo] = useState(null);
   const [maxLength, setMaxLength] = useState(2000);
   const { clinic_name: clinicName, uid } = useSelector((state) => state.app);
 
@@ -380,9 +351,53 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
     }
   };
 
-  const changeChannelSubscription = async (type,isSubscribed,value) => {
+
+  //SUBSCRIPTION CHANNEL RELATED FUNCTIONS
+  const getSubscribedChannel = (consent_date,subscriptions) => {
+    let initSubscribedChannel = {
+      sms: null,
+      email: null,
+    }
+
+    //If subscription is [] and w/o consent
+    if (subscriptions.length === 0 && !consent_date) {
+      return initSubscribedChannel;
+    }
+
+    //If subscription is [] and with consent
+    if (subscriptions.length === 0 && consent_date) {
+      return {
+        sms: "opt_in",
+        email: "opt_in"
+      }
+    }
+
+    //if either sms and email has status opt_in then their corresponding channel is true
+    for (let sub of subscriptions) {
+      if (sub.subscription_type === "sms") {
+        initSubscribedChannel = { ...initSubscribedChannel,sms: sub.status }
+      } else if (sub.subscription_type === "email") {
+        initSubscribedChannel = { ...initSubscribedChannel,email: sub.status }
+      }
+    }
+
+    return initSubscribedChannel;
+  }
+
+  const changeChannelSubscription = async (type,subscriptionStatus,willSub,value) => {
+    let newSubscriptionStatus;
+
+    if (subscriptionStatus === "opt_out") newSubscriptionStatus = "opt_in";
+    else if (subscriptionStatus === "opt_in") newSubscriptionStatus = "opt_out";
+    else {
+      //Patient has consent
+      if (patientInfo.agreement_date_signed) newSubscriptionStatus = "opt_out";
+      //Patient has no consent, thus the user will determine to subscribe or unsubscribe
+      else newSubscriptionStatus = willSub ? "opt_in" : "opt_out";
+    }
+
     const payload = {
-      subscription_status: !isSubscribed ? "opt_in" : "opt_out",
+      subscription_status: newSubscriptionStatus,
       subscription_type: type,
       values: value
     };
@@ -402,37 +417,41 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
       let changed_subscriptions =
         patientInfo.subscriptions.find((sub) => { return sub.subscription_type === type });
 
-      changed_subscriptions.status = !isSubscribed ? "opt_in" : "opt_out";
+      changed_subscriptions.status = newSubscriptionStatus;
 
-      const temp_subscriptions = [
+      const new_subscriptions = [
         patientInfo.subscriptions.find((sub) => { return sub.subscription_type !== type }),
         changed_subscriptions
       ];
 
-      dispatch({
-        type: "app/setPatientInfo",
-        payload: { ...patientInfo,subscriptions: temp_subscriptions }
-      })
+      handleChange('subscriptions',getSubscribedChannel(patientInfo.agreement_date_signed,new_subscriptions));
 
-      setSubscribedChannel(() => { return getSubscribedChannel(temp_subscriptions) })
+      //TODO Dwight: Will uncomment this if needed in PatientPanel
+      /* dispatch({
+        type: "app/setPatientInfo",
+        payload: { ...patientInfo,subscriptions: new_subscriptions }
+      }) */
+
+      //setSubscribedChannel(getSubscribedChannel(patientInfo.agreement_date_signed,new_subscriptions))
     } catch (e) {
       console.log(e);
     }
   }
 
-  const handleChannelSubscription = () => {
-    let isSubscribedToThisChannel;
+  const handleChannelSubscription = (willSub = false) => {
+    let channelSubscription;
     let value;
 
+    //Will get the subscription status
     if (scheme === "email") {
-      isSubscribedToThisChannel = subscribedChannel.email;
+      channelSubscription = subscriptions.email;
       value = to;
     } else if (scheme === "sms") {
-      isSubscribedToThisChannel = subscribedChannel.sms;
+      channelSubscription = subscriptions.sms;
       value = phone;
     }
 
-    changeChannelSubscription(scheme,isSubscribedToThisChannel,value);
+    changeChannelSubscription(scheme,channelSubscription,willSub,value);
   }
 
   const handleSend = () => {
@@ -465,7 +484,6 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
       getPatientInfo().then((patientInfo) => {
         if (patientInfo) {
           setPatientInfo(patientInfo);
-          setSubscribedChannel(() => { return getSubscribedChannel(patientInfo.subscriptions) });
         }
       });
     }
@@ -483,6 +501,8 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
       if (phone) {
         handleChange("phone", phone);
       }
+
+      handleChange("subscriptions",getSubscribedChannel(patientInfo.agreement_date_signed,patientInfo.subscriptions));
     }
   }, [patientInfo]);
 
@@ -554,19 +574,14 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         <div>
           {scheme === "email" ? (
             <>
-              <Alert
-                title={ subscribedChannel.email ? "Success" : "Warning" }
-                message={ `Patient is ${subscribedChannel.email ? "unsubscribed" : "subscribed"} at this email address` }
-                className="tw-w-full tw-my-2"
-                variant={ subscribedChannel.email ? "success" : "warning" }
-              >
-                <>
-                  <br />
-                  <span onClick={ handleChannelSubscription } className="tw-font-bold tw-underline tw-cursor-pointer">
-                    { `${subscribedChannel.email ? "Unsubscribe" : "Subscribe"} to ${to}` }
-                  </span>
-                </>
-              </Alert>
+              { (to) ?
+                <SubscriptionContainer
+                  channelName={ scheme }
+                  channel={ subscriptions.email }
+                  value={ to }
+                  handleSubscriptionChange={ handleChannelSubscription }
+                />
+                : null }
               <div>
                 <Input
                   type="email"
@@ -574,7 +589,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
                   value={to}
                   onChange={(val) => handleChange("to", val)}
                   defaultValue={to}
-                  isError={ !subscribedChannel.email }
+                  /* isError={ !subscriptions.email } */
                 />
               </div>
               <hr className="tw-opacity-10" />
@@ -590,19 +605,14 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
           ) : null}
           {scheme === "sms" ? (
             <>
-              <Alert
-                title={ subscribedChannel.sms ? "Success" : "Warning" }
-                message={ `Patient is ${subscribedChannel.sms ? "subscribed" : "unsubscribed"} at this phone number` }
-                className="tw-w-full tw-my-2"
-                variant={ subscribedChannel.sms ? "success" : "warning" }
-              >
-                <>
-                  <br />
-                  <span onClick={ handleChannelSubscription } className="tw-font-bold tw-underline tw-cursor-pointer">
-                    { `${subscribedChannel.sms ? "Unsubscribe" : "Subscribe"} to ${phone}` }
-                  </span>
-                </>
-              </Alert>
+              { (phone) ?
+                <SubscriptionContainer
+                  channelName={ scheme }
+                  channel={ subscriptions.sms }
+                  value={ phone }
+                  handleSubscriptionChange={ handleChannelSubscription }
+                />
+                : null }
               <div>
                 <Input
                   type="text"
@@ -610,7 +620,6 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
                   onChange={ (val) => handleChange("phone",val) }
                   value={ phone }
                   defaultValue={ phone }
-                  isError={ !subscribedChannel.sms }
                 />
               </div>
             </>
@@ -697,7 +706,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
               onClick={() => setOpenSavedReplies(true)}
               rounded={true}
               variant="custom"
-              className="tw-bg-indigo-100 "
+              className="tw-bg-indigo-100"
             >
               <PlusIcon className="tw-h-5 tw-w-5 tw-text-indigo-1000 tw-m-1"></PlusIcon>
             </Button>
@@ -710,7 +719,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
                 onClick={handleSend}
                 className="tw-bg-indigo-100 tw-text-blue-1000 tw-text-sm  tw-rounded-md tw-font-medium "
                 variant="custom"
-                disabled={ !subscribedChannel.email }
+                disabled={ subscriptions?.email === "opt_out" || subscriptions?.email === "invalid" }
               >
                 <span className="tw-flex tw-items-center tw-cursor-pointer">
                   <span className="tw-cursor-pointer">Send Email</span>
@@ -727,7 +736,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
                       onClick={handleSend}
                       variant="custom"
                       className="tw-bg-emerald-100 tw-text-emerald-900 tw-text-sm  tw-mr-2 tw-rounded-md tw-font-medium "
-                      disabled={ !subscribedChannel.sms }
+                      disabled={ subscriptions?.sms === "opt_out" || subscriptions?.sms === "invalid" }
                     >
                       <span className="tw-flex tw-items-center tw-cursor-pointer">
                         <span className="tw-cursor-pointer">Send Text</span>
