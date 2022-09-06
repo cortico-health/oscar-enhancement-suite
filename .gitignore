@@ -156,6 +156,3 @@ Thumbs.db
 *.flv
 *.mov
 *.wmv
-
-builds_production/
-builds_staging/
