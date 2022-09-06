@@ -1,5 +1,5 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { ExclamationIcon,InformationCircleIcon,CheckCircleIcon } from "@heroicons/react/solid";
+import { ExclamationIcon,ExclamationCircleIcon,InformationCircleIcon,CheckCircleIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
 
 export default function Alert({ size,title,message,className,children,variant = "warning",...props }) {
@@ -10,6 +10,7 @@ export default function Alert({ size,title,message,className,children,variant = 
         variant === "warning" && "tw-bg-yellow-50",
         variant === "success" && "tw-bg-emerald-50",
         variant === "info" && "tw-bg-blue-100",
+        variant === "error" && "tw-bg-red-100",
         className
       )}
     >
@@ -27,6 +28,10 @@ export default function Alert({ size,title,message,className,children,variant = 
             className={ `tw-h-5 tw-w-5 tw-text-blue-400` }
             aria-hidden="tw-true"
           /> }
+          { variant === "error" && <ExclamationCircleIcon
+            className={ `tw-h-5 tw-w-5 tw-text-red-400` }
+            aria-hidden="tw-true"
+          /> }
         </div>
         <div className="tw-ml-3">
           <h3
@@ -35,6 +40,7 @@ export default function Alert({ size,title,message,className,children,variant = 
               variant === "warning" && "tw-text-yellow-800",
               variant === "success" && "tw-text-emerald-800",
               variant === "info" && "tw-text-blue-800",
+              variant === "error" && "tw-text-red-800",
               size === "sm" ? "tw-text-xs" : "tw-text-sm"
             )}
           >
@@ -43,7 +49,8 @@ export default function Alert({ size,title,message,className,children,variant = 
           <div className={ classNames(`tw-mt-2 tw-text-sm`,
             variant === "warning" && "tw-text-yellow-700",
             variant === "success" && "tw-text-emerald-700",
-            variant === "info" && "tw-text-blue-700") }>
+            variant === "info" && "tw-text-blue-700",
+            variant === "error" && "tw-text-red-700") }>
             <p
               className={classNames(
                 size === "sm" ? "tw-text-xs" : "tw-text-sm"
