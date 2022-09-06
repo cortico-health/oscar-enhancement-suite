@@ -81,10 +81,7 @@ const CUsersList = () => {
             const existingConversation = conversationStore.conversations.all.find((conversation) => {
                 return conversation.id === parseInt(data.id);
             })
-            if (!existingConversation) {
-                conversationStore.conversations.all.push(data);
-            }
-            conversationStore.selectConversation(data.id);
+            conversationStore.selectConversation(data);
 
             goToChat();
         }).catch((error) => {
