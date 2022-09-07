@@ -57,6 +57,7 @@ const PatientData = ({ patient,showControls,handleClick,handleClose }) => {
 }
 
 const CPatientCard = (props) => {
+    const dispatch = useDispatch();
     const { info } = useSelector((state) => state.patient);
     const { patientStore } = useStore();
 
@@ -99,6 +100,6 @@ const CPatientCard = (props) => {
             }
         </div>
     )
-})
+}
 
 export default observer(CPatientCard);
