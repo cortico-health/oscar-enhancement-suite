@@ -35,25 +35,34 @@ const initialState = {
       icon: <CogIcon className="tw-w-6 tw-h-6" />,
       current: false,
     },
-    {
-      name: "Provider Messaging",
-      icon: <ChatAlt2Icon className="tw-w-6 tw-h-6" />,
-      current: false,
-    },
-    {
-      name: "VCN Patient",
-      icon: <ChatAlt2Icon className="tw-w-6 tw-h-6" />,
-      current: false,
-      visible: false,
-    },
-    {
-      name: "VCN Add Chat",
-      icon: <ChatAlt2Icon className="tw-w-6 tw-h-6" />,
-      current: false,
-      visible: false,
-    },
-  ],
+  ]
 };
+
+const providerMessagingPages = [
+  {
+    name: "Provider Messaging",
+    icon: <ChatAlt2Icon className="tw-w-6 tw-h-6" />,
+    current: false,
+    visible: true
+  },
+  {
+    name: "VCN Patient",
+    icon: <ChatAlt2Icon className="tw-w-6 tw-h-6" />,
+    current: false,
+    visible: false,
+  },
+  {
+    name: "VCN Add Chat",
+    icon: <ChatAlt2Icon className="tw-w-6 tw-h-6" />,
+    current: false,
+    visible: false,
+  }
+]
+
+// PROVIDER MESSAGING FEATURE FLAG
+if (process.env.INCLUDE_PROVIDER_MESSAGING) {
+  initialState.items.push(...providerMessagingPages);
+}
 
 export function sidebarReducer(state = initialState, action) {
   switch (action.type) {

@@ -7,22 +7,21 @@ services:
       - ./:/code
     working_dir: /code
     command: bash -c "yarn && yarn dev"
+    environment:
+      - CEREBRO_URL=https://cerebro-develop.cortico.ca
+      - WEBSOCKET_URL=wss://cerebro-develop.cortico.ca
+      - INCLUDE_PROVIDER_MESSAGING=1
+  oes-stg:
+    volumes:
+      - .:/code
+    working_dir: /code
+    build: .
+    command: ./stg.bash
   oes-pkg:
     volumes:
       - .:/code
     working_dir: /code
     build: .
-  vcn-web:
-    image: node:16
-    volumes:
-      - ./provider-messaging/:/code
-    working_dir: /code
-    command: bash -c "yarn && yarn dev"
-    environment:
-      - VITE_CEREBRO_URL=http://localhost:8426
-      - VITE_WEBSOCKET_URL=ws://localhost:8426
-    ports:
-      - "3500:3500"
 
 networks:
   back-tier:

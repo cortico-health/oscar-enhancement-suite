@@ -45,18 +45,6 @@ This will start webpack on watch mode and have source maps enabled by default.
 The minified file located in `dist` directory named `cortico-min.js` may be loaded
 into tampermonkey, or greasemonkey for direct testing before publishing.
 
-## VCN
-
-1. `docker-compose up vcn-web`
-2. Navigate to `localhost:3500`
-
-# Staging
-
-## VCN
-
-1. `cp dc.vcn-stage.yml docker-compose.override.yml`
-2. `docker-compose up vcn-web`
-
 # Manual Testing
 
 **Chrome**
@@ -111,9 +99,17 @@ Then
 
 # Building
 
+## Staging
+
+1. `docker-compose run oes-stg`
+
+You can locate cortico-firefox-stage.zip and cortico-chrome-stage.zip in the builds_staging folder.
+
+## Production
+
 1. `docker-compose run oes-pkg`
 
-Upload cortico-firefox.zip and cortico-chrome.zip to respective stores.
+Upload cortico-firefox.zip and cortico-chrome.zip from the builds_production folder to respective stores.
 
 # Contributing
 
