@@ -1,6 +1,7 @@
 import useWebSocket from "react-use-websocket";
 import { useEffect, useRef, useState } from "preact/hooks";
 import { observer } from "mobx-react-lite";
+import { v4 as uuidv4 } from 'uuid';
 import { useStore } from "../../store/mobx";
 import MChatTools from "../Molecules/MChatTools";
 import AFileInputShow from "../Atoms/AFileInputShow";
@@ -21,7 +22,7 @@ const CMessageList = () => {
 
     const [messages, setMessages] = useState(undefined);
     const [socketUrl, setSocketUrl] = useState(null);
-    const [preview, setPreview] = useState(null);
+    const [previews,setPreviews] = useState([]);
 
     const [patientSelected, setPatientSelected] = useState(null);
     const [uploadedFile, setUploadedFile] = useState(null);
@@ -53,16 +54,21 @@ const CMessageList = () => {
             const file = e.target.files[0];
             const extension = file.name.split(".").pop().toLowerCase();
 
-            createFile(file).then((response) => { return response.json() }).then((data) => {
-                setUploadedFile(data);
-                setPreview({ dataURL: data.file, name: file.name, type: extension });
-            }).catch((error) => {
-                console.log(error);
-            });
+            setPreviews([...previews,{ id: uuidv4(),dataURL: file,name: file.name,type: extension }]);
+            /*
+                to avoid error
+                createFile(file).then((response) => { return response.json() }).then((data) => {
+                    setUploadedFile(data);
+                    setPreviews({ dataURL: data.file,name: file.name,type: extension });
+                }).catch((error) => {
+                    console.log(error);
+                });
+            */
+
         },
-        removeFile: () => {
+        removeFile: (id) => {
             setUploadedFile(null);
-            setPreview(null);
+            setPreviews(previews.filter((preview) => preview.id !== id));
         },
         onSend: () => {
             const value = sendRef?.current?.base?.lastElementChild?.value;
@@ -72,7 +78,7 @@ const CMessageList = () => {
                     'file': uploadedFile ? uploadedFile.id : null
                 }));
                 setUploadedFile(null);
-                setPreview(null);
+                setPreviews([]);
                 sendRef.current.base.lastElementChild.value = "";
                 window.scrollTo(0, document.body.scrollHeight);
             }
@@ -168,8 +174,13 @@ const CMessageList = () => {
                     </div>
                     <div className="tw-sticky tw-bg-secondary-10 tw-w-full">
                         <div className="tw-mx-12">
-                            <AFileInputShow fileInput={preview} exit={handlers.removeFile} />
-
+                            <div className="tw-w-full tw-max-h-16 tw-overflow-y-auto">
+                                <table className="tw-border-0">
+                                    { previews.map((preview) => {
+                                        return <tr><td><AFileInputShow fileInput={ preview } exit={ () => handlers.removeFile(preview.id) } /></td></tr>
+                                    }) }
+                                </table>
+                            </div>
                             <MSend
                                 placeholder="Type message..."
                                 ref={sendRef}
