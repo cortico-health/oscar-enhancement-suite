@@ -414,25 +414,31 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
 
       await setPatientChannelSubscription(token,payload);
 
-      let changed_subscriptions =
-        patientInfo.subscriptions.find((sub) => { return sub.subscription_type === type });
+      //Check for the index of updated subscription info
+      const changed_subscription =
+        patientInfo.subscriptions.findIndex((sub) => { return sub.subscription_type === type && sub.value === value });
 
-      changed_subscriptions.status = newSubscriptionStatus;
+      //Copy the current subscriptions array since it will be harder to up
+      let temp_subscriptions = patientInfo.subscriptions;
 
-      const new_subscriptions = [
-        patientInfo.subscriptions.find((sub) => { return sub.subscription_type !== type }),
-        changed_subscriptions
-      ];
+      //If the channel info is in the subscription list then update otherwise append
+      if (changed_subscription > -1) {
+        temp_subscriptions[changed_subscription].status = newSubscriptionStatus;
+      } else {
+        temp_subscriptions.push({
+          subscription_type: type,
+          value: value,
+          status: newSubscriptionStatus,
+        });
+      }
 
-      handleChange('subscriptions',getSubscribedChannel(patientInfo.agreement_date_signed,new_subscriptions));
+      handleChange('subscriptions',getSubscribedChannel(patientInfo.agreement_date_signed,temp_subscriptions));
 
       //TODO Dwight: Will uncomment this if needed in PatientPanel
       /* dispatch({
         type: "app/setPatientInfo",
         payload: { ...patientInfo,subscriptions: new_subscriptions }
       }) */
-
-      //setSubscribedChannel(getSubscribedChannel(patientInfo.agreement_date_signed,new_subscriptions))
     } catch (e) {
       console.log(e);
     }
