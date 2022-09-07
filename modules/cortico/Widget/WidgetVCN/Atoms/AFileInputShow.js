@@ -15,12 +15,12 @@ const AFileInputShow = ({ fileInput,exit }) => {
     return (
         <div className="tw-flex tw-items-center tw-gap-4">
             { isImage(fileInput.type) && <img width="50" src={ fileInput.dataURL } /> }
-            { isAudio(fileInput.type) && <ASvg src={ MusicLogo } className="tw-h-16 tw-w-16" /> }
-            { isDocument(fileInput.type) && <ASvg src={ DocumentLogo } className="tw-h-16 tw-w-16" /> }
-            { isTextFile(fileInput.type) && <ASvg src={ DocumentTextLogo } className="tw-h-16 tw-w-16" /> }
-            { isSheet(fileInput.type) && <ASvg src={ TableLogo } className="tw-h-16 tw-w-16" /> }
-            { isHTML(fileInput.type) && <ASvg src={ CodeLogo } className="tw-h-16 tw-w-16" /> }
-            <p>{ fileInput.name }</p>
+            { isAudio(fileInput.type) && <ASvg src={ MusicLogo } className="tw-h-9 tw-w-9" /> }
+            { isDocument(fileInput.type) && <ASvg src={ DocumentLogo } className="tw-h-9 tw-w-9" /> }
+            { isTextFile(fileInput.type) && <ASvg src={ DocumentTextLogo } className="tw-h-9 tw-w-9" /> }
+            { isSheet(fileInput.type) && <ASvg src={ TableLogo } className="tw-h-9 tw-w-9" /> }
+            { isHTML(fileInput.type) && <ASvg src={ CodeLogo } className="tw-h-9 tw-w-9" /> }
+            <p className="tw-text-sm">{ fileInput.name }</p>
             <ASvg src={ ExitLogo } className="tw-cursor-pointer" onClick={ exit } />
         </div>
     )
