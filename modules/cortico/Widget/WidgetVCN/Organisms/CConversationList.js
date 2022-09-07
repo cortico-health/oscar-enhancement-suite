@@ -13,45 +13,58 @@ const CConversationList = () => {
     const { conversationStore,patientStore } = useStore();
 
     const [searchName,setSearchName] = useState("");
-    const [filteredConversation,setFilteredConversation] = useState(undefined);
+    const [patientConversations,setPatientConversations] = useState(undefined);
+    const [filteredConversations,setFilteredConversations] = useState(undefined);
 
     useEffect(() => {
-        setFilteredConversation(() => { return conversationStore.conversations.all });
+        setFilteredConversations(conversationStore.conversations.all);
     },[]);
 
+    //Handle the conversation that is filtered by patient
     useEffect(() => {
         const selectedPatient = patientStore.patients.selected;
+
+        //If no one is selected then place all conversation otherwise filter it
         if (!selectedPatient) {
-            setFilteredConversation(conversationStore.conversations.all);
+            setPatientConversations(conversationStore.conversations.all);
             return;
         }
 
-        setFilteredConversation(conversationStore.conversations.all.filter((conversation) => {
-            return conversation.patient === selectedPatient?.first_name + " " + selectedPatient?.last_name
-        }))
+        //If there is selected patient already (E-Chart) then place it immediately in filtered conversation
+        setPatientConversations(() => {
+            return conversationStore.conversations.all.filter((conversation) => {
+                return conversation.patient === selectedPatient?.first_name + " " + selectedPatient?.last_name
+            })
+        });
     },[patientStore.patients.selected]);
 
-    const searchHandler = debounce(query => {
-        if (!query) return setFilteredConversation(conversationStore.conversations.all)
+    //Handle the conversation that is being viewed by the user
+    useEffect(() => {
+        setFilteredConversations(patientConversations);
+    },[patientConversations])
 
-        const filteredData = conversationStore.conversations.all.filter((conversation) => {
+    const searchHandler = debounce(query => {
+        setSearchName(query);
+
+        if (!query) return setFilteredConversations(patientConversations)
+
+        const filteredData = patientConversations.filter((conversation) => {
             return conversation.members.find((member) => {
                 return member.full_name.includes(query);
             })
         })
 
-        setFilteredConversation(filteredData);
-        setSearchName(query);
+        setFilteredConversations(filteredData);
     },500)
 
     return (
         <div className="tw-mx-2.5">
-            <MSearch onInput={ (e) => searchHandler(e.target.value) } />
+            <MSearch disabled={ filteredConversations?.length === 0 && !searchName } onInput={ (e) => searchHandler(e.target.value) } />
             <div className="tw-h-[400px] tw-overflow-y-auto">
-                { filteredConversation ? (
-                    filteredConversation.length > 0 ? (
+                { filteredConversations ? (
+                    filteredConversations.length > 0 ? (
                         <>
-                            { filteredConversation?.map(conversation => {
+                            { filteredConversations?.map(conversation => {
                                 return (
                                     <MConversationTab
                                         key={ `conversation-${conversation.id}` }
@@ -61,7 +74,11 @@ const CConversationList = () => {
                             }) }
                         </>
                     ) : <CNotFound name={ searchName } />
-                ) : (<ASpinner />)
+                ) : (
+                    <div className="tw-flex tw-justify-center tw-items-center tw-mt-3">
+                        <ASpinner />
+                    </div>
+                )
                 }
             </div>
         </div>
