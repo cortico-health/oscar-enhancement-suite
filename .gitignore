@@ -1,3 +1,4 @@
+*.bak
 manifest.json
 *.zip
 # Logs
