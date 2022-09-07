@@ -280,15 +280,15 @@ function PluginContentRenderer() {
           <PatientPanel />
         </div>
       ) : activeItem === "Provider Messaging" ? (
-        <div className="tw-h-full tw-font-sans">
+        <div className="tw-font-sans tw-h-[600px] tw-w-[1100px]">
           <PIndex />
         </div>
       ) : activeItem === "VCN Patient" ? (
-        <div className="tw-h-full tw-font-sans">
+        <div className="tw-font-sans tw-h-[600px] tw-w-[1100px]">
           <PSelect />
         </div>
       ) : activeItem === "VCN Add Chat" ? (
-        <div className="tw-h-full tw-font-sans">
+        <div className="tw-font-sans tw-h-[600px] tw-w-[1100px]">
           <PAddChat />
         </div>
       ) : null}
