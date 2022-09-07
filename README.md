@@ -99,9 +99,17 @@ Then
 
 # Building
 
+## Staging
+
+1. `docker-compose run oes-stg`
+
+You can locate cortico-firefox-stage.zip and cortico-chrome-stage.zip in the builds_staging folder.
+
+## Production
+
 1. `docker-compose run oes-pkg`
 
-Upload cortico-firefox.zip and cortico-chrome.zip to respective stores.
+Upload cortico-firefox.zip and cortico-chrome.zip from the builds_production folder to respective stores.
 
 # Contributing
 
