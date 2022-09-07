@@ -16,6 +16,7 @@ const AInput = ({
   type = "text",
   placeholder = "Search...",
   inputClass = "",
+  disabled = false,
   ...props
 }) => {
   const inputRef = useRef(null);
@@ -34,16 +35,20 @@ const AInput = ({
           ref={ inputRef }
           name={ name }
           placeholder={ placeholder }
+          disabled={ disabled }
           type="text"
         />
       ) : (
         <textarea
             className={ `${input_class} tw-resize-none ${inputClass}` }
-          onKeyDown={ (e) => {
-            if (e.key === "Enter" && e.ctrlKey) {
-              onKeyDown()
+            onKeyDown={
+              (e) => {
+                if (e.key === "Enter" && e.ctrlKey) {
+                  onKeyDown()
+                }
+              }
             }
-          } }
+            disabled={ disabled }
           rows={ 1 }
           onInput={ onInput }
           ref={ inputRef }
