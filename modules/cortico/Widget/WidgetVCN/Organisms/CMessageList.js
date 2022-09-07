@@ -193,7 +193,7 @@ const CMessageList = () => {
                     </div>
                 </>
             ) : (
-                <div className="tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-2 tw-w-[1000px] tw-h-full">
+                    <div className="tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-2 tw-w-full tw-h-full">
                     <ASpinner variant="md" />
                 </div>
             )}
