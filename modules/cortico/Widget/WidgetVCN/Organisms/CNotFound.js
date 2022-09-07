@@ -3,8 +3,9 @@ import { useState } from 'preact/hooks';
 import AButton from "../Atoms/AButton";
 
 const CNotFound = ({ name }) => {
+    /* TODO Dwight: Bring this back if vcn invite feature is prioritized */
 
-    const [inputs,setInputs] = useState({
+    /* const [inputs,setInputs] = useState({
         first_name: '',
         last_name: '',
         email: '',
@@ -20,14 +21,29 @@ const CNotFound = ({ name }) => {
     const onSubmit = (e) => {
         e.preventDefault();
         alert(JSON.stringify(inputs,null,2))
-    }
+    } */
 
     const [isOpened,setIsOpened] = useState(false);
     return (
         <div className='c-not-found tw-relative'>
-            <p className='tw-text-center tw-text-h3 tw-text-secondary-500 tw-px-5 tw-mb-2'> It seems like <span className="tw-font-bold">{ name }</span> is not in our network. To start a conversation with <span className="tw-font-bold">{ name }</span>, please use the invite button below. </p>
+            {/* <p className='tw-text-center tw-text-h3 tw-text-secondary-500 tw-px-5 tw-mb-2'> It seems like <span className="tw-font-bold">{ name }</span> is not in our network. To start a conversation with <span className="tw-font-bold">{ name }</span>, please use the invite button below. </p> */ }
+            <p className='tw-text-center tw-text-h3 tw-text-secondary-500 tw-px-5 tw-mb-2'>
+                { (name) ?
+                    (
+                        <>
+                            It seems like <span className="tw-font-bold">{ name }</span> is not in our network. To start a conversation with <span className="tw-font-bold">{ name }</span>, please ask him/her to create their own account.
+                        </>
+                    )
+                    :
+                    (
+                        <>
+                            No Conversation for this patient
+                        </>
+                    )
+                }
+            </p>
 
-            {
+            {/* {
                 isOpened ?
                     <div className='tw-bg-white tw-px-7 tw-pt-9 tw-pb-7 tw-rounded-2xl'>
                         <form onSubmit={ onSubmit }>
@@ -64,7 +80,7 @@ const CNotFound = ({ name }) => {
                         Invite user
                     </AButton>
 
-            }
+            } */}
         </div>
     )
 }

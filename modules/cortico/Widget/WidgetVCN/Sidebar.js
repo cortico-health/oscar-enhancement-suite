@@ -15,7 +15,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="tw-flex tw-w-[350px]">
+    <div className="tw-flex tw-w-[550px]">
       <div className="tw-bg-gray-50 tw-shadow tw-h-full tw-w-full tw-block">
         <PatientCard
           className="tw-mt-6 tw-pb-6 tw-px-6 tw-h-min tw-border-b tw-border-gray-200"

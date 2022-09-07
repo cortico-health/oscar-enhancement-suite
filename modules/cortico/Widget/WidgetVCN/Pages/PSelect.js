@@ -10,7 +10,7 @@ import CSelectList from "../Organisms/CSelectList";
 const PSelect = () => {
     return (
         <div className="tw-flex tw-h-full">
-            <div className="tw-bg-gray-50 tw-shadow tw-h-full tw-block tw-w-[450px]">
+            <div className="tw-bg-gray-50 tw-shadow tw-h-full tw-block tw-w-[550px]">
                 <CRecentList />
             </div>
             <CSelectList />
