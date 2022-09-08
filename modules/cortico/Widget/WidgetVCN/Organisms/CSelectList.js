@@ -64,7 +64,7 @@ const CSelectList = ({ ...props }) => {
         <div className='tw-pl-8 tw-pt-11 tw-w-full tw-bg-white' { ...props }>
             <h2 className='tw-text-secondary-500 tw-font-bold tw-text-title3 tw-mb-0.5'>Recent patients</h2>
             <p className='tw-text-secondary-300 tw-text-title4'>accusamus magnam id</p>
-            <div className='tw-p-8 tw-overflow-y-scroll tw-overflow-x-hidden tw-relative tw-min-w-[calc(100vh-100px)]'>
+            <div className='tw-p-8 tw-overflow-y-scroll tw-overflow-x-hidden tw-relative tw-w-full'>
                 <MSearch onInput={ (e) => searchHandler(e.target.value) } />
                 <div className='tw-flex tw-gap-x-5'>
                     <ARadio onChange={ handleChange } checked name="filter" value="firstName" />
