@@ -50,9 +50,14 @@ export default function PatientPanel() {
               </svg>
             </span>
 
-            <div class="tw-inline-flex tw-absolute tw-bottom-0 tw-right-0 tw-justify-center tw-items-center tw-w-6 tw-h-6 tw-text-xs tw-font-bold tw-text-white tw-bg-green-500 tw-rounded-full tw-border-2 tw-border-white">
-              <svg class="tw-w-6 tw-h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-            </div>
+            {
+              info.agreement_date_signed &&
+              (
+                <div class="tw-inline-flex tw-absolute tw-bottom-0 tw-right-0 tw-justify-center tw-items-center tw-w-6 tw-h-6 tw-text-xs tw-font-bold tw-text-white tw-bg-green-500 tw-rounded-full tw-border-2 tw-border-white">
+                  <svg class="tw-w-6 tw-h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                </div>
+              )
+            }
           </div>
         </Tooltip>
 
