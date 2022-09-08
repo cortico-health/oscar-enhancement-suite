@@ -5,22 +5,28 @@ const channelOptions = {
     "email": "email address"
 }
 
-const SubscriptionContainer = ({ channelName,channel,value,handleSubscriptionChange }) => {
+const SubscriptionContainer = ({ channelName,channel,value,handleSubscriptionChange = null,consented }) => {
 
     const getTitle = () => {
-        if (channel === null) return "Info";
+        if (!consented) return "Patient has not yet consented"
 
-        if (channel === "invalid") return "Error";
-
-        return channel === "opt_in" ? "Success" : "Warning";
+        return `Patient has Consented last ${new Date(consented).toDateString()}`
     }
 
     const getMessage = () => {
-        if (channel === null) return `We do not yet have record of patient ${channelOptions[channelName]}.`;
+        if (channel === null) return `We do not yet have record of patient's ${channelOptions[channelName]}.`;
 
-        if (channel === "invalid") return `The ${channelOptions[channelName]} of ${value} is invalid`
+        if (channel === "invalid") return `The ${channelOptions[channelName]} of ${value} is invalid`;
 
         return `Patient is ${channel === "opt_in" ? "subscribed" : "unsubscribed"} at this ${channelOptions[channelName]}`
+    }
+
+    const getVariant = () => {
+        if (channel === null) return "info";
+
+        if (channel === "invalid") return "error";
+
+        return channel === "opt_in" ? "success" : "warning";
     }
 
     return (
@@ -28,10 +34,9 @@ const SubscriptionContainer = ({ channelName,channel,value,handleSubscriptionCha
             title={ getTitle() }
             message={ getMessage() }
             className="tw-w-full tw-my-2"
-            variant={ getTitle().toLowerCase() }
+            variant={ getVariant() }
         >
             <>
-                {/* from [] */ }
                 { channel !== null ?
                     (
                         channel !== "invalid" ?
