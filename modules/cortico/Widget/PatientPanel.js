@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import {
   ShareIcon,
-  ChatAltIcon,
+  CurrencyDollarIcon,
   MailIcon,
   PhoneIcon,
 } from "@heroicons/react/solid";
@@ -114,7 +114,7 @@ export default function PatientPanel() {
                 );
               }}
               icon={
-                <ChatAltIcon className="tw-h-4 tw-w-4 tw-ml-2 tw-cursor-pointer" />
+                <CurrencyDollarIcon className="tw-h-4 tw-w-4 tw-ml-2 tw-cursor-pointer" />
               }
               className="tw-w-[150px]"
             >
