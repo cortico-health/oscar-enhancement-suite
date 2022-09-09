@@ -58,7 +58,8 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
     document,
     inboxDocument,
     scheme,
-    subscriptions,
+    subscriptions, // check the subscriptions status of users email and sms. opt_in, opt_out, invalid, etc.
+    subscriptionsInfo, // Check the available channels for user.
     consentedDate,
   } = useSelector((state) => state.messenger);
   const [openSavedReplies, setOpenSavedReplies] = useState(false);
@@ -582,6 +583,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
       }
 
       handleChange("subscriptions",getSubscribedChannel(patientInfo.agreement_date_signed,patientInfo.subscriptions));
+      handleChange("subscriptionsInfo",patientInfo.subscriptions);
       handleChange("consentedDate",patientInfo.agreement_date_signed);
     }
   }, [patientInfo]);
@@ -661,7 +663,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
                   value={ to }
                   handleSubscriptionChange={ handleChannelSubscription }
                   consented={ consentedDate }
-                  isSubscriptionsEmpty={ patientInfo.subscriptions.length === 0 }
+                isSubscriptionsEmpty={ subscriptionsInfo.length === 0 }
                 />
               }
               <div>
@@ -694,7 +696,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
                   value={ phone }
                   handleSubscriptionChange={ handleChannelSubscription }
                   consented={ consentedDate }
-                  isSubscriptionsEmpty={ patientInfo.subscriptions.length === 0 }
+                isSubscriptionsEmpty={ subscriptionsInfo.length === 0 }
                 /> }
               <div>
                 <Input
