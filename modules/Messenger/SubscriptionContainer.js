@@ -53,7 +53,11 @@ const SubscriptionContainer = ({
                                 </p>
                             )
                             :
-                            null
+                            (
+                                <p className="tw-font-bold tw-mt-4">
+                                    { `Please change the ${channelOptions[channelName]}` }
+                                </p>
+                            )
                     )
                     :
                     (
