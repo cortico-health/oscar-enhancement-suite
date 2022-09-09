@@ -14,6 +14,7 @@ import {
   getEncounterNotes,
   addEncounterNote,
   postCaseManagementEntry,
+  setPatientChannelSubscription,
 } from "../Api/Api";
 import {
   loadExtensionStorageValue,
@@ -31,6 +32,7 @@ import { BroadcastChannel } from "broadcast-channel";
 import { handleTokenExpiry } from "../../modules/cortico/Widget/common/utils";
 import classNames from "classnames";
 import Alert from "../cortico/Widget/Alert";
+import SubscriptionContainer from "./SubscriptionContainer";
 
 class MessengerError extends Error {
   constructor(title, message) {
@@ -39,6 +41,7 @@ class MessengerError extends Error {
     this.title = title;
   }
 }
+
 
 function MessengerWindow({ encounter: encounterOption, ...props }) {
   const dispatch = useDispatch();
@@ -55,11 +58,15 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
     document,
     inboxDocument,
     scheme,
+    subscriptions,
+    consentedDate,
   } = useSelector((state) => state.messenger);
   const [openSavedReplies, setOpenSavedReplies] = useState(false);
   const [filePreviewLink, setFilePreviewLink] = useState(false);
-  const [patientInfo, setPatientInfo] = useState(null);
+  const [patientInfo,setPatientInfo] = useState(null);
   const [maxLength, setMaxLength] = useState(2000);
+  const [emailChanged,setEmailChanged] = useState(false);
+  const [phoneChanged,setPhoneChanged] = useState(false);
   const { clinic_name: clinicName, uid } = useSelector((state) => state.app);
 
   const handleEncounter = async (scheme, subject, body) => {
@@ -178,6 +185,27 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
           "Phone required",
           "Please enter a phone number"
         );
+      }
+
+      const SUBSCRIPTION_REJECT_OPTIONS = {
+        "invalid": "Invalid",
+        "opt_out": "Unsubscribed"
+      }
+
+      //email Changed is like a blocker it will only go to this condition if email hasn't been changed.
+      if (scheme === "email" && (subscriptions.email === "invalid" || subscriptions.email === "opt_out") && !emailChanged) {
+        throw new MessengerError(
+          `${SUBSCRIPTION_REJECT_OPTIONS[subscriptions.email]} Email Address`,
+          `Please Subscribe to this email ${to}`
+        )
+      }
+
+      //email Changed is like a blocker it will only go to this condition if email hasn't been changed.
+      if (scheme === "sms" && (subscriptions.sms === "invalid" || subscriptions.sms === "opt_out") && !phoneChanged) {
+        throw new MessengerError(
+          `${SUBSCRIPTION_REJECT_OPTIONS[subscriptions.sms]} Phone Number`,
+          `Please Subscribe to number ${phone}`
+        )
       }
 
       if (scheme === "email") {
@@ -347,6 +375,164 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
     }
   };
 
+
+  //SUBSCRIPTION CHANNEL RELATED FUNCTIONS
+  const getSubscribedChannel = (consent_date,subscriptions) => {
+    let initSubscribedChannel = {
+      sms: null,
+      email: null,
+    }
+
+    //If subscription is [] and w/o consent
+    if (subscriptions.length === 0 && !consent_date) {
+      return initSubscribedChannel;
+    }
+
+    //If subscription is [] and with consent
+    if (subscriptions.length === 0 && consent_date) {
+      return {
+        sms: "opt_in",
+        email: "opt_in"
+      }
+    }
+
+    //if either sms and email has status opt_in then their corresponding channel is true
+    for (let sub of subscriptions) {
+      if (sub.subscription_type === "sms") {
+        initSubscribedChannel = { ...initSubscribedChannel,sms: sub.status }
+      } else if (sub.subscription_type === "email") {
+        initSubscribedChannel = { ...initSubscribedChannel,email: sub.status }
+      }
+    }
+
+    return initSubscribedChannel;
+  }
+
+  const changeChannelSubscription = async (type,subscriptionStatus,willSub,value) => {
+    let newSubscriptionStatus;
+
+    if (subscriptionStatus === "opt_out") newSubscriptionStatus = "opt_in";
+    else if (subscriptionStatus === "opt_in") newSubscriptionStatus = "opt_out";
+    else {
+      //Patient has consent
+      if (consentedDate) newSubscriptionStatus = "opt_out";
+      //Patient has no consent, thus the user will determine to subscribe or unsubscribe
+      else newSubscriptionStatus = willSub ? "opt_in" : "opt_out";
+    }
+
+    const payload = {
+      subscription_status: newSubscriptionStatus,
+      subscription_type: type,
+      values: value
+    };
+
+    try {
+      const token = await loadExtensionStorageValue("jwt_access_token");
+
+      if (!token) {
+        throw new MessengerError(
+          "Could not get access token",
+          "Please try signing in again. Otherwise, please contact us"
+        );
+      }
+
+      await setPatientChannelSubscription(token,payload);
+
+      //Check for the index of updated subscription info
+      const changed_subscription =
+        patientInfo.subscriptions.findIndex((sub) => { return sub.subscription_type === type && sub.value === value });
+
+      //Copy the current subscriptions array since it will be harder to up
+      let temp_subscriptions = patientInfo.subscriptions;
+
+      //If the channel info is in the subscription list then update otherwise append
+      if (changed_subscription > -1) {
+        temp_subscriptions[changed_subscription].status = newSubscriptionStatus;
+      } else {
+        temp_subscriptions.push({
+          subscription_type: type,
+          value: value,
+          status: newSubscriptionStatus,
+        });
+      }
+
+      handleChange('subscriptions',getSubscribedChannel(patientInfo.agreement_date_signed,temp_subscriptions));
+
+      //TODO Dwight: Will uncomment this if needed in PatientPanel
+      /* dispatch({
+        type: "app/setPatientInfo",
+        payload: { ...patientInfo,subscriptions: new_subscriptions }
+      }) */
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  const handleChannelSubscription = (willSub = false) => {
+    let channelSubscription;
+    let value;
+
+    //Will get the subscription status
+    if (scheme === "email") {
+      channelSubscription = subscriptions.email;
+      value = to;
+    } else if (scheme === "sms") {
+      channelSubscription = subscriptions.sms;
+      value = phone;
+    }
+
+    changeChannelSubscription(scheme,channelSubscription,willSub,value);
+  }
+
+  useEffect(() => {
+    if (patientInfo) {
+      //if subscription is 0
+      if (patientInfo.subscriptions.length === 0) {
+        if (patientInfo.email === to) setEmailChanged(false);
+        else setEmailChanged(true);
+
+        return;
+      }
+
+      //Check if it the value didn't changed
+      const index = patientInfo.subscriptions.findIndex((sub) => sub.subscription_type === "email" && sub.value === to);
+
+      //Channel Value has changed
+      if (index === -1) {
+        setEmailChanged(true);
+      } else {
+        setEmailChanged(false);
+      }
+    }
+  },[to]);
+
+  useEffect(() => {
+    if (patientInfo) {
+      const patientPhone =
+        patientInfo["Cell PhoneHistory"] ||
+        patientInfo["PhoneWHistory"] ||
+        patientInfo["PhoneHHistory"];
+
+      //if subscription is 0
+      if (patientInfo.subscriptions.length === 0) {
+        if (patientPhone === phone) setPhoneChanged(false);
+        else setPhoneChanged(true);
+
+        return;
+      }
+
+      //Check if it the value didn't changed
+      const index = patientInfo.subscriptions.findIndex((sub) => sub.subscription_type === "sms" && sub.value === phone);
+
+      //Channel Value has changed
+      if (index === -1) {
+        setPhoneChanged(true);
+      } else {
+        setPhoneChanged(false);
+      }
+    }
+  },[phone]);
+
   const handleSend = () => {
     submitData(scheme);
   };
@@ -394,6 +580,9 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
       if (phone) {
         handleChange("phone", phone);
       }
+
+      handleChange("subscriptions",getSubscribedChannel(patientInfo.agreement_date_signed,patientInfo.subscriptions));
+      handleChange("consentedDate",patientInfo.agreement_date_signed);
     }
   }, [patientInfo]);
 
@@ -465,6 +654,16 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         <div>
           {scheme === "email" ? (
             <>
+              { (to && !emailChanged) &&
+                <SubscriptionContainer
+                  channelName={ scheme }
+                  channel={ subscriptions.email }
+                  value={ to }
+                  handleSubscriptionChange={ handleChannelSubscription }
+                  consented={ consentedDate }
+                  isSubscriptionsEmpty={ patientInfo.subscriptions.length === 0 }
+                />
+              }
               <div>
                 <Input
                   type="email"
@@ -472,6 +671,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
                   value={to}
                   onChange={(val) => handleChange("to", val)}
                   defaultValue={to}
+                  /* isError={ !subscriptions.email } */
                 />
               </div>
               <hr className="tw-opacity-10" />
@@ -486,15 +686,26 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
             </>
           ) : null}
           {scheme === "sms" ? (
-            <div>
-              <Input
-                type="text"
-                placeholder="Phone"
-                onChange={(val) => handleChange("phone", val)}
-                value={phone}
-                defaultValue={phone}
-              />
-            </div>
+            <>
+              { (phone && !phoneChanged) &&
+                <SubscriptionContainer
+                  channelName={ scheme }
+                  channel={ subscriptions.sms }
+                  value={ phone }
+                  handleSubscriptionChange={ handleChannelSubscription }
+                  consented={ consentedDate }
+                  isSubscriptionsEmpty={ patientInfo.subscriptions.length === 0 }
+                /> }
+              <div>
+                <Input
+                  type="text"
+                  placeholder="Phone"
+                  onChange={ (val) => handleChange("phone",val) }
+                  value={ phone }
+                  defaultValue={ phone }
+                />
+              </div>
+            </>
           ) : null}
 
           <hr className="tw-opacity-10" />
@@ -570,7 +781,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
               onClose={() => setOpenSavedReplies(false)}
               s
             >
-              <div className="tw-inline-block tw-translate-x-[-50%] tw-left-[50%]  tw-text-white tw-relative tw-translate-y-[-50%] tw-top-[50%]">
+              <div className="tw-inline-block tw-translate-x-[-50%] tw-left-[50%] tw-text-white tw-relative tw-translate-y-[-50%] tw-top-[50%]">
                 <SavedReplies loadReply={handleLoadReply} />
               </div>
             </Dialog>
@@ -578,7 +789,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
               onClick={() => setOpenSavedReplies(true)}
               rounded={true}
               variant="custom"
-              className="tw-bg-indigo-100 "
+              className="tw-bg-indigo-100"
             >
               <PlusIcon className="tw-h-5 tw-w-5 tw-text-indigo-1000 tw-m-1"></PlusIcon>
             </Button>

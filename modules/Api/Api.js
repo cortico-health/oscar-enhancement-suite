@@ -117,6 +117,33 @@ export const addCannedReply = (token, data) => {
   });
 };
 
+export const getPatientSubscription = (token,demographicNo,email,phone) => {
+  const url = `${getCorticoUrl()}/api/plug-in/patient/${demographicNo}?email=${email}&phone=${phone}`;
+
+  return fetch(url,{
+    method: "GET",
+    mode: "cors",
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
+export const setPatientChannelSubscription = (token,data) => {
+  const url = `${getCorticoUrl()}/api/subscription/`;
+
+  return fetch(url,{
+    method: "POST",
+    body: JSON.stringify(data),
+    mode: "cors",
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
 export function getEncounterNotes(demographicNo) {
   const payload = {
     method: "viewNotesOpt",
