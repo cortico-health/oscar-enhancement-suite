@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import Alert from "../cortico/Widget/Alert";
 
 const channelOptions = {
@@ -5,20 +6,27 @@ const channelOptions = {
     "email": "email address"
 }
 
-const SubscriptionContainer = ({ channelName,channel,value,handleSubscriptionChange = null,consented }) => {
+const SubscriptionContainer = ({
+    channelName,
+    channel,
+    value,
+    handleSubscriptionChange = null,
+    consented,
+    isSubscriptionsEmpty = false
+}) => {
 
     const getTitle = () => {
-        if (!consented) return "Patient has not yet consented"
+        if (isSubscriptionsEmpty) {
+            if (!consented) return "Patient has not yet consented";
 
-        return `Patient has Consented last ${new Date(consented).toDateString()}`
-    }
+            return `Patient has Consented last ${dayjs(consented).format("MMMM DD, YYYY")}`
+        }
 
-    const getMessage = () => {
         if (channel === null) return `We do not yet have record of patient's ${channelOptions[channelName]}.`;
 
         if (channel === "invalid") return `The ${channelOptions[channelName]} of ${value} is invalid`;
 
-        return `Patient is ${channel === "opt_in" ? "subscribed" : "unsubscribed"} at this ${channelOptions[channelName]}`
+        return `Patient is ${channel === "opt_in" ? "subscribed" : "unsubscribed"} at this ${channelOptions[channelName]}`;
     }
 
     const getVariant = () => {
@@ -32,7 +40,6 @@ const SubscriptionContainer = ({ channelName,channel,value,handleSubscriptionCha
     return (
         <Alert
             title={ getTitle() }
-            message={ getMessage() }
             className="tw-w-full tw-my-2"
             variant={ getVariant() }
         >

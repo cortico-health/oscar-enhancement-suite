@@ -661,7 +661,9 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
                   value={ to }
                   handleSubscriptionChange={ handleChannelSubscription }
                   consented={ consentedDate }
-                /> }
+                  isSubscriptionsEmpty={ patientInfo.subscriptions.length === 0 }
+                />
+              }
               <div>
                 <Input
                   type="email"
@@ -685,15 +687,15 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
           ) : null}
           {scheme === "sms" ? (
             <>
-              { (phone && !phoneChanged) ?
+              { (phone && !phoneChanged) &&
                 <SubscriptionContainer
                   channelName={ scheme }
                   channel={ subscriptions.sms }
                   value={ phone }
                   handleSubscriptionChange={ handleChannelSubscription }
                   consented={ consentedDate }
-                />
-                : null }
+                  isSubscriptionsEmpty={ patientInfo.subscriptions.length === 0 }
+                /> }
               <div>
                 <Input
                   type="text"
@@ -779,7 +781,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
               onClose={() => setOpenSavedReplies(false)}
               s
             >
-              <div className="tw-inline-block tw-translate-x-[-50%] tw-left-[50%]  tw-text-white tw-relative tw-translate-y-[-50%] tw-top-[50%]">
+              <div className="tw-inline-block tw-translate-x-[-50%] tw-left-[50%] tw-text-white tw-relative tw-translate-y-[-50%] tw-top-[50%]">
                 <SavedReplies loadReply={handleLoadReply} />
               </div>
             </Dialog>
