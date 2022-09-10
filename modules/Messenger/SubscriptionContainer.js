@@ -49,7 +49,7 @@ const SubscriptionContainer = ({
                         channel !== "invalid" ?
                             (
                                 <p onClick={ handleSubscriptionChange } className="tw-font-bold tw-underline tw-cursor-pointer tw-mt-4">
-                                    { `${channel === "opt_in" ? "Unsubscribe" : "Subscribe"} to ${value}` }
+                                    { `${channel === "opt_in" ? "Unsubscribe" : "Subscribe"} ${value}` }
                                 </p>
                             )
                             :
@@ -65,10 +65,10 @@ const SubscriptionContainer = ({
                             (
                                 <>
                                     <p onClick={ (e) => handleSubscriptionChange(true) } className="tw-font-bold tw-underline tw-cursor-pointer tw-mt-4 tw-mb-1">
-                                        Subscribe to { value }
+                                        Subscribe { value }
                                     </p>
                                     <p onClick={ (e) => handleSubscriptionChange(false) } className="tw-font-bold tw-underline tw-cursor-pointer">
-                                        Unsubscribe to { value }
+                                        Unsubscribe { value }
                                     </p>
                                 </>
                             )
