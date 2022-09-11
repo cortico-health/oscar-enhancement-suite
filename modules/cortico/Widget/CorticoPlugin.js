@@ -141,7 +141,7 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
   };
 
   return (
-    <div className="tw-flex tw-h-full">
+    <div className="tw-flex tw-bg-white tw-rounded-xl tw-border">
       {refresh ? (
         <AlertDialog
           icon={
@@ -191,7 +191,7 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
         <WidgetSidebar onClick={handleClick} />
       </div>
 
-      <div className=" tw-text-black tw-relative">
+      <div className=" tw-text-black tw-relative tw-max-h-[700px] tw-overflow-y-auto">
         <div
           className="tw-absolute tw-top-2 tw-right-2 tw-cursor-pointer tw-bg-amber-400 tw-rounded-full"
           onClick={onMinimize}

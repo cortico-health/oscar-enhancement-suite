@@ -171,10 +171,7 @@ function App({ mode = "normal", ...props }) {
           <>
             <div
               className={classNames(
-                "tw-fixed tw-bottom-5 tw-right-5 tw-z-10005  tw-text-white cortico-widget-body",
-                open === true
-                  ? "tw-rounded-xl tw-border tw-bg-white"
-                  : "tw-rounded-full "
+                "tw-fixed tw-bottom-5 tw-max-h-[700px] tw-h-[calc(100%-200)] tw-right-5 tw-z-10005  tw-text-white cortico-widget-body"
               )}
               ref={containerRef}
             >

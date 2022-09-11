@@ -1,6 +1,7 @@
 import { render } from "preact";
 import { useEffect } from "preact/hooks";
 import { CheckIcon } from "../Icons/HeroIcons.js";
+import { PrimaryButton } from "../core/Button";
 
 function SuccessWindow() {
   const refresh = () => {
@@ -30,12 +31,12 @@ function SuccessWindow() {
             <p className="tw-text-base tw-text-gray-700 tw-text-center tw-mt-6">
               Not refreshing? Click the button below
             </p>
-            <button
+            <PrimaryButton
               onClick={refresh}
               className="tw-bg-blue-1000 tw-mt-4 tw-py-2 tw-px-4 tw-text-white tw-rounded-md tw-text-sm"
             >
               Refresh
-            </button>
+            </PrimaryButton>
           </div>
         </div>
       </div>
