@@ -10,6 +10,7 @@ import CodeLogo from "../../../../../resources/icons/code.svg";
 import UploadLogo from "../../../../../resources/icons/upload.svg";
 import DismissedLogo from "../../../../../resources/icons/dismissed.svg";
 import MConfirmationModal from "./MConfirmationModal";
+import { CEREBRO_URL } from "../../../../Utils/VcnUtils";
 
 const ShowSVGFile = ({ url, icon, name, isUser }) => {
     return (
@@ -44,8 +45,8 @@ const ShowImgFile = ({ url }) => {
 }
 
 const MMessageFile = ({ dataURL, name, extension, isUser }) => {
-    name = name.replace('provider_messenger/', '');
-    const fileUrl = dataURL;
+    name = name.replace("provider_messenger/", "");
+    const fileUrl = dataURL.startsWith("/") ? `${CEREBRO_URL}${dataURL}` : dataURL;
 
     const [isUploadOpen, setIsUploadOpen] = useState(false);
     const [isDismissOpen, setIsDismissOpen] = useState(false);
