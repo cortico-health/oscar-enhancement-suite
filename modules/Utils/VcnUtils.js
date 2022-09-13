@@ -1,5 +1,5 @@
-const CEREBRO_URL = process.env.CEREBRO_URL;
-const WEBSOCKET_URL = process.env.WEBSOCKET_URL;
+export const CEREBRO_URL = process.env.CEREBRO_URL;
+export const WEBSOCKET_URL = process.env.WEBSOCKET_URL;
 
 export const getWsChatUrl = (id, accessToken) => {
     return `${WEBSOCKET_URL}/chat/${id}/?token=${accessToken}`;
