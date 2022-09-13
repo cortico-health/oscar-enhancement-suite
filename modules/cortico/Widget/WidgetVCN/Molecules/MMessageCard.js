@@ -62,7 +62,7 @@ const MMessageCard = ({ messageDetails, readHistory }) => {
                                             <MMessageFile
                                                 dataURL={file.file}
                                                 name={file.file_name}
-                                                extension={getFileExtension(file.file)}
+                                                extension={ getFileExtension(file.file_name) }
                                                 isUser={from_user.id === userStore.user.id}
                                             />
                                         </div>
@@ -100,7 +100,7 @@ const MMessageCard = ({ messageDetails, readHistory }) => {
                                                     <MMessageFile
                                                         dataURL={file.file}
                                                         name={file.file_name}
-                                                        extension={getFileExtension(file.file)}
+                                                        extension={ getFileExtension(file.file_name) }
                                                     />
                                                 </div>
                                             )

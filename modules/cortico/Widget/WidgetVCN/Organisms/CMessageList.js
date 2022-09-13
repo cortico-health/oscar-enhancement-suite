@@ -14,10 +14,12 @@ import { getWsChatUrl } from "../../../../Utils/VcnUtils";
 import { loadExtensionStorageValue } from "../../../../Utils/Utils";
 import { createFile, getChatMessageData, getConversation } from "../../../../Api/Vcn/Conversations.js";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 
 const CMessageList = () => {
     const dispatch = useDispatch();
+    const { attachments } = useSelector((state) => state.messenger);
     const { conversationStore, patientStore } = useStore();
     const sendRef = useRef(null);
     const messagesEndRef = useRef(null);
@@ -91,6 +93,15 @@ const CMessageList = () => {
         });
     }
 
+    const deleteAttachment = (id) => {
+        dispatch({
+            type: "messenger/deleteAttachment",
+            payload: {
+                id,
+            },
+        });
+    };
+
     useEffect(() => {
         const conversation = conversationStore.conversations.selected;
 
@@ -128,6 +139,17 @@ const CMessageList = () => {
     useEffect(() => {
         messagesEndRef?.current?.scrollIntoView()
     }, [messages]);
+
+    useEffect(() => {
+        //TODO Dwight & Justin: Change the naming convenions same as Aaron's I think?
+        const newAttachments = attachments.map((attachment) => ({
+            id: attachment.id,
+            file_name: attachment.name,
+            file: attachment.data,
+            type: "dataURL"
+        }))
+        setUploadedFiles((prevUploadedFiles) => [...prevUploadedFiles,...newAttachments]);
+    },[attachments]);
 
     if (!conversationStore.conversations.selected) {
         return (
@@ -168,7 +190,11 @@ const CMessageList = () => {
                                 uploadedFiles.length > 0 &&
                                 <div className="tw-flex tw-flex-wrap tw-w-full tw-max-h-32 tw-overflow-y-auto tw-mt-3">
                                     {uploadedFiles.map((file) => {
-                                        return <AFileInputShow fileInput={file} exit={() => handlers.removeFile(file.id)} />
+                                        return <AFileInputShow fileInput={ file } exit={ () => {
+                                            //TODO Dwight: To be improved since it loops twice.
+                                            deleteAttachment(file.id);
+                                            handlers.removeFile(file.id);
+                                        } } />
                                     })}
                                 </div>
                             }

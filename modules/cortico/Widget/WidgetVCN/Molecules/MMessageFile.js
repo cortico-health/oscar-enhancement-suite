@@ -46,7 +46,9 @@ const ShowImgFile = ({ url }) => {
 }
 
 const MMessageFile = ({ dataURL, name, extension, isUser }) => {
-    name = cleanFileName(name);
+    //TODO Dwight: Since the attachments from mobx and state have different naming convention
+    if (name.indexOf('provider_messenger') > -1)
+        name = cleanFileName(name);
     const fileUrl = dataURL.startsWith("/") ? `${CEREBRO_URL}${dataURL}` : dataURL;
 
     const [isUploadOpen, setIsUploadOpen] = useState(false);
