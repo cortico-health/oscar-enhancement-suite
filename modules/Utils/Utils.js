@@ -412,3 +412,8 @@ export function formEncounterMessage(scheme, subject, body) {
   const suffix = `\n-------------------------------------------\n`;
   return prefix + body + suffix;
 }
+
+export function getFileExtension(url) {
+  if (url) return url.split(".").pop().toLowerCase()
+  return ''
+}

@@ -56,7 +56,6 @@ export const createFile = async (file) => {
     return await fetch(`${CEREBRO_API_URL}/vcn/files/`, {
         method: "POST",
         headers: {
-            "Content-Type": "multipart/form-data",
             "Authorization": `Bearer ${accessToken}`
         },
         body: data,

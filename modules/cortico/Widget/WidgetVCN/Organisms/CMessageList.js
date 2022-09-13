@@ -22,10 +22,9 @@ const CMessageList = () => {
 
     const [messages, setMessages] = useState(undefined);
     const [socketUrl, setSocketUrl] = useState(null);
-    const [previews,setPreviews] = useState([]);
 
     const [patientSelected, setPatientSelected] = useState(null);
-    const [uploadedFile, setUploadedFile] = useState(null);
+    const [uploadedFiles, setUploadedFiles] = useState([]);
     const [fileStats, setFileStats] = useState(null);
     const [readHistory, setReadHistory] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -52,33 +51,24 @@ const CMessageList = () => {
     const handlers = {
         onUpload: (e) => {
             const file = e.target.files[0];
-            const extension = file.name.split(".").pop().toLowerCase();
 
-            setPreviews([...previews,{ id: uuidv4(),dataURL: file,name: file.name,type: extension }]);
-            /*
-                to avoid error
-                createFile(file).then((response) => { return response.json() }).then((data) => {
-                    setUploadedFile(data);
-                    setPreviews({ dataURL: data.file,name: file.name,type: extension });
-                }).catch((error) => {
-                    console.log(error);
-                });
-            */
-
+            createFile(file).then((response) => { return response.json() }).then((data) => {
+                setUploadedFiles([...uploadedFiles, data]);
+            }).catch((error) => {
+                console.log(error);
+            });
         },
         removeFile: (id) => {
-            setUploadedFile(null);
-            setPreviews(previews.filter((preview) => preview.id !== id));
+            setUploadedFiles(uploadedFiles.filter((file) => file.id !== id));
         },
         onSend: () => {
             const value = sendRef?.current?.base?.lastElementChild?.value;
-            if (value || uploadedFile) {
+            if (value || uploadedFiles) {
                 getWebSocket().send(JSON.stringify({
                     'body': value ? value : '',
-                    'file': uploadedFile ? uploadedFile.id : null
+                    'files': uploadedFiles ? uploadedFiles.map((file) => file.id) : null
                 }));
-                setUploadedFile(null);
-                setPreviews([]);
+                setUploadedFiles([]);
                 sendRef.current.base.lastElementChild.value = "";
                 window.scrollTo(0, document.body.scrollHeight);
             }
@@ -176,9 +166,9 @@ const CMessageList = () => {
                         <div className="tw-mx-12">
                             <div className="tw-w-full tw-max-h-16 tw-overflow-y-auto">
                                 <table className="tw-border-0">
-                                    { previews.map((preview) => {
-                                        return <tr><td><AFileInputShow fileInput={ preview } exit={ () => handlers.removeFile(preview.id) } /></td></tr>
-                                    }) }
+                                    {uploadedFiles.map((file) => {
+                                        return <tr><td><AFileInputShow fileInput={file} exit={() => handlers.removeFile(file.id)} /></td></tr>
+                                    })}
                                 </table>
                             </div>
                             <MSend
@@ -204,7 +194,7 @@ const CMessageList = () => {
                     </div>
                 </>
             ) : (
-                    <div className="tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-2 tw-w-full tw-h-full">
+                <div className="tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-2 tw-w-full tw-h-full">
                     <ASpinner variant="md" />
                 </div>
             )}

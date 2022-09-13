@@ -6,6 +6,7 @@ import MMessageFile from "./MMessageFile";
 
 import VerifiedLogo from "../../../../../resources/icons/verified.svg"
 import MProfilePicture from "./MProfilePicture";
+import { getFileExtension } from "../../../../Utils/Utils";
 
 const formatURL = (string) => {
     return string.replace(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g, (url) => '<a class="text-primary-500" href="' + url + '">' + url + '</a>')
@@ -17,11 +18,6 @@ const MMessageCard = ({ messageDetails, readHistory }) => {
     const message = () => ({
         __html: DOMPurify.sanitize(formatURL(body))
     });
-
-    const getFileExtension = (url) => {
-        if (url) return url.split(".").pop().toLowerCase()
-        return ''
-    }
 
     const { userStore } = useStore();
 
@@ -53,13 +49,16 @@ const MMessageCard = ({ messageDetails, readHistory }) => {
                                     {from_user.clinic_name}
                                 </p>
                             </div>
-                            <div className='tw-flex tw-items-center tw-rounded-2xl tw-p-4 tw-mb-2 tw-mt-3 tw-bg-secondary-200 tw-gap-x-5 tw-max-w-[45%]'>
-                                <p ref={textRef} dangerouslySetInnerHTML={message()} className='tw-text-secondary-500 tw-text-message1' />
-                            </div>
+                            {
+                                body &&
+                                <div className='tw-flex tw-items-center tw-rounded-2xl tw-p-4 tw-mb-2 tw-mt-3 tw-bg-secondary-200 tw-gap-x-5 tw-max-w-[45%]'>
+                                    <p ref={textRef} dangerouslySetInnerHTML={message()} className='tw-text-secondary-500 tw-text-message1' />
+                                </div>
+                            }
                             {
                                 files.map(file => {
                                     return (
-                                        <div className='tw-flex tw-justify-end tw-mb-2'>
+                                        <div className='tw-flex tw-justify-end tw-mt-3'>
                                             <MMessageFile
                                                 dataURL={file.file}
                                                 name={file.file_name}
