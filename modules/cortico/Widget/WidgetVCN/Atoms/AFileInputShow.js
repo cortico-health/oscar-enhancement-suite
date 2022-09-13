@@ -18,14 +18,15 @@ const AFileInputShow = ({ fileInput, exit }) => {
     const fileName = cleanFileName(fileInput.file_name);
 
     return (
-        <div className="tw-flex tw-items-center tw-gap-4">
-            {isImage(type) && <img width="50" src={fileInput.file} />}
+        <div className="tw-flex tw-p-1 tw-mr-1 tw-border tw-rounded-sm tw-items-center tw-gap-4 tw-bg-white">
+            {/* TODO: Dwight - Convert this into tailwind */}
+            {isImage(type) && <img style="width: 40px!important; height: 40px!important; object-fit: cover;" src={fileInput.file} />}
             {isAudio(type) && <ASvg src={MusicLogo} className="tw-h-9 tw-w-9" />}
             {isDocument(type) && <ASvg src={DocumentLogo} className="tw-h-9 tw-w-9" />}
             {isTextFile(type) && <ASvg src={DocumentTextLogo} className="tw-h-9 tw-w-9" />}
             {isSheet(type) && <ASvg src={TableLogo} className="tw-h-9 tw-w-9" />}
             {isHTML(type) && <ASvg src={CodeLogo} className="tw-h-9 tw-w-9" />}
-            <p className="tw-text-sm">{fileName}</p>
+            {!isImage(type) && <p className="tw-text-sm">{fileName}</p>}
             <ASvg src={ExitLogo} className="tw-cursor-pointer" onClick={exit} />
         </div>
     )

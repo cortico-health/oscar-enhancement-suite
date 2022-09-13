@@ -150,7 +150,7 @@ const CMessageList = () => {
     }
 
     return (
-        <div className="tw-relative tw-h-full tw-flex tw-flex-col tw-justify-between tw-overflow-x-hidden tw-w-[1000px]">
+        <div className="tw-relative tw-h-full tw-flex tw-flex-col tw-justify-between tw-overflow-hidden tw-w-[1000px]">
             <MChatTools
                 fileStats={fileStats}
                 patient={patientStore.patients.selected}
@@ -160,7 +160,7 @@ const CMessageList = () => {
 
             {conversationStore.conversations.selected && !loading ? (
                 <>
-                    <div className="tw-flex-grow tw-overflow-y-auto tw-h-96 tw-px-9">
+                    <div className="tw-flex-1 tw-overflow-y-auto tw-h-96 tw-px-9">
                         {messages?.slice(0).reverse().map((message) => {
                             return (
                                 <MMessageCard
@@ -171,15 +171,16 @@ const CMessageList = () => {
                         })}
                         <div ref={messagesEndRef} />
                     </div>
-                    <div className="tw-sticky tw-bg-secondary-10 tw-w-full">
+                    <div className="tw-sticky tw-border tw-bg-secondary-10 tw-w-full">
                         <div className="tw-mx-12">
-                            <div className="tw-w-full tw-max-h-16 tw-overflow-y-auto">
-                                <table className="tw-border-0">
+                            {
+                                uploadedFiles.length > 0 &&
+                                <div className="tw-flex tw-flex-wrap tw-w-full tw-max-h-32 tw-overflow-y-auto tw-mt-3">
                                     {uploadedFiles.map((file) => {
-                                        return <tr><td><AFileInputShow fileInput={file} exit={() => handlers.removeFile(file.id)} /></td></tr>
+                                        return <AFileInputShow fileInput={file} exit={() => handlers.removeFile(file.id)} />
                                     })}
-                                </table>
-                            </div>
+                                </div>
+                            }
                             <MSend
                                 placeholder="Type message..."
                                 ref={sendRef}
@@ -195,7 +196,7 @@ const CMessageList = () => {
                                         "No Patient."
                                     }</span>
                                 {" "}
-                                <span className="tw-font-medium tw-text-primary-500 tw-cursor-pointer" onClick={ goToSelectPatient }>
+                                <span className="tw-font-medium tw-text-primary-500 tw-cursor-pointer" onClick={goToSelectPatient}>
                                     {patientSelected ? "Switch" : "Choose"} Patient
                                 </span>
                             </p>
