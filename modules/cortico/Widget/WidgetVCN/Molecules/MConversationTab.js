@@ -76,7 +76,7 @@ const MConversationTab = ({ conversation, selected, ...props }) => {
                         {
                             conversation?.patient
                             &&
-                            <span> ({conversation.patient})</span>
+                            <span> ({conversation.patient.first_name} {conversation.patient.last_name})</span>
                         }
                     </p>
                     <p

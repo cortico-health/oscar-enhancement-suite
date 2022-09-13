@@ -8,23 +8,24 @@ import { useStore } from "../../store/mobx";
 
 const CRecentList = ({ ...props }) => {
 
-    const { patientStore } = useStore();
+    const { patientStore, conversationStore } = useStore();
 
     const dispatch = useDispatch();
 
     return (
-        <div className='tw-px-5 tw-pt-6' { ...props }>
+        <div className='tw-px-5 tw-pt-6' {...props}>
             <h2 className='tw-text-secondary-500 tw-font-bold tw-text-h1'>Recent patients</h2>
             {
                 patientStore?.patients?.all?.map(patient => {
-                    return <MRecentItem onClick={ () => {
+                    return <MRecentItem onClick={() => {
+                        conversationStore.conversations.all = null;
                         patientStore.selectPatient(patient)
                         dispatch({
                             type: "sidebar/setCurrent",
                             payload: "Provider Messaging",
                         });
-                    } }
-                        patient={ patient } />
+                    }}
+                        patient={patient} />
                 })
             }
         </div>

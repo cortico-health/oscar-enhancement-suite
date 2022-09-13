@@ -96,19 +96,6 @@ const CMessageList = () => {
 
         if (conversation) {
             setLoading(true);
-
-            getConversation(conversation.id).then((res) => { return res.json() }).then(
-                (data) => {
-                    setFileStats(data.stats)
-                    patientStore.selectPatient(data.patient);
-                }
-            ).catch(
-                (error) => {
-                    console.log(error)
-                    setLoading(false);
-                }
-            )
-
             getChatMessageData(conversation.id).then((response) => {
                 return response.json();
             }).then((data) => {
@@ -125,6 +112,10 @@ const CMessageList = () => {
             console.log("Message False")
         }
     }, [conversationStore.conversations.selected?.id]);
+
+    useEffect(() => {
+        if (conversationStore.conversations.selected?.stats) setFileStats(conversationStore.conversations.selected.stats);
+    }, [conversationStore.conversations.selected?.stats]);
 
     useEffect(() => {
         setReadHistory(conversationStore.conversations.selected?.last_read_messages || []);

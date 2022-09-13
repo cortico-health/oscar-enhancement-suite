@@ -81,10 +81,11 @@ export const StateProvider = ({ children }) => {
 
   const conversationStore = useLocalObservable(() => ({
     conversations: {
-      all: [],
+      all: null,
       selected: null,
     },
     fetchConversations(patient_hin = "") {
+      this.conversations.all = null;
       getConversationsList(patient_hin).then((res) => { return res.json() }).then(
         (data) => {
           this.conversations.all = data.results;
@@ -101,6 +102,7 @@ export const StateProvider = ({ children }) => {
       }
 
       this.conversations.selected = conversation;
+      if (conversation.patient) patientStore.selectPatient(conversation.patient);
     },
     updateOrInsertConversation(updatedConversation) {
       const existingConversation = this.conversations.all.find((conversation) => {
