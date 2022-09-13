@@ -72,6 +72,7 @@ const CPatientCard = (props) => {
                 email: info["email"] || "N/A",
             };
             patientStore.selectPatient(patient);
+            conversationStore.fetchConversations(patient.hin);
         }
     }, [info]);
 

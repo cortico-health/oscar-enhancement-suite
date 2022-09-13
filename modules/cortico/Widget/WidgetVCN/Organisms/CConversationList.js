@@ -13,8 +13,13 @@ const CConversationList = () => {
     const { conversationStore, patientStore } = useStore();
 
     const [searchName, setSearchName] = useState("");
+    const [conversationKey, setConversationKey] = useState("all")
 
     //Handle the conversation that is filtered by patient
+    useEffect(() => {
+        setConversationKey(patientStore.patients.selected?.hin || "all")
+    }, [patientStore.patients.selected?.hin]);
+
     useEffect(() => {
         const selectedPatient = patientStore.patients.selected;
 
@@ -27,7 +32,7 @@ const CConversationList = () => {
 
         //Filter Conversation by Patients hin
         conversationStore.fetchConversations(selectedPatient.hin);
-    }, [patientStore.patients.selected?.id]);
+    }, [conversationKey])
 
     const searchHandler = debounce(query => {
         // TODO: Justin - Implement search later
@@ -35,12 +40,12 @@ const CConversationList = () => {
 
     return (
         <div className="tw-mx-2.5">
-            <MSearch disabled={conversationStore.conversations.all?.length === 0 && !searchName} onInput={(e) => searchHandler(e.target.value)} />
+            <MSearch disabled={conversationStore.conversations[conversationKey]?.length === 0 && !searchName} onInput={(e) => searchHandler(e.target.value)} />
             <div className="tw-h-[400px] tw-overflow-y-auto">
-                {conversationStore.conversations.all ? (
-                    conversationStore.conversations.all.length > 0 ? (
+                {conversationStore.conversations[conversationKey] ? (
+                    conversationStore.conversations[conversationKey].length > 0 ? (
                         <>
-                            {conversationStore.conversations.all?.map(conversation => {
+                            {conversationStore.conversations[conversationKey]?.map(conversation => {
                                 return (
                                     <MConversationTab
                                         key={`conversation-${conversation.id}`}

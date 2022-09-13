@@ -48,7 +48,6 @@ const CSelectList = ({ ...props }) => {
     }, 500)
 
     const handlePatientSelect = () => {
-        conversationStore.conversations.all = null;
         patientStore.selectPatient(select);
         dispatch({
             type: "sidebar/setCurrent",

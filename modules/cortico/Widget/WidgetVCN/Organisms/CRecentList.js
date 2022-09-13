@@ -18,7 +18,6 @@ const CRecentList = ({ ...props }) => {
             {
                 patientStore?.patients?.all?.map(patient => {
                     return <MRecentItem onClick={() => {
-                        conversationStore.conversations.all = null;
                         patientStore.selectPatient(patient)
                         dispatch({
                             type: "sidebar/setCurrent",

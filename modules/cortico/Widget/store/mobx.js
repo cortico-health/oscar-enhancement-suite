@@ -84,14 +84,20 @@ export const StateProvider = ({ children }) => {
       all: null,
       selected: null,
     },
-    fetchConversations(patient_hin = "") {
-      this.conversations.all = null;
-      getConversationsList(patient_hin).then((res) => { return res.json() }).then(
+    fetchConversations(hin = "") {
+      getConversationsList(hin).then((res) => { return res.json() }).then(
         (data) => {
-          this.conversations.all = data.results;
+          if (hin) {
+            this.conversations[hin] = data.results;
+          } else {
+            this.conversations.all = data.results;
+          }
         }
       ).catch(
-        (error) => console.log(error)
+        (error) => {
+          console.log(error)
+          this.fetchConversations(hin);
+        }
       )
     },
     selectConversation(conversation) {
@@ -105,7 +111,8 @@ export const StateProvider = ({ children }) => {
       if (conversation.patient) patientStore.selectPatient(conversation.patient);
     },
     updateOrInsertConversation(updatedConversation) {
-      const existingConversation = this.conversations.all.find((conversation) => {
+      // Update All Conversations
+      let existingConversation = this.conversations.all.find((conversation) => {
         return conversation.id === updatedConversation.id;
       })
 
@@ -119,6 +126,22 @@ export const StateProvider = ({ children }) => {
 
       this.conversations.all = _.orderBy(this.conversations.all, ['last_message.created_date'], ['desc']);
       if (this.conversations.selected.id === updatedConversation.id) this.conversations.selected = updatedConversation;
+
+      // Update Patient-specific Conversations if already loaded
+      if (updatedConversation.patient && this.conversations[updatedConversation.patient.hin]) {
+        const hin = updatedConversation.patient.hin;
+        let existingConversation = this.conversations[hin].find((conversation) => {
+          return conversation.id === updatedConversation.id;
+        })
+
+        if (existingConversation) {
+          this.conversations[hin] = this.conversations[hin].map((conversation) => {
+            return conversation.id === updatedConversation.id ? updatedConversation : conversation;
+          });
+
+          this.conversations[hin] = _.orderBy(this.conversations[hin], ['last_message.created_date'], ['desc']);
+        }
+      }
     }
   }))
 
@@ -131,7 +154,6 @@ export const StateProvider = ({ children }) => {
           // Fetch all initial data after logging in
           userStore.fetchUser();
           userStore.fetchUsers();
-          conversationStore.fetchConversations();
           patientStore.fetchPatients();
 
           setSocketUrl(getWsUpdateUrl(accessToken));
