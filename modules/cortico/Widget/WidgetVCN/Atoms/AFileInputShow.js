@@ -7,13 +7,15 @@ import DocumentLogo from "../../../../../resources/icons/document.svg";
 import DocumentTextLogo from "../../../../../resources/icons/document-text.svg";
 import TableLogo from "../../../../../resources/icons/table.svg";
 import CodeLogo from "../../../../../resources/icons/code.svg";
-import { getFileExtension } from '../../../../Utils/Utils';
+import { getFileExtension, cleanFileName } from '../../../../Utils/Utils';
+
 
 const AFileInputShow = ({ fileInput, exit }) => {
 
     if (!fileInput) return null;
 
     const type = getFileExtension(fileInput.file);
+    const fileName = cleanFileName(fileInput.file_name);
 
     return (
         <div className="tw-flex tw-items-center tw-gap-4">
@@ -23,7 +25,7 @@ const AFileInputShow = ({ fileInput, exit }) => {
             {isTextFile(type) && <ASvg src={DocumentTextLogo} className="tw-h-9 tw-w-9" />}
             {isSheet(type) && <ASvg src={TableLogo} className="tw-h-9 tw-w-9" />}
             {isHTML(type) && <ASvg src={CodeLogo} className="tw-h-9 tw-w-9" />}
-            <p className="tw-text-sm">{fileInput.name}</p>
+            <p className="tw-text-sm">{fileName}</p>
             <ASvg src={ExitLogo} className="tw-cursor-pointer" onClick={exit} />
         </div>
     )
