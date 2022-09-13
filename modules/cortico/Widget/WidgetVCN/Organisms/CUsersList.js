@@ -78,9 +78,13 @@ const CUsersList = () => {
             members: [userStore.user.id, ...getCheckedPatients()]
         }
         createConversation(inputs).then((response) => { return response.json() }).then((data) => {
-            const existingConversation = conversationStore.conversations.all.find((conversation) => {
+            //TODO Dwight: this must be an API query
+            const existingConversation = conversationStore.conversations.all?.find((conversation) => {
                 return conversation.id === parseInt(data.id);
             })
+
+            if (!existingConversation) conversationStore.selectConversation(existingConversation);
+
             conversationStore.selectConversation(data);
 
             goToChat();
