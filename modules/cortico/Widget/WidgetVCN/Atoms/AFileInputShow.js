@@ -14,8 +14,13 @@ const AFileInputShow = ({ fileInput, exit }) => {
 
     if (!fileInput) return null;
 
-    const type = getFileExtension(fileInput.file);
-    const fileName = cleanFileName(fileInput.file_name);
+    const type = getFileExtension(fileInput.file_name);
+    let fileName;
+    //TODO Dwight: will remove this condition if the naming structure is changed.
+    if (fileInput.file_name?.indexOf("provider_messenger") > -1)
+        fileName = cleanFileName(fileInput.file_name);
+    else
+        fileName = fileInput.file_name;
 
     return (
         <div className="tw-flex tw-p-1 tw-mr-1 tw-border tw-rounded-sm tw-items-center tw-gap-4 tw-bg-white">
