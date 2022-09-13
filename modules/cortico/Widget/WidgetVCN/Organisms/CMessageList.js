@@ -13,9 +13,11 @@ import ASpinner from "../Atoms/ASpinner";
 import { getWsChatUrl } from "../../../../Utils/VcnUtils";
 import { loadExtensionStorageValue } from "../../../../Utils/Utils";
 import { createFile, getChatMessageData, getConversation } from "../../../../Api/Vcn/Conversations.js";
+import { useDispatch } from "react-redux";
 
 
 const CMessageList = () => {
+    const dispatch = useDispatch();
     const { conversationStore, patientStore } = useStore();
     const sendRef = useRef(null);
     const messagesEndRef = useRef(null);
@@ -81,6 +83,13 @@ const CMessageList = () => {
             }
         },
     };
+
+    const goToSelectPatient = () => {
+        dispatch({
+            type: "sidebar/setCurrent",
+            payload: "VCN Patient",
+        });
+    }
 
     useEffect(() => {
         const conversation = conversationStore.conversations.selected;
@@ -186,9 +195,9 @@ const CMessageList = () => {
                                         "No Patient."
                                     }</span>
                                 {" "}
-                                <a className="tw-font-medium tw-text-primary-500" href="/select">
+                                <span className="tw-font-medium tw-text-primary-500 tw-cursor-pointer" onClick={ goToSelectPatient }>
                                     {patientSelected ? "Switch" : "Choose"} Patient
-                                </a>
+                                </span>
                             </p>
                         </div>
                     </div>

@@ -84,8 +84,8 @@ export const StateProvider = ({ children }) => {
       all: [],
       selected: null,
     },
-    fetchConversations() {
-      getConversationsList().then((res) => { return res.json() }).then(
+    fetchConversations(patient_hin = "") {
+      getConversationsList(patient_hin).then((res) => { return res.json() }).then(
         (data) => {
           this.conversations.all = data.results;
         }
