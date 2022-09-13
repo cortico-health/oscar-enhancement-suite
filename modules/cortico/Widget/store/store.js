@@ -34,9 +34,9 @@ const rootReducer = combineReducers({
 
 function logger({ getState }) {
   return (next) => (action) => {
-    console.info("will dispatch", action);
+    console.debug("will dispatch", action);
     const returnValue = next(action);
-    console.info("state after dispatch", getState());
+    console.debug("state after dispatch", getState());
     return returnValue;
   };
 }

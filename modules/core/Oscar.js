@@ -64,7 +64,9 @@ export class Oscar {
     return (
       this.route.indexOf(
         "/oscarReport/reportByTemplate/GenerateReportAction.do"
-      ) > -1
+      ) > -1 ||
+      this.route.indexOf("/oscarReport/reportByTemplate/homePage.jsp") > -1 ||
+      this.route.indexOf("/oscarReport/reportByTemplate") > -1
     );
   }
 
