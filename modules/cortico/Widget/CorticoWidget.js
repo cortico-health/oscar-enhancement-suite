@@ -18,12 +18,9 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import PatientAdapter from "./adapters/PatientAdapter";
 import AppointmentDetailAdapter from "./adapters/AppointmentDetailAdapter";
 import LabResultsAdapter from "./adapters/LabResultsAdapter";
-<<<<<<< HEAD
 import { StateProvider } from "./store/mobx.js";
-=======
 import FeatureDetector from "./adapters/FeatureDetecter";
 import InboxDocumentAdapter from "./adapters/InboxDocumentAdapter";
->>>>>>> 14d2f7f093b483b6effcfbe2db9f928ac9ec5cdb
 
 const uid = nanoid();
 
