@@ -23,21 +23,21 @@ const CNotFound = ({ name }) => {
         alert(JSON.stringify(inputs,null,2))
     } */
 
-    const [isOpened,setIsOpened] = useState(false);
+    const [isOpened, setIsOpened] = useState(false);
     return (
         <div className='c-not-found tw-relative'>
-            {/* <p className='tw-text-center tw-text-h3 tw-text-secondary-500 tw-px-5 tw-mb-2'> It seems like <span className="tw-font-bold">{ name }</span> is not in our network. To start a conversation with <span className="tw-font-bold">{ name }</span>, please use the invite button below. </p> */ }
+            {/* <p className='tw-text-center tw-text-h3 tw-text-secondary-500 tw-px-5 tw-mb-2'> It seems like <span className="tw-font-bold">{ name }</span> is not in our network. To start a conversation with <span className="tw-font-bold">{ name }</span>, please use the invite button below. </p> */}
             <p className='tw-text-center tw-text-h3 tw-text-secondary-500 tw-px-5 tw-mb-2'>
-                { (name) ?
+                {(name) ?
                     (
                         <>
-                            It seems like <span className="tw-font-bold">{ name }</span> is not in our network. To start a conversation with <span className="tw-font-bold">{ name }</span>, please ask him/her to create their own account.
+                            It seems like <span className="tw-font-bold">{name}</span> is not in our network. To start a conversation with <span className="tw-font-bold">{name}</span>, please ask him/her to create their own account.
                         </>
                     )
                     :
                     (
                         <>
-                            No Conversation for this patient
+                            No Conversations for this patient
                         </>
                     )
                 }
