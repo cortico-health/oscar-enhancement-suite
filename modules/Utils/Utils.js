@@ -417,3 +417,7 @@ export function getFileExtension(url) {
   if (url) return url.split(".").pop().toLowerCase()
   return ''
 }
+
+export function cleanFileName(fileName) {
+  return fileName.replace("provider_messenger/", "");
+}
