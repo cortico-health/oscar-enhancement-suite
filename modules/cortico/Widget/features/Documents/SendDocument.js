@@ -2,6 +2,8 @@ import Button from "../../../../core/Button";
 import { ArrowRightIcon } from "@heroicons/react/solid";
 import { getBaseUrl } from "../../../../Utils/Utils";
 import { useDispatch } from "react-redux";
+import { nanoid } from "nanoid";
+
 export default function SendDocument({ node, ...props }) {
   const dispatch = useDispatch();
   const handleClick = async (evt) => {
@@ -27,6 +29,9 @@ export default function SendDocument({ node, ...props }) {
 
     try {
       const blob = await fetch(url).then((r) => {
+        if (!r.ok) {
+          throw Error("Error fetching file");
+        }
         try {
           const contentDisposition = r.headers.get("Content-Disposition");
           if (contentDisposition.includes("filename")) {
@@ -63,21 +68,32 @@ export default function SendDocument({ node, ...props }) {
         type: "sidebar/setCurrent",
         payload: "Messenger",
       });
-
       dispatch({
-        type: "messenger/setAll",
+        type: "messenger/addAttachment",
         payload: {
-          attachment: {
-            name: fileName || node.textContent,
-            data: dataUrl,
-            extension,
-          },
-          document: true,
+          id: nanoid(),
+          name: fileName || node.textContent,
+          data: dataUrl,
+          type: "dataUrl",
+          extension,
         },
       });
 
       console.log("Data URL", dataUrl);
     } catch (error) {
+      dispatch({
+        type: "app/setOpen",
+        payload: true,
+      });
+      dispatch({
+        type: "notifications/add",
+        payload: {
+          type: "error",
+          message: "Error fetching file",
+          title: "Failed to get document",
+          id: nanoid(),
+        },
+      });
       console.error(error);
     }
   };

@@ -186,32 +186,41 @@ export function htmlToElement(html) {
     : undefined;
 }
 
+function getDemographicFromSearchParams(url) {
+  var searchParams = new URLSearchParams(url);
+  return (
+    searchParams.get("demographic_no") ||
+    searchParams.get("demographicNo") ||
+    searchParams.get("functionid") ||
+    searchParams.get("demographicId") ||
+    searchParams.get("efmdemographic_no")
+  );
+}
+
 export function getDemographicNo(apptUrl) {
   if (apptUrl) {
-    var searchParams = new URLSearchParams(apptUrl);
-    return (
-      searchParams.get("demographic_no") ||
-      searchParams.get("demographicNo") ||
-      searchParams.get("functionid") ||
-      searchParams.get("demographicId") ||
-      searchParams.get("efmdemographic_no")
-    );
+    return getDemographicFromSearchParams(apptUrl);
   } else {
     // try several options
-    let demographicNo = getDemographicNo(window.location.search);
+    let demographicNo = getDemographicFromSearchParams(window.location.search);
     if (!demographicNo && window.opener) {
-      demographicNo = getDemographicNo(window.opener.location.search);
+      demographicNo = getDemographicFromSearchParams(
+        window.opener.location.search
+      );
     }
 
     if (!demographicNo) {
-      console.log("Called!");
       const temp = document.body.innerHTML;
       demographicNo = temp.match(/demographic_no=[0-9]*/);
       if (demographicNo) {
-        console.log(demographicNo);
         demographicNo = demographicNo[0].split("=")[1];
-        console.log(demographicNo);
-        console.log("Found demographic Number!", demographicNo);
+      }
+
+      if (!demographicNo) {
+        const demoInput = document.querySelector('input[name="demog"]');
+        if (demoInput) {
+          demographicNo = demoInput.value;
+        }
       }
     }
 
@@ -421,3 +430,22 @@ export function getFileExtension(url) {
 export function cleanFileName(fileName) {
   return fileName.replace("provider_messenger/", "");
 }
+
+export const getFileInfo = (contentDisposition) => {
+  let fileName = null;
+  let extension = null;
+  if (contentDisposition.includes("filename")) {
+    fileName = contentDisposition
+      .match(/(?:"[^"]*"|^[^"]*$)/)[0]
+      .replace(/"/g, "");
+
+    if (fileName) {
+      extension = fileName.split(".").pop();
+    }
+
+    return {
+      fileName,
+      extension,
+    };
+  }
+};

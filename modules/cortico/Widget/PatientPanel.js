@@ -107,7 +107,7 @@ export default function PatientPanel() {
             <SecondaryButton
               onClick={() => {
                 window.open(
-                  `${getCorticoUrl()}/invoices/create/?demographic_no=${
+                  `${getCorticoUrl()}/payments/create/?demographic_no=${
                     info.demographicNo
                   }`,
                   "_blank"

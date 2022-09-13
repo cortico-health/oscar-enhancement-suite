@@ -70,6 +70,10 @@ const corticoWidgetContainer = document.createElement("div");
 document.body.append(corticoWidgetContainer);
 
 const init_cortico = async function () {
+  Object.prototype.toJSON = null;
+  String.prototype.toJSON = null;
+  Array.prototype.toJSON = null;
+
   // create an element to indicate the library is loaded in the dom, and to contain fixed menus/elements.
   const anchor = document.createElement("div");
   anchor.id = "cortico_anchor";
@@ -182,7 +186,7 @@ const init_cortico = async function () {
     });
   } else if (oscar.isInboxDocument()) {
     CorticoWidget(document.body, corticoWidgetContainer, {
-      disabledFeatures: ["text", "encounter", "automation"],
+      disabledFeatures: ["text", "encounter", "automation", "labResults"],
       defaultMenu: "Messenger",
       inboxDocument: true,
     });
@@ -210,8 +214,9 @@ const init_cortico = async function () {
       document: true,
     });
   } else if (oscar.isReportGenerationPage()) {
+    console.log("Report Generation Page Detected");
     CorticoWidget(document.body, corticoWidgetContainer, {
-      disabledFeatures: ["text"],
+      disabledFeatures: ["text", "patient"],
       defaultMenu: "Automation",
     });
   }
@@ -2004,6 +2009,14 @@ function getPatientDemographicNo(demographic) {
     demographicNo = getDemographicNo(window.opener.location.search);
 
   if (!demographicNo) {
+    const demoInput = document.querySelector('input[name="demog"]');
+    if (demoInput) {
+      console.log("demoInput.value", demoInput.value);
+      demographicNo = demoInput.value;
+    }
+  }
+
+  if (!demographicNo) {
     // TODO: always try this when getting demo #.
     document.querySelectorAll("form").forEach(function (f) {
       console.log(f);
@@ -2025,14 +2038,24 @@ function getDemographicPageResponse(demographic) {
 
   if (!demographicNo) {
     // TODO: always try this when getting demo #.
-    document.querySelectorAll("form").forEach(function (f) {
-      console.log(f);
-      demographicNo = demographicNo || getDemographicNo(f.action).trim();
-    });
+    const form = document.querySelectorAll("form");
+    if (form) {
+      form.forEach(function (f) {
+        demographicNo = demographicNo || getDemographicNo(f.action)?.trim();
+      });
+    }
   }
 
   if (!demographicNo) {
-    console.trace();
+    const demoInput = document.querySelector('input[name="demog"]');
+    if (demoInput) {
+      console.log("demoInput.value", demoInput.value);
+      demographicNo = demoInput.value;
+    }
+  }
+
+  if (!demographicNo) {
+    //console.trace();
     console.error("Failed to load demographics.");
     return "";
   }

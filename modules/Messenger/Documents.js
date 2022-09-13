@@ -1,7 +1,7 @@
 import { render } from "preact";
 import { PaperClipIcon, TrashIcon } from "../Icons/HeroIcons";
 
-function Documents({ name, onDelete }) {
+function Documents({ id, name, onDelete }) {
   return (
     <div>
       <div className="tw-flex tw-justify-between tw-items-center">
@@ -14,7 +14,9 @@ function Documents({ name, onDelete }) {
           </div>
         </div>
         <button
-          onClick={onDelete}
+          onClick={() => {
+            onDelete(id);
+          }}
           className="tw-bg-rose-100 tw-rounded-md tw-p-2"
         >
           <TrashIcon className="tw-text-rose-700 tw-w-4 tw-h-4" />

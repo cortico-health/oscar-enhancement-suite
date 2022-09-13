@@ -26,10 +26,11 @@ import Dialog from "../cortico/Widget/features/Dialog/Dialog";
 import SavedReplies from "./SavedReplies";
 import { getDemographicNo } from "../Utils/Utils";
 import FeatureDetector from "../cortico/Widget/adapters/FeatureDetecter";
-import InboxDocument from "../cortico/Widget/adapters/InboxDocument";
 import Encounter from "../core/Encounter";
 import { BroadcastChannel } from "broadcast-channel";
 import { handleTokenExpiry } from "../../modules/cortico/Widget/common/utils";
+import FileUploader from "../cortico/Widget/FileUploader";
+import EFormAdapter from "../cortico/Widget/adapters/EFormAdapter";
 import classNames from "classnames";
 import Alert from "../cortico/Widget/Alert";
 import SubscriptionContainer from "./SubscriptionContainer";
@@ -53,7 +54,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
     subject,
     body,
     encounter,
-    attachment,
+    attachments,
     eform,
     document,
     inboxDocument,
@@ -63,11 +64,11 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
     consentedDate,
   } = useSelector((state) => state.messenger);
   const [openSavedReplies, setOpenSavedReplies] = useState(false);
-  const [filePreviewLink, setFilePreviewLink] = useState(false);
-  const [patientInfo,setPatientInfo] = useState(null);
+  const [filePreview, setFilePreview] = useState([]);
+  const [patientInfo, setPatientInfo] = useState(null);
   const [maxLength, setMaxLength] = useState(2000);
-  const [emailChanged,setEmailChanged] = useState(false);
-  const [phoneChanged,setPhoneChanged] = useState(false);
+  const [emailChanged, setEmailChanged] = useState(false);
+  const [phoneChanged, setPhoneChanged] = useState(false);
   const { clinic_name: clinicName, uid } = useSelector((state) => state.app);
 
   const handleEncounter = async (scheme, subject, body) => {
@@ -170,7 +171,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
   };
 
   const submitData = async (scheme) => {
-    setFilePreviewLink(false);
+    setFilePreview([]);
     try {
       setLoading(true);
 
@@ -258,52 +259,32 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         );
       }
 
-      if (document === true || inboxDocument === true) {
-        data.attachment = attachment.data;
-        if (attachment.extension) {
-          data.extension = attachment.extension;
-        }
-
-        if (data.attachment && !data.body && scheme === "email") {
-          data.body += "\nThe file link will only be valid for 7 days.\n";
-        }
-      } else if (eform === true && attachment) {
-        const clone = window.document.cloneNode(true);
-        const widget = clone.querySelector(".cortico-widget");
-        widget.parentNode.removeChild(widget);
-
-        /* Eform Letter Head Begin */
-        const richTextLetterForm = clone.querySelector(
-          `form[name="RichTextLetter"]`
-        );
-        const iframe = window.document.querySelector("iframe#edit");
-        if (richTextLetterForm && iframe) {
-          clone.querySelector("iframe")?.remove();
-          clone.querySelector("table")?.remove();
-          const iframeClone = iframe.contentDocument.cloneNode(true);
-          clone
-            .querySelector("body")
-            .appendChild(iframeClone.querySelector("body"));
-        }
-        /* Eform Letter Head End */
-        if (scheme === "email") {
-          data.body += "\nThe file link will only be valid for 7 days.\n";
-        }
-
-        try {
-          data.pdf_html = await setFormInputValueAttributes(clone);
-        } catch (error) {
-          throw new MessengerError(
-            "Error Parsing",
-            "There was an error parsing this eform"
-          );
-        }
-      }
-
       let result = null;
       data.demographic_no = demographicNo;
       if (scheme === "email") {
-        console.log("Data", data);
+        data.files = [];
+        for (let i = 0; i < attachments.length; i++) {
+          const file = attachments[i];
+          let contents = null;
+
+          if (file.type === "dataUrl") {
+            contents = file.data;
+          } else {
+            const reader = new FileReader();
+            reader.readAsDataURL(file.data);
+            contents = await new Promise((resolve, reject) => {
+              reader.addEventListener("load", () => {
+                resolve(reader.result);
+              });
+            });
+          }
+
+          data.files.push({
+            ...file,
+            data: contents,
+          });
+        }
+
         result = await sendEmail(token, data);
       } else if (scheme === "sms") {
         result = await sendMessage(token, data);
@@ -333,9 +314,9 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
 
         const clonedResult = result.clone();
         const responseData = await clonedResult.json();
-        console.log("Response Data", responseData);
-        if (responseData.preview) {
-          setFilePreviewLink(responseData.preview);
+        if (responseData.files) {
+          console.log("Response data", responseData);
+          setFilePreview(responseData.files);
         }
       } else {
         let errorResponse = null;
@@ -378,7 +359,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
 
 
   //SUBSCRIPTION CHANNEL RELATED FUNCTIONS
-  const getSubscribedChannel = (consent_date,subscriptions) => {
+  const getSubscribedChannel = (consent_date, subscriptions) => {
     let initSubscribedChannel = {
       sms: null,
       email: null,
@@ -400,16 +381,16 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
     //if either sms and email has status opt_in then their corresponding channel is true
     for (let sub of subscriptions) {
       if (sub.subscription_type === "sms") {
-        initSubscribedChannel = { ...initSubscribedChannel,sms: sub.status }
+        initSubscribedChannel = { ...initSubscribedChannel, sms: sub.status }
       } else if (sub.subscription_type === "email") {
-        initSubscribedChannel = { ...initSubscribedChannel,email: sub.status }
+        initSubscribedChannel = { ...initSubscribedChannel, email: sub.status }
       }
     }
 
     return initSubscribedChannel;
   }
 
-  const changeChannelSubscription = async (type,subscriptionStatus,willSub,value) => {
+  const changeChannelSubscription = async (type, subscriptionStatus, willSub, value) => {
     let newSubscriptionStatus;
 
     if (subscriptionStatus === "opt_out") newSubscriptionStatus = "opt_in";
@@ -437,7 +418,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         );
       }
 
-      await setPatientChannelSubscription(token,payload);
+      await setPatientChannelSubscription(token, payload);
 
       //Check for the index of updated subscription info
       const changed_subscription =
@@ -457,7 +438,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         });
       }
 
-      handleChange('subscriptions',getSubscribedChannel(patientInfo.agreement_date_signed,temp_subscriptions));
+      handleChange('subscriptions', getSubscribedChannel(patientInfo.agreement_date_signed, temp_subscriptions));
 
       //TODO Dwight: Will uncomment this if needed in PatientPanel
       /* dispatch({
@@ -482,7 +463,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
       value = phone;
     }
 
-    changeChannelSubscription(scheme,channelSubscription,willSub,value);
+    changeChannelSubscription(scheme, channelSubscription, willSub, value);
   }
 
   useEffect(() => {
@@ -505,7 +486,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         setEmailChanged(false);
       }
     }
-  },[to]);
+  }, [to]);
 
   useEffect(() => {
     if (patientInfo) {
@@ -532,14 +513,13 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         setPhoneChanged(false);
       }
     }
-  },[phone]);
+  }, [phone]);
 
   const handleSend = () => {
     submitData(scheme);
   };
 
   const handleChange = (key, value) => {
-    console.log("Body", body);
     dispatch({
       type: "messenger/set",
       payload: {
@@ -549,13 +529,14 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
     });
   };
 
-  useEffect(() => {
-    if (eform === true) {
-      handleChange("attachment", {
-        name: "eForm",
-      });
-    }
-  }, [eform]);
+  const deleteAttachment = (id) => {
+    dispatch({
+      type: "messenger/deleteAttachment",
+      payload: {
+        id,
+      },
+    });
+  };
 
   useEffect(() => {
     const demographicNo = getDemographicNo();
@@ -582,9 +563,9 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         handleChange("phone", phone);
       }
 
-      handleChange("subscriptions",getSubscribedChannel(patientInfo.agreement_date_signed,patientInfo.subscriptions));
-      handleChange("subscriptionsInfo",patientInfo.subscriptions);
-      handleChange("consentedDate",patientInfo.agreement_date_signed);
+      handleChange("subscriptions", getSubscribedChannel(patientInfo.agreement_date_signed, patientInfo.subscriptions));
+      handleChange("subscriptionsInfo", patientInfo.subscriptions);
+      handleChange("consentedDate", patientInfo.agreement_date_signed);
     }
   }, [patientInfo]);
 
@@ -595,7 +576,6 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
   }, [clinicName]);
 
   const handleLoadReply = (reply) => {
-    console.log("Load Reply", reply);
     dispatch({
       type: "messenger/setAll",
       payload: {
@@ -604,17 +584,6 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
       },
     });
     setOpenSavedReplies(false);
-  };
-
-  const handleInboxDoc = (doc) => {
-    if (doc && !attachment) {
-      handleChange("attachment", {
-        name: doc.name,
-        data: doc.data,
-        extension: doc.extension,
-      });
-    }
-    console.log("Inbox Document?", inboxDocument);
   };
 
   const handleSchemeChange = (scheme) => {
@@ -637,6 +606,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
 
   return (
     <div className="tw-m-0 no-print">
+      {eform === true && <EFormAdapter />}
       <FeatureDetector featureName="text">
         {({ disabled }) => {
           return disabled === false ? (
@@ -649,21 +619,18 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         }}
       </FeatureDetector>
 
-      {inboxDocument === true ? (
-        <InboxDocument onSuccess={handleInboxDoc}></InboxDocument>
-      ) : null}
       <div>
         <div>
           {scheme === "email" ? (
             <>
-              { (to && !emailChanged) &&
+              {(to && !emailChanged) &&
                 <SubscriptionContainer
-                  channelName={ scheme }
-                  channel={ subscriptions.email }
-                  value={ to }
-                  handleSubscriptionChange={ handleChannelSubscription }
-                  consented={ consentedDate }
-                isSubscriptionsEmpty={ subscriptionsInfo.length === 0 }
+                  channelName={scheme}
+                  channel={subscriptions.email}
+                  value={to}
+                  handleSubscriptionChange={handleChannelSubscription}
+                  consented={consentedDate}
+                  isSubscriptionsEmpty={subscriptionsInfo.length === 0}
                 />
               }
               <div>
@@ -673,7 +640,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
                   value={to}
                   onChange={(val) => handleChange("to", val)}
                   defaultValue={to}
-                  /* isError={ !subscriptions.email } */
+                /* isError={ !subscriptions.email } */
                 />
               </div>
               <hr className="tw-opacity-10" />
@@ -689,22 +656,22 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
           ) : null}
           {scheme === "sms" ? (
             <>
-              { (phone && !phoneChanged) &&
+              {(phone && !phoneChanged) &&
                 <SubscriptionContainer
-                  channelName={ scheme }
-                  channel={ subscriptions.sms }
-                  value={ phone }
-                  handleSubscriptionChange={ handleChannelSubscription }
-                  consented={ consentedDate }
-                isSubscriptionsEmpty={ subscriptionsInfo.length === 0 }
-                /> }
+                  channelName={scheme}
+                  channel={subscriptions.sms}
+                  value={phone}
+                  handleSubscriptionChange={handleChannelSubscription}
+                  consented={consentedDate}
+                  isSubscriptionsEmpty={subscriptionsInfo.length === 0}
+                />}
               <div>
                 <Input
                   type="text"
                   placeholder="Phone"
-                  onChange={ (val) => handleChange("phone",val) }
-                  value={ phone }
-                  defaultValue={ phone }
+                  onChange={(val) => handleChange("phone", val)}
+                  value={phone}
+                  defaultValue={phone}
                 />
               </div>
             </>
@@ -730,16 +697,26 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
           </div>
           <hr className="tw-opacity-40" />
 
-          {attachment ? (
-            <div className="tw-mt-4 tw-border tw-border-opacity-20 tw-rounded-md tw-p-2">
-              <Documents
-                onDelete={() => handleChange("attachment", null)}
-                name={attachment.name}
-              ></Documents>
+          {attachments.map((attachment) => {
+            return (
+              <div
+                className="tw-mt-4 tw-border tw-border-opacity-20 tw-rounded-md tw-p-2"
+                key={attachment.id}
+              >
+                <Documents
+                  id={attachment.id}
+                  onDelete={deleteAttachment}
+                  name={attachment.name}
+                ></Documents>
+              </div>
+            );
+          })}
+
+          {scheme === "email" ? (
+            <div className="tw-mt-3 tw-mb-1">
+              <FileUploader />
             </div>
-          ) : (
-            ""
-          )}
+          ) : null}
 
           <FeatureDetector featureName="encounter">
             {({ disabled }) => {
@@ -758,23 +735,25 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
             }}
           </FeatureDetector>
         </div>
-
         <hr className="tw-my-4" />
 
-        {filePreviewLink !== false ? (
+        {filePreview.length > 0 && (
           <div className="tw-flex tw-justify-between tw-mt-4 tw-w-full tw-max-w-[368px]">
             <div className="tw-bg-blue-100 tw-text-blue-800 tw-p-3 tw-rounded-md tw-text-xs tw-w-full">
-              File sent successfully, Preview the file:{" "}
-              <a
-                className="tw-text-underline tw-font-semibold tw-block tw-break-words"
-                href={filePreviewLink}
-                target="_blank"
-              >
-                {filePreviewLink}
-              </a>
+              File sent successfully, Preview the file(s):{" "}
+              {filePreview.map((file) => (
+                <a
+                  className="tw-text-underline tw-font-semibold tw-block tw-break-words"
+                  href={file.previewLink}
+                  target="_blank"
+                  key={file.previewLink}
+                >
+                  {file.filename}
+                </a>
+              ))}
             </div>
           </div>
-        ) : null}
+        )}
 
         <div className="tw-flex tw-justify-between tw-mt-4 tw-w-full">
           <div>
