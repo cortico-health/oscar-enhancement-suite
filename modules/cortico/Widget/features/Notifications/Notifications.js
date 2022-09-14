@@ -79,7 +79,7 @@ export function Notification({
         </div>
         <div className="tw-flex-1 tw-text-sm tw-mx-4">
           <p className="tw-text-gray-900 tw-font-medium">{title}</p>
-          <p className="tw-text-gray-500">{message}</p>
+          { message && <p className="tw-text-gray-500">{ message }</p> }
         </div>
         <div className="tw-flex-shrink-0 tw-cursor-pointer" onClick={dismiss}>
           <XIcon className="tw-h-5 tw-w-5 tw-cursor-pointer tw-text-gray-700"></XIcon>
