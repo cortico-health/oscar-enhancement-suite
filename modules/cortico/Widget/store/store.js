@@ -11,6 +11,7 @@ import {
 import { automationReducer } from "../features/Automation/Automation";
 import { authReducer } from "../features/Auth/auth";
 import { messengerReducer } from "../features/Messenger";
+import { providerMessagingReducer } from "../features/ProviderMessaging";
 import { appReducer } from "../features/App";
 import { sidebarReducer } from "../features/Sidebar";
 import { dialogReducer } from "../features/Dialog/index";
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   automation: automationReducer,
   auth: authReducer,
   messenger: messengerReducer,
+  providerMessaging: providerMessagingReducer,
   app: appReducer,
   sidebar: sidebarReducer,
   dialog: dialogReducer,

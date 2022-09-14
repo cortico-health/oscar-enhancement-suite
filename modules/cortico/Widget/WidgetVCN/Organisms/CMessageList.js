@@ -15,11 +15,12 @@ import { loadExtensionStorageValue } from "../../../../Utils/Utils";
 import { createFile, getChatMessageData, getConversation } from "../../../../Api/Vcn/Conversations.js";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import _ from "lodash";
 
 
 const CMessageList = () => {
     const dispatch = useDispatch();
-    const { attachments } = useSelector((state) => state.messenger);
+    const { attachments } = useSelector((state) => state.providerMessaging);
     const { conversationStore, patientStore } = useStore();
     const sendRef = useRef(null);
     const messagesEndRef = useRef(null);
@@ -72,7 +73,12 @@ const CMessageList = () => {
                     'body': value ? value : '',
                     'files': uploadedFiles ? uploadedFiles.map((file) => file.id) : null
                 }));
+                //TODO Dwight: can be uncommented if said so.
+                //Commenting this out since I want to instill the data after sending like in MessengerWindow.
                 setUploadedFiles([]);
+                dispatch({
+                    type: "providerMessaging/reset"
+                })
                 sendRef.current.base.lastElementChild.value = "";
                 window.scrollTo(0, document.body.scrollHeight);
             }
@@ -148,7 +154,9 @@ const CMessageList = () => {
             file: attachment.data,
             type: "dataURL"
         }))
-        setUploadedFiles((prevUploadedFiles) => [...prevUploadedFiles,...newAttachments]);
+        console.log();
+        //setUploadedFiles((prevUploadedFiles) => [...new Set([...prevUploadedFiles,...newAttachments])]);
+        setUploadedFiles((prevUploadedFiles) => _.uniqWith([...prevUploadedFiles,...newAttachments],_.isEqual));
     },[attachments]);
 
     if (!conversationStore.conversations.selected) {
