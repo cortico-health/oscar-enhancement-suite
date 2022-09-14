@@ -39,9 +39,9 @@ const CConversationList = () => {
     }, 500)
 
     return (
-        <div className="tw-mx-2.5">
-            <MSearch disabled={conversationStore.conversations[conversationKey]?.length === 0 && !searchName} onInput={(e) => searchHandler(e.target.value)} />
-            <div className="tw-h-[400px] tw-overflow-y-auto">
+        <div className="tw-mx-2.5 tw-flex-1 tw-flex tw-flex-col">
+            <MSearch className="tw-flex-none" disabled={conversationStore.conversations[conversationKey]?.length === 0 && !searchName} onInput={(e) => searchHandler(e.target.value)} />
+            <div className="tw-overflow-y-auto">
                 {conversationStore.conversations[conversationKey] ? (
                     conversationStore.conversations[conversationKey].length > 0 ? (
                         <>
