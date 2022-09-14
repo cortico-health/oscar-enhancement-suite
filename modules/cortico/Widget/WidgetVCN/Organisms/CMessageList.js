@@ -101,7 +101,7 @@ const CMessageList = () => {
 
     const deleteAttachment = (id) => {
         dispatch({
-            type: "messenger/deleteAttachment",
+            type: "providerMessaging/deleteAttachment",
             payload: {
                 id,
             },
