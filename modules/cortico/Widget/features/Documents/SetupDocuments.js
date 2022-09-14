@@ -1,10 +1,19 @@
 import { useEffect, useState } from "preact/hooks";
-import { createPortal } from "preact/compat";
+import { createPortal,Fragment } from "preact/compat";
 import { nanoid } from "nanoid";
 import SendDocument from "./SendDocument";
+import VCNSendDocument from "./VCNSendDocument";
 
 export default function SetupDocuments() {
   const [docNodes, setDocNodes] = useState([]);
+  const [isProviderMessagingEnabled] = useState(() => {
+    // PROVIDER MESSAGING FEATURE FLAG
+    if (process.env.INCLUDE_PROVIDER_MESSAGING) {
+      return true;
+    }
+
+    return false;
+  });
 
   useEffect(() => {
     const search = window.location.search;
@@ -33,7 +42,10 @@ export default function SetupDocuments() {
     <div>
       {docNodes.map((node) => {
         return createPortal(
-          <SendDocument node={node} key={node.uid}></SendDocument>,
+          <Fragment key={ node.uid }>
+            <SendDocument node={ node }></SendDocument>
+            { isProviderMessagingEnabled && <VCNSendDocument node={ node }></VCNSendDocument> }
+          </Fragment>,
           node.parentNode
         );
       })}
