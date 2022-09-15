@@ -17,7 +17,7 @@ import { useDispatch,useSelector } from "react-redux";
 
 const CMessageList = () => {
     const dispatch = useDispatch();
-    const { attachment } = useSelector((state) => state.providerMessaging);
+    const { attachments } = useSelector((state) => state.providerMessaging);
     const { conversationStore,patientStore } = useStore();
     const sendRef = useRef(null);
     const messagesEndRef = useRef(null);
@@ -52,6 +52,7 @@ const CMessageList = () => {
 
     const attachFileToChat = (file) => {
         createFile(file).then((response) => { return response.json() }).then((data) => {
+            console.log("Entered Here");
             setUploadedFiles([...uploadedFiles,data]);
         }).catch((error) => {
             console.log(error);

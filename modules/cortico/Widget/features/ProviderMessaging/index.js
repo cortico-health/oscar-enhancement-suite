@@ -9,7 +9,7 @@
 */
 
 export const initialState = {
-    attachment: {}
+    attachments: []
 };
 
 export function providerMessagingReducer(state = initialState,action) {

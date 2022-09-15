@@ -86,16 +86,13 @@ const VCNSendDocument = ({ node,...props }) => {
             }
 
             dispatch({
-                type: "providerMessaging/set",
+                type: "providerMessaging/addAttachment",
                 payload: {
-                    key: 'attachment',
-                    value: {
-                        id: nanoid(),
-                        name: fileName || node.textContent,
-                        data: dataUrl,
-                        type: "dataUrl",
-                        extension,
-                    }
+                    id: nanoid(),
+                    name: fileName || node.textContent,
+                    data: dataUrl,
+                    type: "dataUrl",
+                    extension,
                 },
             });
 
