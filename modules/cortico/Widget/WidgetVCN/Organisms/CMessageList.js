@@ -68,7 +68,7 @@ const CMessageList = () => {
         },
         onSend: () => {
             const value = sendRef?.current?.base?.lastElementChild?.value;
-            if (value || uploadedFiles) {
+            if (value || uploadedFiles.length > 0) {
                 getWebSocket().send(JSON.stringify({
                     'body': value ? value : '',
                     'files': uploadedFiles ? uploadedFiles.map((file) => file.id) : null

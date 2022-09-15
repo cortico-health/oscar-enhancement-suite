@@ -366,12 +366,12 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
     }
 
     //If subscription is [] and w/o consent
-    if (subscriptions.length === 0 && !consent_date) {
+    if (subscriptions && subscriptions.length === 0 && !consent_date) {
       return initSubscribedChannel;
     }
 
     //If subscription is [] and with consent
-    if (subscriptions.length === 0 && consent_date) {
+    if (subscriptions && subscriptions.length === 0 && consent_date) {
       return {
         sms: "opt_in",
         email: "opt_in"
@@ -623,7 +623,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         <div>
           {scheme === "email" ? (
             <>
-              {(to && !emailChanged) &&
+              {(to && !emailChanged && subscriptions) &&
                 <SubscriptionContainer
                   channelName={scheme}
                   channel={subscriptions.email}
@@ -656,7 +656,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
           ) : null}
           {scheme === "sms" ? (
             <>
-              {(phone && !phoneChanged) &&
+              {(phone && !phoneChanged && subscriptions) &&
                 <SubscriptionContainer
                   channelName={scheme}
                   channel={subscriptions.sms}
