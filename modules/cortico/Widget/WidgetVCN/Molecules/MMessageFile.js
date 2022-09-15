@@ -12,6 +12,7 @@ import DismissedLogo from "../../../../../resources/icons/dismissed.svg";
 import MConfirmationModal from "./MConfirmationModal";
 import { CEREBRO_URL } from "../../../../Utils/VcnUtils";
 import { cleanFileName } from "../../../../Utils/Utils";
+import classNames from "classnames";
 
 const ShowSVGFile = ({ url, icon, name, isUser }) => {
     return (
@@ -66,24 +67,22 @@ const MMessageFile = ({ dataURL, name, extension, isUser }) => {
 
     return (
         <>
-            <div className="tw-flex tw-items-center tw-gap-2">
-                {isUser && (
-                    <div className="tw-flex tw-justify-between tw-items-end tw-gap-2">
-                        <div className="tw-p-2 hover:tw-bg-green-500/60 hover:tw-rounded-full tw-w-10 tw-h-10">
-                            <ASvg src={UploadLogo}
-                                className="tw-cursor-pointer"
-                                onClick={() => setIsUploadOpen(true)}
-                            />
-                        </div>
-
-                        <div className="tw-p-2 hover:tw-bg-red-500/60 hover:tw-rounded-full tw-w-10 tw-h-10">
-                            <ASvg src={DismissedLogo}
-                                className="tw-cursor-pointer"
-                                onClick={() => setIsDismissOpen(true)}
-                            />
-                        </div>
+            <div className={ classNames("tw-flex tw-items-center tw-gap-2",!isUser) }>
+                { isUser && <div className="tw-flex tw-justify-between tw-items-end tw-gap-2">
+                    <div className="tw-p-2 hover:tw-bg-green-500/60 hover:tw-rounded-full tw-w-10 tw-h-10">
+                        <ASvg src={ UploadLogo }
+                            className="tw-cursor-pointer"
+                            onClick={ () => setIsUploadOpen(true) }
+                        />
                     </div>
-                )}
+
+                    <div className="tw-p-2 hover:tw-bg-red-500/60 hover:tw-rounded-full tw-w-10 tw-h-10">
+                        <ASvg src={ DismissedLogo }
+                            className="tw-cursor-pointer"
+                            onClick={ () => setIsDismissOpen(true) }
+                        />
+                    </div>
+                </div> }
 
                 {
                     /* If there is missing fields */
@@ -122,6 +121,22 @@ const MMessageFile = ({ dataURL, name, extension, isUser }) => {
                     &&
                     <ShowSVGFile url={fileUrl} icon={CodeLogo} name={name} isUser={isUser} />
                 }
+
+                { !isUser && <div className="tw-flex tw-justify-between tw-items-end tw-gap-2">
+                    <div className="tw-p-2 hover:tw-bg-green-500/60 hover:tw-rounded-full tw-w-10 tw-h-10">
+                        <ASvg src={ UploadLogo }
+                            className="tw-cursor-pointer"
+                            onClick={ () => setIsUploadOpen(true) }
+                        />
+                    </div>
+
+                    <div className="tw-p-2 hover:tw-bg-red-500/60 hover:tw-rounded-full tw-w-10 tw-h-10">
+                        <ASvg src={ DismissedLogo }
+                            className="tw-cursor-pointer"
+                            onClick={ () => setIsDismissOpen(true) }
+                        />
+                    </div>
+                </div> }
             </div>
 
             {isUploadOpen && createPortal(
