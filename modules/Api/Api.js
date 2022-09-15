@@ -218,6 +218,26 @@ export const getBootstrap = (token) => {
   });
 };
 
+export function postFileToEmr(
+  token,
+  data = {
+    file_path,
+    hin,
+    description
+  }) {
+  const url = `${getCorticoUrl()}/api/plug-in/upload-file-to-emr/`;
+
+  return fetch(url,{
+    method: "POST",
+    body: JSON.stringify(data),
+    mode: "cors",
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
+}
+
 export function refreshToken(refreshToken) {
   const url = `${getCorticoUrl()}/api/token/refresh/`;
   return fetch(url, {

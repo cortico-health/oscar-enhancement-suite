@@ -11,8 +11,12 @@ import UploadLogo from "../../../../../resources/icons/upload.svg";
 import DismissedLogo from "../../../../../resources/icons/dismissed.svg";
 import MConfirmationModal from "./MConfirmationModal";
 import { CEREBRO_URL } from "../../../../Utils/VcnUtils";
-import { cleanFileName } from "../../../../Utils/Utils";
+import { cleanFileName,loadExtensionStorageValue } from "../../../../Utils/Utils";
 import classNames from "classnames";
+import { useStore } from "../../store/mobx";
+import { useDispatch } from "react-redux";
+import { postFileToEmr } from "../../../../Api/Api";
+import { nanoid } from "nanoid";
 
 const ShowSVGFile = ({ url, icon, name, isUser }) => {
     return (
@@ -46,7 +50,10 @@ const ShowImgFile = ({ url }) => {
     );
 }
 
-const MMessageFile = ({ dataURL, name, extension, isUser }) => {
+const MMessageFile = ({ dataURL,name,extension,isUser }) => {
+    const { patientStore } = useStore();
+    const dispatch = useDispatch();
+
     //TODO Dwight: Since the attachments from mobx and state have different naming convention
     if (name.indexOf('provider_messenger') > -1)
         name = cleanFileName(name);
@@ -54,16 +61,54 @@ const MMessageFile = ({ dataURL, name, extension, isUser }) => {
 
     const [isUploadOpen, setIsUploadOpen] = useState(false);
     const [isDismissOpen, setIsDismissOpen] = useState(false);
+    const [isLoading,setIsLoading] = useState(false);
 
     const modalContainer = document.getElementById('upload-confirm');
 
-    const onUpload = () => {
-        console.log("File Uploaded to Oscar");
+    const onUpload = async () => {
+        setIsLoading(true);
+        try {
+            const token = await loadExtensionStorageValue("jwt_access_token");
+
+            const response = await postFileToEmr(token,{
+                file_path: fileUrl,
+                hin: patientStore.patients.selected?.hin,
+                description: name
+            });
+
+            const result = await response.json();
+
+            setIsLoading(false);
+            setIsUploadOpen(false);
+            if (!result?.success) {
+                dispatch({
+                    type: "notifications/add",
+                    payload: {
+                        type: "error",
+                        title: `${name} was not successfully uploaded to EMR`,
+                        id: nanoid(),
+                    },
+                });
+            }
+
+            dispatch({
+                type: "notifications/add",
+                payload: {
+                    type: "success",
+                    title: `${name} was successfully uploaded to EMR`,
+                    id: nanoid(),
+                },
+            });
+        } catch (error) {
+            console.error(error);
+            setIsLoading(false);
+        }
     }
 
-    const onDismiss = () => {
+    const onDismiss = (payload) => {
         console.log("File is being dismissed");
     }
+
 
     return (
         <>
@@ -142,8 +187,9 @@ const MMessageFile = ({ dataURL, name, extension, isUser }) => {
             {isUploadOpen && createPortal(
                 <MConfirmationModal
                     setIsOpen={setIsUploadOpen}
-                    onConfirm={onUpload}
-                    type="upload" />
+                    onConfirm={ onUpload }
+                    type="upload"
+                    isLoading={ isLoading } />
                 , modalContainer)
             }
 
@@ -151,7 +197,8 @@ const MMessageFile = ({ dataURL, name, extension, isUser }) => {
                 <MConfirmationModal
                     setIsOpen={setIsDismissOpen}
                     onConfirm={onDismiss}
-                    type="dismiss" />
+                    type="dismiss"
+                    isLoading={ isLoading } />
                 , modalContainer)
             }
         </>
