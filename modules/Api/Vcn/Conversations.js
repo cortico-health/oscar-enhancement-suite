@@ -13,7 +13,7 @@ export const getChatMessageData = async (id) => {
 
 export const getConversationsList = async (patient_hin = "") => {
     const accessToken = await (loadExtensionStorageValue('jwt_access_token'));
-    return await fetch(`${CEREBRO_API_URL}/vcn/conversations/?patient__hin=${patient_hin}`,{
+    return await fetch(`${CEREBRO_API_URL}/vcn/conversations/?patient__hin=${patient_hin}`, {
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${accessToken}`
@@ -51,7 +51,7 @@ export const createConversation = async (userInputs) => {
 export const createFile = async (file) => {
     const accessToken = await (loadExtensionStorageValue('jwt_access_token'));
     const data = new FormData();
-    data.append('file', file, file.name);
+    data.append('data', file, file.name);
 
     return await fetch(`${CEREBRO_API_URL}/vcn/files/`, {
         method: "POST",

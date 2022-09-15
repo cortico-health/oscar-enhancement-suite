@@ -68,7 +68,7 @@ const CMessageList = () => {
         },
         onSend: () => {
             const value = sendRef?.current?.base?.lastElementChild?.value;
-            if (value || uploadedFiles) {
+            if (value || uploadedFiles.length > 0) {
                 getWebSocket().send(JSON.stringify({
                     'body': value ? value : '',
                     'files': uploadedFiles ? uploadedFiles.map((file) => file.id) : null
@@ -150,14 +150,14 @@ const CMessageList = () => {
         //TODO Dwight & Justin: Change the naming convenions same as Aaron's I think?
         const newAttachments = attachments.map((attachment) => ({
             id: attachment.id,
-            file_name: attachment.name,
+            name: attachment.name,
             file: attachment.data,
             type: "dataURL"
         }))
         console.log();
         //setUploadedFiles((prevUploadedFiles) => [...new Set([...prevUploadedFiles,...newAttachments])]);
-        setUploadedFiles((prevUploadedFiles) => _.uniqWith([...prevUploadedFiles,...newAttachments],_.isEqual));
-    },[attachments]);
+        setUploadedFiles((prevUploadedFiles) => _.uniqWith([...prevUploadedFiles, ...newAttachments], _.isEqual));
+    }, [attachments]);
 
     if (!conversationStore.conversations.selected) {
         return (
@@ -198,11 +198,11 @@ const CMessageList = () => {
                                 uploadedFiles.length > 0 &&
                                 <div className="tw-flex tw-flex-wrap tw-w-full tw-max-h-32 tw-overflow-y-auto tw-mt-3">
                                     {uploadedFiles.map((file) => {
-                                        return <AFileInputShow fileInput={ file } exit={ () => {
+                                        return <AFileInputShow fileInput={file} exit={() => {
                                             //TODO Dwight: To be improved since it loops twice.
                                             deleteAttachment(file.id);
                                             handlers.removeFile(file.id);
-                                        } } />
+                                        }} />
                                     })}
                                 </div>
                             }
