@@ -161,6 +161,8 @@ export const StateProvider = ({ children }) => {
           userStore.fetchUsers();
           patientStore.fetchPatients();
 
+          conversationStore.fetchConversations();
+
           setSocketUrl(getWsUpdateUrl(accessToken));
         }
       });
