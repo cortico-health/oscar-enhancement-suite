@@ -127,7 +127,6 @@ export const StateProvider = ({ children }) => {
         }
 
         this.conversations.all = _.orderBy(this.conversations.all, ['last_message.created_date'], ['desc']);
-        if (this.conversations.selected.id === updatedConversation.id) this.conversations.selected = updatedConversation;
       }
 
       // Update Patient-specific Conversations if already loaded
@@ -146,6 +145,10 @@ export const StateProvider = ({ children }) => {
         } else {
           this.conversations[hin] = [updatedConversation]
         }
+      }
+
+      if (this.conversations.selected && this.conversations.selected.id === updatedConversation.id) {
+        this.conversations.selected = updatedConversation;
       }
     }
   }))
