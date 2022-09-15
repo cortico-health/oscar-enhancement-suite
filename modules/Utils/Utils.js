@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import { Oscar } from "../../modules/core/Oscar.js";
+
 const oscar = new Oscar(window.location.hostname);
 
 export function debounce(func, wait, immediate) {
@@ -450,4 +451,17 @@ export const getFileInfo = (contentDisposition) => {
       extension,
     };
   }
-};
+}
+
+export function dataURLtoBlob(dataurl) {
+  const arr = dataurl.split(',');
+  const mime = arr[0].match(/:(.*?);/)[1];
+  const bstr = window.atob(arr[1])
+  let n = bstr.length
+  const u8arr = new Uint8Array(n);
+
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new Blob([u8arr], { type: mime });
+}

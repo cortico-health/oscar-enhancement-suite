@@ -1,7 +1,6 @@
 import useWebSocket from "react-use-websocket";
 import { useEffect, useRef, useState } from "preact/hooks";
 import { observer } from "mobx-react-lite";
-import { v4 as uuidv4 } from 'uuid';
 import { useStore } from "../../store/mobx";
 import MChatTools from "../Molecules/MChatTools";
 import AFileInputShow from "../Atoms/AFileInputShow";
@@ -11,11 +10,9 @@ import ASvg from "../Atoms/ASvg";
 import NoDiscussionLogo from "../../../../../resources/icons/chat-alt2.svg"
 import ASpinner from "../Atoms/ASpinner";
 import { getWsChatUrl } from "../../../../Utils/VcnUtils";
-import { loadExtensionStorageValue } from "../../../../Utils/Utils";
-import { createFile, getChatMessageData, getConversation } from "../../../../Api/Vcn/Conversations.js";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import _ from "lodash";
+import { loadExtensionStorageValue, dataURLtoBlob } from "../../../../Utils/Utils";
+import { createFile, getChatMessageData } from "../../../../Api/Vcn/Conversations.js";
+import { useDispatch, useSelector } from "react-redux";
 
 
 const CMessageList = () => {
@@ -53,15 +50,18 @@ const CMessageList = () => {
         handlers.onRead();
     }
 
+    const attachFileToChat = (file) => {
+        createFile(file).then((response) => { return response.json() }).then((data) => {
+            setUploadedFiles([...uploadedFiles, data]);
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+
     const handlers = {
         onUpload: (e) => {
             const file = e.target.files[0];
-
-            createFile(file).then((response) => { return response.json() }).then((data) => {
-                setUploadedFiles([...uploadedFiles, data]);
-            }).catch((error) => {
-                console.log(error);
-            });
+            attachFileToChat(file);
         },
         removeFile: (id) => {
             setUploadedFiles(uploadedFiles.filter((file) => file.id !== id));
@@ -147,16 +147,11 @@ const CMessageList = () => {
     }, [messages]);
 
     useEffect(() => {
-        //TODO Dwight & Justin: Change the naming convenions same as Aaron's I think?
-        const newAttachments = attachments.map((attachment) => ({
-            id: attachment.id,
-            name: attachment.name,
-            file: attachment.data,
-            type: "dataURL"
-        }))
-        console.log();
-        //setUploadedFiles((prevUploadedFiles) => [...new Set([...prevUploadedFiles,...newAttachments])]);
-        setUploadedFiles((prevUploadedFiles) => _.uniqWith([...prevUploadedFiles, ...newAttachments], _.isEqual));
+        attachments.forEach(attachment => {
+            const blob = dataURLtoBlob(attachment.data);
+            const file = new File([blob], attachment.name);
+            attachFileToChat(file);
+        });
     }, [attachments]);
 
     if (!conversationStore.conversations.selected) {
