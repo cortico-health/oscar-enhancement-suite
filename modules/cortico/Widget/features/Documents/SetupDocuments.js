@@ -6,7 +6,7 @@ import VCNSendDocument from "./VCNSendDocument";
 
 export default function SetupDocuments() {
   const [docNodes, setDocNodes] = useState([]);
-  const [isProviderMessagingEnabled] = useState(process.env.INCLUDE_PROVIDER_MESSAGING ? true : false)
+  const [isProviderMessagingEnabled] = useState(process.env.INCLUDE_PROVIDER_MESSAGING ? true : false);
 
   useEffect(() => {
     const search = window.location.search;

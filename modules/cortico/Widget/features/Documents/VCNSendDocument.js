@@ -25,8 +25,6 @@ const VCNSendDocument = ({ node,...props }) => {
         }
 
 
-
-
         const documentSpace = window.location.pathname.split("/")[2];
         const baseUrl = getBaseUrl();
         const url = `${baseUrl}/${documentSpace}/${nodeHtml}`;
@@ -88,13 +86,16 @@ const VCNSendDocument = ({ node,...props }) => {
             }
 
             dispatch({
-                type: "providerMessaging/addAttachment",
+                type: "providerMessaging/set",
                 payload: {
-                    id: nanoid(),
-                    name: fileName || node.textContent,
-                    data: dataUrl,
-                    type: "dataUrl",
-                    extension,
+                    key: 'attachment',
+                    value: {
+                        id: nanoid(),
+                        name: fileName || node.textContent,
+                        data: dataUrl,
+                        type: "dataUrl",
+                        extension,
+                    }
                 },
             });
 

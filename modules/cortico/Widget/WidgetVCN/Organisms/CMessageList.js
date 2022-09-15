@@ -20,7 +20,7 @@ import _ from "lodash";
 
 const CMessageList = () => {
     const dispatch = useDispatch();
-    const { attachments } = useSelector((state) => state.providerMessaging);
+    const { attachment } = useSelector((state) => state.providerMessaging);
     const { conversationStore, patientStore } = useStore();
     const sendRef = useRef(null);
     const messagesEndRef = useRef(null);
@@ -100,12 +100,7 @@ const CMessageList = () => {
     }
 
     const deleteAttachment = (id) => {
-        dispatch({
-            type: "providerMessaging/deleteAttachment",
-            payload: {
-                id,
-            },
-        });
+        setUploadedFiles((prevUploadedFiles) => prevUploadedFiles.filter((uploadedFile => uploadedFile.id !== id)));
     };
 
     useEffect(() => {
@@ -147,17 +142,15 @@ const CMessageList = () => {
     }, [messages]);
 
     useEffect(() => {
-        //TODO Dwight & Justin: Change the naming convenions same as Aaron's I think?
-        const newAttachments = attachments.map((attachment) => ({
-            id: attachment.id,
-            file_name: attachment.name,
-            file: attachment.data,
-            type: "dataURL"
-        }))
-        console.log();
-        //setUploadedFiles((prevUploadedFiles) => [...new Set([...prevUploadedFiles,...newAttachments])]);
-        setUploadedFiles((prevUploadedFiles) => _.uniqWith([...prevUploadedFiles,...newAttachments],_.isEqual));
-    },[attachments]);
+        if (!_.isEmpty(attachment))
+            setUploadedFiles((prevUploadedFiles) => [...prevUploadedFiles,attachment]);
+
+        return () => {
+            dispatch({
+                type: "providerMessaging/reset"
+            })
+        }
+    },[attachment]);
 
     if (!conversationStore.conversations.selected) {
         return (
@@ -201,7 +194,6 @@ const CMessageList = () => {
                                         return <AFileInputShow fileInput={ file } exit={ () => {
                                             //TODO Dwight: To be improved since it loops twice.
                                             deleteAttachment(file.id);
-                                            handlers.removeFile(file.id);
                                         } } />
                                     })}
                                 </div>
