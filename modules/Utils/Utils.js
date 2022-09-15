@@ -422,9 +422,11 @@ export function formEncounterMessage(scheme, subject, body) {
   return prefix + body + suffix;
 }
 
-export function getFileExtension(url) {
-  if (url) return url.split(".").pop().toLowerCase()
-  return ''
+export function getFileExtension(name) {
+  if (!name) return '';
+
+  const texts = name.split(".");
+  return texts[texts.length - 1].toLowerCase();
 }
 
 export function cleanFileName(fileName) {
