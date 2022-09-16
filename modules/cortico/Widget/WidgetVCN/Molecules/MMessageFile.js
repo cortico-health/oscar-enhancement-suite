@@ -11,12 +11,14 @@ import UploadLogo from "../../../../../resources/icons/upload.svg";
 import DismissedLogo from "../../../../../resources/icons/dismissed.svg";
 import MConfirmationModal from "./MConfirmationModal";
 import { CEREBRO_URL } from "../../../../Utils/VcnUtils";
-import { cleanFileName, loadExtensionStorageValue } from "../../../../Utils/Utils";
+import { loadExtensionStorageValue } from "../../../../Utils/Utils";
 import classNames from "classnames";
 import { useStore } from "../../store/mobx";
 import { useDispatch } from "react-redux";
 import { postFileToEmr } from "../../../../Api/Api";
 import { nanoid } from "nanoid";
+import { markFileAsUploaded, markFileAsDismissed } from "../../../../Api/Vcn/Conversations";
+
 
 const ShowSVGFile = ({ url, icon, name, isUser }) => {
     return (
@@ -50,7 +52,7 @@ const ShowImgFile = ({ url }) => {
     );
 }
 
-const MMessageFile = ({ dataURL, name, extension, isUser }) => {
+const MMessageFile = ({ id, dataURL, name, extension, isUser }) => {
     const { patientStore } = useStore();
     const dispatch = useDispatch();
 
@@ -74,11 +76,10 @@ const MMessageFile = ({ dataURL, name, extension, isUser }) => {
             });
 
             const result = await response.json();
-
-            setIsLoading(false);
-            setIsUploadOpen(false);
             if (!result?.success) {
-                dispatch({
+                setIsLoading(false);
+                setIsUploadOpen(false);
+                return dispatch({
                     type: "notifications/add",
                     payload: {
                         type: "error",
@@ -88,7 +89,23 @@ const MMessageFile = ({ dataURL, name, extension, isUser }) => {
                 });
             }
 
-            dispatch({
+            const isUploaded = await markFileAsUploaded(id);
+            if (!isUploaded?.ok) {
+                setIsLoading(false);
+                setIsUploadOpen(false);
+                return dispatch({
+                    type: "notifications/add",
+                    payload: {
+                        type: "error",
+                        title: `${name} was not successfully uploaded to EMR`,
+                        id: nanoid(),
+                    },
+                });
+            }
+
+            setIsLoading(false);
+            setIsUploadOpen(false);
+            return dispatch({
                 type: "notifications/add",
                 payload: {
                     type: "success",
@@ -102,10 +119,33 @@ const MMessageFile = ({ dataURL, name, extension, isUser }) => {
         }
     }
 
-    const onDismiss = (payload) => {
-        console.log("File is being dismissed");
-    }
+    const onDismiss = async () => {
+        const isDismissed = await markFileAsDismissed(id);
 
+        if (!isDismissed?.ok) {
+            setIsLoading(false);
+            setIsDismissOpen(false);
+            return dispatch({
+                type: "notifications/add",
+                payload: {
+                    type: "error",
+                    title: `${name} was not successfully dismissed`,
+                    id: nanoid(),
+                },
+            });
+        }
+
+        setIsLoading(false);
+        setIsDismissOpen(false);
+        return dispatch({
+            type: "notifications/add",
+            payload: {
+                type: "success",
+                title: `${name} was successfully dismissed`,
+                id: nanoid(),
+            },
+        });
+    }
 
     return (
         <>

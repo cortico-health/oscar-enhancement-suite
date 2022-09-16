@@ -59,6 +59,7 @@ const MMessageCard = ({ messageDetails, readHistory }) => {
                                     return (
                                         <div className='tw-flex tw-justify-end tw-mt-3'>
                                             <MMessageFile
+                                                id={file.id}
                                                 dataURL={file.data}
                                                 name={file.name}
                                                 extension={file.extension}
@@ -97,6 +98,7 @@ const MMessageCard = ({ messageDetails, readHistory }) => {
                                             return (
                                                 <div className='tw-flex tw-mb-2'>
                                                     <MMessageFile
+                                                        id={file.id}
                                                         dataURL={file.data}
                                                         name={file.name}
                                                         extension={file.extension}
