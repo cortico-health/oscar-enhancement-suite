@@ -189,7 +189,7 @@ const MMessageFile = ({ id, dataURL, name, extension, status, isUser }) => {
                 {
                     isAudio(extension)
                     &&
-                    <audio controls>
+                    <audio controls className="tw-w-72 tw-h-12 tw-mb-2">
                         <source src={fileUrl} />
                         Your browser does not support the audio element.
                     </audio>
