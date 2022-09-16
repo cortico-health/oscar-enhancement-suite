@@ -37,16 +37,16 @@ const MConversationTab = ({ conversation, selected, ...props }) => {
         <div
             onClick={handleChatRedirect}
             {...props}
-            className={classNames("tw-flex tw-flex-column tw-items-center tw-px-2 tw-my-3 hover:tw-cursor-pointer",
+            className={ classNames("tw-flex tw-flex-column tw-items-center tw-px-2 tw-my-3 tw-cursor-pointer",
                 isSelected ? "tw-h-24 tw-rounded-lg tw-bg-primary-500" : "",
                 conversation.unread_messages_count ? 'tw-font-bold' : "")
             }
         >
             <div
-                className={`tw-flex tw-relative tw-items-center tw-justify-between tw-space-x-3`}
+                className={ `tw-flex tw-relative tw-items-center tw-justify-between tw-space-x-3 tw-cursor-pointer` }
             >
                 {conversation?.members.length > 2 ? (
-                    <div className="tw-cursor-pointer tw-ml-4" onClick={() => setOpenModal(true)}>
+                    <div className="tw-ml-4" onClick={ () => setOpenModal(true) }>
                         <div className="tw-w-11 tw-min-w-8 tw-h-11 tw-min-h-8">
                             <MProfilePicture avatar={conversation?.members[conversation?.members.length - 1].avatar}
                                 className="tw-absolute tw-left-2 tw-top-2"
@@ -67,27 +67,25 @@ const MConversationTab = ({ conversation, selected, ...props }) => {
                         <MProfilePicture avatar={conversation?.members[0].avatar} />
                     </div>
                 )}
-                <div className="tw-max-w-full tw-ml-4">
+                <div className="tw-max-w-full tw-ml-4 tw-cursor-pointer">
                     <p
-                        className={`tw-text-contact2 tw-w-56 tw-cursor-pointer tw-whitespace-nowrap tw-text-ellipsis tw-overflow-hidden ${isSelected ? "tw-text-white" : "tw-text-secondary-500"
+                        className={ `tw-text-contact2 tw-w-72 tw-cursor-pointer tw-whitespace-nowrap tw-text-ellipsis tw-overflow-hidden ${isSelected ? "tw-text-white" : "tw-text-secondary-500"
                             }`}
                     >
                         {multipleObjectDataFormatting(getOtherMembersName(conversation?.members))}
                         {
                             conversation?.patient
                             &&
-                            <span> ({conversation.patient.first_name} {conversation.patient.last_name})</span>
+                            <span>({ conversation.patient.first_name } { conversation.patient.last_name })</span>
                         }
                     </p>
                     <p
-                        className={`tw-text-contact3 tw-relative tw-mt-2 tw-w-56 tw-whitespace-nowrap tw-text-ellipsis tw-overflow-hidden ${isSelected ? "tw-text-white" : "tw-text-secondary-300"
+                        className={ `tw-text-contact3 tw-relative tw-cursor-pointer tw-mt-2 tw-w-72 tw-whitespace-nowrap tw-text-ellipsis tw-overflow-hidden ${isSelected ? "tw-text-white" : "tw-text-secondary-300"
                             }`}
                     >
-                        {conversation?.last_message ? (
-                            <span className="tw-cursor-pointer">
-                                {`${conversation.last_message.from_user}: ${conversation.last_message.body}`}
-                            </span>
-                        ) : ''}
+                        { conversation?.last_message ?
+                            `${conversation.last_message.from_user}: ${conversation.last_message.body}`
+                            : '' }
                     </p>
                 </div>
                 {unreadMessages > 0 &&
