@@ -65,7 +65,7 @@ export const createFile = async (file) => {
 export const markFileAsUploaded = async (id) => {
     const accessToken = await (loadExtensionStorageValue('jwt_access_token'));
     return await fetch(`${CEREBRO_API_URL}/vcn/files/${id}/upload_to_echarts/`, {
-        method: "PATCH",
+        method: "POST",
         headers: {
             "Authorization": `Bearer ${accessToken}`
         },
@@ -75,7 +75,7 @@ export const markFileAsUploaded = async (id) => {
 export const markFileAsDismissed = async (id) => {
     const accessToken = await (loadExtensionStorageValue('jwt_access_token'));
     return await fetch(`${CEREBRO_API_URL}/vcn/files/${id}/dismiss/`, {
-        method: "PATCH",
+        method: "POST",
         headers: {
             "Authorization": `Bearer ${accessToken}`
         },
