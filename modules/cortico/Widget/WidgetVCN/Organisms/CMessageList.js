@@ -52,6 +52,7 @@ const CMessageList = () => {
 
     const attachFileToChat = (file) => {
         createFile(file).then((response) => { return response.json() }).then((data) => {
+            console.log("Entered Here");
             setUploadedFiles([...uploadedFiles, data]);
         }).catch((error) => {
             console.log(error);
@@ -100,12 +101,7 @@ const CMessageList = () => {
     }
 
     const deleteAttachment = (id) => {
-        dispatch({
-            type: "messenger/deleteAttachment",
-            payload: {
-                id,
-            },
-        });
+        setUploadedFiles((prevUploadedFiles) => prevUploadedFiles.filter((uploadedFile => uploadedFile.id !== id)));
     };
 
     useEffect(() => {
@@ -158,8 +154,8 @@ const CMessageList = () => {
         return (
             <div className="tw-w-[1000px] tw-h-full tw-relative">
                 <div className="tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-2 tw-w-64 tw-h-full tw-absolute tw-left-1/2 -tw-translate-x-1/2">
-                    <ASvg src={ NoConversationLogo } />
-                    <h4 className="text-secondary-300 text-2xl">Choose the conversation</h4>
+                    <ASvg src={NoConversationLogo} />
+                    <h4 className="text-secondary-300 text-2xl">Choose Conversation</h4>
                 </div>
             </div>
         );

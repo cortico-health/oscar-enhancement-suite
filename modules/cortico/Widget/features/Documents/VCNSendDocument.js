@@ -25,8 +25,6 @@ const VCNSendDocument = ({ node,...props }) => {
         }
 
 
-
-
         const documentSpace = window.location.pathname.split("/")[2];
         const baseUrl = getBaseUrl();
         const url = `${baseUrl}/${documentSpace}/${nodeHtml}`;
