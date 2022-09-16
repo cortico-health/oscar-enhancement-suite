@@ -1,4 +1,4 @@
-import { UploadIcon, XCircleIcon } from "@heroicons/react/outline";
+import { PencilIcon, UploadIcon, XCircleIcon } from "@heroicons/react/outline";
 import classNames from "classnames";
 
 const MConfirmationModal = ({ setIsOpen, onConfirm, type, isLoading }) => {
@@ -13,14 +13,17 @@ const MConfirmationModal = ({ setIsOpen, onConfirm, type, isLoading }) => {
                     <div className="tw-p-6 tw-text-center">
                         {type === "upload" && <UploadIcon className="tw-mx-auto tw-mb-4 tw-w-14 tw-h-14 tw-text-gray-400" />}
                         {type === "dismiss" && <XCircleIcon className="tw-mx-auto tw-mb-4 tw-w-14 tw-h-14 tw-text-gray-400" />}
+                        {type === "encounter" && <PencilIcon className="tw-mx-auto tw-mb-4 tw-w-14 tw-h-14 tw-text-gray-400" />}
                         <h3 className="tw-mb-5 tw-text-lg tw-font-normal tw-text-gray-500">
                             {type === "upload" && "Are you sure you want to upload this to the patient's EMR?"}
                             {type === "dismiss" && "Are you sure you want to dismiss this file?"}
+                            {type === "encounter" && "Are you sure you want to upload the chat to EChart?"}
                         </h3>
                         <button onClick={onConfirm} type="button"
                             className={classNames("tw-text-white focus:tw-ring-4 focus:tw-outline-none tw-font-medium tw-rounded-lg tw-text-sm tw-inline-flex tw-items-center tw-px-5 tw-py-2.5 tw-text-center tw-mr-2",
                                 type === "upload" && "tw-bg-green-500 hover:tw-bg-green-700 focus:tw-ring-green-300",
-                                type === "dismiss" && "tw-bg-red-500 hover:tw-bg-red-700 focus:tw-ring-red-300")}
+                                type === "dismiss" && "tw-bg-red-500 hover:tw-bg-red-700 focus:tw-ring-red-300",
+                                type === "encounter" && "tw-bg-blue-500 hover:tw-bg-blue-700 focus:tw-ring-blue-300")}
                             disabled={isLoading}>
                             {isLoading && <svg aria-hidden="true" role="status" class="tw-inline tw-mr-3 tw-w-4 tw-h-4 tw-text-white tw-animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB" />
