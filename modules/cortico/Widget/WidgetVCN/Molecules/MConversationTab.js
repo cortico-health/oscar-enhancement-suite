@@ -69,18 +69,18 @@ const MConversationTab = ({ conversation, selected, ...props }) => {
                 )}
                 <div className="tw-max-w-full tw-ml-4 tw-cursor-pointer">
                     <p
-                        className={ `tw-text-contact2 tw-w-72 tw-cursor-pointer tw-whitespace-nowrap tw-text-ellipsis tw-overflow-hidden ${isSelected ? "tw-text-white" : "tw-text-secondary-500"
+                        className={ `tw-text-contact2 tw-w-72 tw-cursor-pointer tw-whitespace-nowrap tw-text-ellipsis tw-overflow-hidden ${isSelected ? "tw-text-white tw-font-bold" : "tw-text-secondary-500"
                             }`}
                     >
                         {multipleObjectDataFormatting(getOtherMembersName(conversation?.members))}
                         {
                             conversation?.patient
                             &&
-                            <span>({ conversation.patient.first_name } { conversation.patient.last_name })</span>
+                            <span> ({ conversation.patient.first_name } { conversation.patient.last_name })</span>
                         }
                     </p>
                     <p
-                        className={ `tw-text-contact3 tw-relative tw-cursor-pointer tw-mt-2 tw-w-72 tw-whitespace-nowrap tw-text-ellipsis tw-overflow-hidden ${isSelected ? "tw-text-white" : "tw-text-secondary-300"
+                        className={ `tw-text-contact3 tw-relative tw-cursor-pointer tw-mt-2 tw-w-72 tw-whitespace-nowrap tw-text-ellipsis tw-overflow-hidden ${isSelected ? "tw-text-white tw-font-bold" : "tw-text-secondary-300"
                             }`}
                     >
                         { conversation?.last_message ?
