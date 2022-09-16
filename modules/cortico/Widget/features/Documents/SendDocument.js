@@ -100,7 +100,7 @@ export default function SendDocument({ node, ...props }) {
   return (
     <Button className="tw-m-1" size="xs" onClick={handleClick}>
       <ArrowRightIcon className="tw-w-3 tw-h-3 tw-mr-1" />
-      Send
+      Patient
     </Button>
   );
 }

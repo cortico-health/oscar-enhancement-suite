@@ -6,7 +6,6 @@ import MMessageFile from "./MMessageFile";
 
 import VerifiedLogo from "../../../../../resources/icons/verified.svg"
 import MProfilePicture from "./MProfilePicture";
-import { getFileExtension } from "../../../../Utils/Utils";
 
 const formatURL = (string) => {
     return string.replace(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g, (url) => '<a class="text-primary-500" href="' + url + '">' + url + '</a>')
@@ -60,9 +59,11 @@ const MMessageCard = ({ messageDetails, readHistory }) => {
                                     return (
                                         <div className='tw-flex tw-justify-end tw-mt-3'>
                                             <MMessageFile
+                                                id={file.id}
                                                 dataURL={file.data}
                                                 name={file.name}
-                                                extension={getFileExtension(file.name)}
+                                                extension={file.extension}
+                                                status={file.status}
                                                 isUser={from_user.id === userStore.user.id}
                                             />
                                         </div>
@@ -90,17 +91,22 @@ const MMessageCard = ({ messageDetails, readHistory }) => {
                             <div className="tw-flex tw-gap-3 tw-mt-3">
                                 <MProfilePicture avatar={author?.avatar} className="tw-relative tw-w-11 tw-h-11" />
                                 <div className="tw-flex tw-flex-col tw-gap-2 tw-w-full">
-                                    <div className="tw-bg-white tw-rounded-2xl tw-p-4 tw-inline-block tw-w-[45%] tw-max-w-fit">
-                                        <p className='tw-text-secondary-500 tw-text-message1' dangerouslySetInnerHTML={message()} />
-                                    </div>
+                                    {
+                                        body &&
+                                        <div className="tw-bg-white tw-rounded-2xl tw-p-4 tw-inline-block tw-w-[45%] tw-max-w-fit">
+                                            <p className='tw-text-secondary-500 tw-text-message1' dangerouslySetInnerHTML={message()} />
+                                        </div>
+                                    }
                                     {
                                         files.map(file => {
                                             return (
                                                 <div className='tw-flex tw-mb-2'>
                                                     <MMessageFile
+                                                        id={file.id}
                                                         dataURL={file.data}
                                                         name={file.name}
-                                                        extension={getFileExtension(file.name)}
+                                                        extension={file.extension}
+                                                        status={file.status}
                                                     />
                                                 </div>
                                             )

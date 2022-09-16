@@ -11,7 +11,14 @@ import UploadLogo from "../../../../../resources/icons/upload.svg";
 import DismissedLogo from "../../../../../resources/icons/dismissed.svg";
 import MConfirmationModal from "./MConfirmationModal";
 import { CEREBRO_URL } from "../../../../Utils/VcnUtils";
+import { loadExtensionStorageValue } from "../../../../Utils/Utils";
 import classNames from "classnames";
+import { useStore } from "../../store/mobx";
+import { useDispatch } from "react-redux";
+import { postFileToEmr } from "../../../../Api/Api";
+import { nanoid } from "nanoid";
+import { markFileAsUploaded, markFileAsDismissed } from "../../../../Api/Vcn/Conversations";
+
 
 const ShowSVGFile = ({ url, icon, name, isUser }) => {
     return (
@@ -45,26 +52,114 @@ const ShowImgFile = ({ url }) => {
     );
 }
 
-const MMessageFile = ({ dataURL, name, extension, isUser }) => {
+const MMessageFile = ({ id, dataURL, name, extension, status, isUser }) => {
+    const { patientStore, conversationStore } = useStore();
+    const dispatch = useDispatch();
+
     const fileUrl = dataURL.startsWith("/") ? `${CEREBRO_URL}${dataURL}` : dataURL;
 
     const [isUploadOpen, setIsUploadOpen] = useState(false);
     const [isDismissOpen, setIsDismissOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [fileStatus, setFileStatus] = useState(status);
 
     const modalContainer = document.getElementById('upload-confirm');
 
-    const onUpload = () => {
-        console.log("File Uploaded to Oscar");
+    const onUpload = async () => {
+        setIsLoading(true);
+        try {
+            const token = await loadExtensionStorageValue("jwt_access_token");
+
+            const upload = await postFileToEmr(token, {
+                file_path: fileUrl,
+                hin: patientStore.patients.selected?.hin,
+                description: name
+            });
+
+            const uploadResponse = await upload.json();
+            if (!uploadResponse?.success) {
+                setIsLoading(false);
+                setIsUploadOpen(false);
+                return dispatch({
+                    type: "notifications/add",
+                    payload: {
+                        type: "error",
+                        title: `${name} was not successfully uploaded to EMR`,
+                        id: nanoid(),
+                    },
+                });
+            }
+
+            const isUploaded = await markFileAsUploaded(id);
+            if (!isUploaded?.ok) {
+                setIsLoading(false);
+                setIsUploadOpen(false);
+                return dispatch({
+                    type: "notifications/add",
+                    payload: {
+                        type: "error",
+                        title: `${name} was not successfully uploaded to EMR`,
+                        id: nanoid(),
+                    },
+                });
+            }
+
+            const isUploadedResponse = await isUploaded.json();
+            conversationStore.conversations.selected.stats = isUploadedResponse.stats;
+            setFileStatus('uploaded');
+
+            setIsLoading(false);
+            setIsUploadOpen(false);
+            return dispatch({
+                type: "notifications/add",
+                payload: {
+                    type: "success",
+                    title: `${name} was successfully uploaded to EMR`,
+                    id: nanoid(),
+                },
+            });
+        } catch (error) {
+            console.error(error);
+            setIsLoading(false);
+        }
     }
 
-    const onDismiss = () => {
-        console.log("File is being dismissed");
+    const onDismiss = async () => {
+        const isDismissed = await markFileAsDismissed(id);
+
+        if (!isDismissed?.ok) {
+            setIsLoading(false);
+            setIsDismissOpen(false);
+            return dispatch({
+                type: "notifications/add",
+                payload: {
+                    type: "error",
+                    title: `${name} was not successfully dismissed`,
+                    id: nanoid(),
+                },
+            });
+        }
+
+        const isDismissedResponse = await isDismissed.json();
+        conversationStore.conversations.selected.stats = isDismissedResponse.stats;
+        setFileStatus('dismissed');
+
+        setIsLoading(false);
+        setIsDismissOpen(false);
+        return dispatch({
+            type: "notifications/add",
+            payload: {
+                type: "success",
+                title: `${name} was successfully dismissed`,
+                id: nanoid(),
+            },
+        });
     }
 
     return (
         <>
-            <div className={classNames("tw-flex tw-items-center tw-gap-2", !isUser)}>
-                {isUser && <div className="tw-flex tw-justify-between tw-items-end tw-gap-2">
+            <div className={`tw-flex tw-items-center tw-gap-2 ${!isUser ? "tw-flex-row-reverse" : ""}`}>
+                {fileStatus === 'awaiting_action' && <div className="tw-flex tw-justify-between tw-items-end tw-gap-2">
                     <div className="tw-p-2 hover:tw-bg-green-500/60 hover:tw-rounded-full tw-w-10 tw-h-10">
                         <ASvg src={UploadLogo}
                             className="tw-cursor-pointer"
@@ -117,29 +212,14 @@ const MMessageFile = ({ dataURL, name, extension, isUser }) => {
                     &&
                     <ShowSVGFile url={fileUrl} icon={CodeLogo} name={name} isUser={isUser} />
                 }
-
-                {!isUser && <div className="tw-flex tw-justify-between tw-items-end tw-gap-2">
-                    <div className="tw-p-2 hover:tw-bg-green-500/60 hover:tw-rounded-full tw-w-10 tw-h-10">
-                        <ASvg src={UploadLogo}
-                            className="tw-cursor-pointer"
-                            onClick={() => setIsUploadOpen(true)}
-                        />
-                    </div>
-
-                    <div className="tw-p-2 hover:tw-bg-red-500/60 hover:tw-rounded-full tw-w-10 tw-h-10">
-                        <ASvg src={DismissedLogo}
-                            className="tw-cursor-pointer"
-                            onClick={() => setIsDismissOpen(true)}
-                        />
-                    </div>
-                </div>}
             </div>
 
             {isUploadOpen && createPortal(
                 <MConfirmationModal
                     setIsOpen={setIsUploadOpen}
                     onConfirm={onUpload}
-                    type="upload" />
+                    type="upload"
+                    isLoading={isLoading} />
                 , modalContainer)
             }
 
@@ -147,7 +227,8 @@ const MMessageFile = ({ dataURL, name, extension, isUser }) => {
                 <MConfirmationModal
                     setIsOpen={setIsDismissOpen}
                     onConfirm={onDismiss}
-                    type="dismiss" />
+                    type="dismiss"
+                    isLoading={isLoading} />
                 , modalContainer)
             }
         </>

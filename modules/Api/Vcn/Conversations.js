@@ -62,10 +62,20 @@ export const createFile = async (file) => {
     });
 }
 
-export const deleteFile = async (id) => {
+export const markFileAsUploaded = async (id) => {
     const accessToken = await (loadExtensionStorageValue('jwt_access_token'));
-    return await fetch(`/vcn/files/${id}`, {
-        method: "DELETE",
+    return await fetch(`${CEREBRO_API_URL}/vcn/files/${id}/upload_to_echarts/`, {
+        method: "PATCH",
+        headers: {
+            "Authorization": `Bearer ${accessToken}`
+        },
+    });
+}
+
+export const markFileAsDismissed = async (id) => {
+    const accessToken = await (loadExtensionStorageValue('jwt_access_token'));
+    return await fetch(`${CEREBRO_API_URL}/vcn/files/${id}/dismiss/`, {
+        method: "PATCH",
         headers: {
             "Authorization": `Bearer ${accessToken}`
         },

@@ -1,7 +1,6 @@
 import useWebSocket from "react-use-websocket";
 import { useEffect, useRef, useState } from "preact/hooks";
 import { observer } from "mobx-react-lite";
-import { v4 as uuidv4 } from 'uuid';
 import { useStore } from "../../store/mobx";
 import MChatTools from "../Molecules/MChatTools";
 import AFileInputShow from "../Atoms/AFileInputShow";
@@ -11,13 +10,14 @@ import ASvg from "../Atoms/ASvg";
 import NoConversationLogo from "../../../../../resources/icons/chat-alt2.svg"
 import ASpinner from "../Atoms/ASpinner";
 import { getWsChatUrl } from "../../../../Utils/VcnUtils";
-import { loadExtensionStorageValue } from "../../../../Utils/Utils";
-import { createFile, getChatMessageData, getConversation } from "../../../../Api/Vcn/Conversations.js";
-import { useDispatch } from "react-redux";
+import { loadExtensionStorageValue, dataURLtoBlob } from "../../../../Utils/Utils";
+import { createFile, getChatMessageData } from "../../../../Api/Vcn/Conversations.js";
+import { useDispatch, useSelector } from "react-redux";
 
 
 const CMessageList = () => {
     const dispatch = useDispatch();
+    const { attachments } = useSelector((state) => state.providerMessaging);
     const { conversationStore, patientStore } = useStore();
     const sendRef = useRef(null);
     const messagesEndRef = useRef(null);
@@ -50,15 +50,19 @@ const CMessageList = () => {
         handlers.onRead();
     }
 
+    const attachFileToChat = (file) => {
+        createFile(file).then((response) => { return response.json() }).then((data) => {
+            console.log("Entered Here");
+            setUploadedFiles([...uploadedFiles, data]);
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+
     const handlers = {
         onUpload: (e) => {
             const file = e.target.files[0];
-
-            createFile(file).then((response) => { return response.json() }).then((data) => {
-                setUploadedFiles([...uploadedFiles, data]);
-            }).catch((error) => {
-                console.log(error);
-            });
+            attachFileToChat(file);
         },
         removeFile: (id) => {
             setUploadedFiles(uploadedFiles.filter((file) => file.id !== id));
@@ -70,7 +74,12 @@ const CMessageList = () => {
                     'body': value ? value : '',
                     'files': uploadedFiles ? uploadedFiles.map((file) => file.id) : null
                 }));
+                //TODO Dwight: can be uncommented if said so.
+                //Commenting this out since I want to instill the data after sending like in MessengerWindow.
                 setUploadedFiles([]);
+                dispatch({
+                    type: "providerMessaging/reset"
+                })
                 sendRef.current.base.lastElementChild.value = "";
                 window.scrollTo(0, document.body.scrollHeight);
             }
@@ -90,6 +99,10 @@ const CMessageList = () => {
             payload: "VCN Patient",
         });
     }
+
+    const deleteAttachment = (id) => {
+        setUploadedFiles((prevUploadedFiles) => prevUploadedFiles.filter((uploadedFile => uploadedFile.id !== id)));
+    };
 
     useEffect(() => {
         const conversation = conversationStore.conversations.selected;
@@ -129,12 +142,20 @@ const CMessageList = () => {
         messagesEndRef?.current?.scrollIntoView()
     }, [messages]);
 
+    useEffect(() => {
+        attachments.forEach(attachment => {
+            const blob = dataURLtoBlob(attachment.data);
+            const file = new File([blob], attachment.name);
+            attachFileToChat(file);
+        });
+    }, [attachments]);
+
     if (!conversationStore.conversations.selected) {
         return (
             <div className="tw-w-[1000px] tw-h-full tw-relative">
                 <div className="tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-2 tw-w-64 tw-h-full tw-absolute tw-left-1/2 -tw-translate-x-1/2">
-                    <ASvg src={ NoConversationLogo } />
-                    <h4 className="text-secondary-300 text-2xl">Choose the conversation</h4>
+                    <ASvg src={NoConversationLogo} />
+                    <h4 className="text-secondary-300 text-2xl">Choose Conversation</h4>
                 </div>
             </div>
         );
@@ -168,7 +189,11 @@ const CMessageList = () => {
                                 uploadedFiles.length > 0 &&
                                 <div className="tw-flex tw-flex-wrap tw-w-full tw-max-h-32 tw-overflow-y-auto tw-mt-3">
                                     {uploadedFiles.map((file) => {
-                                        return <AFileInputShow fileInput={file} exit={() => handlers.removeFile(file.id)} />
+                                        return <AFileInputShow fileInput={file} exit={() => {
+                                            //TODO Dwight: To be improved since it loops twice.
+                                            deleteAttachment(file.id);
+                                            handlers.removeFile(file.id);
+                                        }} />
                                     })}
                                 </div>
                             }
