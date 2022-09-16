@@ -53,7 +53,7 @@ const ShowImgFile = ({ url }) => {
 }
 
 const MMessageFile = ({ id, dataURL, name, extension, status, isUser }) => {
-    const { patientStore } = useStore();
+    const { patientStore, conversationStore } = useStore();
     const dispatch = useDispatch();
 
     const fileUrl = dataURL.startsWith("/") ? `${CEREBRO_URL}${dataURL}` : dataURL;
@@ -61,6 +61,7 @@ const MMessageFile = ({ id, dataURL, name, extension, status, isUser }) => {
     const [isUploadOpen, setIsUploadOpen] = useState(false);
     const [isDismissOpen, setIsDismissOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [fileStatus, setFileStatus] = useState(status);
 
     const modalContainer = document.getElementById('upload-confirm');
 
@@ -69,14 +70,14 @@ const MMessageFile = ({ id, dataURL, name, extension, status, isUser }) => {
         try {
             const token = await loadExtensionStorageValue("jwt_access_token");
 
-            const response = await postFileToEmr(token, {
+            const upload = await postFileToEmr(token, {
                 file_path: fileUrl,
                 hin: patientStore.patients.selected?.hin,
                 description: name
             });
 
-            const result = await response.json();
-            if (!result?.success) {
+            const uploadResponse = await upload.json();
+            if (!uploadResponse?.success) {
                 setIsLoading(false);
                 setIsUploadOpen(false);
                 return dispatch({
@@ -102,6 +103,10 @@ const MMessageFile = ({ id, dataURL, name, extension, status, isUser }) => {
                     },
                 });
             }
+
+            const isUploadedResponse = await isUploaded.json();
+            conversationStore.conversations.selected.stats = isUploadedResponse.stats;
+            setFileStatus('uploaded');
 
             setIsLoading(false);
             setIsUploadOpen(false);
@@ -135,6 +140,10 @@ const MMessageFile = ({ id, dataURL, name, extension, status, isUser }) => {
             });
         }
 
+        const isDismissedResponse = await isDismissed.json();
+        conversationStore.conversations.selected.stats = isDismissedResponse.stats;
+        setFileStatus('dismissed');
+
         setIsLoading(false);
         setIsDismissOpen(false);
         return dispatch({
@@ -150,7 +159,7 @@ const MMessageFile = ({ id, dataURL, name, extension, status, isUser }) => {
     return (
         <>
             <div className={`tw-flex tw-items-center tw-gap-2 ${!isUser ? "tw-flex-row-reverse" : ""}`}>
-                {status === 'awaiting_action' && <div className="tw-flex tw-justify-between tw-items-end tw-gap-2">
+                {fileStatus === 'awaiting_action' && <div className="tw-flex tw-justify-between tw-items-end tw-gap-2">
                     <div className="tw-p-2 hover:tw-bg-green-500/60 hover:tw-rounded-full tw-w-10 tw-h-10">
                         <ASvg src={UploadLogo}
                             className="tw-cursor-pointer"
