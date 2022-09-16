@@ -113,7 +113,7 @@ const MMessageCard = ({ messageDetails, readHistory }) => {
             }
             {
                 readHistory && readHistory.length > 0 &&
-                <div className="tw-text-right tw-text-xs tw-text-secondary-200">Seen by {getReaderNames(readHistory)}</div>
+                <div className="tw-text-right tw-text-xs tw-text-secondary-200 tw-mb-2">Seen by {getReaderNames(readHistory)}</div>
             }
         </div>
     )
