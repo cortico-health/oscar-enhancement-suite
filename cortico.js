@@ -109,6 +109,17 @@ const init_cortico = async function () {
   const corticoWidgetContainer = document.createElement("div");
   document.body.append(corticoWidgetContainer);
 
+  if (window.accuro) {
+    console.log("Accuro Object Detected On");
+    CorticoWidget(accuro.container, accuro.replaceNode, {
+      disabledFeatures: ["automation"],
+      defaultMenu: "Messenger",
+      open: true,
+      mode: "accuro",
+    });
+    return;
+  }
+
   /*
   const modal = new Modal();
   modal.setContent(Dashboard());
@@ -163,7 +174,6 @@ const init_cortico = async function () {
     route.indexOf("/oscarEncounter/IncomingEncounter.do") > -1
   ) {
     //const patient_info = await getPatientInfo();
-
     if (oscar.isEncounterPage()) {
       CorticoWidget(document.body, corticoWidgetContainer, {
         disabledFeatures: ["automation"],

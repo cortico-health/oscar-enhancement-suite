@@ -45,18 +45,8 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
   const dispatch = useDispatch();
   const [demographicNo, setDemographicNo] = useState(null);
   const [loading, setLoading] = useState();
-  const {
-    to,
-    phone,
-    subject,
-    body,
-    encounter,
-    attachments,
-    eform,
-    document,
-    inboxDocument,
-    scheme,
-  } = useSelector((state) => state.messenger);
+  const { to, phone, subject, body, encounter, attachments, eform, scheme } =
+    useSelector((state) => state.messenger);
   const [openSavedReplies, setOpenSavedReplies] = useState(false);
   const [filePreview, setFilePreview] = useState([]);
   const [patientInfo, setPatientInfo] = useState(null);

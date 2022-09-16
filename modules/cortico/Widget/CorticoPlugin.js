@@ -21,10 +21,12 @@ import Button from "../../core/Button";
 import { BroadcastChannel } from "broadcast-channel";
 import { handleTokenExpiry } from "./common/utils";
 import PatientPanel from "./PatientPanel";
-import PatientAdapter from "./adapters/PatientAdapter";
+import classNames from "classnames";
 export default function CorticoPlugin({ onMinimize, ...props }) {
   const dispatch = useDispatch();
-  const { refresh, refreshToken, uid } = useSelector((state) => state.app);
+  const { refresh, refreshToken, uid, mode } = useSelector(
+    (state) => state.app
+  );
   const loggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   const handleClick = (name) => {
@@ -141,7 +143,11 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
   };
 
   return (
-    <div className="tw-flex tw-h-full">
+    <div
+      className={classNames(
+        mode === "accuro" ? "tw-flex tw-h-screen" : "tw-flex tw-h-full"
+      )}
+    >
       {refresh ? (
         <AlertDialog
           icon={
@@ -188,10 +194,10 @@ export default function CorticoPlugin({ onMinimize, ...props }) {
       ) : null}
       <Notifications />
       <div className="">
-        <WidgetSidebar onClick={handleClick} />
+        <WidgetSidebar onClick={handleClick} mode={mode} />
       </div>
 
-      <div className=" tw-text-black tw-relative">
+      <div className=" tw-text-black tw-relative tw-w-full">
         <div
           className="tw-absolute tw-top-2 tw-right-2 tw-cursor-pointer tw-bg-amber-400 tw-rounded-full"
           onClick={onMinimize}
@@ -247,6 +253,8 @@ function PluginContentRenderer() {
   const loggedIn = useSelector((state) => state.auth.isLoggedIn);
   const { items: sidebarItems } = useSelector((state) => state.sidebar);
   const [activeItem, setActiveItem] = useState("Account");
+  const { mode } = useSelector((state) => state.app);
+
   useEffect(() => {
     const activeItem = sidebarItems.find((item) => item.current);
     if (activeItem) {
@@ -261,7 +269,12 @@ function PluginContentRenderer() {
           {loggedIn === true ? <AccountInformation /> : <Login />}
         </div>
       ) : activeItem === "Automation" ? (
-        <div className="tw-p-4 tw-overflow-y-auto tw-max-h-[600px]">
+        <div
+          className={classNames(
+            "tw-p-4 tw-overflow-y-auto",
+            mode === "accuro" ? "" : "tw-max-h-[600px]"
+          )}
+        >
           <WidgetAutomation />
         </div>
       ) : activeItem === "Settings" ? (
@@ -269,7 +282,12 @@ function PluginContentRenderer() {
           <WidgetSettings />
         </div>
       ) : activeItem === "Messenger" ? (
-        <div className="tw-p-4 tw-h-full tw-max-w-[450px]">
+        <div
+          className={classNames(
+            "tw-p-4 tw-h-full",
+            mode === "accuro" ? "" : "tw-p-4 tw-h-full tw-max-w-[450px]"
+          )}
+        >
           <WidgetMessenger />
         </div>
       ) : activeItem === "Patient" ? (

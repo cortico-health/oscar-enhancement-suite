@@ -2,11 +2,16 @@ import classNames from "classnames";
 import Logo from "../../../resources/icons/logo-regular-white.svg";
 import { useSelector } from "react-redux";
 
-export default function WidgetSidebar({ onClick, ...props }) {
+export default function WidgetSidebar({ mode, onClick, ...props }) {
   const { items } = useSelector((state) => state.sidebar);
 
   return (
-    <div className="tw-w-full tw-h-full tw-rounded-l-xl tw-px-2 tw-shadow-right tw-bg-gradient-to-bl tw-from-indigo-500 tw-to-blue-1000 tw-bg-blue-1000 ">
+    <div
+      className={classNames(
+        mode === "accuro" ? "" : "tw-rounded-l-xl",
+        "tw-w-full tw-h-full tw-px-2 tw-shadow-right tw-bg-gradient-to-bl tw-from-indigo-500 tw-to-blue-1000 tw-bg-blue-1000"
+      )}
+    >
       <div className="tw-py-8 tw-flex tw-flex-col tw-justify-between tw-h-full tw-w-full">
         <div>
           <div className="tw-mb-8">

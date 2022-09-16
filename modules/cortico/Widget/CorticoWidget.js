@@ -22,11 +22,13 @@ import InboxDocumentAdapter from "./adapters/InboxDocumentAdapter";
 
 const uid = nanoid();
 
-function App({ mode = "normal", ...props }) {
+function App({ ...props }) {
   const open = useSelector((state) => state.app.open);
   const containerRef = useRef();
   const dispatch = useDispatch();
   const [dragging, setDragging] = useState(false);
+
+  console.log("Props", props);
 
   useEffect(() => {
     const subscriptions = {
@@ -67,16 +69,6 @@ function App({ mode = "normal", ...props }) {
         type: "messenger/set",
         payload: {
           key: "eform",
-          value: true,
-        },
-      });
-    }
-
-    if (props.inboxDocument === true) {
-      dispatch({
-        type: "messenger/set",
-        payload: {
-          key: "inboxDocument",
           value: true,
         },
       });
@@ -167,13 +159,17 @@ function App({ mode = "normal", ...props }) {
   return (
     <div className="cleanslate cortico-widget no-print DoNotPrint">
       <div className="tailwind preflight">
-        {mode === "normal" ? (
+        {props.mode === undefined || props.mode === "accuro" ? (
           <>
             <div
               className={classNames(
-                "tw-fixed tw-bottom-5 tw-right-5 tw-z-10005  tw-text-white cortico-widget-body",
+                props.mode === "normal" &&
+                  "tw-fixed tw-bottom-5 tw-right-5 tw-z-10005  tw-text-white cortico-widget-body",
+                props.mode === "accuro" && "tw-text-white cortico-widget-body",
                 open === true
-                  ? "tw-rounded-xl tw-border tw-bg-white"
+                  ? props.mode !== "accuro"
+                    ? "tw-rounded-xl tw-border tw-bg-white"
+                    : ""
                   : "tw-rounded-full "
               )}
               ref={containerRef}
@@ -218,7 +214,7 @@ function App({ mode = "normal", ...props }) {
             </div>
             <>{props.document === true ? <SetupDocuments /> : null}</>
           </>
-        ) : mode === "appointment" ? (
+        ) : props.mode === "appointment" ? (
           <Appointment />
         ) : null}
       </div>
