@@ -423,17 +423,6 @@ export function formEncounterMessage(scheme, subject, body) {
   return prefix + body + suffix;
 }
 
-export function getFileExtension(name) {
-  if (!name) return '';
-
-  const texts = name.split(".");
-  return texts[texts.length - 1].toLowerCase();
-}
-
-export function cleanFileName(fileName) {
-  return fileName.replace("provider_messenger/", "");
-}
-
 export const getFileInfo = (contentDisposition) => {
   let fileName = null;
   let extension = null;

@@ -111,21 +111,23 @@ export const StateProvider = ({ children }) => {
       if (conversation.patient) patientStore.selectPatient(conversation.patient);
     },
     updateOrInsertConversation(updatedConversation) {
+
       // Update All Conversations
-      let existingConversation = this.conversations.all.find((conversation) => {
-        return conversation.id === updatedConversation.id;
-      })
+      if (this.conversations.all) {
+        let existingConversation = this.conversations.all.find((conversation) => {
+          return conversation.id === updatedConversation.id;
+        })
 
-      if (existingConversation) {
-        this.conversations.all = this.conversations.all.map((conversation) => {
-          return conversation.id === updatedConversation.id ? updatedConversation : conversation;
-        });
-      } else {
-        this.conversations.all.push(updatedConversation)
+        if (existingConversation) {
+          this.conversations.all = this.conversations.all.map((conversation) => {
+            return conversation.id === updatedConversation.id ? updatedConversation : conversation;
+          });
+        } else {
+          this.conversations.all.push(updatedConversation)
+        }
+
+        this.conversations.all = _.orderBy(this.conversations.all, ['last_message.created_date'], ['desc']);
       }
-
-      this.conversations.all = _.orderBy(this.conversations.all, ['last_message.created_date'], ['desc']);
-      if (this.conversations.selected.id === updatedConversation.id) this.conversations.selected = updatedConversation;
 
       // Update Patient-specific Conversations if already loaded
       if (updatedConversation.patient && this.conversations[updatedConversation.patient.hin]) {
@@ -140,7 +142,13 @@ export const StateProvider = ({ children }) => {
           });
 
           this.conversations[hin] = _.orderBy(this.conversations[hin], ['last_message.created_date'], ['desc']);
+        } else {
+          this.conversations[hin] = [updatedConversation]
         }
+      }
+
+      if (this.conversations.selected && this.conversations.selected.id === updatedConversation.id) {
+        this.conversations.selected = updatedConversation;
       }
     }
   }))
@@ -155,6 +163,8 @@ export const StateProvider = ({ children }) => {
           userStore.fetchUser();
           userStore.fetchUsers();
           patientStore.fetchPatients();
+
+          conversationStore.fetchConversations();
 
           setSocketUrl(getWsUpdateUrl(accessToken));
         }

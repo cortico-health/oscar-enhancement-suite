@@ -7,7 +7,6 @@ import DocumentLogo from "../../../../../resources/icons/document.svg";
 import DocumentTextLogo from "../../../../../resources/icons/document-text.svg";
 import TableLogo from "../../../../../resources/icons/table.svg";
 import CodeLogo from "../../../../../resources/icons/code.svg";
-import { getFileExtension } from '../../../../Utils/Utils';
 
 
 const AFileInputShow = ({ fileInput, exit }) => {
@@ -16,7 +15,7 @@ const AFileInputShow = ({ fileInput, exit }) => {
 
     const dataURL = fileInput.data;
     const fileName = fileInput.name;
-    const type = getFileExtension(fileInput.name);
+    const type = file.extension;
 
     return (
         <div className="tw-flex tw-p-1 tw-mr-1 tw-border tw-rounded-sm tw-items-center tw-gap-4 tw-bg-white">

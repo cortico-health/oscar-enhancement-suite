@@ -7,7 +7,7 @@ import AFileInputShow from "../Atoms/AFileInputShow";
 import MSend from "../Molecules/MSend";
 import MMessageCard from "../Molecules/MMessageCard";
 import ASvg from "../Atoms/ASvg";
-import NoDiscussionLogo from "../../../../../resources/icons/chat-alt2.svg"
+import NoConversationLogo from "../../../../../resources/icons/chat-alt2.svg"
 import ASpinner from "../Atoms/ASpinner";
 import { getWsChatUrl } from "../../../../Utils/VcnUtils";
 import { loadExtensionStorageValue, dataURLtoBlob } from "../../../../Utils/Utils";
@@ -158,8 +158,8 @@ const CMessageList = () => {
         return (
             <div className="tw-w-[1000px] tw-h-full tw-relative">
                 <div className="tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-2 tw-w-64 tw-h-full tw-absolute tw-left-1/2 -tw-translate-x-1/2">
-                    <ASvg src={NoDiscussionLogo} />
-                    <h4 className="text-secondary-300 text-2xl">Choose the discussion</h4>
+                    <ASvg src={ NoConversationLogo } />
+                    <h4 className="text-secondary-300 text-2xl">Choose the conversation</h4>
                 </div>
             </div>
         );
