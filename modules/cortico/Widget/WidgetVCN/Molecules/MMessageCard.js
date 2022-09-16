@@ -63,6 +63,7 @@ const MMessageCard = ({ messageDetails, readHistory }) => {
                                                 dataURL={file.data}
                                                 name={file.name}
                                                 extension={file.extension}
+                                                status={file.status}
                                                 isUser={from_user.id === userStore.user.id}
                                             />
                                         </div>
@@ -90,9 +91,12 @@ const MMessageCard = ({ messageDetails, readHistory }) => {
                             <div className="tw-flex tw-gap-3 tw-mt-3">
                                 <MProfilePicture avatar={author?.avatar} className="tw-relative tw-w-11 tw-h-11" />
                                 <div className="tw-flex tw-flex-col tw-gap-2 tw-w-full">
-                                    <div className="tw-bg-white tw-rounded-2xl tw-p-4 tw-inline-block tw-w-[45%] tw-max-w-fit">
-                                        <p className='tw-text-secondary-500 tw-text-message1' dangerouslySetInnerHTML={message()} />
-                                    </div>
+                                    {
+                                        body &&
+                                        <div className="tw-bg-white tw-rounded-2xl tw-p-4 tw-inline-block tw-w-[45%] tw-max-w-fit">
+                                            <p className='tw-text-secondary-500 tw-text-message1' dangerouslySetInnerHTML={message()} />
+                                        </div>
+                                    }
                                     {
                                         files.map(file => {
                                             return (
@@ -102,6 +106,7 @@ const MMessageCard = ({ messageDetails, readHistory }) => {
                                                         dataURL={file.data}
                                                         name={file.name}
                                                         extension={file.extension}
+                                                        status={file.status}
                                                     />
                                                 </div>
                                             )
