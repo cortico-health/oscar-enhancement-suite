@@ -31,7 +31,7 @@ const PatientData = ({ patient, showControls, handleClick, handleClose }) => {
                             {showControls && <ASvg onClick={handleClose} className="tw-cursor-pointer" src={ExitLogo} />}
                         </div>
                     </div>
-                    <table className="tw-text-md tw-text-secondary-300">
+                    <table className="tw-w-full tw-text-md tw-text-secondary-300">
                         <tr>
                             <td className="tw-font-bold tw-w-1/3">Gender:</td>
                             <td>{GENDER_CHOICES[gender]}</td>
