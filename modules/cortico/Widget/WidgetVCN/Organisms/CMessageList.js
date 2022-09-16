@@ -13,11 +13,12 @@ import { getWsChatUrl } from "../../../../Utils/VcnUtils";
 import { loadExtensionStorageValue, dataURLtoBlob } from "../../../../Utils/Utils";
 import { createFile, getChatMessageData } from "../../../../Api/Vcn/Conversations.js";
 import { useDispatch, useSelector } from "react-redux";
+import _ from "lodash";
 
 
 const CMessageList = () => {
     const dispatch = useDispatch();
-    const { attachments } = useSelector((state) => state.providerMessaging);
+    const { attachment } = useSelector((state) => state.providerMessaging);
     const { conversationStore, patientStore } = useStore();
     const sendRef = useRef(null);
     const messagesEndRef = useRef(null);
@@ -52,8 +53,11 @@ const CMessageList = () => {
 
     const attachFileToChat = (file) => {
         createFile(file).then((response) => { return response.json() }).then((data) => {
-            console.log("Entered Here");
-            setUploadedFiles([...uploadedFiles, data]);
+            setUploadedFiles((prevUploadedFiles) => [...prevUploadedFiles,data]);
+            dispatch({
+                type: "providerMessaging/reset",
+                payload: "attachment"
+            })
         }).catch((error) => {
             console.log(error);
         });
@@ -65,7 +69,7 @@ const CMessageList = () => {
             attachFileToChat(file);
         },
         removeFile: (id) => {
-            setUploadedFiles(uploadedFiles.filter((file) => file.id !== id));
+            setUploadedFiles((prevUploadedFiles) => prevUploadedFiles.filter((uploadedFile => uploadedFile.id !== id)));
         },
         onSend: () => {
             const value = sendRef?.current?.base?.lastElementChild?.value;
@@ -77,9 +81,6 @@ const CMessageList = () => {
                 //TODO Dwight: can be uncommented if said so.
                 //Commenting this out since I want to instill the data after sending like in MessengerWindow.
                 setUploadedFiles([]);
-                dispatch({
-                    type: "providerMessaging/reset"
-                })
                 sendRef.current.base.lastElementChild.value = "";
                 window.scrollTo(0, document.body.scrollHeight);
             }
@@ -99,10 +100,6 @@ const CMessageList = () => {
             payload: "VCN Patient",
         });
     }
-
-    const deleteAttachment = (id) => {
-        setUploadedFiles((prevUploadedFiles) => prevUploadedFiles.filter((uploadedFile => uploadedFile.id !== id)));
-    };
 
     useEffect(() => {
         const conversation = conversationStore.conversations.selected;
@@ -143,12 +140,12 @@ const CMessageList = () => {
     }, [messages]);
 
     useEffect(() => {
-        attachments.forEach(attachment => {
-            const blob = dataURLtoBlob(attachment.data);
-            const file = new File([blob], attachment.name);
-            attachFileToChat(file);
-        });
-    }, [attachments]);
+        if (_.isEmpty(attachment)) return;
+
+        const blob = dataURLtoBlob(attachment.data);
+        const file = new File([blob],attachment.name);
+        attachFileToChat(file);
+    },[attachment]);
 
     if (!conversationStore.conversations.selected) {
         return (
@@ -189,11 +186,7 @@ const CMessageList = () => {
                                 uploadedFiles.length > 0 &&
                                 <div className="tw-flex tw-flex-wrap tw-w-full tw-max-h-32 tw-overflow-y-auto tw-mt-3">
                                     {uploadedFiles.map((file) => {
-                                        return <AFileInputShow fileInput={file} exit={() => {
-                                            //TODO Dwight: To be improved since it loops twice.
-                                            deleteAttachment(file.id);
-                                            handlers.removeFile(file.id);
-                                        }} />
+                                        return <AFileInputShow fileInput={ file } exit={ () => handlers.removeFile(file.id) } />
                                     })}
                                 </div>
                             }

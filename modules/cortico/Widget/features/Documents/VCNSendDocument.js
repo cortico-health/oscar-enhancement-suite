@@ -86,17 +86,19 @@ const VCNSendDocument = ({ node,...props }) => {
             }
 
             dispatch({
-                type: "providerMessaging/addAttachment",
+                type: "providerMessaging/set",
                 payload: {
-                    id: nanoid(),
-                    name: fileName || node.textContent,
-                    data: dataUrl,
-                    type: "dataUrl",
-                    extension,
-                },
+                    key: "attachment",
+                    value: {
+                        id: nanoid(),
+                        name: fileName || node.textContent,
+                        data: dataUrl,
+                        type: "dataUrl",
+                        extension,
+                    }
+                }
             });
 
-            console.log("Data URL",dataUrl);
         } catch (error) {
             dispatch({
                 type: "app/setOpen",
