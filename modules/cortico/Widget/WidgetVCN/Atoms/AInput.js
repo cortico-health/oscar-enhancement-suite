@@ -1,5 +1,5 @@
 import { h } from "preact";
-import { useRef } from "preact/hooks";
+import { useEffect,useRef } from "preact/hooks";
 
 const inputEffects = "placeholder:tw-text-primary-300 focus:tw-outline-[#5c70ff] focus:tw-outline-[0.2rem]";
 
@@ -17,9 +17,18 @@ const AInput = ({
   placeholder = "Search...",
   inputClass = "",
   disabled = false,
+  noImageDrop = false,
   ...props
 }) => {
   const inputRef = useRef(null);
+
+  const onDrop = (evt) => {
+    const types = evt.dataTransfer.types;
+    console.log("Dropped Types: ",types);
+    if (types.length > 2 || types.indexOf("text/uri-list") > -1) {
+      evt.preventDefault();
+    }
+  }
 
   return (
     <div className={ `tw-relative ${className}` } { ...props }>
@@ -49,6 +58,7 @@ const AInput = ({
               }
             }
             disabled={ disabled }
+            onDrop={ onDrop }
           rows={ 1 }
           onInput={ onInput }
           ref={ inputRef }
