@@ -1,5 +1,6 @@
 import DOMPurify from "dompurify";
 import { useRef } from "preact/hooks";
+import { PencilIcon } from "@heroicons/react/outline";
 import { useStore } from "../../store/mobx";
 import ASvg from "../Atoms/ASvg";
 import MMessageFile from "./MMessageFile";
@@ -50,9 +51,19 @@ const MMessageCard = ({ messageDetails, readHistory }) => {
                             </div>
                             {
                                 body &&
-                                <div className='tw-flex tw-items-center tw-rounded-2xl tw-p-4 tw-mb-2 tw-mt-3 tw-bg-secondary-200 tw-gap-x-5 tw-max-w-[45%]'>
-                                    <p ref={textRef} dangerouslySetInnerHTML={message()} className='tw-text-secondary-500 tw-text-message1' />
-                                </div>
+                                (
+                                    <div className="tw-max-w-[60%] tw-flex tw-items-center tw-gap-2 tw-flex-row-reverse">
+                                        <div className='tw-rounded-2xl tw-p-4 tw-mb-2 tw-mt-3 tw-bg-secondary-200 tw-max-w-[80%]'>
+                                            <p ref={ textRef } dangerouslySetInnerHTML={ message() } className='tw-text-secondary-500 tw-text-message1' />
+                                        </div>
+                                        <div className="tw-p-2 hover:tw-bg-blue-500/60 hover:tw-rounded-full tw-w-10 tw-h-10">
+                                            <PencilIcon
+                                                className="tw-cursor-pointer"
+                                            />
+                                        </div>
+                                    </div>
+                                )
+
                             }
                             {
                                 files.map(file => {
@@ -93,9 +104,19 @@ const MMessageCard = ({ messageDetails, readHistory }) => {
                                 <div className="tw-flex tw-flex-col tw-gap-2 tw-w-full">
                                     {
                                         body &&
-                                        <div className="tw-bg-white tw-rounded-2xl tw-p-4 tw-inline-block tw-w-[45%] tw-max-w-fit">
-                                            <p className='tw-text-secondary-500 tw-text-message1' dangerouslySetInnerHTML={message()} />
-                                        </div>
+                                        (
+                                            <div className="tw-max-w-[60%] tw-flex tw-items-center tw-gap-2">
+                                                <div className="tw-bg-white tw-rounded-2xl tw-p-4 tw-inline-block tw-max-w-[80%]">
+                                                    <p className='tw-text-secondary-500 tw-text-message1' dangerouslySetInnerHTML={ message() } />
+                                                </div>
+                                                <div className="tw-p-2 hover:tw-bg-blue-500/60 hover:tw-rounded-full tw-w-10 tw-h-10">
+                                                    <PencilIcon
+                                                        className="tw-cursor-pointer"
+                                                    />
+                                                </div>
+                                            </div>
+                                        )
+
                                     }
                                     {
                                         files.map(file => {
