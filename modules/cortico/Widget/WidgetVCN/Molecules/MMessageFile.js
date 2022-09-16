@@ -159,22 +159,24 @@ const MMessageFile = ({ id, dataURL, name, extension, status, isUser }) => {
     return (
         <>
             <div className={`tw-flex tw-items-center tw-gap-2 ${!isUser ? "tw-flex-row-reverse" : ""}`}>
-                {fileStatus === 'awaiting_action' && <div className="tw-flex tw-justify-between tw-items-end tw-gap-2">
-                    <div className="tw-p-2 hover:tw-bg-green-500/60 hover:tw-rounded-full tw-w-10 tw-h-10">
-                        <ASvg src={UploadLogo}
-                            className="tw-cursor-pointer"
-                            onClick={() => setIsUploadOpen(true)}
-                        />
-                    </div>
+                {
+                    patientStore.patients.selected &&
+                    fileStatus === 'awaiting_action' &&
+                    <div className="tw-flex tw-justify-between tw-items-end tw-gap-2">
+                        <div className="tw-p-2 hover:tw-bg-green-500/60 hover:tw-rounded-full tw-w-10 tw-h-10">
+                            <ASvg src={UploadLogo}
+                                className="tw-cursor-pointer"
+                                onClick={() => setIsUploadOpen(true)}
+                            />
+                        </div>
 
-                    <div className="tw-p-2 hover:tw-bg-red-500/60 hover:tw-rounded-full tw-w-10 tw-h-10">
-                        <ASvg src={DismissedLogo}
-                            className="tw-cursor-pointer"
-                            onClick={() => setIsDismissOpen(true)}
-                        />
-                    </div>
-                </div>}
-
+                        <div className="tw-p-2 hover:tw-bg-red-500/60 hover:tw-rounded-full tw-w-10 tw-h-10">
+                            <ASvg src={DismissedLogo}
+                                className="tw-cursor-pointer"
+                                onClick={() => setIsDismissOpen(true)}
+                            />
+                        </div>
+                    </div>}
                 {
                     /* If there is missing fields */
                     (!fileUrl || !name || !extension) && null

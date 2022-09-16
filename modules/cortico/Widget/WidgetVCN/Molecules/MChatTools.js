@@ -27,16 +27,19 @@ const MChatTools = ({ fileStats, conversation, patient, loading, ...props }) => 
         <img src={AddLogo} />
       </div>
       <div className='tw-flex tw-gap-x-4'>
-        <AButton
-          href={location.hash == "#assets" ? '#' : '#assets'}
-          className='tw-flex'
-          variant='tab'
-        >
-          <img src={FilesLogo} className="tw-w-8" />
-          <p className='tw-font-medium tw-text-h2'>{fileStats ? (
-            `${fileStats.upload_count} / ${fileStats.total_files - fileStats.dismiss_count}`
-          ) : '0/0'}</p>
-        </AButton>
+        {
+          patient &&
+          <AButton
+            href={location.hash == "#assets" ? '#' : '#assets'}
+            className='tw-flex'
+            variant='tab'
+          >
+            <img src={FilesLogo} className="tw-w-8" />
+            <p className='tw-font-medium tw-text-h2'>{fileStats ? (
+              `${fileStats.upload_count} / ${fileStats.total_files - fileStats.dismiss_count}`
+            ) : '0/0'}</p>
+          </AButton>
+        }
         <MSearch placeholder="Search this chat" />
       </div>
 
