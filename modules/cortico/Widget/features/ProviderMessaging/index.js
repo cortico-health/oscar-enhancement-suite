@@ -6,9 +6,12 @@
   extension,
   type: 'eform
   }
+
+  Note: I'll leave some cases in place in case there are some upgrades in the provider messaging.
 */
 
 export const initialState = {
+    attachment: {},
     attachments: []
 };
 
@@ -19,9 +22,14 @@ export function providerMessagingReducer(state = initialState,action) {
                 ...state,
                 [action.payload.key]: action.payload.value,
             };
+        case "providerMessaging/reset":
+            return {
+                ...state,
+                [action.payload]: initialState[action.payload]
+            };
         case "providerMessaging/setAll":
             return { ...state,...action.payload };
-        case "providerMessaging/reset":
+        case "providerMessaging/resetAll":
             return { ...state,...initialState };
         case "providerMessaging/addAttachment":
             return { ...state,attachments: [...state.attachments,action.payload] };
