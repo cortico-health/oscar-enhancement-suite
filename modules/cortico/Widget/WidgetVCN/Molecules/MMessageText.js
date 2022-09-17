@@ -1,10 +1,15 @@
 import { PencilIcon } from "@heroicons/react/outline";
 import classNames from "classnames";
 import DOMPurify from "dompurify";
+import { nanoid } from "nanoid";
 import { createPortal } from "preact/compat";
 import { useState } from "preact/hooks";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { addEncounterNote,getEncounterNotes,postCaseManagementEntry } from "../../../../Api/Api";
 import Encounter from "../../../../core/Encounter";
 import { formProviderEncounterMessage,getDemographicNo } from "../../../../Utils/Utils";
+import { useStore } from "../../store/mobx";
 import MConfirmationModal from "./MConfirmationModal";
 
 const formatURL = (string) => {
@@ -12,6 +17,11 @@ const formatURL = (string) => {
 }
 
 const MMessageText = ({ isUser,body,sender,dateCreated,isEncounterPage }) => {
+    const dispatch = useDispatch();
+    const { clinic_name: clinicName,uid } = useSelector((state) => state.app);
+
+    const { patientStore } = useStore();
+
     const [isModalOpen,setIsModalOpen] = useState(false);
     const [isLoading,setIsLoading] = useState(false);
 
@@ -22,7 +32,7 @@ const MMessageText = ({ isUser,body,sender,dateCreated,isEncounterPage }) => {
     });
 
 
-    const uploadToChartNotes = () => {
+    const uploadToChartNotes = async () => {
         try {
             const encounterMessage = formProviderEncounterMessage(sender,body);
             const caseNote = Encounter.getCaseNote();
@@ -34,7 +44,84 @@ const MMessageText = ({ isUser,body,sender,dateCreated,isEncounterPage }) => {
                 return;
             }
 
+            let encounterTabFound = false;
+            // Check if e-chart tab is open
+            const encounterChannel = new BroadcastChannel("cortico/oes/encounter");
+            encounterChannel.addEventListener("message",(data) => {
+                if (data.uid !== uid && data.encounter === true) {
+                    encounterTabFound = true;
+                }
+            });
+
+            const demographicNo = patientStore.patients.selected?.hin;
+            if (!demographicNo) {
+                throw Error("Could not find demographic number");
+            }
+            encounterChannel.postMessage({
+                uid,
+                demographicNo,
+                sender,
+                body
+            });
+
+            await new Promise((resolve) => setTimeout(resolve,1000));
+            encounterChannel.close();
+
+            if (encounterTabFound === true) {
+                console.log("Encounter Tab Found");
+                setIsModalOpen(false);
+                return;
+            }
+
+            console.log("Encounter Tab Not Found");
+
+            const res = Promise.all([
+                postCaseManagementEntry(demographicNo),
+                getEncounterNotes(demographicNo),
+            ]);
+
+            const result = await Promise.all([res[0].text(),res[1].text()]);
+
+            const programId = Encounter.getProgramId(result[0]);
+            const note_id = Encounter.getNoteId(result[1]);
+
+            const temp = window.document.createElement("html");
+            temp.innerHTML = result[1];
+            let note = Encounter.getCaseNote(temp);
+
+            if (note == null) {
+                throw Error("Could not find encounter notes");
+            }
+
+            if (programId == null) {
+                throw Error("Could not find program id");
+            }
+
+            if (note_id == null) {
+                throw Error("Could not find note id");
+            }
+
+            note = note.value;
+
+            await addEncounterNote(
+                demographicNo,
+                note_id,
+                programId,
+                note + encounterMessage
+            );
+
             setIsModalOpen(false);
+
+            dispatch({
+                type: "notifications/add",
+                payload: {
+                    type: "success",
+                    message: "Encounter message has been copied.",
+                    title: "Encounter Copied",
+                    id: nanoid(),
+                },
+            });
+
         } catch (error) {
             dispatch({
                 type: "notifications/add",
@@ -59,12 +146,12 @@ const MMessageText = ({ isUser,body,sender,dateCreated,isEncounterPage }) => {
                 }>
                     <p className="tw-text-secondary-500 tw-text-message1 tw-break-words" dangerouslySetInnerHTML={ message() } />
                 </div>
-                { isEncounterPage && <div className="tw-p-2 hover:tw-bg-blue-500/60 hover:tw-rounded-full tw-w-10 tw-h-10">
+                <div className="tw-p-2 hover:tw-bg-blue-500/60 hover:tw-rounded-full tw-w-10 tw-h-10">
                     <PencilIcon
                         className="tw-cursor-pointer"
                         onClick={ () => setIsModalOpen(true) }
                     />
-                </div> }
+                </div>
             </div>
 
             { isModalOpen && createPortal(
