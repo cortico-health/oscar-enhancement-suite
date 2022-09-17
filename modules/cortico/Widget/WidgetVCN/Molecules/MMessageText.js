@@ -30,7 +30,7 @@ const MMessageText = ({ isUser,body,sender,dateCreated,isEncounterPage }) => {
                 isUser && "tw-flex-row-reverse")
             }>
                 <div className={ classNames("tw-rounded-2xl tw-p-4 tw-mb-2 tw-mt-3 tw-max-w-[80%]",
-                    isUser ? "tw-bg-secondary-200" : "tw-bg-white")
+                    isUser ? "tw-bg-blue-200" : "tw-bg-secondary-200")
                 }>
                     <p className="tw-text-secondary-500 tw-text-message1 tw-break-words" dangerouslySetInnerHTML={ message() } />
                 </div>
