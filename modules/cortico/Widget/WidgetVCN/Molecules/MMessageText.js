@@ -3,6 +3,7 @@ import classNames from "classnames";
 import DOMPurify from "dompurify";
 import { createPortal } from "preact/compat";
 import { useState } from "preact/hooks";
+import { formProviderEncounterMessage } from "../../../../Utils/Utils";
 import MConfirmationModal from "./MConfirmationModal";
 
 const formatURL = (string) => {
@@ -21,7 +22,23 @@ const MMessageText = ({ isUser,body,sender,dateCreated,isEncounterPage }) => {
 
 
     const uploadToChartNotes = () => {
-        setIsModalOpen(false);
+        try {
+            const encounterMessage = formProviderEncounterMessage(sender,body);
+
+            console.log(encounterMessage);
+            setIsModalOpen(false);
+        } catch (error) {
+            dispatch({
+                type: "notifications/add",
+                payload: {
+                    type: "error",
+                    message: error.message || error.toString(),
+                    title: "Failed To Copy To Encounter",
+                    id: nanoid(),
+                },
+            });
+            console.error(error);
+        }
     }
 
     return (
