@@ -26,7 +26,7 @@ const MMessageText = ({ isUser,body,sender,dateCreated,isEncounterPage }) => {
 
     return (
         <>
-            <div className={ classNames("tw-max-w-[60%] tw-flex tw-items-center tw-gap-2",
+            <div className={ classNames("tw-max-w-[60%] tw-min-w-[150px] tw-flex tw-items-center tw-gap-2",
                 isUser && "tw-flex-row-reverse")
             }>
                 <div className={ classNames("tw-rounded-2xl tw-p-4 tw-mb-2 tw-mt-3 tw-max-w-[80%]",
