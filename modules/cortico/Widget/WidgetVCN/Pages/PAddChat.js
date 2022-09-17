@@ -13,15 +13,13 @@ const PAddChat = () => {
 
     return (
         <div className="tw-flex tw-h-full">
-            <div className="fixed z-20 tw-bg-gray-50 tw-shadow tw-h-full tw-block tw-w-[550px]">
+            <div className="fixed z-20 tw-bg-gray-50 tw-shadow tw-h-full tw-block tw-w-[400px]">
                 <CPatientCard
                     className="tw-mt-7 tw-pb-6 tw-px-5 tw-h-min tw-border-b tw-border-secondary-100"
                 />
                 <CUsersList />
             </div>
-            <div className="tw-opacity-10">
-                <CMessageList />
-            </div>
+            <div className="tw-opacity-10 tw-w-[700px]"></div>
         </div>
     )
 }

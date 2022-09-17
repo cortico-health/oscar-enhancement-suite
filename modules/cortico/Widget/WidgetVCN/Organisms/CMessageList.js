@@ -149,7 +149,7 @@ const CMessageList = ({ isEncounterPage }) => {
 
     if (!conversationStore.conversations.selected) {
         return (
-            <div className="tw-w-[1000px] tw-h-full tw-relative">
+            <div className="tw-w-[700px] tw-h-full tw-relative">
                 <div className="tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-2 tw-w-64 tw-h-full tw-absolute tw-left-1/2 -tw-translate-x-1/2">
                     <ASvg src={NoConversationLogo} />
                     <h4 className="text-secondary-300 text-2xl">Choose Conversation</h4>
@@ -159,7 +159,7 @@ const CMessageList = ({ isEncounterPage }) => {
     }
 
     return (
-        <div className="tw-relative tw-h-full tw-flex tw-flex-col tw-justify-between tw-overflow-hidden tw-w-[1000px]">
+        <div className="tw-relative tw-h-full tw-flex tw-flex-col tw-justify-between tw-overflow-hidden tw-w-[700px]">
             <MChatTools
                 fileStats={fileStats}
                 patient={patientStore.patients.selected}
