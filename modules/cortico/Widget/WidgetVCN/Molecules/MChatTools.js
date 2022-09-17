@@ -13,7 +13,7 @@ const MChatTools = ({ fileStats, conversation, patient, loading, ...props }) => 
   return (
     <div {...props} className='tw-flex tw-justify-between tw-items-center tw-mt-10 tw-mb-2 tw-mx-5 tw-pb-10 tw-border-b tw-border-secondary-100'>
       <div className='tw-flex tw-gap-x-2.5 tw-items-center'>
-        <div className='tw-w-fit'>
+        <div className='tw-max-w-[200px]'>
           <h1 className='tw-text-secondary-500 tw-font-bold tw-text-title3'>
             {multipleObjectDataFormatting(getOtherMembersName(conversation?.members))}
           </h1>
