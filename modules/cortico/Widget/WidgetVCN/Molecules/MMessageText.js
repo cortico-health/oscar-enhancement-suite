@@ -32,7 +32,7 @@ const MMessageText = ({ isUser,body,sender,dateCreated,isEncounterPage }) => {
                 <div className={ classNames("tw-rounded-2xl tw-p-4 tw-mb-2 tw-mt-3 tw-max-w-[80%]",
                     isUser ? "tw-bg-secondary-200" : "tw-bg-white")
                 }>
-                    <p className="tw-text-secondary-500 tw-text-message1" dangerouslySetInnerHTML={ message() } />
+                    <p className="tw-text-secondary-500 tw-text-message1 tw-break-words" dangerouslySetInnerHTML={ message() } />
                 </div>
                 { isEncounterPage && <div className="tw-p-2 hover:tw-bg-blue-500/60 hover:tw-rounded-full tw-w-10 tw-h-10">
                     <PencilIcon
