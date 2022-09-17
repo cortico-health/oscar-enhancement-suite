@@ -427,7 +427,7 @@ export function formProviderEncounterMessage(sender,message) {
   const formattedDate = dayjs().format("DD-MM-YYYY, HH:mm:ss");
   const suffix = `\n-------------------------------------------\n`;
 
-  return `[${formattedDate} .: ${sender} sent a message]\n${message}\n\n${suffix}`
+  return `\n\n[${formattedDate} .: ${sender} sent a message]\n${message}\n${suffix}`
 }
 
 export const getFileInfo = (contentDisposition) => {
