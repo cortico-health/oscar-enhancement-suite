@@ -7,7 +7,7 @@ const useUtils = () => {
         if (!members) return [];
 
         return members.filter((member) => {
-            return member.full_name !== userStore.user?.profile.first_name + " " + userStore.user?.profile.last_name;
+            return member.id !== userStore.user.id;
         })
     }
 
