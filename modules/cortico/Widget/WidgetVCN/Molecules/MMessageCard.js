@@ -14,7 +14,7 @@ const formatDate = (date) => {
     return (new Date(date)).toLocaleTimeString('en-us',{ hour: 'numeric',minute: '2-digit' });
 }
 
-const MMessageCard = ({ messageDetails, readHistory }) => {
+const MMessageCard = ({ messageDetails,readHistory,isEncounterPage }) => {
     const { userStore } = useStore();
     const { files, author, body, created_date, from_user } = messageDetails;
 
@@ -48,7 +48,13 @@ const MMessageCard = ({ messageDetails, readHistory }) => {
                                 </p>
                             </div>
                             {
-                                body && <MMessageText isUser={ isUser } body={ body } sender={ from_user.full_name } dateCreated={ dateCreated } />
+                                body && <MMessageText
+                                    isUser={ isUser }
+                                    body={ body }
+                                    sender={ from_user.full_name }
+                                    dateCreated={ dateCreated }
+                                    isEncounterPage={ isEncounterPage }
+                                />
 
                             }
                             {
@@ -90,8 +96,13 @@ const MMessageCard = ({ messageDetails, readHistory }) => {
                                 <MProfilePicture avatar={author?.avatar} className="tw-relative tw-w-11 tw-h-11" />
                                 <div className="tw-flex tw-flex-col tw-gap-2 tw-w-full">
                                     {
-                                        body && <MMessageText isUser={ isUser } body={ body } sender={ from_user.full_name } dateCreated={ dateCreated } />
-
+                                        body && <MMessageText
+                                            isUser={ isUser }
+                                            body={ body }
+                                            sender={ from_user.full_name }
+                                            dateCreated={ dateCreated }
+                                            isEncounterPage={ isEncounterPage }
+                                        />
                                     }
                                     {
                                         files.map(file => {

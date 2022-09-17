@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import _ from "lodash";
 
 
-const CMessageList = () => {
+const CMessageList = ({ isEncounterPage }) => {
     const dispatch = useDispatch();
     const { attachment } = useSelector((state) => state.providerMessaging);
     const { conversationStore, patientStore } = useStore();
@@ -176,6 +176,7 @@ const CMessageList = () => {
                                     key={`message-${message.id}`}
                                     messageDetails={message}
                                     readHistory={readHistory.filter((m) => m.chat_message_id === message.id)}
+                                    isEncounterPage={ isEncounterPage }
                                 />);
                         })}
                         <div ref={messagesEndRef} />

@@ -9,7 +9,7 @@ const formatURL = (string) => {
     return string.replace(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g,(url) => '<a class="text-primary-500" href="' + url + '">' + url + '</a>')
 }
 
-const MMessageText = ({ isUser,body,sender,dateCreated }) => {
+const MMessageText = ({ isUser,body,sender,dateCreated,isEncounterPage }) => {
     const [isModalOpen,setIsModalOpen] = useState(false);
     const [isLoading,setIsLoading] = useState(false);
 
@@ -21,7 +21,7 @@ const MMessageText = ({ isUser,body,sender,dateCreated }) => {
 
 
     const uploadToChartNotes = () => {
-
+        setIsModalOpen(false);
     }
 
     return (
@@ -34,12 +34,12 @@ const MMessageText = ({ isUser,body,sender,dateCreated }) => {
                 }>
                     <p className="tw-text-secondary-500 tw-text-message1" dangerouslySetInnerHTML={ message() } />
                 </div>
-                <div className="tw-p-2 hover:tw-bg-blue-500/60 hover:tw-rounded-full tw-w-10 tw-h-10">
+                { isEncounterPage && <div className="tw-p-2 hover:tw-bg-blue-500/60 hover:tw-rounded-full tw-w-10 tw-h-10">
                     <PencilIcon
                         className="tw-cursor-pointer"
                         onClick={ () => setIsModalOpen(true) }
                     />
-                </div>
+                </div> }
             </div>
 
             { isModalOpen && createPortal(
