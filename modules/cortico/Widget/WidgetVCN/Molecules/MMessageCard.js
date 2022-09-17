@@ -1,26 +1,25 @@
 import DOMPurify from "dompurify";
 import { useRef } from "preact/hooks";
+import { PencilIcon } from "@heroicons/react/outline";
 import { useStore } from "../../store/mobx";
 import ASvg from "../Atoms/ASvg";
 import MMessageFile from "./MMessageFile";
 
 import VerifiedLogo from "../../../../../resources/icons/verified.svg"
 import MProfilePicture from "./MProfilePicture";
+import MMessageText from "./MMessageText";
 
-const formatURL = (string) => {
-    return string.replace(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g, (url) => '<a class="text-primary-500" href="' + url + '">' + url + '</a>')
+
+const formatDate = (date) => {
+    return (new Date(date)).toLocaleTimeString('en-us',{ hour: 'numeric',minute: '2-digit' });
 }
 
-const MMessageCard = ({ messageDetails, readHistory }) => {
+const MMessageCard = ({ messageDetails,readHistory,isEncounterPage }) => {
+    const { userStore } = useStore();
     const { files, author, body, created_date, from_user } = messageDetails;
 
-    const message = () => ({
-        __html: DOMPurify.sanitize(formatURL(body))
-    });
-
-    const { userStore } = useStore();
-
-    const textRef = useRef(null);
+    const isUser = from_user.id === userStore.user.id;
+    const dateCreated = formatDate(created_date);
 
     const getReaderNames = (readHistory) => {
         return readHistory.map((message) => message.user_name).join(", ");
@@ -29,11 +28,11 @@ const MMessageCard = ({ messageDetails, readHistory }) => {
     return (
         <div>
             {
-                from_user.id === userStore.user.id
+                isUser
                     ?
                     <div className="tw-mt-10">
-                        <p className='tw-text-secondary-200 tw-text-title6 tw-text-center'>{(new Date(created_date)).toLocaleTimeString('en-us',
-                            { hour: 'numeric', minute: '2-digit' })}
+                        <p className='tw-text-secondary-200 tw-text-title6 tw-text-center'>
+                            { dateCreated }
                         </p>
                         <div className='tw-ml-auto tw-mt-3 tw-mb-1 tw-rounded-2xl tw-flex tw-flex-col tw-items-end'>
                             <div>
@@ -49,10 +48,14 @@ const MMessageCard = ({ messageDetails, readHistory }) => {
                                 </p>
                             </div>
                             {
-                                body &&
-                                <div className='tw-flex tw-items-center tw-rounded-2xl tw-p-4 tw-mb-2 tw-mt-3 tw-bg-secondary-200 tw-gap-x-5 tw-max-w-[45%]'>
-                                    <p ref={textRef} dangerouslySetInnerHTML={message()} className='tw-text-secondary-500 tw-text-message1' />
-                                </div>
+                                body && <MMessageText
+                                    isUser={ isUser }
+                                    body={ body }
+                                    sender={ from_user.full_name }
+                                    dateCreated={ dateCreated }
+                                    isEncounterPage={ isEncounterPage }
+                                />
+
                             }
                             {
                                 files.map(file => {
@@ -74,8 +77,9 @@ const MMessageCard = ({ messageDetails, readHistory }) => {
                     </div>
                     :
                     <div className="tw-mt-10">
-                        <p className='tw-text-secondary-200 tw-text-title6 tw-text-center'>{(new Date(created_date)).toLocaleTimeString('en-us',
-                            { hour: 'numeric', minute: '2-digit' })}</p>
+                        <p className='tw-text-secondary-200 tw-text-title6 tw-text-center'>
+                            { dateCreated }
+                        </p>
                         <div className='tw-mt-3 tw-mr-auto'>
                             <div>
                                 <div className="tw-flex tw-items-center tw-gap-5">
@@ -92,10 +96,13 @@ const MMessageCard = ({ messageDetails, readHistory }) => {
                                 <MProfilePicture avatar={author?.avatar} className="tw-relative tw-w-11 tw-h-11" />
                                 <div className="tw-flex tw-flex-col tw-gap-2 tw-w-full">
                                     {
-                                        body &&
-                                        <div className="tw-bg-white tw-rounded-2xl tw-p-4 tw-inline-block tw-w-[45%] tw-max-w-fit">
-                                            <p className='tw-text-secondary-500 tw-text-message1' dangerouslySetInnerHTML={message()} />
-                                        </div>
+                                        body && <MMessageText
+                                            isUser={ isUser }
+                                            body={ body }
+                                            sender={ from_user.full_name }
+                                            dateCreated={ dateCreated }
+                                            isEncounterPage={ isEncounterPage }
+                                        />
                                     }
                                     {
                                         files.map(file => {
