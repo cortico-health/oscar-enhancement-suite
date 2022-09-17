@@ -7,11 +7,11 @@ import DefaultAvatar from "../../../../../resources/icons/avatar.svg";
 const MProfilePicture = ({ avatar = null,className = "" }) => {
     if (!avatar) {
         return (
-            <ASvg className={ classNames("tw-rounded-full tw-w-12 tw-h-12",className) } src={ DefaultAvatar } />
+            <ASvg className={ classNames("tw-rounded-full tw-w-12 tw-h-12 tw-cursor-pointer",className) } src={ DefaultAvatar } />
         )
     }
     return (
-        <img className={ classNames("tw-object-cover tw-rounded-full tw-w-12 tw-h-12",className) } src={ avatar } alt="" />
+        <img className={ classNames("tw-object-cover tw-rounded-full tw-w-12 tw-h-12 tw-cursor-pointer",className) } src={ avatar } alt="" />
     )
 }
 

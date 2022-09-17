@@ -49,7 +49,7 @@ const MConversationTab = ({ conversation, selected, ...props }) => {
                     <div className="tw-ml-4" onClick={ () => setOpenModal(true) }>
                         <div className="tw-w-11 tw-min-w-8 tw-h-11 tw-min-h-8">
                             <MProfilePicture avatar={conversation?.members[conversation?.members.length - 1].avatar}
-                                className="tw-absolute tw-left-2 tw-top-2"
+                                className="tw-absolute tw-left-2 tw-top-2 tw-cursor-pointer"
                             />
                         </div>
 
@@ -76,7 +76,7 @@ const MConversationTab = ({ conversation, selected, ...props }) => {
                         {
                             conversation?.patient
                             &&
-                            <span> ({ conversation.patient.first_name } { conversation.patient.last_name })</span>
+                            <span className="tw-cursor-pointer"> ({ conversation.patient.first_name } { conversation.patient.last_name })</span>
                         }
                     </p>
                     <p
