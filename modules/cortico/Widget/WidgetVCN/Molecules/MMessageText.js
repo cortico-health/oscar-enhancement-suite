@@ -16,7 +16,7 @@ const formatURL = (string) => {
     return string.replace(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g,(url) => '<a class="text-primary-500" href="' + url + '">' + url + '</a>')
 }
 
-const MMessageText = ({ isUser,body,sender,dateCreated,isEncounterPage }) => {
+const MMessageText = ({ isUser,body,sender,isUploadEnabled }) => {
     const dispatch = useDispatch();
     const { clinic_name: clinicName,uid } = useSelector((state) => state.app);
 
@@ -31,8 +31,13 @@ const MMessageText = ({ isUser,body,sender,dateCreated,isEncounterPage }) => {
         __html: DOMPurify.sanitize(formatURL(body))
     });
 
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setIsLoading(false);
+    }
 
     const uploadToChartNotes = async () => {
+        setIsLoading(true);
         try {
             const encounterMessage = formProviderEncounterMessage(sender,body);
             const caseNote = Encounter.getCaseNote();
@@ -40,7 +45,7 @@ const MMessageText = ({ isUser,body,sender,dateCreated,isEncounterPage }) => {
             if (caseNote) {
                 const result = Encounter.addToCaseNote(encounterMessage);
                 if (result === true) caseNote.focus();
-                setIsModalOpen(false);
+                closeModal();
                 return;
             }
 
@@ -53,8 +58,9 @@ const MMessageText = ({ isUser,body,sender,dateCreated,isEncounterPage }) => {
                 }
             });
 
-            const demographicNo = patientStore.patients.selected?.hin;
+            const demographicNo = getDemographicNo();
             if (!demographicNo) {
+                closeModal();
                 throw Error("Could not find demographic number");
             }
             encounterChannel.postMessage({
@@ -69,13 +75,13 @@ const MMessageText = ({ isUser,body,sender,dateCreated,isEncounterPage }) => {
 
             if (encounterTabFound === true) {
                 console.log("Encounter Tab Found");
-                setIsModalOpen(false);
-                return;
+                closeModal();
+                return
             }
 
             console.log("Encounter Tab Not Found");
 
-            const res = Promise.all([
+            const res = await Promise.all([
                 postCaseManagementEntry(demographicNo),
                 getEncounterNotes(demographicNo),
             ]);
@@ -110,7 +116,7 @@ const MMessageText = ({ isUser,body,sender,dateCreated,isEncounterPage }) => {
                 note + encounterMessage
             );
 
-            setIsModalOpen(false);
+            closeModal();
 
             dispatch({
                 type: "notifications/add",
@@ -123,6 +129,7 @@ const MMessageText = ({ isUser,body,sender,dateCreated,isEncounterPage }) => {
             });
 
         } catch (error) {
+            closeModal();
             dispatch({
                 type: "notifications/add",
                 payload: {
@@ -146,15 +153,15 @@ const MMessageText = ({ isUser,body,sender,dateCreated,isEncounterPage }) => {
                 }>
                     <p className="tw-text-secondary-500 tw-text-message1 tw-break-words" dangerouslySetInnerHTML={ message() } />
                 </div>
-                <div className="tw-p-2 hover:tw-bg-blue-500/60 hover:tw-rounded-full tw-w-10 tw-h-10">
+                { isUploadEnabled && <div className="tw-p-2 hover:tw-bg-blue-500/60 hover:tw-rounded-full tw-w-10 tw-h-10">
                     <PencilIcon
                         className="tw-cursor-pointer"
                         onClick={ () => setIsModalOpen(true) }
                     />
-                </div>
+                </div> }
             </div>
 
-            { isModalOpen && createPortal(
+            { (isModalOpen && isUploadEnabled) && createPortal(
                 <MConfirmationModal
                     setIsOpen={ setIsModalOpen }
                     onConfirm={ uploadToChartNotes }
