@@ -145,7 +145,7 @@ const init_cortico = async function () {
     getAccountProviderNo();
 
     CorticoWidget(document.body, corticoWidgetContainer, {
-      disabledFeatures: ["messenger"],
+      disabledFeatures: ["messenger", "uploadToEChart"],
     });
 
     const isMarkham = window.location.href.includes("mmfcc");
