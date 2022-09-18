@@ -14,7 +14,7 @@ const formatDate = (date) => {
     return (new Date(date)).toLocaleTimeString('en-us',{ hour: 'numeric',minute: '2-digit' });
 }
 
-const MMessageCard = ({ messageDetails,readHistory,isEncounterPage }) => {
+const MMessageCard = ({ messageDetails,readHistory,isUploadEnabled }) => {
     const { userStore } = useStore();
     const { files, author, body, created_date, from_user } = messageDetails;
 
@@ -53,7 +53,7 @@ const MMessageCard = ({ messageDetails,readHistory,isEncounterPage }) => {
                                     body={ body }
                                     sender={ from_user.full_name }
                                     dateCreated={ dateCreated }
-                                    isEncounterPage={ isEncounterPage }
+                                    isUploadEnabled={ isUploadEnabled }
                                 />
 
                             }
@@ -101,7 +101,7 @@ const MMessageCard = ({ messageDetails,readHistory,isEncounterPage }) => {
                                             body={ body }
                                             sender={ from_user.full_name }
                                             dateCreated={ dateCreated }
-                                            isEncounterPage={ isEncounterPage }
+                                            isUploadEnabled={ isUploadEnabled }
                                         />
                                     }
                                     {
