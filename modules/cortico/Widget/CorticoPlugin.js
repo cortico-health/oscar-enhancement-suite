@@ -25,6 +25,7 @@ import PatientAdapter from "./adapters/PatientAdapter";
 import PSelect from "./WidgetVCN/Pages/PSelect";
 import PAddChat from "./WidgetVCN/Pages/PAddChat";
 import PIndex from "./WidgetVCN/Pages/PIndex";
+import CLoginDetector from "./WidgetVCN/Organisms/CLoginDetector";
 export default function CorticoPlugin({ onMinimize, ...props }) {
   const dispatch = useDispatch();
   const { refresh, refreshToken, uid } = useSelector((state) => state.app);
@@ -280,17 +281,23 @@ function PluginContentRenderer() {
           <PatientPanel />
         </div>
       ) : activeItem === "Provider Messaging" ? (
-        <div className="tw-font-sans tw-h-[640px] tw-w-[1100px]">
-          <PIndex />
-        </div>
+        <CLoginDetector>
+          <div className="tw-font-sans tw-h-[640px] tw-w-[1100px]">
+            <PIndex />
+          </div>
+        </CLoginDetector>
       ) : activeItem === "VCN Patient" ? (
-        <div className="tw-font-sans tw-h-[640px] tw-w-[1100px]">
-          <PSelect />
-        </div>
+        <CLoginDetector>
+          <div className="tw-font-sans tw-h-[640px] tw-w-[1100px]">
+            <PSelect />
+          </div>
+        </CLoginDetector>
       ) : activeItem === "VCN Add Chat" ? (
-        <div className="tw-font-sans tw-h-[640px] tw-w-[1100px]">
-          <PAddChat />
-        </div>
+        <CLoginDetector>
+          <div className="tw-font-sans tw-h-[640px] tw-w-[1100px]">
+            <PAddChat />
+          </div>
+        </CLoginDetector>
       ) : null}
     </>
   );
