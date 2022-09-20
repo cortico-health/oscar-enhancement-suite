@@ -2,6 +2,7 @@ import { useQuery } from "react-query";
 import { useDispatch } from "react-redux";
 import { getFileInfo } from "../../../Utils/Utils";
 import { nanoid } from "nanoid";
+import { useEffect } from "preact/hooks";
 const url = "PrintPDF.do";
 const id = nanoid();
 
