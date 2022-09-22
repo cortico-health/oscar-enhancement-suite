@@ -3,10 +3,11 @@ import { useDispatch } from "react-redux";
 import { getFileInfo } from "../../../Utils/Utils";
 import { nanoid } from "nanoid";
 import { useEffect } from "preact/hooks";
-const url = "PrintPDF.do";
+const url = window.location.href.replace(/[^\/]+$/, "") + "/PrintPDF.do";
 const id = nanoid();
 
 export default function LabResultsAdapter() {
+  console.log("Got the new changes");
   const urlParams = new URLSearchParams(window.location.search);
   const segmentId = urlParams.get("segmentID");
   const dispatch = useDispatch();
