@@ -5,7 +5,10 @@ import { getFileInfo } from "../../../Utils/Utils";
 import { nanoid } from "nanoid";
 
 function url(strings, docNo) {
-  return `ManageDocument.do?method=display&doc_no=${docNo}`;
+  return (
+    window.location.href.replace(/[^\/]+$/, "") +
+    `ManageDocument.do?method=display&doc_no=${docNo}`
+  );
 }
 
 const urlParams = new URLSearchParams(window.location.search);

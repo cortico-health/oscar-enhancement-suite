@@ -30,9 +30,12 @@
         "https://*/*/eform/efmshowform_data.jsp*",
         "https://*/*/dms/documentReport.jsp*",
         "https://*/*/dms/showDocument.jsp*",
-        "*://*/*/oscarReport/reportByTemplate/GenerateReportAction.do"
+        "*://*/*/oscarReport/reportByTemplate/GenerateReportAction.do",
+        "*://*/*/lab/*"
       ],
-      "js": ["dist/cortico-min.js"]
+      "js": [
+        "dist/cortico-min.js"
+      ]
     }
   ],
   "permissions": [
