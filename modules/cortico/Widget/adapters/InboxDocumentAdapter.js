@@ -31,7 +31,6 @@ export default function InboxDocument({ onSuccess, onError, ...props }) {
         if (!response.ok) throw Error("Network response was not ok");
 
         const contentDisposition = response.headers.map["content-disposition"];
-        const { fileName, extension } = getFileInfo(contentDisposition);
         const { fileName: _fileName, extension: _extension } =
           getFileInfo(contentDisposition);
         fileName = _fileName;
