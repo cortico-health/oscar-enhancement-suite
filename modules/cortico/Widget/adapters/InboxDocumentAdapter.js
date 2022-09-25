@@ -16,78 +16,41 @@ const segmentId = urlParams.get("segmentID");
 const id = nanoid();
 
 export default function InboxDocument({ onSuccess, onError, ...props }) {
-  const dispatch = useDispatch();
   if (!segmentId) {
     return <></>;
   }
 
+  const dispatch = useDispatch();
   useEffect(() => {
-    return () => {
-      dispatch({
-        type: "messenger/deleteAttachment",
-        payload: {
-          id,
-        },
-      });
-    };
-  }, []);
-
-  const result = useQuery(
-    `inboxDocument${segmentId}`,
-    () => {
-      return fetch(url`${segmentId}`, {
-        method: "GET",
-      }).then((response) => {
+    let fileName,
+      extension = null;
+    fetch(url`${segmentId}`, {
+      method: "GET",
+    })
+      .then((response) => {
         if (!response.ok) throw Error("Network response was not ok");
-        return response;
-      });
-    },
-    {
-      staleTime: Infinity,
-      cacheTime: Infinity,
-      retry: false,
-    }
-  );
 
-  if (result.data) {
-    const contentDisposition = result.data.headers.get("Content-Disposition");
-    const { fileName, extension } = getFileInfo(contentDisposition);
-
-    const { data: blob } = useQuery(
-      `inboxDocument${segmentId}Blob`,
-      () => {
-        return result.data.blob();
-      },
-      {
-        staleTime: Infinity,
-        cacheTime: Infinity,
-        retry: false,
-      }
-    );
-
-    if (blob) {
-      const { data: dataUrl } = useQuery(
-        `inboxDocument${segmentId}DataUrl`,
-        () => {
-          return new Promise((resolve, reject) => {
-            let reader = new FileReader();
-            reader.addEventListener("load", (evt) => {
-              resolve(reader.result);
-            });
-            reader.addEventListener("error", (evt) => {
-              reject(evt);
-            });
-            reader.readAsDataURL(blob);
+        const contentDisposition = response.headers.map["content-disposition"];
+        const { fileName, extension } = getFileInfo(contentDisposition);
+        const { fileName: _fileName, extension: _extension } =
+          getFileInfo(contentDisposition);
+        fileName = _fileName;
+        extension = _extension;
+        return response.blob();
+      })
+      .then((blob) => {
+        return new Promise((resolve, reject) => {
+          let reader = new FileReader();
+          reader.addEventListener("load", (evt) => {
+            resolve(reader.result);
           });
-        },
-        {
-          staleTime: Infinity,
-          cacheTime: Infinity,
-          retry: false,
-        }
-      );
-
-      if (dataUrl) {
+          reader.addEventListener("error", (evt) => {
+            reject(evt);
+          });
+          reader.readAsDataURL(blob);
+        });
+      })
+      .then((dataUrl) => {
         dispatch({
           type: "messenger/addAttachment",
           payload: {
@@ -98,7 +61,18 @@ export default function InboxDocument({ onSuccess, onError, ...props }) {
             extension,
           },
         });
-      }
-    }
-  }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    return () => {
+      dispatch({
+        type: "messenger/deleteAttachment",
+        payload: {
+          id,
+        },
+      });
+    };
+  }, []);
 }
