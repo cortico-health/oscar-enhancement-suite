@@ -41,12 +41,13 @@ class MessengerError extends Error {
 
 function MessengerWindow({ encounter: encounterOption, ...props }) {
   const dispatch = useDispatch();
-  const [demographicNo, setDemographicNo] = useState(null);
   const [loading, setLoading] = useState();
   const { to, phone, subject, body, encounter, attachments, eform, scheme } =
     useSelector((state) => state.messenger);
 
   const { info: patientInfo } = useSelector((state) => state.patient);
+  const demographicNo = patientInfo?.demographicNo;
+  console.log("Patient Info", patientInfo);
   const [openSavedReplies, setOpenSavedReplies] = useState(false);
   const [filePreview, setFilePreview] = useState([]);
   const [maxLength, setMaxLength] = useState(2000);
@@ -72,7 +73,6 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
           }
         });
 
-        const demographicNo = getDemographicNo();
         if (!demographicNo) {
           throw Error("Could not find demographic number");
         }
