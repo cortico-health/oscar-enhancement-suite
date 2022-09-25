@@ -53,7 +53,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
   const [maxLength, setMaxLength] = useState(2000);
   const { clinic_name: clinicName, uid } = useSelector((state) => state.app);
 
-  const handleEncounter = async (scheme, subject, body) => {
+  const handleEncounter = async (scheme, subject, body, demographicNo) => {
     try {
       const encounterMessage = formEncounterMessage(scheme, subject, body);
       const caseNote = Encounter.getCaseNote();
@@ -259,7 +259,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         }
 
         if (encounter === true) {
-          await handleEncounter(scheme, subject, body);
+          await handleEncounter(scheme, subject, body, demographicNo);
         }
 
         dispatch({
