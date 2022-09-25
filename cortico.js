@@ -2054,8 +2054,6 @@ function getDemographicPageResponse(demographic) {
       }
     }
   }
-  console.log("Got demo?", demographicNo);
-
   if (!demographicNo) {
     const resAnchor = document.querySelector(".NormalRes a");
 
