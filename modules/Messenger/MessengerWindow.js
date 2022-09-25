@@ -47,7 +47,6 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
 
   const { info: patientInfo } = useSelector((state) => state.patient);
   const demographicNo = patientInfo?.demographicNo;
-  console.log("Patient Info", patientInfo);
   const [openSavedReplies, setOpenSavedReplies] = useState(false);
   const [filePreview, setFilePreview] = useState([]);
   const [maxLength, setMaxLength] = useState(2000);
