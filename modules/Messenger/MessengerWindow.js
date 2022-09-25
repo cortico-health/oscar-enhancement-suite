@@ -6,7 +6,6 @@ import Input from "../../modules/cortico/Widget/base/Input";
 import Textarea from "../cortico/Widget/base/Textarea";
 import Checkbox from "../cortico/Widget/base/Checkbox";
 import Button from "../core/Button";
-import { setFormInputValueAttributes } from "../Utils/Utils";
 import { useDispatch, useSelector } from "react-redux";
 import {
   sendEmail,
@@ -19,7 +18,6 @@ import {
   loadExtensionStorageValue,
   formEncounterMessage,
 } from "../Utils/Utils";
-import { getPatientInfo } from "../../cortico";
 import { nanoid } from "nanoid";
 import Dialog from "../cortico/Widget/features/Dialog/Dialog";
 import SavedReplies from "./SavedReplies";
@@ -43,27 +41,18 @@ class MessengerError extends Error {
 
 function MessengerWindow({ encounter: encounterOption, ...props }) {
   const dispatch = useDispatch();
-  const [demographicNo, setDemographicNo] = useState(null);
   const [loading, setLoading] = useState();
-  const {
-    to,
-    phone,
-    subject,
-    body,
-    encounter,
-    attachments,
-    eform,
-    document,
-    inboxDocument,
-    scheme,
-  } = useSelector((state) => state.messenger);
+  const { to, phone, subject, body, encounter, attachments, eform, scheme } =
+    useSelector((state) => state.messenger);
+
+  const { info: patientInfo } = useSelector((state) => state.patient);
+  const demographicNo = patientInfo?.demographicNo;
   const [openSavedReplies, setOpenSavedReplies] = useState(false);
   const [filePreview, setFilePreview] = useState([]);
-  const [patientInfo, setPatientInfo] = useState(null);
   const [maxLength, setMaxLength] = useState(2000);
   const { clinic_name: clinicName, uid } = useSelector((state) => state.app);
 
-  const handleEncounter = async (scheme, subject, body) => {
+  const handleEncounter = async (scheme, subject, body, demographicNo) => {
     try {
       const encounterMessage = formEncounterMessage(scheme, subject, body);
       const caseNote = Encounter.getCaseNote();
@@ -83,7 +72,6 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
           }
         });
 
-        const demographicNo = getDemographicNo();
         if (!demographicNo) {
           throw Error("Could not find demographic number");
         }
@@ -270,7 +258,7 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
         }
 
         if (encounter === true) {
-          await handleEncounter(scheme, subject, body);
+          await handleEncounter(scheme, subject, body, demographicNo);
         }
 
         dispatch({
@@ -350,18 +338,6 @@ function MessengerWindow({ encounter: encounterOption, ...props }) {
       },
     });
   };
-
-  useEffect(() => {
-    const demographicNo = getDemographicNo();
-    setDemographicNo(demographicNo);
-    if (demographicNo && !patientInfo) {
-      getPatientInfo().then((patientInfo) => {
-        if (patientInfo) {
-          setPatientInfo(patientInfo);
-        }
-      });
-    }
-  }, []);
 
   useEffect(() => {
     if (patientInfo) {

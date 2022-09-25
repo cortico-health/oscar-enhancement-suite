@@ -2009,8 +2009,32 @@ function getPatientDemographicNo(demographic) {
     // TODO: always try this when getting demo #.
     document.querySelectorAll("form").forEach(function (f) {
       console.log(f);
-      demographicNo = demographicNo || getDemographicNo(f.action).trim();
+      demographicNo =
+        demographicNo ||
+        (getDemographicNo(f.action) && getDemographicNo(f.action).trim());
     });
+  }
+
+  if (!demographicNo) {
+    const billButton = document.querySelector('input[value="Bill"]');
+    if (billButton) {
+      const demographicNoArray =
+        billButton.attributes.onclick.textContent.match(/demographic_no=\d+/g);
+      if (demographicNoArray && demographicNoArray.length > 0) {
+        demographicNo = demographicNoArray[0].split("=")[1];
+      }
+    }
+  }
+  if (!demographicNo) {
+    const resAnchor = document.querySelector(".NormalRes a");
+
+    if (resAnchor) {
+      const demographicNoArray =
+        resAnchor.attributes.href.textContent.match(/demo=\d+/g);
+      if (demographicNoArray && demographicNoArray.length > 0) {
+        demographicNo = demographicNoArray[0].split("=")[1];
+      }
+    }
   }
 
   return demographicNo;
@@ -2038,8 +2062,29 @@ function getDemographicPageResponse(demographic) {
   if (!demographicNo) {
     const demoInput = document.querySelector('input[name="demog"]');
     if (demoInput) {
-      console.log("demoInput.value", demoInput.value);
       demographicNo = demoInput.value;
+    }
+  }
+
+  if (!demographicNo) {
+    const billButton = document.querySelector('input[value="Bill"]');
+    if (billButton) {
+      const demographicNoArray =
+        billButton.attributes.onclick.textContent.match(/demographic_no=\d+/g);
+      if (demographicNoArray && demographicNoArray.length > 0) {
+        demographicNo = demographicNoArray[0].split("=")[1];
+      }
+    }
+  }
+  if (!demographicNo) {
+    const resAnchor = document.querySelector(".NormalRes a");
+
+    if (resAnchor) {
+      const demographicNoArray =
+        resAnchor.attributes.href.textContent.match(/demo=\d+/g);
+      if (demographicNoArray && demographicNoArray.length > 0) {
+        demographicNo = demographicNoArray[0].split("=")[1];
+      }
     }
   }
 
