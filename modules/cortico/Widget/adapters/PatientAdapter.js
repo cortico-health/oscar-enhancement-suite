@@ -8,20 +8,25 @@ export function PatientAdapter() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getPatientInfo().then((patient) => {
-      dispatch({
-        type: "app/setPatientInfo",
-        payload: patient,
-      });
+    getPatientInfo()
+      .then((patient) => {
+        console.log("Patient", patient);
+        dispatch({
+          type: "app/setPatientInfo",
+          payload: patient,
+        });
 
-      dispatch({
-        type: "sidebar/setVisible",
-        payload: {
-          name: "Patient",
-          visible: true,
-        },
+        dispatch({
+          type: "sidebar/setVisible",
+          payload: {
+            name: "Patient",
+            visible: true,
+          },
+        });
+      })
+      .catch((error) => {
+        console.error(error);
       });
-    });
   }, []);
 
   return <></>;

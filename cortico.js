@@ -1946,9 +1946,12 @@ async function init_diagnostic_viewer_button() {
 
 export async function getPatientInfo(demographicNo) {
   const result = await getDemographicPageResponse(demographicNo);
-
   if (!result) {
     return {};
+  }
+
+  if (!result.ok) {
+    throw Error(result)
   }
   const text = await result.text();
 
