@@ -61,7 +61,7 @@ const CSelectList = ({ ...props }) => {
             <div className='tw-pl-8 tw-pt-11 tw-w-full tw-bg-white' { ...props }>
                 <h2 className='tw-text-secondary-500 tw-font-bold tw-text-title3 tw-mb-0.5'>Recent patients</h2>
                 <p className='tw-text-secondary-300 tw-text-title4'>accusamus magnam id</p>
-                <div className='tw-p-8 tw-overflow-y-scroll tw-overflow-x-hidden tw-relative tw-w-full'>
+                <div className='tw-px-8 tw-pt-8 tw-pb-4 tw-overflow-y-scroll tw-overflow-x-hidden tw-relative tw-w-full'>
                     <MSearch onInput={ (e) => searchHandler(e.target.value) } />
                     <div className='tw-flex tw-gap-x-5'>
                         <ARadio onChange={ handleChange } checked name="filter" value="firstName" />
@@ -69,7 +69,7 @@ const CSelectList = ({ ...props }) => {
                         <ARadio onChange={ handleChange } name="filter" value="healthCardNumber" />
                         <ARadio onChange={ handleChange } name="filter" value="email" />
                     </div>
-                    <div className="tw-overflow-x-auto">
+                    <div className="tw-overflow-auto tw-h-72">
                         <table className='tw-w-full tw-border-separate' style={ { borderSpacing: '0' } }>
                             {
                                 showPatients?.map(patient => {
@@ -80,10 +80,12 @@ const CSelectList = ({ ...props }) => {
                         </table>
                     </div>
                 </div>
-                <AButton onClick={ handlePatientSelect }
-                    className='tw-w-44 tw-right-10 tw-bottom-10 tw-absolute' variant='button-primary-lg'>
-                    Get Started
-                </AButton>
+                <div className="tw-w-full tw-text-right tw-px-8">
+                    <AButton onClick={ handlePatientSelect }
+                        className='tw-w-44' variant='button-primary-lg'>
+                        Get Started
+                    </AButton>
+                </div>
             </div>
             :
             <div className="tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-2 tw-w-full tw-h-full">
