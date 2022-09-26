@@ -68,7 +68,9 @@ export default function LabResultsAdapter() {
       .then((response) => {
         if (!response.ok) throw Error("Network response was not ok");
         console.log("Response came through", response);
-        const contentDisposition = response.headers.map["content-disposition"];
+        const contentDisposition =
+          response.headers.get("Content-Disposition") ||
+          response.headers.map["content-disposition"];
         const { fileName: _fileName, extension: _extension } =
           getFileInfo(contentDisposition);
         fileName = _fileName;
