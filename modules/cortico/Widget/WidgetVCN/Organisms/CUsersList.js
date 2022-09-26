@@ -98,7 +98,7 @@ const CUsersList = () => {
     }
 
     return (
-        <div className="tw-mx-2.5 tw-h-full">
+        <div className="tw-mx-2 tw-h-full">
             {confirm ?
                 <div className="tw-absolute tw-z-50 tw-bg-white/40 tw-w-full tw-h-full tw-top-0 tw-right-0">
                     <div className="tw-bg-white tw-max-w-max tw-w-72 tw-px-9 tw-pt-16 tw-pb-8 tw-absolute tw-top-1/2 -tw-translate-y-1/2 tw-left-4">
@@ -125,18 +125,20 @@ const CUsersList = () => {
             <MSearch
                 onInput={searchHandler}
             />
-            {
-                showUsers.map((user, index) => {
-                    return (
-                        <MUserTab
-                            key={user.id}
-                            onChange={handleOnChange}
-                            user={user}
-                            index={index}
-                        />
-                    );
-                })
-            }
+            <div className="tw-overflow-y-auto tw-h-72">
+                {
+                    showUsers.map((user,index) => {
+                        return (
+                            <MUserTab
+                                key={ user.id }
+                                onChange={ handleOnChange }
+                                user={ user }
+                                index={ index }
+                            />
+                        );
+                    })
+                }
+            </div>
         </div>
     );
 };
