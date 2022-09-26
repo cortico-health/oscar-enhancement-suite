@@ -22,9 +22,9 @@ import { markFileAsUploaded, markFileAsDismissed } from "../../../../Api/Vcn/Con
 
 const ShowSVGFile = ({ url, icon, name, isUser }) => {
     return (
-        <div className={`tw-flex tw-items-center tw-gap-2 tw-rounded-2xl tw-p-2 ${isUser ? "tw-bg-secondary-200" : "tw-bg-slate-200"}`}>
+        <div className={ `tw-flex tw-items-center tw-gap-2 tw-rounded-2xl tw-p-3 ${isUser ? "tw-bg-secondary-200" : "tw-bg-slate-200"}` }>
             <ASvg src={icon} className="tw-h-12 tw-w-12" />
-            <a href={url} target="_blank" className='tw-text-secondary-500 tw-text-sm'>{name || "File"}</a>
+            <a href={ url } target="_blank" className='tw-text-secondary-500 tw-text-sm tw-max-w-[200px] tw-break-words'>{ name || "File" }</a>
         </div>
     )
 }
