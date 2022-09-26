@@ -1,4 +1,5 @@
-import { PencilIcon, UploadIcon, XCircleIcon } from "@heroicons/react/outline";
+
+import { UploadIcon,XCircleIcon } from "@heroicons/react/outline";
 import classNames from "classnames";
 
 const MConfirmationModal = ({ setIsOpen, onConfirm, type, isLoading }) => {
@@ -13,11 +14,16 @@ const MConfirmationModal = ({ setIsOpen, onConfirm, type, isLoading }) => {
                     <div className="tw-p-6 tw-text-center">
                         {type === "upload" && <UploadIcon className="tw-mx-auto tw-mb-4 tw-w-14 tw-h-14 tw-text-gray-400" />}
                         {type === "dismiss" && <XCircleIcon className="tw-mx-auto tw-mb-4 tw-w-14 tw-h-14 tw-text-gray-400" />}
-                        {type === "encounter" && <PencilIcon className="tw-mx-auto tw-mb-4 tw-w-14 tw-h-14 tw-text-gray-400" />}
+                        {type === "encounter" && (
+                            /* TODO Dwight: For demo purposes since I can't change the color yet, I'll just delete it after and improve it */
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="tw-mx-auto tw-mb-4 tw-w-14 tw-h-14 tw-stroke-[#9ca3af]">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 4.5h14.25M3 9h9.75M3 13.5h5.25m5.25-.75L17.25 9m0 0L21 12.75M17.25 9v12" />
+                            </svg>
+                        )}
                         <h3 className="tw-mb-5 tw-text-lg tw-font-normal tw-text-gray-500">
                             {type === "upload" && "Are you sure you want to upload this to the patient's EMR?"}
                             {type === "dismiss" && "Are you sure you want to dismiss this file?"}
-                            {type === "encounter" && "Are you sure you want to upload the chat to EChart?"}
+                            {type === "encounter" && "Save message to encounter notes?"}
                         </h3>
                         <button onClick={onConfirm} type="button"
                             className={classNames("tw-text-white focus:tw-ring-4 focus:tw-outline-none tw-font-medium tw-rounded-lg tw-text-sm tw-inline-flex tw-items-center tw-px-5 tw-py-2.5 tw-text-center tw-mr-2",
