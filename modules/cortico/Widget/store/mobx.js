@@ -30,29 +30,31 @@ export const StateProvider = ({ children }) => {
   const userStore = useLocalObservable(() => ({
     users: [],
     user: null,
-    fetchUsers() {
-      getUsersData().then((res) => { return res.json() }).then(
-        (data) => {
-          this.users = data.results;
-        }
-      ).catch(
-        (error) => console.error(error)
-      )
+    *fetchUsers() {
+      try {
+        const res = yield getUsersData();
+        const data = yield res.json();
+
+        this.users = data.results;
+      } catch (error) {
+        console.error(error);
+      }
     },
-    fetchUser() {
-      getUserData().then((res) => { return res.json() }).then(
-        (data) => {
-          if (!data?.profile) {
-            this.user = {};
-            this.accessToken = null;
-            localStorage.removeItem('vcnAccessToken');
-          } else {
-            this.user = data;
-          }
+    *fetchUser() {
+      try {
+        const res = yield getUserData();
+        const data = yield res.json();
+
+        if (!data?.profile) {
+          this.user = {};
+          this.accessToken = null;
+          localStorage.removeItem('vcnAccessToken');
+        } else {
+          this.user = data;
         }
-      ).catch(
-        (error) => console.error(error)
-      )
+      } catch (error) {
+        console.error(error);
+      }
     }
   }))
 
@@ -61,14 +63,16 @@ export const StateProvider = ({ children }) => {
       all: [],
       selected: null,
     },
-    fetchPatients() {
-      getPatients().then((res) => { return res.json() }).then(
-        (data) => {
-          this.patients.all = data.results;
-        }
-      ).catch(
-        (error) => console.log(error)
-      )
+    *fetchPatients() {
+      try {
+        const res = yield getPatients();
+        const data = yield res.json();
+
+        this.patients.all = data.results;
+
+      } catch (error) {
+        console.error(error)
+      }
     },
     selectPatient(patient) {
       if (!patient) {
@@ -84,21 +88,22 @@ export const StateProvider = ({ children }) => {
       all: null,
       selected: null,
     },
-    fetchConversations(hin = "") {
-      getConversationsList(hin).then((res) => { return res.json() }).then(
-        (data) => {
-          if (hin) {
-            this.conversations[hin] = data.results;
-          } else {
-            this.conversations.all = data.results;
-          }
+    *fetchConversations(hin = "") {
+      try {
+        const res = yield getConversationsList(hin);
+
+        const data = yield res.json();
+
+        if (hin) {
+          this.conversations[hin] = data.results;
+        } else {
+          this.conversations.all = data.results;
         }
-      ).catch(
-        (error) => {
-          console.log(error)
-          this.fetchConversations(hin);
-        }
-      )
+
+      } catch (error) {
+        console.log(error)
+        this.fetchConversations(hin);
+      }
     },
     selectConversation(conversation) {
       if (!conversation) {
@@ -111,7 +116,6 @@ export const StateProvider = ({ children }) => {
       if (conversation.patient) patientStore.selectPatient(conversation.patient);
     },
     updateOrInsertConversation(updatedConversation) {
-
       // Update All Conversations
       if (this.conversations.all) {
         let existingConversation = this.conversations.all.find((conversation) => {
@@ -168,6 +172,8 @@ export const StateProvider = ({ children }) => {
 
           setSocketUrl(getWsUpdateUrl(accessToken));
         }
+      }).catch(error => {
+        console.error(error);
       });
     }
   }, [])
