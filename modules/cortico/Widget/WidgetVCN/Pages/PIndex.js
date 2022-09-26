@@ -2,8 +2,8 @@ import { useEffect } from "preact/hooks";
 import { useStore } from "../../store/mobx";
 import CMessageList from '../Organisms/CMessageList'
 import Sidebar from '../Sidebar'
-import { observer } from "mobx-react-lite";
 import { Oscar } from "../../../../core/Oscar";
+import { action } from "mobx";
 
 const oscar = new Oscar(window.location.hostname);
 
@@ -12,7 +12,9 @@ const PIndex = () => {
 
   useEffect(() => {
     return () => {
-      conversationStore.conversations.selected = null;
+      action(() => {
+        conversationStore.conversations.selected = null;
+      });
     }
   }, [])
 
@@ -25,4 +27,4 @@ const PIndex = () => {
   )
 }
 
-export default observer(PIndex);
+export default PIndex;
