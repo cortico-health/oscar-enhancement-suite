@@ -15,7 +15,7 @@ const PAddChat = () => {
         <div className="tw-flex tw-h-full">
             <div className="fixed z-20 tw-bg-gray-50 tw-shadow tw-h-full tw-block tw-w-[400px]">
                 <CPatientCard
-                    className="tw-mt-7 tw-pb-6 tw-px-5 tw-h-min tw-border-b tw-border-secondary-100"
+                    className="tw-p-7 tw-border-b tw-border-gray-200"
                 />
                 <CUsersList />
             </div>
