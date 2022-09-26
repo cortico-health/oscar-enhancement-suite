@@ -60,7 +60,7 @@ const CSelectList = ({ ...props }) => {
         patientStore.patients.all?.length ?
             <div className='tw-pl-8 tw-pt-11 tw-w-full tw-bg-white' { ...props }>
                 <h2 className='tw-text-secondary-500 tw-font-bold tw-text-title3 tw-mb-0.5'>Recent patients</h2>
-                <p className='tw-text-secondary-300 tw-text-title4'>accusamus magnam id</p>
+                <p className='tw-text-secondary-300 tw-text-title4'>Select a patient from the table.</p>
                 <div className='tw-px-8 tw-pt-8 tw-pb-4 tw-overflow-y-scroll tw-overflow-x-hidden tw-relative tw-w-full'>
                     <MSearch onInput={ (e) => searchHandler(e.target.value) } />
                     <div className='tw-flex tw-gap-x-5'>
