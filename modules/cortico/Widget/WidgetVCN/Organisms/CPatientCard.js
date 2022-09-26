@@ -5,7 +5,6 @@ import { useStore } from "../../store/mobx";
 import AButton from "../Atoms/AButton";
 import ExitLogo from "../../../../../resources/icons/exit.svg";
 import SwitchLogo from "../../../../../resources/icons/switch.svg";
-import ASvg from "../Atoms/ASvg";
 // import MProfilePicture from "../Molecules/MProfilePicture";
 
 const PatientData = ({ patient, showControls, handleClick, handleClose }) => {
@@ -28,7 +27,7 @@ const PatientData = ({ patient, showControls, handleClick, handleClose }) => {
                             {first_name + " " + last_name}
                         </div>
                         <div>
-                            {showControls && <ASvg onClick={handleClose} className="tw-cursor-pointer" src={ExitLogo} />}
+                            { showControls && <img onClick={ handleClose } className="tw-cursor-pointer" src={ ExitLogo } /> }
                         </div>
                     </div>
                     <table className="tw-w-full tw-text-md tw-text-secondary-300">
@@ -51,7 +50,7 @@ const PatientData = ({ patient, showControls, handleClick, handleClose }) => {
                     </table>
                 </div>
             </div>
-            {showControls && <AButton onClick={handleClick} className="tw-w-full tw-mt-5 tw-flex tw-items-center tw-justify-center tw-gap-x-2 tw-mb-0" variant="button-tertiary-sm"> <ASvg src={SwitchLogo} /> Switch Patient</AButton>}
+            { showControls && <AButton onClick={ handleClick } className="tw-w-full tw-mt-5 tw-flex tw-items-center tw-justify-center tw-gap-x-2 tw-mb-0" variant="button-tertiary-sm"> <img src={ SwitchLogo } /> Switch Patient</AButton> }
         </>
     )
 }
@@ -89,8 +88,7 @@ const CPatientCard = (props) => {
     }
 
     return (
-        <div {...props}>
-            {/* <ASvg className="h-12.5 min-w-12.5 border-2 rounded-full p-0.25 border-primary-500" src="avatar" /> */}
+        <div { ...props }>
             {patientStore.patients.selected ?
                 <PatientData patient={patientStore.patients.selected} showControls={!info} handleClick={handleClick} handleClose={handleClose} />
                 :

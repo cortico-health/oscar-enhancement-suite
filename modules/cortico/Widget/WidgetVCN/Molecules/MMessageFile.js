@@ -1,7 +1,6 @@
 import { useState } from "preact/hooks";
 import { createPortal } from "preact/compat";
-import { isAudio, isDocument, isHTML, isImage, isSheet, isTextFile } from "../../../../helper/determine-file-type";
-import ASvg from "../Atoms/ASvg";
+import { isAudio,isDocument,isHTML,isImage,isSheet,isTextFile } from "../../../../helper/determine-file-type";
 
 import DocumentLogo from "../../../../../resources/icons/document.svg";
 import DocumentTextLogo from "../../../../../resources/icons/document-text.svg";
@@ -23,7 +22,7 @@ import { markFileAsUploaded, markFileAsDismissed } from "../../../../Api/Vcn/Con
 const ShowSVGFile = ({ url, icon, name, isUser }) => {
     return (
         <div className={ `tw-flex tw-items-center tw-gap-2 tw-rounded-2xl tw-p-3 ${isUser ? "tw-bg-secondary-200" : "tw-bg-slate-200"}` }>
-            <ASvg src={icon} className="tw-h-12 tw-w-12" />
+            <img src={ icon } className="tw-h-12 tw-w-12" />
             <a href={ url } target="_blank" className='tw-text-secondary-500 tw-text-sm tw-max-w-[200px] tw-break-words'>{ name || "File" }</a>
         </div>
     )
@@ -164,14 +163,14 @@ const MMessageFile = ({ id, dataURL, name, extension, status, isUser }) => {
                     fileStatus === 'awaiting_action' &&
                     <div className="tw-flex tw-justify-between tw-items-end tw-gap-2">
                         <div className="tw-p-2 hover:tw-bg-green-500/60 hover:tw-rounded-full tw-w-10 tw-h-10">
-                            <ASvg src={UploadLogo}
+                                <img src={ UploadLogo }
                                 className="tw-cursor-pointer"
                                 onClick={() => setIsUploadOpen(true)}
                             />
                         </div>
 
                         <div className="tw-p-2 hover:tw-bg-red-500/60 hover:tw-rounded-full tw-w-10 tw-h-10">
-                            <ASvg src={DismissedLogo}
+                                <img src={ DismissedLogo }
                                 className="tw-cursor-pointer"
                                 onClick={() => setIsDismissOpen(true)}
                             />

@@ -2,7 +2,6 @@ import DOMPurify from "dompurify";
 import { useRef } from "preact/hooks";
 import { PencilIcon } from "@heroicons/react/outline";
 import { useStore } from "../../store/mobx";
-import ASvg from "../Atoms/ASvg";
 import MMessageFile from "./MMessageFile";
 
 import VerifiedLogo from "../../../../../resources/icons/verified.svg"
@@ -40,7 +39,7 @@ const MMessageCard = ({ messageDetails,readHistory,isUploadEnabled }) => {
                                     <p className='tw-text-secondary-500 tw-text-h1 tw-font-medium'>
                                         {from_user.full_name}
                                     </p>
-                                    <ASvg src={VerifiedLogo} className="tw-text-white tw-bg-blue-600 tw-rounded-full -tw-ml-2 tw-w-6 tw-h-6" />
+                                    <img src={ VerifiedLogo } className="tw-text-white tw-bg-blue-600 tw-rounded-full -tw-ml-2 tw-w-6 tw-h-6" />
                                 </div>
                                 {/* TODO - Dwight: Change this once there is an info for clinic */}
                                 <p className='tw-text-secondary-300 tw-text-select2 tw-text-right'>
@@ -86,7 +85,7 @@ const MMessageCard = ({ messageDetails,readHistory,isUploadEnabled }) => {
                                     <p className='tw-text-secondary-500 tw-text-h1 tw-font-medium'>
                                         {from_user.full_name}
                                     </p>
-                                    <ASvg src={VerifiedLogo} className="tw-text-white tw-bg-blue-600 tw-rounded-full -tw-ml-2 tw-w-6 tw-h-6" />
+                                    <img src={ VerifiedLogo } className="tw-text-white tw-bg-blue-600 tw-rounded-full -tw-ml-2 tw-w-6 tw-h-6" />
                                 </div>
                                 <p className='tw-text-secondary-300 tw-text-select2'>
                                     {from_user.clinic_name}
