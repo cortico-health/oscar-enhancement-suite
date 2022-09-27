@@ -39,7 +39,6 @@ const CUsersList = () => {
     }, [userStore.users])
 
     const handleOnChange = (e) => {
-        console.log(e.target.value)
         setChecked({ ...checked, [e.target.value]: e.target.checked })
     }
 
@@ -63,7 +62,6 @@ const CUsersList = () => {
     }
 
     const nextHandle = () => {
-        console.log(checked)
         if (Object.values(checked).includes(true)) {
             setConfirm(true)
         }
