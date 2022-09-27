@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import { h } from "preact";
 import { useEffect, useState } from "preact/hooks";
 import { useDispatch } from "react-redux";
@@ -67,7 +68,14 @@ const CUsersList = () => {
             setConfirm(true)
         }
         else {
-            alert("users not selected")
+            dispatch({
+                type: "notifications/add",
+                payload: {
+                    type: "error",
+                    title: "Please select a user first.",
+                    id: nanoid(),
+                },
+            });
         }
     }
 
