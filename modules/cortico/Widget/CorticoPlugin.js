@@ -261,7 +261,7 @@ function PluginContentRenderer() {
   return (
     <>
       {activeItem === "Account" ? (
-        <div className="tw-p-4 tw-h-full">
+        <div className="tw-p-4 tw-h-[550px] tw-overflow-y-auto">
           {loggedIn === true ? <AccountInformation /> : <Login />}
         </div>
       ) : activeItem === "Automation" ? (

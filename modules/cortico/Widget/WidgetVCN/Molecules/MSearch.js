@@ -1,6 +1,5 @@
 import { h } from 'preact';
 import AInput from '../Atoms/AInput';
-import ASvg from '../Atoms/ASvg';
 
 import SearchLogo from "../../../../../resources/icons/search.svg"
 
