@@ -1948,12 +1948,9 @@ export async function getPatientInfo(demographicNo) {
     return {};
   }
 
-<<<<<<< HEAD
-=======
   if (!result.ok) {
     throw Error(result)
   }
->>>>>>> origin/master
   const text = await result.text();
 
   var el = document.createElement("html");
