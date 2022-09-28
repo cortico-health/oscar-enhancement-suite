@@ -1,5 +1,5 @@
 import { useEffect } from "preact/hooks";
-import { observer } from "mobx-react-lite";
+import { Observer } from "mobx-react-lite";
 import { useDispatch, useSelector } from "react-redux";
 import { useStore } from "../../store/mobx";
 import AButton from "../Atoms/AButton";
@@ -88,18 +88,23 @@ const CPatientCard = (props) => {
     }
 
     return (
-        <div { ...props }>
-            {patientStore.patients.selected ?
-                <PatientData patient={patientStore.patients.selected} showControls={!info} handleClick={handleClick} handleClose={handleClose} />
-                :
-                <>
-                    <h1 className="tw-text-md tw-text-secondary-500 tw-font-bold tw-mb-1.5">Viewing all conversations</h1>
-                    <p className="tw-text-sm tw-mb-5">No patient selected</p>
-                    <AButton onClick={handleClick} className="tw-w-full" variant="button-primary-sm"> Select patient</AButton>
-                </>
-            }
-        </div>
+        <Observer>
+            { () => (
+                <div { ...props }>
+                    { patientStore.patients.selected ?
+                        <PatientData patient={ patientStore.patients.selected } showControls={ !info } handleClick={ handleClick } handleClose={ handleClose } />
+                        :
+                        <>
+                            <h1 className="tw-text-md tw-text-secondary-500 tw-font-bold tw-mb-1.5">Viewing all conversations</h1>
+                            <p className="tw-text-sm tw-mb-5">No patient selected</p>
+                            <AButton onClick={ handleClick } className="tw-w-full" variant="button-primary-sm"> Select patient</AButton>
+                        </>
+                    }
+                </div>
+            ) }
+
+        </Observer>
     )
 }
 
-export default observer(CPatientCard);
+export default CPatientCard;

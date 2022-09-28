@@ -1,6 +1,6 @@
 import useWebSocket from "react-use-websocket";
 import { useEffect, useRef, useState } from "preact/hooks";
-import { observer } from "mobx-react-lite";
+import { Observer } from "mobx-react-lite";
 import { useStore } from "../../store/mobx";
 import MChatTools from "../Molecules/MChatTools";
 import AFileInputShow from "../Atoms/AFileInputShow";
@@ -101,66 +101,68 @@ const CMessageList = ({ isEncounterPage }) => {
         });
     }
 
-    useEffect(() => {
-        const conversation = conversationStore.conversations.selected;
-
-        if (conversation) {
-            setLoading(true);
-            getChatMessageData(conversation.id).then((response) => {
-                return response.json();
-            }).then((data) => {
-                loadExtensionStorageValue("jwt_access_token").then((accessToken) => {
-                    if (accessToken) setSocketUrl(getWsChatUrl(conversation.id, accessToken));
-                });
-                setMessages(data.results)
-                setLoading(false);
-            }).catch((error) => {
-                console.log(error);
-                setLoading(false);
-            });
-        } else {
-            console.log("Message False")
-        }
-    }, [conversationStore.conversations.selected?.id]);
-
-    useEffect(() => {
-        if (conversationStore.conversations.selected?.stats) setFileStats(conversationStore.conversations.selected.stats);
-    }, [conversationStore.conversations.selected?.stats]);
-
-    useEffect(() => {
-        setReadHistory(conversationStore.conversations.selected?.last_read_messages || []);
-    }, [conversationStore.conversations.selected?.last_read_messages]);
-
-    useEffect(() => {
-        setPatientSelected(patientStore.patients.selected);
-    }, [patientStore.patients.selected]);
-
-    useEffect(() => {
-        messagesEndRef?.current?.scrollIntoView()
-    }, [messages]);
-
-    useEffect(() => {
-        if (_.isEmpty(attachment)) return;
-
-        const blob = dataURLtoBlob(attachment.data);
-        const file = new File([blob],attachment.name);
-        attachFileToChat(file);
-    },[attachment]);
-
-    if (!conversationStore.conversations.selected) {
-        return (
-            <div className="tw-w-[700px] tw-h-full tw-relative">
-                <div className="tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-2 tw-w-64 tw-h-full tw-absolute tw-left-1/2 -tw-translate-x-1/2">
-                    <img src={ NoConversationLogo } />
-                    <h4 className="text-secondary-300 text-2xl">Choose Conversation</h4>
-                </div>
-            </div>
-        );
-    }
-
     return (
         <FeatureDetector featureName="uploadToEChart">
-            { ({ disabled }) => {
+            { ({ disabled }) => (
+                <Observer>
+                    { () => {
+                        useEffect(() => {
+                            const conversation = conversationStore.conversations.selected;
+
+                            if (conversation) {
+                                setLoading(true);
+                                getChatMessageData(conversation.id).then((response) => {
+                                    return response.json();
+                                }).then((data) => {
+                                    loadExtensionStorageValue("jwt_access_token").then((accessToken) => {
+                                    if (accessToken) setSocketUrl(getWsChatUrl(conversation.id,accessToken));
+                                });
+                                setMessages(data.results)
+                                setLoading(false);
+                            }).catch((error) => {
+                                console.log(error);
+                                setLoading(false);
+                            });
+                        } else {
+                            console.log("Message False")
+                        }
+                        },[conversationStore.conversations.selected?.id]);
+
+                        useEffect(() => {
+                            if (conversationStore.conversations.selected?.stats) setFileStats(conversationStore.conversations.selected.stats);
+                        },[conversationStore.conversations.selected?.stats]);
+
+                        useEffect(() => {
+                            setReadHistory(conversationStore.conversations.selected?.last_read_messages || []);
+                        },[conversationStore.conversations.selected?.last_read_messages]);
+
+                        useEffect(() => {
+                            setPatientSelected(patientStore.patients.selected);
+                        },[patientStore.patients.selected]);
+
+                        useEffect(() => {
+                            messagesEndRef?.current?.scrollIntoView()
+                        },[messages]);
+
+                        useEffect(() => {
+                            if (_.isEmpty(attachment)) return;
+
+                            const blob = dataURLtoBlob(attachment.data);
+                            const file = new File([blob],attachment.name);
+                            attachFileToChat(file);
+                        },[attachment]);
+
+                        if (!conversationStore.conversations.selected) {
+                            return (
+                                <div className="tw-w-[700px] tw-h-full tw-relative">
+                                    <div className="tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-2 tw-w-64 tw-h-full tw-absolute tw-left-1/2 -tw-translate-x-1/2">
+                                        <img src={ NoConversationLogo } />
+                                        <h4 className="text-secondary-300 text-2xl">Choose Conversation</h4>
+                                    </div>
+                                </div>
+                            );
+                        }
+
                 return (
                     <div className="tw-relative tw-h-full tw-flex tw-flex-col tw-justify-between tw-overflow-hidden tw-w-[700px]">
                         <MChatTools
@@ -224,9 +226,11 @@ const CMessageList = ({ isEncounterPage }) => {
                     </div>
                 )
             } }
-
+                </Observer>
+            ) }
         </FeatureDetector>
     )
+
 }
 
-export default observer(CMessageList)
+export default CMessageList
