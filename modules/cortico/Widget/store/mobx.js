@@ -91,7 +91,6 @@ export const StateProvider = ({ children }) => {
     *fetchConversations(hin = "") {
       try {
         const res = yield getConversationsList(hin);
-
         const data = yield res.json();
 
         if (hin) {
@@ -111,7 +110,6 @@ export const StateProvider = ({ children }) => {
         patientStore.selectPatient(null);
         return;
       }
-
       this.conversations.selected = conversation;
       if (conversation.patient) patientStore.selectPatient(conversation.patient);
     },

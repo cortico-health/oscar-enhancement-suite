@@ -1,6 +1,6 @@
 import useWebSocket from "react-use-websocket";
 import { useEffect,useRef,useState } from "preact/hooks";
-import { observer } from "mobx-react-lite";
+import { observer } from "mobx-preact";
 import { useStore } from "../../store/mobx";
 import MChatTools from "../Molecules/MChatTools";
 import AFileInputShow from "../Atoms/AFileInputShow";
@@ -20,6 +20,7 @@ const CMessageList = ({ isEncounterPage }) => {
     const dispatch = useDispatch();
     const { attachment } = useSelector((state) => state.providerMessaging);
     const { conversationStore,patientStore } = useStore();
+
     const sendRef = useRef(null);
     const messagesEndRef = useRef(null);
 
@@ -159,76 +160,66 @@ const CMessageList = ({ isEncounterPage }) => {
     }
 
     return (
-        <Observer>
-            <FeatureDetector featureName="uploadToEChart">
-                { ({ disabled }) => {
-                    return (
-                        <div className="tw-relative tw-h-full tw-flex tw-flex-col tw-justify-between tw-overflow-hidden tw-w-[700px]">
-                            <MChatTools
-                            fileStats={ fileStats }
-                            patient={ patientStore.patients.selected }
-                            conversation={ conversationStore.conversations.selected }
-                            loading={ loading }
-                        />
+        <div className="tw-relative tw-h-full tw-flex tw-flex-col tw-justify-between tw-overflow-hidden tw-w-[700px]">
+            <MChatTools
+                fileStats={ fileStats }
+                patient={ patientStore.patients.selected }
+                conversation={ conversationStore.conversations.selected }
+                loading={ loading }
+            />
 
-                        { conversationStore.conversations.selected && !loading ? (
-                            <>
-                                <div className="tw-flex-1 tw-overflow-y-auto tw-h-96 tw-px-9">
-                                    { messages?.slice(0).reverse().map((message) => {
-                                        return (
-                                            <MMessageCard
-                                                key={ `message-${message.id}` }
-                                                messageDetails={ message }
-                                                readHistory={ readHistory.filter((m) => m.chat_message_id === message.id) }
-                                                isUploadEnabled={ !disabled }
-                                            />);
-                                    }) }
-                                    <div ref={ messagesEndRef } />
-                                </div>
-                                <div className="tw-sticky tw-border tw-bg-secondary-10 tw-w-full">
-                                    <div className="tw-mx-12">
-                                        {
-                                            uploadedFiles.length > 0 &&
-                                            <div className="tw-flex tw-flex-wrap tw-w-full tw-max-h-32 tw-overflow-y-auto tw-mt-3">
-                                                    { uploadedFiles.map((file) => {
-                                                        return <AFileInputShow fileInput={ file } exit={ () => handlers.removeFile(file.id) } />
-                                                    }) }
-                                                </div>
-                                        }
-                                        <MSend
-                                            placeholder="Type message..."
-                                            ref={ sendRef }
-                                            handlers={ handlers }
-                                        />
-                                        <p className="tw-text-h3 tw-text-right tw-text-secondary-500 tw-pb-4">
-                                            { patientSelected && "Sending a message about " }
-
-                                            <span className="tw-font-bold">
-                                                { (patientSelected) ?
-                                                    `${patientSelected?.first_name} ${patientSelected?.last_name}.`
-                                                    :
-                                                    "No Patient."
-                                                }</span>
-                                            { " " }
-                                            <span className="tw-font-medium tw-text-primary-500 tw-cursor-pointer" onClick={ goToSelectPatient }>
-                                                { patientSelected ? "Switch" : "Choose" } Patient
-                                            </span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </>
-                        ) : (
-                            <div className="tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-2 tw-w-full tw-h-full">
-                                <ASpinner variant="md" />
-                            </div>
-                        ) }
+            { conversationStore.conversations.selected && !loading ? (
+                <>
+                    <div className="tw-flex-1 tw-overflow-y-auto tw-h-96 tw-px-9">
+                        { messages?.slice(0).reverse().map((message) => {
+                            return (
+                                <MMessageCard
+                                    key={ `message-${message.id}` }
+                                    messageDetails={ message }
+                                    readHistory={ readHistory.filter((m) => m.chat_message_id === message.id) }
+                                />);
+                        }) }
+                        <div ref={ messagesEndRef } />
                     </div>
-                    )
-                } }
+                    <div className="tw-sticky tw-border tw-bg-secondary-10 tw-w-full">
+                        <div className="tw-mx-12">
+                            {
+                                uploadedFiles.length > 0 &&
+                                <div className="tw-flex tw-flex-wrap tw-w-full tw-max-h-32 tw-overflow-y-auto tw-mt-3">
+                                    { uploadedFiles.map((file) => {
+                                        return <AFileInputShow fileInput={ file } exit={ () => handlers.removeFile(file.id) } />
+                                    }) }
+                                </div>
+                            }
+                            <MSend
+                                placeholder="Type message..."
+                                ref={ sendRef }
+                                handlers={ handlers }
+                            />
+                            <p className="tw-text-h3 tw-text-right tw-text-secondary-500 tw-pb-4">
+                                { patientSelected && "Sending a message about " }
 
-            </FeatureDetector>
-        </Observer>
+                                <span className="tw-font-bold">
+                                    { (patientSelected) ?
+                                        `${patientSelected?.first_name} ${patientSelected?.last_name}.`
+                                        :
+                                        "No Patient."
+                                    }</span>
+                                { " " }
+                                <span className="tw-font-medium tw-text-primary-500 tw-cursor-pointer" onClick={ goToSelectPatient }>
+                                    { patientSelected ? "Switch" : "Choose" } Patient
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </>
+            ) : (
+                <div className="tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-2 tw-w-full tw-h-full">
+                    <ASpinner variant="md" />
+                </div>
+            ) }
+        </div>
     )
 }
 
-export default CMessageList
+export default observer(CMessageList);

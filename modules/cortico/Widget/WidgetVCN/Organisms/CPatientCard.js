@@ -1,5 +1,5 @@
 import { useEffect } from "preact/hooks";
-import { observer,Observer } from "mobx-react-lite";
+import { observer } from "mobx-preact";
 import { useDispatch,useSelector } from "react-redux";
 import { useStore } from "../../store/mobx";
 import AButton from "../Atoms/AButton";
@@ -88,34 +88,32 @@ const CPatientCard = (props) => {
   };
 
   return (
-    <Observer>
-      <div { ...props }>
-        {/* <ASvg className="h-12.5 min-w-12.5 border-2 rounded-full p-0.25 border-primary-500" src="avatar" /> */ }
-        { patientStore.patients.selected ? (
-          <PatientData
-            patient={ patientStore.patients.selected }
-            showControls={ !info }
-            handleClick={ handleClick }
-            handleClose={ handleClose }
-          />
-        ) : (
-          <>
-            <h1 className="tw-text-md tw-text-secondary-500 tw-font-bold tw-mb-1.5">
-              Viewing all conversations
-            </h1>
-            <p className="tw-text-sm tw-mb-5">No patient selected</p>
-            <AButton
-              onClick={ handleClick }
-              className="tw-w-full"
-              variant="button-primary-sm">
-              { " " }
-              Select patient
-            </AButton>
-          </>
-        ) }
-      </div>
-    </Observer>
+    <div { ...props }>
+      {/* <ASvg className="h-12.5 min-w-12.5 border-2 rounded-full p-0.25 border-primary-500" src="avatar" /> */ }
+      { patientStore.patients.selected ? (
+        <PatientData
+          patient={ patientStore.patients.selected }
+          showControls={ !info }
+          handleClick={ handleClick }
+          handleClose={ handleClose }
+        />
+      ) : (
+        <>
+          <h1 className="tw-text-md tw-text-secondary-500 tw-font-bold tw-mb-1.5">
+            Viewing all conversations
+          </h1>
+          <p className="tw-text-sm tw-mb-5">No patient selected</p>
+          <AButton
+            onClick={ handleClick }
+            className="tw-w-full"
+            variant="button-primary-sm">
+            { " " }
+            Select patient
+          </AButton>
+        </>
+      ) }
+    </div>
   );
 };
 
-export default CPatientCard;
+export default observer(CPatientCard);

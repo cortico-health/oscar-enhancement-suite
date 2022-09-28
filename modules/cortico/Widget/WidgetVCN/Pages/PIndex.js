@@ -19,15 +19,13 @@ const PIndex = () => {
   },[])
 
   return (
-    <Observer>
-      <div
-        id="upload-confirm"
-        className="tw-relative tw-flex tw-w-full tw-h-full">
-        <Sidebar />
+    <div
+      id="upload-confirm"
+      className="tw-relative tw-flex tw-w-full tw-h-full">
+      <Sidebar />
 
-        <CMessageList isEncounterPage={ oscar.isEncounterPage() } />
-      </div>
-    </Observer>
+      <CMessageList isEncounterPage={ oscar.isEncounterPage() } />
+    </div>
   );
 };
 

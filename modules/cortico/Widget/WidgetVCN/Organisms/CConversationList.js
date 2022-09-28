@@ -5,7 +5,7 @@ import {useStore} from "../../store/mobx";
 import MConversationTab from "../Molecules/MConversationTab";
 import MSearch from "../Molecules/MSearch";
 import CNotFound from "./CNotFound";
-import {observer, Observer} from "mobx-react-lite";
+import { observer } from "mobx-preact";
 import {debounce} from "lodash";
 import ASpinner from "../Atoms/ASpinner";
 
@@ -39,43 +39,41 @@ const CConversationList = () => {
   }, 500);
 
   return (
-    <Observer>
-      <div className="tw-mx-2.5 tw-flex-1 tw-flex tw-flex-col">
-        <MSearch
-          className="tw-flex-none"
-          disabled={
-            conversationStore.conversations[conversationKey]?.length === 0 &&
-            !searchName
-          }
-          onInput={(e) => searchHandler(e.target.value)}
-        />
-        <div className="tw-overflow-y-auto">
-          {conversationStore.conversations[conversationKey] ? (
-            conversationStore.conversations[conversationKey].length > 0 ? (
-              <>
-                {conversationStore.conversations[conversationKey]?.map(
-                  (conversation) => {
-                    return (
-                      <MConversationTab
-                        key={`conversation-${conversation.id}`}
-                        conversation={conversation}
-                      />
-                    );
-                  }
-                )}
-              </>
-            ) : (
-              <CNotFound name={searchName} />
-            )
+    <div className="tw-mx-2.5 tw-flex-1 tw-flex tw-flex-col">
+      <MSearch
+        className="tw-flex-none"
+        disabled={
+          conversationStore.conversations[conversationKey]?.length === 0 &&
+          !searchName
+        }
+        onInput={ (e) => searchHandler(e.target.value) }
+      />
+      <div className="tw-overflow-y-auto">
+        { conversationStore.conversations[conversationKey] ? (
+          conversationStore.conversations[conversationKey].length > 0 ? (
+            <>
+              { conversationStore.conversations[conversationKey]?.map(
+                (conversation) => {
+                  return (
+                    <MConversationTab
+                      key={ `conversation-${conversation.id}` }
+                      conversation={ conversation }
+                    />
+                  );
+                }
+              ) }
+            </>
           ) : (
-            <div className="tw-flex tw-justify-center tw-items-center tw-mt-3">
-              <ASpinner />
-            </div>
-          )}
-        </div>
+            <CNotFound name={ searchName } />
+          )
+        ) : (
+          <div className="tw-flex tw-justify-center tw-items-center tw-mt-3">
+            <ASpinner />
+          </div>
+        ) }
       </div>
-    </Observer>
+    </div>
   );
 };
 
-export default CConversationList;
+export default observer(CConversationList);
