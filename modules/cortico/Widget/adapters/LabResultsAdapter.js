@@ -2,7 +2,8 @@ import { useQuery } from "react-query";
 import { useDispatch } from "react-redux";
 import { getFileInfo } from "../../../Utils/Utils";
 import { nanoid } from "nanoid";
-const url = "PrintPDF.do";
+import { useEffect } from "preact/hooks";
+const url = window.location.href.replace(/[^\/]+$/, "") + "/PrintPDF.do";
 const id = nanoid();
 
 export default function LabResultsAdapter() {
@@ -13,17 +14,6 @@ export default function LabResultsAdapter() {
   if (!segmentId) {
     return <></>;
   }
-
-  useEffect(() => {
-    return () => {
-      dispatch({
-        type: "messenger/deleteAttachment",
-        payload: {
-          id,
-        },
-      });
-    };
-  }, []);
 
   const form = document.querySelector(
     `form[name="acknowledgeForm_${segmentId}"]`
@@ -67,63 +57,39 @@ export default function LabResultsAdapter() {
   const data = new FormData();
   params.map((param) => data.append(param.key, param.value));
 
-  const result = useQuery(
-    `labResults${segmentId}`,
-    () => {
-      return fetch(url, {
-        method: "POST",
-        body: new URLSearchParams(data),
-      }).then((response) => {
+  let fileName,
+    extension = null;
+
+  useEffect(() => {
+    fetch(url, {
+      method: "POST",
+      body: new URLSearchParams(data),
+    })
+      .then((response) => {
         if (!response.ok) throw Error("Network response was not ok");
-        return response;
-      });
-    },
-    {
-      staleTime: Infinity,
-      cacheTime: Infinity,
-      retry: false,
-    }
-  );
-
-  if (result.data) {
-    const contentDisposition = result.data.headers.get("Content-Disposition");
-    const { fileName, extension } = getFileInfo(contentDisposition);
-
-    const { data: blob } = useQuery(
-      `labResults${segmentId}Blob`,
-      () => {
-        return result.data.blob();
-      },
-      {
-        staleTime: Infinity,
-        cacheTime: Infinity,
-        retry: false,
-      }
-    );
-
-    if (blob) {
-      const { data: dataUrl } = useQuery(
-        `labResults${segmentId}DataUrl`,
-        () => {
-          return new Promise((resolve, reject) => {
-            let reader = new FileReader();
-            reader.addEventListener("load", (evt) => {
-              resolve(reader.result);
-            });
-            reader.addEventListener("error", (evt) => {
-              reject(evt);
-            });
-            reader.readAsDataURL(blob);
+        console.log("Response came through", response);
+        const contentDisposition =
+          response.headers.get("Content-Disposition") ||
+          response.headers.map["content-disposition"];
+        const { fileName: _fileName, extension: _extension } =
+          getFileInfo(contentDisposition);
+        fileName = _fileName;
+        extension = _extension;
+        return response.blob();
+      })
+      .then((blob) => {
+        return new Promise((resolve, reject) => {
+          let reader = new FileReader();
+          reader.addEventListener("load", (evt) => {
+            resolve(reader.result);
           });
-        },
-        {
-          staleTime: Infinity,
-          cacheTime: Infinity,
-          retry: false,
-        }
-      );
-
-      if (dataUrl) {
+          reader.addEventListener("error", (evt) => {
+            reject(evt);
+          });
+          reader.readAsDataURL(blob);
+        });
+      })
+      .then((dataUrl) => {
         dispatch({
           type: "messenger/addAttachment",
           payload: {
@@ -134,8 +100,19 @@ export default function LabResultsAdapter() {
             extension,
           },
         });
-      }
-    }
-  }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    return () => {
+      dispatch({
+        type: "messenger/deleteAttachment",
+        payload: {
+          id,
+        },
+      });
+    };
+  }, []);
+
   return <></>;
 }

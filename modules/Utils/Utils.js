@@ -225,6 +225,30 @@ export function getDemographicNo(apptUrl) {
       }
     }
 
+    if (!demographicNo) {
+      const billButton = document.querySelector('input[value="Bill"]');
+      if (billButton) {
+        const demographicNoArray =
+          billButton.attributes.onclick.textContent.match(
+            /demographic_no=\d+/g
+          );
+        if (demographicNoArray && demographicNoArray.length > 0) {
+          demographicNo = demographicNoArray[0].split("=")[1];
+        }
+      }
+    }
+    if (!demographicNo) {
+      const resAnchor = document.querySelector(".NormalRes a");
+
+      if (resAnchor) {
+        const demographicNoArray =
+          resAnchor.attributes.href.textContent.match(/demo=\d+/g);
+        if (demographicNoArray && demographicNoArray.length > 0) {
+          demographicNo = demographicNoArray[0].split("=")[1];
+        }
+      }
+    }
+
     return demographicNo;
   }
 }

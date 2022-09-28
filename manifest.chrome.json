@@ -30,10 +30,15 @@
         "*://*/*/eform/efmshowform_data.jsp*",
         "*://*/*/dms/documentReport.jsp*",
         "*://*/*/dms/showDocument.jsp*",
-        "*://*/*/oscarReport/reportByTemplate/GenerateReportAction.do"
+        "*://*/*/oscarReport/reportByTemplate/GenerateReportAction.do",
+        "*://*/*/lab/*"
       ],
-      "js": ["dist/cortico-min.js"]
+      "js": [
+        "dist/cortico-min.js"
+      ]
     }
   ],
-  "permissions": ["storage"]
+  "permissions": [
+    "storage"
+  ]
 }

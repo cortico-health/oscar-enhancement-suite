@@ -2,36 +2,33 @@ import { useQuery } from "react-query";
 import { useDispatch } from "react-redux";
 import { getPatientInfo } from "../../../../cortico";
 import { isEmpty } from "lodash";
+import { useEffect } from "preact/hooks";
 
 export function PatientAdapter() {
   const dispatch = useDispatch();
-  const result = useQuery(
-    "patient",
-    async () => {
-      return await getPatientInfo();
-    },
-    {
-      staleTime: Infinity,
-      cacheTime: Infinity,
-      retry: false,
-    }
-  );
 
-  if (result.isSuccess && !isEmpty(result.data)) {
-    console.log("Result", result, result.isSuccess);
-    dispatch({
-      type: "app/setPatientInfo",
-      payload: result.data,
-    });
+  useEffect(() => {
+    getPatientInfo()
+      .then((patient) => {
+        console.log("Patient", patient);
+        dispatch({
+          type: "app/setPatientInfo",
+          payload: patient,
+        });
 
-    dispatch({
-      type: "sidebar/setVisible",
-      payload: {
-        name: "Patient",
-        visible: true,
-      },
-    });
-  }
+        dispatch({
+          type: "sidebar/setVisible",
+          payload: {
+            name: "Patient",
+            visible: true,
+          },
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
   return <></>;
 }
 
